@@ -213,7 +213,6 @@ end
 
 local function onPursuitAction(vehId, data)
     local playerIsCop = isPlayerInPoliceVehicle()
-
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
 
     if data.type == "start" then -- pursuit started
@@ -247,8 +246,6 @@ local function onPursuitAction(vehId, data)
                     if playerIsCop == false then
                         local pursuitEndTime = os.time()
                         local pursuitDuration = pursuitEndTime - playerData.pursuitStartTime
-                        
-
                         if not inventoryId or hasLicensePlate(inventoryId) then
                             local reward = pursuitDuration * (12 * data.uniqueOffensesCount)
                             career_modules_payment.pay({money = {amount = -reward}}, {label = "Fine for being arrested by the police"})
@@ -271,10 +268,7 @@ local function onPursuitAction(vehId, data)
                                          suspectActive = false
                                     end
                             career_saveSystem.saveCurrent()
-                            end
-
-
-
+                        end
                     end
                 end
                 -- core_recoveryPrompt.setDefaultsForCareer()
@@ -291,8 +285,6 @@ local function onPursuitAction(vehId, data)
                 career_modules_payment.pay({money = {amount = -bonus}}, {label = "Fine for being arrested by the police"})
                 ui_message("Arrest Bonus: $" .. bonus, 5)
             else
-
-
               if not inventoryId or hasLicensePlate(inventoryId) then
                     local fine = data.mode * data.uniqueOffensesCount * 1000 -- fine value is WIP
                     career_saveSystem.saveCurrent()
@@ -305,8 +297,7 @@ local function onPursuitAction(vehId, data)
                     career_modules_payment.pay({money = {amount = fine}}, {label = "Fine for being arrested by the police"})
                     ui_message(translateLanguage("ui.traffic.policeFine", "You got fined by the police extra for missing licenseplate: $")..fine, 5, "careerPursuit")
                     career_saveSystem.saveCurrent()
-                    end
-                
+                    end        
             end
         end
     end
@@ -327,9 +318,6 @@ local function onPursuitAction(vehId, data)
    --endPolicePursuit()
   end
 end
-
-
-
 
 
 
