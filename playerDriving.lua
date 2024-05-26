@@ -111,7 +111,7 @@ local function setupTraffic(forceSetup)
         if forceSetup or (gameplay_traffic.getState() == "off" and not gameplay_traffic.getTrafficList(true)[1] and playerData.trafficActive == 0) then
             log("I", "career", "Now spawning traffic for career mode")
             -- TODO: revise this
-            local amount = clamp(gameplay_traffic.getIdealSpawnAmount(), 4, 10) -- returns amount from user settings; at least 3 vehicles should get spawned
+            local amount = clamp(gameplay_traffic.getIdealSpawnAmount(), 14, 24) -- returns amount from user settings; at least 3 vehicles should get spawned
             if not getAllVehiclesByType()[1] then -- if player vehicle does not exist yet
                 amount = amount - 1
             end
