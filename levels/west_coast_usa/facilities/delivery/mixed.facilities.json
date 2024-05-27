@@ -1,0 +1,540 @@
+{
+  "deliveryProviders":[
+    {
+      "id":"hospital",
+      "name":"Hospital",
+      "description":"Receives various cargo.",
+      "preview":"previews/hospital.jpg",
+      "pickUpSpotNames":["hospital_main"],
+      "dropOffSpotNames":["hospital_main"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":[],
+      "logisticTypesReceived":["parcel", "food", "vehDeliveryAmbulance"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":0,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["food"],
+          "min":-1,
+          "max":1,
+          "interval":60
+        }
+      ],
+    },
+    {
+      "id":"policeStation",
+      "name":"Police Station",
+      "description":"Receives various cargo.",
+      "preview":"previews/hospital.jpg",
+      "pickUpSpotNames":[],
+      "dropOffSpotNames":["police1","police2","police3"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":[],
+      "logisticTypesReceived":["vehDeliveryPolice"],
+      "logisticGenerators":[],
+    },
+    {
+      "id":"snoozeNews",
+      "name":"Snooze News",
+      "description":"Receives various cargo.",
+      "preview":"previews/snoozeNews.jpg",
+      "pickUpSpotNames":["snoozeNews_main"],
+      "dropOffSpotNames":["snoozeNews_main"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":[],
+      "logisticTypesReceived":["parcel", "food"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":0,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["food"],
+          "min":-1,
+          "max":1,
+          "interval":60
+        }
+      ],
+    },
+    {
+      "id":"constructionCity",
+      "name":"City Construction Site",
+      "description":"Receives industrial goods.",
+      "preview":"previews/constructionCity.jpg",
+      "pickUpSpotNames":["construction_city"],
+      "dropOffSpotNames":["construction_city"],
+      "trailerSpotNames":["construction_city_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+    },
+    {
+      "id":"steelFactory",
+      "name":"Hot Rolled Inc.",
+      "description":"Receives industrial goods.",
+      "preview":"previews/steelFactory.jpg",
+      "pickUpSpotNames":["hotrolled_parking"],
+      "dropOffSpotNames":["hotrolled_parking"],
+      "trailerSpotNames":["hotrolled_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+    },
+    {
+      "id":"quarry",
+      "name":"Quarry",
+      "description":"Receives industrial goods.",
+      "preview":"previews/quarry.jpg",
+      "pickUpSpotNames":["quarry_parking"],
+      "dropOffSpotNames":["quarry_parking"],
+      "trailerSpotNames":["quarry_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+
+    },
+
+    {
+      "id":"sealbrik",
+      "name":"Sealbrik",
+      "description":"Receives industrial goods.",
+      "preview":"previews/sealbrik.jpg",
+      "pickUpSpotNames":["sealbrik_parking"],
+      "dropOffSpotNames":["sealbrik_parking"],
+      "trailerSpotNames":["sealbrik_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+    },
+
+
+    {
+      "id":"lensflareStudios",
+      "name":"Lensflare Studios",
+      "description":"Receives various cargo.",
+      "preview":"previews/lensflareStudios.jpg",
+      "pickUpSpotNames":["lensflareStudios_parking"],
+      "dropOffSpotNames":["lensflareStudios_parking"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":[],
+      "logisticTypesReceived":["parcel", "food"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":0,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["food"],
+          "min":-1,
+          "max":1,
+          "interval":60
+        }
+      ],
+    },
+    {
+      "id":"lensflareLogistics",
+      "name":"Lensflare Studios Warehouse",
+      "description":"Receives industrial goods.",
+      "preview":"previews/lensflareLogistics.jpg",
+      "pickUpSpotNames":["lensflareLogistics_parking"],
+      "dropOffSpotNames":["lensflareLogistics_parking"],
+      "trailerSpotNames":["lensflareLogistics_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        }
+      ],
+    },
+
+    {
+      "id":"refinery_logistics",
+      "name":"Shuffleboard Logistics (Refinery)",
+      "description":"Receives industrial goods.",
+      "preview":"previews/refinery_logistics.jpg",
+      "pickUpSpotNames":["refinery_logistics_parking"],
+      "dropOffSpotNames":["refinery_logistics_parking"],
+      "trailerSpotNames":["refinery_logistics_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+    },
+
+    {
+      "id":"pier",
+      "name":"Refinery Pier",
+      "description":"Receives industrial goods.",
+      "preview":"previews/pier.jpg",
+      "pickUpSpotNames":["pier_parking"],
+      "dropOffSpotNames":["pier_parking"],
+      "trailerSpotNames":["pier_trailer"],
+      "sitesFile":"mixed.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["industrial", "trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":-3,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["industrial"],
+          "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":1,
+          "max": 3,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":60,
+          "min":-1,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        }
+      ],
+    },
+  ]
+}
