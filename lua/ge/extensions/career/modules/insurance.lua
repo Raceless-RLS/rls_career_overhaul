@@ -65,7 +65,7 @@ local repairOptions = {
       priceOptions = {
         {
           {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id), canBeNegative = true}}},
-          {text = "as extra fee", price = {money = { amount = 1000, canBeNegative = true}}}
+          {text = "as extra fee", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id) * .5, canBeNegative = true}}}
         },
         {
           {text = "", price = {bonusStars = { amount = 1, canBeNegative = false}}}
@@ -379,6 +379,9 @@ end
 
 -- when you damage a test drive vehicle, insurance needs to know
 local function makeTestDriveDamageClaim(vehId)
+  local invVehId = M.getInventoryIdFromVehicleId(vehId)
+  local value = M.getInventoryVehicleValue(invVehId)
+  testDriveClaimPrice = {money = { amount = value * 0.05, canBeNegative = true}}
   local label = string.format("Test drive vehicle damaged: -%i$", testDriveClaimPrice.money.amount)
   ui_message(label)
 
@@ -569,19 +572,6 @@ local function updateDistanceDriven(dtReal)
 
   lastPos:set(vehicleData.pos)
 end
-local function printTable(t, indent)
-  indent = indent or 0
-  local indentStr = string.rep("  ", indent)
-
-  for key, value in pairs(t) do
-    if type(value) == "table" then
-      print(indentStr .. tostring(key) .. ":")
-      printTable(value, indent + 1)
-    else
-      print(indentStr .. tostring(key) .. ": " .. tostring(value))
-    end
-  end
-end
 
 local function calculatePremiumDetails(policyId, overiddenPerks)
   local premiumDetails = {
@@ -596,7 +586,6 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
     table.insert(perks, perk)
   end
 
-  local perkPriceScale = policyInfo.perkPriceScale[tableFindKey(policyInfo.perks.renewal.changeability.changeParams.choices, (overiddenPerks and overiddenPerks ~= nil) and overiddenPerks.renewal or getPlPerkValue(policyInfo.id, "renewal"))]
   for _, perkData in pairs(perks) do
     local perkValue = getPlPerkValue(policyId, perkData.name)
     if overiddenPerks and overiddenPerks[perkData.name] ~= nil then
@@ -614,16 +603,14 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
       value = perkData.changeability.premiumInfluence
     end
     
-    value = value * perkPriceScale
     premiumDetails.price = premiumDetails.price + value
     premiumDetails.perksPriceDetails[perkData.name] = {
       perk = perkData,
       price = value
     }
   end
-  printTable(premiumDetails)
   premiumDetails.perksPriceDetails["renewal"] = (renewal - 1) * premiumDetails.price
-  printTable(premiumDetails)
+  premiumDetails.price = premiumDetails.price * renewal
   return premiumDetails
 end
 
@@ -632,6 +619,7 @@ local function calculatePolicyPremium(policyId, overiddenPerks)
   local policyInfo = availablePolicies[policyId]
   local plPolicyInfo = plPoliciesData[policyId]
   local premium = 0
+  local renewal = 1
 
   for perkName, perkData in pairs(policyInfo.perks) do
     local perkValue = getPlPerkValue(policyId, perkName)
@@ -639,11 +627,11 @@ local function calculatePolicyPremium(policyId, overiddenPerks)
     if overiddenPerks and overiddenPerks[perkName] ~= nil then
       perkValue = overiddenPerks[perkName]
     end
-
+    
     if perkData.changeability.changeable then
       local index = tableFindKey(perkData.changeability.changeParams.choices, perkValue)
       if perkName == "renewal " then
-        premium = premium * perkData.changeability.changeParams.premiumInfluence[index]
+        renewal = perkData.changeability.changeParams.premiumInfluence[index]
       else
         premium = premium + perkData.changeability.changeParams.premiumInfluence[index]
       end
@@ -651,7 +639,7 @@ local function calculatePolicyPremium(policyId, overiddenPerks)
       premium = premium + perkData.changeability.premiumInfluence
     end
   end
-
+  premium = premium * renewal
   return premium * plPolicyInfo.bonus
 end
 
@@ -682,7 +670,7 @@ local function checkRenewPolicy()
 end
 
 local function getActualRepairPrice(vehInvId)
-  local price =  M.getInventoryVehicleValue(vehInvId) * (getPlPerkValue(insuredInvVehs[tostring(vehInvId)], "deductible") / 100)
+  local price =  career_modules_valueCalculator.getInventoryVehicleValue(vehInvId) * (getPlPerkValue(insuredInvVehs[tostring(vehInvId)], "deductible") / 100)
   return price
 end
 
