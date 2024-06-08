@@ -10,7 +10,7 @@ local plInsuranceDataFileName = "insurance"
 
 local brokenPartsThreshold = 3
 local metersDrivenSinceLastPay = 0
-local bonusDecrease = 0.15
+local bonusDecrease = 0.05
 local policyEditTime = 600 -- have to wait between perks editing
 local testDriveClaimPrice = {money = { amount = 500, canBeNegative = true}}
 local minimumPolicyScore = 1
@@ -46,39 +46,29 @@ local repairOptions = {
     }
   end,
   normalRepair = function(invVehInfo)
-   local repairDetails = M.getRepairDetailsWithoutPolicy(invVehInfo)
     return {
       repairTime = M.getPlPerkValue(insuredInvVehs[tostring(invVehInfo.id)], "repairTime"),
       isPolicyRepair = true,
       repairName = translateLanguage("insurance.repairOptions.normalRepair.name", "insurance.repairOptions.normalRepair.name", true),
       priceOptions = {
         { -- one choice
-          {text = "", price = {money = { amount = M.getActualRepairPrice(insuredInvVehs[tostring(invVehInfo.id)]) + repairDetails.price * .15, canBeNegative = true}}},
+          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id), canBeNegative = true}}}
         }
       }
     }
   end,
   quickRepair = function(invVehInfo)
-
-  --RLS
-  local repairDetails = M.getRepairDetailsWithoutPolicy(invVehInfo)
-  local actualRepairPrice = M.getActualRepairPrice(insuredInvVehs[tostring(invVehInfo.id)])
-
-
-
     return {
       repairTime = 0,
       isPolicyRepair = true,
       repairName = translateLanguage("insurance.repairOptions.quickRepair.name", "insurance.repairOptions.quickRepair.name", true),
       priceOptions = {
-  --RLS
-      {
-          {type = "deductible", price = {money = { amount = M.getActualRepairPrice(insuredInvVehs[tostring(invVehInfo.id)]), canBeNegative = true}}},
-          {type = "extra", price = {money = { amount = repairDetails.price * 1.75, canBeNegative = true}}}
+        {
+          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id), canBeNegative = true}}},
+          {text = "as extra fee", price = {money = { amount = 1000, canBeNegative = true}}}
         },
         {
-          {type = "deductible", price = {money = { amount = M.getActualRepairPrice(insuredInvVehs[tostring(invVehInfo.id)]), canBeNegative = false}}},
-          {type = "extra", price = {bonusStars = { amount = 1, canBeNegative = false}}}
+          {text = "", price = {bonusStars = { amount = 1, canBeNegative = false}}}
         }
       }
     }
@@ -579,6 +569,19 @@ local function updateDistanceDriven(dtReal)
 
   lastPos:set(vehicleData.pos)
 end
+local function printTable(t, indent)
+  indent = indent or 0
+  local indentStr = string.rep("  ", indent)
+
+  for key, value in pairs(t) do
+    if type(value) == "table" then
+      print(indentStr .. tostring(key) .. ":")
+      printTable(value, indent + 1)
+    else
+      print(indentStr .. tostring(key) .. ": " .. tostring(value))
+    end
+  end
+end
 
 local function calculatePremiumDetails(policyId, overiddenPerks)
   local premiumDetails = {
@@ -586,6 +589,7 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
     price = 0
   }
   local policyInfo = availablePolicies[policyId]
+  local renewal = {}
 
   local perks = {}
   for _, perk in pairs(policyInfo.perks) do
@@ -593,7 +597,6 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
   end
 
   local perkPriceScale = policyInfo.perkPriceScale[tableFindKey(policyInfo.perks.renewal.changeability.changeParams.choices, (overiddenPerks and overiddenPerks ~= nil) and overiddenPerks.renewal or getPlPerkValue(policyInfo.id, "renewal"))]
-
   for _, perkData in pairs(perks) do
     local perkValue = getPlPerkValue(policyId, perkData.name)
     if overiddenPerks and overiddenPerks[perkData.name] ~= nil then
@@ -604,9 +607,13 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
     if perkData.changeability.changeable then
       local index = tableFindKey(perkData.changeability.changeParams.choices, perkValue)
       value = perkData.changeability.changeParams.premiumInfluence[index]
+      if perkData.name == "renewal" then
+        renewal = value
+      end
     else
       value = perkData.changeability.premiumInfluence
     end
+    
     value = value * perkPriceScale
     premiumDetails.price = premiumDetails.price + value
     premiumDetails.perksPriceDetails[perkData.name] = {
@@ -614,11 +621,10 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
       price = value
     }
   end
+  printTable(premiumDetails)
+  premiumDetails.perksPriceDetails["renewal"] = (renewal - 1) * premiumDetails.price
+  printTable(premiumDetails)
   return premiumDetails
-end
-
-local function getPremiumWithPolicyScore(policyId)
-  return calculatePremiumDetails(policyId).price * plPoliciesData[policyId].bonus
 end
 
 -- overiddenPerks param is there only for the UI. Allows to calculate the premium of a non-existing policy
@@ -636,13 +642,21 @@ local function calculatePolicyPremium(policyId, overiddenPerks)
 
     if perkData.changeability.changeable then
       local index = tableFindKey(perkData.changeability.changeParams.choices, perkValue)
-      premium = premium + perkData.changeability.changeParams.premiumInfluence[index]
+      if perkName == "renewal " then
+        premium = premium * perkData.changeability.changeParams.premiumInfluence[index]
+      else
+        premium = premium + perkData.changeability.changeParams.premiumInfluence[index]
+      end
     else
       premium = premium + perkData.changeability.premiumInfluence
     end
   end
 
   return premium * plPolicyInfo.bonus
+end
+
+local function getPremiumWithPolicyScore(policyId)
+  return calculatePolicyPremium(policyId)
 end
 
 --make player pay for insurance renewal every X meters
@@ -667,8 +681,9 @@ local function checkRenewPolicy()
   end
 end
 
-local function getActualRepairPrice(policyId)
-  return getPlPerkValue(policyId, "deductible")
+local function getActualRepairPrice(vehInvId)
+  local price =  M.getInventoryVehicleValue(vehInvId) * (getPlPerkValue(insuredInvVehs[tostring(vehInvId)], "deductible") / 100)
+  return price
 end
 
 local originComputerId
