@@ -32,6 +32,7 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 - **Deductible Changes**: Deductible is now a percentage of your insured vehicle value, ranging from 0.05% to 10%.
 - **Repair Times**: Repair times range from 2 minutes to 30 minutes.
 - **Renewal Range**: Renewal range is a multiplier that is cheaper for longer periods.
+- **Cheapest Option**: Insurance will always be the cheapest option now.
 
 #### Insurance Policies
 
@@ -70,6 +71,10 @@ Each policy has specific perks with customizable parameters:
 - **Jefferson Motors**: Focuses on cheaper classic cars, race cars, and custom cars, positioning itself as a custom shop.
 - **Quarryside Auto Sales**: Expanded into used cheap trucks and SUVs to stay relevant.
 - **Commercial Vehicle Sales**: Offers retired service/police vehicles and commercial/fleet vehicles.
+
+### Test Drive
+
+- **Dynamic Repair Cost**: Test drive repair cost is now dynamic based on the vehicle.
 
 ## Installation
 

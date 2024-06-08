@@ -47,12 +47,12 @@ local repairOptions = {
   end,
   normalRepair = function(invVehInfo)
     return {
-      repairTime = M.getPlPerkValue(insuredInvVehs[tostring(invVehInfo.id)], "repairTime"),
+      repairTime = math.min(M.getPlPerkValue(insuredInvVehs[tostring(invVehInfo.id)], "repairTime"), M.getRepairDetailsWithoutPolicy(invVehInfo).repairTime),
       isPolicyRepair = true,
       repairName = translateLanguage("insurance.repairOptions.normalRepair.name", "insurance.repairOptions.normalRepair.name", true),
       priceOptions = {
         { -- one choice
-          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id), canBeNegative = true}}}
+          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo), canBeNegative = true}}}
         }
       }
     }
@@ -64,8 +64,8 @@ local repairOptions = {
       repairName = translateLanguage("insurance.repairOptions.quickRepair.name", "insurance.repairOptions.quickRepair.name", true),
       priceOptions = {
         {
-          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id), canBeNegative = true}}},
-          {text = "as extra fee", price = {money = { amount = M.getActualRepairPrice(invVehInfo.id) * .5, canBeNegative = true}}}
+          {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo), canBeNegative = true}}},
+          {text = "as extra fee", price = {money = { amount = M.getActualRepairPrice(invVehInfo) * .5, canBeNegative = true}}}
         },
         {
           {text = "", price = {bonusStars = { amount = 1, canBeNegative = false}}}
@@ -378,9 +378,7 @@ local function repairPartConditions(data)
 end
 
 -- when you damage a test drive vehicle, insurance needs to know
-local function makeTestDriveDamageClaim(vehId)
-  local invVehId = M.getInventoryIdFromVehicleId(vehId)
-  local value = M.getInventoryVehicleValue(invVehId)
+local function makeTestDriveDamageClaim(value)
   testDriveClaimPrice = {money = { amount = value * 0.05, canBeNegative = true}}
   local label = string.format("Test drive vehicle damaged: -%i$", testDriveClaimPrice.money.amount)
   ui_message(label)
@@ -393,6 +391,7 @@ local function makeTestDriveDamageClaim(vehId)
   }
 
   table.insert(plHistory.generalHistory.testDriveClaims, claim)
+  career_saveSystem.saveCurrent()
 end
 
 local function makeRepairClaim(invVehId, price)
@@ -664,14 +663,17 @@ local function checkRenewPolicy()
     local logBookLabel = string.format("Insurance renewed! Tier: %s", availablePolicies[currApplicablePolicyId].name)
     career_modules_payment.pay({money = { amount = premium, canBeNegative = true}}, {label=logBookLabel})
     ui_message(label)
-
+    
     metersDrivenSinceLastPay = 0
+    career_saveSystem.saveCurrent()
   end
 end
 
-local function getActualRepairPrice(vehInvId)
-  local price =  career_modules_valueCalculator.getInventoryVehicleValue(vehInvId) * (getPlPerkValue(insuredInvVehs[tostring(vehInvId)], "deductible") / 100)
-  return price
+local function getActualRepairPrice(vehInvInfo) 
+  -- This function returns the actual price of the repair, taking into account the deductible and the price of the repair without the policy  
+  -- You will pay the lower value as a deductible is the max you will pay not the lowest
+  local price =  career_modules_valueCalculator.getInventoryVehicleValue(vehInvInfo.id) * (getPlPerkValue(insuredInvVehs[tostring(vehInvInfo.id)], "deductible") / 100)
+  return math.min(price, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 0.8)
 end
 
 local originComputerId
@@ -1101,6 +1103,7 @@ local function changePolicyPerks(policyId, changedPerks)
   career_modules_payment.pay({money = { amount = availablePolicies[policyId].paperworkFees, canBeNegative = false}}, {label=label})
   plPoliciesData[policyId].nextPolicyEditTimer = policyEditTime
   M.sendUIData()
+  career_saveSystem.saveCurrent()
 end
 
 -- close the insurances computer menu
@@ -1159,6 +1162,7 @@ local function payBonusReset(policyId)
     career_modules_payment.pay(policyData.resetBonus.price, {label=label})
     plPoliciesData[policyId].bonus = 1
     sendUIData()
+    career_saveSystem.saveCurrent()
   end
 end
 
