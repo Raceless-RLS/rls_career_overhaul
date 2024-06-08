@@ -608,42 +608,13 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
       price = value
     }
   end
-  premiumDetails.perksPriceDetails["renewal"] = (renewal - 1) * premiumDetails.price
+  premiumDetails.perksPriceDetails["renewal"].price = (renewal - 1) * premiumDetails.price
   premiumDetails.price = premiumDetails.price * renewal
   return premiumDetails
 end
 
--- overiddenPerks param is there only for the UI. Allows to calculate the premium of a non-existing policy
-local function calculatePolicyPremium(policyId, overiddenPerks)
-  local policyInfo = availablePolicies[policyId]
-  local plPolicyInfo = plPoliciesData[policyId]
-  local premium = 0
-  local renewal = 1
-
-  for perkName, perkData in pairs(policyInfo.perks) do
-    local perkValue = getPlPerkValue(policyId, perkName)
-
-    if overiddenPerks and overiddenPerks[perkName] ~= nil then
-      perkValue = overiddenPerks[perkName]
-    end
-    
-    if perkData.changeability.changeable then
-      local index = tableFindKey(perkData.changeability.changeParams.choices, perkValue)
-      if perkName == "renewal " then
-        renewal = perkData.changeability.changeParams.premiumInfluence[index]
-      else
-        premium = premium + perkData.changeability.changeParams.premiumInfluence[index]
-      end
-    else
-      premium = premium + perkData.changeability.premiumInfluence
-    end
-  end
-  premium = premium * renewal
-  return premium * plPolicyInfo.bonus
-end
-
 local function getPremiumWithPolicyScore(policyId)
-  return calculatePolicyPremium(policyId)
+  return calculatePremiumDetails(policyId).price
 end
 
 --make player pay for insurance renewal every X meters
@@ -1234,7 +1205,6 @@ M.getPlayerPolicyData = getPlayerPolicyData
 M.payBonusReset = payBonusReset
 
 M.calculatePremiumDetails = calculatePremiumDetails
-M.calculatePolicyPremium = calculatePolicyPremium
 M.startRepairInGarage = startRepairInGarage
 M.openMenu = openMenu
 M.sendUIData = sendUIData
