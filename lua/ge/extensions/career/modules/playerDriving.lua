@@ -259,7 +259,7 @@ local function onPursuitAction(vehId, data)
                 career_saveSystem.saveCurrent()
                 career_modules_payment.pay({
                     money = {
-                        amount = fine
+                        amount = fine, canBeNegative = true
                     }
                 }, {
                     label = "Fine for being arrested by the police"
@@ -272,7 +272,7 @@ local function onPursuitAction(vehId, data)
                 career_saveSystem.saveCurrent()
                 career_modules_payment.pay({
                     money = {
-                        amount = fine
+                        amount = fine, canBeNegative = true
                     }
                 }, {
                     label = "Fine for being arrested by the police (No License Plate)"

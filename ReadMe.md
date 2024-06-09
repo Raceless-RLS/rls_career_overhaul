@@ -29,7 +29,7 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 ### Insurance
 
 - **Higher Rates**: Insurance rates have increased.
-- **Deductible Changes**: Deductible is now a percentage of your insured vehicle value, ranging from 0.05% to 10%.
+- **Deductible Changes**: Deductible is now a percentage of your insured vehicle value, ranging from 0.5% to 10%.
 - **Repair Times**: Repair times range from 2 minutes to 30 minutes.
 - **Renewal Range**: Renewal range is a multiplier that is cheaper for longer periods.
 - **Cheapest Option**: Insurance will always be the cheapest option now.
@@ -63,6 +63,8 @@ Each policy has specific perks with customizable parameters:
 - **Reworked Dealerships**: Car dealerships and categories have been reworked.
 - **Increased Inventory**: More cars available at each dealership.
 - **Faster Refresh**: Cars refresh more quickly in dealerships.
+- **Wider Price Range**: Vehicles now have a wider range of prices, making it possible to get a good deal and sell a car for a profit.
+- **Vehicle Valuation and Depreciation**: Vehicles are valued and depreciate differently, making them not as cheap due to still being fully functional.
 
 #### Dealership Lore
 
@@ -75,6 +77,10 @@ Each policy has specific perks with customizable parameters:
 ### Test Drive
 
 - **Dynamic Repair Cost**: Test drive repair cost is now dynamic based on the vehicle.
+
+### Starting Capital
+
+- **Increased Starting Capital**: Starting capital has been increased from 13,500 to 25,500.
 
 ## Installation
 
