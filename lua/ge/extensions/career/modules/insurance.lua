@@ -11,9 +11,9 @@ local plInsuranceDataFileName = "insurance"
 local brokenPartsThreshold = 3
 local metersDrivenSinceLastPay = 0
 local bonusDecrease = 0.05
-local policyEditTime = 600 -- have to wait between perks editing
+local policyEditTime = 120 -- have to wait between perks editing
 local testDriveClaimPrice = {money = { amount = 500, canBeNegative = true}}
-local minimumPolicyScore = 1
+local minimumPolicyScore = 0.5
 
 --loaded data
 local availablePerks = {} -- to avoid copy pasting data in policies.json, this table comprises perks niceName and descriptions
@@ -65,7 +65,7 @@ local repairOptions = {
       priceOptions = {
         {
           {text = "", price = {money = { amount = M.getActualRepairPrice(invVehInfo), canBeNegative = true}}},
-          {text = "as extra fee", price = {money = { amount = M.getActualRepairPrice(invVehInfo) * .5, canBeNegative = true}}}
+          {text = "as extra fee", price = {money = { amount = M.getActualRepairPrice(invVehInfo) * 1.5, canBeNegative = true}}}
         },
         {
           {text = "", price = {bonusStars = { amount = 1, canBeNegative = false}}}
@@ -609,7 +609,7 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
     }
   end
   premiumDetails.perksPriceDetails["renewal"].price = (renewal - 1) * premiumDetails.price
-  premiumDetails.price = premiumDetails.price * renewal
+  premiumDetails.price = math.floor(premiumDetails.price * renewal * 100) / 100
   return premiumDetails
 end
 
