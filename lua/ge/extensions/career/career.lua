@@ -140,7 +140,7 @@ local function toggleCareerModules(active, alreadyInLevel)
     end
 
     for _, moduleName in ipairs(careerModules) do
-      if extensions[moduleName] and extensions[moduleName].onCareerActivated then
+      if extensions[moduleName].onCareerActivated then
         extensions[moduleName].onCareerActivated()
       end
     end
@@ -198,7 +198,7 @@ local function activateCareer(removeVehicles)
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
   local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
-  local levelToLoad = careerData.level or levelName
+  local levelToLoad = levelName
   boughtStarterVehicle = careerData.boughtStarterVehicle
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
 

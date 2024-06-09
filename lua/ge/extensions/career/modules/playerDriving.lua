@@ -95,6 +95,12 @@ local function setTrafficVars()
 end
 
 local function setupTraffic(forceSetup)
+    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+    local careerData = (savePath and jsonReadFile(savePath .. "/career/general.json")) or {}
+    if careerData.level ~= "rls_west_coast_usa" then
+        careerData.level = "rls_west_coast_usa"
+        jsonWriteFile(savePath .. "/career/general.json", careerData)
+    end
 
     if forceSetup or
         (gameplay_traffic.getState() == "off" and not gameplay_traffic.getTrafficList(true)[1] and
