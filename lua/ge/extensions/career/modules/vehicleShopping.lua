@@ -61,6 +61,17 @@ local function getShoppingData()
   return data
 end
 
+local function getRandomizedPrice(price)
+  local rand = math.random(0, 100) / 100
+  if rand < 10 then
+    return price * (0.65 + rand)
+  elseif rand < 90 then
+    return price * (0.75 + (rand-10)/4)
+  else
+    return price * (0.95 + (rand - 90)/100)
+  end
+end
+
 local function generateVehicleList()
   local eligibleVehicles = util_configListGenerator.getEligibleVehicles(not career_career.hasBoughtStarterVehicle())
   local sellers = {}
@@ -110,7 +121,7 @@ local function generateVehicleList()
         randomVehicleInfo.Mileage = starterVehicleMileages[randomVehicleInfo.model_key]
       end
 
-      randomVehicleInfo.Value = career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year})
+      randomVehicleInfo.Value = getRandomizedPrice(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}))
       randomVehicleInfo.shopId = tableSize(vehiclesInShop) + 1
 
       -- compute taxes and fees
