@@ -241,7 +241,7 @@ end
 
 local function triggerParcelGenerator(fac, generator, timeOffset)
   -- how many new items should be generated?
-  local typeAmount = math.random(1, 5)
+  local typeAmount = math.random(5, 8)
   -- proceed only if items are to be generated.
   if typeAmount > 0 then
     local remainingAttempts = 100
@@ -425,7 +425,7 @@ local function triggerVehicleOfferGenerator(fac, generator, timeOffset)
 
     local offerDuration = generator.interval
     if generator.offerDuration then
-      offerDuration = 300
+      offerDuration = 180
     end
 
     cargoId = cargoId + 1
