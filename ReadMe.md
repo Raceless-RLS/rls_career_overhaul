@@ -25,10 +25,9 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 ### Vehicle Deliveries
 
 - **Increased Deliveries**: More deliveries available with increased rewards.
-
 ### Insurance
 
-- **Higher Rates**: Insurance rates have increased.
+- **Dynamic Rates**: Insurance rates are now dynamic and based on the amount the insurance has to pay.
 - **Deductible Changes**: Deductible is now a percentage of your insured vehicle value, ranging from 0.5% to 10%.
 - **Repair Times**: Repair times range from 2 minutes to 30 minutes.
 - **Renewal Range**: Renewal range is a multiplier that is cheaper for longer periods.
@@ -53,6 +52,18 @@ Each policy has specific perks with customizable parameters:
 - **Roadside Assistance**:
   - Choices: true, false
   - Premium Influence: 110, 0
+
+#### Policy Score
+
+- **Dynamic Calculation**: The policy score is now based on how much the insurance has to pay divided by an interval determined by your repair time selection.
+- **Impact of Deductible**: If you have a lower deductible percentage, insurance will have to cover more, making your score go up faster.
+- **Impact of Repair Time**: Faster repair times will also make your insurance score go up.
+- **Score Multiplier**: The rate increase is multiplied by your score, meaning higher insurance scores result in more significant increases.
+- **Policy Score Deduction**: The deduction is now 10% of the score, making insurance go down faster.
+- **Renewal Term**: The rate at which the policy score deduction occurs is based on the renewal term. Every term without an accident will reduce your policy score.
+- **Minimum Policy Score**: The minimum policy score is now 0.5, allowing for cheaper insurance if you never use it or get caught by police.
+
+This new system encourages safer driving and careful management of insurance coverage to maintain lower costs.
 
 ### Garage Space
 

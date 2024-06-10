@@ -10,7 +10,7 @@ local plInsuranceDataFileName = "insurance"
 
 local brokenPartsThreshold = 3
 local metersDrivenSinceLastPay = 0
-local bonusDecrease = 0.05
+local bonusDecrease = 0.10
 local policyEditTime = 120 -- have to wait between perks editing
 local testDriveClaimPrice = {money = { amount = 500, canBeNegative = true}}
 local minimumPolicyScore = 0.5
@@ -91,8 +91,9 @@ local gestures = {
 
     local everyGestures = plHistory.policyHistory[plPolicyData.id].policyScoreDecreases
     local lastGesture = everyGestures[#everyGestures]
-    if plPolicyData.totalMetersDriven - math.max(data.distRef, lastGesture and lastGesture.happenedAt or 0) > availablePolicies[plPolicyData.id].gestures.policyScoreDecrease.distance then
-      plPolicyData.bonus = plPolicyData.bonus - bonusDecrease
+    if plPolicyData.totalMetersDriven - math.max(data.distRef, lastGesture and lastGesture.happenedAt or 0) > M.getPlPerkValue(plPolicyData.id, "renewal") then
+      plPolicyData.bonus = math.floor(plPolicyData.bonus * (1 - bonusDecrease) * 100) / 100
+      if plPolicyData.bonus < minimumPolicyScore then plPolicyData.bonus = minimumPolicyScore end
 
       table.insert(plHistory.policyHistory[plPolicyData.id].policyScoreDecreases, {
         happenedAt = plPolicyData.totalMetersDriven,
@@ -291,7 +292,7 @@ local function getRepairDetailsWithoutPolicy(invVehInfo)
     if part then
       price = part.value
     end
-    details.price = details.price + price * 0.6-- lower the price a bit..
+    details.price = math.floor((details.price + price * 0.6) * 100) / 100 -- lower the price a bit..
     details.repairTime = details.repairTime + repairTimePerPart
   end
 
@@ -394,7 +395,10 @@ local function makeTestDriveDamageClaim(value)
   career_saveSystem.saveCurrent()
 end
 
-local function makeRepairClaim(invVehId, price)
+local function makeRepairClaim(invVehId, price, rateIncrease)
+  if rateIncrease == nil then
+    rateIncrease = 1 + bonusDecrease
+  end
   local policyId = insuredInvVehs[tostring(invVehId)]
   local hasUsedFreeRepair = false
 
@@ -402,7 +406,9 @@ local function makeRepairClaim(invVehId, price)
     plPoliciesData[policyId].hasFreeRepair = false
     hasUsedFreeRepair = true
   else
-    plPoliciesData[policyId].bonus = plPoliciesData[policyId].bonus + bonusDecrease
+    plPoliciesData[policyId].bonus = math.floor(plPoliciesData[policyId].bonus * rateIncrease * 100) / 100
+    local label = string.format("Your Insurance Increased by " .. rateIncrease .. " to " .. plPoliciesData[policyId].bonus)
+    ui_message(label)
   end
 
   local claim = {
@@ -511,11 +517,13 @@ local function startRepair(inventoryId, repairOptionData, callback)
   end
 
   if repairOption.isPolicyRepair then -- the player can repair on his own without insurance
-    makeRepairClaim(inventoryId, price)
+    local covering =  math.max(repairOptionData.fullCost - price.money.amount, 0)
+    local rateIncrease = 1 + math.floor((covering / ((700 - M.calculatePremiumDetails(insuredInvVehs[tostring(inventoryId)]).perksPriceDetails['repairTime'].price) * 100)) * 100) / 100
+    makeRepairClaim(inventoryId, price, rateIncrease)
   end
 
   -- the actual repair
-  local paintRepair = repairOption.paintRepair or getPlPerkValue(insuredInvVehs[tostring(inventoryId)], "paintRepair") == true
+  local paintRepair = repairOption.isPolicyRepair and (repairOption.paintRepair or getPlPerkValue(insuredInvVehs[tostring(inventoryId)], "paintRepair") == true)
   local data = {
     partConditions = vehInfo.partConditions,
     paintRepair = paintRepair
@@ -532,7 +540,7 @@ end
 
 local function startRepairInGarage(vehInvInfo, repairOptionData)
   local repairOption = repairOptions[repairOptionData.name](vehInvInfo)
-
+  repairOptionData.fullCost = M.getRepairDetailsWithoutPolicy(vehInvInfo).price
   local vehId = career_modules_inventory.getVehicleIdFromInventoryId(vehInvInfo.id)
   return startRepair(vehInvInfo.id, repairOptionData, (vehId and repairOption.repairTime<= 0) and
     function(vehInfo)
@@ -644,7 +652,7 @@ local function getActualRepairPrice(vehInvInfo)
   -- This function returns the actual price of the repair, taking into account the deductible and the price of the repair without the policy  
   -- You will pay the lower value as a deductible is the max you will pay not the lowest
   local price =  career_modules_valueCalculator.getInventoryVehicleValue(vehInvInfo.id) * (getPlPerkValue(insuredInvVehs[tostring(vehInvInfo.id)], "deductible") / 100)
-  return math.min(price, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 0.8)
+  return math.floor(math.min(price, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 0.8) * 100) / 100
 end
 
 local originComputerId
