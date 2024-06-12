@@ -16,6 +16,10 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 ### Economy
 
 - **Increased Ticket Prices**: Higher prices for speed camera and red-light camera tickets.
+- **Adjusted Speed Trap Pricing**: Speed trap pricing has been adjusted.
+- **Speed Traps**: Speed traps are now connected to insurance.
+- **Adjusted Redlight Camera Pricing**: Redlight camera pricing has been adjusted.
+- **Redlight Camera**: Redlight cameras are now connected to insurance.
 
 ### Parcel Deliveries
 
@@ -25,6 +29,7 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 ### Vehicle Deliveries
 
 - **Increased Deliveries**: More deliveries available with increased rewards.
+
 ### Insurance
 
 - **Dynamic Rates**: Insurance rates are now dynamic and based on the amount the insurance has to pay.
@@ -118,6 +123,6 @@ The RLS Career Overhaul mod provides a comprehensive enhancement to the career m
 
 ### Notes
 
-For installing the mod directly from GitHub, compress the mod’s contents into a single ZIP file (excluding the `.gitignore` and `README.md` files) and place the compressed file into the mods folder of BeamNG.drive. This ensures the mod functions correctly and appears in the game’s Mod Manager.
+For installing the mod directly from GitHub, compress the mod's contents into a single ZIP file (excluding the `.gitignore` and `README.md` files) and place the compressed file into the mods folder of BeamNG.drive. This ensures the mod functions correctly and appears in the game's Mod Manager.
 
 For more detailed instructions, you can refer to the official [BeamNG Documentation](https://documentation.beamng.com/tutorials/mods/installing-mods/) and [Steam Community Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2918556246) on how to manually install mods.

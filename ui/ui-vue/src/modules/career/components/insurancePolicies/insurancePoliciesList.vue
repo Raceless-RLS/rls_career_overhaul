@@ -64,7 +64,7 @@
                   Premium :
                   <BngUnit
                     :beambucks="
-                      (currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && tempPolicyPremiumDetails.price) || policy.premium
+                      (currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && (tempPolicyPremiumDetails.price * policy.plData.bonus)) || (policy.premium * policy.plData.bonus)
                     " />
                 </div>
               </div>
@@ -233,6 +233,10 @@ const calculateTempPremium = () => {
   lua.career_modules_insurance
     .calculatePremiumDetails(currEditedPolicyId.value, tempChangedPolicyPerks.value)
     .then(value => (tempPolicyPremiumDetails.value = value))
+}
+
+const calculatePremiumWithPolicyScore = () => {
+  calculateTempPremium.value
 }
 
 const purchasePolicy = policyId => {

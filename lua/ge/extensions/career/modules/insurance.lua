@@ -395,6 +395,22 @@ local function makeTestDriveDamageClaim(value)
   career_saveSystem.saveCurrent()
 end
 
+local function getPolicyIdFromInvVehId(invVehId)
+  return insuredInvVehs[tostring(invVehId)]
+end
+
+local function getPolicyScore(invVehId)
+  local policyId = getPolicyIdFromInvVehId(invVehId)
+  return plPoliciesData[policyId].bonus
+end
+
+local function changePolicyScore(invVehId, rate, operation)
+  if not operation then operation = function(bonus, rate) return bonus * rate end end
+  local policyId = getPolicyIdFromInvVehId(invVehId)
+  plPoliciesData[policyId].bonus = operation(plPoliciesData[policyId].bonus, rate)
+  return plPoliciesData[policyId].bonus
+end
+
 local function makeRepairClaim(invVehId, price, rateIncrease)
   if rateIncrease == nil then
     rateIncrease = 1 + bonusDecrease
@@ -500,6 +516,11 @@ local function mergeRepairOptionPrices(price)
   return merged, canBeNegative
 end
 
+local function getRateIncrease(vehId, fullcost, paid)
+  local covering =  math.max(fullcost - paid, 0)
+  return 1 + math.floor((covering / ((700 - M.calculatePremiumDetails(insuredInvVehs[tostring(vehId)]).perksPriceDetails['repairTime'].price) * 100)) * 100) / 100
+end
+
 local function startRepair(inventoryId, repairOptionData, callback)
   inventoryId = inventoryId or career_modules_inventory.getCurrentVehicle()
   repairOptionData = (repairOptionData and type(repairOptionData) == "table") and repairOptionData or {}
@@ -517,9 +538,7 @@ local function startRepair(inventoryId, repairOptionData, callback)
   end
 
   if repairOption.isPolicyRepair then -- the player can repair on his own without insurance
-    local covering =  math.max(repairOptionData.fullCost - price.money.amount, 0)
-    local rateIncrease = 1 + math.floor((covering / ((700 - M.calculatePremiumDetails(insuredInvVehs[tostring(inventoryId)]).perksPriceDetails['repairTime'].price) * 100)) * 100) / 100
-    makeRepairClaim(inventoryId, price, rateIncrease)
+    makeRepairClaim(inventoryId, price, getRateIncrease(inventoryId, repairOptionData.fullCost, price.money.amount))
   end
 
   -- the actual repair
@@ -622,7 +641,7 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
 end
 
 local function getPremiumWithPolicyScore(policyId)
-  return calculatePremiumDetails(policyId).price
+  return calculatePremiumDetails(policyId).price * plPoliciesData[policyId].bonus
 end
 
 --make player pay for insurance renewal every X meters
@@ -652,7 +671,7 @@ local function getActualRepairPrice(vehInvInfo)
   -- This function returns the actual price of the repair, taking into account the deductible and the price of the repair without the policy  
   -- You will pay the lower value as a deductible is the max you will pay not the lowest
   local price =  career_modules_valueCalculator.getInventoryVehicleValue(vehInvInfo.id) * (getPlPerkValue(insuredInvVehs[tostring(vehInvInfo.id)], "deductible") / 100)
-  return math.floor(math.min(price, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 0.8) * 100) / 100
+  return math.floor(math.min(price * 100, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 80)) / 100
 end
 
 local originComputerId
@@ -686,9 +705,18 @@ local function getRepairData()
       repairOptionsSanitized[repairOptionName] = repairOptionSanitized
     end
   end
+  local fullcost = 0
+  local deductible = 0 
+
+  if repairOptionsSanitized["repairNoInsurance"].priceOptions[1].prices[1].price.money.amount then
+    fullcost = repairOptionsSanitized["repairNoInsurance"].priceOptions[1].prices[1].price.money.amount
+  end
+  if repairOptionsSanitized["normalRepair"].priceOptions[1].prices[1].price.money.amount then
+    deductible = repairOptionsSanitized["normalRepair"].priceOptions[1].prices[1].price.money.amount
+  end
 
   data.policyInfo = policyInfo
-  data.policyScoreInfluence = bonusDecrease
+  data.policyScoreInfluence = math.floor(((getRateIncrease(vehicleToRepairData.id, fullcost, deductible) * plPoliciesData[policyId].bonus) - plPoliciesData[policyId].bonus) * 100) / 100
   data.repairOptions = repairOptionsSanitized
   data.baseDeductible = {money = {amount = getPlPerkValue(policyId, "deductible"), canBeNegative = true}}
   data.vehicle = vehicleToRepairData
@@ -1218,6 +1246,11 @@ M.openMenu = openMenu
 M.sendUIData = sendUIData
 M.closeMenu = closeMenu
 M.changePolicyPerks = changePolicyPerks
+
+-- For External Use
+M.changePolicyScore = changePolicyScore
+M.getPolicyScore = getPolicyScore
+M.getPolicyIdFromInvVehId = getPolicyIdFromInvVehId
 
 -- hooks
 M.onEnterVehicleFinished = onEnterVehicleFinished
