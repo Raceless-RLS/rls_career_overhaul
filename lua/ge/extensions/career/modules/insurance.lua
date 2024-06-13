@@ -1041,8 +1041,12 @@ local function onPursuitAction(vehId, data)
 
             local insuranceRate = 0
 
-            for _, offense in pairs(data.offenses or {}) do
-                insuranceRate = 1 + (insuranceRate + (offense.score / 20000))
+            local score = data.score
+
+            if score <= 600 then
+                insuranceRate = (score/(500*sqrt(score)))
+            else
+                insuranceRate = ((math.pow(score, 2))/(100*score*math.sqrt(score))) - 0.2
             end
 
             local vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
