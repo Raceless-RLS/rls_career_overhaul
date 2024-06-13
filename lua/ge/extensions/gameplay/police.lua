@@ -196,6 +196,7 @@ local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1
       suspectActive = false
     end
     pursuit.mode = 0
+    pursuit.policeAttack = false
     targetVeh.role:resetAction()
     targetVeh:resetAll()
 

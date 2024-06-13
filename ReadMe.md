@@ -12,6 +12,7 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 - **Play as Police**: Drive a police vehicle (any vehicle with a police siren) to play as police. If suspects are not spawning, exit and re-enter your police vehicle.
 - **Earn Money**: Earn money from escaping as a suspect or catching suspects as police.
 - **Troubleshooting**: If police are not spawning, go into free roam, spawn traffic with police, and return to career mode.
+- **Message for Police Role**: Added a message stating if you are a cop.
 
 ### Economy
 
@@ -37,6 +38,8 @@ The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including 
 - **Repair Times**: Repair times range from 2 minutes to 30 minutes.
 - **Renewal Range**: Renewal range is a multiplier that is cheaper for longer periods.
 - **Cheapest Option**: Insurance will always be the cheapest option now.
+- **Detailed Insurance Logs**: Added detailed insurance logs.
+- **Test Drives Affect Insurance**: Test drives now affect your daily driver insurance.
 
 #### Insurance Policies
 

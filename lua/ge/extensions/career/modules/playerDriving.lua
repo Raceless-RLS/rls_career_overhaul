@@ -6,8 +6,7 @@ local M = {}
 M.dependencies = {'career_career'}
 
 local playerData = {
-    trafficActive = 0, -- traffic data, parking data, etc.
-    pursuitStartTime = nil -- track the start time of the pursuit
+    trafficActive = 0 -- traffic data, parking data, etc.
 }
 
 local _devTraffic = {
@@ -95,19 +94,12 @@ local function setTrafficVars()
 end
 
 local function setupTraffic(forceSetup)
-    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-    local careerData = (savePath and jsonReadFile(savePath .. "/career/general.json")) or {}
-    if careerData.level ~= "rls_west_coast_usa" then
-        careerData.level = "rls_west_coast_usa"
-        jsonWriteFile(savePath .. "/career/general.json", careerData)
-    end
-
     if forceSetup or
         (gameplay_traffic.getState() == "off" and not gameplay_traffic.getTrafficList(true)[1] and
             playerData.trafficActive == 0) then
         log("I", "career", "Now spawning traffic for career mode")
         -- TODO: revise this
-        local amount = clamp(gameplay_traffic.getIdealSpawnAmount(), 4, 10) -- returns amount from user settings; at least 3 vehicles should get spawned
+        local amount = gameplay_traffic.getIdealSpawnAmount(-1, true) -- returns amount from user settings; at least 3 vehicles should get spawned
         if not getAllVehiclesByType()[1] then -- if player vehicle does not exist yet
             amount = amount - 1
         end
@@ -175,14 +167,10 @@ end
 local function onPursuitAction(vehId, data)
     local playerIsCop = isPlayerInPoliceVehicle()
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-    if not inventoryId then
-        return
-    end
 
     if data.type == "start" then -- pursuit started
-        playerData.pursuitStartTime = os.time()
         gameplay_parking.disableTracking(vehId)
-        if hasLicensePlate(inventoryId) then
+        if inventoryId and hasLicensePlate(inventoryId) then
             gameplay_police.setPursuitVars({
                 evadeLimit = 55
             })
@@ -198,7 +186,6 @@ local function onPursuitAction(vehId, data)
             gameplay_parking.enableTracking(vehId)
         end
         -- core_recoveryPrompt.setDefaultsForCareer()
-        playerData.pursuitStartTime = nil
         log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
     elseif data.type == "evade" then
         if not gameplay_walk.isWalking() then
@@ -217,12 +204,7 @@ local function onPursuitAction(vehId, data)
                 ui_message("The suspect got away, Here is $1250 for repairs", 5)
             else
                 if playerIsCop == false then
-                    local pursuitEndTime = os.time()
-                    local pursuitDuration = pursuitEndTime - playerData.pursuitStartTime
-                    local traffic = gameplay_traffic.getTrafficData()
-                    local targetVeh = traffic[vehId]
-
-                    local reward = pursuitDuration * (12 * data.uniqueOffensesCount)
+                    local reward = data.timers["main"] * (2.5 * data.score)
                     career_modules_payment.pay({
                         money = {
                             amount = -reward
@@ -237,14 +219,10 @@ local function onPursuitAction(vehId, data)
             -- core_recoveryPrompt.setDefaultsForCareer()
             log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
         end
-        playerData.pursuitStartTime = nil
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
-            local pursuitEndTime = os.time()
-            local pursuitDuration = pursuitEndTime - playerData.pursuitStartTime
-            local bonus = pursuitDuration * (18 * data.uniqueOffensesCount)
-            -- local bonus = data.mode * data.uniqueOffensesCount + pursuitDuration * 50
-            career_saveSystem.saveCurrent()
+            local bonus = data.timers["main"] * (18 * data.uniqueOffensesCount)
+            
             career_modules_payment.pay({
                 money = {
                     amount = -bonus
@@ -253,41 +231,16 @@ local function onPursuitAction(vehId, data)
                 label = "Arrest Bonus"
             })
             ui_message("Arrest Bonus: $" .. bonus, 5)
-        else
-            if not inventoryId or hasLicensePlate(inventoryId) then
-                local fine = data.mode * data.uniqueOffensesCount * 1000 -- fine value is WIP
-                career_saveSystem.saveCurrent()
-                career_modules_payment.pay({
-                    money = {
-                        amount = fine, canBeNegative = true
-                    }
-                }, {
-                    label = "Fine for being arrested by the police"
-                })
-                career_saveSystem.saveCurrent()
-                ui_message(translateLanguage("ui.traffic.policeFine", "You got fined by the police: $") .. fine, 5,
-                    "careerPursuit")
-            else
-                local fine = data.mode * data.uniqueOffensesCount * 2500 -- fine value is WIP
-                career_saveSystem.saveCurrent()
-                career_modules_payment.pay({
-                    money = {
-                        amount = fine, canBeNegative = true
-                    }
-                }, {
-                    label = "Fine for being arrested by the police (No License Plate)"
-                })
-                career_saveSystem.saveCurrent()
-                ui_message(translateLanguage("ui.traffic.policeFine",
-                    "You got fined by the police extra for missing licenseplate: $") .. fine, 5, "careerPursuit")
-            end
-            playerData.pursuitStartTime = nil
         end
+        career_saveSystem.saveCurrent()
     end
 end
 
 local function onVehicleSwitched(oldId, newId)
     local playerIsCop = isPlayerInPoliceVehicle()
+    if playerIsCop then
+        ui_message("You are now a cop", 5)
+    end
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
         setPlayerData(newId, oldId)
         setTrafficVars()

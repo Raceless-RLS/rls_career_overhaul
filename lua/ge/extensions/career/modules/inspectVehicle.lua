@@ -89,7 +89,7 @@ local function checkDamage()
     function(needsRepair)
       -- only make a claim if the vehicle is damaged
       if needsRepair then
-        career_modules_insurance.makeTestDriveDamageClaim(testDriveVehInfo.value)
+        career_modules_insurance.makeTestDriveDamageClaim(testDriveVehInfo)
       end
       career_modules_vehicleDeletionService.flagForDeletion(testDriveVehInfo.vehId)
     end

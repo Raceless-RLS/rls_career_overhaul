@@ -116,11 +116,18 @@ local function onSpeedTrapTriggered(speedTrapData, playerSpeed, overSpeed)
                 tags = {"fine"}
             })
             Engine.Audio.playOnce('AudioGui', 'event:>UI>Career>Speedcam_Snapshot')
-            ui_message(string.format(
-                "Traffic Violation: \n - %q | Fine %d$\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})",
-                core_vehicles.getVehicleLicenseText(veh), fine.money.amount, playerSpeed, speedTrapData.speedLimit), 10,
-                "speedTrap")
+            local label = string.format(
+                "Traffic Violation: \n Fine %d$\n - %0.2f mph in a %0.2f mph zone", fine.money.amount, playerSpeed* 2.23694, speedTrapData.speedLimit* 2.23694)
+            ui_message(label, 10, "speedTrap")
             informInsurance(inventoryId, speedTrapData.speedLimit, playerSpeed)
+            local effectText = {{
+                label = "Money",
+                value = -fine.money.amount
+            }, {
+                label = "New policy score",
+                value = career_modules_insurance.getPolicyScore(inventoryId)
+            }}
+            career_modules_insurance.addTicketEvent(label, effectText, inventoryId)
         else
             ui_message(string.format(
                 "Traffic Violation: \n - No license plate detected | Fine could not be issued\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})",
@@ -190,12 +197,21 @@ local function onRedLightCamTriggered(speedTrapData, playerSpeed)
                 tags = {"fine"}
             })
             Engine.Audio.playOnce('AudioGui', 'event:>UI>Career>Speedcam_Snapshot')
-            ui_message(string.format("Traffic Violation (Failure to stop at Red Light): \n - %q | Fine %d$",
-                core_vehicles.getVehicleLicenseText(veh), fine.money.amount), 10, "speedTrap")
+            local label = string.format("Traffic Violation (Failure to stop at Red Light): \n - %q | Fine %d$",
+            core_vehicles.getVehicleLicenseText(veh), fine.money.amount)
+            ui_message(label, 10, "speedTrap")
             local bonus = career_modules_insurance.changePolicyScore(inventoryId, 0.10, function(bonus, rate)
                 return bonus + rate
             end)
-            local label = string.format("Your Insurance Increased by %f to %f", 0.10, bonus)
+            local effectText = {{
+                label = "Money",
+                value = -amount
+            }, {
+                label = "New policy score",
+                value = career_modules_insurance.getPolicyScore(inventoryId)
+            }}
+            career_modules_insurance.addTicketEvent(label, effectText, inventoryId)
+            label = string.format("Your Insurance Increased by %f to %f", 0.10, bonus)
             ui_message(label)
         else
             ui_message(string.format(
