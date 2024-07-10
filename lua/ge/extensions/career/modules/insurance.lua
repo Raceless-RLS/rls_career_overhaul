@@ -92,7 +92,7 @@ local repairOptions = {
                 text = "as extra fee",
                 price = {
                     money = {
-                        amount = M.getActualRepairPrice(invVehInfo) * 1.5,
+                        amount = M.getActualRepairPrice(invVehInfo) * 2.5,
                         canBeNegative = true
                     }
                 }
@@ -1044,7 +1044,7 @@ local function onPursuitAction(vehId, data)
             local score = data.score
 
             if score <= 600 then
-                insuranceRate = (score/(500*sqrt(score)))
+                insuranceRate = score/(500*math.sqrt(score))
             else
                 insuranceRate = ((math.pow(score, 2))/(100*score*math.sqrt(score))) - 0.2
             end
