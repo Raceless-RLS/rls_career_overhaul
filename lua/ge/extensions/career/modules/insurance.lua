@@ -1044,9 +1044,11 @@ local function onPursuitAction(vehId, data)
             local score = data.score
 
             if score <= 600 then
-                insuranceRate = score/(500*math.sqrt(score))
+                -- For scores up to 600, gradually increase from 1.02 to 1.1
+                insuranceRate = 1.02 + (0.08 * (score / 600))
             else
-                insuranceRate = ((math.pow(score, 2))/(100*score*math.sqrt(score))) - 0.2
+                -- For scores above 600, increase more rapidly and reach 2.0 at 8000
+                insuranceRate = 1.1 + (0.9 * (1 - math.exp(-(score - 600) / 2000)))
             end
 
             local vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
@@ -1091,11 +1093,11 @@ local function onPursuitAction(vehId, data)
             }, {
                 label = eventDescription
             })
-            ui_message(eventDescription)
-            local label = string.format("You got fined: %.2f", fine)
-            ui_message(label)
-            label = string.format("Your Insurance is now %.2f", plPoliciesData[policyId].bonus)
-            ui_message(label)
+            local combinedMessage = string.format(
+                "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f",
+                eventDescription, fine, plPoliciesData[policyId].bonus
+            )
+            ui_message(combinedMessage)
         end
     end
 end
