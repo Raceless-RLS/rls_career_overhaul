@@ -939,6 +939,7 @@ local function sellVehicle(inventoryId)
   if not vehicle then return end
 
   local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+  value = math.max(value - career_modules_insurance.getRepairDetailsWithoutPolicy(vehicle).price, value * 0.2)
   career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")})
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
