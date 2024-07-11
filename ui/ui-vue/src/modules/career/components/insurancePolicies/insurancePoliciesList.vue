@@ -2,11 +2,7 @@
   I really don't know how this all works anymore
  -->
 
-<<<<<<< Updated upstream
 <template>
-=======
- <template>
->>>>>>> Stashed changes
   <div style="display: flex; height: 84%">
     <div>
       <h2>Insurance history</h2>
@@ -60,11 +56,7 @@
                     </p>
                     <p v-else>
                       {{ perk.niceName }} : 
-<<<<<<< Updated upstream
                       {{ perkName === 'deductible' ? (getPerkDataByName(perkName, policy.id, true).value * 100) + '%' : getPerkDataByName(perkName, policy.id, true).value }}
-=======
-                      {{ perkName === 'deductible' ? (getPerkDataByName(perkName, policy.id, true).value) + '%' : getPerkDataByName(perkName, policy.id, true).value }}
->>>>>>> Stashed changes
                     </p>
                   </template>
                 </div>
