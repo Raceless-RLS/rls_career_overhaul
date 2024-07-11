@@ -149,6 +149,10 @@ end
 
 local function leaveSaleCallback()
   if not testDriveVehInfo then return end
+<<<<<<< Updated upstream
+=======
+  if not leaveSaleTether then return end
+>>>>>>> Stashed changes
 
   core_jobsystem.create(function(job)
     setInspectScreen(false)
