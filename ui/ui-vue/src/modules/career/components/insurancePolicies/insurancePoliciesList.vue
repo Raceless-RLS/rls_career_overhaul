@@ -2,7 +2,7 @@
   I really don't know how this all works anymore
  -->
 
-<template>
+ <template>
   <div style="display: flex; height: 84%">
     <div>
       <h2>Insurance history</h2>
@@ -56,7 +56,7 @@
                     </p>
                     <p v-else>
                       {{ perk.niceName }} : 
-                      {{ perkName === 'deductible' ? (getPerkDataByName(perkName, policy.id, true).value * 100) + '%' : getPerkDataByName(perkName, policy.id, true).value }}
+                      {{ perkName === 'deductible' ? (getPerkDataByName(perkName, policy.id, true).value) + '%' : getPerkDataByName(perkName, policy.id, true).value }}
                     </p>
                   </template>
                 </div>

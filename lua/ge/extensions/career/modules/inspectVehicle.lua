@@ -149,6 +149,7 @@ end
 
 local function leaveSaleCallback()
   if not testDriveVehInfo then return end
+  if not leaveSaleTether then return end
 
   core_jobsystem.create(function(job)
     setInspectScreen(false)

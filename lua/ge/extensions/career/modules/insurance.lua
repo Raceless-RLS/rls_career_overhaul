@@ -479,8 +479,8 @@ local function makeTestDriveDamageClaim(vehInfo)
     end
     plPoliciesData[policyId].bonus = math.floor(plPoliciesData[policyId].bonus * rateIncrease * 100) / 100
 
+    label = label .. string.format("\nYour insurance went up to :) %0.2f", plPoliciesData[policyId].bonus)
     ui_message(label, 5)
-    label = string.format("Your insurance went up to :) %0.2f", plPoliciesData[policyId].bonus)
 
     local claim = {
         time = os.time(),
@@ -510,7 +510,10 @@ local function changePolicyScore(invVehId, rate, operation)
             return bonus * rate
         end
     end
-    local policyId = getPolicyIdFromInvVehId(invVehId)
+    local policyId = 1
+    if invVehId then
+        policyId = getPolicyIdFromInvVehId(invVehId)
+    end
     plPoliciesData[policyId].bonus = math.max(operation(math.floor(plPoliciesData[policyId].bonus * 100) / 100, rate),
         minimumPolicyScore)
     return plPoliciesData[policyId].bonus
@@ -648,6 +651,16 @@ local function startRepair(inventoryId, repairOptionData, callback)
     local repairOption = repairOptions[repairOptionData.name](vehInfo)
     local price = mergeRepairOptionPrices(repairOption.priceOptions and
                                               repairOption.priceOptions[repairOptionData.priceOption or 1] or nil)
+
+    -- Check if it's not an instant free repair and if the player can afford it
+    if repairOptionData.name ~= "instantFreeRepair" then
+        local playerMoney = career_modules_playerAttributes.getAttributeValue("money")
+        if not price or (price.money and playerMoney < price.money.amount) then
+            -- Player can't afford the repair
+            ui_message("Insufficient funds for repair", 3)
+            return
+        end
+    end
 
     if price then
         career_modules_payment.pay(price, {
@@ -1050,9 +1063,11 @@ local function onPursuitAction(vehId, data)
                 -- For scores above 600, increase more rapidly and reach 2.0 at 8000
                 insuranceRate = 1.1 + (0.9 * (1 - math.exp(-(score - 600) / 2000)))
             end
-
             local vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-            local policyId = insuredInvVehs[tostring(vehId)]
+            local policyId = nil 
+            if insuredInvVehs[tostring(vehId)] then
+                policyId = insuredInvVehs[tostring(vehId)]
+            end
             M.changePolicyScore(policyId, insuranceRate)
 
             if not hasLicensePlate(vehId) then

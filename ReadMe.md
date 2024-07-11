@@ -52,7 +52,7 @@ Each policy has specific perks with customizable parameters:
   - Choices: 120, 300, 600, 1800 seconds
   - Premium Influence: 300, 100, 25, 10
 - **Deductible**:
-  - Choices: 1.5%, 2.5%, 5%, 10%
+  - Choices: 5%, 10%, 15%, 25%
   - Premium Influence: 300, 200, 125, 50
 - **Renewal**:
   - Choices: 25000, 50000, 100000, 150000 km
