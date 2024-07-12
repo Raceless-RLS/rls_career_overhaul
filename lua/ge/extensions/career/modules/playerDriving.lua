@@ -191,17 +191,17 @@ local function onPursuitAction(vehId, data)
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
             if playerIsCop == true then
-                local pity = -1250
+                local pity = -750
                 career_saveSystem.saveCurrent()
                 career_modules_payment.pay({
                     money = {
                         amount = pity
                     }
                 }, {
-                    label = "The suspect got away, Here is $1250 for repairs"
+                    label = "The suspect got away, Here is " .. pity .. " for repairs"
                 })
                 career_saveSystem.saveCurrent()
-                ui_message("The suspect got away, Here is $1250 for repairs", 5)
+                ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5)
             else
                 if playerIsCop == false then
                     local reward = math.floor(150 * data.score) / 100

@@ -1050,7 +1050,7 @@ end
 local function onPursuitAction(vehId, data)
     if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
         if data.type == "arrest" then
-            local fine = math.floor(data.score * 100) / 100
+            local fine = math.floor(data.score * 130) / 100
 
             local insuranceRate = 0
 
@@ -1063,13 +1063,16 @@ local function onPursuitAction(vehId, data)
                 -- For scores above 600, increase more rapidly and reach 2.0 at 8000
                 insuranceRate = 1.1 + (0.9 * (1 - math.exp(-(score - 600) / 2000)))
             end
+            insuranceRate = math.floor(insuranceRate * 100) / 100
             local vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
             local policyId = nil 
             if insuredInvVehs[tostring(vehId)] then
                 policyId = insuredInvVehs[tostring(vehId)]
             end
             M.changePolicyScore(policyId, insuranceRate)
-
+            if not policyId then
+                policyId = 1
+            end
             if not hasLicensePlate(vehId) then
                 fine = fine * 2.5
             end

@@ -11,7 +11,7 @@ local routePlanner = require('gameplay/route/route')()
 local imgui = ui_imgui
 
 local vehicleDeliveryDelay = 60
-local shopGenerationDelay = 1 * 60
+local shopGenerationDelay = 5 * 60
 local salesTax = 0.07
 
 local starterVehicleMileages = {bx = 165746239, etki = 285817342, covet = 80174611}
