@@ -500,7 +500,10 @@ local function getPolicyIdFromInvVehId(invVehId)
 end
 
 local function getPolicyScore(invVehId)
-    local policyId = getPolicyIdFromInvVehId(invVehId)
+    local policyId = 1
+    if invVehId then
+        policyId = getPolicyIdFromInvVehId(invVehId)
+    end 
     return plPoliciesData[policyId].bonus
 end
 
@@ -1121,7 +1124,10 @@ local function onPursuitAction(vehId, data)
 end
 
 local function addTicketEvent(description, effectText, invVehId)
-    local policyId = insuredInvVehs[tostring(invVehId)]
+    local policyId = 1
+    if invVehId then
+        policyId = insuredInvVehs[tostring(invVehId)]
+    end
     table.insert(plHistory.generalHistory.ticketEvents, {
         type = "other",
         time = os.time(),

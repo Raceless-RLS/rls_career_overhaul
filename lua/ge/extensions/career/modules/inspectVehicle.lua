@@ -9,6 +9,7 @@ M.dependencies = {}
 local testDriveVehInfo
 local isCloseToSpawnedVehicle
 local didTestDrive
+local didLeaveSale
 local freezeVehicleCounter
 local hasLeftTheSale = true
 local inspectScreenActive = false
@@ -149,20 +150,22 @@ end
 
 local function leaveSaleCallback()
   if not testDriveVehInfo then return end
-  if not leaveSaleTether then return end
 
   core_jobsystem.create(function(job)
-    setInspectScreen(false)
-    job.sleep(0.1)
-    -- always inform the player that they left the sale
-    if career_modules_testDrive.isActive() then
-      -- end testdrive, no TP, just stop
-      career_modules_testDrive.abandonTestDrive()
-    else
-      ui_message("You have left the sale.")
+    if not didLeaveSale then
+      setInspectScreen(false)
+      job.sleep(0.1)
+      didLeaveSale = true
+      -- always inform the player that they left the sale
+      if career_modules_testDrive.isActive() then
+        -- end testdrive, no TP, just stop
+        career_modules_testDrive.abandonTestDrive()
+      else
+        ui_message("You have left the sale.")
+      end
+      resetSomeData()
+      checkDamage()
     end
-    resetSomeData()
-    checkDamage()
   end,1)
   career_modules_tether.removeTether(leaveSaleTether)
   leaveSaleTether = nil

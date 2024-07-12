@@ -250,7 +250,7 @@ local function triggerParcelGenerator(fac, generator, timeOffset)
       local template = getDeliveryItemTemplateFor(generator)
 
       if not template then
-        log("E","","No Template! " .. dumps(generator.logisticTypesLookup))
+        -- log("E","","No Template! " .. dumps(generator.logisticTypesLookup))
         for _, item in ipairs(getDeliveryParcelTemplates()) do
           dump(item.id, item.logisticTypesLookup)
         end
@@ -281,7 +281,7 @@ local function triggerParcelGenerator(fac, generator, timeOffset)
       end
       remainingAttempts = remainingAttempts - 1
       if remainingAttempts <= 0 then
-        log("E","","Could not generate items after 100 tries: " .. fac.id.. " -> " .. dumps(generator))
+        -- log("E","","Could not generate items after 100 tries: " .. fac.id.. " -> " .. dumps(generator))
         return
       end
     end

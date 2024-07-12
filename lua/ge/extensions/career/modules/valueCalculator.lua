@@ -22,7 +22,7 @@ local function getDepreciation(year, power)
   local depreciation = 1
   for i = 1, year do
     if i == 1 then
-      depreciation = depreciation * (1 - 0.15 * (1/powerFactor))  -- 15% depreciation for the first year
+      depreciation = depreciation * (1 - 0.05 * (1/powerFactor))  -- 15% depreciation for the first year
     elseif i == 2 then
       depreciation = depreciation * (1 - 0.10 * (1/powerFactor))  -- 10% depreciation for the second year
     elseif i <= 12 then

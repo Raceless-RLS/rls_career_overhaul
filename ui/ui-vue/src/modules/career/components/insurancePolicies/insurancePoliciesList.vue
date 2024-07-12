@@ -64,7 +64,7 @@
                   Premium :
                   <BngUnit
                     :beambucks="
-                      (currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && (tempPolicyPremiumDetails.price * policy.plData.bonus)) || (policy.premium * policy.plData.bonus)
+                      (currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && tempPolicyPremiumDetails.price) || policy.premium
                     " />
                 </div>
               </div>
