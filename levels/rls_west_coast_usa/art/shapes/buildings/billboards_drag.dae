@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.82.7 commit date:2020-03-12, commit time:05:06, hash:375c7dc4caf4</authoring_tool>
+    </contributor>
+    <created>2020-06-18T15:36:45</created>
+    <modified>2020-06-18T15:36:45</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="barrierfence-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <reflectivity>
+              <float sid="specular">1</float>
+            </reflectivity>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="barrierfence-material" name="barrierfence">
+      <instance_effect url="#barrierfence-effect"/>
+    </material>
+    <material id="industrial-material" name="industrial">
+      <instance_effect url="#industrial-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_62041-mesh" name="Plane.62041">
+      <mesh>
+        <source id="Plane_62041-mesh-positions">
+          <float_array id="Plane_62041-mesh-positions-array" count="72">135.028 78.42427 123.6118 130.6894 84.7195 127.0515 135.1205 78.49306 127.0578 130.6902 84.71833 123.6054 135.1213 78.49189 123.6118 130.5961 84.65187 127.0515 135.0272 78.42544 127.0578 130.5969 84.65071 123.6054 138.4865 73.56452 123.6118 135.161 78.43619 127.0515 138.579 73.63331 127.0578 135.1618 78.43502 123.6054 138.5798 73.63214 123.6118 135.0677 78.36857 127.0515 138.4857 73.56569 127.0578 135.0685 78.3674 123.6054 130.5582 84.70515 123.6118 127.2327 89.57682 127.0515 130.6507 84.77394 127.0578 127.2335 89.57566 123.6054 130.6515 84.77278 123.6118 127.1393 89.5092 127.0515 130.5573 84.70632 127.0578 127.1402 89.50804 123.6054</float_array>
+          <technique_common>
+            <accessor source="#Plane_62041-mesh-positions-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_62041-mesh-normals">
+          <float_array id="Plane_62041-mesh-normals-array" count="54">0.8147442 0.5798207 -6.82665e-7 -0.5866921 0.80981 -4.12972e-4 5.41351e-4 -6.69245e-4 -0.9999997 0.5866175 -0.8098641 4.15322e-4 -4.81782e-4 6.68541e-4 0.9999998 -0.8147459 -0.5798183 -1.1588e-6 0.814745 0.5798196 1.14394e-6 -0.5866701 0.809826 -4.1298e-4 6.61085e-4 -8.67674e-4 -0.9999995 0.5867066 -0.8097996 4.16608e-4 -6.14818e-4 8.66782e-4 0.9999995 -0.8147443 -0.5798206 1.50227e-6 0.814745 0.5798196 -3.07606e-6 -0.5866701 0.809826 -4.15382e-4 6.12005e-4 -8.67825e-4 -0.9999995 0.586727 -0.8097847 4.14199e-4 -6.148e-4 8.66932e-4 0.9999995 -0.8147436 -0.5798214 1.50227e-6</float_array>
+          <technique_common>
+            <accessor source="#Plane_62041-mesh-normals-array" count="18" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_62041-mesh-map-0">
+          <float_array id="Plane_62041-mesh-map-0-array" count="144">0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345 0.419498 0.5733345</float_array>
+          <technique_common>
+            <accessor source="#Plane_62041-mesh-map-0-array" count="72" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_62041-mesh-map-1">
+          <float_array id="Plane_62041-mesh-map-1-array" count="144">0.5186923 0.4281163 0.5187349 0.3398837 0.356266 0.3398837 0.3562234 0.4281163 0.4625862 0.712153 0.4625862 0.7243465 0.1868137 0.7243465 0.1868137 0.712153 0.3231051 0.712153 0.3230144 0.7243465 0.8308142 0.7243465 0.8309049 0.712153 0.4735409 0.712153 0.4735409 0.7243465 0.7493134 0.7243465 0.7493134 0.712153 0.544405 0.712153 0.5443143 0.7243465 0.03651452 0.7243465 0.03660511 0.712153 0.2471174 0.2376791 0.002243936 0.2376791 0.002243936 0.0178259 0.2471174 0.0178259 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9674518 0.9977051 0.7595311 0.9977052 0.7594513 0.7546142 0.9673723 0.7546142 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9674517 0.9974247 0.759531 0.9974247 0.7594512 0.7543337 0.9673722 0.7543339</float_array>
+          <technique_common>
+            <accessor source="#Plane_62041-mesh-map-1-array" count="72" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_62041-mesh-colors-Col" name="Col">
+          <float_array id="Plane_62041-mesh-colors-Col-array" count="288">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_62041-mesh-colors-Col-array" count="72" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_62041-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_62041-mesh-positions"/>
+        </vertices>
+        <polylist material="barrierfence-material" count="3">
+          <input semantic="VERTEX" source="#Plane_62041-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_62041-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_62041-mesh-map-0" offset="2" set="0"/>
+          <input semantic="TEXCOORD" source="#Plane_62041-mesh-map-1" offset="2" set="1"/>
+          <input semantic="COLOR" source="#Plane_62041-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 4 4 </vcount>
+          <p>6 5 20 20 5 5 21 21 7 5 22 22 0 5 23 23 14 11 44 44 13 11 45 45 15 11 46 46 8 11 47 47 22 17 68 68 21 17 69 69 23 17 70 70 16 17 71 71</p>
+        </polylist>
+        <polylist material="industrial-material" count="15">
+          <input semantic="VERTEX" source="#Plane_62041-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_62041-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_62041-mesh-map-0" offset="2" set="0"/>
+          <input semantic="TEXCOORD" source="#Plane_62041-mesh-map-1" offset="2" set="1"/>
+          <input semantic="COLOR" source="#Plane_62041-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 </vcount>
+          <p>2 0 0 0 4 0 1 1 3 0 2 2 1 0 3 3 5 1 4 4 1 1 5 5 3 1 6 6 7 1 7 7 7 2 8 8 3 2 9 9 4 2 10 10 0 2 11 11 0 3 12 12 4 3 13 13 2 3 14 14 6 3 15 15 6 4 16 16 2 4 17 17 1 4 18 18 5 4 19 19 10 6 24 24 12 6 25 25 11 6 26 26 9 6 27 27 13 7 28 28 9 7 29 29 11 7 30 30 15 7 31 31 15 8 32 32 11 8 33 33 12 8 34 34 8 8 35 35 8 9 36 36 12 9 37 37 10 9 38 38 14 9 39 39 14 10 40 40 10 10 41 41 9 10 42 42 13 10 43 43 18 12 48 48 20 12 49 49 19 12 50 50 17 12 51 51 21 13 52 52 17 13 53 53 19 13 54 54 23 13 55 55 23 14 56 56 19 14 57 57 20 14 58 58 16 14 59 59 16 15 60 60 20 15 61 61 18 15 62 62 22 15 63 63 22 16 64 64 18 16 65 65 17 16 66 66 21 16 67 67</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 9.54475e-5 0 1 0 2.05673e-4 0 0 1 6.57132e-5 0 0 0 1</matrix>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="billboards_drag_a070" name="billboards_drag_a070" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+            <instance_geometry url="#Plane_62041-mesh" name="billboards_drag_a070">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="barrierfence-material" target="#barrierfence-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                    <bind_vertex_input semantic="sponsors" input_semantic="TEXCOORD" input_set="1"/>
+                  </instance_material>
+                  <instance_material symbol="industrial-material" target="#industrial-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                    <bind_vertex_input semantic="sponsors" input_semantic="TEXCOORD" input_set="1"/>
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="nulldetail50" name="nulldetail50" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

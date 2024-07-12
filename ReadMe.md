@@ -101,6 +101,22 @@ This new system encourages safer driving and careful management of insurance cov
 
 - **Increased Starting Capital**: Starting capital has been increased from 13,500 to 25,500.
 
+- **Expanded Racing Experience**: Most races from the original map have been converted into freeroam races.
+- **Career Mode Integration**: Freeroam racing is now available in career mode and freeroam
+- **New Freeroam Challenges**:
+  - 3 Rock Climbs
+  - 3 Hill Climbs
+  - Bunny Slope Rock Climb
+  - Small Rock Climb
+  - Mud Drag Racing
+  - Track w/ Alternative Route
+  - Dirt Circuit
+  - Drag Strip
+- **Enhanced Map**: Additional backroads for more diverse driving experiences.
+- **Police Vehicles**: Encounter the Bastion, SUV, and Van as police vehicles on this map.
+- **Checkpoint Races**: Checkpoint races now have audio to indicate when you hit a checkpoint.
+- **Dynamic Trigger Assets**: New trigger assets that are dynamically hidden.
+
 ## Installation
 
 1. **Download the Mod**:

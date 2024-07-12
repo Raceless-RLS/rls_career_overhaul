@@ -1,0 +1,1948 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Christin</author>
+      <authoring_tool>OpenCOLLADA for 3ds Max;  Version: 1.6;  Revision: 62</authoring_tool>
+      </contributor>
+    <created>2018-10-22T17:14:53</created>
+    <modified>2018-10-22T17:14:53</modified>
+    <unit meter="1" name="meter" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="metal_galvanized">
+      <profile_COMMON>
+        <newparam sid="metal_galvanized_d_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="metal_galvanized_d_dds-sampler">
+          <sampler2D>
+            <source>metal_galvanized_d_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.588 0.588 0.588 1</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL1" texture="metal_galvanized_d_dds-sampler" />
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>10</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="roadsigns">
+      <profile_COMMON>
+        <newparam sid="roadsigns_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="roadsigns_dds-sampler">
+          <sampler2D>
+            <source>roadsigns_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.588 0.588 0.588 1</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL1" texture="roadsigns_dds-sampler" />
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>10</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="industrial">
+      <profile_COMMON>
+        <newparam sid="industrial_d_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="industrial_d_dds-sampler">
+          <sampler2D>
+            <source>industrial_d_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.588 0.588 0.588 1</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL1" texture="industrial_d_dds-sampler" />
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>10</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__4">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__5">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__6">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__7">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__8">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__9">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__10">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__4_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__5_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__6_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__7_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__8_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__9_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__10_ncl1_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__4_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__5_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__6_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__7_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__8_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__9_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="Material__43_Slot__10_ncl1_2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.2 0.2 0.2 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0.2 0.2 0.2 1</color>
+            </specular>
+            <shininess>
+              <float>43.21928</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="industrial_1">
+      <profile_COMMON>
+        <newparam sid="industrial_d_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="industrial_d_dds-sampler">
+          <sampler2D>
+            <source>industrial_d_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.588 0.588 0.588 1</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL1" texture="industrial_d_dds-sampler" />
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>10</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <opacity_type sid="opacity_type" type="int">0</opacity_type>
+            <falloff_type sid="falloff_type" type="int">0</falloff_type>
+            <falloff sid="falloff" type="float">0</falloff>
+            <index_of_refraction sid="index_of_refraction" type="float">1.5</index_of_refraction>
+            <wire_size sid="wire_size" type="float">1</wire_size>
+            <wire_units sid="wire_units" type="int">0</wire_units>
+            <apply_reflection_dimming sid="apply_reflection_dimming" type="bool">0</apply_reflection_dimming>
+            <dim_level sid="dim_level" type="float">0</dim_level>
+            <reflection_level sid="reflection_level" type="float">3</reflection_level>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_texture_lock sid="ambient_diffuse_texture_lock" type="bool">1</ambient_diffuse_texture_lock>
+            <ambient_diffuse_lock sid="ambient_diffuse_lock" type="bool">0</ambient_diffuse_lock>
+            <diffuse_specular_lock sid="diffuse_specular_lock" type="bool">0</diffuse_specular_lock>
+            <use_self_illum_color sid="use_self_illum_color" type="bool">0</use_self_illum_color>
+            <self_illumination sid="self_illumination" type="float">0</self_illumination>
+            <specular_level sid="specular_level" type="float">1</specular_level>
+            <soften sid="soften" type="float">0.1</soften>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="metal_galvanized-material" name="metal_galvanized">
+      <instance_effect url="#metal_galvanized" />
+    </material>
+    <material id="roadsigns-material" name="roadsigns">
+      <instance_effect url="#roadsigns" />
+    </material>
+    <material id="industrial-material" name="industrial">
+      <instance_effect url="#industrial" />
+    </material>
+    <material id="Material__43_Slot__4-material" name="Material__43_Slot__4">
+      <instance_effect url="#Material__43_Slot__4" />
+    </material>
+    <material id="Material__43_Slot__5-material" name="Material__43_Slot__5">
+      <instance_effect url="#Material__43_Slot__5" />
+    </material>
+    <material id="Material__43_Slot__6-material" name="Material__43_Slot__6">
+      <instance_effect url="#Material__43_Slot__6" />
+    </material>
+    <material id="Material__43_Slot__7-material" name="Material__43_Slot__7">
+      <instance_effect url="#Material__43_Slot__7" />
+    </material>
+    <material id="Material__43_Slot__8-material" name="Material__43_Slot__8">
+      <instance_effect url="#Material__43_Slot__8" />
+    </material>
+    <material id="Material__43_Slot__9-material" name="Material__43_Slot__9">
+      <instance_effect url="#Material__43_Slot__9" />
+    </material>
+    <material id="Material__43_Slot__10-material" name="Material__43_Slot__10">
+      <instance_effect url="#Material__43_Slot__10" />
+    </material>
+    <material id="Material__43_Slot__4_ncl1_1-material" name="Material__43_Slot__4_ncl1_1">
+      <instance_effect url="#Material__43_Slot__4_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__5_ncl1_1-material" name="Material__43_Slot__5_ncl1_1">
+      <instance_effect url="#Material__43_Slot__5_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__6_ncl1_1-material" name="Material__43_Slot__6_ncl1_1">
+      <instance_effect url="#Material__43_Slot__6_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__7_ncl1_1-material" name="Material__43_Slot__7_ncl1_1">
+      <instance_effect url="#Material__43_Slot__7_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__8_ncl1_1-material" name="Material__43_Slot__8_ncl1_1">
+      <instance_effect url="#Material__43_Slot__8_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__9_ncl1_1-material" name="Material__43_Slot__9_ncl1_1">
+      <instance_effect url="#Material__43_Slot__9_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__10_ncl1_1-material" name="Material__43_Slot__10_ncl1_1">
+      <instance_effect url="#Material__43_Slot__10_ncl1_1" />
+    </material>
+    <material id="Material__43_Slot__4_ncl1_2-material" name="Material__43_Slot__4_ncl1_2">
+      <instance_effect url="#Material__43_Slot__4_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__5_ncl1_2-material" name="Material__43_Slot__5_ncl1_2">
+      <instance_effect url="#Material__43_Slot__5_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__6_ncl1_2-material" name="Material__43_Slot__6_ncl1_2">
+      <instance_effect url="#Material__43_Slot__6_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__7_ncl1_2-material" name="Material__43_Slot__7_ncl1_2">
+      <instance_effect url="#Material__43_Slot__7_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__8_ncl1_2-material" name="Material__43_Slot__8_ncl1_2">
+      <instance_effect url="#Material__43_Slot__8_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__9_ncl1_2-material" name="Material__43_Slot__9_ncl1_2">
+      <instance_effect url="#Material__43_Slot__9_ncl1_2" />
+    </material>
+    <material id="Material__43_Slot__10_ncl1_2-material" name="Material__43_Slot__10_ncl1_2">
+      <instance_effect url="#Material__43_Slot__10_ncl1_2" />
+    </material>
+    <material id="industrial_1-material" name="industrial">
+      <instance_effect url="#industrial_1" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="geom-ClosedRoad_sign_big_b200" name="ClosedRoad_sign_big_b200">
+      <mesh>
+        <source id="geom-ClosedRoad_sign_big_b200-positions">
+          <float_array count="276" id="geom-ClosedRoad_sign_big_b200-positions-array">-1.070199 -0.811774 0.103776 -1.070199 0.811774 0.103777 -1.070199 -0.811774 0 -1.070199 0.811774 10e-7 -1.172192 -0.811774 0.103776 -1.172192 0.811774 0.103777 -1.172192 -0.811774 0 -1.172192 0.811774 10e-7 -1.070199 -0.127166 0.103776 -1.070198 -0.127166 2.526365 -1.070199 -0.02339 0.103776 -1.070198 -0.02339 2.526365 -1.172192 -0.127166 0.103776 -1.172191 -0.127166 2.526365 -1.172192 -0.02339 0.103776 -1.172191 -0.02339 2.526365 -1.237878 -0.183541 0.856516 -1.237879 -0.183541 0.369792 1.237879 -0.183541 0.856515 1.237879 -0.183541 0.369791 0.145189 -0.127166 0.856515 0.145189 -0.127166 0.369792 1.237879 -0.127166 0.856515 -1.237878 -0.127166 0.856516 -1.237879 -0.127166 0.369792 0.145189 -0.183541 0.369792 0.145189 -0.183541 0.856515 1.237879 -0.127166 0.369791 1.169726 -0.811773 0.103776 1.169726 0.811774 0.103776 1.169726 -0.811773 -10e-7 1.169726 0.811774 0 1.067732 -0.811773 0.103776 1.067732 0.811774 0.103776 1.067732 -0.811773 -10e-7 1.067733 0.811774 0 1.169726 -0.127166 0.103776 1.169726 -0.127166 2.526364 1.169726 -0.02339 0.103776 1.169726 -0.02339 2.526364 1.067732 -0.127166 0.103776 1.067733 -0.127166 2.526364 1.067732 -0.02339 0.103776 1.067733 -0.02339 2.526364 -1.237878 -0.183542 1.735631 -1.237878 -0.183541 1.248906 1.237879 -0.183542 1.73563 1.237879 -0.183541 1.248906 0.14519 -0.127166 1.73563 0.14519 -0.127166 1.248906 1.237879 -0.127166 1.73563 1.237879 -0.127166 1.248906 -1.237878 -0.127166 1.735631 -1.237878 -0.127166 1.248906 0.14519 -0.183542 1.73563 0.14519 -0.183541 1.248906 0.14519 -0.183542 2.570348 -1.237878 -0.183542 2.570348 -1.237878 -0.183541 2.083624 1.237879 -0.183542 2.570348 1.237879 -0.183541 2.083624 1.237879 -0.127166 2.570348 1.237879 -0.127166 2.083624 0.14519 -0.127166 2.083624 0.14519 -0.127166 2.570348 -1.237878 -0.127166 2.083624 -1.237878 -0.127166 2.570348 0.14519 -0.183541 2.083624 0.464741 -0.183541 1.021223 0.46474 -0.183541 1.865927 -0.594273 -0.183542 1.021223 -0.594273 -0.183542 1.865926 0.865506 -0.183824 1.925542 0.865506 -0.183824 2.757549 -0.844777 -0.183824 1.925542 -0.844777 -0.183824 2.757549 -0.567641 -0.194032 1.132667 0.438109 -0.194032 1.132667 -0.567641 -0.194032 1.754484 0.438109 -0.194032 1.754485 -0.732431 -0.194314 2.014264 0.753161 -0.194314 2.014265 -0.732431 -0.194315 2.668827 0.753161 -0.194314 2.668828 0.865506 -0.188665 1.925542 0.865506 -0.188665 2.757549 -0.844777 -0.188665 1.925542 -0.844777 -0.188665 2.757549 0.464741 -0.188665 1.021223 0.46474 -0.188665 1.865927 -0.594273 -0.188665 1.021223 -0.594273 -0.188665 1.865926</float_array>
+          <technique_common>
+            <accessor count="92" source="#geom-ClosedRoad_sign_big_b200-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b200-normals">
+          <float_array count="1044" id="geom-ClosedRoad_sign_big_b200-normals-array">1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 1 -10e-7 10e-7 1 -10e-7 10e-7 1 -10e-7 10e-7 1 -10e-7 10e-7 1 -10e-7 10e-7 1 -10e-7 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 0 1 -10e-7 0 1 -10e-7 0 1 -10e-7 0 1 -10e-7 0 1 -10e-7 0 1 -10e-7 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 1 0 -10e-7 1 0 -10e-7 1 0 -10e-7 1 0 -10e-7 1 0 -10e-7 1 0 -10e-7 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 0 -2e-6 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 -10e-7 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor count="348" source="#geom-ClosedRoad_sign_big_b200-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b200-map-2">
+          <float_array count="1044" id="geom-ClosedRoad_sign_big_b200-map-2-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="348" source="#geom-ClosedRoad_sign_big_b200-map-2-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b200-map0">
+          <float_array count="1044" id="geom-ClosedRoad_sign_big_b200-map0-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="348" source="#geom-ClosedRoad_sign_big_b200-map0-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b200-map1">
+          <float_array count="660" id="geom-ClosedRoad_sign_big_b200-map1-array">9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.085775 0.717826 0 1.085775 0.787167 0 1.086003 0.787181 0 9.46e-4 0.787181 0 9.46e-4 0.717826 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.105312 0.717826 0 1.105312 0.787203 0 9.46e-4 0.787203 0 -0.06626 0.787203 0 -0.06626 0.71894 0 9.46e-4 0.71894 0 9.46e-4 0.787203 0 1.105311 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.105312 0.717826 0 -0.06626 0.71894 0 -0.06626 0.787093 0 -0.133354 0.787093 0 -0.133354 0.71894 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.619682 0.717825 0 1.619682 0.787166 0 1.086003 0.787181 0 -0.533073 0.787181 0 -0.533073 0.717825 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.648833 0.717826 0 1.648833 0.787204 0 9.46e-4 0.787203 0 -0.066259 0.787203 0 -0.066259 0.71894 0 9.47e-4 0.71894 0 9.47e-4 0.787203 0 1.648833 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.648834 0.71783 0 0.716336 0.256268 0 0.674144 0.256268 0 0.716336 0.015695 0 0.674144 0.015695 0 0.674144 0.064444 0 0.716336 0.064444 0 0.674144 0.256291 0 0.716336 0.256291 0 0.674144 0.064444 0 0.716336 0.064444 0 0.674144 0.256291 0 0.716336 0.256291 0 0.716336 0.256289 0 0.674144 0.256289 0 0.716336 0.015695 0 0.674144 0.015695 0 0.369696 0.828806 0 0.184848 0.850216 0 1.835199 0.828806 0 0 0.850216 0 0.784677 0.828806 0 0.184848 0.828806 0 0.369696 0.828806 0 0.784677 0.850216 0 2.25018 0.828806 0 0.369696 0.850216 0 0.184848 0.850216 0 0.369696 0.850216 0 0 0.82729 0 2.25018 0.850216 0 0.184848 0.82729 0 1.835199 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.085775 0.717826 0 1.085775 0.787167 0 1.086003 0.787181 0 9.46e-4 0.787181 0 9.46e-4 0.717826 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.105312 0.717826 0 1.105312 0.787203 0 9.46e-4 0.787203 0 -0.06626 0.787203 0 -0.06626 0.71894 0 9.46e-4 0.71894 0 9.46e-4 0.787203 0 1.105311 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.105312 0.717826 0 -0.06626 0.71894 0 -0.06626 0.787093 0 -0.133354 0.787093 0 -0.133354 0.71894 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.619682 0.717826 0 1.619682 0.787166 0 1.086003 0.787181 0 -0.533073 0.787181 0 -0.533073 0.717825 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.648833 0.717826 0 1.648833 0.787204 0 9.46e-4 0.787203 0 -0.06626 0.787204 0 -0.06626 0.718941 0 9.46e-4 0.718941 0 9.47e-4 0.787204 0 1.648833 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.648834 0.71783 0 0.716336 0.256289 0 0.674144 0.256289 0 0.716336 0.015695 0 0.674144 0.015695 0 0.674144 0.064444 0 0.716336 0.064444 0 0.674144 0.256291 0 0.716336 0.256291 0 0.674144 0.064444 0 0.716336 0.064444 0 0.674144 0.256291 0 0.716336 0.256291 0 0.716336 0.256289 0 0.674144 0.256289 0 0.716336 0.015695 0 0.674144 0.015695 0 0.369696 0.828806 0 0.184848 0.850216 0 1.835199 0.828806 0 0 0.850216 0 0.784677 0.828806 0 0.184848 0.828806 0 0.369696 0.828806 0 0.784677 0.850216 0 2.25018 0.828806 0 0.369696 0.850216 0 0.184848 0.850216 0 0.369696 0.850216 0 0 0.828806 0 2.25018 0.850216 0 0.184848 0.828806 0 1.835199 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 0.716336 0.015695 0 0.716336 0.256289 0 0.674144 0.256289 0 0.674144 0.015695 0 0.674144 0.256291 0 0.674144 0.064444 0 0.716336 0.064444 0 0.716336 0.256291 0 0.674144 0.256291 0 0.716336 0.256291 0 0.716336 0.064444 0 0.674144 0.064444 0 0.716336 0.015695 0 0.674144 0.015695 0 0.674144 0.256289 0 0.716336 0.256289 0 0.369696 0.828806 0 0.784677 0.828806 0 0.784677 0.850216 0 0.369696 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 0.184848 0.828806 0 0.369696 0.828806 0 0.369696 0.850216 0 0.184848 0.850216 0 1.835199 0.828806 0 2.25018 0.828806 0 2.25018 0.850216 0 1.835199 0.850216 0 1.309938 0.828806 0 1.309938 0.850216 0 0.184848 0.850216 0 0 0.850216 0 0 0.828806 0 0.184848 0.828806 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.589926 0.316981 0 0.678936 0.316981 0 0.589926 0.427045 0 0.678936 0.427045 0 0.687783 0.771785 0 0.850644 0.771785 0 0.687784 0.915299 0 0.850644 0.9153 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0</float_array>
+          <technique_common>
+            <accessor count="220" source="#geom-ClosedRoad_sign_big_b200-map1-array" stride="3">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+              <param name="P" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-ClosedRoad_sign_big_b200-vertices">
+          <input semantic="POSITION" source="#geom-ClosedRoad_sign_big_b200-positions" />
+        </vertices>
+        <triangles count="16" material="metal_galvanized">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b200-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b200-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b200-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b200-map1" />
+          <p>22 78 52 54 21 79 54 53 20 80 55 52 21 81 54 53 22 82 52 54 27 83 53 55 23 84 59 56 20 85 56 58 21 86 57 59 23 87 59 56 21 88 57 59 24 89 58 57 48 204 139 132 50 205 136 134 51 206 137 135 48 207 139 132 51 208 137 135 49 209 138 133 52 210 143 136 48 211 140 138 49 212 141 139 52 213 143 136 49 214 141 139 53 215 142 137 61 264 176 168 63 265 178 170 64 266 179 171 63 267 178 170 61 268 176 168 62 269 177 169 66 270 183 175 64 271 180 172 63 272 181 173 66 273 183 175 63 274 181 173 65 275 182 174 69 312 210 197 68 313 209 196 71 314 211 199 71 315 211 199 68 316 209 196 70 317 208 198 75 318 213 203 73 319 214 201 72 320 215 200 75 321 213 203 72 322 215 200 74 323 212 202</p>
+        </triangles>
+        <triangles count="20" material="roadsigns">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b200-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b200-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b200-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b200-map1" />
+          <p>17 66 46 45 25 67 47 47 16 68 45 44 26 69 44 46 16 70 45 44 25 71 47 47 25 72 50 49 18 73 48 50 26 74 49 48 18 75 48 50 25 76 50 49 19 77 51 51 45 192 130 125 55 193 131 127 44 194 129 124 54 195 128 126 44 196 129 124 55 197 131 127 55 198 134 129 47 199 135 131 54 200 133 128 46 201 132 130 54 202 133 128 47 203 135 131 58 252 170 162 67 253 171 163 57 254 169 161 56 255 168 160 57 256 169 161 67 257 171 163 67 258 174 166 59 259 172 164 56 260 173 165 59 261 172 164 67 262 174 166 60 263 175 167 78 324 216 206 77 325 218 205 79 326 219 207 77 327 218 205 78 328 216 206 76 329 217 204 82 330 220 210 81 331 222 209 83 332 223 211 81 333 222 209 82 334 220 210 80 335 221 208 87 336 227 215 84 337 225 212 85 338 226 213 84 339 225 212 87 340 227 215 86 341 224 214 91 342 231 219 88 343 229 216 89 344 230 217 88 345 229 216 91 346 231 219 90 347 228 218</p>
+        </triangles>
+        <triangles count="80" material="industrial">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b200-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b200-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b200-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b200-map1" />
+          <p>2 0 1 1 3 1 2 2 0 2 0 0 1 3 3 3 0 4 0 0 3 5 2 2 4 6 4 4 5 7 5 5 7 8 6 6 4 9 4 4 7 10 6 6 6 11 7 7 5 12 10 10 0 13 8 8 1 14 9 9 0 15 8 8 5 16 10 10 4 17 11 11 5 18 15 15 1 19 12 12 7 20 14 14 1 21 12 12 3 22 13 13 7 23 14 14 6 24 18 18 3 25 16 16 2 26 17 17 3 27 16 16 6 28 18 18 7 29 19 19 0 30 21 21 6 31 23 23 2 32 20 20 6 33 23 23 0 34 21 21 4 35 22 22 9 36 27 27 10 37 25 25 11 38 26 26 10 39 25 25 9 40 27 27 8 41 24 24 15 42 30 30 12 43 28 28 13 44 29 29 12 45 28 28 15 46 30 30 14 47 31 31 9 48 33 33 12 49 35 35 8 50 32 32 12 51 35 35 9 52 33 33 13 53 34 34 11 54 37 37 13 55 39 39 9 56 36 36 13 57 39 39 11 58 37 37 15 59 38 38 15 60 43 43 10 61 41 41 14 62 42 42 10 63 41 41 15 64 43 43 11 65 40 40 26 90 62 67 18 91 63 71 20 92 61 64 22 93 60 60 20 94 61 64 18 95 63 71 16 96 66 79 26 97 67 67 23 98 65 78 20 99 64 64 23 100 65 78 26 101 67 67 18 102 70 69 19 103 71 70 22 104 69 66 22 105 69 66 19 106 71 70 27 107 68 65 19 108 74 73 21 109 72 62 27 110 73 68 21 111 72 62 19 112 74 73 25 113 75 75 25 114 78 75 24 115 76 76 21 116 77 62 24 117 76 76 25 118 78 75 17 119 79 77 23 120 80 61 17 121 82 72 16 122 83 74 17 123 82 72 23 124 80 61 24 125 81 63 30 126 85 81 31 127 86 82 28 128 84 80 29 129 87 83 28 130 84 80 31 131 86 82 32 132 88 84 33 133 89 85 35 134 90 86 32 135 88 84 35 136 90 86 34 137 91 87 33 138 94 90 28 139 92 88 29 140 93 89 28 141 92 88 33 142 94 90 32 143 95 91 33 144 99 95 29 145 96 92 35 146 98 94 29 147 96 92 31 148 97 93 35 149 98 94 30 150 101 97 35 151 103 99 31 152 100 96 35 153 103 99 30 154 101 97 34 155 102 98 28 156 105 101 34 157 107 103 30 158 104 100 34 159 107 103 28 160 105 101 32 161 106 102 37 162 111 107 36 163 108 104 39 164 110 106 39 165 110 106 36 166 108 104 38 167 109 105 43 168 114 110 40 169 112 108 41 170 113 109 40 171 112 108 43 172 114 110 42 173 115 111 41 174 118 114 36 175 116 112 37 176 117 113 36 177 116 112 41 178 118 114 40 179 119 115 43 180 122 118 37 181 120 116 39 182 121 117 37 183 120 116 43 184 122 118 41 185 123 119 43 186 127 123 38 187 125 121 42 188 126 122 38 189 125 121 43 190 127 123 39 191 124 120 54 216 146 147 46 217 147 151 48 218 145 144 50 219 144 140 48 220 145 144 46 221 147 151 44 222 150 159 54 223 151 147 52 224 149 158 48 225 148 144 52 226 149 158 54 227 151 147 46 228 154 149 47 229 155 150 50 230 153 146 50 231 153 146 47 232 155 150 51 233 152 145 47 234 158 153 49 235 156 142 51 236 157 148 49 237 156 142 47 238 158 153 55 239 159 155 55 240 162 155 53 241 160 156 49 242 161 142 53 243 160 156 55 244 162 155 45 245 163 157 52 246 164 141 45 247 166 152 44 248 167 154 45 249 166 152 52 250 164 141 53 251 165 143 56 276 186 178 59 277 187 179 64 278 185 177 61 279 184 176 64 280 185 177 59 281 187 179 57 282 190 181 56 283 191 178 66 284 189 180 64 285 188 177 66 286 189 180 56 287 191 178 59 288 194 184 60 289 195 185 61 290 193 183 61 291 193 183 60 292 195 185 62 293 192 182 60 294 198 188 63 295 196 186 62 296 197 187 63 297 196 186 60 298 198 188 67 299 199 189 67 300 202 189 65 301 200 190 63 302 201 186 65 303 200 190 67 304 202 189 58 305 203 191 66 306 204 192 58 307 206 194 57 308 207 195 58 309 206 194 66 310 204 192 65 311 205 193</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-ClosedRoad_sign_big_b70" name="ClosedRoad_sign_big_b70">
+      <mesh>
+        <source id="geom-ClosedRoad_sign_big_b70-positions">
+          <float_array count="276" id="geom-ClosedRoad_sign_big_b70-positions-array">-1.070199 -0.811774 0.103776 -1.070199 0.811774 0.103777 -1.070199 -0.811774 0 -1.070199 0.811774 10e-7 -1.172192 -0.811774 0.103776 -1.172192 0.811774 0.103777 -1.172192 -0.811774 0 -1.172192 0.811774 10e-7 -1.070199 -0.127166 0.103776 -1.070198 -0.127166 2.526365 -1.070199 -0.02339 0.103776 -1.070198 -0.02339 2.526365 -1.172192 -0.127166 0.103776 -1.172191 -0.127166 2.526365 -1.172192 -0.02339 0.103776 -1.172191 -0.02339 2.526365 -1.237878 -0.183541 0.856516 -1.237879 -0.183541 0.369792 1.237879 -0.183541 0.856515 1.237879 -0.183541 0.369791 0.145189 -0.127166 0.856515 0.145189 -0.127166 0.369792 1.237879 -0.127166 0.856515 -1.237878 -0.127166 0.856516 -1.237879 -0.127166 0.369792 0.145189 -0.183541 0.369792 0.145189 -0.183541 0.856515 1.237879 -0.127166 0.369791 1.169726 -0.811773 0.103776 1.169726 0.811774 0.103776 1.169726 -0.811773 -10e-7 1.169726 0.811774 0 1.067732 -0.811773 0.103776 1.067732 0.811774 0.103776 1.067732 -0.811773 -10e-7 1.067733 0.811774 0 1.169726 -0.127166 0.103776 1.169726 -0.127166 2.526364 1.169726 -0.02339 0.103776 1.169726 -0.02339 2.526364 1.067732 -0.127166 0.103776 1.067733 -0.127166 2.526364 1.067732 -0.02339 0.103776 1.067733 -0.02339 2.526364 -1.237878 -0.183542 1.735631 -1.237878 -0.183541 1.248906 1.237879 -0.183542 1.73563 1.237879 -0.183541 1.248906 0.14519 -0.127166 1.73563 0.14519 -0.127166 1.248906 1.237879 -0.127166 1.73563 1.237879 -0.127166 1.248906 -1.237878 -0.127166 1.735631 -1.237878 -0.127166 1.248906 0.14519 -0.183542 1.73563 0.14519 -0.183541 1.248906 0.14519 -0.183542 2.570348 -1.237878 -0.183542 2.570348 -1.237878 -0.183541 2.083624 1.237879 -0.183542 2.570348 1.237879 -0.183541 2.083624 1.237879 -0.127166 2.570348 1.237879 -0.127166 2.083624 0.14519 -0.127166 2.083624 0.14519 -0.127166 2.570348 -1.237878 -0.127166 2.083624 -1.237878 -0.127166 2.570348 0.14519 -0.183541 2.083624 0.464741 -0.183541 1.021223 0.46474 -0.183541 1.865927 -0.594273 -0.183542 1.021223 -0.594273 -0.183542 1.865926 0.865506 -0.183824 1.925542 0.865506 -0.183824 2.757549 -0.844777 -0.183824 1.925542 -0.844777 -0.183824 2.757549 -0.567641 -0.194032 1.132667 0.438109 -0.194032 1.132667 -0.567641 -0.194032 1.754484 0.438109 -0.194032 1.754485 -0.732431 -0.194314 2.014264 0.753161 -0.194314 2.014265 -0.732431 -0.194315 2.668827 0.753161 -0.194314 2.668828 0.865506 -0.188665 1.925542 0.865506 -0.188665 2.757549 -0.844777 -0.188665 1.925542 -0.844777 -0.188665 2.757549 0.464741 -0.188665 1.021223 0.46474 -0.188665 1.865927 -0.594273 -0.188665 1.021223 -0.594273 -0.188665 1.865926</float_array>
+          <technique_common>
+            <accessor count="92" source="#geom-ClosedRoad_sign_big_b70-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b70-normals">
+          <float_array count="576" id="geom-ClosedRoad_sign_big_b70-normals-array">1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 -1 0 -10e-7 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 10e-7 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 -1 10e-7 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor count="192" source="#geom-ClosedRoad_sign_big_b70-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b70-map-2">
+          <float_array count="576" id="geom-ClosedRoad_sign_big_b70-map-2-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="192" source="#geom-ClosedRoad_sign_big_b70-map-2-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b70-map0">
+          <float_array count="576" id="geom-ClosedRoad_sign_big_b70-map0-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="192" source="#geom-ClosedRoad_sign_big_b70-map0-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b70-map1">
+          <float_array count="384" id="geom-ClosedRoad_sign_big_b70-map1-array">9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.085775 0.717826 0 1.085775 0.787167 0 1.086003 0.787181 0 9.46e-4 0.787181 0 9.46e-4 0.717826 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.105312 0.717826 0 1.105312 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.619682 0.717825 0 1.619682 0.787166 0 1.086003 0.787181 0 -0.533073 0.787181 0 -0.533073 0.717825 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.648833 0.717826 0 1.648833 0.787204 0 9.46e-4 0.787203 0 1.648833 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.648834 0.71783 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.085775 0.717826 0 1.085775 0.787167 0 1.086003 0.787181 0 9.46e-4 0.787181 0 9.46e-4 0.717826 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.105312 0.717826 0 1.105312 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.787167 0 9.46e-4 0.717826 0 1.619682 0.717826 0 1.619682 0.787166 0 1.086003 0.787181 0 -0.533073 0.787181 0 -0.533073 0.717825 0 1.086003 0.717826 0 9.46e-4 0.717826 0 1.648833 0.717826 0 1.648833 0.787204 0 9.46e-4 0.787203 0 1.648833 0.787203 0 9.46e-4 0.787203 0 9.46e-4 0.717826 0 1.648834 0.71783 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.716778 0.014133 0 0.716778 0.25894 0 0.673702 0.25894 0 0.673702 0.014133 0 0.673702 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.716778 0.256291 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.062882 0 0.673702 0.062882 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.25894 0 0.716778 0.25894 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.589926 0.316981 0 0.678936 0.316981 0 0.589926 0.427045 0 0.678936 0.427045 0 0.687783 0.771785 0 0.850644 0.771785 0 0.687784 0.915299 0 0.850644 0.9153 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0</float_array>
+          <technique_common>
+            <accessor count="128" source="#geom-ClosedRoad_sign_big_b70-map1-array" stride="3">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+              <param name="P" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-ClosedRoad_sign_big_b70-vertices">
+          <input semantic="POSITION" source="#geom-ClosedRoad_sign_big_b70-positions" />
+        </vertices>
+        <triangles count="44" material="metal_galvanized">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b70-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b70-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b70-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b70-map1" />
+          <p>2 0 1 1 3 1 2 2 0 2 0 0 1 3 3 3 0 4 0 0 3 5 2 2 4 6 4 4 5 7 5 5 7 8 6 6 4 9 4 4 7 10 6 6 6 11 7 7 5 12 10 10 0 13 8 8 1 14 9 9 0 15 8 8 5 16 10 10 4 17 11 11 9 18 15 15 10 19 13 13 11 20 14 14 10 21 13 13 9 22 15 15 8 23 12 12 15 24 18 18 12 25 16 16 13 26 17 17 12 27 16 16 15 28 18 18 14 29 19 19 9 30 21 21 12 31 23 23 8 32 20 20 12 33 23 23 9 34 21 21 13 35 22 22 15 36 27 27 10 37 25 25 14 38 26 26 10 39 25 25 15 40 27 27 11 41 24 24 22 54 36 38 21 55 38 37 20 56 39 36 21 57 38 37 22 58 36 38 27 59 37 39 23 60 43 40 20 61 40 42 21 62 41 43 23 63 43 40 21 64 41 43 24 65 42 41 30 66 45 45 31 67 46 46 28 68 44 44 29 69 47 47 28 70 44 44 31 71 46 46 32 72 48 48 33 73 49 49 35 74 50 50 32 75 48 48 35 76 50 50 34 77 51 51 33 78 54 54 28 79 52 52 29 80 53 53 28 81 52 52 33 82 54 54 32 83 55 55 37 84 59 59 36 85 56 56 39 86 58 58 39 87 58 58 36 88 56 56 38 89 57 57 43 90 62 62 40 91 60 60 41 92 61 61 40 93 60 60 43 94 62 62 42 95 63 63 41 96 66 66 36 97 64 64 37 98 65 65 36 99 64 64 41 100 66 66 40 101 67 67 43 102 71 71 38 103 69 69 42 104 70 70 38 105 69 69 43 106 71 71 39 107 68 68 48 120 83 80 50 121 80 82 51 122 81 83 48 123 83 80 51 124 81 83 49 125 82 81 52 126 87 84 48 127 84 86 49 128 85 87 52 129 87 84 49 130 85 87 53 131 86 85 61 144 96 96 63 145 98 98 64 146 99 99 63 147 98 98 61 148 96 96 62 149 97 97 66 150 103 103 64 151 100 100 63 152 101 101 66 153 103 103 63 154 101 101 65 155 102 102 69 156 106 105 68 157 105 104 71 158 107 107 71 159 107 107 68 160 105 104 70 161 104 106 75 162 109 111 73 163 110 109 72 164 111 108 75 165 109 111 72 166 111 108 74 167 108 110</p>
+        </triangles>
+        <triangles count="20" material="roadsigns">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b70-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b70-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b70-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b70-map1" />
+          <p>17 42 30 29 25 43 31 31 16 44 29 28 26 45 28 30 16 46 29 28 25 47 31 31 25 48 34 33 18 49 32 34 26 50 33 32 18 51 32 34 25 52 34 33 19 53 35 35 45 108 74 73 55 109 75 75 44 110 73 72 54 111 72 74 44 112 73 72 55 113 75 75 55 114 78 77 47 115 79 79 54 116 77 76 46 117 76 78 54 118 77 76 47 119 79 79 58 132 90 90 67 133 91 91 57 134 89 89 56 135 88 88 57 136 89 89 67 137 91 91 67 138 94 94 59 139 92 92 56 140 93 93 59 141 92 92 67 142 94 94 60 143 95 95 78 168 112 114 77 169 114 113 79 170 115 115 77 171 114 113 78 172 112 114 76 173 113 112 82 174 116 118 81 175 118 117 83 176 119 119 81 177 118 117 82 178 116 118 80 179 117 116 87 180 123 123 84 181 121 120 85 182 122 121 84 183 121 120 87 184 123 123 86 185 120 122 91 186 127 127 88 187 125 124 89 188 126 125 88 189 125 124 91 190 127 127 90 191 124 126</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-ClosedRoad_sign_big_b35" name="ClosedRoad_sign_big_b35">
+      <mesh>
+        <source id="geom-ClosedRoad_sign_big_b35-positions">
+          <float_array count="180" id="geom-ClosedRoad_sign_big_b35-positions-array">-1.237878 -0.183541 0.856516 -1.237879 -0.183541 0.369792 1.237879 -0.183541 0.856515 1.237879 -0.183541 0.369791 0.145189 -0.127166 0.856515 0.145189 -0.127166 0.369792 1.237879 -0.127166 0.856515 -1.237878 -0.127166 0.856516 -1.237879 -0.127166 0.369792 0.145189 -0.183541 0.369792 0.145189 -0.183541 0.856515 1.237879 -0.127166 0.369791 -1.237878 -0.183542 1.735631 -1.237878 -0.183541 1.248906 1.237879 -0.183542 1.73563 1.237879 -0.183541 1.248906 0.14519 -0.127166 1.73563 0.14519 -0.127166 1.248906 1.237879 -0.127166 1.73563 1.237879 -0.127166 1.248906 -1.237878 -0.127166 1.735631 -1.237878 -0.127166 1.248906 0.14519 -0.183542 1.73563 0.14519 -0.183541 1.248906 0.14519 -0.183542 2.570348 -1.237878 -0.183542 2.570348 -1.237878 -0.183541 2.083624 1.237879 -0.183542 2.570348 1.237879 -0.183541 2.083624 1.237879 -0.127166 2.570348 1.237879 -0.127166 2.083624 0.14519 -0.127166 2.083624 0.14519 -0.127166 2.570348 -1.237878 -0.127166 2.083624 -1.237878 -0.127166 2.570348 0.14519 -0.183541 2.083624 0.464741 -0.183541 1.021223 0.46474 -0.183541 1.865927 -0.594273 -0.183542 1.021223 -0.594273 -0.183542 1.865926 0.865506 -0.183824 1.925542 0.865506 -0.183824 2.757549 -0.844777 -0.183824 1.925542 -0.844777 -0.183824 2.757549 -0.567641 -0.194032 1.132667 0.438109 -0.194032 1.132667 -0.567641 -0.194032 1.754484 0.438109 -0.194032 1.754485 -0.732431 -0.194314 2.014264 0.753161 -0.194314 2.014265 -0.732431 -0.194315 2.668827 0.753161 -0.194314 2.668828 0.865506 -0.188665 1.925542 0.865506 -0.188665 2.757549 -0.844777 -0.188665 1.925542 -0.844777 -0.188665 2.757549 0.464741 -0.188665 1.021223 0.46474 -0.188665 1.865927 -0.594273 -0.188665 1.021223 -0.594273 -0.188665 1.865926</float_array>
+          <technique_common>
+            <accessor count="60" source="#geom-ClosedRoad_sign_big_b35-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b35-normals">
+          <float_array count="324" id="geom-ClosedRoad_sign_big_b35-normals-array">0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor count="108" source="#geom-ClosedRoad_sign_big_b35-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b35-map-2">
+          <float_array count="324" id="geom-ClosedRoad_sign_big_b35-map-2-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="108" source="#geom-ClosedRoad_sign_big_b35-map-2-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b35-map0">
+          <float_array count="324" id="geom-ClosedRoad_sign_big_b35-map0-array">0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 0.843137 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="108" source="#geom-ClosedRoad_sign_big_b35-map0-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-ClosedRoad_sign_big_b35-map1">
+          <float_array count="216" id="geom-ClosedRoad_sign_big_b35-map1-array">0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.25894 0 0.673702 0.25894 0 0.716778 0.014133 0 0.673702 0.014133 0 0.716778 0.014133 0 0.716778 0.25894 0 0.673702 0.25894 0 0.673702 0.014133 0 0.673702 0.256291 0 0.673702 0.062882 0 0.716778 0.062882 0 0.716778 0.256291 0 0.673702 0.256291 0 0.716778 0.256291 0 0.716778 0.062882 0 0.673702 0.062882 0 0.716778 0.014133 0 0.673702 0.014133 0 0.673702 0.25894 0 0.716778 0.25894 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.589926 0.316981 0 0.678936 0.316981 0 0.589926 0.427045 0 0.678936 0.427045 0 0.687783 0.771785 0 0.850644 0.771785 0 0.687784 0.915299 0 0.850644 0.9153 0 0.595871 0.005868 0 0.669505 0.005868 0 0.595871 0.308594 0 0.669506 0.308594 0 0.179099 0.629342 0 0.253857 0.629342 0 0.179099 0.81679 0 0.253857 0.81679 0</float_array>
+          <technique_common>
+            <accessor count="72" source="#geom-ClosedRoad_sign_big_b35-map1-array" stride="3">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+              <param name="P" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-ClosedRoad_sign_big_b35-vertices">
+          <input semantic="POSITION" source="#geom-ClosedRoad_sign_big_b35-positions" />
+        </vertices>
+        <triangles count="16" material="metal_galvanized">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b35-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b35-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b35-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b35-map1" />
+          <p>6 12 8 10 5 13 10 9 4 14 11 8 5 15 10 9 6 16 8 10 11 17 9 11 7 18 15 12 4 19 12 14 5 20 13 15 7 21 15 12 5 22 13 15 8 23 14 13 16 36 27 24 18 37 24 26 19 38 25 27 16 39 27 24 19 40 25 27 17 41 26 25 20 42 31 28 16 43 28 30 17 44 29 31 20 45 31 28 17 46 29 31 21 47 30 29 29 60 40 40 31 61 42 42 32 62 43 43 31 63 42 42 29 64 40 40 30 65 41 41 34 66 47 47 32 67 44 44 31 68 45 45 34 69 47 47 31 70 45 45 33 71 46 46 37 72 50 49 36 73 49 48 39 74 51 51 39 75 51 51 36 76 49 48 38 77 48 50 43 78 53 55 41 79 54 53 40 80 55 52 43 81 53 55 40 82 55 52 42 83 52 54</p>
+        </triangles>
+        <triangles count="20" material="roadsigns">
+          <input offset="0" semantic="VERTEX" source="#geom-ClosedRoad_sign_big_b35-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-ClosedRoad_sign_big_b35-normals" />
+          <input offset="2" semantic="COLOR" set="0" source="#geom-ClosedRoad_sign_big_b35-map0" />
+          <input offset="3" semantic="TEXCOORD" set="0" source="#geom-ClosedRoad_sign_big_b35-map1" />
+          <p>1 0 2 1 9 1 3 3 0 2 1 0 10 3 0 2 0 4 1 0 9 5 3 3 9 6 6 5 2 7 4 6 10 8 5 4 2 9 4 6 9 10 6 5 3 11 7 7 13 24 18 17 23 25 19 19 12 26 17 16 22 27 16 18 12 28 17 16 23 29 19 19 23 30 22 21 15 31 23 23 22 32 21 20 14 33 20 22 22 34 21 20 15 35 23 23 26 48 34 34 35 49 35 35 25 50 33 33 24 51 32 32 25 52 33 33 35 53 35 35 35 54 38 38 27 55 36 36 24 56 37 37 27 57 36 36 35 58 38 38 28 59 39 39 46 84 56 58 45 85 58 57 47 86 59 59 45 87 58 57 46 88 56 58 44 89 57 56 50 90 60 62 49 91 62 61 51 92 63 63 49 93 62 61 50 94 60 62 48 95 61 60 55 96 67 67 52 97 65 64 53 98 66 65 52 99 65 64 55 100 67 67 54 101 64 66 59 102 71 71 56 103 69 68 57 104 70 69 56 105 69 68 59 106 71 71 58 107 68 70</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-colmesh-1_1" name="colmesh-1">
+      <mesh>
+        <source id="geom-colmesh-1_1-positions">
+          <float_array count="120" id="geom-colmesh-1_1-positions-array">-1.142107 -0.374274 0 1.142107 -0.374274 0 -1.237879 -0.036392 0 1.237879 -0.036392 0 -1.142107 -0.374274 2.757549 1.237879 -0.246989 2.757549 -1.237879 -0.036392 2.757549 1.142107 0.090894 2.757549 -1.280613 0.811774 -0.246224 -0.962989 0.811774 -0.246224 -1.280613 0.811774 0.008004 -0.962989 0.811774 0.008004 -1.280613 -0.811774 -0.246224 -0.962989 -0.811774 -0.246224 -1.280613 -0.811774 0.008004 -1.058761 -0.811774 0.103776 0.961979 0.811774 -0.246224 1.279602 0.811774 -0.246224 0.961979 0.811774 0.008004 1.279602 0.811774 0.008004 0.961979 -0.811774 -0.246224 1.279602 -0.811774 -0.246224 0.961979 -0.811774 0.008004 1.18383 -0.811774 0.103776 -1.237879 -0.246989 0 1.237879 -0.246989 0 -1.142107 0.090894 0 1.142107 0.090894 0 -1.237879 -0.246989 2.757549 1.142107 -0.374274 2.757549 -1.142107 0.090894 2.757549 1.237879 -0.036392 2.757549 -1.184841 0.811774 0.103776 -1.058761 0.811774 0.103776 -1.184841 -0.811774 0.103776 -0.962989 -0.811774 0.008004 1.057751 0.811774 0.103776 1.18383 0.811774 0.103776 1.057751 -0.811774 0.103776 1.279602 -0.811774 0.008004</float_array>
+          <technique_common>
+            <accessor count="40" source="#geom-colmesh-1_1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-colmesh-1_1-normals">
+          <float_array count="612" id="geom-colmesh-1_1-normals-array">0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0.799072 -0.601235 0 0.799072 -0.601235 0 0.799072 -0.601235 0 0.799072 -0.601235 0 0.799072 -0.601235 0 0.799072 -0.601235 0 -0.799072 -0.601235 0 -0.799072 -0.601235 0 -0.799072 -0.601235 0 -0.799072 -0.601235 0 -0.799072 -0.601235 0 -0.799072 -0.601235 0 0.799072 0.601235 0 0.799072 0.601235 0 0.799072 0.601235 0 0.799072 0.601235 0 0.799072 0.601235 0 0.799072 0.601235 0 -0.799072 0.601235 0 -0.799072 0.601235 0 -0.799072 0.601235 0 -0.799072 0.601235 0 -0.799072 0.601235 0 -0.799072 0.601235 0 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 -0.707107 0 0.707107 -0.707107 0 0.707107 -0.707107 0 0.707107 -0.707107 0 0.707107 -0.707107 0 0.707107 -0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 0.707107 0 0.707107 -0.707106 0 0.707107 -0.707107 0 0.707107 -0.707106 0 0.707107 -0.707106 0 0.707107 -0.707107 0 0.707107 -0.707106 0 0.707107</float_array>
+          <technique_common>
+            <accessor count="204" source="#geom-colmesh-1_1-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-colmesh-1_1-map1">
+          <float_array count="312" id="geom-colmesh-1_1-map1-array">0.961316 0 0 0.038684 0 0 1 0.726366 0 0 0.726366 0 0.038684 0 0 1 0.273634 0 0 0.726366 0 0.961316 1 0 0.038684 0 0 0.961316 0 0 0.038684 1 0 0.961316 1 0 0.273634 0 0 0.726366 0 0 0.273634 1 0 0.726366 1 0 0.038684 0 0 0.961316 0 0 0.038684 1 0 0.961316 1 0 0.273634 0 0 0.726366 0 0 0.273634 1 0 0.726366 1 0 1 0 0 0 0 0 1 0.726366 0 0 0.726366 0 0 0 0 1 0 0 0 0.726366 0 0.698474 1 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 0.726366 0 0 0 1 0 0.726366 1 0 0.301526 0 0 0.698474 0 0 0.301526 1 0 0.698474 1 0 0.273634 0 0 1 0 0 0.273634 1 0 1 1 0 1 0 0 0 0 0 1 0.726366 0 0 0.726366 0 0 0 0 1 0 0 0 0.726366 0 0.698474 1 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 0.726366 0 0 0 1 0 0.726366 1 0 0.301526 0 0 0.698474 0 0 0.301526 1 0 0.698474 1 0 0.273634 0 0 1 0 0 0.273634 1 0 1 1 0 1 0.273634 0 0 0.273634 0 0.961316 1 0 0.038684 1 0 0 0.273634 0 0.961316 0 0 0.038684 1 0 1 0.726366 0 -0.017045 0 0 -0.017045 1 0 1.017045 1 0 1.017045 0 0 -0.120567 0 0 -0.120567 1 0 -0.017045 0 0 -0.017045 1 0 0.698474 1 0 0.301526 1 0 0.301526 1 0 1 0.726366 0 0.698474 1 0 0.301526 1 0 0.301526 1 0 1 0.726366 0 0.193975 0 0 0.193975 1 0 0.213748 0 0 0.213748 1 0 0.193975 0 0 0.193975 1 0 0.213748 0 0 0.213748 1 0</float_array>
+          <technique_common>
+            <accessor count="104" source="#geom-colmesh-1_1-map1-array" stride="3">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+              <param name="P" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-colmesh-1_1-vertices">
+          <input semantic="POSITION" source="#geom-colmesh-1_1-positions" />
+        </vertices>
+        <triangles count="68" material="industrial">
+          <input offset="0" semantic="VERTEX" source="#geom-colmesh-1_1-vertices" />
+          <input offset="1" semantic="NORMAL" source="#geom-colmesh-1_1-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#geom-colmesh-1_1-map1" />
+          <p>24 0 72 2 1 2 26 2 74 26 3 74 27 4 75 3 5 3 24 6 72 26 7 74 3 8 3 3 9 3 25 10 73 1 11 1 24 12 72 3 13 3 1 14 1 0 15 0 24 16 72 1 17 1 4 18 4 29 19 77 5 20 5 5 21 5 31 22 79 7 23 7 4 24 4 5 25 5 7 26 7 7 27 7 30 28 78 6 29 6 4 30 4 7 31 7 6 32 6 28 33 76 4 34 4 6 35 6 0 36 8 1 37 9 29 38 11 29 39 11 4 40 10 0 41 8 25 42 12 3 43 13 31 44 15 31 45 15 5 46 14 25 47 12 27 48 16 26 49 17 30 50 19 30 51 19 7 52 18 27 53 16 2 54 20 24 55 21 28 56 23 28 57 23 6 58 22 2 59 20 8 60 24 10 61 26 32 62 88 32 63 88 33 64 89 11 65 27 8 66 24 32 67 88 11 68 27 8 69 24 11 70 27 9 71 25 13 72 29 35 73 91 15 74 31 12 75 28 13 76 29 15 77 31 15 78 31 34 79 90 14 80 30 12 81 28 15 82 31 14 83 30 8 84 32 9 85 33 13 86 35 13 87 35 12 88 34 8 89 32 9 90 36 11 91 37 35 92 39 35 93 39 13 94 38 9 95 36 33 96 40 32 97 41 34 98 43 34 99 43 15 100 42 33 101 40 10 102 44 8 103 45 12 104 47 12 105 47 14 106 46 10 107 44 16 108 48 18 109 50 36 110 92 36 111 92 37 112 93 19 113 51 16 114 48 36 115 92 19 116 51 16 117 48 19 118 51 17 119 49 21 120 53 39 121 95 23 122 55 20 123 52 21 124 53 23 125 55 23 126 55 38 127 94 22 128 54 20 129 52 23 130 55 22 131 54 16 132 56 17 133 57 21 134 59 21 135 59 20 136 58 16 137 56 17 138 60 19 139 61 39 140 63 39 141 63 21 142 62 17 143 60 37 144 64 36 145 65 38 146 67 38 147 67 23 148 66 37 149 64 18 150 68 16 151 69 20 152 71 20 153 71 22 154 70 18 155 68 1 156 80 25 157 12 5 158 14 5 159 14 29 160 81 1 161 80 4 162 82 28 163 23 24 164 21 24 165 21 0 166 83 4 167 82 3 168 84 27 169 16 7 170 18 7 171 18 31 172 85 3 173 84 26 174 86 2 175 20 6 176 22 6 177 22 30 178 87 26 179 86 11 180 96 33 181 40 15 182 42 15 183 42 35 184 97 11 185 96 32 186 98 10 187 44 14 188 46 14 189 46 34 190 99 32 191 98 19 192 100 37 193 64 23 194 66 23 195 66 39 196 101 19 197 100 36 198 102 18 199 68 22 200 70 22 201 70 38 202 103 36 203 102</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_lights>
+    <light id="EnvironmentAmbientLight" name="EnvironmentAmbientLight">
+      <technique_common>
+        <ambient>
+          <color>0 0 0</color>
+        </ambient>
+      </technique_common>
+    </light>
+  </library_lights>
+  <library_visual_scenes>
+    <visual_scene id="MaxScene">
+      <node name="EnvironmentAmbientLight">
+        <instance_light url="#EnvironmentAmbientLight" />
+      </node>
+      <node id="node-base00" name="base00">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="node-collision-1" name="collision-1">
+          <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-start01" name="start01">
+          <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="node-nulldetail1" name="nulldetail1">
+            <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <extra>
+              <technique profile="OpenCOLLADA">
+                <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+                <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+                <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+                <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+              </technique>
+            </extra>
+          </node>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-ClosedRoad_sign_big_b200" name="ClosedRoad_sign_big_b200">
+          <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_geometry url="#geom-ClosedRoad_sign_big_b200">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="industrial" target="#industrial-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+                <instance_material symbol="metal_galvanized" target="#metal_galvanized-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+                <instance_material symbol="roadsigns" target="#roadsigns-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-ClosedRoad_sign_big_b70" name="ClosedRoad_sign_big_b70">
+          <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_geometry url="#geom-ClosedRoad_sign_big_b70">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="metal_galvanized" target="#metal_galvanized-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+                <instance_material symbol="roadsigns" target="#roadsigns-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-ClosedRoad_sign_big_b35" name="ClosedRoad_sign_big_b35">
+          <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_geometry url="#geom-ClosedRoad_sign_big_b35">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="metal_galvanized" target="#metal_galvanized-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+                <instance_material symbol="roadsigns" target="#roadsigns-material">
+                  <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <extra>
+          <technique profile="OpenCOLLADA">
+            <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+            <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+            <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+            <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+          </technique>
+        </extra>
+      </node>
+      <node id="node-colmesh-1_1" name="colmesh-1">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#geom-colmesh-1_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="industrial" target="#industrial_1-material">
+                <bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="CHANNEL1" />
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="OpenCOLLADA">
+            <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+            <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+            <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+            <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#MaxScene" />
+  </scene>
+</COLLADA>

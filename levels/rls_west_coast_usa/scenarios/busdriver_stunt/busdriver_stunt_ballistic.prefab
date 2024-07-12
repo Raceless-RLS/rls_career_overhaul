@@ -1,0 +1,269 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0.000000 0.000000 0.000000";
+
+   new BeamNGWaypoint(ramp_base) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-439.503967 -93.8344421 108.72213";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGVehicle(scenario_player0) {
+      JBeam = "citybus";
+      color = "0.899999976 0.899999976 0.899999976 1.17999995";
+      colorPalette0 = "0.899999976 0.899999976 0.899999976 1.17999995";
+      colorPalette1 = "0.899999976 0.899999976 0.899999976 1.17999995";
+      partConfig = "levels/rls_west_coast_usa/scenarios/busdriver_stunt/configurations/hero.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "-868.802307 -539.784302 106.699532";
+      scale = "1 1 1";
+      rotationMatrix = "-0.697063923 0.717009306 0 -0.717009425 -0.697063804 0 0 0 1";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         licenseText = "RTG-8221";
+   };
+   new SimPath(democam) {
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "0758b540-3542-4685-9ac8-7b78b9abb592";
+         looped = "1";
+         renderDebug = "0";
+
+      new Marker() {
+         seqNum = "0";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "-875.559753 -549.506348 108.25164";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.982101977 0.188349947 -1.62981451e-08 -0.187893555 0.979722261 -0.0695720017 -0.0131038651 0.0683268011 0.997576952";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "23a9c62f-13be-4688-9c7d-269115c7440a";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "1";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-875.559753 -549.506348 108.25164";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.982101977 0.188349947 -1.62981451e-08 -0.187893555 0.979722261 -0.0695720017 -0.0131038651 0.0683268011 0.997576952";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "a3002fc8-66f9-4534-9fe9-0287e0215bc7";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "2";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "-876.466858 -550.124207 108.440353";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.996539414 -0.0831216052 4.19095159e-08 0.0814326927 0.97629112 -0.200560048 0.0166708305 0.199865982 0.979681432";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "875686ca-3bba-4503-b175-ff031eaa07b0";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "3";
+         timeToNext = "0";
+         positionSmooth = "1";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "-876.466858 -550.124207 108.440353";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.996539414 -0.0831216052 4.19095159e-08 0.0814326927 0.97629112 -0.200560048 0.0166708305 0.199865982 0.979681432";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "970b960f-087a-45d6-84f1-331e46d457c4";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "4";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "-777.321106 -238.953781 136.590408";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.218916118 -0.975743651 1.86264515e-08 0.970137 0.217658162 -0.107047357 0.104450777 0.023434408 0.994253933";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "ed4fdde2-80b1-499e-8207-717a893f6e8f";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "5";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-777.321106 -238.953781 136.590408";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.218916118 -0.975743651 1.86264515e-08 0.970137 0.217658162 -0.107047357 0.104450777 0.023434408 0.994253933";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "685fa96e-ef38-45c3-830b-5d9d3ed2f8e4";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "6";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-742.313904 -228.575974 136.378891";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.289794564 -0.957088828 0 0.956900358 0.289737463 -0.0198454559 0.0189938638 0.00575110409 0.999803066";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "ae480019-1f81-475a-98e2-959c0230f762";
+            seconds = "2";
+      };
+      new Marker() {
+         seqNum = "7";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-742.313904 -228.575974 136.378891";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.289794564 -0.957088828 0 0.956900358 0.289737463 -0.0198454559 0.0189938638 0.00575110409 0.999803066";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "4f0f2524-084e-4c6e-9012-967969a3f9c1";
+            seconds = "2";
+      };
+      new Marker() {
+         seqNum = "8";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "-449.974487 38.5607948 176.495728";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.994642258 0.103372708 -1.86264515e-09 -0.0953537971 -0.917485118 -0.386170775 -0.0399195328 -0.384101957 0.922427297";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "7e9f41fc-fa0b-4f97-a497-d0b74564b5bb";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "9";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-449.974487 38.5607948 176.495728";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.994642258 0.103372708 -1.86264515e-09 -0.0953537971 -0.917485118 -0.386170775 -0.0399195328 -0.384101957 0.922427297";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "4c828b48-c1ea-41d9-bd61-e04eac9f09a3";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "10";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-433.703247 35.2556496 176.495728";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.974206924 0.225656927 -2.60770321e-08 -0.209121644 -0.902820706 -0.375743181 -0.0847890824 -0.366051584 0.926723838";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "37544b14-d2b4-4f5d-9896-4e101568c05d";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "11";
+         timeToNext = "0";
+         positionSmooth = "0.300000012";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "-433.703247 35.2556496 176.495728";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.974206924 0.225656927 -2.60770321e-08 -0.209121644 -0.902820706 -0.375743181 -0.0847890824 -0.366051584 0.926723838";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "6a2c6576-abe8-40ef-965d-2f25efcc2563";
+            seconds = "3";
+      };
+   };
+   new TSStatic() {
+      shapeName = "art/shapes/objects/ramp_massive.dae";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      useInstanceRenderData = "0";
+      instanceColor = "White";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      prebuildCollisionData = "0";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "-535.502014 -197.354996 107.050003";
+      scale = "1 1 1";
+      rotationMatrix = "0.726792872 -0.686856925 0 0.686856925 0.726792872 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(stcheck_1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-699.087769 -364.46582 104.740227";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(stcheck_2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "907.460693 -613.667603 -81.6408081";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
