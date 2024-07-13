@@ -1,7 +1,5 @@
 # RLS Career Overhaul (0.32.4)
 
-**Disclaimer**: This mod is not intended to work without the [RLS Championships mod](https://github.com/Raceless-RLS/rls_championships). You can either download both mods separately or go to the combined branch and download the complete package.
-
 **Important**: When starting a new save, you must press `Ctrl+L`. It is recommended to do this every time you start the game to ensure everything runs smoothly.
 
 ## Overview
@@ -103,19 +101,14 @@ This new system encourages safer driving and careful management of insurance cov
 
 ### Starting Capital
 
-- **Increased Starting Capital**: Starting capital has been increased from 13,500 to 25,500.
+- **Increased Starting Capital**: Starting capital has been increased from 13,500 to 23,000.
 
 ## Installation
 
 1. **Download the Mod**:
-   - Click on the green "Code" button and select "Download ZIP".
-
-2. **Extract the Contents**:
-   - Extract the downloaded ZIP file to a folder on your computer.
-
-3. **Compress the Mod**:
-   - Ensure the mod's contents are compressed into a single ZIP file. Exclude the `.gitignore` and `README.md` files to keep the mod clean and focused on game-relevant files.
-
+   - Click on Releases on right side and select the Latest Release.
+   - Scroll to the bottom and download either the standard or noPolice version of the mod.
+     
 4. **Move to Mods Folder**:
    - Navigate to your BeamNG.drive mods folder. The default path is `%AppData%\BeamNG.drive\0.32\mods`. Note that `0.32` is the current version and might be different for your game.
    - Copy the compressed ZIP file into the `mods` folder.
@@ -129,7 +122,5 @@ This new system encourages safer driving and careful management of insurance cov
 The RLS Career Overhaul mod provides a comprehensive enhancement to the career mode, making it more engaging and challenging. Enjoy the new features and improvements!
 
 ### Notes
-
-For installing the mod directly from GitHub, compress the mod's contents into a single ZIP file (excluding the `.gitignore` and `README.md` files) and place the compressed file into the mods folder of BeamNG.drive. This ensures the mod functions correctly and appears in the game's Mod Manager.
 
 For more detailed instructions, you can refer to the official [BeamNG Documentation](https://documentation.beamng.com/tutorials/mods/installing-mods/) and [Steam Community Guide](https://steamcommunity.com/sharedfiles/filedetails/?id=2918556246) on how to manually install mods.
