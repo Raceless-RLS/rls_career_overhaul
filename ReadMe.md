@@ -2,6 +2,8 @@
 
 **Disclaimer**: This mod is not intended to work without the [RLS Championships mod](https://github.com/Raceless-RLS/rls_championships). You can either download both mods separately or go to the combined branch and download the complete package.
 
+**Important**: When starting a new save, you must press `Ctrl+L`. It is recommended to do this every time you start the game to ensure everything runs smoothly.
+
 ## Overview
 
 The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including police interactions, the economy, parcel and vehicle deliveries, insurance, garage space, and dealerships. This mod aims to provide a more immersive and challenging career experience.
