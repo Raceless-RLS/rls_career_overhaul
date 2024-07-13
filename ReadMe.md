@@ -1,4 +1,6 @@
-# RLS Career Overhaul
+# RLS Career Overhaul (0.32.4)
+
+**Disclaimer**: This mod is not intended to work without the [RLS Championships mod](https://github.com/Raceless-RLS/rls_championships). You can either download both mods separately or go to the combined branch and download the complete package.
 
 ## Overview
 
