@@ -902,15 +902,11 @@ end
 
 -- Green light trigger
 local function Greenlight(data)
-    print("Greenlight function called with data:")
-
     if be:getPlayerVehicleID(0) ~= data.subjectID then
-        print("Greenlight: Player vehicle ID mismatch")
         return
     end
 
     local raceName = getActivityName(data)
-    print("Greenlight: raceName =" .. raceName)
 
     local Greenlight = scenetree.findObject(raceName .. '_Green')
     local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
@@ -919,10 +915,8 @@ local function Greenlight(data)
         if currCheckpoint + 1 == races[raceName].checkpoints then
             displayAssets(data)
             playCheckpointSound()
-            print("Greenlight: Final checkpoint reached")
             timerActive = false
             local reward = payoutRace(data)
-            print("Greenlight: Race payout =" .. reward)
             currCheckpoint = nil
             mSplitTimes = {}
             mActiveRace = raceName
@@ -930,7 +924,6 @@ local function Greenlight(data)
             timerActive = true
             if races[raceName].hotlap then
                 mHotlap = raceName
-                print("Greenlight: Hotlap started for" .. raceName)
             end
             return
         else
@@ -940,33 +933,15 @@ local function Greenlight(data)
 
     if data.event == "enter" and staged == raceName then
         displayAssets(data)
-        print("Greenlight: Enter event triggered and race is staged")
         timerActive = true
         in_race_time = 0
         mActiveRace = raceName
-        print("Greenlight: Race started for" .. raceName)
-        print("Greenlight: in_race_time =" .. in_race_time)
-        print("Greenlight: mActiveRace =" .. mActiveRace)
-        displayMessage(getStartMessage(raceName), 2)
+        displayMessage(getStartMessage(raceName), 6)
         if Greenlight then
             Greenlight:setHidden(false)
-            print("Greenlight: Green light shown")
-        else
-            print("Greenlight: Green light object not found")
         end
         if Yellowlight then
             Yellowlight:setHidden(true)
-            print("Greenlight: Yellow light hidden")
-        else
-            print("Greenlight: Yellow light object not found")
-        end
-    else
-        print("Greenlight: Conditions not met for race start")
-        print("Greenlight: data.event =" .. data.event)
-        if staged == nil then
-            print("Greenlight: staged = False")
-        else
-            print("Greenlight: staged = " .. staged)
         end
     end
 end
@@ -1012,25 +987,16 @@ local function displayStagedMessage(race, times)
 end
 -- Yellow light trigger
 local function Yellowlight(data)
-    print("Yellowlight function called with data:")
-
     if be:getPlayerVehicleID(0) ~= data.subjectID then
-        print("Yellowlight: Player vehicle ID mismatch")
         return
     end
-
     local raceName = getActivityName(data)
-    print("Yellowlight: raceName =" .. raceName)
-
     local yellowLight = scenetree.findObject(raceName .. '_Yellow')
 
     if data.event == "enter" then
-        print("Yellowlight: Enter event triggered")
         local vehicleSpeed = math.abs(be:getObjectVelocityXYZ(data.subjectID)) * speedUnit
-        print("Yellowlight: Vehicle speed =" .. vehicleSpeed)
 
         if vehicleSpeed > 5 then
-            print("Yellowlight: Vehicle too fast to stage")
             local message = "You are too fast to stage.\n" .. "Please back up and slow down to stage."
             displayMessage(message, 2)
             staged = nil
@@ -1039,39 +1005,33 @@ local function Yellowlight(data)
                 initDisplays()
                 resetDisplays()
             end
-            print("Yellowlight: Vehicle speed acceptable for staging")
             loadLeaderboard()
-            print("Yellowlight: Leaderboard loaded")
             staged = raceName
-            print("Yellowlight: staged set to" .. raceName)
 
             local race = races[raceName]
             if not leaderboard[raceName] then
                 leaderboard[raceName] = {}
-                print("Yellowlight: Created new leaderboard entry for" .. raceName)
             end
             displayStagedMessage(race, leaderboard[raceName])
             
             if yellowLight then
                 yellowLight:setHidden(false)
-                print("Yellowlight: Yellow light shown")
             else
-                print("Yellowlight: Yellow light object not found")
             end
             local Redlight = scenetree.findObject(raceName .. '_Red')
             if Redlight then
                 Redlight:setHidden(true)
             end
+            local Greenlight = scenetree.findObject(raceName .. '_Green')
+            if Greenlight then
+                Greenlight:setHidden(true)
+            end
         end
     elseif data.event == "exit" then
-        print("Yellowlight: Exit event triggered")
         staged = nil
-        print("Yellowlight: staged set to nil")
         if yellowLight then
             yellowLight:setHidden(true)
-            print("Yellowlight: Yellow light hidden")
         else
-            print("Yellowlight: Yellow light object not found")
         end
         if not mActiveRace then
             local Redlight = scenetree.findObject(raceName .. '_Red')
