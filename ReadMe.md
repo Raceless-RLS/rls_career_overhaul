@@ -2,6 +2,20 @@
 
 **Important**: When starting a new save, you must press `Ctrl+L`. It is recommended to do this every time you start the game to ensure everything runs smoothly.
 
+## Installation
+
+1. **Download the Mod**:
+   - Click on Releases on right side and select the Latest Release.
+   - Scroll to the bottom and download either the standard or noPolice version of the mod.
+     
+4. **Move to Mods Folder**:
+   - Navigate to your BeamNG.drive mods folder. The default path is `%AppData%\BeamNG.drive\0.32\mods`. Note that `0.32` is the current version and might be different for your game.
+   - Copy the compressed ZIP file into the `mods` folder.
+
+5. **Enable the Mod**:
+   - Launch BeamNG.drive.
+   - Go to the game settings and enable the RLS Career Overhaul mod.
+
 ## Overview
 
 The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including police interactions, the economy, parcel and vehicle deliveries, insurance, garage space, and dealerships. This mod aims to provide a more immersive and challenging career experience.
@@ -102,20 +116,6 @@ This new system encourages safer driving and careful management of insurance cov
 ### Starting Capital
 
 - **Increased Starting Capital**: Starting capital has been increased from 13,500 to 23,000.
-
-## Installation
-
-1. **Download the Mod**:
-   - Click on Releases on right side and select the Latest Release.
-   - Scroll to the bottom and download either the standard or noPolice version of the mod.
-     
-4. **Move to Mods Folder**:
-   - Navigate to your BeamNG.drive mods folder. The default path is `%AppData%\BeamNG.drive\0.32\mods`. Note that `0.32` is the current version and might be different for your game.
-   - Copy the compressed ZIP file into the `mods` folder.
-
-5. **Enable the Mod**:
-   - Launch BeamNG.drive.
-   - Go to the game settings and enable the RLS Career Overhaul mod.
 
 ## Conclusion
 
