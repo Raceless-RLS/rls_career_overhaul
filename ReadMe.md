@@ -1,5 +1,7 @@
 # RLS Career Overhaul
 
+**Important**: When starting a new save, you must press `Ctrl+L`. It is recommended to do this every time you start the game to ensure everything runs smoothly.
+
 ## Overview
 
 The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including police interactions, the economy, parcel and vehicle deliveries, insurance, garage space, and dealerships. This mod aims to provide a more immersive and challenging career experience.
