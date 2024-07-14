@@ -1,0 +1,42 @@
+name: Create Patch
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-patch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Install xdelta3
+      run: sudo apt-get install -y xdelta3
+
+    - name: Download previous release assets
+      run: |
+        latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        for asset in "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip"; do
+          wget https://github.com/Raceless-RLS/rls_career_overhaul/releases/download/$latest_tag/$asset -O old_$asset
+        done
+
+    - name: Download current release assets
+      run: |
+        current_tag=$(git describe --tags)
+        for asset in "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip"; do
+          wget https://github.com/Raceless-RLS/rls_career_overhaul/archive/$current_tag.zip -O new_$asset
+        done
+
+    - name: Create patch files
+      run: |
+        for asset in "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip"; do
+          xdelta3 -e -s old_$asset new_$asset patch_$asset.xdelta
+        done
+
+    - name: Upload patch files
+      uses: actions/upload-artifact@v2
+      with:
+        name: patches
+        path: patch_*.xdelta
