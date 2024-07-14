@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9d68b</authoring_tool>
+    </contributor>
+    <created>2019-05-22T11:22:38</created>
+    <modified>2019-05-22T11:22:38</modified>
+    <unit meter="1" name="meter" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="eca_rocks-effect">
+      <profile_COMMON>
+        <newparam sid="eca_rocks_d_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="eca_rocks_d_dds-sampler">
+          <sampler2D>
+            <source>eca_rocks_d_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="eca_rocks_s_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="eca_rocks_s_dds-sampler">
+          <sampler2D>
+            <source>eca_rocks_s_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="eca_rocks_n_dds-surface">
+          <surface type="2D">
+            </surface>
+        </newparam>
+        <newparam sid="eca_rocks_n_dds-sampler">
+          <sampler2D>
+            <source>eca_rocks_n_dds-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="eca_rocks_d_dds-sampler" />
+            </diffuse>
+            <specular>
+              <texture texture="eca_rocks_s_dds-sampler" />
+            </specular>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+          <extra>
+            <technique profile="FCOLLADA">
+              <bump>
+                <texture texture="eca_rocks_n_dds-sampler" />
+              </bump>
+            </technique>
+          </extra>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="eca_rocks-material" name="eca_rocks">
+      <instance_effect url="#eca_rocks-effect" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube_011-mesh" name="Cube.011">
+      <mesh>
+        <source id="Cube_011-mesh-positions">
+          <float_array count="93" id="Cube_011-mesh-positions-array">0.1341743 0.06747007 0.06391376 -0.04547119 0.06042635 0.1426625 -0.03450393 0.1113834 0.04724925 -0.1413574 -0.03329026 0.05528062 0.05234616 0.1148654 -0.002812862 -0.1553344 -0.01157534 -0.1025395 -0.0193634 -0.1327751 -0.1205382 -0.08835792 -0.01068717 -0.1161366 0.03070539 -0.03738808 -0.1306958 0.06636047 -0.07844525 -0.07328844 0.06061166 -0.1303765 -0.02080965 -0.07633304 -0.1488731 -0.02565574 0.08481788 -0.04741632 0.1021437 -0.0493431 -0.08910375 0.1403217 0.1226625 0.08577191 -0.0444231 0.09187316 0.02725166 -0.1221104 -0.1511402 0.03518325 -0.01178836 -0.0565977 0.1025976 -0.02737569 0.006406724 -0.1034525 0.1444664 0.001021325 -0.1475095 0.05439656 0.04804414 0.01620972 0.1056637 0.02198976 0.05813974 0.1276507 0.1217012 -0.007925212 0.087902 0.1378936 -0.02649176 0.0545172 0.137432 0.01596283 0.07534307 0.1059799 -0.07385843 -0.06829833 0.1275796 -0.04073846 -0.05832147 0.1210222 -0.07676547 -0.03422689 -0.08839511 0.1079105 -0.1012549 -0.06876564 0.1016697 -0.1242685 -0.1089707 0.08730715 -0.1198845</float_array>
+          <technique_common>
+            <accessor count="31" source="#Cube_011-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_011-mesh-normals">
+          <float_array count="93" id="Cube_011-mesh-normals-array">-0.8988891 -0.1710614 0.403406 -0.7876585 -0.2005082 -0.5825725 -0.4866241 -0.8675001 -0.1031539 -0.4490206 -0.4432221 0.7758446 0.8017321 -0.5895951 -0.09799623 0.9175279 -0.3518553 0.1853123 0.5915837 -0.3391901 0.7314226 -0.2660012 0.5020635 0.8229069 -0.3616477 0.9183106 0.1609866 -0.8870115 0.4259877 0.1781713 0.009003102 0.6161508 -0.7875768 -0.3690986 0.9233265 -0.105993 0.2232182 0.9741765 0.03396797 0.5547711 0.2422279 -0.7959614 -0.2075625 -0.2125066 -0.9548606 -0.0488007 -0.6822944 -0.7294471 0.202676 -0.1503666 -0.9676324 0.1566837 -0.9490747 0.2733266 0.5379574 -0.8401256 -0.06921696 0.4695088 0.3394966 0.8150482 -0.3484659 0.9011038 0.2580381 0.4861444 -0.7145214 -0.5031132 0.240764 -0.5392701 0.8069823 0.9344116 -0.1216807 -0.334767 0.6804335 0.5624144 0.4697875 0.4295583 -0.6789005 -0.5954609 0.5745856 -0.0845077 0.8140699 0.832925 0.09399855 0.5453443 0.4457992 0.2835878 0.8490237 -0.5896655 0.4513211 -0.669779 0.7519225 0.540946 -0.3768157</float_array>
+          <technique_common>
+            <accessor count="31" source="#Cube_011-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_011-mesh-map-0">
+          <float_array count="348" id="Cube_011-mesh-map-0-array">0.1771837 0.4978734 0.1750386 0.4866164 0.1850885 0.4938432 0.1831318 0.5054426 0.1771837 0.4978734 0.1850885 0.4938432 0.197416 0.498039 0.1978728 0.5042669 0.1933208 0.5059996 0.1710025 0.5075904 0.163691 0.4956269 0.1722127 0.4939211 0.1722127 0.4939211 0.1771837 0.4978734 0.1710025 0.5075904 0.1771837 0.4978734 0.1722127 0.4939211 0.1750386 0.4866164 0.2185703 0.4881042 0.2207711 0.4889818 0.214812 0.5008851 0.1756143 0.4748989 0.1896959 0.4720302 0.1796464 0.4833975 0.1904187 0.4878493 0.1796464 0.4833975 0.1889495 0.4791883 0.1896959 0.4720302 0.1889495 0.4791883 0.1796464 0.4833975 0.1879588 0.4994137 0.1927452 0.4965859 0.197416 0.498039 0.2219359 0.5096412 0.214812 0.5008851 0.2226047 0.5010571 0.1982046 0.4958712 0.1994903 0.4884651 0.2058867 0.4930661 0.1831318 0.5054426 0.1872919 0.5049607 0.1860713 0.5172129 0.1904187 0.4878493 0.1927452 0.4965859 0.1850885 0.4938432 0.197416 0.498039 0.1933208 0.5059996 0.1872919 0.5049607 0.2001086 0.4975198 0.2058867 0.4930661 0.203741 0.5079174 0.1982046 0.4958712 0.196586 0.4937686 0.1994903 0.4884651 0.2226047 0.5010571 0.2270518 0.5081551 0.2219359 0.5096412 0.1978728 0.5042669 0.1972584 0.5070475 0.1933208 0.5059996 0.1904187 0.4878493 0.1994903 0.4884651 0.196586 0.4937686 0.203741 0.5079174 0.1997531 0.5069475 0.1978728 0.5042669 0.1925283 0.5113559 0.1972584 0.5070475 0.1994618 0.5082567 0.197416 0.498039 0.1872919 0.5049607 0.1879588 0.4994137 0.1933208 0.5059996 0.1860713 0.5172129 0.1872919 0.5049607 0.1796464 0.4833975 0.1750386 0.4866164 0.1736456 0.4777131 0.197416 0.498039 0.196586 0.4937686 0.1982046 0.4958712 0.1925283 0.5113559 0.1912693 0.5154551 0.1860713 0.5172129 0.2058867 0.4930661 0.20808 0.5006053 0.203741 0.5079174 0.1796464 0.4833975 0.1850885 0.4938432 0.1750386 0.4866164 0.1796464 0.4833975 0.1904187 0.4878493 0.1850885 0.4938432 0.1933208 0.5059996 0.1925283 0.5113559 0.1860713 0.5172129 0.1927452 0.4965859 0.1879588 0.4994137 0.1850885 0.4938432 0.2226047 0.5010571 0.214812 0.5008851 0.2213896 0.4951507 0.20808 0.5006053 0.2058867 0.4930661 0.214812 0.5008851 0.2183343 0.5117088 0.214812 0.5008851 0.2219359 0.5096412 0.20808 0.5006053 0.214812 0.5008851 0.2105082 0.5087761 0.2213896 0.4951507 0.214812 0.5008851 0.2207711 0.4889818 0.163691 0.488857 0.1722127 0.4939211 0.163691 0.4956269 0.1722127 0.4939211 0.163691 0.488857 0.1657111 0.4868533 0.2183343 0.5117088 0.2105082 0.5087761 0.214812 0.5008851 0.163691 0.4956269 0.1710025 0.5075904 0.164505 0.5018293 0.1831318 0.5054426 0.1710025 0.5075904 0.1771837 0.4978734 0.1831318 0.5054426 0.1879588 0.4994137 0.1872919 0.5049607 0.1904187 0.4878493 0.196586 0.4937686 0.1927452 0.4965859 0.1850885 0.4938432 0.1879588 0.4994137 0.1831318 0.5054426 0.1972584 0.5070475 0.1978728 0.5042669 0.1997531 0.5069475 0.197416 0.498039 0.1982046 0.4958712 0.2001086 0.4975198 0.1736456 0.4777131 0.1731446 0.4749927 0.1756143 0.4748989 0.1925283 0.5113559 0.1933208 0.5059996 0.1972584 0.5070475 0.2012305 0.5121245 0.1925283 0.5113559 0.1994618 0.5082567 0.2001086 0.4975198 0.1982046 0.4958712 0.2058867 0.4930661 0.197416 0.498039 0.2001086 0.4975198 0.203741 0.5079174 0.197416 0.498039 0.203741 0.5079174 0.1978728 0.5042669 0.2058867 0.4930661 0.2185703 0.4881042 0.214812 0.5008851 0.1750386 0.4866164 0.1722127 0.4939211 0.1657111 0.4868533 0.1736456 0.4777131 0.1756143 0.4748989 0.1796464 0.4833975 0.197416 0.498039 0.1927452 0.4965859 0.196586 0.4937686</float_array>
+          <technique_common>
+            <accessor count="174" source="#Cube_011-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_011-mesh-colors-Col" name="Col">
+          <float_array count="522" id="Cube_011-mesh-colors-Col-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="174" source="#Cube_011-mesh-colors-Col-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_011-mesh-colors-Col.001" name="Col.001">
+          <float_array count="522" id="Cube_011-mesh-colors-Col.001-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="174" source="#Cube_011-mesh-colors-Col.001-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_011-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_011-mesh-positions" />
+        </vertices>
+        <triangles count="58" material="eca_rocks-material">
+          <input offset="0" semantic="VERTEX" source="#Cube_011-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#Cube_011-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#Cube_011-mesh-map-0" />
+          <input offset="3" semantic="COLOR" set="0" source="#Cube_011-mesh-colors-Col" />
+          <input offset="3" semantic="COLOR" set="1" source="#Cube_011-mesh-colors-Col.001" />
+          <p>3 0 0 0 5 1 1 1 11 2 2 2 13 3 3 3 3 0 4 4 11 2 5 5 27 4 6 6 23 5 7 7 12 6 8 8 1 7 9 9 17 8 10 10 16 9 11 11 16 9 12 12 3 0 13 13 1 7 14 14 3 0 15 15 16 9 16 16 5 1 17 17 29 10 18 18 28 11 19 19 4 12 20 20 29 10 21 21 15 13 22 22 7 14 23 23 6 15 24 24 7 14 25 25 8 16 26 26 15 13 27 27 8 16 28 28 7 14 29 29 19 17 30 30 10 18 31 31 27 4 32 32 21 19 33 33 4 12 34 34 2 20 35 35 25 21 36 36 8 16 37 37 15 13 38 38 13 3 39 39 18 22 40 40 1 7 41 41 6 15 42 42 10 18 43 43 11 2 44 44 27 4 45 45 12 6 46 46 18 22 47 47 26 23 48 48 15 13 49 49 0 24 50 50 25 21 51 51 9 25 52 52 8 16 53 53 2 20 54 54 1 7 55 55 21 19 56 56 23 5 57 57 22 26 58 58 12 6 59 59 6 15 60 60 8 16 61 61 9 25 62 62 0 24 63 63 24 27 64 64 23 5 65 65 20 28 66 66 22 26 67 67 24 27 68 68 27 4 69 69 18 22 70 70 19 17 71 71 12 6 72 72 1 7 73 73 18 22 74 74 7 14 75 75 5 1 76 76 30 29 77 77 27 4 78 78 9 25 79 79 25 21 80 80 20 28 81 81 21 19 82 82 1 7 83 83 15 13 84 84 14 30 85 85 0 24 86 86 7 14 87 87 11 2 88 88 5 1 89 89 7 14 90 90 6 15 91 91 11 2 92 92 12 6 93 93 20 28 94 94 1 7 95 95 10 18 96 96 19 17 97 97 11 2 98 98 2 20 99 99 4 12 100 100 17 8 101 101 14 30 102 102 15 13 103 103 4 12 104 104 20 28 105 105 4 12 106 106 21 19 107 107 14 30 108 108 4 12 109 109 0 24 110 110 17 8 111 111 4 12 112 112 28 11 113 113 28 11 114 114 16 9 115 115 17 8 116 116 16 9 117 117 28 11 118 118 30 29 119 119 20 28 120 120 0 24 121 121 4 12 122 122 17 8 123 123 1 7 124 124 2 20 125 125 13 3 126 126 1 7 127 127 3 0 128 128 13 3 129 129 19 17 130 130 18 22 131 131 6 15 132 132 9 25 133 133 10 18 134 134 11 2 135 135 19 17 136 136 13 3 137 137 22 26 138 138 23 5 139 139 24 27 140 140 27 4 141 141 25 21 142 142 26 23 143 143 30 29 144 144 28 11 145 145 29 10 146 146 20 28 147 147 12 6 148 148 22 26 149 149 0 24 150 150 20 28 151 151 24 27 152 152 26 23 153 153 25 21 154 154 15 13 155 155 27 4 156 156 26 23 157 157 0 24 158 158 27 4 159 159 0 24 160 160 23 5 161 161 15 13 162 162 29 10 163 163 4 12 164 164 5 1 165 165 16 9 166 166 30 29 167 167 30 29 168 168 29 10 169 169 7 14 170 170 27 4 171 171 10 18 172 172 9 25 173 173</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Cube_018-mesh" name="Cube.018">
+      <mesh>
+        <source id="Cube_018-mesh-positions">
+          <float_array count="30" id="Cube_018-mesh-positions-array">0.1404048 0.03230708 0.07983422 -0.02554613 0.07891964 0.1286333 -0.159644 0.006703794 0.02689576 0.09054249 0.1065989 -0.01281541 -0.1466789 0.003377854 -0.1078317 -0.04841727 -0.1565223 -0.07999348 0.08491915 0.01426023 -0.129418 0.1157873 -0.08948332 -0.0374062 -0.006182074 -0.112931 0.1464926 -0.09301835 0.1042317 -0.1207268</float_array>
+          <technique_common>
+            <accessor count="10" source="#Cube_018-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_018-mesh-normals">
+          <float_array count="30" id="Cube_018-mesh-normals-array">-0.9430387 0.06372374 0.3265233 -0.7792705 -0.08798605 -0.6204805 -0.232681 -0.8719132 -0.4308446 -0.03857553 -0.6151029 0.7875026 0.7862613 -0.5815092 -0.2089026 0.8587765 0.2091777 0.4677049 -0.3707432 0.7089838 -0.5999094 0.5525137 0.1084336 -0.8264206 0.5337235 0.8396806 -0.1003783 -0.1904124 0.6193059 0.7617108</float_array>
+          <technique_common>
+            <accessor count="10" source="#Cube_018-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_018-mesh-map-0">
+          <float_array count="96" id="Cube_018-mesh-map-0-array">0.1746019 0.4958207 0.1756945 0.4861582 0.1879109 0.4906693 0.1864736 0.5047564 0.1746019 0.4958207 0.1879109 0.4906693 0.1968679 0.4973026 0.2010424 0.5075381 0.1864736 0.5047564 0.1738094 0.4761698 0.1895719 0.4732193 0.1756945 0.4861582 0.1879109 0.4906693 0.1756945 0.4861582 0.1895719 0.4732193 0.1968679 0.4973026 0.2048241 0.4923018 0.2010424 0.5075381 0.1879109 0.4906693 0.2048241 0.4923018 0.1968679 0.4973026 0.2048241 0.4923018 0.2118206 0.5007608 0.2010424 0.5075381 0.1968679 0.4973026 0.1864736 0.5047564 0.1879109 0.4906693 0.2254833 0.5073799 0.2118206 0.5007608 0.2203747 0.4888237 0.1647725 0.4877843 0.1746019 0.4958207 0.169871 0.5065587 0.2254833 0.5073799 0.2105082 0.5087761 0.2118206 0.5007608 0.1864736 0.5047564 0.169871 0.5065587 0.1746019 0.4958207 0.1868195 0.5167204 0.1864736 0.5047564 0.2010424 0.5075381 0.2048241 0.4923018 0.2203747 0.4888237 0.2118206 0.5007608 0.1756945 0.4861582 0.1746019 0.4958207 0.1647725 0.4877843</float_array>
+          <technique_common>
+            <accessor count="48" source="#Cube_018-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_018-mesh-colors-Col" name="Col">
+          <float_array count="144" id="Cube_018-mesh-colors-Col-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="48" source="#Cube_018-mesh-colors-Col-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_018-mesh-colors-Col.001" name="Col.001">
+          <float_array count="144" id="Cube_018-mesh-colors-Col.001-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="48" source="#Cube_018-mesh-colors-Col.001-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_018-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_018-mesh-positions" />
+        </vertices>
+        <triangles count="16" material="eca_rocks-material">
+          <input offset="0" semantic="VERTEX" source="#Cube_018-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#Cube_018-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#Cube_018-mesh-map-0" />
+          <input offset="3" semantic="COLOR" set="0" source="#Cube_018-mesh-colors-Col" />
+          <input offset="3" semantic="COLOR" set="1" source="#Cube_018-mesh-colors-Col.001" />
+          <p>2 0 0 0 4 1 1 1 5 2 2 2 8 3 3 3 2 0 4 4 5 2 5 5 7 4 6 6 0 5 7 7 8 3 8 8 9 6 9 9 6 7 10 10 4 1 11 11 5 2 12 12 4 1 13 13 6 7 14 14 7 4 15 15 6 7 16 16 0 5 17 17 5 2 18 18 6 7 19 19 7 4 20 20 6 7 21 21 3 8 22 22 0 5 23 23 7 4 24 24 8 3 25 25 5 2 26 26 1 9 27 27 3 8 28 28 9 6 29 29 9 6 30 30 2 0 31 31 1 9 32 32 1 9 33 33 0 5 34 34 3 8 35 35 8 3 36 36 1 9 37 37 2 0 38 38 1 9 39 39 8 3 40 40 0 5 41 41 6 7 42 42 9 6 43 43 3 8 44 44 4 1 45 45 2 0 46 46 9 6 47 47</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Cube_031-mesh" name="Cube.031">
+      <mesh>
+        <source id="Cube_031-mesh-positions">
+          <float_array count="36" id="Cube_031-mesh-positions-array">-0.02796328 -0.008951425 -0.1669418 0.104325 -0.08794647 -0.09221887 -0.06093394 -0.1367691 -0.06923538 -0.1630722 -0.008951425 -0.05503046 -0.06093394 0.1188663 -0.06923538 0.104325 0.07004362 -0.09221887 0.05097496 -0.1367691 0.06587463 -0.114284 -0.08794647 0.08885812 -0.114284 0.07004362 0.08885812 0.05097496 0.1188663 0.06587463 0.1531132 -0.008951425 0.05166971 0.01800429 -0.008951425 0.1635811</float_array>
+          <technique_common>
+            <accessor count="12" source="#Cube_031-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_031-mesh-normals">
+          <float_array count="36" id="Cube_031-mesh-normals-array">-0.1376091 0 -0.9904866 0.6491446 -0.5380545 -0.5376883 -0.3265569 -0.8590278 -0.3942488 0.6491446 0.5380545 -0.5376883 -0.9475543 0 -0.319595 -0.3265569 0.8590278 -0.3942488 0.9475543 0 0.319595 0.3265569 -0.8590278 0.3942488 -0.6491446 -0.5380545 0.5376883 -0.6491446 0.5380545 0.5376883 0.3265569 0.8590278 0.3942488 0.1376091 0 0.9904866</float_array>
+          <technique_common>
+            <accessor count="12" source="#Cube_031-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_031-mesh-map-0">
+          <float_array count="120" id="Cube_031-mesh-map-0-array">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor count="60" source="#Cube_031-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_031-mesh-colors-Col" name="Col">
+          <float_array count="180" id="Cube_031-mesh-colors-Col-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="60" source="#Cube_031-mesh-colors-Col-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_031-mesh-colors-Col.001" name="Col.001">
+          <float_array count="180" id="Cube_031-mesh-colors-Col.001-array">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor count="60" source="#Cube_031-mesh-colors-Col.001-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_031-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_031-mesh-positions" />
+        </vertices>
+        <triangles count="20" material="eca_rocks-material">
+          <input offset="0" semantic="VERTEX" source="#Cube_031-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#Cube_031-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#Cube_031-mesh-map-0" />
+          <input offset="3" semantic="COLOR" set="0" source="#Cube_031-mesh-colors-Col" />
+          <input offset="3" semantic="COLOR" set="1" source="#Cube_031-mesh-colors-Col.001" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 3 3 0 0 4 4 5 3 5 5 0 0 6 6 2 2 7 7 3 4 8 8 0 0 9 9 3 4 10 10 4 5 11 11 0 0 12 12 4 5 13 13 5 3 14 14 1 1 15 15 5 3 16 16 10 6 17 17 2 2 18 18 1 1 19 19 6 7 20 20 3 4 21 21 2 2 22 22 7 8 23 23 4 5 24 24 3 4 25 25 8 9 26 26 5 3 27 27 4 5 28 28 9 10 29 29 1 1 30 30 10 6 31 31 6 7 32 32 2 2 33 33 6 7 34 34 7 8 35 35 3 4 36 36 7 8 37 37 8 9 38 38 4 5 39 39 8 9 40 40 9 10 41 41 5 3 42 42 9 10 43 43 10 6 44 44 6 7 45 45 10 6 46 46 11 11 47 47 7 8 48 48 6 7 49 49 11 11 50 50 8 9 51 51 7 8 52 52 11 11 53 53 9 10 54 54 8 9 55 55 11 11 56 56 10 6 57 57 9 10 58 58 11 11 59 59</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers />
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="bb__autobillboard25" name="bb__autobillboard25" type="NODE">
+        <matrix sid="transform">1 0 0 10 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+      </node>
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="eca_rock_small_5_a110" name="eca_rock_small_5_a110" type="NODE">
+            <matrix sid="transform">1.05597 1.97319e-8 -0.1468595 0 -1.97319e-8 1.066133 1.36554e-9 0 0.1468595 1.36554e-9 1.05597 0 0 0 0 1</matrix>
+            <instance_geometry name="eca_rock_small_5_a110" url="#Cube_011-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="eca_rocks-material" target="#eca_rocks-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="eca_rock_small_5_a30" name="eca_rock_small_5_a30" type="NODE">
+            <matrix sid="transform">1.05597 1.97319e-8 -0.1468595 0 -1.97319e-8 1.066133 1.36554e-9 0 0.1468595 1.36554e-9 1.05597 0 0 0 0 1</matrix>
+            <instance_geometry name="eca_rock_small_5_a30" url="#Cube_018-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="eca_rocks-material" target="#eca_rocks-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="Colmesh-1" name="Colmesh-1" type="NODE">
+            <matrix sid="transform">1.05597 1.97319e-8 -0.1468595 0 -1.97319e-8 1.066133 1.36554e-9 0 0.1468595 1.36554e-9 1.05597 0 0 0 0 1</matrix>
+            <instance_geometry name="Colmesh-1" url="#Cube_031-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="eca_rocks-material" target="#eca_rocks-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+        </node>
+        <node id="nulldetail10" name="nulldetail10" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 10 0 0 0 1</matrix>
+        </node>
+        <node id="collision-1" name="collision-1" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

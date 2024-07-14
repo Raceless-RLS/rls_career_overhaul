@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.82.7 commit date:2020-03-12, commit time:05:06, hash:375c7dc4caf4</authoring_tool>
+    </contributor>
+    <created>2020-09-20T16:49:08</created>
+    <modified>2020-09-20T16:49:08</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="clutter_commercial-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <reflectivity>
+              <float sid="specular">1</float>
+            </reflectivity>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lod_vertcol-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="clutter_commercial-material" name="clutter_commercial">
+      <instance_effect url="#clutter_commercial-effect"/>
+    </material>
+    <material id="industrial-material" name="industrial">
+      <instance_effect url="#industrial-effect"/>
+    </material>
+    <material id="lod_vertcol-material" name="lod_vertcol">
+      <instance_effect url="#lod_vertcol-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_678-mesh" name="Plane.678">
+      <mesh>
+        <source id="Plane_678-mesh-positions">
+          <float_array id="Plane_678-mesh-positions-array" count="36">-0.02236396 -5.774337 -1.801834 -0.02236396 -5.774337 1.801826 -0.02236396 5.774339 -1.801834 -0.02236396 5.774339 1.801826 -0.02236396 5.66718 -1.671933 -0.02236396 -5.667178 -1.671933 -0.02236396 -5.667178 1.671925 -0.02236396 5.66718 1.671925 0.04472792 -5.774339 -1.801818 0.04472792 -5.774339 1.801826 0.04472792 5.774337 -1.801818 0.04472792 5.774337 1.801841</float_array>
+          <technique_common>
+            <accessor source="#Plane_678-mesh-positions-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_678-mesh-normals">
+          <float_array id="Plane_678-mesh-normals-array" count="18">-1 0 0 -1.1816e-4 -6.91596e-7 1 2.38781e-4 0 -1 2.84289e-5 1 0 -2.84289e-5 -1 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_678-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_678-mesh-map-0">
+          <float_array id="Plane_678-mesh-map-0-array" count="80">0.2908804 0.2025414 0.2908804 0.2877014 7.08071e-4 0.2877014 7.08071e-4 0.2025414 0.6444092 0.8081831 0.1223421 0.8081838 0.1156202 0.801462 0.65113 0.801462 0.1350101 0.7887929 0.6317391 0.7887929 0.6510359 0.8080897 0.1157144 0.8080886 0.6444092 0.8081831 0.1223421 0.8081838 0.1156202 0.801462 0.65113 0.8014621 0.6317402 0.8080888 0.135011 0.8080897 0.1157144 0.788793 0.6510359 0.788793 1.42809 0.8052487 -0.5711075 0.8052516 -0.5711081 0.7895384 1.428089 0.7895384 -1.256266 0.8052526 -3.255464 0.8052554 -3.255465 0.7895384 -1.256267 0.7895384 2.113249 0.8052478 1.42809 0.8052487 1.428089 0.7895384 2.113248 0.7895384 -0.5711075 0.8052516 -1.256266 0.8052526 -1.256267 0.7895384 -0.5711081 0.7895384 0.6086972 0.3409826 0.6086972 0.4282478 0.3580915 0.4282478 0.3580915 0.3409826</float_array>
+          <technique_common>
+            <accessor source="#Plane_678-mesh-map-0-array" count="40" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_678-mesh-colors-Col" name="Col">
+          <float_array id="Plane_678-mesh-colors-Col-array" count="160">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.8117647 0.6666667 0.6039216 1 0.8117647 0.6666667 0.6039216 1 0.8117647 0.6666667 0.6039216 1 0.8117647 0.6666667 0.6039216 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_678-mesh-colors-Col-array" count="40" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_678-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_678-mesh-positions"/>
+        </vertices>
+        <polylist material="clutter_commercial-material" count="1">
+          <input semantic="VERTEX" source="#Plane_678-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_678-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_678-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_678-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 </vcount>
+          <p>5 0 0 0 6 0 1 1 7 0 2 2 4 0 3 3</p>
+        </polylist>
+        <polylist material="industrial-material" count="9">
+          <input semantic="VERTEX" source="#Plane_678-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_678-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_678-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_678-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 </vcount>
+          <p>5 0 4 4 4 0 5 5 2 0 6 6 0 0 7 7 6 0 8 8 5 0 9 9 0 0 10 10 1 0 11 11 7 0 12 12 6 0 13 13 1 0 14 14 3 0 15 15 4 0 16 16 7 0 17 17 3 0 18 18 2 0 19 19 3 1 20 20 1 1 21 21 9 1 22 22 11 1 23 23 0 2 24 24 2 2 25 25 10 2 26 26 8 2 27 27 2 3 28 28 3 3 29 29 11 3 30 30 10 3 31 31 1 4 32 32 0 4 33 33 8 4 34 34 9 4 35 35 10 5 36 36 11 5 37 37 9 5 38 38 8 5 39 39</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_682-mesh" name="Plane.682">
+      <mesh>
+        <source id="Plane_682-mesh-positions">
+          <float_array id="Plane_682-mesh-positions-array" count="24">-0.02236396 5.66718 -1.671933 -0.02236396 -5.667178 -1.671933 -0.02236396 -5.667178 1.671925 -0.02236396 5.66718 1.671925 0.04472792 -5.774339 -1.801818 0.04472792 -5.774339 1.801826 0.04472792 5.774337 -1.801818 0.04472792 5.774337 1.801841</float_array>
+          <technique_common>
+            <accessor source="#Plane_682-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_682-mesh-normals">
+          <float_array id="Plane_682-mesh-normals-array" count="6">-1 0 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_682-mesh-normals-array" count="2" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_682-mesh-map-0">
+          <float_array id="Plane_682-mesh-map-0-array" count="16">0.2908804 0.2025414 0.2908804 0.2877014 7.08071e-4 0.2877014 7.08071e-4 0.2025414 0.6086972 0.3409826 0.6086972 0.4282478 0.3580915 0.4282478 0.3580915 0.3409826</float_array>
+          <technique_common>
+            <accessor source="#Plane_682-mesh-map-0-array" count="8" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_682-mesh-colors-Col" name="Col">
+          <float_array id="Plane_682-mesh-colors-Col-array" count="32">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.4941176 0.4078431 0.3647059 1 0.4941176 0.4078431 0.3647059 1 0.4941176 0.4078431 0.3647059 1 0.4941176 0.4078431 0.3647059 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_682-mesh-colors-Col-array" count="8" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_682-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_682-mesh-positions"/>
+        </vertices>
+        <polylist material="clutter_commercial-material" count="1">
+          <input semantic="VERTEX" source="#Plane_682-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_682-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_682-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_682-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 </vcount>
+          <p>1 0 0 0 2 0 1 1 3 0 2 2 0 0 3 3</p>
+        </polylist>
+        <polylist material="lod_vertcol-material" count="1">
+          <input semantic="VERTEX" source="#Plane_682-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_682-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_682-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_682-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 </vcount>
+          <p>6 1 4 4 7 1 5 5 5 1 6 6 4 1 7 7</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 9.54475e-5 0 1 0 2.05673e-4 0 0 1 6.57132e-5 0 0 0 1</matrix>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="sign_lemon_a070" name="sign_lemon_a070" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+            <instance_geometry url="#Plane_682-mesh" name="sign_lemon_a070">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="clutter_commercial-material" target="#clutter_commercial-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                  <instance_material symbol="lod_vertcol-material" target="#lod_vertcol-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="sign_lemon_a200" name="sign_lemon_a200" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+            <instance_geometry url="#Plane_678-mesh" name="sign_lemon_a200">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="clutter_commercial-material" target="#clutter_commercial-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                  <instance_material symbol="industrial-material" target="#industrial-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="nulldetail60" name="nulldetail60" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

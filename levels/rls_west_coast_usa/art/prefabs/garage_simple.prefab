@@ -1,0 +1,64 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   order_simset = "0";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0 0 0";
+
+   new TSStatic() {
+      shapeName = "art/shapes/interface/simplegarage.dae";
+      dynamic = "0";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      useInstanceRenderData = "0";
+      instanceColor = "White";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      prebuildCollisionData = "0";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "0 0 0";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      isRenderEnabled = "false";
+      mode = "Ignore";
+      order_simset = "1953853550";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new SpotLight() {
+      range = "10";
+      innerAngle = "150";
+      outerAngle = "170";
+      isEnabled = "1";
+      color = "White";
+      brightness = "1";
+      castShadows = "0";
+      priority = "1";
+      animate = "1";
+      animationPeriod = "1";
+      animationPhase = "1";
+      flareScale = "1";
+      attenuationRatio = "0 1 1";
+      shadowType = "Spot";
+      texSize = "512";
+      overDarkFactor = "2000 1000 500 100";
+      shadowDistance = "400";
+      shadowSoftness = "0.150000006";
+      numSplits = "1";
+      logWeight = "0.910000026";
+      fadeStartDistance = "0";
+      lastSplitTerrainOnly = "0";
+      representedInLightmap = "0";
+      shadowDarkenColor = "0 0 0 -1";
+      includeLightmappedGeometryInShadow = "0";
+      position = "0 0 5";
+      rotationMatrix = "1 7.10542736e-15 -1.74845553e-07 -1.74845553e-07 5.96046448e-08 -1 7.10542736e-15 1 5.96046448e-08";
+      mode = "Ignore";
+      order_simset = "0";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+};
+//--- OBJECT WRITE END ---

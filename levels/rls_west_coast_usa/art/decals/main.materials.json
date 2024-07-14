@@ -1,0 +1,183 @@
+{
+  "asphalt_patches": {
+    "name": "asphalt_patches",
+    "mapTo": "asphalt_patches",
+    "class": "Material",
+    "persistentId": "8ae4a8e7-d0e8-4f9a-a5a5-d4c6eb2ea19e",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_repair_patch_decal_o.data.png",
+        "baseColorMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_repair_patch_decal_b.color.png",
+        "normalMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_repair_patch_decal_nm.normal.png",
+        "opacityMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_repair_patch_decal_o.data.png",
+        "roughnessMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_repair_patch_decal_r.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "annotation": "ASPHALT",
+    "groundType": "ASPHALT",
+    "materialTag0": "decal",
+    "materialTag1": "road",
+    "materialTag2": "beamng",
+    "translucent": true,
+    "translucentZWrite": true,
+    "version": 1.5
+  },
+  "damage": {
+    "name": "damage",
+    "mapTo": "damage",
+    "class": "Material",
+    "persistentId": "53874869-26ee-4faa-ac09-597e7de00023",
+    "Stages": [
+      {
+        "baseColorMap": "/levels/rls_west_coast_usa/art/decals/t_decal_damage_b.color.png",
+        "opacityMap": "/levels/rls_west_coast_usa/art/decals/t_decal_damage_o.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "annotation": "ASPHALT",
+    "materialTag0": "decal",
+    "materialTag1": "road",
+    "materialTag2": "beamng",
+    "translucent": true,
+    "translucentZWrite": true,
+    "version": 1.5
+  },
+  "flag": {
+    "name": "flag",
+    "mapTo": "unmapped_mat",
+    "class": "Material",
+    "persistentId": "2be9c5c4-78cd-4513-b039-fa837f95252d",
+    "Stages": [
+      {
+        "colorMap": "/levels/rls_west_coast_usa/art/decals/flag.png",
+        "useAnisotropic": true
+      },
+      {
+        "useAnisotropic": null
+      },
+      {
+        "useAnisotropic": null
+      },
+      {
+        "useAnisotropic": null
+      }
+    ],
+    "materialTag0": "decal",
+    "materialTag1": "road",
+    "materialTag2": "beamng",
+    "translucent": true,
+    "translucentZWrite": true
+  },
+  "graffiti": {
+    "name": "graffiti",
+    "mapTo": "graffiti",
+    "class": "Material",
+    "persistentId": "961a9b4a-94d0-4f03-9695-b78f344c06fd",
+    "Stages": [
+      {
+        "baseColorMap": "/levels/rls_west_coast_usa/art/decals/t_decal_graffiti_b.color.png",
+        "opacityMap": "/levels/rls_west_coast_usa/art/decals/t_decal_graffiti_o.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "annotation": "BUILDINGS",
+    "materialTag0": "decal",
+    "materialTag1": "road",
+    "materialTag2": "beamng",
+    "translucent": true,
+    "translucentZWrite": true,
+    "version": 1.5
+  },
+  "m_dirty_ground": {
+    "name": "m_dirty_ground",
+    "mapTo": "m_dirty_ground",
+    "class": "Material",
+    "persistentId": "1f2fcf81-a5dc-4576-9f6b-061dd02f368a",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/decals/t_dirty_ground_decal_ao.data.png",
+        "baseColorFactor": [
+          0.475097001,
+          0.44035399,
+          0.39634499,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/decals/t_dirty_ground_decal_b.color.png",
+        "detailNormalMap": "/levels/rls_west_coast_usa/art/decals/t_asphalt_detail_02_nm.normal.png",
+        "detailNormalMapStrength": 5,
+        "detailScale": [
+          5,
+          5
+        ],
+        "normalMap": "/levels/rls_west_coast_usa/art/decals/t_dirty_ground_decal_nm.normal.png",
+        "opacityFactor": 0.598999977,
+        "opacityMap": "/levels/rls_west_coast_usa/art/decals/t_dirty_ground_decal_o.data.png",
+        "roughnessFactor": 0.699999988,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/decals/t_dirty_ground_decal_r.data.png"
+      },
+      {
+        "baseColorFactor": null,
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "opacityFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "baseColorFactor": null,
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "opacityFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "baseColorFactor": null,
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "opacityFactor": null,
+        "roughnessFactor": null
+      }
+    ],
+    "annotation": "ASPHALT",
+    "materialTag0": "decal",
+    "materialTag1": "beamng",
+    "translucent": true,
+    "translucentZWrite": true,
+    "version": 1.5
+  },
+  "roadmarkings1": {
+    "name": "roadmarkings1",
+    "mapTo": "roadmarkings1",
+    "class": "Material",
+    "persistentId": "2b2fd875-b742-43b0-9781-07c1d7d0217f",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_ao.data.png",
+        "baseColorMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_b.color.png",
+        "metallicMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_m.data.png",
+        "normalMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_nm.normal.png",
+        "opacityMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_o.data.png",
+        "roughnessMap": "/levels/rls_west_coast_usa/art/decals/t_decal_roadmarkings_r.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "alphaRef": 8,
+    "alphaTest": true,
+    "annotation": "DRIVING_INSTRUCTIONS",
+    "castShadows": false,
+    "materialTag0": "decal",
+    "materialTag1": "road",
+    "materialTag2": "beamng",
+    "translucent": true,
+    "translucentZWrite": true,
+    "version": 1.5
+  }
+}

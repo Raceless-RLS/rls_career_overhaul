@@ -16,6 +16,8 @@
    - Launch BeamNG.drive.
    - Go to the game settings and enable the RLS Career Overhaul mod.
 
+**Important**: When starting a new save, you must press `Ctrl+L`. It is recommended to do this every time you start the game to ensure everything runs smoothly.
+
 ## Overview
 
 The RLS Career Overhaul mod enhances various aspects of BeamNG.drive, including police interactions, the economy, parcel and vehicle deliveries, insurance, garage space, and dealerships. This mod aims to provide a more immersive and challenging career experience.
@@ -116,6 +118,41 @@ This new system encourages safer driving and careful management of insurance cov
 ### Starting Capital
 
 - **Increased Starting Capital**: Starting capital has been increased from 13,500 to 23,000.
+
+- **Expanded Racing Experience**: Most races from the original map have been converted into freeroam races.
+- **Career Mode Integration**: Freeroam racing is now available in career mode and freeroam
+- **New Freeroam Challenges**:
+  - 3 Rock Climbs
+  - 3 Hill Climbs
+  - Bunny Slope Rock Climb
+  - Small Rock Climb
+  - Mud Drag Racing
+  - Track w/ Alternative Route
+  - Dirt Circuit
+  - Drag Strip
+- **Enhanced Map**: Additional backroads for more diverse driving experiences.
+- **Police Vehicles**: Encounter the Bastion, SUV, and Van as police vehicles on this map.
+- **Checkpoint Races**: Checkpoint races now have audio to indicate when you hit a checkpoint.
+- **Dynamic Trigger Assets**: New trigger assets that are dynamically hidden.
+
+## Installation
+
+1. **Download the Mod**:
+   - Click on the green "Code" button and select "Download ZIP".
+
+2. **Extract the Contents**:
+   - Extract the downloaded ZIP file to a folder on your computer.
+
+3. **Compress the Mod**:
+   - Ensure the mod's contents are compressed into a single ZIP file. Exclude the `.gitignore` and `README.md` files to keep the mod clean and focused on game-relevant files.
+
+4. **Move to Mods Folder**:
+   - Navigate to your BeamNG.drive mods folder. The default path is `%AppData%\BeamNG.drive\0.32\mods`. Note that `0.32` is the current version and might be different for your game.
+   - Copy the compressed ZIP file into the `mods` folder.
+
+5. **Enable the Mod**:
+   - Launch BeamNG.drive.
+   - Go to the game settings and enable the RLS Career Overhaul mod.
 
 ## Conclusion
 

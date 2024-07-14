@@ -1,0 +1,1916 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>lucar</author>
+      <authoring_tool>OpenCOLLADA for 3ds Max;  Version: 1.6;  Revision: developer_version</authoring_tool>
+      <source_data>file:///H:/BeamNG_Drive/1_BNGD_MAXFiles/WestCoast/cement_batch_factory/cement_batch_factory_080.max</source_data>
+    </contributor>
+    <created>2023-12-13T11:15:48</created>
+    <modified>2023-12-13T11:15:48</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="lod_vertcol">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="wca_objects_construction">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color>0 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_metal_wall_corrugate">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_metal_trim_01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_concrete_floor_polish">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_stucco_white">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_concrete_cinderblock_01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="tactile_indicator">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="architraves">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="concrete_precast1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_plywood_old">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lod_vertcol_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal_rust">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_plastic_trim">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_gm_concrete_plain">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_worn_brushed_plaster">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_plaster_float">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="curbs">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="sidewalk1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="vertCol_light">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material__37">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_modern_corrugated">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial_trim">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="tiles_marble_square">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="cladding_zinc">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial_signs">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal_expanded">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal_trim">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_fabric_padded_square">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_corrugated_tin_v1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_corrugated_tin_v2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_corrugated_tin_v3">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="columns">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="wirefence">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="grass_garden">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal_grate">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="line_yellow">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="metal_galvanized">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="road1_concrete">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="SHOCK_ABSORBER">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="metal_plates">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_glass_grid_dirty">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_terrain_dirt">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="clutter_commercial">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="balustrades">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="windows_doors_reflective">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="power_cables">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="brick_plain">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="concrete_plain">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="slabs_large">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="construction">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_concrete_cinderblock_01_1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="canal">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_gm_concrete_edges">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_gm_concrete_tiles_vertical">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="metal_paint">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="groundmesh_grass2">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="corrugation">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="lod_vertcol-material" name="lod_vertcol">
+      <instance_effect url="#lod_vertcol"/>
+    </material>
+    <material id="wca_objects_construction-material" name="wca_objects_construction">
+      <instance_effect url="#wca_objects_construction"/>
+    </material>
+    <material id="m_metal_wall_corrugate-material" name="m_metal_wall_corrugate">
+      <instance_effect url="#m_metal_wall_corrugate"/>
+    </material>
+    <material id="m_metal_trim_01-material" name="m_metal_trim_01">
+      <instance_effect url="#m_metal_trim_01"/>
+    </material>
+    <material id="m_concrete_floor_polish-material" name="m_concrete_floor_polish">
+      <instance_effect url="#m_concrete_floor_polish"/>
+    </material>
+    <material id="m_stucco_white-material" name="m_stucco_white">
+      <instance_effect url="#m_stucco_white"/>
+    </material>
+    <material id="m_concrete_cinderblock_01-material" name="m_concrete_cinderblock_01">
+      <instance_effect url="#m_concrete_cinderblock_01"/>
+    </material>
+    <material id="tactile_indicator-material" name="tactile_indicator">
+      <instance_effect url="#tactile_indicator"/>
+    </material>
+    <material id="architraves-material" name="architraves">
+      <instance_effect url="#architraves"/>
+    </material>
+    <material id="concrete_precast1-material" name="concrete_precast1">
+      <instance_effect url="#concrete_precast1"/>
+    </material>
+    <material id="ind_plywood_old-material" name="ind_plywood_old">
+      <instance_effect url="#ind_plywood_old"/>
+    </material>
+    <material id="lod_vertcol_1-material" name="lod_vertcol">
+      <instance_effect url="#lod_vertcol_1"/>
+    </material>
+    <material id="ind_metal_rust-material" name="ind_metal_rust">
+      <instance_effect url="#ind_metal_rust"/>
+    </material>
+    <material id="ind_metal-material" name="ind_metal">
+      <instance_effect url="#ind_metal"/>
+    </material>
+    <material id="m_plastic_trim-material" name="m_plastic_trim">
+      <instance_effect url="#m_plastic_trim"/>
+    </material>
+    <material id="m_gm_concrete_plain-material" name="m_gm_concrete_plain">
+      <instance_effect url="#m_gm_concrete_plain"/>
+    </material>
+    <material id="m_worn_brushed_plaster-material" name="m_worn_brushed_plaster">
+      <instance_effect url="#m_worn_brushed_plaster"/>
+    </material>
+    <material id="m_plaster_float-material" name="m_plaster_float">
+      <instance_effect url="#m_plaster_float"/>
+    </material>
+    <material id="curbs-material" name="curbs">
+      <instance_effect url="#curbs"/>
+    </material>
+    <material id="sidewalk1-material" name="sidewalk1">
+      <instance_effect url="#sidewalk1"/>
+    </material>
+    <material id="vertCol_light-material" name="vertCol_light">
+      <instance_effect url="#vertCol_light"/>
+    </material>
+    <material id="Material__37-material" name="Material__37">
+      <instance_effect url="#Material__37"/>
+    </material>
+    <material id="m_modern_corrugated-material" name="m_modern_corrugated">
+      <instance_effect url="#m_modern_corrugated"/>
+    </material>
+    <material id="industrial_trim-material" name="industrial_trim">
+      <instance_effect url="#industrial_trim"/>
+    </material>
+    <material id="tiles_marble_square-material" name="tiles_marble_square">
+      <instance_effect url="#tiles_marble_square"/>
+    </material>
+    <material id="cladding_zinc-material" name="cladding_zinc">
+      <instance_effect url="#cladding_zinc"/>
+    </material>
+    <material id="industrial_signs-material" name="industrial_signs">
+      <instance_effect url="#industrial_signs"/>
+    </material>
+    <material id="ind_metal_expanded-material" name="ind_metal_expanded">
+      <instance_effect url="#ind_metal_expanded"/>
+    </material>
+    <material id="ind_metal_trim-material" name="ind_metal_trim">
+      <instance_effect url="#ind_metal_trim"/>
+    </material>
+    <material id="m_fabric_padded_square-material" name="m_fabric_padded_square">
+      <instance_effect url="#m_fabric_padded_square"/>
+    </material>
+    <material id="m_corrugated_tin_v1-material" name="m_corrugated_tin_v1">
+      <instance_effect url="#m_corrugated_tin_v1"/>
+    </material>
+    <material id="m_corrugated_tin_v2-material" name="m_corrugated_tin_v2">
+      <instance_effect url="#m_corrugated_tin_v2"/>
+    </material>
+    <material id="m_corrugated_tin_v3-material" name="m_corrugated_tin_v3">
+      <instance_effect url="#m_corrugated_tin_v3"/>
+    </material>
+    <material id="columns-material" name="columns">
+      <instance_effect url="#columns"/>
+    </material>
+    <material id="wirefence-material" name="wirefence">
+      <instance_effect url="#wirefence"/>
+    </material>
+    <material id="grass_garden-material" name="grass_garden">
+      <instance_effect url="#grass_garden"/>
+    </material>
+    <material id="ind_metal_grate-material" name="ind_metal_grate">
+      <instance_effect url="#ind_metal_grate"/>
+    </material>
+    <material id="line_yellow-material" name="line_yellow">
+      <instance_effect url="#line_yellow"/>
+    </material>
+    <material id="metal_galvanized-material" name="metal_galvanized">
+      <instance_effect url="#metal_galvanized"/>
+    </material>
+    <material id="road1_concrete-material" name="road1_concrete">
+      <instance_effect url="#road1_concrete"/>
+    </material>
+    <material id="SHOCK_ABSORBER-material" name="SHOCK_ABSORBER">
+      <instance_effect url="#SHOCK_ABSORBER"/>
+    </material>
+    <material id="metal_plates-material" name="metal_plates">
+      <instance_effect url="#metal_plates"/>
+    </material>
+    <material id="m_glass_grid_dirty-material" name="m_glass_grid_dirty">
+      <instance_effect url="#m_glass_grid_dirty"/>
+    </material>
+    <material id="m_terrain_dirt-material" name="m_terrain_dirt">
+      <instance_effect url="#m_terrain_dirt"/>
+    </material>
+    <material id="clutter_commercial-material" name="clutter_commercial">
+      <instance_effect url="#clutter_commercial"/>
+    </material>
+    <material id="balustrades-material" name="balustrades">
+      <instance_effect url="#balustrades"/>
+    </material>
+    <material id="windows_doors_reflective-material" name="windows_doors_reflective">
+      <instance_effect url="#windows_doors_reflective"/>
+    </material>
+    <material id="power_cables-material" name="power_cables">
+      <instance_effect url="#power_cables"/>
+    </material>
+    <material id="brick_plain-material" name="brick_plain">
+      <instance_effect url="#brick_plain"/>
+    </material>
+    <material id="concrete_plain-material" name="concrete_plain">
+      <instance_effect url="#concrete_plain"/>
+    </material>
+    <material id="slabs_large-material" name="slabs_large">
+      <instance_effect url="#slabs_large"/>
+    </material>
+    <material id="construction-material" name="construction">
+      <instance_effect url="#construction"/>
+    </material>
+    <material id="m_concrete_cinderblock_01_1-material" name="m_concrete_cinderblock_01">
+      <instance_effect url="#m_concrete_cinderblock_01_1"/>
+    </material>
+    <material id="canal-material" name="canal">
+      <instance_effect url="#canal"/>
+    </material>
+    <material id="m_gm_concrete_edges-material" name="m_gm_concrete_edges">
+      <instance_effect url="#m_gm_concrete_edges"/>
+    </material>
+    <material id="m_gm_concrete_tiles_vertical-material" name="m_gm_concrete_tiles_vertical">
+      <instance_effect url="#m_gm_concrete_tiles_vertical"/>
+    </material>
+    <material id="metal_paint-material" name="metal_paint">
+      <instance_effect url="#metal_paint"/>
+    </material>
+    <material id="groundmesh_grass2-material" name="groundmesh_grass2">
+      <instance_effect url="#groundmesh_grass2"/>
+    </material>
+    <material id="corrugation-material" name="corrugation">
+      <instance_effect url="#corrugation"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="geom-sandbarrel_a016" name="sandbarrel_a016">
+      <mesh>
+        <source id="geom-sandbarrel_a016-positions">
+          <float_array id="geom-sandbarrel_a016-positions-array" count="51">-0.1802204 -0.4350886 1.60933e-6 -0.2288849 -0.5525753 1.324669 0.180219 -0.4350891 1.75777e-6 0.2288836 -0.5525758 1.324669 0.4350886 -0.1802204 1.96695e-6 0.5525752 -0.2288849 1.324669 0.5525758 0.2288836 1.324669 0.2288837 0.5525758 1.324669 0.4350891 0.180219 2.08616e-6 0.1802191 0.4350891 2.08735e-6 -1.2317e-6 -1.2317e-6 1.576739 -0.1802203 0.4350886 1.72853e-6 -0.2288848 0.5525753 1.324669 -0.4350891 0.1802191 1.86763e-6 -0.5525758 0.2288837 1.324669 -0.4350886 -0.1802203 2.08616e-6 -0.5525754 -0.2288848 1.324669</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a016-positions-array" count="17" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a016-normals">
+          <float_array id="geom-sandbarrel_a016-normals-array" count="75">-0.3809329 -0.9196515 -0.09555959 -0.3809328 -0.9196515 -0.09555959 0.3809309 -0.9196522 -0.09555959 0.3809311 -0.9196522 -0.09555959 0.1486213 -0.3588042 0.9215049 -6.84522e-7 -7.4701e-7 1 -0.1486219 -0.3588045 0.9215047 0.919651 -0.3809335 -0.09555959 0.9196512 -0.3809334 -0.09555959 0.3588035 -0.1486215 0.9215052 0.9196519 0.3809314 -0.09555959 0.9196519 0.3809314 -0.09555959 0.3588033 0.1486208 0.9215053 0.3809316 0.9196518 -0.09555965 0.3809317 0.9196518 -0.09555959 0.1486212 0.3588029 0.9215054 -0.3809334 0.9196512 -0.09555959 -0.3809332 0.9196513 -0.09555959 -0.1486213 0.3588033 0.9215053 -0.919652 0.3809313 -0.09555959 -0.9196521 0.3809313 -0.09555959 -0.3588042 0.1486213 0.921505 -0.9196515 -0.3809326 -0.09555959 -0.9196515 -0.3809326 -0.09555959 -0.3588045 -0.1486219 0.9215047</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a016-normals-array" count="25" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a016-map-2">
+          <float_array id="geom-sandbarrel_a016-map-2-array" count="168">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a016-map-2-array" count="56" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a016-map0">
+          <float_array id="geom-sandbarrel_a016-map0-array" count="168">1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a016-map0-array" count="56" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a016-map1">
+          <float_array id="geom-sandbarrel_a016-map1-array" count="168">0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a016-map1-array" count="56" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-sandbarrel_a016-vertices">
+          <input semantic="POSITION" source="#geom-sandbarrel_a016-positions"/>
+        </vertices>
+        <triangles material="lod_vertcol" count="24">
+          <input semantic="VERTEX" source="#geom-sandbarrel_a016-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-sandbarrel_a016-normals" offset="1"/>
+          <input semantic="COLOR" source="#geom-sandbarrel_a016-map0" offset="2" set="0"/>
+          <input semantic="TEXCOORD" source="#geom-sandbarrel_a016-map1" offset="3" set="0"/>
+          <p>1 0 0 0 0 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 1 0 0 0 3 4 4 4 10 5 5 5 1 6 6 6 3 3 7 7 2 2 8 8 4 7 9 9 4 7 9 9 5 8 10 10 3 3 7 7 5 9 11 11 10 5 12 12 3 4 13 13 5 8 14 14 4 7 15 15 8 10 16 16 8 10 16 16 6 11 17 17 5 8 14 14 6 12 18 18 10 5 19 19 5 9 20 20 6 11 21 21 8 10 22 22 9 13 23 23 9 13 23 23 7 14 24 24 6 11 21 21 7 15 25 25 10 5 26 26 6 12 27 27 7 14 28 28 9 13 29 29 11 16 30 30 11 16 30 30 12 17 31 31 7 14 28 28 12 18 32 32 10 5 33 33 7 15 34 34 12 17 35 35 11 16 36 36 13 19 37 37 13 19 37 37 14 20 38 38 12 17 35 35 14 21 39 39 10 5 40 40 12 18 41 41 14 20 42 42 13 19 43 43 15 22 44 44 15 22 44 44 16 23 45 45 14 20 42 42 16 24 46 46 10 5 47 47 14 21 48 48 16 23 49 49 15 22 50 50 0 1 51 51 0 1 51 51 1 0 52 52 16 23 49 49 1 6 53 53 10 5 54 54 16 24 55 55</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-sandbarrel_a050" name="sandbarrel_a050">
+      <mesh>
+        <source id="geom-sandbarrel_a050-positions">
+          <float_array id="geom-sandbarrel_a050-positions-array" count="123">-0.207533 -0.5010271 0.5694497 -0.1894735 -0.4574275 0.5336157 -0.1802204 -0.4350886 1.64791e-6 -0.2453833 -0.592406 1.42543 -0.2288849 -0.5525753 1.324669 0.2075316 -0.5010275 0.5694499 0.1894721 -0.457428 0.5336158 0.180219 -0.4350891 1.75777e-6 0.245382 -0.5924065 1.42543 0.2288836 -0.5525758 1.324669 0.5010271 -0.207533 0.56945 0.4574275 -0.1894735 0.5336159 0.4350886 -0.1802204 1.97749e-6 0.5924059 -0.2453833 1.42543 0.5525752 -0.2288849 1.324669 0.5525758 0.2288836 1.324669 0.2288837 0.5525758 1.324669 0.5010275 0.2075316 0.5694501 0.2075316 0.5010274 0.5694501 0.457428 0.1894721 0.533616 0.1894722 0.457428 0.533616 0.4350891 0.180219 2.08735e-6 0.1802191 0.4350891 2.08735e-6 0.5924065 0.245382 1.42543 0.2453821 0.5924065 1.42543 -1.2317e-6 -1.2317e-6 1.576739 -0.2288848 0.5525753 1.324669 -0.2075328 0.501027 0.5694499 -0.1894733 0.4574275 0.5336158 -0.1802203 0.4350886 1.75777e-6 -0.2453832 0.592406 1.42543 -0.5525758 0.2288837 1.324669 -0.5010275 0.2075316 0.56945 -0.457428 0.1894721 0.5336159 -0.4350891 0.1802191 1.86763e-6 -0.5924065 0.2453821 1.42543 -0.5525754 -0.2288848 1.324669 -0.5010271 -0.2075328 0.5694501 -0.4574275 -0.1894733 0.533616 -0.4350886 -0.1802203 2.08735e-6 -0.592406 -0.2453832 1.42543</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a050-positions-array" count="41" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a050-normals">
+          <float_array id="geom-sandbarrel_a050-normals-array" count="195">-0.3816439 -0.9213683 -0.07367891 -0.3816438 -0.9213683 -0.07367891 0.3816421 -0.921369 -0.07367891 0.3816422 -0.9213689 -0.07367891 -0.2314259 -0.5587102 -0.7964201 -0.2314261 -0.5587102 -0.7964202 0.2314255 -0.558711 -0.7964197 0.231426 -0.5587108 -0.7964197 -0.382292 -0.9229323 -0.04526615 -0.3822918 -0.9229323 -0.04526615 0.3822897 -0.9229332 -0.04526621 0.3822899 -0.9229331 -0.04526621 0.3518302 -0.8493958 -0.3933733 0.3525083 -0.8510327 0.3892061 -0.3525096 -0.8510323 0.389206 -0.3518317 -0.8493952 -0.3933732 -4.28158e-7 -4.50825e-7 1 0.921368 -0.3816444 -0.07367891 0.921368 -0.3816444 -0.07367891 0.5587112 -0.2314263 -0.7964193 0.5587114 -0.2314259 -0.7964193 0.922932 -0.3822926 -0.04526621 0.922932 -0.3822923 -0.04526621 0.8493952 -0.3518322 -0.3933729 0.851032 -0.3525098 0.3892064 0.9213688 0.3816427 -0.07367902 0.9213687 0.3816427 -0.07367902 0.5587113 0.2314255 -0.7964195 0.5587112 0.2314257 -0.7964195 0.9229329 0.3822905 -0.04526615 0.9229329 0.3822906 -0.04526615 0.8493958 0.3518304 -0.3933731 0.8510324 0.3525084 0.3892064 0.3816428 0.9213686 -0.07367908 0.381643 0.9213687 -0.07367908 0.2314257 0.558711 -0.7964197 0.2314258 0.558711 -0.7964197 0.3822906 0.9229328 -0.04526615 0.3822908 0.9229327 -0.04526615 0.3518307 0.8493955 -0.3933733 0.3525088 0.8510324 0.3892063 -0.3816443 0.9213681 -0.07367908 -0.3816443 0.9213681 -0.07367908 -0.2314267 0.5587106 -0.7964197 -0.2314264 0.5587107 -0.7964197 -0.3822925 0.922932 -0.04526615 -0.3822923 0.9229321 -0.04526615 -0.3518322 0.849395 -0.3933732 -0.3525099 0.8510319 0.3892064 -0.9213688 0.3816424 -0.07367908 -0.9213688 0.3816425 -0.07367908 -0.558712 0.2314247 -0.7964192 -0.5587118 0.2314249 -0.7964193 -0.9229331 0.3822899 -0.04526615 -0.9229331 0.3822898 -0.04526615 -0.8493959 0.3518299 -0.3933731 -0.8510327 0.3525083 0.3892059 -0.9213683 -0.3816438 -0.07367902 -0.9213683 -0.3816437 -0.07367897 -0.558711 -0.2314258 -0.7964196 -0.5587111 -0.2314255 -0.7964196 -0.9229323 -0.3822919 -0.04526609 -0.9229323 -0.3822917 -0.04526609 -0.8493952 -0.3518316 -0.393373 -0.8510322 -0.3525094 0.3892061</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a050-normals-array" count="65" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a050-map-2">
+          <float_array id="geom-sandbarrel_a050-map-2-array" count="456">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a050-map-2-array" count="152" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a050-map0">
+          <float_array id="geom-sandbarrel_a050-map0-array" count="456">1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 1 0.827451 0.3607843 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549 0.1647059 0.1529412 0.1372549</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a050-map0-array" count="152" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a050-map1">
+          <float_array id="geom-sandbarrel_a050-map1-array" count="456">0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9092936 0.7689626 0 0.7794427 0.7770585 0 0.9091151 0.6209374 0 0.9177817 0.626029 0 0.9178215 0.7639288 0 0.9092936 0.7689626 0 0.9265244 0.7655503 0 0.9314962 0.5858023 0 0.9911752 0.5858023 0 0.995112 0.7663866 0 0.774564 0.635212 0 0.7745439 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7712341 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a050-map1-array" count="152" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-sandbarrel_a050-vertices">
+          <input semantic="POSITION" source="#geom-sandbarrel_a050-positions"/>
+        </vertices>
+        <triangles material="lod_vertcol" count="72">
+          <input semantic="VERTEX" source="#geom-sandbarrel_a050-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-sandbarrel_a050-normals" offset="1"/>
+          <input semantic="COLOR" source="#geom-sandbarrel_a050-map0" offset="2" set="0"/>
+          <input semantic="TEXCOORD" source="#geom-sandbarrel_a050-map1" offset="3" set="0"/>
+          <p>4 0 0 0 0 1 1 1 5 2 2 2 5 2 2 2 9 3 3 3 4 0 0 0 0 4 4 4 1 5 5 5 6 6 6 6 6 6 6 6 5 7 7 7 0 4 4 4 1 8 8 8 2 9 9 9 7 10 10 10 7 10 10 10 6 11 11 11 1 8 8 8 9 12 12 12 8 13 13 13 3 14 14 14 3 14 14 14 4 15 15 15 9 12 12 12 8 13 16 16 25 16 17 17 3 14 18 18 9 3 19 19 5 2 20 20 10 17 21 21 10 17 21 21 14 18 22 22 9 3 19 19 5 7 23 23 6 6 24 24 11 19 25 25 11 19 25 25 10 20 26 26 5 7 23 23 6 11 27 27 7 10 28 28 12 21 29 29 12 21 29 29 11 22 30 30 6 11 27 27 14 23 31 31 13 24 32 32 8 13 33 33 8 13 33 33 9 12 34 34 14 23 31 31 13 24 35 35 25 16 36 36 8 13 37 37 14 18 38 38 10 17 39 39 17 25 40 40 17 25 40 40 15 26 41 41 14 18 38 38 10 20 42 42 11 19 43 43 19 27 44 44 19 27 44 44 17 28 45 45 10 20 42 42 11 22 46 46 12 21 47 47 21 29 48 48 21 29 48 48 19 30 49 49 11 22 46 46 15 31 50 50 23 32 51 51 13 24 52 52 13 24 52 52 14 23 53 53 15 31 50 50 23 32 54 54 25 16 55 55 13 24 56 56 15 26 57 57 17 25 58 58 18 33 59 59 18 33 59 59 16 34 60 60 15 26 57 57 17 28 61 61 19 27 62 62 20 35 63 63 20 35 63 63 18 36 64 64 17 28 61 61 19 30 65 65 21 29 66 66 22 37 67 67 22 37 67 67 20 38 68 68 19 30 65 65 16 39 69 69 24 40 70 70 23 32 71 71 23 32 71 71 15 31 72 72 16 39 69 69 24 40 73 73 25 16 74 74 23 32 75 75 16 34 76 76 18 33 77 77 27 41 78 78 27 41 78 78 26 42 79 79 16 34 76 76 18 36 80 80 20 35 81 81 28 43 82 82 28 43 82 82 27 44 83 83 18 36 80 80 20 38 84 84 22 37 85 85 29 45 86 86 29 45 86 86 28 46 87 87 20 38 84 84 26 47 88 88 30 48 89 89 24 40 90 90 24 40 90 90 16 39 91 91 26 47 88 88 30 48 92 92 25 16 93 93 24 40 94 94 26 42 95 95 27 41 96 96 32 49 97 97 32 49 97 97 31 50 98 98 26 42 95 95 27 44 99 99 28 43 100 100 33 51 101 101 33 51 101 101 32 52 102 102 27 44 99 99 28 46 103 103 29 45 104 104 34 53 105 105 34 53 105 105 33 54 106 106 28 46 103 103 31 55 107 107 35 56 108 108 30 48 109 109 30 48 109 109 26 47 110 110 31 55 107 107 35 56 111 111 25 16 112 112 30 48 113 113 31 50 114 114 32 49 115 115 37 57 116 116 37 57 116 116 36 58 117 117 31 50 114 114 32 52 118 118 33 51 119 119 38 59 120 120 38 59 120 120 37 60 121 121 32 52 118 118 33 54 122 122 34 53 123 123 39 61 124 124 39 61 124 124 38 62 125 125 33 54 122 122 36 63 126 126 40 64 127 127 35 56 128 128 35 56 128 128 31 55 129 129 36 63 126 126 40 64 130 130 25 16 131 131 35 56 132 132 36 58 133 133 37 57 134 134 0 1 135 135 0 1 135 135 4 0 136 136 36 58 133 133 37 60 137 137 38 59 138 138 1 5 139 139 1 5 139 139 0 4 140 140 37 60 137 137 38 62 141 141 39 61 142 142 2 9 143 143 2 9 143 143 1 8 144 144 38 62 141 141 4 15 145 145 3 14 146 146 40 64 147 147 40 64 147 147 36 63 148 148 4 15 145 145 3 14 149 149 25 16 150 150 40 64 151 151</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-sandbarrel_a150" name="sandbarrel_a150">
+      <mesh>
+        <source id="geom-sandbarrel_a150-positions">
+          <float_array id="geom-sandbarrel_a150-positions-array" count="342">-0.2515681 -0.6073372 1.352807 0 -0.6573773 1.352807 0.2515679 -0.6073374 1.352807 0 -0.5950449 1.28327 0.2277143 -0.5497497 1.28327 -0.207533 -0.5010271 0.5694497 0 -0.5423079 0.5694497 0.2075328 -0.5010271 0.5694497 -0.1894735 -0.4574275 0.5336157 0 -0.4951161 0.5336157 0.1894733 -0.4574276 0.5336157 -0.1802204 -0.4350886 1.64791e-6 0 -0.4709367 1.64791e-6 0.1802203 -0.4350887 1.64791e-6 -0.2453833 -0.592406 1.42543 0 -0.6412158 1.42543 0.2453832 -0.5924061 1.42543 -0.2115482 -0.5107207 1.48264 0 -0.5528002 1.48264 0.211548 -0.5107207 1.48264 0 1.74188e-6 1.576739 0 0.5528037 1.48264 0.2115482 0.5107242 1.48264 0 0.6412193 1.42543 0.2453833 0.5924095 1.42543 -0.1802203 0.4350922 1.64791e-6 0 0.4709402 1.64791e-6 0.1802203 0.4350922 1.64791e-6 0 0.4951196 0.5336157 0.1894734 0.4574311 0.5336157 0 0.5423114 0.5694498 0.2075329 0.5010306 0.5694498 0 0.5950484 1.28327 0.2277144 0.5497531 1.28327 0 0.6573808 1.352807 0.251568 0.6073408 1.352807 0.4648373 0.4648389 1.352807 0.5497514 0.2277162 1.28327 0.4207615 0.4207632 1.28327 0.5010288 0.2075346 0.5694499 0.3834709 0.3834726 0.5694499 0.4574293 0.1894751 0.5336158 0.3501012 0.3501029 0.5336158 0.4350904 0.180222 1.75777e-6 0.3330038 0.3330056 1.75777e-6 0.4534093 0.453411 1.42543 0.39089 0.3908917 1.48264 0.5107225 0.2115498 1.48264 0.552802 1.70284e-6 1.48264 0.5924079 0.2453849 1.42543 0.6412176 1.70284e-6 1.42543 0.4709385 1.70284e-6 1.75777e-6 0.4951179 1.70284e-6 0.5336158 0.5423097 1.70284e-6 0.5694499 0.5950466 1.70284e-6 1.28327 0.6073391 0.2515697 1.352807 0.657379 1.70284e-6 1.352807 0.5107223 -0.2115465 1.48264 0.39089 -0.3908883 1.48264 0.5924078 -0.2453817 1.42543 0.4534093 -0.4534076 1.42543 0.4350904 -0.1802186 1.64791e-6 0.3330037 -0.333002 1.64791e-6 0.4574292 -0.1894717 0.5336157 0.3501012 -0.3500995 0.5336157 0.5010288 -0.2075312 0.5694498 0.3834708 -0.3834692 0.5694498 0.5497514 -0.2277128 1.28327 0.4207614 -0.4207597 1.28327 0.607339 -0.2515664 1.352807 0.4648371 -0.4648355 1.352807 0 1.67982e-6 8.78886e-7 -0.607339 -0.2515664 1.352807 -0.4648373 -0.4648354 1.352807 -0.4207615 -0.4207597 1.28327 -0.2277145 -0.5497496 1.28327 -0.5010288 -0.2075312 0.5694499 -0.3834709 -0.3834692 0.5694499 -0.4574293 -0.1894717 0.5336158 -0.3501012 -0.3500994 0.5336158 -0.4350904 -0.1802186 1.75777e-6 -0.3330038 -0.333002 1.75777e-6 -0.4534093 -0.4534075 1.42543 -0.5107225 -0.2115464 1.48264 -0.39089 -0.3908882 1.48264 -0.552802 1.76438e-6 1.48264 -0.5107224 0.2115498 1.48264 -0.5924079 -0.2453815 1.42543 -0.6412176 1.75665e-6 1.42543 -0.5924077 0.245385 1.42543 -0.4709385 1.77153e-6 1.75777e-6 -0.4951179 1.76942e-6 0.5336158 -0.5423097 1.76529e-6 0.5694499 -0.5497515 -0.2277126 1.28327 -0.5950466 1.76068e-6 1.28327 -0.5497514 0.2277162 1.28327 -0.657379 1.75523e-6 1.352807 -0.607339 0.2515698 1.352807 -0.39089 0.3908918 1.48264 -0.2115481 0.5107243 1.48264 -0.4534093 0.4534111 1.42543 -0.2453833 0.5924095 1.42543 -0.4350904 0.1802221 1.64791e-6 -0.3330038 0.3330056 1.64791e-6 -0.4574292 0.1894752 0.5336157 -0.3501012 0.350103 0.5336157 -0.1894734 0.4574311 0.5336157 -0.5010288 0.2075347 0.5694498 -0.3834708 0.3834726 0.5694498 -0.2075329 0.5010306 0.5694498 -0.4207614 0.4207633 1.28327 -0.2277144 0.5497531 1.28327 -0.4648371 0.464839 1.352807 -0.2515681 0.6073408 1.352807</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a150-positions-array" count="114" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a150-normals">
+          <float_array id="geom-sandbarrel_a150-normals-array" count="342">-0.3714763 -0.8968291 -0.2402144 -0.3495979 -0.8440096 -0.4067299 0 -0.9135509 -0.4067245 0 -0.9707196 -0.2402154 0.3495979 -0.8440096 -0.4067299 0.3714763 -0.8968291 -0.2402144 -0.3403772 -0.8217517 -0.4570204 0 -0.8894534 -0.457026 0.3403772 -0.8217517 -0.4570204 -0.3340379 -0.8064826 -0.4878571 0 -0.872931 -0.4878439 0.3340379 -0.8064826 -0.4878571 -0.2797442 -0.6754025 -0.6823304 0 -0.7310563 -0.6823172 0.2797442 -0.6754025 -0.6823304 0 -0.8352293 0.5499018 -0.3196298 -0.7716529 0.5498989 0.3196298 -0.7716529 0.5498989 0 -0.3844138 0.9231609 -0.1471007 -0.3551476 0.9231639 0.1471007 -0.3551476 0.9231639 0 0 1 0 0 -1 -0.3714763 0.8968291 -0.2402144 -0.3495979 0.8440096 -0.4067299 -0.6459754 0.6459754 -0.4067331 -0.6864026 0.6864026 -0.240215 -0.8440096 0.3495979 -0.4067299 -0.8968291 0.3714763 -0.2402144 -0.3403772 0.8217517 -0.4570204 -0.628939 0.628939 -0.4570245 -0.8217517 0.3403772 -0.4570204 -0.3340379 0.8064826 -0.4878571 -0.6172526 0.6172526 -0.4878509 -0.8064826 0.3340379 -0.4878571 -0.2797442 0.6754025 -0.6823304 -0.5169343 0.5169343 -0.6823179 -0.6754025 0.2797442 -0.6823304 -0.5905928 0.5905928 0.5499096 -0.3196298 0.7716529 0.5498989 -0.7716529 0.3196298 0.5498989 -0.271803 0.271803 0.9231719 -0.1471007 0.3551476 0.9231639 -0.3551476 0.1471007 0.9231639 -0.9135509 0 -0.4067245 -0.9707126 0 -0.2402442 -0.8440096 -0.3495979 -0.4067299 -0.8968226 -0.3714736 -0.2402432 -0.8894534 0 -0.457026 -0.8217517 -0.3403772 -0.4570204 -0.872931 0 -0.4878439 -0.8064826 -0.3340379 -0.4878571 -0.7310563 0 -0.6823172 -0.6754025 -0.2797442 -0.6823304 -0.8352293 0 0.5499018 -0.7716529 -0.3196298 0.5498989 -0.3844138 0 0.9231609 -0.3551476 -0.1471007 0.9231639 -0.5169343 -0.5169343 -0.6823179 -0.271803 -0.271803 0.9231719 -0.5905928 -0.5905928 0.5499096 -0.6864026 -0.6864026 -0.240215 -0.6172526 -0.6172526 -0.4878509 -0.628939 -0.628939 -0.4570245 -0.6459754 -0.6459754 -0.4067331 0 0.7310563 -0.6823172 0.2797442 0.6754025 -0.6823304 0 0.3844138 0.9231609 0.1471007 0.3551476 0.9231639 0 0.8352293 0.5499018 0.3196298 0.7716529 0.5498989 0 0.9707196 -0.2402154 0.3714763 0.8968291 -0.2402144 0 0.872931 -0.4878439 0.3340379 0.8064826 -0.4878571 0 0.8894534 -0.457026 0.3403772 0.8217517 -0.4570204 0 0.9135509 -0.4067245 0.3495979 0.8440096 -0.4067299 0.8968226 0.3714736 -0.2402432 0.8440096 0.3495979 -0.4067299 0.6459754 0.6459754 -0.4067331 0.6863975 0.6863975 -0.2402437 0.8217517 0.3403772 -0.4570204 0.628939 0.628939 -0.4570245 0.8064826 0.3340379 -0.4878571 0.6172526 0.6172526 -0.4878509 0.6754025 0.2797442 -0.6823304 0.5169343 0.5169343 -0.6823179 0.5905928 0.5905928 0.5499096 0.7716529 0.3196298 0.5498989 0.271803 0.271803 0.9231719 0.3551476 0.1471007 0.9231639 0.7310563 0 -0.6823172 0.6754025 -0.2797442 -0.6823304 0.3844138 0 0.9231609 0.3551476 -0.1471007 0.9231639 0.8352293 0 0.5499018 0.7716529 -0.3196298 0.5498989 0.9707196 0 -0.2402154 0.8968291 -0.3714763 -0.2402144 0.872931 0 -0.4878439 0.8064826 -0.3340379 -0.4878571 0.8894534 0 -0.457026 0.8217517 -0.3403772 -0.4570204 0.9135509 0 -0.4067245 0.8440096 -0.3495979 -0.4067299 0.5169343 -0.5169343 -0.6823179 0.271803 -0.271803 0.9231719 0.5905928 -0.5905928 0.5499096 0.6864026 -0.6864026 -0.240215 0.6172526 -0.6172526 -0.4878509 0.628939 -0.628939 -0.4570245 0.6459754 -0.6459754 -0.4067331</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a150-normals-array" count="114" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a150-map-2">
+          <float_array id="geom-sandbarrel_a150-map-2-array" count="1440">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a150-map-2-array" count="480" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a150-map0">
+          <float_array id="geom-sandbarrel_a150-map0-array" count="1440">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a150-map0-array" count="480" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-sandbarrel_a150-map1">
+          <float_array id="geom-sandbarrel_a150-map1-array" count="1440">0.6947181 0.6382876 0 0.6965287 0.6063182 0 0.7346833 0.6063719 0 0.7348839 0.635212 0 0.7348839 0.635212 0 0.7346833 0.6063719 0 0.7729144 0.6059474 0 0.7749266 0.6357146 0 0.7799986 0.6080478 0 0.9091151 0.6209374 0 0.9063639 0.6950643 0 0.7794427 0.6927767 0 0.7794427 0.6927767 0 0.9063639 0.6950643 0 0.908698 0.7698719 0 0.7791511 0.7776821 0 0.9091151 0.6209374 0 0.9197348 0.626029 0 0.916845 0.6951766 0 0.9063639 0.6950643 0 0.9063639 0.6950643 0 0.916845 0.6951766 0 0.9187253 0.7654601 0 0.908698 0.7698719 0 0.9265244 0.7655503 0 0.9314962 0.5817704 0 0.9619534 0.588604 0 0.9609686 0.7713082 0 0.9609686 0.7713082 0 0.9619534 0.588604 0 0.9926023 0.5817661 0 0.9959787 0.7675617 0 0.7348839 0.635212 0 0.7348638 0.6574221 0 0.6959813 0.6631771 0 0.6947181 0.6382876 0 0.7749266 0.6357146 0 0.774106 0.6610295 0 0.7348638 0.6574221 0 0.7348839 0.635212 0 0.7348638 0.6574221 0 0.7349376 0.6891578 0 0.7005206 0.6969335 0 0.6959813 0.6631771 0 0.774106 0.6610295 0 0.7699455 0.6962085 0 0.7349376 0.6891578 0 0.7348638 0.6574221 0 0.7349376 0.6891578 0 0.7331721 0.8713401 0 0.7005206 0.6969335 0 0.7699455 0.6962085 0 0.7346889 0.8701737 0 0.7349376 0.6891578 0 0.9235141 0.527866 0 0.9261685 0.4805426 0 0.9845318 0.5279037 0 0.9261702 0.5754873 0 0.9235141 0.527866 0 0.9845318 0.5279037 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0 -0.07382977 0.5754873 0 -0.07648587 0.527866 0 -0.01546823 0.5279037 0 -0.07648587 0.527866 0 -0.07383149 0.4805426 0 -0.01546823 0.5279037 0 -0.2300545 0.6962085 0 -0.2653111 0.8701737 0 -0.2650625 0.6891578 0 -0.2650625 0.6891578 0 -0.2668279 0.8713401 0 -0.2994794 0.6969335 0 -0.2258939 0.6610295 0 -0.2300545 0.6962085 0 -0.2650625 0.6891578 0 -0.2651363 0.6574221 0 -0.2651363 0.6574221 0 -0.2650625 0.6891578 0 -0.2994794 0.6969335 0 -0.3040187 0.6631771 0 -0.2250734 0.6357146 0 -0.2258939 0.6610295 0 -0.2651363 0.6574221 0 -0.2651161 0.635212 0 -0.2651161 0.635212 0 -0.2651363 0.6574221 0 -0.3040187 0.6631771 0 -0.3052819 0.6382876 0 -0.03903138 0.7713082 0 -0.03804659 0.588604 0 -0.007397711 0.5817661 0 -0.004021346 0.7675617 0 -0.07347565 0.7655503 0 -0.06850379 0.5817704 0 -0.03804659 0.588604 0 -0.03903138 0.7713082 0 -0.09363609 0.6950643 0 -0.08315503 0.6951766 0 -0.08127468 0.7654601 0 -0.09130197 0.7698719 0 -0.09088486 0.6209374 0 -0.08026516 0.626029 0 -0.08315503 0.6951766 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.09363609 0.6950643 0 -0.09130197 0.7698719 0 -0.2208489 0.7776821 0 -0.2200014 0.6080478 0 -0.09088486 0.6209374 0 -0.09363609 0.6950643 0 -0.2205572 0.6927767 0 -0.2651161 0.635212 0 -0.2653167 0.6063719 0 -0.2270856 0.6059474 0 -0.2250734 0.6357146 0 -0.3052819 0.6382876 0 -0.3034713 0.6063182 0 -0.2653167 0.6063719 0 -0.2651161 0.635212 0</float_array>
+          <technique_common>
+            <accessor source="#geom-sandbarrel_a150-map1-array" count="480" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-sandbarrel_a150-vertices">
+          <input semantic="POSITION" source="#geom-sandbarrel_a150-positions"/>
+        </vertices>
+        <triangles material="wca_objects_construction" count="224">
+          <input semantic="VERTEX" source="#geom-sandbarrel_a150-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-sandbarrel_a150-normals" offset="1"/>
+          <input semantic="COLOR" source="#geom-sandbarrel_a150-map0" offset="2" set="0"/>
+          <input semantic="TEXCOORD" source="#geom-sandbarrel_a150-map1" offset="3" set="0"/>
+          <p>0 0 0 0 75 1 1 1 3 2 2 2 3 2 2 2 1 3 3 3 0 0 0 0 1 3 4 4 3 2 5 5 4 4 6 6 4 4 6 6 2 5 7 7 1 3 4 4 75 1 8 8 5 6 9 9 6 7 10 10 6 7 10 10 3 2 11 11 75 1 8 8 3 2 12 12 6 7 13 13 7 8 14 14 7 8 14 14 4 4 15 15 3 2 12 12 5 6 16 16 8 9 17 17 9 10 18 18 9 10 18 18 6 7 19 19 5 6 16 16 6 7 20 20 9 10 21 21 10 11 22 22 10 11 22 22 7 8 23 23 6 7 20 20 8 9 24 24 11 12 25 25 12 13 26 26 12 13 26 26 9 10 27 27 8 9 24 24 9 10 28 28 12 13 29 29 13 14 30 30 13 14 30 30 10 11 31 31 9 10 28 28 1 3 32 32 15 15 33 33 14 16 34 34 14 16 34 34 0 0 35 35 1 3 32 32 2 5 36 36 16 17 37 37 15 15 38 38 15 15 38 38 1 3 39 39 2 5 36 36 15 15 40 40 18 18 41 41 17 19 42 42 17 19 42 42 14 16 43 43 15 15 40 40 16 17 44 44 19 20 45 45 18 18 46 46 18 18 46 46 15 15 47 47 16 17 44 44 18 18 48 48 20 21 49 49 17 19 50 50 19 20 51 51 20 21 52 52 18 18 53 53 12 13 54 54 11 12 55 55 71 22 56 56 13 14 57 57 12 13 58 58 71 22 59 59 113 23 60 60 111 24 61 61 110 25 62 62 110 25 62 62 112 26 63 63 113 23 60 60 112 26 64 64 110 25 65 65 95 27 66 66 95 27 66 66 97 28 67 67 112 26 64 64 111 24 68 68 109 29 69 69 108 30 70 70 108 30 70 70 110 25 71 71 111 24 68 68 110 25 72 72 108 30 73 73 107 31 74 74 107 31 74 74 95 27 75 75 110 25 72 72 109 29 76 76 106 32 77 77 105 33 78 78 105 33 78 78 108 30 79 79 109 29 76 76 108 30 80 80 105 33 81 81 104 34 82 82 104 34 82 82 107 31 83 83 108 30 80 80 106 32 84 84 25 35 85 85 103 36 86 86 103 36 86 86 105 33 87 87 106 32 84 84 105 33 88 88 103 36 89 89 102 37 90 90 102 37 90 90 104 34 91 91 105 33 88 88 112 26 92 92 100 38 93 93 101 39 94 94 101 39 94 94 113 23 95 95 112 26 92 92 97 28 96 96 89 40 97 97 100 38 98 98 100 38 98 98 112 26 99 99 97 28 96 96 100 38 100 100 98 41 101 101 99 42 102 102 99 42 102 102 101 39 103 103 100 38 100 100 89 40 104 104 86 43 105 105 98 41 106 106 98 41 106 106 100 38 107 107 89 40 104 104 98 41 108 108 20 21 109 109 99 42 110 110 86 43 111 111 20 21 112 112 98 41 113 113 103 36 114 114 25 35 115 115 71 22 116 116 102 37 117 117 103 36 118 118 71 22 119 119 97 28 120 120 95 27 121 121 94 44 122 122 94 44 122 122 96 45 123 123 97 28 120 120 96 45 124 124 94 44 125 125 93 46 126 126 93 46 126 126 72 47 127 127 96 45 124 124 95 27 128 128 107 31 129 129 92 48 130 130 92 48 130 130 94 44 131 131 95 27 128 128 94 44 132 132 92 48 133 133 76 49 134 134 76 49 134 134 93 46 135 135 94 44 132 132 107 31 136 136 104 34 137 137 91 50 138 138 91 50 138 138 92 48 139 139 107 31 136 136 92 48 140 140 91 50 141 141 78 51 142 142 78 51 142 142 76 49 143 143 92 48 140 140 104 34 144 144 102 37 145 145 90 52 146 146 90 52 146 146 91 50 147 147 104 34 144 144 91 50 148 148 90 52 149 149 80 53 150 150 80 53 150 150 78 51 151 151 91 50 148 148 96 45 152 152 88 54 153 153 89 40 154 154 89 40 154 154 97 28 155 155 96 45 152 152 72 47 156 156 87 55 157 157 88 54 158 158 88 54 158 158 96 45 159 159 72 47 156 156 88 54 160 160 85 56 161 161 86 43 162 162 86 43 162 162 89 40 163 163 88 54 160 160 87 55 164 164 83 57 165 165 85 56 166 166 85 56 166 166 88 54 167 167 87 55 164 164 85 56 168 168 20 21 169 169 86 43 170 170 83 57 171 171 20 21 172 172 85 56 173 173 90 52 174 174 102 37 175 175 71 22 176 176 80 53 177 177 90 52 178 178 71 22 179 179 11 12 180 180 81 58 181 181 71 22 182 182 81 58 183 183 80 53 184 184 71 22 185 185 17 19 186 186 20 21 187 187 84 59 188 188 84 59 189 189 20 21 190 190 83 57 191 191 14 16 192 192 17 19 193 193 84 59 194 194 84 59 194 194 82 60 195 195 14 16 192 192 82 60 196 196 84 59 197 197 83 57 198 198 83 57 198 198 87 55 199 199 82 60 196 196 0 0 200 200 14 16 201 201 82 60 202 202 82 60 202 202 73 61 203 203 0 0 200 200 73 61 204 204 82 60 205 205 87 55 206 206 87 55 206 206 72 47 207 207 73 61 204 204 79 62 208 208 81 58 209 209 11 12 210 210 11 12 210 210 8 9 211 211 79 62 208 208 78 51 212 212 80 53 213 213 81 58 214 214 81 58 214 214 79 62 215 215 78 51 212 212 77 63 216 216 79 62 217 217 8 9 218 218 8 9 218 218 5 6 219 219 77 63 216 216 76 49 220 220 78 51 221 221 79 62 222 222 79 62 222 222 77 63 223 223 76 49 220 220 74 64 224 224 77 63 225 225 5 6 226 226 5 6 226 226 75 1 227 227 74 64 224 224 93 46 228 228 76 49 229 229 77 63 230 230 77 63 230 230 74 64 231 231 93 46 228 228 73 61 232 232 74 64 233 233 75 1 234 234 75 1 234 234 0 0 235 235 73 61 232 232 72 47 236 236 93 46 237 237 74 64 238 238 74 64 238 238 73 61 239 239 72 47 236 236 25 35 240 240 26 65 241 241 71 22 242 242 26 65 243 243 27 66 244 244 71 22 245 245 99 42 246 246 20 21 247 247 21 67 248 248 21 67 249 249 20 21 250 250 22 68 251 251 101 39 252 252 99 42 253 253 21 67 254 254 21 67 254 254 23 69 255 255 101 39 252 252 23 69 256 256 21 67 257 257 22 68 258 258 22 68 258 258 24 70 259 259 23 69 256 256 113 23 260 260 101 39 261 261 23 69 262 262 23 69 262 262 34 71 263 263 113 23 260 260 34 71 264 264 23 69 265 265 24 70 266 266 24 70 266 266 35 72 267 267 34 71 264 264 28 73 268 268 26 65 269 269 25 35 270 270 25 35 270 270 106 32 271 271 28 73 268 268 29 74 272 272 27 66 273 273 26 65 274 274 26 65 274 274 28 73 275 275 29 74 272 272 30 75 276 276 28 73 277 277 106 32 278 278 106 32 278 278 109 29 279 279 30 75 276 276 31 76 280 280 29 74 281 281 28 73 282 282 28 73 282 282 30 75 283 283 31 76 280 280 32 77 284 284 30 75 285 285 109 29 286 286 109 29 286 286 111 24 287 287 32 77 284 284 33 78 288 288 31 76 289 289 30 75 290 290 30 75 290 290 32 77 291 291 33 78 288 288 34 71 292 292 32 77 293 293 111 24 294 294 111 24 294 294 113 23 295 295 34 71 292 292 35 72 296 296 33 78 297 297 32 77 298 298 32 77 298 298 34 71 299 299 35 72 296 296 55 79 300 300 37 80 301 301 38 81 302 302 38 81 302 302 36 82 303 303 55 79 300 300 36 82 304 304 38 81 305 305 33 78 306 306 33 78 306 306 35 72 307 307 36 82 304 304 37 80 308 308 39 83 309 309 40 84 310 310 40 84 310 310 38 81 311 311 37 80 308 308 38 81 312 312 40 84 313 313 31 76 314 314 31 76 314 314 33 78 315 315 38 81 312 312 39 83 316 316 41 85 317 317 42 86 318 318 42 86 318 318 40 84 319 319 39 83 316 316 40 84 320 320 42 86 321 321 29 74 322 322 29 74 322 322 31 76 323 323 40 84 320 320 41 85 324 324 43 87 325 325 44 88 326 326 44 88 326 326 42 86 327 327 41 85 324 324 42 86 328 328 44 88 329 329 27 66 330 330 27 66 330 330 29 74 331 331 42 86 328 328 36 82 332 332 45 89 333 333 49 90 334 334 49 90 334 334 55 79 335 335 36 82 332 332 35 72 336 336 24 70 337 337 45 89 338 338 45 89 338 338 36 82 339 339 35 72 336 336 45 89 340 340 46 91 341 341 47 92 342 342 47 92 342 342 49 90 343 343 45 89 340 340 24 70 344 344 22 68 345 345 46 91 346 346 46 91 346 346 45 89 347 347 24 70 344 344 46 91 348 348 20 21 349 349 47 92 350 350 22 68 351 351 20 21 352 352 46 91 353 353 44 88 354 354 43 87 355 355 71 22 356 356 27 66 357 357 44 88 358 358 71 22 359 359 43 87 360 360 51 93 361 361 71 22 362 362 51 93 363 363 61 94 364 364 71 22 365 365 47 92 366 366 20 21 367 367 48 95 368 368 48 95 369 369 20 21 370 370 57 96 371 371 49 90 372 372 47 92 373 373 48 95 374 374 48 95 374 374 50 97 375 375 49 90 372 372 50 97 376 376 48 95 377 377 57 96 378 378 57 96 378 378 59 98 379 379 50 97 376 376 55 79 380 380 49 90 381 381 50 97 382 382 50 97 382 382 56 99 383 383 55 79 380 380 56 99 384 384 50 97 385 385 59 98 386 386 59 98 386 386 69 100 387 387 56 99 384 384 52 101 388 388 51 93 389 389 43 87 390 390 43 87 390 390 41 85 391 391 52 101 388 388 63 102 392 392 61 94 393 393 51 93 394 394 51 93 394 394 52 101 395 395 63 102 392 392 53 103 396 396 52 101 397 397 41 85 398 398 41 85 398 398 39 83 399 399 53 103 396 396 65 104 400 400 63 102 401 401 52 101 402 402 52 101 402 402 53 103 403 403 65 104 400 400 54 105 404 404 53 103 405 405 39 83 406 406 39 83 406 406 37 80 407 407 54 105 404 404 67 106 408 408 65 104 409 409 53 103 410 410 53 103 410 410 54 105 411 411 67 106 408 408 56 99 412 412 54 105 413 413 37 80 414 414 37 80 414 414 55 79 415 415 56 99 412 412 69 100 416 416 67 106 417 417 54 105 418 418 54 105 418 418 56 99 419 419 69 100 416 416 61 94 420 420 62 107 421 421 71 22 422 422 62 107 423 423 13 14 424 424 71 22 425 425 57 96 426 426 20 21 427 427 58 108 428 428 58 108 429 429 20 21 430 430 19 20 431 431 59 98 432 432 57 96 433 433 58 108 434 434 58 108 434 434 60 109 435 435 59 98 432 432 60 109 436 436 58 108 437 437 19 20 438 438 19 20 438 438 16 17 439 439 60 109 436 436 69 100 440 440 59 98 441 441 60 109 442 442 60 109 442 442 70 110 443 443 69 100 440 440 70 110 444 444 60 109 445 445 16 17 446 446 16 17 446 446 2 5 447 447 70 110 444 444 64 111 448 448 62 107 449 449 61 94 450 450 61 94 450 450 63 102 451 451 64 111 448 448 10 11 452 452 13 14 453 453 62 107 454 454 62 107 454 454 64 111 455 455 10 11 452 452 66 112 456 456 64 111 457 457 63 102 458 458 63 102 458 458 65 104 459 459 66 112 456 456 7 8 460 460 10 11 461 461 64 111 462 462 64 111 462 462 66 112 463 463 7 8 460 460 68 113 464 464 66 112 465 465 65 104 466 466 65 104 466 466 67 106 467 467 68 113 464 464 4 4 468 468 7 8 469 469 66 112 470 470 66 112 470 470 68 113 471 471 4 4 468 468 70 110 472 472 68 113 473 473 67 106 474 474 67 106 474 474 69 100 475 475 70 110 472 472 2 5 476 476 4 4 477 477 68 113 478 478 68 113 478 478 70 110 479 479 2 5 476 476</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="geom-Colmesh_sandbarrel-1" name="Colmesh_sandbarrel-1">
+      <mesh>
+        <source id="geom-Colmesh_sandbarrel-1-positions">
+          <float_array id="geom-Colmesh_sandbarrel-1-positions-array" count="96">-0.5178794 -0.5190391 -0.02987695 0.495136 -0.5190391 -0.02987695 -0.5178794 0.5190426 -0.02987695 0.495136 0.5190426 -0.02987695 -0.7654873 -0.7727738 1.576739 0.7427437 -0.7727738 1.576739 -0.7654873 0.7727773 1.576739 0.7427437 0.7727773 1.576739 -0.4551162 -0.4547228 -0.02987695 0.4323727 -0.4547228 -0.02987695 0.6492985 -0.6770164 1.576739 -0.6720421 -0.6770164 1.576739 0.4323727 0.4547264 -0.02987695 0.6492985 0.6770198 1.576739 -0.4551162 0.4547264 -0.02987695 -0.6720421 0.6770198 1.576739 -0.3734854 -0.3710721 -0.02987695 0.350742 -0.3710721 -0.02987695 0.5277623 -0.5524728 1.576739 -0.5505058 -0.5524728 1.576739 0.350742 0.3710757 -0.02987695 0.5277623 0.5524762 1.576739 -0.3734854 0.3710757 -0.02987695 -0.5505058 0.5524762 1.576739 -0.2878397 -0.2833071 -0.02987695 0.2650962 -0.2833071 -0.02987695 0.4002483 -0.4218035 1.576739 -0.4229918 -0.4218035 1.576739 0.2650962 0.2833107 -0.02987695 0.4002483 0.4218071 1.576739 -0.2878397 0.2833107 -0.02987695 -0.4229918 0.4218071 1.576739</float_array>
+          <technique_common>
+            <accessor source="#geom-Colmesh_sandbarrel-1-positions-array" count="32" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-Colmesh_sandbarrel-1-normals">
+          <float_array id="geom-Colmesh_sandbarrel-1-normals-array" count="192">0 -0.9877573 -0.1559977 0 -0.9877574 -0.1559977 0 -0.9877574 -0.1559977 0 -0.9877574 -0.1559977 0.9883314 0 -0.1523193 0.9883313 0 -0.1523192 0.9883313 0 -0.1523193 0.9883313 0 -0.1523193 0 0.9877573 -0.1559976 0 0.9877575 -0.1559977 0 0.9877574 -0.1559976 0 0.9877574 -0.1559976 -0.9883313 0 -0.1523193 -0.9883314 0 -0.1523193 -0.9883313 0 -0.1523193 -0.9883313 0 -0.1523193 0 -0.9905633 -0.1370557 0 -0.9905633 -0.1370557 0 -0.9905633 -0.1370557 0 -0.9905633 -0.1370557 0.9910075 0 -0.1338062 0.9910075 0 -0.1338062 0.9910076 0 -0.1338062 0.9910075 0 -0.1338062 0 0.9905635 -0.1370556 0 0.9905633 -0.1370556 0 0.9905635 -0.1370556 0 0.9905635 -0.1370556 -0.9910075 0 -0.1338062 -0.9910076 0 -0.1338062 -0.9910075 0 -0.1338062 -0.9910075 0 -0.1338062 0 -0.9936862 -0.1121956 0 -0.9936861 -0.1121956 0 -0.9936861 -0.1121956 0 -0.9936862 -0.1121956 0.9939847 0 -0.1095194 0.9939847 0 -0.1095193 0.9939846 0 -0.1095193 0.9939846 0 -0.1095193 0 0.9936862 -0.1121956 0 0.9936861 -0.1121956 0 0.9936861 -0.1121956 0 0.9936862 -0.1121956 -0.9939847 0 -0.1095194 -0.9939846 0 -0.1095193 -0.9939846 0 -0.1095193 -0.9939846 0 -0.1095193 0 -0.996305 -0.08588529 0 -0.9963049 -0.08588528 0 -0.996305 -0.08588529 0 -0.996305 -0.08588529 0.9964804 0 -0.0838262 0.9964803 0 -0.08382619 0.9964803 0 -0.08382618 0.9964804 0 -0.08382619 0 0.9963049 -0.08588525 0 0.9963049 -0.08588525 0 0.996305 -0.08588526 0 0.9963052 -0.08588526 -0.9964804 0 -0.0838262 -0.9964803 0 -0.08382619 -0.9964803 0 -0.08382618 -0.9964803 0 -0.08382618</float_array>
+          <technique_common>
+            <accessor source="#geom-Colmesh_sandbarrel-1-normals-array" count="64" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-Colmesh_sandbarrel-1-map1">
+          <float_array id="geom-Colmesh_sandbarrel-1-map1-array" count="192">0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#geom-Colmesh_sandbarrel-1-map1-array" count="64" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-Colmesh_sandbarrel-1-vertices">
+          <input semantic="POSITION" source="#geom-Colmesh_sandbarrel-1-positions"/>
+        </vertices>
+        <triangles material="SHOCK_ABSORBER" count="32">
+          <input semantic="VERTEX" source="#geom-Colmesh_sandbarrel-1-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-Colmesh_sandbarrel-1-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#geom-Colmesh_sandbarrel-1-map1" offset="2" set="0"/>
+          <p>0 0 0 1 1 1 5 2 3 5 2 3 4 3 2 0 0 0 1 4 4 3 5 5 7 6 7 7 6 7 5 7 6 1 4 4 3 8 8 2 9 9 6 10 11 6 10 11 7 11 10 3 8 8 2 12 12 0 13 13 4 14 15 4 14 15 6 15 14 2 12 12 8 16 16 9 17 17 10 18 18 10 18 18 11 19 19 8 16 16 9 20 20 12 21 21 13 22 22 13 22 22 10 23 23 9 20 20 12 24 24 14 25 25 15 26 26 15 26 26 13 27 27 12 24 24 14 28 28 8 29 29 11 30 30 11 30 30 15 31 31 14 28 28 16 32 32 17 33 33 18 34 34 18 34 34 19 35 35 16 32 32 17 36 36 20 37 37 21 38 38 21 38 38 18 39 39 17 36 36 20 40 40 22 41 41 23 42 42 23 42 42 21 43 43 20 40 40 22 44 44 16 45 45 19 46 46 19 46 46 23 47 47 22 44 44 24 48 48 25 49 49 26 50 50 26 50 50 27 51 51 24 48 48 25 52 52 28 53 53 29 54 54 29 54 54 26 55 55 25 52 52 28 56 56 30 57 57 31 58 58 31 58 58 29 59 59 28 56 56 30 60 60 24 61 61 27 62 62 27 62 62 31 63 63 30 60 60</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_lights>
+    <light id="EnvironmentAmbientLight" name="EnvironmentAmbientLight">
+      <technique_common>
+        <ambient>
+          <color>0 0 0</color>
+        </ambient>
+      </technique_common>
+    </light>
+  </library_lights>
+  <library_visual_scenes>
+    <visual_scene id="MaxScene">
+      <node name="EnvironmentAmbientLight">
+        <instance_light url="#EnvironmentAmbientLight"/>
+      </node>
+      <node id="node-base00" name="base00">
+        <node id="node-start01" name="start01">
+          <node id="node-sandbarrel_a016" name="sandbarrel_a016">
+            <instance_geometry url="#geom-sandbarrel_a016">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="lod_vertcol" target="#lod_vertcol-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+            <extra>
+              <technique profile="OpenCOLLADA">
+                <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+                <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+                <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+                <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+              </technique>
+            </extra>
+          </node>
+          <node id="node-sandbarrel_a050" name="sandbarrel_a050">
+            <instance_geometry url="#geom-sandbarrel_a050">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="lod_vertcol" target="#lod_vertcol-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+            <extra>
+              <technique profile="OpenCOLLADA">
+                <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+                <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+                <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+                <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+              </technique>
+            </extra>
+          </node>
+          <node id="node-sandbarrel_a150" name="sandbarrel_a150">
+            <instance_geometry url="#geom-sandbarrel_a150">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="wca_objects_construction" target="#wca_objects_construction-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+            <extra>
+              <technique profile="OpenCOLLADA">
+                <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+                <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+                <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+                <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+              </technique>
+            </extra>
+          </node>
+          <node id="node-Colmesh_sandbarrel-1" name="Colmesh_sandbarrel-1">
+            <instance_geometry url="#geom-Colmesh_sandbarrel-1">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="SHOCK_ABSORBER" target="#SHOCK_ABSORBER-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+            <extra>
+              <technique profile="OpenCOLLADA">
+                <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+                <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+                <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+                <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+              </technique>
+            </extra>
+          </node>
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-collision1" name="collision1">
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <node id="node-nulldetail15" name="nulldetail15">
+          <extra>
+            <technique profile="OpenCOLLADA">
+              <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+              <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+              <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+              <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+            </technique>
+          </extra>
+        </node>
+        <extra>
+          <technique profile="OpenCOLLADA">
+            <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+            <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+            <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+            <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#MaxScene"/>
+  </scene>
+</COLLADA>

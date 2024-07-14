@@ -1,0 +1,200 @@
+{
+  "m_asphalt_factory_01": {
+    "name": "m_asphalt_factory_01",
+    "mapTo": "m_asphalt_factory_01",
+    "class": "Material",
+    "persistentId": "59c58b27-c31b-4f42-86e9-a2df9766d4bc",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_asphalt_old_ao.data.png",
+        "ambientOcclusionMapUseUV": null,
+        "baseColorFactor": [
+          0.999989986,
+          0.99999702,
+          1,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_asphalt_old_b.color.png",
+        "detailMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_concrete_detail.data.png",
+        "detailNormalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_concrete_nm.normal.png",
+        "detailNormalMapStrength": 0.349999994,
+        "detailScale": [
+          0.0700000003,
+          0.0700000003
+        ],
+        "diffuseMapUseUV": null,
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_asphalt_old_nm.normal.png",
+        "normalMapStrength": null,
+        "normalMapUseUV": null,
+        "opacityFactor": null,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_asphalt_old_r.data.png",
+        "roughnessMapUseUV": null,
+        "vertColor": true
+      },
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_asphalt_old_ao.data.png",
+        "ambientOcclusionMapUseUV": 1,
+        "baseColorFactor": [
+          0.912209988,
+          0.912200987,
+          0.912200987,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_asphalt_old_02_b.color.png",
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "diffuseMapUseUV": 1,
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_asphalt_old_nm.normal.png",
+        "normalMapStrength": 5,
+        "normalMapUseUV": 1,
+        "opacityFactor": 0.298000008,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_macro_asphalt_old_r.data.png",
+        "roughnessMapUseUV": 1,
+        "vertColor": null
+      },
+      {
+        "ambientOcclusionMapUseUV": null,
+        "baseColorFactor": null,
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "diffuseMapUseUV": null,
+        "normalMapStrength": null,
+        "normalMapUseUV": null,
+        "opacityFactor": null,
+        "roughnessMapUseUV": null,
+        "vertColor": null
+      },
+      {
+        "ambientOcclusionMapUseUV": null,
+        "baseColorFactor": null,
+        "detailNormalMapStrength": null,
+        "detailScale": null,
+        "diffuseMapUseUV": null,
+        "normalMapStrength": null,
+        "normalMapUseUV": null,
+        "opacityFactor": null,
+        "roughnessMapUseUV": null,
+        "vertColor": null
+      }
+    ],
+    "activeLayers": 2,
+    "annotation": "ASPHALT",
+    "groundType": "ASPHALT_OLD",
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "m_chrome": {
+    "name": "m_chrome",
+    "mapTo": "m_chrome",
+    "class": "Material",
+    "persistentId": "33017db7-f40d-4e03-9a3c-2144fe3fe677",
+    "Stages": [
+      {
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_chrome_b.color.png",
+        "detailScale": [
+          3,
+          1
+        ],
+        "metallicFactor": 1,
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_chrome_nm.normal.png",
+        "roughnessFactor": 0.206,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_chrome_r.data.png"
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      }
+    ],
+    "annotation": "OBSTACLES",
+    "cubemap": "global_cubemap_metalblurred",
+    "groundType": "METAL",
+    "version": 1.5
+  },
+  "m_modern_corrugated": {
+    "name": "m_modern_corrugated",
+    "mapTo": "m_modern_corrugated",
+    "class": "Material",
+    "persistentId": "06c33d46-72d5-4c9b-be11-16d9a957cf3f",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_corrugated_02_ao.data.png",
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_corrugated_02_b.color.png",
+        "detailNormalMapStrength": 0,
+        "detailScale": [
+          0.0500000007,
+          0.0500000007
+        ],
+        "metallicFactor": 1,
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_corrugated_02_nm.normal.png",
+        "normalMapStrength": 4,
+        "overlayMap": "levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/grunge_dripping_d.dds",
+        "pixelSpecular": true,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_metal_corrugated_02_r.data.png",
+        "vertColor": true
+      },
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_wall_breakup_ao.data.png",
+        "ambientOcclusionMapUseUV": 1,
+        "baseColorFactor": [
+          0.509840012,
+          0.509835005,
+          0.509835005,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_wall_breakup_b.color.png",
+        "diffuseMapUseUV": 1,
+        "normalMapStrength": 0,
+        "normalMapUseUV": 1,
+        "opacityFactor": 0.600000024,
+        "opacityMapUseUV": 1,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_wall_breakup_r.data.png",
+        "roughnessMapUseUV": 1
+      },
+      {}
+    ],
+    "activeLayers": 2,
+    "alphaRef": 0,
+    "annotation": "BUILDINGS",
+    "cubemap": "cubemap_automation_reflection",
+    "materialTag0": "beamng",
+    "materialTag1": "building",
+    "version": 1.5
+  },
+  "m_steel_factory_brand": {
+    "name": "m_steel_factory_brand",
+    "mapTo": "m_steel_factory_brand",
+    "class": "Material",
+    "persistentId": "bd3f75ec-0d11-4ae5-9d85-9ba16d559abf",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_steel_factory_brand_ao.data.png",
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_steel_factory_brand_b.color.png",
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_steel_factory_brand_nm.normal.png",
+        "normalMapStrength": 0.300000012,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/buildings/steel_factory/t_steel_factory_brand_r.data.png"
+      },
+      {
+        "normalMapStrength": null
+      },
+      {
+        "normalMapStrength": null
+      },
+      {
+        "normalMapStrength": null
+      }
+    ],
+    "annotation": "BUILDINGS",
+    "version": 1.5
+  }
+}

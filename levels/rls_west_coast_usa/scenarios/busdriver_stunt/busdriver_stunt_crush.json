@@ -1,0 +1,35 @@
+[
+{
+    "name": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.title",
+    "description": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.description",
+    "authors": "BeamNG",
+    "introType": "portrait",
+    "portraitImg": {
+        "start": "campaigns/bus_minichapter/directorportrait.png",
+        "success": "campaigns/bus_minichapter/directorportrait_face.png",
+        "fail": "campaigns/bus_minichapter/directorportrait_face.png"
+    },
+    "portraitText": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_crush.description",
+    "difficulty": "0.03",
+    "date": 1519379080,
+    "restrictToCampaign": true,
+    "levelObjects": {
+        "tod" : {
+            "time" : 0.11,
+            "dayLength" : 2880,
+            "play" : false,
+        }
+
+    },
+    "vehicles": {
+        "scenario_player0": {"playerUsable": true, "startFocus": true},
+        "*": {"playerUsable": false}
+    },
+    "lapConfig": ["course_wp1", "course_wp2", "course_wp3", "course_wp4", "course_wp5"],
+    "radiusMultiplierAI": 2,
+    "statistics":
+    {
+        "disableEndUI": true,
+    },
+},
+]

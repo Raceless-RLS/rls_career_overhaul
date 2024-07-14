@@ -1,0 +1,354 @@
+{
+    "version": 1,
+    "routes":[
+        {"routeID":"1",
+            "variance":"a",
+            "direction":"Star Diner",
+            "routeColor": "#3b9c00",
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "tasklist":[
+                "wcu_bs_16",
+                "wcu_bs_13",
+                "wcu_bs_02",
+                "wcu_bs_23",
+                "wcu_bs_26",
+                "wcu_bs_29",
+                "wcu_bs_27",
+                "wcu_bs_28",
+                "wcu_bs_25",
+                "wcu_bs_20"
+            ],
+            "spawnLocation": {
+                "pos": {"x": -613.572,"y": 199.223,"z": 113.173},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": 1,"w": 224.173}
+            },
+            "requiredWaypoints":{
+                "wcu_bs_29":{
+                    "wp":["wcu_cp_agave"],
+                    "failmsg":"You got too far-off the route" },
+                "wcu_bs_27":{
+                    "wp":["wcu_cp_hwy"],
+                    "failmsg":"You got too far-off the route" }
+            },
+            "navhelp":{
+                "wcu_bs_13":["wpTown_16","Bridge36_3","Bridge36_1"],
+                "wcu_bs_26":["bs_raceTrack_1","Bridge4_B1","Bridge4_A1","Bridge4_A2","countryside_road_1","countryside_road_2"],
+                "wcu_bs_29":["Junction_mountain_A","Bridge1_B"],
+                "wcu_bs_27":["countryside_road_3","Bridge2_A1","Bridge2_A2","Bridge2_A3","Bridge17_A","Bridge17_B","Bridge17_E"],
+                "wcu_bs_28":["countryside_road_4"],
+            },
+            "previews":[
+                "01_StarDiner.png"
+            ]
+        },
+        {"routeID":"2",
+            "variance":"a",
+            "direction":"Riverway Plaza",
+            "routeColor": "#fff200",
+            "tasklist":[
+                "wcu_bs_04",
+                "wcu_bs_01",
+                "wcu_bs_05_b",
+                "wcu_bs_14_b",
+                "wcu_bs_19_b",
+                "wcu_bs_25_b",
+                "wcu_bs_24_b",
+                "wcu_bs_27_b",
+                "wcu_bs_21",
+                "wcu_bs_17"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -337.572,"y": 605.564,"z": 75.0979},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": 1,"w": 135.337}
+            },
+            "requiredWaypoints":{
+                "wcu_bs_27":{
+                    "wp":["wcu_cp_hrzn"],
+                    "failmsg":"You got too far-off the route" }
+            },
+            "navhelp":{
+                "wcu_bs_21":["Bridge17b_A"],
+                "wcu_bs_17":["tennis_1","tennis_2"],
+            },
+            "previews":[
+                "02_RiverwayPlaza.png"
+            ]
+        },
+        {"routeID":"2",
+            "variance":"b",
+            "direction":"Belasco Boulevard",
+            "routeColor": "#fff200",
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "tasklist":[
+                "wcu_bs_04_b",
+                "wcu_bs_12_b",
+                "wcu_bs_17_b",
+                "wcu_bs_21_b",
+                "wcu_bs_27",
+                "wcu_bs_24",
+                "wcu_bs_25",
+                "wcu_bs_19",
+                "wcu_bs_14",
+                "wcu_bs_05",
+                "wcu_bs_01_b"
+            ],
+            "spawnLocation": {
+                "pos": {"x": -505.697,"y": 751.774,"z": 75.2664},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": -1,"w": 45.1025}
+            },
+            "requiredWaypoints":{
+                "wcu_bs_24":{
+                    "wp":["wcu_cp_hrzn"],
+                    "failmsg":"You got too far-off the route" }
+            },
+            "navhelp":{
+                "wcu_bs_21_b":["tennis_2","tennis_1"],
+                "wcu_bs_24":["residence_junction_A4","residence_junction_A3","residence_junction_A6"]
+            },
+            "previews":[
+                "02_BelascoBoulevard.png"
+            ]
+        },
+        {"routeID":"3",
+            "variance":"a",
+            "direction":"Fjord Street",
+            "routeColor": "#ffa600",
+            "tasklist":[
+                "wcu_bs_01_b",
+                "wcu_bs_04_b",
+                "wcu_bs_13",
+                "wcu_bs_21_b",
+                "wcu_bs_17",
+                "wcu_bs_12",
+                "wcu_bs_06",
+                "wcu_bs_03"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -905.432,"y": 870.23,"z": 75.0095},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": -1,"w": 88.2726}
+            },
+            "navhelp":{
+                "wcu_bs_21_b":["Bridge8_A","tennis_1"],
+                "wcu_bs_13":["Bridge13_A"],
+            },
+            "previews":[
+                "03_FjordStreet.png"
+            ]
+        },
+        {"routeID":"3",
+            "variance":"b",
+            "direction":"Convention Center",
+            "routeColor": "#ffa600",
+            "tasklist":[
+                "wcu_bs_01",
+                "wcu_bs_03_b",
+                "wcu_bs_06_b",
+                "wcu_bs_12_b",
+                "wcu_bs_17_b",
+                "wcu_bs_21",
+                "wcu_bs_13_b",
+                "wcu_bs_04"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -712.521,"y": 861.891,"z": 75.0783},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": 1,"w": 127.629}
+            },
+            "navhelp":{
+                "wcu_bs_13_b":["tennis_1","Bridge8a_A","Bridge8a_B","countryside_road_9","countryside_road_10"],
+            },
+            "previews":[
+                "03_ConventionCenter.png"
+            ]
+        },
+        {"routeID":"4",
+            "variance":"a",
+            "direction":"Central Hospital",
+            "routeColor": "#ff0000",
+            "tasklist":[
+                "wcu_bs_08",
+                "wcu_bs_04",
+                "wcu_bs_01",
+                "wcu_bs_03_b",
+                "wcu_bs_05",
+                "wcu_bs_09_b",
+                "wcu_bs_14_b",
+                "wcu_bs_19_b",
+                "wcu_bs_22",
+                "wcu_bs_20",
+                "wcu_bs_15",
+                "wcu_bs_12_b",
+                "wcu_bs_10_b"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": 31.9073,"y": 545.97,"z": 74.9018},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": 1,"w": 64.4437 }
+            },
+            "previews":[
+                "04_CentralHospital.png"
+            ]
+        },
+        {"routeID":"4",
+            "variance":"b",
+            "direction":"Convention Center",
+            "routeColor": "#ff0000",
+            "tasklist":[
+                "wcu_bs_08_b",
+                "wcu_bs_10",
+                "wcu_bs_12",
+                "wcu_bs_15_b",
+                "wcu_bs_20_b",
+                "wcu_bs_22_b",
+                "wcu_bs_19",
+                "wcu_bs_14",
+                "wcu_bs_09",
+                "wcu_bs_05_b",
+                "wcu_bs_03",
+                "wcu_bs_01_b",
+                "wcu_bs_04_b"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": 31.9073,"y": 545.97,"z": 74.9018},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": 1,"w": 64.4437 }
+            },
+            "navhelp":{
+                "wcu_bs_08_b":["wpTown_17"],
+            },
+            "previews":[
+                "04_ConventionCenter.png"
+            ]
+        },
+        {"routeID":"5",
+            "variance":"a",
+            "direction":"Little China",
+            "routeColor": "#0040ff",
+            "tasklist":[
+                "wcu_bs_03_b",
+                "wcu_bs_06_b",
+                "wcu_bs_07_b",
+                "wcu_bs_12",
+                "wcu_bs_15_b",
+                "wcu_bs_18_b",
+                "wcu_bs_14",
+                "wcu_bs_09"
+            ],
+            "navhelp": {
+                "wcu_bs_14" : ["wp_town11"]
+            },
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -936.977,"y": 661.033,"z": 112.4},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": -1,"w": 88.0451}
+            },
+            "previews":[
+                "05_LittleChina.png"
+            ]
+        },
+        {"routeID":"5",
+            "variance":"b",
+            "direction":"Fjord Street",
+            "routeColor": "#0040ff",
+            "tasklist":[
+                "wcu_bs_09_b",
+                "wcu_bs_14_b",
+                "wcu_bs_18",
+                "wcu_bs_15",
+                "wcu_bs_12_b",
+                "wcu_bs_07",
+                "wcu_bs_06",
+                "wcu_bs_03"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -936.977,"y": 661.033,"z": 112.4},
+                "rotAngAxisF": {"x": 0,"y": 0,"z": -1,"w": 88.0451}
+            },
+            "previews":[
+                "05_FjordStreet.png"
+            ]
+        },
+        {"routeID":"6",
+            "variance":"a",
+            "direction":"Royal Bank",
+            "routeColor": "#9900ff",
+            "tasklist":[
+                "wcu_bs_06",
+                "wcu_bs_05",
+                "wcu_bs_09_b",
+                "wcu_bs_11_b",
+                "wcu_bs_18_b",
+                "wcu_bs_20",
+                "wcu_bs_16",
+                "wcu_bs_12"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -607.101,"y": 610.03,"z": 93.4471},
+                "rotAngAxisF": {"x": 0.0370749, "y": 0.1001111,"z": 0.9942853,"w": 225.581213144}
+            },
+            "previews":[
+                "06_RoyalBank.png"
+            ]
+        },
+        {"routeID":"6",
+            "variance":"b",
+            "direction":"Logan Park",
+            "routeColor": "#9900ff",
+            "tasklist":[
+                "wcu_bs_06_b",
+                "wcu_bs_12_b",
+                "wcu_bs_16_b",
+                "wcu_bs_20_b",
+                "wcu_bs_18",
+                "wcu_bs_11",
+                "wcu_bs_09",
+                "wcu_bs_05_b"
+            ],
+            "vehicle" : {
+                "model": "citybus",
+                "config": "base"
+            },
+            "spawnLocation": {
+                "pos": {"x": -607.101,"y": 610.03,"z": 93.4471},
+                "rotAngAxisF": {"x": 0.0370749, "y": 0.1001111,"z": 0.9942853,"w": 225.581213144}
+            },
+            "previews":[
+                "06_LoganPark.png"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.82.7 commit date:2020-03-12, commit time:05:06, hash:375c7dc4caf4</authoring_tool>
+    </contributor>
+    <created>2020-09-18T14:53:37</created>
+    <modified>2020-09-18T14:53:37</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="roadsigns-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="metal_galvanized-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0 0 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="roadsigns-material" name="roadsigns">
+      <instance_effect url="#roadsigns-effect"/>
+    </material>
+    <material id="metal_galvanized-material" name="metal_galvanized">
+      <instance_effect url="#metal_galvanized-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_061-mesh" name="Plane.061">
+      <mesh>
+        <source id="Plane_061-mesh-positions">
+          <float_array id="Plane_061-mesh-positions-array" count="60">-0.3658399 0.007514715 -0.5 0.3658399 0.007514715 -0.5 -0.3658399 0.007514715 0.5 0.3658399 0.007514715 0.5 -0.2989815 -0.002485275 0.0159946 0.2989815 -0.002485275 0.0159946 -0.2989815 -0.002485275 0.4350568 0.2989815 -0.002485275 0.4350568 -0.07222366 -0.002485275 -0.4592841 0.3632782 -0.002485275 -0.4592841 -0.07222366 -0.002485275 0.0401802 0.3632782 -0.002485275 0.0401802 -0.3658399 0.007514715 -0.5 0.3658399 0.007514715 -0.5 -0.3658399 0.007514715 0.5 0.3658399 0.007514715 0.5 -0.3969812 -0.002485275 -0.4592841 0.03852057 -0.002485275 -0.4592841 -0.3969812 -0.002485275 0.0401802 0.03852057 -0.002485275 0.0401802</float_array>
+          <technique_common>
+            <accessor source="#Plane_061-mesh-positions-array" count="20" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_061-mesh-normals">
+          <float_array id="Plane_061-mesh-normals-array" count="6">0 -1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_061-mesh-normals-array" count="2" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_061-mesh-map-0">
+          <float_array id="Plane_061-mesh-map-0-array" count="40">0.2520882 0.8150909 0.1805207 0.8150909 0.1805207 0.628251 0.2520882 0.628251 0.1120428 0.6279084 0.1772436 0.6279084 0.1772436 0.7176973 0.1120428 0.7176973 0.272947 0.926571 0.2980777 0.926571 0.2980777 0.9883705 0.272947 0.9883705 0.2520882 0.8150909 0.2520882 0.628251 0.1805207 0.628251 0.1805207 0.8150909 0.1904274 0.926571 0.2155581 0.926571 0.2155581 0.9883705 0.1904274 0.9883705</float_array>
+          <technique_common>
+            <accessor source="#Plane_061-mesh-map-0-array" count="20" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_061-mesh-colors-Col" name="Col">
+          <float_array id="Plane_061-mesh-colors-Col-array" count="80">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_061-mesh-colors-Col-array" count="20" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_061-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_061-mesh-positions"/>
+        </vertices>
+        <polylist material="roadsigns-material" count="4">
+          <input semantic="VERTEX" source="#Plane_061-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_061-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_061-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_061-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 4 4 4 </vcount>
+          <p>0 0 0 0 1 0 1 1 3 0 2 2 2 0 3 3 4 0 4 4 5 0 5 5 7 0 6 6 6 0 7 7 8 0 8 8 9 0 9 9 11 0 10 10 10 0 11 11 16 0 16 16 17 0 17 17 19 0 18 18 18 0 19 19</p>
+        </polylist>
+        <polylist material="metal_galvanized-material" count="1">
+          <input semantic="VERTEX" source="#Plane_061-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_061-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_061-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#Plane_061-mesh-colors-Col" offset="3" set="0"/>
+          <vcount>4 </vcount>
+          <p>12 1 12 12 14 1 13 13 15 1 14 14 13 1 15 15</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 9.54475e-5 0 1 0 2.05673e-4 0 0 1 6.57132e-5 0 0 0 1</matrix>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="sign_speed25_a015" name="sign_speed25_a015" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+            <instance_geometry url="#Plane_061-mesh" name="sign_speed25_a015">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="roadsigns-material" target="#roadsigns-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                  <instance_material symbol="metal_galvanized-material" target="#metal_galvanized-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="nulldetail10" name="nulldetail10" type="NODE">
+            <matrix sid="transform">1 0 0 -9.54475e-5 0 1 0 -2.05673e-4 0 0 1 -6.57132e-5 0 0 0 1</matrix>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

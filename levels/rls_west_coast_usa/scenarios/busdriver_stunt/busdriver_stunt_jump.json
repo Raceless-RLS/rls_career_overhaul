@@ -1,0 +1,77 @@
+[
+{
+    "name": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_jump.title",
+    "description": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_jump.description",
+    "authors": "BeamNG",
+    "introType": "portrait",
+    "portraitImg": {
+        "start": "campaigns/bus_minichapter/directorportrait.png",
+        "success": "campaigns/bus_minichapter/directorportrait_face.png",
+        "fail": "campaigns/bus_minichapter/directorportrait_face.png"
+    },
+    "portraitText": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_jump.description",
+    "difficulty": "0.03",
+    "date": 1519379080,
+    "maxTime":30,
+    "reverseTime" : true,
+    "restrictToCampaign": true,
+    "levelObjects": {
+        "tod" : {
+            "time" : 0.11,
+            "dayLength" : 2880,
+            "play" : false,
+        }
+
+    },
+    "statistics":
+    {
+        "alias":
+        {
+            "finishRace": "Completed the Jump"
+        },
+        "damage":
+        {
+            "source": "scenario_player0",
+            "target": "scenario_player0",
+            "maxValue" : 60000,
+            "maxPoints" : -400
+        },
+        "time":
+        {
+            "best": 26,
+            "worst": 30,
+            "maxPoints": 1000
+        }
+    },
+    "vehicles":
+    {
+       "scenario_player0":
+       {
+            "driver":
+            {
+                "player":true,
+                "startFocus": true,
+                "required": true
+            },
+            "goal":
+            {
+                "timeLimit":
+                {
+                    "maxTime":30,
+                    "waitTime":3,
+                    "msg":{"txt":"scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_jump.fail_time.msg","context":{"timeLimit":30}}
+                },
+                "damage":
+                {
+                    "damageLimit":60000,
+                    "msg": "scenarios.west_coast_usa.busdriver_stunt.busdriver_stunt_jump.fail_damage.msg",
+                    "purpose":"fail"
+                }
+
+            }
+        },
+
+    },
+    "lapConfig": ["course_wp1", "course_wp2", "course_wp3"]
+}
+]
