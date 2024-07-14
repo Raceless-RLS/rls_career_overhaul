@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 3.3.0 commit date:2022-09-06, commit time:15:39, hash:0759f671ce1f</authoring_tool>
+    </contributor>
+    <created>2022-11-21T17:16:50</created>
+    <modified>2022-11-21T17:16:50</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="rocks_desert_ca-effect">
+      <profile_COMMON>
+        <newparam sid="t_rocks_desert_ca_b_color_png-surface">
+          <surface type="2D">
+            <init_from>t_rocks_desert_ca_b_color_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="t_rocks_desert_ca_b_color_png-sampler">
+          <sampler2D>
+            <source>t_rocks_desert_ca_b_color_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="t_rocks_desert_ca_b_color_png-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="t_rocks_desert_ca_b_color_png" name="t_rocks_desert_ca_b_color_png">
+      <init_from>/F:/beamng.drive_source/source_environment/common/rock/desert_rocks_ca/t_rocks_desert_ca_b.color.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="rocks_desert_ca-material" name="rocks_desert_ca">
+      <instance_effect url="#rocks_desert_ca-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube_494-mesh" name="Cube.494">
+      <mesh>
+        <source id="Cube_494-mesh-positions">
+          <float_array id="Cube_494-mesh-positions-array" count="48">-0.07281464 -0.3367329 -0.05063688 -0.09786826 -0.2198509 -0.1456159 0.1852645 -0.151715 -0.1646035 -0.1983093 -0.08007425 0.1766625 0.02000325 -0.02685081 0.2150004 -0.2530049 0.1299897 -0.1054507 -0.239442 0.2781845 -0.09806376 -0.17441 0.1682562 -0.2377173 -0.2313171 0.09292054 0.2029528 -0.212877 0.2689236 0.1889138 0.166718 -0.3427255 -0.1518162 0.2153573 -0.0725823 -0.2348735 0.1923984 -0.2232034 0.02643734 0.06334352 0.1661756 -0.2276995 0.2452868 0.2826597 -0.04815918 0.2187156 0.2212282 0.2061116</float_array>
+          <technique_common>
+            <accessor source="#Cube_494-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_494-mesh-normals">
+          <float_array id="Cube_494-mesh-normals-array" count="78">-0.9404717 -0.329108 -0.08485835 -0.955236 -0.2349693 -0.1797605 -0.5833549 -0.4017891 -0.7058772 0.106339 -0.334719 0.9362987 -0.02492868 -0.5149518 0.8568566 0.08450227 -0.7043419 0.7048134 -0.3104218 -0.04964524 -0.9493018 -0.9944192 0.1031929 -0.02194929 -0.9972773 -0.007026016 0.0734083 -0.989228 0.1112328 0.09516024 0.03725594 0.9908906 0.1294138 0.1528537 0.9613742 -0.2289006 0.01782923 0.9553558 -0.2949193 0.5001344 -0.1317554 -0.8558658 0.2012287 -0.8267453 0.5253563 0.8070592 -0.4029483 0.4316111 0.2026779 0.5726307 -0.7943651 -0.02617728 0.06735593 0.9973856 0.6221014 -0.1480242 0.7688164 -0.1743499 -0.3285897 -0.9282408 -0.7488325 -0.5071904 -0.4266238 -0.06578958 -0.03774893 0.9971193 0.4774507 -0.3356468 -0.8120235 0.9920232 -0.1013411 -0.07496637 0.9938338 -0.09563058 0.05611771 0.09695816 0.9650936 0.2432971</float_array>
+          <technique_common>
+            <accessor source="#Cube_494-mesh-normals-array" count="26" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_494-mesh-map-0">
+          <float_array id="Cube_494-mesh-map-0-array" count="168">0.4257409 0.1387097 0.4178618 0.1524206 0.4156929 0.1307254 0.4069023 0.1505448 0.4017511 0.1478716 0.4054488 0.1304711 0.4178618 0.1524206 0.4139112 0.153775 0.4156929 0.1307254 0.4185062 0.1598724 0.4139112 0.153775 0.4178618 0.1524206 0.4185062 0.1598724 0.4178618 0.1524206 0.4263225 0.148225 0.4185062 0.1598724 0.4263225 0.148225 0.4269611 0.1585738 0.462149 0.1356515 0.4703819 0.1111349 0.4707725 0.1377695 0.4141629 0.1642794 0.4253171 0.1793922 0.4157252 0.1874305 0.4054488 0.1304711 0.4125816 0.1277145 0.4131582 0.1392202 0.4257409 0.1387097 0.4263225 0.148225 0.4178618 0.1524206 0.4707725 0.1377695 0.4703819 0.1111349 0.4746978 0.1207476 0.4211 0.1651939 0.4253171 0.1793922 0.4141629 0.1642794 0.402266 0.1585214 0.4069023 0.1505448 0.4134849 0.1604186 0.4134849 0.1604186 0.4069023 0.1505448 0.4139112 0.1451328 0.422983 0.1949253 0.4159815 0.194754 0.4157252 0.1874305 0.4156929 0.1307254 0.417622 0.1259528 0.4257409 0.1387097 0.4707725 0.1377695 0.4746978 0.1207476 0.4746978 0.1347392 0.4014981 0.1531382 0.4017511 0.1478716 0.4069023 0.1505448 0.402266 0.1585214 0.4014981 0.1531382 0.4069023 0.1505448 0.4230827 0.1852914 0.4157252 0.1874305 0.4253171 0.1793922 0.4157252 0.1874305 0.4230827 0.1852914 0.422983 0.1949253 0.4079726 0.168657 0.4025475 0.169893 0.4047318 0.162156 0.4025475 0.169893 0.4079726 0.168657 0.4114822 0.171256 0.4111008 0.1940681 0.4025475 0.169893 0.4114822 0.171256 0.4069023 0.1505448 0.4054488 0.1304711 0.4131582 0.1392202 0.4211 0.1651939 0.4253171 0.1598724 0.4253171 0.1793922 0.4628872 0.1113944 0.4703819 0.1111349 0.462149 0.1356515 0.4038472 0.1959625 0.4025475 0.169893 0.4111008 0.1940681</float_array>
+          <technique_common>
+            <accessor source="#Cube_494-mesh-map-0-array" count="84" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_494-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_494-mesh-positions"/>
+        </vertices>
+        <triangles material="rocks_desert_ca-material" count="28">
+          <input semantic="VERTEX" source="#Cube_494-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_494-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_494-mesh-map-0" offset="2" set="0"/>
+          <p>3 0 0 5 1 1 1 2 2 4 3 3 3 4 4 0 5 5 5 1 6 7 6 7 1 2 8 6 7 9 7 6 10 5 1 11 6 7 12 5 1 13 8 8 14 6 7 15 8 8 16 9 9 17 9 10 18 14 11 19 6 12 20 7 6 21 11 13 22 1 2 23 0 5 24 10 14 25 12 15 26 3 0 27 8 8 28 5 1 29 6 12 30 14 11 31 13 16 32 13 16 33 11 13 34 7 6 35 9 17 36 4 3 37 15 18 38 15 18 39 4 3 40 12 15 41 10 19 42 0 20 43 1 2 44 1 2 45 0 20 46 3 0 47 6 12 48 13 16 49 7 6 50 8 21 51 3 4 52 4 3 53 9 17 54 8 21 55 4 3 56 2 22 57 1 2 58 11 13 59 1 2 60 2 22 61 10 19 62 2 22 63 12 15 64 10 23 65 12 15 66 2 22 67 11 13 68 14 24 69 12 15 70 11 13 71 4 3 72 0 5 73 12 15 74 13 16 75 14 11 76 11 13 77 15 25 78 14 11 79 9 10 80 15 18 81 12 15 82 14 24 83</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="collision-1" name="collision-1" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="s_rocks_desert_tiny_03_low_a100" name="s_rocks_desert_tiny_03_low_a100" type="NODE">
+            <matrix sid="transform">0.5 0 0 0 0 0.5 8.14603e-8 0 0 -8.14603e-8 0.5 0 0 0 0 1</matrix>
+            <instance_geometry url="#Cube_494-mesh" name="s_rocks_desert_tiny_03_low_a100">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="rocks_desert_ca-material" target="#rocks_desert_ca-material">
+                    <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

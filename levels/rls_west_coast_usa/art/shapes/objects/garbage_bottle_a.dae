@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.76.0 commit date:2015-11-03, commit time:10:56, hash:f337fea</authoring_tool>
+    </contributor>
+    <created>2016-03-14T12:15:32</created>
+    <modified>2016-03-14T12:15:32</modified>
+    <unit meter="1" name="meter" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="garbage-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="garbage-material" name="garbage">
+      <instance_effect url="#garbage-effect" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="tree_oak_bush_a200_001-mesh" name="tree_oak_bush_a200.001">
+      <mesh>
+        <source id="tree_oak_bush_a200_001-mesh-positions">
+          <float_array count="24" id="tree_oak_bush_a200_001-mesh-positions-array">-0.06158256 0.04838746 -2.38419e-7 -0.06158256 0 -0.04838776 0.1778855 0 -0.01676058 -0.06158256 -0.04838746 -2.38419e-7 -0.06158256 0 0.04838716 0.1778855 -0.01676023 -2.38419e-7 0.1778855 0 0.01675987 0.1778855 0.01676023 -2.38419e-7</float_array>
+          <technique_common>
+            <accessor count="8" source="#tree_oak_bush_a200_001-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tree_oak_bush_a200_001-mesh-normals">
+          <float_array count="24" id="tree_oak_bush_a200_001-mesh-normals-array">-0.5285634 0 -0.8488938 -0.5285634 -0.8488938 0 -0.5285634 0 0.8488938 0.6259708 0.7798466 0 -0.5285634 0.8488938 0 0.6259708 -0.7798466 0 0.6259708 0 0.7798466 0.6259708 0 -0.7798466</float_array>
+          <technique_common>
+            <accessor count="8" source="#tree_oak_bush_a200_001-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tree_oak_bush_a200_001-mesh-map-0">
+          <float_array count="72" id="tree_oak_bush_a200_001-mesh-map-0-array">0.5628226 0.1869762 0.5521714 0.161262 0.5778858 0.1497182 0.6000674 0.09825444 0.6064094 0.1497182 0.5778858 0.1497182 0.5596363 0.09996312 0.5680199 0.1001897 0.5778858 0.1497182 0.5279328 0.09822523 0.5460371 0.09899473 0.5488239 0.1497182 0.6101467 0.09800076 0.6285911 0.09753668 0.6349331 0.1497182 0.4647483 0.4110237 0.4699317 0.3994447 0.4815108 0.4046279 0.5885369 0.176325 0.5628226 0.1869762 0.5778858 0.1497182 0.5816228 0.09871846 0.6000674 0.09825444 0.5778858 0.1497182 0.5488239 0.1497182 0.5596363 0.09996312 0.5778858 0.1497182 0.5208264 0.1497182 0.5279328 0.09822523 0.5488239 0.1497182 0.6064094 0.1497182 0.6101467 0.09800076 0.6349331 0.1497182 0.4763275 0.416207 0.4647483 0.4110237 0.4815108 0.4046279</float_array>
+          <technique_common>
+            <accessor count="36" source="#tree_oak_bush_a200_001-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="tree_oak_bush_a200_001-mesh-vertices">
+          <input semantic="POSITION" source="#tree_oak_bush_a200_001-mesh-positions" />
+        </vertices>
+        <polylist count="12" material="garbage-material">
+          <input offset="0" semantic="VERTEX" source="#tree_oak_bush_a200_001-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#tree_oak_bush_a200_001-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#tree_oak_bush_a200_001-mesh-map-0" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>1 0 0 3 1 1 4 2 2 7 3 3 0 4 4 4 2 5 5 5 6 6 6 7 4 2 8 2 7 9 5 5 10 3 1 11 7 3 12 2 7 13 1 0 14 2 7 15 7 3 16 6 6 17 0 4 18 1 0 19 4 2 20 6 6 21 7 3 22 4 2 23 3 1 24 5 5 25 4 2 26 1 0 27 2 7 28 3 1 29 0 4 30 7 3 31 1 0 32 5 5 33 2 7 34 6 6 35</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="tree_oak_bush_a200-mesh" name="tree_oak_bush_a200">
+      <mesh>
+        <source id="tree_oak_bush_a200-mesh-positions">
+          <float_array count="120" id="tree_oak_bush_a200-mesh-positions-array">-0.06158256 0.03296953 -2.38419e-7 0.1778855 0.01141989 -2.38419e-7 -0.06158256 0.02331298 -0.02331328 0.1778855 0.008075058 -0.008075237 -0.06158256 0 -0.03296983 0.1778855 0 -0.01142013 -0.06158256 -0.02331298 -0.02331328 0.1778855 -0.008075058 -0.008075237 -0.06158256 -0.03296953 -2.38419e-7 0.1778855 -0.01141983 -2.38419e-7 -0.06158256 -0.02331298 0.02331268 0.1778855 -0.008075058 0.008074879 -0.06158256 0 0.03296923 0.1778855 0 0.01141965 -0.06158256 0.02331298 0.02331268 0.1778855 0.008075058 0.008074879 0.06158256 0.03296953 -2.38419e-7 0.06158256 0.02331298 -0.02331328 0.06158256 0 -0.03296971 0.06158256 -0.02331298 -0.02331328 0.06158256 -0.03296953 -2.38419e-7 0.06158256 -0.02331298 0.0233128 0.06158256 0 0.03296923 0.06158256 0.02331298 0.0233128 0.1612968 0.01141989 -2.38419e-7 0.1612968 0.008075058 -0.008075237 0.1612968 0 -0.01142013 0.1612968 -0.008075058 -0.008075237 0.1612968 -0.01141983 -2.38419e-7 0.1612968 -0.008075058 0.008074879 0.1612968 0 0.01141965 0.1612968 0.008075058 0.008074879 0.1583888 0.006837189 -0.006837368 0.1583888 0 -0.009669423 0.1583888 -0.006837129 -0.006837368 0.1583888 -0.009669184 -2.38419e-7 0.1583888 -0.006837129 0.006836891 0.1583888 0 0.009668946 0.1583888 0.006837189 0.006836891 0.1583888 0.009669184 -2.38419e-7</float_array>
+          <technique_common>
+            <accessor count="40" source="#tree_oak_bush_a200-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tree_oak_bush_a200-mesh-normals">
+          <float_array count="120" id="tree_oak_bush_a200-mesh-normals-array">0.6302583 0.7763856 0 0.6302602 0.5489864 -0.5489864 -0.2521846 0.6842526 -0.6842526 0.6302583 0 -0.7763856 -0.2521821 0 -0.9676799 0.6302602 -0.5489864 -0.5489864 -0.2521846 -0.6842526 -0.6842526 0.6302583 -0.7763856 0 -0.2521821 -0.9676799 0 0.6302602 -0.5489864 0.5489864 -0.2521846 -0.6842526 0.6842526 0.6302583 0 0.7763856 -0.2521821 0 0.9676799 0.6302602 0.5489864 0.5489864 -0.2521821 0.9676799 0 -0.2521846 0.6842526 0.6842526 -0.6302602 -0.5489864 -0.5489864 -0.6302583 0 0.7763856 -0.6302602 0.5489864 0.5489864 0.1145974 0 0.9934121 0.1145976 0.7024484 0.7024484 0.1145974 0.9934121 0 0.1145976 -0.7024484 0.7024484 0.1145974 -0.9934121 0 -0.6302602 -0.5489864 0.5489864 0.1145976 -0.7024484 -0.7024484 -0.6302583 -0.7763856 0 0.1145974 0 -0.9934121 -0.6302602 0.5489864 -0.5489864 0.1145976 0.7024484 -0.7024484 -0.6302583 0.7763856 0 -0.1683124 0 0.9857338 -0.1683112 0.6970192 0.6970192 -0.1683112 -0.6970192 0.6970192 -0.1683124 -0.9857338 0 -0.1683124 0 -0.9857338 -0.1683124 0.9857338 0 -0.1683112 0.6970192 -0.6970192 -0.1683112 -0.6970192 -0.6970192 -0.6302583 0 -0.7763856</float_array>
+          <technique_common>
+            <accessor count="40" source="#tree_oak_bush_a200-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tree_oak_bush_a200-mesh-map-0">
+          <float_array count="456" id="tree_oak_bush_a200-mesh-map-0-array">0.4873661 0.3923969 0.4925155 0.3879767 0.4948989 0.3916957 0.4925155 0.3879767 0.4984247 0.3847676 0.5007123 0.38898 0.4915268 0.4292208 0.4864844 0.4241427 0.4902754 0.4213419 0.4864844 0.4241427 0.4830194 0.4181558 0.4873176 0.4165583 0.4830194 0.4181558 0.4813171 0.411491 0.4858651 0.4111384 0.4813171 0.411491 0.4815108 0.4046279 0.4859712 0.4055389 0.4815108 0.4046279 0.4694644 0.4160134 0.4647483 0.4110237 0.4835833 0.3980938 0.4873661 0.3923969 0.4906505 0.395489 0.4815108 0.4046279 0.4835833 0.3980938 0.4876111 0.4001909 0.5521714 0.176325 0.5778858 0.1497182 0.5885369 0.161262 0.5778858 0.1497182 0.5770144 0.1162989 0.5912761 0.1162989 0.5921475 0.1497182 0.5912761 0.1162989 0.6055381 0.1162989 0.5637347 0.1162989 0.5770144 0.1162989 0.5778858 0.1497182 0.5502688 0.1162989 0.5637347 0.1162989 0.5628226 0.1497182 0.5362702 0.1162989 0.5502688 0.1162989 0.5488239 0.1497182 0.5222715 0.1162989 0.5362702 0.1162989 0.534825 0.1497182 0.6206712 0.1497182 0.6198 0.1162989 0.6340618 0.1162989 0.6064094 0.1497182 0.6055381 0.1162989 0.6198 0.1162989 0.4873562 0.4057421 0.4859712 0.4055389 0.4876111 0.4001909 0.4888874 0.400767 0.4876111 0.4001909 0.4906505 0.395489 0.4858651 0.4111384 0.4859712 0.4055389 0.4873562 0.4057421 0.4873176 0.4165583 0.4858651 0.4111384 0.487254 0.4109514 0.4902754 0.4213419 0.4873176 0.4165583 0.4885983 0.4159901 0.4956 0.4239091 0.4950706 0.4253551 0.4902754 0.4213419 0.4948989 0.3916957 0.5007123 0.38898 0.5008894 0.3906813 0.4917289 0.3963985 0.4906505 0.395489 0.4948989 0.3916957 0.6055381 0.1162989 0.6101467 0.09800076 0.6143293 0.09789562 0.6244086 0.09764188 0.6285911 0.09753668 0.6340618 0.1162989 0.5222715 0.1162989 0.5279328 0.09822523 0.5320384 0.09839975 0.5419316 0.09882032 0.5460371 0.09899473 0.5502688 0.1162989 0.5502688 0.1162989 0.5596363 0.09996312 0.5638779 0.1011673 0.5638779 0.1011673 0.5680199 0.1001897 0.5770144 0.1162989 0.5958847 0.09835964 0.6000674 0.09825444 0.6055381 0.1162989 0.5770144 0.1162989 0.5816228 0.09871846 0.5858055 0.0986132 0.4906505 0.395489 0.4873661 0.3923969 0.4948989 0.3916957 0.4948989 0.3916957 0.4925155 0.3879767 0.5007123 0.38898 0.4950706 0.4253551 0.4915268 0.4292208 0.4902754 0.4213419 0.4902754 0.4213419 0.4864844 0.4241427 0.4873176 0.4165583 0.4873176 0.4165583 0.4830194 0.4181558 0.4858651 0.4111384 0.4858651 0.4111384 0.4813171 0.411491 0.4859712 0.4055389 0.4647483 0.4110237 0.464942 0.4041606 0.4815108 0.4046279 0.4699317 0.3994447 0.4767948 0.3996382 0.4815108 0.4046279 0.4815108 0.4046279 0.4813171 0.411491 0.4763275 0.416207 0.4763275 0.416207 0.4694644 0.4160134 0.4815108 0.4046279 0.464942 0.4041606 0.4699317 0.3994447 0.4815108 0.4046279 0.4876111 0.4001909 0.4835833 0.3980938 0.4906505 0.395489 0.4859712 0.4055389 0.4815108 0.4046279 0.4876111 0.4001909 0.5885369 0.161262 0.5885369 0.176325 0.5778856 0.1869762 0.5778856 0.1869762 0.5628226 0.1869762 0.5885369 0.161262 0.5521714 0.176325 0.5521714 0.161262 0.5628226 0.1497182 0.5628226 0.1497182 0.5778858 0.1497182 0.5521714 0.176325 0.5885369 0.161262 0.5628226 0.1869762 0.5521714 0.176325 0.5921475 0.1497182 0.5778858 0.1497182 0.5912761 0.1162989 0.6064094 0.1497182 0.5921475 0.1497182 0.6055381 0.1162989 0.5628226 0.1497182 0.5637347 0.1162989 0.5778858 0.1497182 0.5488239 0.1497182 0.5502688 0.1162989 0.5628226 0.1497182 0.534825 0.1497182 0.5362702 0.1162989 0.5488239 0.1497182 0.5208264 0.1497182 0.5222715 0.1162989 0.534825 0.1497182 0.6349331 0.1497182 0.6206712 0.1497182 0.6340618 0.1162989 0.6206712 0.1497182 0.6064094 0.1497182 0.6198 0.1162989 0.4888874 0.400767 0.4873562 0.4057421 0.4876111 0.4001909 0.4917289 0.3963985 0.4888874 0.400767 0.4906505 0.395489 0.487254 0.4109514 0.4858651 0.4111384 0.4873562 0.4057421 0.4885983 0.4159901 0.4873176 0.4165583 0.487254 0.4109514 0.4913119 0.4204298 0.4902754 0.4213419 0.4885983 0.4159901 0.4913119 0.4204298 0.4956 0.4239091 0.4902754 0.4213419 0.49571 0.3929296 0.4948989 0.3916957 0.5008894 0.3906813 0.49571 0.3929296 0.4917289 0.3963985 0.4948989 0.3916957 0.6198 0.1162989 0.6055381 0.1162989 0.6143293 0.09789562 0.6198 0.1162989 0.6244086 0.09764188 0.6340618 0.1162989 0.5362702 0.1162989 0.5222715 0.1162989 0.5320384 0.09839975 0.5362702 0.1162989 0.5419316 0.09882032 0.5502688 0.1162989 0.5637347 0.1162989 0.5502688 0.1162989 0.5638779 0.1011673 0.5637347 0.1162989 0.5638779 0.1011673 0.5770144 0.1162989 0.5912761 0.1162989 0.5958847 0.09835964 0.6055381 0.1162989 0.5912761 0.1162989 0.5770144 0.1162989 0.5858055 0.0986132</float_array>
+          <technique_common>
+            <accessor count="228" source="#tree_oak_bush_a200-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="tree_oak_bush_a200-mesh-vertices">
+          <input semantic="POSITION" source="#tree_oak_bush_a200-mesh-positions" />
+        </vertices>
+        <polylist count="76" material="garbage-material">
+          <input offset="0" semantic="VERTEX" source="#tree_oak_bush_a200-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#tree_oak_bush_a200-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#tree_oak_bush_a200-mesh-map-0" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>1 0 0 3 1 1 25 2 2 3 1 3 5 3 4 26 4 5 5 3 6 7 5 7 27 6 8 7 5 9 9 7 10 28 8 11 9 7 12 11 9 13 29 10 14 11 9 15 13 11 16 30 12 17 13 11 18 7 5 19 5 3 20 15 13 21 1 0 22 24 14 23 13 11 24 15 13 25 31 15 26 6 16 27 12 17 28 14 18 29 12 17 30 22 19 31 23 20 32 14 18 33 23 20 34 16 21 35 21 22 36 22 19 37 12 17 38 20 23 39 21 22 40 10 24 41 19 25 42 20 23 43 8 26 44 18 27 45 19 25 46 6 16 47 2 28 48 17 29 49 18 27 50 0 30 51 16 21 52 17 29 53 37 31 54 30 12 55 31 15 56 38 32 57 31 15 58 24 14 59 29 10 60 30 12 61 37 31 62 28 8 63 29 10 64 36 33 65 27 6 66 28 8 67 35 34 68 33 35 69 26 4 70 27 6 71 25 2 72 26 4 73 33 35 74 39 36 75 24 14 76 25 2 77 16 21 78 39 36 79 32 37 80 32 37 81 33 35 82 18 27 83 18 27 84 33 35 85 34 38 86 34 38 87 35 34 88 20 23 89 20 23 90 35 34 91 36 33 92 36 33 93 37 31 94 22 19 95 38 32 96 39 36 97 16 21 98 22 19 99 37 31 100 38 32 101 24 14 102 1 0 103 25 2 104 25 2 105 3 1 106 26 4 107 26 4 108 5 3 109 27 6 110 27 6 111 7 5 112 28 8 113 28 8 114 9 7 115 29 10 116 29 10 117 11 9 118 30 12 119 5 3 120 3 1 121 13 11 122 1 0 123 15 13 124 13 11 125 13 11 126 11 9 127 9 7 128 9 7 129 7 5 130 13 11 131 3 1 132 1 0 133 13 11 134 31 15 135 15 13 136 24 14 137 30 12 138 13 11 139 31 15 140 14 18 141 0 30 142 2 28 143 2 28 144 4 39 145 14 18 146 6 16 147 8 26 148 10 24 149 10 24 150 12 17 151 6 16 152 14 18 153 4 39 154 6 16 155 14 18 156 12 17 157 23 20 158 0 30 159 14 18 160 16 21 161 10 24 162 21 22 163 12 17 164 8 26 165 20 23 166 10 24 167 6 16 168 19 25 169 8 26 170 4 39 171 18 27 172 6 16 173 4 39 174 2 28 175 18 27 176 2 28 177 0 30 178 17 29 179 38 32 180 37 31 181 31 15 182 39 36 183 38 32 184 24 14 185 36 33 186 29 10 187 37 31 188 35 34 189 28 8 190 36 33 191 34 38 192 27 6 193 35 34 194 34 38 195 33 35 196 27 6 197 32 37 198 25 2 199 33 35 200 32 37 201 39 36 202 25 2 203 17 29 204 16 21 205 32 37 206 17 29 207 32 37 208 18 27 209 19 25 210 18 27 211 34 38 212 19 25 213 34 38 214 20 23 215 21 22 216 20 23 217 36 33 218 21 22 219 36 33 220 22 19 221 23 20 222 38 32 223 16 21 224 23 20 225 22 19 226 38 32 227</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="tree_oak_bush_a200_002-mesh" name="tree_oak_bush_a200.002">
+      <mesh>
+        <source id="tree_oak_bush_a200_002-mesh-positions">
+          <float_array count="0" id="tree_oak_bush_a200_002-mesh-positions-array" />
+          <technique_common>
+            <accessor count="0" source="#tree_oak_bush_a200_002-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tree_oak_bush_a200_002-mesh-normals">
+          <float_array count="0" id="tree_oak_bush_a200_002-mesh-normals-array" />
+          <technique_common>
+            <accessor count="0" source="#tree_oak_bush_a200_002-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="tree_oak_bush_a200_002-mesh-vertices">
+          <input semantic="POSITION" source="#tree_oak_bush_a200_002-mesh-positions" />
+        </vertices>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+  </library_geometries>
+  <library_controllers />
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="collision-1" name="collision-1" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+        <node id="detail150" name="detail150" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+        <node id="detail550" name="detail550" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+        <node id="start01" name="start01" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="tree_oak_bush_a15" name="tree_oak_bush_a15" type="NODE">
+            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <instance_geometry name="tree_oak_bush_a15" url="#tree_oak_bush_a200_001-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="garbage-material" target="#garbage-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="tree_oak_bush_a100" name="tree_oak_bush_a100" type="NODE">
+            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <instance_geometry name="tree_oak_bush_a100" url="#tree_oak_bush_a200-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="garbage-material" target="#garbage-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="Colmesh-1" name="Colmesh-1" type="NODE">
+            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <instance_geometry name="Colmesh-1" url="#tree_oak_bush_a200_002-mesh" />
+          </node>
+        </node>
+        <node id="nulldetail10" name="nulldetail10" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

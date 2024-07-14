@@ -1,0 +1,598 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0.000000 0.000000 0.000000";
+
+   new BeamNGWaypoint(course_wp3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "362.877045 -122.024002 144.685242";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "b209a16a-fa68-47f3-bc3c-abdeaeb44b28";
+   };
+   new Camera(jumpcam) {
+      controlMode = "Fly";
+      newtonMode = "1";
+      newtonRotation = "1";
+      mass = "1";
+      drag = "17";
+      force = "600";
+      angularDrag = "16";
+      angularForce = "400";
+      dataBlock = "observer";
+      position = "372.62735 -174.071075 146.589951";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         dynamicField = "defaultValue";
+         speed = "4";
+   };
+   new BeamNGWaypoint(course_wp2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "437.692383 -121.829819 149.374756";
+      scale = "3 3 3";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "3019be4b-64e3-4aec-92ba-5908a7ef7ecd";
+   };
+   new BeamNGWaypoint(course_wp1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "727.371826 -49.0398865 153.157257";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "36578802-15db-46a4-8a1f-96b989c5e80d";
+   };
+   new BeamNGVehicle(scenario_player0) {
+      JBeam = "citybus";
+      color = "1 1 1 1.0";
+      colorPalette0 = "0.05 0.50 0.70 1.0";
+      colorPalette1 = "0.200000003 0.300000012 0.600000024 1.20000005";
+      partConfig = "{[\"vars\"]={[\"$tirepressure_R\"]=70,[\"$tirepressure_F\"]=80,[\"$toe_F\"]=1.001,[\"$fuel\"]=470,[\"$n2o_rpm\"]=1200,[\"$steer_center_F\"]=-0.0033,[\"$n2o_gear\"]=2.09091},[\"parts\"]={[\"citybus_stanchions\"]=\"citybus_stanchions\",[\"citybus_accessdoor_FL\"]=\"citybus_accessdoor_FL\",[\"citybus_transmission\"]=\"citybus_transmission_6A\",[\"citybus_driveshaft\"]=\"citybus_driveshaft\",[\"brakepad_R\"]=\"brakepad_R_premium\",[\"citybus_turbo\"]=\"citybus_turbo_350\",[\"citybus_bumper_F\"]=\"citybus_bumper_F\",[\"brakepad_F\"]=\"brakepad_F_premium\",[\"citybus_glass\"]=\"citybus_glass\",[\"citybus_roof_mod\"]=\"none\",[\"citybus_bumper_R\"]=\"citybus_bumper_R\",[\"n2o_system\"]=\"n2o_system\",[\"citybus_roof\"]=\"citybus_roof\",[\"citybus_brake_F\"]=\"citybus_brake_F\",[\"citybus_engine_internals\"]=\"citybus_engine_internals\",[\"citybus_steer\"]=\"citybus_steer\",[\"citybus_driverseat\"]=\"citybus_driverseat\",[\"citybus_enginedoor\"]=\"citybus_enginedoor\",[\"n2o_bottle\"]=\"n2o_bottle_20lb\",[\"citybus_ABS\"]=\"citybus_ABS\",[\"citybus_sidedoor_R\"]=\"citybus_sidedoor_R\",[\"citybus_steering_F\"]=\"citybus_steering_F\",[\"citybus_tire_R\"]=\"citybus_tire_R\",[\"citybus_engine\"]=\"citybus_engine\",[\"citybus_shock_R\"]=\"citybus_shock_R\",[\"citybus_mirror_R\"]=\"citybus_mirror_R\",[\"paint_design\"]=\"citybus_skin_transit\",[\"citybus_body\"]=\"citybus_body\",[\"citybus_accessdoor_RR\"]=\"citybus_accessdoor_RR\",[\"citybus_wheeldata_F\"]=\"citybus_wheeldata_F\",[\"citybus_engine_ecu\"]=\"citybus_engine_ecu\",[\"citybus_interior\"]=\"citybus_interior\",[\"citybus_licenseplate_R\"]=\"citybus_licenseplate_R\",[\"citybus_accessdoor_F\"]=\"citybus_accessdoor_F\",[\"skin_signtype\"]=\"citybus_skin_signtype_flipdot\",[\"citybus_tire_F\"]=\"citybus_tire_F\",[\"citybus_intdisplays\"]=\"citybus_intdisplays\",[\"citybus_airbag_R\"]=\"citybus_airbag_R\",[\"n2o_shot\"]=\"n2o_shot_300\",[\"citybus_converter\"]=\"citybus_converter\",[\"citybus_radiator\"]=\"citybus_radiator\",[\"citybus_airbag_F\"]=\"citybus_airbag_F\",[\"citybus_sign_F\"]=\"citybus_sign_F\",[\"citybus_airfilter\"]=\"citybus_airfilter\",[\"citybus_sign_R\"]=\"citybus_sign_R\",[\"citybus_swaybar_F\"]=\"citybus_swaybar_F\",[\"citybus_accessdoor_RL\"]=\"citybus_accessdoor_RL\",[\"citybus_wheel_F\"]=\"citybus_wheel_F\",[\"citybus_axle_F\"]=\"citybus_axle_F\",[\"citybus_mirror_L\"]=\"citybus_mirror_L\",[\"citybus_fueltank\"]=\"citybus_fueltank\",[\"citybus_axle_R\"]=\"citybus_axle_R\",[\"citybus_brake_R\"]=\"citybus_brake_R\",[\"licenseplate_design_2_1\"]=\"none\",[\"citybus_wheeldata_R\"]=\"citybus_wheeldata_R\",[\"citybus_frame\"]=\"citybus_frame\",[\"citybus_body_mod\"]=\"none\",[\"citybus_safety\"]=\"citybus_safety\",[\"soundscape_horn\"]=\"soundscape_horn_12\",[\"citybus_power_steering\"]=\"none\",[\"citybus_mirror_int\"]=\"citybus_mirror_int\",[\"citybus_shock_F\"]=\"citybus_shock_F\",[\"citybus_seats_ballast\"]=\"none\",[\"citybus_sign_S\"]=\"citybus_sign_S\",[\"citybus_adcarriers\"]=\"none\",[\"citybus_wheel_R\"]=\"citybus_wheel_R\",[\"citybus_exhaust\"]=\"citybus_exhaust\",[\"citybus_accessdoor_R\"]=\"citybus_accessdoor_R\",[\"citybus_seats\"]=\"citybus_seats\",[\"citybus_sidedoor_F\"]=\"citybus_sidedoor_F\",[\"citybus_differential_R\"]=\"citybus_differential_R_locking\",[\"citybus_finaldrive_R\"]=\"citybus_finaldrive_R_404\"}}";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "796.934448 -43.1505775 154.038361";
+      scale = "1 1 1";
+      rotationMatrix = "-0.58640027 -0.810021877 0 0.810021877 -0.58640027 0 0 0 1";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "bef0199c-1dd6-4b98-9410-2e27e304d4f8";
+         colorPalette2 = "White";
+         colorPalette3 = "White";
+         isAIControlled = "0";
+         licenseText = "BSZ-9141";
+   };
+   new SimPath(democam) {
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "0758b540-3542-4685-9ac8-7b78b9abb592";
+         looped = "1";
+         renderDebug = "0";
+
+      new Marker() {
+         seqNum = "0";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "464.561737 -102.916054 156.09935";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.638497114 0.769624233 1.49011612e-08 -0.684689522 -0.568033457 -0.456659973 -0.351456583 -0.291576087 0.889641285";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "23a9c62f-13be-4688-9c7d-269115c7440a";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "1";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "464.561737 -102.916054 156.09935";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.638497114 0.769624233 1.49011612e-08 -0.684689522 -0.568033457 -0.456659973 -0.351456583 -0.291576087 0.889641285";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "a3002fc8-66f9-4534-9fe9-0287e0215bc7";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "2";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "451.373749 -104.3433 157.535019";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.56887567 0.822423518 -5.96046448e-08 -0.747854888 -0.517296076 -0.416074336 -0.342189342 -0.23669453 0.909330606";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "875686ca-3bba-4503-b175-ff031eaa07b0";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "3";
+         timeToNext = "0";
+         positionSmooth = "1";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "451.373749 -104.3433 157.535019";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.56887567 0.822423518 -5.96046448e-08 -0.747854888 -0.517296076 -0.416074336 -0.342189342 -0.23669453 0.909330606";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "970b960f-087a-45d6-84f1-331e46d457c4";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "4";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "387.184845 -125.360878 145.911423";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.119280696 -0.992860556 3.7252903e-09 0.992173433 0.119198143 -0.0371971466 0.0369315818 0.00443690643 0.99930793";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "ed4fdde2-80b1-499e-8207-717a893f6e8f";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "5";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "387.184845 -125.360878 145.911423";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.119280696 -0.992860556 3.7252903e-09 0.992173433 0.119198143 -0.0371971466 0.0369315818 0.00443690643 0.99930793";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "685fa96e-ef38-45c3-830b-5d9d3ed2f8e4";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "6";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "376.183716 -126.57576 146.043396";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.0996626616 -0.995021284 -1.86264515e-09 0.994610131 0.0996214747 -0.0287430957 0.0285999905 0.00286461134 0.999586821";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "ae480019-1f81-475a-98e2-959c0230f762";
+            seconds = "2";
+      };
+      new Marker() {
+         seqNum = "7";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "376.183716 -126.57576 146.043396";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "0.0996626616 -0.995021284 -1.86264515e-09 0.994610131 0.0996214747 -0.0287430957 0.0285999905 0.00286461134 0.999586821";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "4f0f2524-084e-4c6e-9012-967969a3f9c1";
+            seconds = "2";
+      };
+      new Marker() {
+         seqNum = "8";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "0";
+         speedSmooth = "1";
+         position = "768.340454 -36.0220108 161.557724";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.359949231 -0.932971895 -1.49011612e-08 0.891461074 -0.34393394 -0.294968873 0.275197685 -0.106173836 0.955506861";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "7e9f41fc-fa0b-4f97-a497-d0b74564b5bb";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "9";
+         timeToNext = "3";
+         positionSmooth = "1";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "768.340454 -36.0220108 161.557724";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.359949231 -0.932971895 -1.49011612e-08 0.891461074 -0.34393394 -0.294968873 0.275197685 -0.106173836 0.955506861";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "4c828b48-c1ea-41d9-bd61-e04eac9f09a3";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "10";
+         timeToNext = "0";
+         positionSmooth = "0";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "766.562927 -44.681633 161.557724";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.0242266655 -0.999706388 -5.96046448e-08 0.958491206 -0.0232278109 -0.284173965 0.284090549 -0.0068846792 0.958772719";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "37544b14-d2b4-4f5d-9896-4e101568c05d";
+            seconds = "3";
+      };
+      new Marker() {
+         seqNum = "11";
+         timeToNext = "0";
+         positionSmooth = "0.300000012";
+         rotationSmooth = "1";
+         speedSmooth = "1";
+         position = "766.562927 -44.681633 161.557724";
+         scale = "0.100000001 0.100000001 0.100000001";
+         rotationMatrix = "-0.0242266655 -0.999706388 -5.96046448e-08 0.958491206 -0.0232278109 -0.284173965 0.284090549 -0.0068846792 0.958772719";
+         mode = "Ignore";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+         persistentId = "6a2c6576-abe8-40ef-965d-2f25efcc2563";
+            seconds = "3";
+      };
+   };
+   new BeamNGVehicle(shell1) {
+      JBeam = "covet";
+      color = "0.456 0.456 0.456 2";
+      colorPalette0 = "0.200000003 0.300000012 0.600000024 1.20000005";
+      colorPalette1 = "0.200000003 0.300000012 0.600000024 1.20000005";
+      partConfig = "levels/rls_west_coast_usa/scenarios/busdriver_stunt/configurations/filmset_shell_hatch.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "386.313568 -122.739799 144.788101";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690534245 0 0.000690534245 0.999999762";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         isAIControlled = "1";
+         licenseText = "SWZ-9932";
+   };
+   new BeamNGVehicle(shell2) {
+      JBeam = "legran";
+      color = "0.330000013 0.330000013 0.330000013 1.29999995";
+      colorPalette0 = "0.330000013 0.330000013 0.330000013 1.29999995";
+      colorPalette1 = "0.330000013 0.330000013 0.330000013 1.29999995";
+      partConfig = "levels/rls_west_coast_usa/scenarios/busdriver_stunt/configurations/filmset_shell_legran.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "384.228363 -121.864342 144.788055";
+      scale = "1 1 1";
+      rotationMatrix = "-0.999837697 -0.0168352295 0.00636096532 0.0177807733 -0.978695691 0.204544649 0.00278194062 0.204624638 0.978836954";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         isAIControlled = "1";
+         licenseText = "HMD-2013";
+   };
+   new BeamNGVehicle(shell3) {
+      JBeam = "pickup";
+      color = "0.479999989 0.479999989 0.479999989 2";
+      colorPalette0 = "1 1 1 1.20000005";
+      colorPalette1 = "1 1 1 1.20000005";
+      partConfig = "levels/rls_west_coast_usa/scenarios/busdriver_stunt/configurations/filmset_shell_pickup.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "380.950348 -121.547829 144.739227";
+      scale = "1 1 1";
+      rotationMatrix = "-0.999792874 0.0153328227 -0.0134055419 -0.00805727579 -0.902280152 -0.43107599 -0.018705491 -0.430878252 0.902217269";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         isAIControlled = "1";
+         licenseText = "YZE-1072";
+   };
+   new BeamNGVehicle(shell4) {
+      JBeam = "van";
+      color = "0.5 0.5 0.5 2";
+      colorPalette0 = "1 1 1 1.20000005";
+      colorPalette1 = "1 1 1 1.20000005";
+      partConfig = "levels/rls_west_coast_usa/scenarios/busdriver_stunt/configurations/filmset_shell_van.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "378.068542 -121.622108 144.716202";
+      scale = "1 1 1";
+      rotationMatrix = "-0.998566329 0.0495492518 -0.0202712286 -0.0531896278 -0.875235975 0.480762154 0.00607893616 0.481149822 0.876618743";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         isAIControlled = "1";
+         licenseText = "VRN-3584";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      improvedSpline = "0";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      Material = "road_slashes_tram";
+      textureLength = "20";
+      breakAngle = "3";
+      renderPriority = "9";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      position = "433.353455 -121.392227 145.34375";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "433.353455 -121.392227 145.343750 10.000000";
+      Node = "355.129822 -121.288269 144.570313 10.000000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      improvedSpline = "0";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      Material = "line_white";
+      textureLength = "6.4000001";
+      breakAngle = "3";
+      renderPriority = "8";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      position = "615.73468 -124.065933 146.625";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "615.734680 -124.065933 146.625000 0.200000";
+      Node = "455.149170 -124.611252 145.625000 0.200000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      improvedSpline = "0";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      Material = "line_white";
+      textureLength = "6.4000001";
+      breakAngle = "3";
+      renderPriority = "8";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      position = "614.600098 -118.195763 146.632813";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "614.600098 -118.195763 146.632813 0.200000";
+      Node = "455.370605 -118.782639 145.640625 0.200000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      improvedSpline = "0";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      Material = "road_blue";
+      textureLength = "20";
+      breakAngle = "3";
+      renderPriority = "9";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      position = "596.490295 -121.859467 146.632813";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "596.490295 -121.859467 146.632813 10.000000";
+      Node = "456.777252 -121.328842 145.648438 10.000000";
+   };
+   new TSStatic() {
+      shapeName = "levels/rls_west_coast_usa/art/shapes/objects/platform_ramp.dae";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      useInstanceRenderData = "0";
+      instanceColor = "White";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      prebuildCollisionData = "0";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "440.601166 -121.867432 145.430969";
+      scale = "1 1 1";
+      rotationMatrix = "-0.0134529201 0.99990952 -0.000181420954 -0.999818563 -0.0134541439 -0.0134831639 -0.0134843849 1.16415308e-10 0.999909163";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new TSStatic() {
+      shapeName = "levels/rls_west_coast_usa/art/shapes/objects/ramp_shallow_long.dae";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      useInstanceRenderData = "0";
+      instanceColor = "White";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      prebuildCollisionData = "0";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "451.613586 -121.714821 145.596268";
+      scale = "1 1 1";
+      rotationMatrix = "5.95992411e-08 1 8.0373308e-10 -0.999909103 5.9604659e-08 -0.0134843998 -0.0134843998 -5.55111512e-17 0.999909103";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGTrigger(jumpTrigger) {
+      TriggerType = "Box";
+      TriggerMode = "Center";
+      TriggerTestType = "Race corners";
+      luaFunction = "onBeamNGTrigger";
+      tickPeriod = "100";
+      debug = "0";
+      ticking = "0";
+      triggerColor = "255 192 0 45";
+      cameraOnEnter = "jumpCam";
+      defaultOnLeave = "1";
+      position = "379.591675 -125.600899 149.42305";
+      scale = "59.4539948 17.735405 9.79754925";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         speed = "2.5";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

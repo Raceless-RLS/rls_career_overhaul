@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>lucar</author>
+      <authoring_tool>OpenCOLLADA for 3ds Max;  Version: 1.6;  Revision: 0</authoring_tool>
+      <source_data>file:///H:/BeamNG_Drive/1_BNGD_MAXFiles/WestCoast/west_coast_garage_161.max</source_data>
+    </contributor>
+    <created>2022-08-10T09:18:55</created>
+    <modified>2022-08-10T09:18:55</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="m_metal_wall_corrugate">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_metal_trim_01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_concrete_floor_polish">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_stucco_white">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_concrete_cinderblock_01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="brick_painted">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="architraves">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="concrete_precast1_white">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_plywood_old">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="lod_vertcol">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="bld_glass_transparent">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="ind_metal">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_plastic_trim">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_west_coast_garage_sign">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_worn_brushed_plaster">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_plaster_float">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="curbs">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="sidewalk1">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="vertCol_light">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material__37">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m_glass_grid_dirty">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="tiles_marble_square">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="cladding_zinc">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.5 0.5 0.5 1</color>
+            </ambient>
+            <diffuse>
+              <color>0.5 0.5 0.5 1</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>100</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="m_metal_wall_corrugate-material" name="m_metal_wall_corrugate">
+      <instance_effect url="#m_metal_wall_corrugate"/>
+    </material>
+    <material id="m_metal_trim_01-material" name="m_metal_trim_01">
+      <instance_effect url="#m_metal_trim_01"/>
+    </material>
+    <material id="m_concrete_floor_polish-material" name="m_concrete_floor_polish">
+      <instance_effect url="#m_concrete_floor_polish"/>
+    </material>
+    <material id="m_stucco_white-material" name="m_stucco_white">
+      <instance_effect url="#m_stucco_white"/>
+    </material>
+    <material id="m_concrete_cinderblock_01-material" name="m_concrete_cinderblock_01">
+      <instance_effect url="#m_concrete_cinderblock_01"/>
+    </material>
+    <material id="brick_painted-material" name="brick_painted">
+      <instance_effect url="#brick_painted"/>
+    </material>
+    <material id="architraves-material" name="architraves">
+      <instance_effect url="#architraves"/>
+    </material>
+    <material id="concrete_precast1_white-material" name="concrete_precast1_white">
+      <instance_effect url="#concrete_precast1_white"/>
+    </material>
+    <material id="ind_plywood_old-material" name="ind_plywood_old">
+      <instance_effect url="#ind_plywood_old"/>
+    </material>
+    <material id="lod_vertcol-material" name="lod_vertcol">
+      <instance_effect url="#lod_vertcol"/>
+    </material>
+    <material id="bld_glass_transparent-material" name="bld_glass_transparent">
+      <instance_effect url="#bld_glass_transparent"/>
+    </material>
+    <material id="ind_metal-material" name="ind_metal">
+      <instance_effect url="#ind_metal"/>
+    </material>
+    <material id="m_plastic_trim-material" name="m_plastic_trim">
+      <instance_effect url="#m_plastic_trim"/>
+    </material>
+    <material id="m_west_coast_garage_sign-material" name="m_west_coast_garage_sign">
+      <instance_effect url="#m_west_coast_garage_sign"/>
+    </material>
+    <material id="m_worn_brushed_plaster-material" name="m_worn_brushed_plaster">
+      <instance_effect url="#m_worn_brushed_plaster"/>
+    </material>
+    <material id="m_plaster_float-material" name="m_plaster_float">
+      <instance_effect url="#m_plaster_float"/>
+    </material>
+    <material id="curbs-material" name="curbs">
+      <instance_effect url="#curbs"/>
+    </material>
+    <material id="sidewalk1-material" name="sidewalk1">
+      <instance_effect url="#sidewalk1"/>
+    </material>
+    <material id="vertCol_light-material" name="vertCol_light">
+      <instance_effect url="#vertCol_light"/>
+    </material>
+    <material id="Material__37-material" name="Material__37">
+      <instance_effect url="#Material__37"/>
+    </material>
+    <material id="m_glass_grid_dirty-material" name="m_glass_grid_dirty">
+      <instance_effect url="#m_glass_grid_dirty"/>
+    </material>
+    <material id="industrial-material" name="industrial">
+      <instance_effect url="#industrial"/>
+    </material>
+    <material id="tiles_marble_square-material" name="tiles_marble_square">
+      <instance_effect url="#tiles_marble_square"/>
+    </material>
+    <material id="cladding_zinc-material" name="cladding_zinc">
+      <instance_effect url="#cladding_zinc"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="geom-s_hvac_seer" name="s_hvac_seer">
+      <mesh>
+        <source id="geom-s_hvac_seer-positions">
+          <float_array id="geom-s_hvac_seer-positions-array" count="120">-0.65 0.65 0 -0.65 0.65 1.3 0.65 0.65 0.06467068 -0.65 0.65 0.06467068 0.65 0.65 1.26129 -0.65 0.65 1.26129 -0.5126976 0.65775 0.8909324 -0.5126976 0.65775 1.17925 0.5171738 0.65775 1.17925 0.5171738 0.65775 0.8909324 -0.65 0.65 0.8178144 0.65 0.65 0.7752842 -0.65 0.65 0.7752842 0.65 0.65 0 0.65 -0.65 0.06467068 0.65775 0.5126976 0.8909324 0.65775 0.5126976 1.17925 0.65775 -0.5171738 1.17925 0.65775 -0.5171738 0.8909324 0.65 -0.65 0.8178144 0.65 0.65 0.8178144 0.65 -0.65 0.7752842 0.65 -0.65 0 -0.65 -0.65 1.3 -0.65 -0.65 1.26129 0.65 -0.65 1.26129 0.5126976 -0.65775 0.8909324 0.5126976 -0.65775 1.17925 -0.5171738 -0.65775 1.17925 -0.5171738 -0.65775 0.8909324 -0.65 -0.65 0.8178144 -0.65 -0.65 0.7752842 0.65 0.65 1.3 0.65 -0.65 1.3 -0.65 -0.65 0 -0.65 -0.65 0.06467068 -0.6577501 -0.5126975 0.8909324 -0.6577501 -0.5126975 1.17925 -0.65775 0.5171738 1.17925 -0.65775 0.5171738 0.8909324</float_array>
+          <technique_common>
+            <accessor source="#geom-s_hvac_seer-positions-array" count="40" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-s_hvac_seer-normals">
+          <float_array id="geom-s_hvac_seer-normals-array" count="204">0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 8.68843e-10 1 -1.5106e-6 4.58497e-8 1 0 2.24904e-8 0.9999999 -1.45892e-8 0 0.9999999 -7.69887e-7 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -0.9999999 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -0.9999999 0 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -1 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -1 1.15752e-7 0 -1 1.15752e-7 0 -1 1.15752e-7 0 -1 1.15752e-7 0 -0.9999999 0 0 -0.9999999 0 0</float_array>
+          <technique_common>
+            <accessor source="#geom-s_hvac_seer-normals-array" count="68" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-s_hvac_seer-map1">
+          <float_array id="geom-s_hvac_seer-map1-array" count="300">0.3569168 0.2147525 0 0.3569168 0.3146133 0 2.14014e-4 0.3146133 0 2.14014e-4 0.2147525 0 1 0.63365 0 0 0.63365 0 1 0.7248635 0 0 0.7248635 0 0 0.6950865 0 1 0.6950865 0 0.002499998 0.5614507 0 0.9975 0.5614507 0 0.002499998 0.5316657 0 0.9975 0.5316657 0 0 0.7021167 0 1 0.7021167 0 0.001890122 0.6896513 0 0.3363306 0.6896513 0 0.001890122 0.8052899 0 0.3363305 0.80529 0 0.001890122 0.6912006 0 0.3363305 0.6912006 0 0.001890122 0.872465 0 0.3363305 0.8724651 0 0.3569168 0.2147525 0 0.3569168 0.3146133 0 2.14014e-4 0.3146133 0 2.14014e-4 0.2147525 0 1 0.63365 0 0 0.63365 0 1 0.7248635 0 0 0.7248635 0 0 0.6950865 0 1 0.6950865 0 0.002499998 0.5614507 0 0.9975 0.5614507 0 0.002499998 0.5316657 0 0.9975 0.5316657 0 0 0.7021167 0 1 0.7021167 0 0.001890122 0.6896513 0 0.3363306 0.6896513 0 0.001890122 0.8052899 0 0.3363305 0.80529 0 0.001890122 0.6912006 0 0.3363305 0.6912006 0 0.001890122 0.872465 0 0.3363305 0.8724651 0 0.3569168 0.2147525 0 0.3569168 0.3146133 0 2.14014e-4 0.3146133 0 2.14014e-4 0.2147525 0 1 0.63365 0 0 0.63365 0 1 0.7248635 0 0 0.7248635 0 0 0.6950865 0 1 0.6950865 0 0.002499998 0.5614507 0 0.9975 0.5614507 0 0.002499998 0.5316657 0 0.9975 0.5316657 0 0 0.7021167 0 1 0.7021167 0 0.001890122 0.6896513 0 0.3363306 0.6896513 0 0.001890122 0.8052899 0 0.3363305 0.80529 0 0.001890122 0.6912006 0 0.3363305 0.6912006 0 0.001890122 0.872465 0 0.3363305 0.8724651 0 0.448516 0.1133204 0 0.6161876 0.1133204 0 0.448516 0.280992 0 0.6161876 0.280992 0 0.3569168 0.2147525 0 0.3569168 0.3146133 0 2.14014e-4 0.3146133 0 2.14014e-4 0.2147525 0 1 0.63365 0 0 0.63365 0 1 0.7248635 0 0 0.7248635 0 0 0.6950865 0 1 0.6950865 0 0.002499998 0.5614507 0 0.9975 0.5614507 0 0.002499998 0.5316657 0 0.9975 0.5316657 0 0 0.7021167 0 1 0.7021167 0 0.001890122 0.6896513 0 0.3363306 0.6896513 0 0.001890122 0.8052899 0 0.3363305 0.80529 0 0.001890122 0.6912006 0 0.3363305 0.6912006 0 0.001890122 0.872465 0 0.3363305 0.8724651 0</float_array>
+          <technique_common>
+            <accessor source="#geom-s_hvac_seer-map1-array" count="100" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-s_hvac_seer-vertices">
+          <input semantic="POSITION" source="#geom-s_hvac_seer-positions"/>
+        </vertices>
+        <triangles material="industrial" count="24">
+          <input semantic="VERTEX" source="#geom-s_hvac_seer-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-s_hvac_seer-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#geom-s_hvac_seer-map1" offset="2" set="0"/>
+          <p>0 0 4 3 1 15 2 2 14 2 2 14 13 3 5 0 0 4 1 6 6 32 7 7 4 8 8 4 8 8 5 9 9 1 6 6 7 10 1 8 11 2 9 12 3 9 12 3 6 13 0 7 10 1 13 16 28 2 17 39 14 18 38 14 18 38 22 19 29 13 16 28 32 22 30 33 23 31 25 24 32 25 24 32 4 25 33 32 22 30 16 26 25 17 27 26 18 28 27 18 28 27 15 29 24 16 26 25 22 32 52 14 33 63 35 34 62 35 34 62 34 35 53 22 32 52 33 38 54 23 39 55 24 40 56 24 40 56 25 41 57 33 38 54 27 42 49 28 43 50 29 44 51 29 44 51 26 45 48 27 42 49 34 52 80 35 53 91 3 54 90 3 54 90 0 55 81 34 52 80 23 58 82 1 59 83 5 60 84 5 60 84 24 61 85 23 58 82 37 62 77 38 63 78 39 64 79 39 64 79 36 65 76 37 62 77</p>
+        </triangles>
+        <triangles material="m_metal_trim_01" count="26">
+          <input semantic="VERTEX" source="#geom-s_hvac_seer-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-s_hvac_seer-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#geom-s_hvac_seer-map1" offset="2" set="0"/>
+          <p>12 4 23 11 5 22 2 2 16 2 2 16 3 1 17 12 4 23 5 9 19 4 8 18 20 14 20 20 14 20 10 15 21 5 9 19 10 15 11 20 14 10 11 5 12 11 5 12 12 4 13 10 15 11 11 20 47 21 21 46 14 18 40 14 18 40 2 17 41 11 20 47 4 25 43 25 24 42 19 30 44 19 30 44 20 31 45 4 25 43 20 31 35 19 30 34 21 21 36 21 21 36 11 20 37 20 31 35 21 36 71 31 37 70 35 34 64 35 34 64 14 33 65 21 36 71 25 41 67 24 40 66 30 46 68 30 46 68 19 47 69 25 41 67 19 47 59 30 46 58 31 37 60 31 37 60 21 36 61 19 47 59 1 48 72 23 49 73 33 50 75 33 50 75 32 51 74 1 48 72 31 56 99 12 57 98 3 54 92 3 54 92 35 53 93 31 56 99 24 61 95 5 60 94 10 66 96 10 66 96 30 67 97 24 61 95 30 67 87 10 66 86 12 57 88 12 57 88 31 56 89 30 67 87</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_lights>
+    <light id="EnvironmentAmbientLight" name="EnvironmentAmbientLight">
+      <technique_common>
+        <ambient>
+          <color>0 0 0</color>
+        </ambient>
+      </technique_common>
+    </light>
+  </library_lights>
+  <library_visual_scenes>
+    <visual_scene id="MaxScene">
+      <node name="EnvironmentAmbientLight">
+        <instance_light url="#EnvironmentAmbientLight"/>
+      </node>
+      <node id="node-s_hvac_seer" name="s_hvac_seer">
+        <rotate>0 0 -1 -90</rotate>
+        <instance_geometry url="#geom-s_hvac_seer">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="m_metal_trim_01" target="#m_metal_trim_01-material"/>
+              <instance_material symbol="industrial" target="#industrial-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="OpenCOLLADA">
+            <cast_shadows sid="cast_shadows" type="bool">1</cast_shadows>
+            <receive_shadows sid="receive_shadows" type="bool">1</receive_shadows>
+            <primary_visibility sid="primary_visibility" type="bool">1</primary_visibility>
+            <secondary_visibility sid="secondary_visibility" type="bool">1</secondary_visibility>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#MaxScene"/>
+  </scene>
+</COLLADA>

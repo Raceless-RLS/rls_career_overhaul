@@ -1,0 +1,656 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset><contributor><author /><authoring_tool>FBX COLLADA exporter</authoring_tool><comments /></contributor><created>2017-11-22T08:55:08Z</created><keywords /><modified>2017-11-22T08:55:08Z</modified><revision /><subject /><title /><unit meter="1.000000" name="centimeter" /><up_axis>Z_UP</up_axis></asset>
+  <library_materials>
+    <material id="metal_galvanized" name="metal_galvanized">
+      <instance_effect url="#metal_galvanized-fx" />
+    </material>
+    <material id="roadsigns" name="roadsigns">
+      <instance_effect url="#roadsigns-fx" />
+    </material>
+    <material id="industrial" name="industrial">
+      <instance_effect url="#industrial-fx" />
+    </material>
+    <material id="Material #43 Slot #4" name="Material #43 Slot #4">
+      <instance_effect url="#Material #43 Slot #4-fx" />
+    </material>
+    <material id="Material #43 Slot #5" name="Material #43 Slot #5">
+      <instance_effect url="#Material #43 Slot #5-fx" />
+    </material>
+    <material id="Material #43 Slot #6" name="Material #43 Slot #6">
+      <instance_effect url="#Material #43 Slot #6-fx" />
+    </material>
+    <material id="Material #43 Slot #7" name="Material #43 Slot #7">
+      <instance_effect url="#Material #43 Slot #7-fx" />
+    </material>
+    <material id="Material #43 Slot #8" name="Material #43 Slot #8">
+      <instance_effect url="#Material #43 Slot #8-fx" />
+    </material>
+    <material id="Material #43 Slot #9" name="Material #43 Slot #9">
+      <instance_effect url="#Material #43 Slot #9-fx" />
+    </material>
+    <material id="Material #43 Slot #10" name="Material #43 Slot #10">
+      <instance_effect url="#Material #43 Slot #10-fx" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="metal_galvanized-fx" name="metal_galvanized">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL0" texture="Map #2-image">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>ADD</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="roadsigns-fx" name="roadsigns">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texcoord="CHANNEL0" texture="Map #1-image">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>ADD</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="industrial-fx" name="industrial">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.588000  0.588000 0.588000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #4-fx" name="Material #43 Slot #4">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #5-fx" name="Material #43 Slot #5">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #6-fx" name="Material #43 Slot #6">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #7-fx" name="Material #43 Slot #7">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #8-fx" name="Material #43 Slot #8">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #9-fx" name="Material #43 Slot #9">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material #43 Slot #10-fx" name="Material #43 Slot #10">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.200000  0.200000 0.200000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.000000  0.000000 0.000000 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.200000  0.200000 0.200000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">20.000006</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="RoadClosed_sign_small_c30-lib" name="RoadClosed_sign_small_c30Mesh">
+      <mesh>
+        <source id="RoadClosed_sign_small_c30-POSITION">
+          <float_array count="72" id="RoadClosed_sign_small_c30-POSITION-array">
+-0.033524 0.059204 2.534752
+-0.033218 0.022644 0.000000
+-0.033218 0.022644 2.534752
+-0.002014 0.077820 2.534752
+-0.033524 0.059204 0.000000
+0.030212 0.023132 0.000000
+0.029861 0.059692 2.534752
+0.030136 0.023071 2.534752
+-0.001358 0.004578 2.534752
+0.029861 0.059692 0.000000
+-0.001358 0.004578 0.000000
+-0.002014 0.077820 0.000000
+0.529526 0.000061 1.766373
+0.529526 0.000061 2.611084
+-0.529465 0.000061 1.766373
+-0.529465 0.000061 2.611084
+-0.502853 -0.005371 1.877815
+0.502914 -0.005371 1.877815
+-0.502853 -0.005371 2.499641
+0.502914 -0.005371 2.499641
+0.529526 0.004883 1.766373
+0.529526 0.004883 2.611084
+-0.529465 0.004883 1.766373
+-0.529465 0.004883 2.611084
+</float_array>
+          <technique_common>
+            <accessor count="24" source="#RoadClosed_sign_small_c30-POSITION-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="RoadClosed_sign_small_c30-Normal0">
+          <float_array count="162" id="RoadClosed_sign_small_c30-Normal0-array">
+-0.870583 0.492023 0.000000
+-0.861971 -0.506958 0.000000
+-0.861971 -0.506958 0.000000
+-0.008272 0.999966 0.000000
+-0.870582 0.492023 0.000000
+-0.870583 0.492023 0.000000
+0.870330 -0.492469 -0.000003
+0.862495 0.506066 0.000017
+0.869712 -0.493560 0.000017
+-0.861971 -0.506958 0.000000
+0.007561 -0.999971 0.000000
+-0.861971 -0.506958 0.000000
+0.861968 0.506963 0.000000
+-0.008272 0.999966 0.000000
+0.862495 0.506066 0.000017
+0.007752 -0.999970 -0.000003
+0.869712 -0.493560 0.000017
+0.007561 -0.999971 0.000000
+-0.870583 0.492023 0.000000
+-0.870582 0.492023 0.000000
+-0.861971 -0.506958 0.000000
+-0.008272 0.999966 0.000000
+-0.008272 0.999966 0.000000
+-0.870582 0.492023 0.000000
+0.870330 -0.492469 -0.000003
+0.861968 0.506963 0.000000
+0.862495 0.506066 0.000017
+-0.861971 -0.506958 0.000000
+0.007752 -0.999970 -0.000003
+0.007561 -0.999971 0.000000
+0.861968 0.506963 0.000000
+-0.008272 0.999966 0.000000
+-0.008272 0.999966 0.000000
+0.007752 -0.999970 -0.000003
+0.870330 -0.492469 -0.000003
+0.869712 -0.493560 0.000017
+0.000000 1.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+0.000000 -1.000000 0.000000
+</float_array>
+          <technique_common>
+            <accessor count="54" source="#RoadClosed_sign_small_c30-Normal0-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="RoadClosed_sign_small_c30-UV0">
+          <float_array count="96" id="RoadClosed_sign_small_c30-UV0-array">
+0.884505 0.468829
+0.900842 0.024310
+0.900863 0.468829
+0.966286 0.468828
+0.982639 0.024310
+0.982644 0.468828
+0.933561 0.024310
+0.949932 0.468828
+0.933574 0.468829
+0.900842 0.024310
+0.917217 0.468829
+0.900863 0.468829
+0.949920 0.024310
+0.966286 0.468828
+0.949932 0.468828
+0.917202 0.024310
+0.933574 0.468829
+0.917217 0.468829
+0.884505 0.468829
+0.884483 0.024310
+0.900842 0.024310
+0.966286 0.468828
+0.966280 0.024310
+0.982639 0.024310
+0.933561 0.024310
+0.949920 0.024310
+0.949932 0.468828
+0.900842 0.024310
+0.917202 0.024310
+0.917217 0.468829
+0.949920 0.024310
+0.966280 0.024310
+0.966286 0.468828
+0.917202 0.024310
+0.933561 0.024310
+0.933574 0.468829
+0.179099 0.629342
+0.253857 0.629342
+0.179099 0.816790
+0.253857 0.816790
+0.589926 0.316981
+0.678936 0.316981
+0.589926 0.427045
+0.678936 0.427045
+0.179099 0.629342
+0.253857 0.629342
+0.179099 0.816790
+0.253857 0.816790
+</float_array>
+          <technique_common>
+            <accessor count="48" source="#RoadClosed_sign_small_c30-UV0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="RoadClosed_sign_small_c30-VERTEX_COLOR0">
+          <float_array count="216" id="RoadClosed_sign_small_c30-VERTEX_COLOR0-array">
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+1.000000 1.000000 1.000000 1.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+</float_array>
+          <technique_common>
+            <accessor count="54" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0-array" stride="4">
+              <param name="R" type="double" />
+              <param name="G" type="double" />
+              <param name="B" type="double" />
+              <param name="A" type="double" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="RoadClosed_sign_small_c30-VERTEX">
+          <input semantic="POSITION" source="#RoadClosed_sign_small_c30-POSITION" />
+        </vertices>
+        <triangles count="14" material="metal_galvanized"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p> 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 0 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 1 9 9 9 8 10 10 10 2 11 11 11 9 12 12 12 3 13 13 13 6 14 14 14 10 15 15 15 7 16 16 16 8 17 17 17 0 18 18 18 4 19 19 19 1 20 20 20 3 21 21 21 11 22 22 22 4 23 23 23 5 24 24 24 9 25 25 25 6 26 26 26 1 27 27 27 10 28 28 28 8 29 29 29 9 30 30 30 11 31 31 31 3 32 32 32 10 33 33 33 5 34 34 34 7 35 35 35 20 36 44 47 23 37 47 45 21 38 45 46 23 39 47 45 20 40 44 47 22 41 46 44</p></triangles>
+        <triangles count="4" material="roadsigns"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p> 15 42 39 39 12 43 36 37 13 44 37 38 12 45 36 37 15 46 39 39 14 47 38 36 19 48 43 43 18 49 42 40 16 50 40 41 19 51 43 43 16 52 40 41 17 53 41 42</p></triangles>
+        <triangles count="0" material="industrial"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #4"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #5"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #6"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #7"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #8"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #9"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+        <triangles count="0" material="Material #43 Slot #10"><input offset="0" semantic="VERTEX" source="#RoadClosed_sign_small_c30-VERTEX" /><input offset="1" semantic="NORMAL" source="#RoadClosed_sign_small_c30-Normal0" /><input offset="2" semantic="TEXCOORD" set="0" source="#RoadClosed_sign_small_c30-UV0" /><input offset="3" semantic="COLOR" set="0" source="#RoadClosed_sign_small_c30-VERTEX_COLOR0" /><p /></triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="construction_sign_small_c" name="construction_sign_small_c">
+      <node id="base00" name="base00" sid="base00"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra><node id="collision-1" name="collision-1" sid="collision-1"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node><node id="start01" name="start01" sid="start01"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra><node id="nulldetail1" name="nulldetail1" sid="nulldetail1"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node></node><node id="RoadClosed_sign_small_c30" name="RoadClosed_sign_small_c30" sid="RoadClosed_sign_small_c30"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><instance_geometry url="#RoadClosed_sign_small_c30-lib"><bind_material><technique_common><instance_material symbol="metal_galvanized" target="#metal_galvanized" /><instance_material symbol="roadsigns" target="#roadsigns" /><instance_material symbol="industrial" target="#industrial" /><instance_material symbol="Material #43 Slot #4" target="#Material #43 Slot #4" /><instance_material symbol="Material #43 Slot #5" target="#Material #43 Slot #5" /><instance_material symbol="Material #43 Slot #6" target="#Material #43 Slot #6" /><instance_material symbol="Material #43 Slot #7" target="#Material #43 Slot #7" /><instance_material symbol="Material #43 Slot #8" target="#Material #43 Slot #8" /><instance_material symbol="Material #43 Slot #9" target="#Material #43 Slot #9" /><instance_material symbol="Material #43 Slot #10" target="#Material #43 Slot #10" /></technique_common></bind_material></instance_geometry><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node></node>
+      <extra><technique profile="MAX3D"><frame_rate>30.000000</frame_rate></technique><technique profile="FCOLLADA"><start_time>0.000000</start_time><end_time>3.333333</end_time></technique></extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#construction_sign_small_c" />
+  </scene>
+</COLLADA>

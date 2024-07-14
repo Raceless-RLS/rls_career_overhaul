@@ -1,0 +1,212 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0 0 0";
+
+   new BeamNGVehicle() {
+      JBeam = "boxutility";
+      color = "0.235254824 0.239644483 0.226355508 1.14400005";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.35800001 0.70599997 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/boxutility/loaded_200.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "-11.4989119 599.000183 75.1421661";
+      rotationMatrix = "-0.025939703 -0.999663651 0 0.999663651 -0.025939703 0 0 0 1";
+      annotation = "CAR";
+      internalName = "trailerandcargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+         licenseText = "cargo";
+         mode = "Ignore";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      gatedRoad = "0";
+      useSubdivisions = "1";
+      ImprovedSpline = "1";
+      startTangent = "1";
+      endTangent = "1";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      material = "line_dashed_short";
+      textureLength = "2.5";
+      breakAngle = "3";
+      renderPriority = "10";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "1 0";
+      hiddenInNavi = "0";
+      position = "-31.1096306 597.102722 74.7200317";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "-31.109631 597.102722 74.720032 0.200000";
+      Node = "-22.068485 597.201538 74.720032 0.200000";
+      Node = "-17.058979 598.647217 74.720032 0.200000";
+      Node = "-15.424686 602.855286 74.720032 0.200000";
+      Node = "-15.259618 609.468262 74.720032 0.200000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      gatedRoad = "0";
+      useSubdivisions = "1";
+      ImprovedSpline = "1";
+      startTangent = "1";
+      endTangent = "1";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      material = "line_dashed_short";
+      textureLength = "2.5";
+      breakAngle = "3";
+      renderPriority = "10";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "1 0";
+      hiddenInNavi = "0";
+      position = "-26.9526405 599.951294 74.7200317";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "-26.952641 599.951294 74.720032 0.200000";
+      Node = "-22.048801 599.910034 74.720032 0.200000";
+      Node = "-19.732403 600.834778 74.720032 0.200000";
+      Node = "-19.148321 603.221497 74.720032 0.200000";
+      Node = "-19.212061 606.464661 74.720032 0.200000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      gatedRoad = "0";
+      useSubdivisions = "1";
+      ImprovedSpline = "1";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      material = "line_dashed_short";
+      textureLength = "2.5";
+      breakAngle = "3";
+      renderPriority = "10";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      hiddenInNavi = "0";
+      position = "-15.1981888 599.997437 74.7200317";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "-15.198189 599.997437 74.720032 0.200000";
+      Node = "-21.568260 599.935974 74.720032 0.200000";
+   };
+   new DecalRoad() {
+      drivability = "-1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      gatedRoad = "0";
+      useSubdivisions = "1";
+      ImprovedSpline = "1";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      material = "line_dashed_short";
+      textureLength = "2.5";
+      breakAngle = "3";
+      renderPriority = "10";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      hiddenInNavi = "0";
+      position = "-15.1981888 597.275024 74.7200317";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      Node = "-15.198189 597.275024 74.720032 0.200000";
+      Node = "-21.568260 597.213562 74.720032 0.200000";
+   };
+   new BeamNGVehicle() {
+      JBeam = "pickup";
+      color = "0.829999983 0.829999983 0.829999983 1.20000005";
+      colorPalette0 = "0.829999983 0.829999983 0.829999983 1.20000005";
+      colorPalette1 = "0.829999983 0.829999983 0.829999983 1.20000005";
+      metallicPaintData[0] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[1] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[2] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/pickup/d15_fleet_M_facelift.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "-17.5671005 609.605469 75.0014877";
+      rotationMatrix = "0.99978292 -0.0208347626 0 0.0208347626 0.99978292 0 0 0 1";
+      annotation = "CAR";
+      internalName = "deplayer";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+         licenseDesign = "vehicles/common/licenseplates/west_coast_usa/licensePlate-default.json";
+         licenseFormats = "[\"30-15\"]";
+         licenseText = "woodel";
+         mode = "Ignore";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+{
+  "BNGGrass_3" : {
+    "name" : "BNGGrass_3",
+    "mapTo" : "unmapped_mat",
+    "class" : "Material",
+    "persistentId" : "477d8f63-6b75-4944-8770-e15cbca6d28a",
+    "Stages" : [
+      {
+        "colorMap" : "levels/hirochi_raceway/art/shapes/groundcover/Grass03_d.dds",
+        "diffuseColor" : [ 0.9960780143737793, 0.9960780143737793, 0.9960780143737793, 1 ],
+        "normalMap" : "levels/hirochi_raceway/art/shapes/groundcover/Grass03_n.dds",
+        "useAnisotropic" : true
+      },
+      {},
+      {},
+      {}
+    ],
+    "alphaRef" : 60,
+    "alphaTest" : true,
+    "annotation" : "NATURE",
+    "doubleSided" : true,
+    "materialTag0" : "beamng",
+    "materialTag1" : "vegetation"
+  },
+  "grass_field" : {
+    "name" : "grass_field",
+    "mapTo" : "grass_field",
+    "class" : "Material",
+    "persistentId" : "93caaec2-94dd-4775-9ffb-33b652dea409",
+    "Stages" : [
+      {
+        "colorMap" : "levels/rls_west_coast_usa/art/groundcover/grass_field.dds",
+        "normalMap" : "levels/rls_west_coast_usa/art/groundcover/normalsfix.dds"
+      },
+      {},
+      {},
+      {}
+    ],
+    "alphaRef" : 147,
+    "alphaTest" : true,
+    "annotation" : "NATURE",
+    "doubleSided" : true,
+    "materialTag0" : "beamng",
+    "materialTag1" : "beamng",
+    "materialTag2" : "vegetation",
+    "materialTag3" : "Natural"
+  },
+  "wca_groundcover" : {
+    "name" : "wca_groundcover",
+    "mapTo" : "wca_groundcover",
+    "class" : "Material",
+    "persistentId" : "49f8e247-5282-4a8e-a867-c20fdd98e172",
+    "Stages" : [
+      {
+        "colorMap" : "levels/rls_west_coast_usa/art/groundcover/wca_groundcover_d.dds",
+        "normalMap" : "levels/rls_west_coast_usa/art/groundcover/wca_groundcover_n.dds",
+        "useAnisotropic" : true
+      },
+      {},
+      {},
+      {}
+    ],
+    "alphaRef" : 128,
+    "alphaTest" : true,
+    "annotation" : "NATURE",
+    "doubleSided" : true,
+    "materialTag0" : "beamng",
+    "materialTag1" : "beamng",
+    "materialTag2" : "vegetation",
+    "materialTag3" : "Natural",
+    "materialTag4" : "east_coast_usa"
+  }
+}
