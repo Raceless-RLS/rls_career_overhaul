@@ -167,8 +167,8 @@ local function getNearestPoliceVehicle(targetId, isVisible, isUsable) -- returns
 end
 
 local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1 = busted, 0 = off, 1 and higher = pursuit level
-  targetId = targetId or be:getPlayerVehicleID(0) -- target is player vehicle by default
   if not targetId then return end
+  targetId = targetId or be:getPlayerVehicleID(0) -- target is player vehicle by default
 
   local traffic = gameplay_traffic.getTrafficData()
   local targetVeh = traffic[targetId]
