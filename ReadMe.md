@@ -101,7 +101,7 @@ This new system encourages safer driving and careful management of insurance cov
 
 ### Starting Capital
 
-- **Increased Starting Capital**: Starting capital has been increased from 13,500 to 25,500.
+- **Increased Starting Capital**: Starting capital has been increased from 13,500 to 23,000.
 
 - **Expanded Racing Experience**: Most races from the original map have been converted into freeroam races.
 - **Career Mode Integration**: Freeroam racing is now available in career mode and freeroam
