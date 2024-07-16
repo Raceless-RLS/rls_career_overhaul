@@ -1,0 +1,512 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0.000000 0.000000 0.000000";
+
+   new BeamNGWaypoint(ai_endpoint3b) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "228.667786 681.271851 100.221558";
+      scale = "4 4 4";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_endpoint2b) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-247.973618 508.194611 91.5888977";
+      scale = "3.5 3.5 3.5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_endpoint1b) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-552.785522 144.587357 100.464951";
+      scale = "6 6 6";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-240.245453 350.22467 101.742355";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(junction1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-423.793732 195.285645 101.196014";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGVehicle(scenario_rescue) {
+      JBeam = "us_semi";
+      color = "1 0.3 0 1.2";
+      colorPalette0 = "1 0.3 0 1.2";
+      colorPalette1 = "1 0.3 0 1.2";
+      partConfig = "vehicles/us_semi/tc82s_rollback.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "151.842789 -960.591003 126.775604";
+      scale = "1 1 1";
+      rotationMatrix = "-0.217348784 -0.976094007 0 0.976094007 -0.217348784 0 0 0 1";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "d5dcbaf2-87c1-401a-8f79-6708e7c527f2";
+         isAIControlled = "1";
+         licenseText = "GJK-6426";
+   };
+   new BeamNGVehicle(scenario_player0) {
+      JBeam = "citybus";
+      color = "1 1 1 1.0";
+      colorPalette0 = "0.05 0.50 0.70 1.0";
+      colorPalette1 = "0.899999976 0.899999976 0.899999976 1.17999995";
+      partConfig = "{[\"vars\"]={[\"$tirepressure_R\"]=70,[\"$tirepressure_F\"]=80,[\"$fuel\"]=470,[\"$steer_center_F\"]=-0.0033,[\"$toe_F\"]=1.001},[\"parts\"]={[\"citybus_stanchions\"]=\"citybus_stanchions\",[\"citybus_accessdoor_FL\"]=\"citybus_accessdoor_FL\",[\"citybus_transmission\"]=\"citybus_transmission_4A\",[\"citybus_driveshaft\"]=\"citybus_driveshaft\",[\"brakepad_R\"]=\"brakepad_R_premium\",[\"citybus_turbo\"]=\"citybus_turbo_280\",[\"citybus_bumper_F\"]=\"citybus_bumper_F\",[\"brakepad_F\"]=\"brakepad_F_premium\",[\"citybus_glass\"]=\"citybus_glass\",[\"citybus_roof_mod\"]=\"none\",[\"citybus_bumper_R\"]=\"citybus_bumper_R\",[\"n2o_system\"]=\"none\",[\"citybus_roof\"]=\"citybus_roof\",[\"citybus_brake_F\"]=\"citybus_brake_F\",[\"citybus_shock_F\"]=\"citybus_shock_F\",[\"citybus_steer\"]=\"citybus_steer\",[\"citybus_driverseat\"]=\"citybus_driverseat\",[\"citybus_enginedoor\"]=\"citybus_enginedoor\",[\"soundscape\"]=\"soundscape_5\",[\"citybus_ABS\"]=\"citybus_ABS\",[\"citybus_adcarrier_R\"]=\"none\",[\"citybus_steering_F\"]=\"citybus_steering_F\",[\"citybus_tire_R\"]=\"citybus_tire_R\",[\"citybus_engine\"]=\"citybus_engine\",[\"citybus_shock_R\"]=\"citybus_shock_R\",[\"citybus_mirror_R\"]=\"citybus_mirror_R\",[\"paint_design\"]=\"citybus_skin_transit\",[\"citybus_body\"]=\"citybus_body\",[\"citybus_accessdoor_RR\"]=\"citybus_accessdoor_RR\",[\"citybus_wheeldata_F\"]=\"citybus_wheeldata_F\",[\"citybus_interior\"]=\"citybus_interior\",[\"citybus_licenseplate_R\"]=\"citybus_licenseplate_R\",[\"citybus_accessdoor_F\"]=\"citybus_accessdoor_F\",[\"skin_signtype\"]=\"citybus_skin_signtype_flipdot\",[\"citybus_tire_F\"]=\"citybus_tire_F\",[\"citybus_sign_F\"]=\"citybus_sign_F\",[\"citybus_airbag_R\"]=\"citybus_airbag_R\",[\"citybus_airbag_F\"]=\"citybus_airbag_F\",[\"citybus_airfilter\"]=\"citybus_airfilter\",[\"citybus_radiator\"]=\"citybus_radiator\",[\"citybus_axle_R\"]=\"citybus_axle_R\",[\"citybus_swaybar_F\"]=\"citybus_swaybar_F\",[\"citybus_accessdoor_RL\"]=\"citybus_accessdoor_RL\",[\"citybus_axle_F\"]=\"citybus_axle_F\",[\"citybus_mirror_L\"]=\"citybus_mirror_L\",[\"citybus_fueltank\"]=\"citybus_fueltank\",[\"citybus_sidedoor_R\"]=\"citybus_sidedoor_R\",[\"citybus_wheel_F\"]=\"citybus_wheel_F\",[\"licenseplate_design_2_1\"]=\"none\",[\"citybus_wheeldata_R\"]=\"citybus_wheeldata_R\",[\"citybus_frame\"]=\"citybus_frame\",[\"citybus_body_mod\"]=\"citybus_bomb\",[\"citybus_safety\"]=\"none\",[\"citybus_brake_R\"]=\"citybus_brake_R\",[\"citybus_power_steering\"]=\"none\",[\"citybus_mirror_int\"]=\"citybus_mirror_int\",[\"citybus_sign_R\"]=\"citybus_sign_R\",[\"citybus_seats_ballast\"]=\"none\",[\"citybus_sign_S\"]=\"citybus_sign_S\",[\"citybus_adcarriers\"]=\"none\",[\"citybus_wheel_R\"]=\"citybus_wheel_R\",[\"citybus_exhaust\"]=\"citybus_exhaust\",[\"citybus_accessdoor_R\"]=\"citybus_accessdoor_R\",[\"citybus_seats\"]=\"citybus_seats\",[\"citybus_sidedoor_F\"]=\"citybus_sidedoor_F\",[\"citybus_differential_R\"]=\"citybus_differential_R_locking\",[\"citybus_finaldrive_R\"]=\"citybus_finaldrive_R_404\"}}";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "566.67041 -689.673401 200.993256";
+      scale = "1 1 1";
+      rotationMatrix = "0.449183494 -0.893424511 0.00495136762 0.890286624 0.448058039 0.0814528167 -0.0749902874 -0.0321791805 0.996665418";
+      annotation = "CAR";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "a5cfd4d5-a77a-4d04-9fb4-49d5674ccc51";
+         licenseText = "HMZ-8872";
+   };
+   new DecalRoad(stdecal_1) {
+      drivability = "1";
+      lanesLeft = "1";
+      lanesRight = "1";
+      oneWay = "0";
+      flipDirection = "0";
+      improvedSpline = "0";
+      startTangent = "0";
+      endTangent = "0";
+      looped = "0";
+      smoothness = "0.5";
+      detail = "0.100000001";
+      overObjects = "0";
+      Material = "DefaultDecalRoadMaterial";
+      textureLength = "5";
+      breakAngle = "3";
+      renderPriority = "10";
+      zBias = "0";
+      decalBias = "0.000500000024";
+      distanceFade = "0 0";
+      startEndFade = "0 0";
+      position = "-789.228149 -565.671021 101.828125";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 1 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "ff847d42-6481-4b77-97f0-c4a0e2b50d66";
+
+      Node = "-789.228149 -565.671021 101.828125 5.000000";
+      Node = "-804.286743 -582.241150 101.882813 5.000000";
+      Node = "-810.043518 -588.787109 101.875000 5.000000";
+   };
+   new BeamNGWaypoint(course_wp3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "469.426208 -648.678345 171.903763";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(course_wp2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "443.604248 -723.877197 189.584991";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(course_wp1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "547.006165 -735.371338 200.265686";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "cf8cd92b-229a-4569-a16a-2941a3c28b6c";
+   };
+   new BeamNGWaypoint(ai_WP1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "20.0720825 -901.019043 125.253113";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_WP2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-436.494904 -288.11908 100.046501";
+      scale = "5 5 5";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_WP3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-371.157532 272.389374 101.344223";
+      scale = "8 8 8";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_WP4) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "180.782532 793.973938 102.413521";
+      scale = "8 8 8";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(course_wp4) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "120.87973 -691.176758 135.479813";
+      scale = "8 8 8";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(course_wp5) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "66.78228 -820.459595 128.848358";
+      scale = "8 8 8";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(course_wp6) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-393.169556 -378.659302 102.742683";
+      scale = "8 8 8";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(canal_WP1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-368.322723 161.044037 100.081627";
+      scale = "7 7 7";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(canal_WP2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-292.789673 220.245682 91.2844849";
+      scale = "7 7 7";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(canal_WP3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-145.056473 394.760406 91.2844849";
+      scale = "16 16 16";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(pier_WP1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-325.74295 367.029449 100.081627";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(pier_WP2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-535.47052 596.072632 89.3275833";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(pier_WP3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-352.135345 782.481506 75.0847321";
+      scale = "6 6 6";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-107.31768 366.694336 101.938103";
+      scale = "12 12 12";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "158.522202 583.679016 100.345512";
+      scale = "10 10 10";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP4) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "135.828995 800.122192 102.289978";
+      scale = "7 7 7";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP5) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-68.0540314 464.979614 74.8386917";
+      scale = "7 7 7";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP6) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-264.984436 569.829163 74.8386917";
+      scale = "9 9 9";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new Camera(bridgeCamera) {
+      controlMode = "Fly";
+      newtonMode = "1";
+      newtonRotation = "1";
+      mass = "1";
+      drag = "17";
+      force = "600";
+      angularDrag = "16";
+      angularForce = "400";
+      dataBlock = "observer";
+      position = "-246.085983 685.153503 88.8575821";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         speed = "2.5";
+         Team = "0";
+   };
+   new Camera(pierCamera) {
+      controlMode = "Fly";
+      newtonMode = "1";
+      newtonRotation = "1";
+      mass = "1";
+      drag = "17";
+      force = "600";
+      angularDrag = "16";
+      angularForce = "400";
+      dataBlock = "observer";
+      position = "-307.54184 882.237244 81.307663";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         speed = "2.5";
+         Team = "0";
+   };
+   new BeamNGTrigger(pierTrigger) {
+      TriggerType = "Box";
+      TriggerMode = "Center";
+      TriggerTestType = "Race corners";
+      luaFunction = "onBeamNGTrigger";
+      tickPeriod = "100";
+      debug = "0";
+      ticking = "0";
+      triggerColor = "255 192 0 45";
+      cameraOnEnter = "pierCamera";
+      defaultOnLeave = "1";
+      position = "-334.078766 800.14978 67.920578";
+      scale = "30 57.4677238 35.4717369";
+      rotationMatrix = "0.00338309165 -0.999994397 8.64019967e-11 0.999994278 0.00338315964 -0.000690534012 0.000690530054 2.33627907e-06 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new Camera(canalCamera) {
+      controlMode = "Fly";
+      newtonMode = "1";
+      newtonRotation = "1";
+      mass = "1";
+      drag = "17";
+      force = "600";
+      angularDrag = "16";
+      angularForce = "400";
+      dataBlock = "observer";
+      position = "-177.835236 487.029724 95.9856186";
+      scale = "1 1 1";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         dynamicField = "defaultValue";
+         speed = "2.5";
+   };
+   new BeamNGTrigger(canalTrigger) {
+      TriggerType = "Box";
+      TriggerMode = "Center";
+      TriggerTestType = "Race corners";
+      luaFunction = "onBeamNGTrigger";
+      tickPeriod = "100";
+      debug = "0";
+      ticking = "0";
+      triggerColor = "255 192 0 45";
+      cameraOnEnter = "canalCamera";
+      defaultOnLeave = "1";
+      position = "-142.748825 407.341339 86.3936844";
+      scale = "30 57.4677238 35.4717369";
+      rotationMatrix = "0.947133243 -0.32084012 -5.72981662e-11 0.320840061 0.947133005 -0.000690534071 0.000221551236 0.000654027797 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGTrigger(pierTrigger1) {
+      TriggerType = "Box";
+      TriggerMode = "Center";
+      TriggerTestType = "Race corners";
+      luaFunction = "onBeamNGTrigger";
+      tickPeriod = "100";
+      debug = "0";
+      ticking = "0";
+      triggerColor = "255 192 0 45";
+      cameraOnEnter = "bridgeCamera";
+      defaultOnLeave = "1";
+      position = "-266.521545 762.541565 67.920578";
+      scale = "30 57.4677238 35.4717369";
+      rotationMatrix = "-0.999989092 -0.00469629513 4.22915036e-10 0.00469627511 -0.999989092 -0.000690534303 3.24272969e-06 -0.000690526736 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(bridge_WP7) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-265.349731 743.833252 74.8386917";
+      scale = "9 9 9";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_endpoint1) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-484.578613 159.020416 100.464951";
+      scale = "6 6 6";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_endpoint2) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "-40.8466072 422.761841 101.890259";
+      scale = "4 4 4";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new BeamNGWaypoint(ai_endpoint3) {
+      drawDebug = "0";
+      directionalWaypoint = "0";
+      position = "200.264343 599.323486 100.221558";
+      scale = "4 4 4";
+      rotationMatrix = "1 0 0 0 0.999999762 -0.000690533896 0 0.000690533896 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

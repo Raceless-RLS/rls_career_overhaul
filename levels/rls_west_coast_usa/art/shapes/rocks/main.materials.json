@@ -1,0 +1,111 @@
+{
+  "wca_cliff": {
+    "name": "wca_cliff",
+    "mapTo": "wca_cliff",
+    "class": "Material",
+    "persistentId": "65b5c08e-4e7b-4aeb-ae98-134546710ea8",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_macro_cliff_ao.data.png",
+        "baseColorFactor": [
+          0.930895984,
+          0.930885971,
+          0.930885971,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_macro_cliff_b.color.png",
+        "detailMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rock_detail.data.png",
+        "detailNormalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rock_nm.normal.png",
+        "detailNormalMapStrength": 0.699999988,
+        "detailScale": [
+          4.61000013,
+          4.61000013
+        ],
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_macro_cliff_nm.normal.png",
+        "opacityMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rock_o.data.png",
+        "opacityMapUseUV": 1,
+        "pixelSpecular": true,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_wca_cliff_r.data.png",
+        "vertColor": true
+      },
+    ],
+    "alphaRef": 0,
+    "alphaTest": true,
+    "annotation": "ROCK",
+    "dynamicCubemap": true,
+    "groundType": "ROCK",
+    "materialTag0": "beamng",
+    "materialTag1": "rock",
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "wca_rock": {
+    "name": "wca_rock",
+    "mapTo": "wca_rock1",
+    "class": "Material",
+    "persistentId": "4daf2183-966f-4c37-9bf3-904c3212febb",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_wca_rock_ao.data.png",
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_wca_rock_b.color.png",
+        "detailMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_pac_detail_d.data.png",
+        "detailNormalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_pac_detail_n.normal.png",
+        "detailNormalMapStrength": 0.300000012,
+        "detailScale": [
+          8,
+          8
+        ],
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_wca_rock_nm.normal.png",
+        "pixelSpecular": true,
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_wca_rock_r.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "alphaRef": 0,
+    "annotation": "ROCK",
+    "groundType": "ROCK",
+    "materialTag0": "beamng",
+    "materialTag1": "rock",
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "eca_rocks": {
+    "name": "eca_rocks",
+    "mapTo": "eca_rocks",
+    "class": "Material",
+    "persistentId": "9f88644e-9984-4f54-8a57-4e4c962eef05",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_ao.data.png",
+        "baseColorFactor": [
+          1,
+          0.948472023,
+          0.896924973,
+          1
+        ],
+        "baseColorMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_b.color.png",
+        "detailMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_detail_b.data.png",
+        "detailNormalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_detail_nm.normal.png",
+        "detailNormalMapStrength": 0.300000012,
+        "detailScale": [
+          24,
+          24
+        ],
+        "normalMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_nm.normal.png",
+        "roughnessMap": "/levels/rls_west_coast_usa/art/shapes/rocks/t_rocks_eca_r.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "annotation": "ROCK",
+    "doubleSided": false,
+    "groundType": "ROCK",
+    "materialTag0": "beamng",
+    "materialTag1": "rock",
+    "translucentBlendOp": "None",
+    "version": 1.5
+  }
+}

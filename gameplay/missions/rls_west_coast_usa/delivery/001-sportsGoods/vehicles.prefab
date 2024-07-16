@@ -1,0 +1,179 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0 0 0";
+
+   new BeamNGVehicle() {
+      JBeam = "boxutility_large";
+      color = "0.235254824 0.239644483 0.226355508 1.14400005";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.35800001 0.70599997 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/boxutility_large/unloaded.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "35.4660759 653.32428 75.1290588";
+      rotationMatrix = "-0.999664307 0.0259290878 0 -0.0259290878 -0.999664307 0 0 0 1";
+      annotation = "CAR";
+      internalName = "trailer";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+         licenseText = "cargo";
+         mode = "Ignore";
+   };
+   new BeamNGVehicle() {
+      JBeam = "pickup";
+      color = "0.829999983 0.829999983 0.829999983 1.20000005";
+      colorPalette0 = "0.829999983 0.829999983 0.829999983 1.20000005";
+      colorPalette1 = "0.829999983 0.829999983 0.829999983 1.20000005";
+      metallicPaintData[0] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[1] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[2] = "0.300000012 0.600000024 1 0.0599999987";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/pickup/d15_fleet_M_facelift.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "45.0550346 672.113831 75.0013657";
+      rotationMatrix = "0.495190799 -0.868784368 0 0.868784368 0.495190799 0 0 0 1";
+      annotation = "CAR";
+      internalName = "deplayer";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+         licenseDesign = "vehicles/common/licenseplates/west_coast_usa/licensePlate-default.json";
+         licenseFormats = "[\"30-15\"]";
+         licenseText = "woodel";
+         mode = "Ignore";
+   };
+   new BeamNGVehicle() {
+      JBeam = "cardboard_box";
+      color = "White";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/cardboard_box/large.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "47.0070648 672.975159 75.3976212";
+      rotationMatrix = "-0.851791859 -0.523881435 0 0.523881435 -0.851791859 0 0 0 1";
+      annotation = "CAR";
+      internalName = "cargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+   };
+   new BeamNGVehicle() {
+      JBeam = "cardboard_box";
+      color = "White";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/cardboard_box/large.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "47.7136955 673.356934 75.4018936";
+      rotationMatrix = "-0.851791859 -0.523881435 0 0.523881435 -0.851791859 0 0 0 1";
+      annotation = "CAR";
+      internalName = "cargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+   };
+   new BeamNGVehicle() {
+      JBeam = "barrels";
+      color = "0.104201518 0.475798488 0.338568985 1";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/barrels/empty.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "34.1601067 654.053284 75.2431183";
+      rotationMatrix = "0.287198961 -0.95787102 0 0.95787102 0.287198961 0 0 0 1";
+      annotation = "CAR";
+      internalName = "cargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+   };
+   new BeamNGVehicle() {
+      JBeam = "barrels";
+      color = "0.104201518 0.475798488 0.338568985 1";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/barrels/empty.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "34.3484344 655.604004 75.2387619";
+      rotationMatrix = "0.287198961 -0.95787102 0 0.95787102 0.287198961 0 0 0 1";
+      annotation = "CAR";
+      internalName = "cargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+   };
+   new BeamNGVehicle() {
+      JBeam = "woodcrate";
+      color = "White";
+      colorPalette0 = "White";
+      colorPalette1 = "White";
+      metallicPaintData[0] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[1] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[2] = "0.200000003 0.5 0.800000012 0";
+      metallicPaintData[3] = "1 1 1 1";
+      partConfig = "vehicles/woodcrate/large.pc";
+      renderDistance = "500";
+      renderFade = "0.100000001";
+      dataBlock = "default_vehicle";
+      position = "35.3543701 654.326416 75.2412872";
+      rotationMatrix = "0.999986291 0.00523607526 0 -0.00523607526 0.999986291 0 0 0 1";
+      annotation = "CAR";
+      internalName = "cargo";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+         autoEnterVehicle = "true";
+         licenseText = "crate";
+         mode = "Ignore";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

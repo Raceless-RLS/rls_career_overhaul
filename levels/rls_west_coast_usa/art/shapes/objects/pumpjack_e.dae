@@ -1,0 +1,523 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.78.0 commit date:2016-10-24, commit time:12:20, hash:e8299c8</authoring_tool>
+    </contributor>
+    <created>2017-10-17T19:54:06</created>
+    <modified>2017-10-17T19:54:06</modified>
+    <unit meter="1" name="meter" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="industrial-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">107</float>
+            </shininess>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 0</color>
+            </transparent>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="industrial-material" name="industrial">
+      <instance_effect url="#industrial-effect" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube_014-mesh" name="Cube.014">
+      <mesh>
+        <source id="Cube_014-mesh-positions">
+          <float_array count="150" id="Cube_014-mesh-positions-array">-0.00524038 0.06452083 3.289387 -0.06111788 0.03225994 3.289387 -0.06111788 -0.03226184 3.289386 -0.00524038 -0.06452274 3.289387 0.05063706 -0.03226184 3.289386 0.05063706 0.03225994 3.289387 -0.06111788 0.03225994 -8.94889 -0.00524038 0.06452083 -8.948891 -0.06111788 -0.03226184 -8.94889 -0.00524038 -0.06452274 -8.948891 0.05063706 -0.03226184 -8.94889 0.05063706 0.03225994 -8.94889 0.1943036 0.02331733 3.30495 0.1741097 0.01165676 3.30495 0.1741097 -0.01166152 3.304948 0.1943036 -0.02331924 3.304948 0.2144975 -0.01166152 3.304948 0.2144975 0.01165676 3.30495 0.1741097 0.01165771 -0.230638 0.1943036 0.02331638 -0.230638 0.1741097 -0.01165962 -0.2306385 0.1943036 -0.02331924 -0.2306385 0.2144975 -0.01165962 -0.2306385 0.2144975 0.01165771 -0.230638 -0.1903733 0.02331733 3.30495 -0.2105672 0.01165676 3.30495 -0.2105672 -0.01166152 3.304948 -0.1903733 -0.02331924 3.304948 -0.1701794 -0.01166152 3.304948 -0.1701794 0.01165676 3.30495 -0.2105672 0.01165771 -0.230638 -0.1903733 0.02331638 -0.230638 -0.2105672 -0.01165962 -0.2306385 -0.1903733 -0.02331924 -0.2306385 -0.1701794 -0.01165962 -0.2306385 -0.1701794 0.01165771 -0.230638 -0.2891267 -0.07857608 -0.1703534 0.293057 -0.07857608 -0.1703534 -0.2891267 0.07857418 -0.1703534 0.293057 0.07857418 -0.1703534 -0.2891267 -0.07857513 -0.5633006 0.293057 -0.07857513 -0.5633006 -0.2891267 0.07857513 -0.5633001 0.293057 0.07857513 -0.5633001 -0.06111788 0.03225994 3.289387 -0.00524038 0.06452083 3.289387 -0.06111788 -0.03226184 3.289386 -0.00524038 -0.06452274 3.289387 0.05063706 -0.03226184 3.289386 0.05063706 0.03225994 3.289387</float_array>
+          <technique_common>
+            <accessor count="50" source="#Cube_014-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_014-mesh-normals">
+          <float_array count="54" id="Cube_014-mesh-normals-array">0 0 1 0.866024 0.5000025 0 0 1 0 0 -1 0 0.866024 -0.5000025 0 0.8660317 -0.4999893 0 -0.8660317 -0.4999893 0 -0.8660317 0.4999893 0 0.8660317 0.4999893 0 -0.866024 -0.5000025 0 0 3.03428e-6 -1 1 0 0 -1 0 0 0 1 2.44263e-6 0 -1 -2.41006e-6 -1 -1.21646e-7 0 0 1 2.41006e-6 0 -1 -2.44263e-6</float_array>
+          <technique_common>
+            <accessor count="18" source="#Cube_014-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_014-mesh-map-0">
+          <float_array count="312" id="Cube_014-mesh-map-0-array">0.2824275 0.3588379 0.2745543 0.3588379 0.2784909 0.3520195 0.9861279 0.3726186 0.038504 0.3643487 0.9863293 0.3643487 0.9857249 0.3891581 0.03810167 0.3808884 0.9859262 0.3808883 0.9855232 0.3974279 0.03749781 0.4056978 0.03769904 0.397428 0.9859262 0.3808883 0.03830301 0.3726186 0.9861279 0.3726186 0.9855232 0.3974279 0.03790009 0.3891582 0.9857249 0.3891581 0.9851205 0.4139676 0.03749781 0.4056978 0.985322 0.4056978 0.8289821 0.4780946 0.8291839 0.4771611 0.8291839 0.4780946 0.8293857 0.4771611 0.8292848 0.4780946 0.8292847 0.4771611 0.8295875 0.4771611 0.8296884 0.4780946 0.8295875 0.4780946 0.8288812 0.4780946 0.8289821 0.4771611 0.8289821 0.4780946 0.8295875 0.4771611 0.8293857 0.4780946 0.8293857 0.4771611 0.8291839 0.4780946 0.8292847 0.4771611 0.8292847 0.4780946 0.8285785 0.4780946 0.8287802 0.4771611 0.8287802 0.4780946 0.8299911 0.4780946 0.830092 0.4771611 0.830092 0.4780946 0.8297893 0.4780946 0.8296884 0.4771611 0.8297893 0.4771611 0.8284776 0.4780946 0.8285785 0.4771611 0.8285785 0.4780946 0.8297893 0.4780946 0.8299911 0.4771611 0.8299911 0.4780946 0.8287802 0.4780946 0.8288812 0.4771611 0.8288812 0.4780946 0.7093384 0.02478885 0.6281074 0.04671585 0.6281074 0.02478885 0.6281074 0.04671609 0.7093384 0.02478921 0.6281074 0.02478921 0.6237833 0.005905032 0.6457099 0.06073218 0.623783 0.06073218 0.6457099 0.06073218 0.6237833 0.005905032 0.623783 0.06073218 0.7108886 0.005905091 0.6296576 0.06073218 0.7108886 0.06073218 0.6296576 0.005905032 0.7108886 0.06073218 0.6296576 0.06073218 0.2784909 0.3520195 0.2824275 0.3542922 0.2824275 0.3588379 0.2824275 0.3588379 0.2784909 0.3611106 0.2745543 0.3588379 0.2745543 0.3588379 0.2745543 0.3542922 0.2784909 0.3520195 0.9861279 0.3726186 0.03830301 0.3726186 0.038504 0.3643487 0.9857249 0.3891581 0.03790009 0.3891582 0.03810167 0.3808884 0.9855232 0.3974279 0.985322 0.4056978 0.03749781 0.4056978 0.9859262 0.3808883 0.03810167 0.3808884 0.03830301 0.3726186 0.9855232 0.3974279 0.03769904 0.397428 0.03790009 0.3891582 0.9851205 0.4139676 0.03729587 0.4139676 0.03749781 0.4056978 0.8289821 0.4780946 0.8289821 0.4771611 0.8291839 0.4771611 0.8293857 0.4771611 0.8293857 0.4780946 0.8292848 0.4780946 0.8295875 0.4771611 0.8296884 0.4771611 0.8296884 0.4780946 0.8288812 0.4780946 0.8288812 0.4771611 0.8289821 0.4771611 0.8295875 0.4771611 0.8295875 0.4780946 0.8293857 0.4780946 0.8291839 0.4780946 0.8291839 0.4771611 0.8292847 0.4771611 0.8285785 0.4780946 0.8285785 0.4771611 0.8287802 0.4771611 0.8299911 0.4780946 0.8299911 0.4771611 0.830092 0.4771611 0.8297893 0.4780946 0.8296884 0.4780946 0.8296884 0.4771611 0.8284776 0.4780946 0.8284776 0.4771611 0.8285785 0.4771611 0.8297893 0.4780946 0.8297893 0.4771611 0.8299911 0.4771611 0.8287802 0.4780946 0.8287802 0.4771611 0.8288812 0.4771611 0.7093384 0.02478885 0.7093384 0.04671585 0.6281074 0.04671585 0.6281074 0.04671609 0.7093384 0.04671609 0.7093384 0.02478921 0.6237833 0.005905032 0.6457102 0.005905091 0.6457099 0.06073218 0.6457099 0.06073218 0.6457102 0.005905091 0.6237833 0.005905032 0.7108886 0.005905091 0.6296576 0.005905091 0.6296576 0.06073218 0.6296576 0.005905032 0.7108886 0.005905032 0.7108886 0.06073218</float_array>
+          <technique_common>
+            <accessor count="156" source="#Cube_014-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_014-mesh-colors-Col" name="Col">
+          <float_array count="468" id="Cube_014-mesh-colors-Col-array">0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.1568627 0.1529412 0.1529412 0.2588235 0.2509804 0.2392157 0.1490196 0.145098 0.145098 0.2235294 0.2235294 0.2235294 0.2705882 0.2627451 0.2509804 0.2156863 0.2156863 0.2156863 0.2156863 0.2156863 0.2156863 0.2627451 0.2627451 0.2627451 0.2705882 0.2705882 0.2705882 0.172549 0.172549 0.172549 0.2627451 0.254902 0.2431373 0.1568627 0.1529412 0.1529412 0.2156863 0.2156863 0.2156863 0.2745098 0.2745098 0.2745098 0.2235294 0.2235294 0.2235294 0.1843137 0.1843137 0.1843137 0.2627451 0.2627451 0.2627451 0.1960784 0.1960784 0.1960784 0.1960784 0.1960784 0.1960784 0.2588235 0.2588235 0.2588235 0.1843137 0.1843137 0.1843137 0.2235294 0.2235294 0.2235294 0.2705882 0.2627451 0.254902 0.2156863 0.2156863 0.2156863 0.1333333 0.1333333 0.1333333 0.2627451 0.2627451 0.2627451 0.2705882 0.2705882 0.2705882 0.2156863 0.2156863 0.2156863 0.2627451 0.2627451 0.2627451 0.1960784 0.1960784 0.1960784 0.2156863 0.2156863 0.2156863 0.2745098 0.2745098 0.2745098 0.2235294 0.2235294 0.2235294 0.1843137 0.1843137 0.1843137 0.2627451 0.2627451 0.2627451 0.1960784 0.1960784 0.1960784 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.1568627 0.1529412 0.1529412 0.2627451 0.254902 0.2431373 0.2588235 0.2509804 0.2392157 0.2235294 0.2235294 0.2235294 0.2745098 0.2666667 0.254902 0.2705882 0.2627451 0.2509804 0.2156863 0.2156863 0.2156863 0.1960784 0.1960784 0.1960784 0.2627451 0.2627451 0.2627451 0.172549 0.172549 0.172549 0.2705882 0.2627451 0.2509804 0.2627451 0.254902 0.2431373 0.2156863 0.2156863 0.2156863 0.2705882 0.2705882 0.2705882 0.2745098 0.2745098 0.2745098 0.1843137 0.1843137 0.1843137 0.2588235 0.2588235 0.2588235 0.2627451 0.2627451 0.2627451 0.1960784 0.1960784 0.1960784 0.2627451 0.2627451 0.2627451 0.2588235 0.2588235 0.2588235 0.2235294 0.2235294 0.2235294 0.2745098 0.2666667 0.2588235 0.2705882 0.2627451 0.254902 0.1333333 0.1333333 0.1333333 0.1254902 0.1215686 0.1215686 0.2627451 0.2627451 0.2627451 0.2156863 0.2156863 0.2156863 0.2705882 0.2705882 0.2705882 0.2627451 0.2627451 0.2627451 0.2156863 0.2156863 0.2156863 0.2705882 0.2705882 0.2705882 0.2745098 0.2745098 0.2745098 0.1843137 0.1843137 0.1843137 0.2588235 0.2588235 0.2588235 0.2627451 0.2627451 0.2627451 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725</float_array>
+          <technique_common>
+            <accessor count="156" source="#Cube_014-mesh-colors-Col-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_014-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_014-mesh-positions" />
+        </vertices>
+        <polylist count="52" material="industrial-material">
+          <input offset="0" semantic="VERTEX" source="#Cube_014-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#Cube_014-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#Cube_014-mesh-map-0" />
+          <input offset="3" semantic="COLOR" set="0" source="#Cube_014-mesh-colors-Col" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>46 0 0 0 48 0 1 1 45 0 2 2 5 1 3 3 7 2 4 4 0 2 5 5 3 3 6 6 10 4 7 7 4 5 8 8 2 6 9 9 6 7 10 10 8 6 11 11 4 5 12 12 11 8 13 13 5 1 14 14 2 6 15 15 9 3 16 16 3 3 17 17 0 2 18 18 6 7 19 19 1 7 20 20 17 8 21 21 19 2 22 22 12 2 23 23 15 3 24 24 22 5 25 25 16 4 26 26 14 9 27 27 18 7 28 28 20 6 29 29 16 4 30 30 23 8 31 31 17 8 32 32 14 9 33 33 21 3 34 34 15 3 35 35 12 2 36 36 18 7 37 37 13 7 38 38 29 8 39 39 31 2 40 40 24 2 41 41 27 3 42 42 34 5 43 43 28 4 44 44 26 9 45 45 30 7 46 46 32 6 47 47 28 4 48 48 35 1 49 49 29 8 50 50 26 9 51 51 33 3 52 52 27 3 53 53 24 2 54 54 30 7 55 55 25 7 56 56 37 0 57 57 38 0 58 58 36 0 59 59 42 10 60 60 41 10 61 61 40 10 62 62 41 11 63 63 39 11 64 64 37 11 65 65 38 12 66 66 40 12 67 67 36 12 68 68 43 13 69 69 38 13 70 70 39 13 71 71 40 14 72 72 37 14 73 73 36 14 74 74 45 0 75 75 44 0 76 76 46 0 77 77 46 0 78 78 47 0 79 79 48 0 80 80 48 0 81 81 49 0 82 82 45 0 83 83 5 1 84 84 11 8 85 85 7 2 86 86 3 3 87 87 9 3 88 88 10 4 89 89 2 6 90 90 1 7 91 91 6 7 92 92 4 5 93 93 10 4 94 94 11 8 95 95 2 6 96 96 8 6 97 97 9 3 98 98 0 2 99 99 7 2 100 100 6 7 101 101 17 8 102 102 23 8 103 103 19 2 104 104 15 3 105 105 21 3 106 106 22 5 107 107 14 9 108 108 13 7 109 109 18 7 110 110 16 4 111 111 22 5 112 112 23 8 113 113 14 9 114 114 20 6 115 115 21 3 116 116 12 2 117 117 19 2 118 118 18 7 119 119 29 8 120 120 35 1 121 121 31 2 122 122 27 3 123 123 33 3 124 124 34 5 125 125 26 9 126 126 25 7 127 127 30 7 128 128 28 4 129 129 34 5 130 130 35 1 131 131 26 9 132 132 32 6 133 133 33 3 134 134 24 2 135 135 31 2 136 136 30 7 137 137 37 0 138 138 39 0 139 139 38 0 140 140 42 10 141 141 43 10 142 142 41 10 143 143 41 11 144 144 43 11 145 145 39 11 146 146 38 15 147 147 42 15 148 148 40 15 149 149 43 16 150 150 42 16 151 151 38 16 152 152 40 17 153 153 41 17 154 154 37 17 155 155</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cube_017-mesh" name="Cube.017">
+      <mesh>
+        <source id="Cube_017-mesh-positions">
+          <float_array count="30" id="Cube_017-mesh-positions-array">-0.03717035 0.05530339 3.289387 -0.04587852 -0.05279147 3.289387 0.06460648 -9.53972e-7 3.289387 -0.04016381 0.06048822 -8.948891 -0.03063923 -0.06158989 -8.948891 0.05861955 -9.53674e-7 -8.94889 0.293057 -0.02619266 -0.1703534 -0.2891267 0.02619075 -0.1703534 0.293057 0.02619171 -0.5633003 -0.2891267 -0.02619171 -0.5633005</float_array>
+          <technique_common>
+            <accessor count="10" source="#Cube_017-mesh-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_017-mesh-normals">
+          <float_array count="30" id="Cube_017-mesh-normals-array">0.9996686 -0.02569669 0.001556396 -0.5220912 0.8528883 -0.001556456 -0.4761878 0.8793435 4.88304e-4 -0.429708 -0.9029667 -0.001434385 0.9996284 0.02725368 -4.88308e-4 -0.5671381 -0.8236215 0.001434385 0.08883577 0.9873118 0.1316201 -0.08883583 -0.9873123 0.1316153 -0.08883577 0.9873123 -0.1316153 0.08883583 -0.9873117 -0.1316201</float_array>
+          <technique_common>
+            <accessor count="10" source="#Cube_017-mesh-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_017-mesh-map-0">
+          <float_array count="60" id="Cube_017-mesh-map-0-array">0.986027 0.3767534 0.038504 0.3643487 0.9863293 0.3643487 0.986027 0.3767534 0.03782695 0.3921654 0.03820234 0.3767535 0.9855965 0.3944208 0.03739684 0.4098327 0.03782695 0.3921654 0.7108886 0.005905091 0.6296576 0.06073218 0.7108886 0.06073218 0.6296576 0.005905032 0.7108886 0.06073218 0.6296576 0.06073218 0.986027 0.3767534 0.03820234 0.3767535 0.038504 0.3643487 0.986027 0.3767534 0.9855965 0.3944208 0.03782695 0.3921654 0.9855965 0.3944208 0.9852213 0.4098327 0.03739684 0.4098327 0.7108886 0.005905091 0.6296576 0.005905091 0.6296576 0.06073218 0.6296576 0.005905032 0.7108886 0.005905032 0.7108886 0.06073218</float_array>
+          <technique_common>
+            <accessor count="30" source="#Cube_017-mesh-map-0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_017-mesh-colors-Col" name="Col">
+          <float_array count="90" id="Cube_017-mesh-colors-Col-array">0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.3803921 0.3764706 0.3764706 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725 0.2901961 0.2509804 0.2313725</float_array>
+          <technique_common>
+            <accessor count="30" source="#Cube_017-mesh-colors-Col-array" stride="3">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_017-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_017-mesh-positions" />
+        </vertices>
+        <polylist count="10" material="industrial-material">
+          <input offset="0" semantic="VERTEX" source="#Cube_017-mesh-vertices" />
+          <input offset="1" semantic="NORMAL" source="#Cube_017-mesh-normals" />
+          <input offset="2" semantic="TEXCOORD" set="0" source="#Cube_017-mesh-map-0" />
+          <input offset="3" semantic="COLOR" set="0" source="#Cube_017-mesh-colors-Col" />
+          <vcount>3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>2 0 0 0 3 1 1 1 0 2 2 2 2 0 3 3 4 3 4 4 5 4 5 5 1 5 6 6 3 1 7 7 4 3 8 8 8 6 9 9 7 6 10 10 6 6 11 11 9 7 12 12 6 7 13 13 7 7 14 14 2 0 15 15 5 4 16 16 3 1 17 17 2 0 18 18 1 5 19 19 4 3 20 20 1 5 21 21 0 2 22 22 3 1 23 23 8 8 24 24 9 8 25 25 7 8 26 26 9 9 27 27 8 9 28 28 6 9 29 29</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_animations>
+    <animation id="pumpjack_e_a300_location_X">
+      <source id="pumpjack_e_a300_location_X-input">
+        <float_array count="3" id="pumpjack_e_a300_location_X-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_X-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_X-output">
+        <float_array count="3" id="pumpjack_e_a300_location_X-output-array">-0.01436632 -0.01436632 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_X-output-array" stride="1">
+            <param name="X" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_X-interpolation">
+        <Name_array count="3" id="pumpjack_e_a300_location_X-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_X-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_X-intangent">
+        <float_array count="6" id="pumpjack_e_a300_location_X-intangent-array">-0.7554235 -0.01436632 1.286243 -0.01436632 3.353309 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_X-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_X-outtangent">
+        <float_array count="6" id="pumpjack_e_a300_location_X-outtangent-array">0.8387568 -0.01436632 2.896691 -0.01436632 4.980024 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_X-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a300_location_X-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a300_location_X-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a300_location_X-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a300_location_X-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a300_location_X-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a300_location_X-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a300_location_X-sampler" target="pumpjack_e_a300/location.X" />
+    </animation>
+    <animation id="pumpjack_e_a300_location_Y">
+      <source id="pumpjack_e_a300_location_Y-input">
+        <float_array count="3" id="pumpjack_e_a300_location_Y-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Y-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Y-output">
+        <float_array count="3" id="pumpjack_e_a300_location_Y-output-array">-9.47835 -9.47835 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Y-output-array" stride="1">
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Y-interpolation">
+        <Name_array count="3" id="pumpjack_e_a300_location_Y-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Y-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Y-intangent">
+        <float_array count="6" id="pumpjack_e_a300_location_Y-intangent-array">-0.7554235 -9.47835 1.286243 -9.47835 3.353309 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Y-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Y-outtangent">
+        <float_array count="6" id="pumpjack_e_a300_location_Y-outtangent-array">0.8387568 -9.47835 2.896691 -9.47835 4.980024 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Y-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a300_location_Y-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a300_location_Y-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a300_location_Y-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a300_location_Y-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a300_location_Y-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a300_location_Y-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a300_location_Y-sampler" target="pumpjack_e_a300/location.Y" />
+    </animation>
+    <animation id="pumpjack_e_a300_location_Z">
+      <source id="pumpjack_e_a300_location_Z-input">
+        <float_array count="3" id="pumpjack_e_a300_location_Z-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Z-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Z-output">
+        <float_array count="3" id="pumpjack_e_a300_location_Z-output-array">-0.4571052 -3.358146 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Z-output-array" stride="1">
+            <param name="Z" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Z-interpolation">
+        <Name_array count="3" id="pumpjack_e_a300_location_Z-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Z-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Z-intangent">
+        <float_array count="6" id="pumpjack_e_a300_location_Z-intangent-array">-0.7554235 -0.4571052 1.286243 -3.358146 3.353309 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Z-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a300_location_Z-outtangent">
+        <float_array count="6" id="pumpjack_e_a300_location_Z-outtangent-array">0.8387568 -0.4571052 2.896691 -3.358146 4.980024 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a300_location_Z-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a300_location_Z-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a300_location_Z-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a300_location_Z-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a300_location_Z-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a300_location_Z-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a300_location_Z-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a300_location_Z-sampler" target="pumpjack_e_a300/location.Z" />
+    </animation>
+    <animation id="pumpjack_e_a100_location_X">
+      <source id="pumpjack_e_a100_location_X-input">
+        <float_array count="3" id="pumpjack_e_a100_location_X-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_X-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_X-output">
+        <float_array count="3" id="pumpjack_e_a100_location_X-output-array">-0.01436632 -0.01436632 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_X-output-array" stride="1">
+            <param name="X" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_X-interpolation">
+        <Name_array count="3" id="pumpjack_e_a100_location_X-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_X-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_X-intangent">
+        <float_array count="6" id="pumpjack_e_a100_location_X-intangent-array">-0.7554235 -0.01436632 1.286243 -0.01436632 3.353309 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_X-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_X-outtangent">
+        <float_array count="6" id="pumpjack_e_a100_location_X-outtangent-array">0.8387568 -0.01436632 2.896691 -0.01436632 4.980024 -0.01436632</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_X-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a100_location_X-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a100_location_X-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a100_location_X-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a100_location_X-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a100_location_X-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a100_location_X-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a100_location_X-sampler" target="pumpjack_e_a100/location.X" />
+    </animation>
+    <animation id="pumpjack_e_a100_location_Y">
+      <source id="pumpjack_e_a100_location_Y-input">
+        <float_array count="3" id="pumpjack_e_a100_location_Y-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Y-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Y-output">
+        <float_array count="3" id="pumpjack_e_a100_location_Y-output-array">-9.47835 -9.47835 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Y-output-array" stride="1">
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Y-interpolation">
+        <Name_array count="3" id="pumpjack_e_a100_location_Y-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Y-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Y-intangent">
+        <float_array count="6" id="pumpjack_e_a100_location_Y-intangent-array">-0.7554235 -9.47835 1.286243 -9.47835 3.353309 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Y-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Y-outtangent">
+        <float_array count="6" id="pumpjack_e_a100_location_Y-outtangent-array">0.8387568 -9.47835 2.896691 -9.47835 4.980024 -9.47835</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Y-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a100_location_Y-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a100_location_Y-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a100_location_Y-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a100_location_Y-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a100_location_Y-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a100_location_Y-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a100_location_Y-sampler" target="pumpjack_e_a100/location.Y" />
+    </animation>
+    <animation id="pumpjack_e_a100_location_Z">
+      <source id="pumpjack_e_a100_location_Z-input">
+        <float_array count="3" id="pumpjack_e_a100_location_Z-input-array">0.04166662 2.083333 4.166666</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Z-input-array" stride="1">
+            <param name="TIME" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Z-output">
+        <float_array count="3" id="pumpjack_e_a100_location_Z-output-array">-0.4571052 -3.358146 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Z-output-array" stride="1">
+            <param name="Z" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Z-interpolation">
+        <Name_array count="3" id="pumpjack_e_a100_location_Z-interpolation-array">BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Z-interpolation-array" stride="1">
+            <param name="INTERPOLATION" type="name" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Z-intangent">
+        <float_array count="6" id="pumpjack_e_a100_location_Z-intangent-array">-0.7554235 -0.4571052 1.286243 -3.358146 3.353309 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Z-intangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="pumpjack_e_a100_location_Z-outtangent">
+        <float_array count="6" id="pumpjack_e_a100_location_Z-outtangent-array">0.8387568 -0.4571052 2.896691 -3.358146 4.980024 -0.4807549</float_array>
+        <technique_common>
+          <accessor count="3" source="#pumpjack_e_a100_location_Z-outtangent-array" stride="2">
+            <param name="X" type="float" />
+            <param name="Y" type="float" />
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="pumpjack_e_a100_location_Z-sampler">
+        <input semantic="INPUT" source="#pumpjack_e_a100_location_Z-input" />
+        <input semantic="OUTPUT" source="#pumpjack_e_a100_location_Z-output" />
+        <input semantic="INTERPOLATION" source="#pumpjack_e_a100_location_Z-interpolation" />
+        <input semantic="IN_TANGENT" source="#pumpjack_e_a100_location_Z-intangent" />
+        <input semantic="OUT_TANGENT" source="#pumpjack_e_a100_location_Z-outtangent" />
+      </sampler>
+      <channel source="#pumpjack_e_a100_location_Z-sampler" target="pumpjack_e_a100/location.Z" />
+    </animation>
+  </library_animations>
+  <library_controllers />
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="base00" name="base00" type="NODE">
+        <translate sid="location">9.54475e-5 2.05673e-4 6.57132e-5</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <node id="start01" name="start01" type="NODE">
+          <translate sid="location">0 0 0</translate>
+          <rotate sid="rotationZ">0 0 1 0</rotate>
+          <rotate sid="rotationY">0 1 0 0</rotate>
+          <rotate sid="rotationX">1 0 0 0</rotate>
+          <scale sid="scale">1 1 1</scale>
+          <node id="pumpjack_e_a300" name="pumpjack_e_a300" type="NODE">
+            <translate sid="location">-0.0144618 -9.478556 -0.4571709</translate>
+            <rotate sid="rotationZ">0 0 1 0</rotate>
+            <rotate sid="rotationY">0 1 0 0</rotate>
+            <rotate sid="rotationX">1 0 0 0</rotate>
+            <scale sid="scale">1 1 1</scale>
+            <instance_geometry name="pumpjack_e_a300" url="#Cube_014-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="industrial-material" target="#industrial-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="pumpjack_e_a100" name="pumpjack_e_a100" type="NODE">
+            <translate sid="location">-0.0144618 -9.478556 -0.4571709</translate>
+            <rotate sid="rotationZ">0 0 1 0</rotate>
+            <rotate sid="rotationY">0 1 0 0</rotate>
+            <rotate sid="rotationX">1 0 0 0</rotate>
+            <scale sid="scale">1 1 1</scale>
+            <instance_geometry name="pumpjack_e_a100" url="#Cube_017-mesh">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="industrial-material" target="#industrial-material" />
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

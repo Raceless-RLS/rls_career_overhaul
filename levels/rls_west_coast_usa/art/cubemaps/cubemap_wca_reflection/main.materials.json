@@ -1,0 +1,30 @@
+{
+  "cubemap_wca_reflection": {
+    "name": "cubemap_wca_reflection",
+    "class": "CubemapData",
+    "cubeFace": [
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox0.hdr.dds",
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox1.hdr.dds",
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox2.hdr.dds",
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox3.hdr.dds",
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox4.hdr.dds",
+      "/levels/rls_west_coast_usa/art/cubemaps/cubemap_wca_reflection/cubemap/skybox5.hdr.dds"
+    ]
+  },
+  "wca_reflection": {
+    "name": "wca_reflection",
+    "mapTo": "unmapped_mat",
+    "class": "Material",
+    "persistentId": "7be5bac1-545e-443e-9c4c-f30f163545aa",
+    "Stages": [
+      {},
+      {},
+      {},
+      {}
+    ],
+    "cubemap": "cubemap_wca_reflection",
+    "materialTag0": "beamng",
+    "materialTag1": "Natural",
+    "materialTag2": "BNG_sky"
+  }
+}

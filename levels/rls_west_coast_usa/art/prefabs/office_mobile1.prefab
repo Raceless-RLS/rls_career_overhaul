@@ -1,0 +1,34 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup(office_mobile1_group) {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0 0 0";
+
+   new TSStatic() {
+      shapeName = "/levels/rls_west_coast_usa/art/shapes/buildings/office_mobile1.dae";
+      dynamic = "0";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      useInstanceRenderData = "0";
+      instanceColor = "White";
+      instanceColor1 = "White";
+      instanceColor2 = "White";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      prebuildCollisionData = "0";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "120.330658 629.173035 74.5880661";
+      scale = "1 1 1";
+      rotationMatrix = "-0.404832244 -0.914390922 0 0.914390922 -0.404832244 0 0 0 1";
+      isRenderEnabled = "false";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "c71d8d0d-4166-40c0-87e4-53c3f098d217";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+

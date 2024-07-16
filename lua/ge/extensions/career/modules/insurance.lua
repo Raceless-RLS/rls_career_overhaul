@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'career_modules_payment', 'career_modules_playerAttributes'}
+M.dependencies = {'career_career', 'career_modules_payment', 'career_modules_playerAttributes', 'career_saveSystem'}
 
 local plInsuranceDataFileName = "insurance"
 
@@ -1119,6 +1119,7 @@ local function onPursuitAction(vehId, data)
                 eventDescription, fine, plPoliciesData[policyId].bonus
             )
             ui_message(combinedMessage)
+            career_saveSystem.saveCurrent()
         end
     end
 end
