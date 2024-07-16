@@ -92,6 +92,15 @@ local function setTrafficVars()
         precision = 0.2
     }) -- allows for relaxed parking detection
 end
+local function isNoPoliceModActive()
+    local mods = core_modmanager.getMods()
+    for modName, modData in pairs(mods) do
+        if modName:lower():find("rls_no_police") and modData.active then
+            return true
+        end
+    end
+    return false
+end
 
 local function setupTraffic(forceSetup)
     if forceSetup or
@@ -104,6 +113,9 @@ local function setupTraffic(forceSetup)
             amount = amount - 1
         end
         local policeAmount = 2
+        if isNoPoliceModActive() then
+            policeAmount = 0
+        end
         -- local policeAmount = 2 -- temporarily disabled by default
         local extraAmount = policeAmount -- enables traffic pooling
         playerData.trafficActive = M.debugMode and _devTraffic.active or amount -- store the amount here for future usage
