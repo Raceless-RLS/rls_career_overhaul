@@ -12,7 +12,7 @@ local imgui = ui_imgui
 
 local vehicleDeliveryDelay = 60
 local shopGenerationDelay = 5 * 60
-local salesTax = 0.07
+local salesTax = 0.06
 
 local starterVehicleMileages = {bx = 165746239, etki = 285817342, covet = 80174611}
 local starterVehicleYears = {bx = 1990, etki = 1989, covet = 1989}
@@ -63,10 +63,14 @@ end
 
 local function getRandomizedPrice(price)
   local rand = math.random(0, 100) / 100
-  if rand < 10 then
-    return price * (0.65 + rand)
+  if rand == 0 then
+    return price * 0.5
+  elseif rand == 100 then
+    return price * 1.15
+  elseif rand < 10 then
+    return price * (0.75 + rand/2)
   elseif rand < 90 then
-    return price * (0.75 + (rand-10)/4)
+    return price * (0.80 + (rand - 10)/8)
   else
     return price * (0.95 + (rand - 90)/100)
   end

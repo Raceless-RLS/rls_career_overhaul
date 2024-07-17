@@ -211,10 +211,10 @@ local function onPursuitAction(vehId, data)
                         amount = pity
                     }
                 }, {
-                    label = "The suspect got away, Here is " .. pity .. " for repairs"
+                    label = "The suspect got away, Here is " .. -pity .. " for repairs"
                 })
                 career_saveSystem.saveCurrent()
-                ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5)
+                ui_message("The suspect got away, Here is " .. -pity .. " for repairs", 5)
             else
                 if playerIsCop == false then
                     local reward = math.floor(150 * data.score) / 100
