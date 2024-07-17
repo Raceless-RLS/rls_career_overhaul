@@ -3,17 +3,20 @@ name: Create Patch
 on:
   release:
     types: [published]
-
+ 
 jobs:
   create-patch:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout the repository
-      uses: actions/checkout@v4  # Updated to the latest version
+      uses: actions/checkout@v4
 
     - name: Install xdelta3
       run: sudo apt-get install -y xdelta3
+
+    - name: Fetch all tags
+      run: git fetch --tags
 
     - name: List all tags
       run: |
@@ -54,11 +57,12 @@ jobs:
 
     - name: Download current release assets
       run: |
-        current_tag=$(git describe --tags)
+        # Get the latest tag again to ensure it's correct
+        current_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "Current tag: $current_tag"
         assets=("rls_career_overhaul.zip" "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip")
         for asset in "${assets[@]}"; do
-          url="https://github.com/Raceless-RLS/rls_career_overhaul/archive/$current_tag.zip"
+          url="https://github.com/Raceless-RLS/rls_career_overhaul/releases/download/$current_tag/$asset"
           echo "Downloading $asset from $url"
           wget $url -O new_$asset
           if [ $? -ne 0 ]; then
@@ -84,7 +88,7 @@ jobs:
         done
 
     - name: Upload patch files
-      uses: actions/upload-artifact@v4  # Updated to the latest version
+      uses: actions/upload-artifact@v4
       with:
         name: patches
         path: patch_*.xdelta
