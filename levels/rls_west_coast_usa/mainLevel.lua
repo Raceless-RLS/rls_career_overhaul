@@ -312,7 +312,7 @@ local function sleep(seconds)
 end
 
 local function displayMessage(message, duration)
-    ui_message(message, duration)
+    ui_message(message, duration, "info", "info")
 end
 
 local function raceReward(x, y, z)
@@ -333,9 +333,14 @@ local function raceReward(x, y, z)
     end
     local ratio = x / in_race_time
     if ratio < 1 then
-        return math.floor(ratio * y * 100) / 100
+        local reward = math.floor(ratio * y * 100) / 100
+        return reward
     else
-        return math.floor((math.pow(ratio, (1 + (y / 500)))) * y * 100) / 100
+        local reward = math.floor((math.pow(ratio, (1 + (y / 500)))) * y * 100) / 100
+        if reward > y*30 then
+            return y*30
+        end
+        return reward
     end
 end
 
@@ -371,6 +376,16 @@ local races = {
         bestTime = 30,
         reward = 2000,
         label = "Right Rock Crawl"
+    },
+    smallCrawll = {
+        bestTime = 20,
+        reward = 1500,
+        label = "Left Small Crawl"
+    },
+    smallCrawlr = {
+        bestTime = 20,
+        reward = 2000,
+        label = "Right Small Crawl"
     },
     hillclimbl = {
         bestTime = 20,
@@ -620,7 +635,7 @@ local function payoutRace(data)
             local speedMessage = string.format("Speed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
             message = message .. "\n" .. speedMessage
         end
-        displayMessage(message, 20)
+        ui_message(message, 20, "Reward")
         print("leaderboard:")
         printTable(leaderboard)
         saveLeaderboard()
@@ -801,9 +816,7 @@ local function routeInfo(data)
     if data.event == "enter" then
         local raceName = getActivityName(data)
         if races[raceName].altRoute and mActiveRace == raceName then
-            if mHotlap ~= raceName then
-                displayMessage(races[raceName].altRoute.altInfo, 20)
-            end
+            displayMessage(races[raceName].altRoute.altInfo, 10)
             displayAssets(data)
         end 
     end
@@ -1076,6 +1089,7 @@ local function Yellowlight(data)
             print("Yellowlight: Yellow light object not found")
         end
         if not mActiveRace then
+            ui_message("You exited the staging zone", 2, "info", "info")
             local Redlight = scenetree.findObject(raceName .. '_Red')
             if Redlight then
                 Redlight:setHidden(false)
