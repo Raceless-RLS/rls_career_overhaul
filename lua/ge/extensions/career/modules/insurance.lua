@@ -655,15 +655,6 @@ local function startRepair(inventoryId, repairOptionData, callback)
     local price = mergeRepairOptionPrices(repairOption.priceOptions and
                                               repairOption.priceOptions[repairOptionData.priceOption or 1] or nil)
 
-    -- Check if it's not an instant free repair and if the player can afford it
-    if repairOptionData.name ~= "instantFreeRepair" then
-        local playerMoney = career_modules_playerAttributes.getAttributeValue("money")
-        if not price or (price.money and playerMoney < price.money.amount) then
-            -- Player can't afford the repair
-            ui_message("Insufficient funds for repair", 3)
-            return
-        end
-    end
 
     if price then
         career_modules_payment.pay(price, {
@@ -673,7 +664,11 @@ local function startRepair(inventoryId, repairOptionData, callback)
     end
 
     if repairOption.isPolicyRepair then -- the player can repair on his own without insurance
-        makeRepairClaim(inventoryId, price, getRateIncrease(inventoryId, repairOptionData.fullCost, price.money.amount))
+        local increase = nil
+        if price.money then
+            increase = getRateIncrease(inventoryId, repairOptionData.fullCost, price.money.amount)
+        end
+        makeRepairClaim(inventoryId, price, increase)
     end
 
     -- the actual repair

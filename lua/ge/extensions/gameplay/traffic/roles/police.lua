@@ -10,7 +10,7 @@ function C:init()
   self.personalityModifiers = {
     aggression = {median = 0.2}
   }
-  self.veh.drivability = clamp(0.5, self.veh.vars.minRoadDrivability, 1)
+  self.veh.drivability = clamp(0.25, self.veh.vars.minRoadDrivability, 1)
   self.cooldownTimer = -1
   self.validTargets = {}
   self.actions = {
