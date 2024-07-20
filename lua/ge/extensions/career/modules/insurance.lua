@@ -467,7 +467,8 @@ local function makeTestDriveDamageClaim(vehInfo)
     }
     local label = string.format("Test drive vehicle damaged: -%i$", testDriveClaimPrice.money.amount)
     career_modules_payment.pay(testDriveClaimPrice, {
-        label = label
+        label = label,
+        tags = {"insurance", "repair", "testDrive"}
     })
 
     local rateIncrease = 1 + math.floor(
@@ -658,7 +659,8 @@ local function startRepair(inventoryId, repairOptionData, callback)
 
     if price then
         career_modules_payment.pay(price, {
-            label = "Repaired a vehicle: " .. (vehInfo.niceName or "(Unnamed Vehicle)")
+            label = "Repaired a vehicle: " .. (vehInfo.niceName or "(Unnamed Vehicle)"),
+            tags = {"insurance", "repair"}
         })
         Engine.Audio.playOnce('AudioGui', 'event:>UI>Career>Buy_01')
     end
@@ -780,7 +782,10 @@ local function calculatePremiumDetails(policyId, overiddenPerks)
 end
 
 local function getPremiumWithPolicyScore(policyId)
-    return calculatePremiumDetails(policyId).price * plPoliciesData[policyId].bonus
+    local basePremium = calculatePremiumDetails(policyId).price
+    local bonus = plPoliciesData[policyId].bonus
+    local cappedBonus = math.min(bonus, 35)  -- Cap the bonus at 35
+    return basePremium * cappedBonus
 end
 
 -- make player pay for insurance renewal every X meters
@@ -806,7 +811,8 @@ local function checkRenewPolicy()
                 canBeNegative = true
             }
         }, {
-            label = logBookLabel
+            label = logBookLabel,
+            tags = {"insurance", "renewal"}
         })
         ui_message(label, 7, "Insurance", "info")
 
@@ -1107,7 +1113,8 @@ local function onPursuitAction(vehId, data)
                     canBeNegative = true
                 }
             }, {
-                label = eventDescription
+                label = eventDescription,
+                tags = {"fine"}
             })
             local combinedMessage = string.format(
                 "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f",
@@ -1399,7 +1406,8 @@ local function changePolicyPerks(policyId, changedPerks)
             canBeNegative = false
         }
     }, {
-        label = label
+        label = label,
+        tags = {"insurance"}
     })
     plPoliciesData[policyId].nextPolicyEditTimer = policyEditTime
     M.sendUIData()
@@ -1468,7 +1476,8 @@ local function payBonusReset(policyId)
         career_modules_payment.canPay(policyData.resetBonus.price) then
         local label = string.format("Policy score decreased. Tier : %s", policyData.name)
         career_modules_payment.pay(policyData.resetBonus.price, {
-            label = label
+            label = label,
+            tags = {"insurance", "goodBehaviour"}
         })
         plPoliciesData[policyId].bonus = 1
         sendUIData()
