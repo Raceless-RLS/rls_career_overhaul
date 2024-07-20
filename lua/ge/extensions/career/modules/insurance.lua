@@ -784,7 +784,7 @@ end
 local function getPremiumWithPolicyScore(policyId)
     local basePremium = calculatePremiumDetails(policyId).price
     local bonus = plPoliciesData[policyId].bonus
-    local cappedBonus = math.min(bonus, 25)  -- Cap the bonus at 25
+    local cappedBonus = math.min(bonus, 35)  -- Cap the bonus at 35
     return basePremium * cappedBonus
 end
 
