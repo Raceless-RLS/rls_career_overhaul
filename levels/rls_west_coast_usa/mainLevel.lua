@@ -315,6 +315,22 @@ local function displayMessage(message, duration)
     ui_message(message, duration, "info", "info")
 end
 
+local function setActiveLight(event, color)
+    local yellow = scenetree.findObject(event .. "_Yellow")
+    local red = scenetree.findObject(event .. "_Red")
+    local green = scenetree.findObject(event .. "_Green")
+    if yellow then
+        yellow:setHidden(color ~= "yellow")
+    end
+    if red then
+        red:setHidden(color ~= "red")
+    end
+    if green then
+        green:setHidden(color ~= "green")
+    end
+
+end
+
 local function raceReward(x, y, z)
     -- The raceReward function calculates the reward based on the time taken to complete the race.
     -- If the actual time is greater than the ideal time, the reward (y) is reduced proportionally.
@@ -389,7 +405,7 @@ local races = {
     },
     hillclimbl = {
         bestTime = 20,
-        reward = 5000,
+        reward = 2000,
         label = "Left Hill Climb"
     },
     hillclimbm = {
@@ -606,9 +622,9 @@ local function payoutRace(data)
             print("No new best time for" .. raceName)
             reward = reward / 2
         end
-        career_modules_payment.pay({
+        career_modules_payment.reward({
             money = {
-                amount = -reward
+                amount = reward
             }
         }, {
             label = label
@@ -790,14 +806,7 @@ local function exitCheckpoint(data)
         return
     end
     if data.event == "enter" and mActiveRace then
-        local Green = scenetree.findObject(mActiveRace .. "_Green")
-        local Red = scenetree.findObject(mActiveRace .. "_Red")
-        if Green then
-            Green:setHidden(true)
-        end
-        if Red then
-            Red:setHidden(false)
-        end
+        setActiveLight(mActiveRace, "red")
         mActiveRace = nil
         timerActive = false
         mAltRoute = nil
@@ -842,18 +851,7 @@ local function manageZone(data)
             currCheckpoint = nil
             mSplitTimes = {}
             displayMessage("You exited the race zone, Race cancelled", 2)
-            local Redlight = scenetree.findObject(raceName .. '_Red')
-            local Greenlight = scenetree.findObject(raceName .. '_Green')
-            local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
-            if Redlight then
-                Redlight:setHidden(false)
-            end
-            if Greenlight then
-                Greenlight:setHidden(true)
-            end
-            if Yellowlight then
-                Yellowlight:setHidden(true)
-            end
+            setActiveLight(raceName, "red")
         end
     end
 end
@@ -925,10 +923,7 @@ local function Greenlight(data)
     end
 
     local raceName = getActivityName(data)
-    print("Greenlight: raceName =" .. raceName)
 
-    local Greenlight = scenetree.findObject(raceName .. '_Green')
-    local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
 
     if currCheckpoint then
         if currCheckpoint + 1 == races[raceName].checkpoints then
@@ -955,7 +950,6 @@ local function Greenlight(data)
 
     if data.event == "enter" and staged == raceName then
         displayAssets(data)
-        print("Greenlight: Enter event triggered and race is staged")
         timerActive = true
         in_race_time = 0
         mActiveRace = raceName
@@ -963,26 +957,9 @@ local function Greenlight(data)
         print("Greenlight: in_race_time =" .. in_race_time)
         print("Greenlight: mActiveRace =" .. mActiveRace)
         displayMessage(getStartMessage(raceName), 5)
-        if Greenlight then
-            Greenlight:setHidden(false)
-            print("Greenlight: Green light shown")
-        else
-            print("Greenlight: Green light object not found")
-        end
-        if Yellowlight then
-            Yellowlight:setHidden(true)
-            print("Greenlight: Yellow light hidden")
-        else
-            print("Greenlight: Yellow light object not found")
-        end
+        setActiveLight(raceName, "green")
     else
-        print("Greenlight: Conditions not met for race start")
-        print("Greenlight: data.event =" .. data.event)
-        if staged == nil then
-            print("Greenlight: staged = False")
-        else
-            print("Greenlight: staged = " .. staged)
-        end
+        setActiveLight(raceName, "red")
     end
 end
 
@@ -1035,9 +1012,6 @@ local function Yellowlight(data)
     end
 
     local raceName = getActivityName(data)
-    print("Yellowlight: raceName =" .. raceName)
-
-    local yellowLight = scenetree.findObject(raceName .. '_Yellow')
 
     if data.event == "enter" then
         print("Yellowlight: Enter event triggered")
@@ -1066,34 +1040,13 @@ local function Yellowlight(data)
                 print("Yellowlight: Created new leaderboard entry for" .. raceName)
             end
             displayStagedMessage(race, leaderboard[raceName])
-            
-            if yellowLight then
-                yellowLight:setHidden(false)
-                print("Yellowlight: Yellow light shown")
-            else
-                print("Yellowlight: Yellow light object not found")
-            end
-            local Redlight = scenetree.findObject(raceName .. '_Red')
-            if Redlight then
-                Redlight:setHidden(true)
-            end
+            setActiveLight(raceName, "yellow")
         end
     elseif data.event == "exit" then
-        print("Yellowlight: Exit event triggered")
         staged = nil
-        print("Yellowlight: staged set to nil")
-        if yellowLight then
-            yellowLight:setHidden(true)
-            print("Yellowlight: Yellow light hidden")
-        else
-            print("Yellowlight: Yellow light object not found")
-        end
         if not mActiveRace then
-            ui_message("You exited the staging zone", 2, "info", "info")
-            local Redlight = scenetree.findObject(raceName .. '_Red')
-            if Redlight then
-                Redlight:setHidden(false)
-            end
+            ui_message("You exited the staging zone", 4, "info", "info")
+            setActiveLight(raceName, "red")
         end
     end
 end
@@ -1110,9 +1063,6 @@ local function Finishline(data)
         return
     end
     local raceName = getActivityName(data)
-    local Greenlight = scenetree.findObject(raceName .. '_Green')
-    local Yellowlight = scenetree.findObject(raceName .. '_Yellow')
-    local Redlight = scenetree.findObject(raceName .. '_Red')
     if data.event == "enter" and mActiveRace == raceName then
         playCheckpointSound()
         if currCheckpoint then
@@ -1135,15 +1085,7 @@ local function Finishline(data)
             local reward = payoutRace(data)
         end
     else
-        if Yellowlight then
-            Yellowlight:setHidden(true)
-        end
-        if Greenlight then
-            Greenlight:setHidden(true)
-        end
-        if Redlight then
-            Redlight:setHidden(false)
-        end
+        setActiveLight(raceName, "red")
     end
 end
 
