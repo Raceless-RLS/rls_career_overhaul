@@ -88,17 +88,8 @@ jobs:
           fi
         done
 
-    - name: Upload patch files to release
-      uses: softprops/action-gh-release@v1
-      if: github.event_name == 'release'
-      with:
-        files: patch_*.xdelta
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Upload patch files as artifacts
+    - name: Upload patch files
       uses: actions/upload-artifact@v4
-      if: github.event_name == 'workflow_dispatch'
       with:
         name: patches
         path: patch_*.xdelta
