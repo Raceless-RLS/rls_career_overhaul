@@ -161,11 +161,6 @@ local function setupTraffic(forceSetup)
     end -- Added end to close the main if-else block
 end -- Added end to close the function
 
--- RLS
-local function displayMessage(message, duration)
-    ui_message(message, duration, "yourMessageCategory")
-end
-
 local function hasLicensePlate(inventoryId)
     for partId, part in pairs(career_modules_partInventory.getInventory()) do
         if part.location == inventoryId then
@@ -205,7 +200,7 @@ local function onPursuitAction(vehId, data)
             if playerIsCop == true then
                 local pity = -750
                 career_saveSystem.saveCurrent()
-                career_modules_payment.pay({
+                career_modules_payment.reward({
                     money = {
                         amount = pity
                     }
@@ -213,19 +208,19 @@ local function onPursuitAction(vehId, data)
                     label = "The suspect got away, Here is " .. -pity .. " for repairs"
                 })
                 career_saveSystem.saveCurrent()
-                ui_message("The suspect got away, Here is " .. -pity .. " for repairs", 5)
+                ui_message("The suspect got away, Here is " .. -pity .. " for repairs", 5, "Police", "info")
             else
                 if playerIsCop == false then
                     local reward = math.floor(150 * data.score) / 100
-                    career_modules_payment.pay({
+                    career_modules_payment.reward({
                         money = {
-                            amount = -reward
+                            amount = reward
                         }
                     }, {
                         label = "You sold your dashcam footage for $" .. reward
                     })
                     career_saveSystem.saveCurrent()
-                    ui_message("You sold your dashcam footage for $" .. reward, 5)
+                    ui_message("You sold your dashcam footage for $" .. reward, 5, "Criminal", "info")
                 end
             end
             -- core_recoveryPrompt.setDefaultsForCareer()
@@ -235,14 +230,14 @@ local function onPursuitAction(vehId, data)
         if playerIsCop == true then
             local bonus = math.floor(200 * data.score) / 100
             
-            career_modules_payment.pay({
+            career_modules_payment.reward({
                 money = {
-                    amount = -bonus
+                    amount = bonus
                 }
             }, {
                 label = "Arrest Bonus"
             })
-            ui_message("Arrest Bonus: $" .. bonus, 5)
+            ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
         end
         career_saveSystem.saveCurrent()
     end
@@ -251,7 +246,7 @@ end
 local function onVehicleSwitched(oldId, newId)
     local playerIsCop = isPlayerInPoliceVehicle()
     if playerIsCop then
-        ui_message("You are now a cop", 5)
+        ui_message("You are now a cop", 5, "Police", "info")
     end
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
         setPlayerData(newId, oldId)
@@ -437,7 +432,7 @@ M.playerPursuitActive = playerPursuitActive
 M.resetPlayerState = resetPlayerState
 M.teleportToGarage = teleportToGarage
 
-M.displayMessage = displayMessage
+M.ui_message = ui_message
 M.isPlayerInPoliceVehicle = isPlayerInPoliceVehicle
 M.getVehicleConfigType = getVehicleConfigType
 

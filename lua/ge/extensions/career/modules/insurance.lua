@@ -142,7 +142,7 @@ local gestures = {
 
             ui_message(string.format(
                 "Insurance policy '%s' score decreased to %0.2f due to not having submitted any claim for a while",
-                availablePolicies[plPolicyData.id].name, plPolicyData.bonus))
+                availablePolicies[plPolicyData.id].name, plPolicyData.bonus), 6, "Insurance", "info")
         end
     end,
     freeRepair = function(data)
@@ -164,7 +164,7 @@ local gestures = {
 
             ui_message(string.format(
                 "Insurance policy '%s' has given you a repair forgiveness due to not having submitted any claim for a while",
-                availablePolicies[plPolicyData.id].name))
+                availablePolicies[plPolicyData.id].name), 6, "Insurance", "info")
         end
     end
 }
@@ -480,7 +480,7 @@ local function makeTestDriveDamageClaim(vehInfo)
     plPoliciesData[policyId].bonus = math.floor(plPoliciesData[policyId].bonus * rateIncrease * 100) / 100
 
     label = label .. string.format("\nYour insurance went up to :) %0.2f", plPoliciesData[policyId].bonus)
-    ui_message(label, 5)
+    ui_message(label, 5, "Insurance", "info")
 
     local claim = {
         time = os.time(),
@@ -536,7 +536,7 @@ local function makeRepairClaim(invVehId, price, rateIncrease)
         plPoliciesData[policyId].bonus = math.floor(plPoliciesData[policyId].bonus * rateIncrease * 100) / 100
         local label = string.format("Your Insurance Increased by " .. rateIncrease .. " to " ..
                                         plPoliciesData[policyId].bonus)
-        ui_message(label)
+        ui_message(label, 5, "Insurance", "info")
     end
 
     local claim = {
@@ -808,7 +808,7 @@ local function checkRenewPolicy()
         }, {
             label = logBookLabel
         })
-        ui_message(label)
+        ui_message(label, 7, "Insurance", "info")
 
         metersDrivenSinceLastPay = 0
         career_saveSystem.saveCurrent()
@@ -1113,7 +1113,8 @@ local function onPursuitAction(vehId, data)
                 "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f",
                 eventDescription, fine, plPoliciesData[policyId].bonus
             )
-            ui_message(combinedMessage)
+            ui_message(combinedMessage, 8, "Insurance", "info")
+            career_saveSystem.saveCurrent()
         end
     end
 end

@@ -31,11 +31,11 @@ function C:init()
           end
         end
 
-        if modeNum <= 1 then -- passive
+        if modeNum < 3 then -- passive
           obj:queueLuaCommand('ai.setMode("follow")')
           obj:queueLuaCommand('ai.driveInLane("off")')
         else -- aggressive
-          obj:queueLuaCommand('ai.setMode("chase")')
+          obj:queueLuaCommand('ai.setMode("follow")')
           obj:queueLuaCommand('ai.driveInLane("off")')
         end
       end
@@ -205,6 +205,13 @@ function C:onUpdate(dt, dtSim)
     return
   end
 
+  local pursuitData = gameplay_police.getPursuitData(self.targetId)
+  if not pursuitData or os.clock() - pursuitData.lastUpdated > 1 then
+    -- Pursuit data is stale or non-existent, end pursuit
+    self:endPursuit()
+    return
+  end
+
   if self.veh.isAi then
     if self.state == 'disabled' then return end
 
@@ -218,40 +225,75 @@ function C:onUpdate(dt, dtSim)
     end
 
     if self.flags.pursuit and self.state ~= 'none' and self.state ~= 'disabled' and self.veh.vars.aiMode == 'traffic' then
+      local pursuitData = gameplay_police.getPursuitData(self.targetId)
+      local canPIT = pursuitData and pursuitData.pitTimer and pursuitData.pitTimer <= 0
       local minSpeed = (4 - targetVeh.pursuit.mode) * 3
       if self.flags.roadblock == 1 then minSpeed = 0 end
 
       if (self.flags.roadblock and targetVeh.vel:dot((targetVeh.pos - targetVeh.pursuit.roadblockPos):normalized()) >= 9)
       or targetVeh.pursuit.timers.evadeValue >= 0.5 then
         obj:queueLuaCommand('ai.setSpeedMode("off")')
-        obj:queueLuaCommand('ai.setMode("chase")')
+        if canPIT then
+          obj:queueLuaCommand('ai.setMode("chase")')
+        else
+          obj:queueLuaCommand('ai.setMode("follow")')
+        end
         obj:queueLuaCommand('ai.setAggressionMode("rubberBand")')
         obj:queueLuaCommand('ai.setAggression(1)')
         self.state = 'chase'
         self.flags.roadblock = nil
       end
 
-      if self.preventPullOver then return end
+      if self.preventPullOver then 
+        self.preventPullOver = false
+        return
+      end
 
       if targetVeh.pursuit.mode < 3 and targetVisible and targetVeh.speed <= minSpeed then
         if self.state == 'chase' and distSq <= brakeDistSq and targetVeh.driveVec:dot(targetVeh.pos - self.veh.pos) > 0 then -- pull over near target vehicle
           self:setAction('pullOver')
-          self.actionTimer = gameplay_police.getPursuitVars().arrestLimit + 5
+          self.actionTimer = gameplay_police.getPursuitVars().arrestLimit + 2
         end
       else
         if self.state == 'pullOver' then
-          obj:queueLuaCommand('ai.setMode("chase")')
-          self.state = 'chase'
+          if canPIT then
+            obj:queueLuaCommand('ai.setMode("chase")')
+            self.state = 'chase'
+          else
+            obj:queueLuaCommand('ai.setMode("follow")')
+            self.state = 'follow'
+          end
         end
       end
-
+      
       if self.state == 'pullOver' and self.actionTimer <= 0 then -- pull over time out
+        if canPIT then
+          obj:queueLuaCommand('ai.setMode("chase")')
+          self.state = 'chase'
+          self.preventPullOver = true -- no more acting nice and pulling over until this vehicle resets
+        else
+          obj:queueLuaCommand('ai.setMode("follow")')
+          self.state = 'follow'
+        end
+      end
+      
+      -- Update AI mode based on PIT timer
+      if self.state == 'chase' and not canPIT then
+        obj:queueLuaCommand('ai.setMode("follow")')
+        self.state = 'follow'
+      elseif self.state == 'follow' and canPIT then
         obj:queueLuaCommand('ai.setMode("chase")')
         self.state = 'chase'
-        self.preventPullOver = true -- no more acting nice and pulling over until this vehicle resets
       end
     end
   end
+end
+
+function C:endPursuit()
+  self.flags.pursuit = nil
+  self.targetId = nil
+  self.state = 'none'
+  -- Reset any other relevant state
 end
 
 return function(...) return require('/lua/ge/extensions/gameplay/traffic/baseRole')(C, ...) end

@@ -12,7 +12,7 @@ M.tutorialEnabled = false
 
 local careerModuleDirectory = '/lua/ge/extensions/career/modules/'
 local saveFile = "general.json"
-local levelName = "rls_west_coast_usa"
+local levelName = "west_coast_usa"
 local defaultLevel = "/levels/rls_west_coast_usa/main.level.json"
 local autosaveEnabled = true
 
@@ -198,13 +198,12 @@ local function activateCareer(removeVehicles)
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
   local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
-  local levelToLoad = careerData.level or levelName
   boughtStarterVehicle = careerData.boughtStarterVehicle
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
 
-  if not getCurrentLevelIdentifier() or (getCurrentLevelIdentifier() ~= levelToLoad) then
+  if not getCurrentLevelIdentifier() then
     spawn.preventPlayerSpawning = true
-    freeroam_freeroam.startFreeroam(path.getPathLevelMain(levelToLoad))
+    freeroam_freeroam.startFreeroam(path.getPathLevelMain("rls_west_coast_usa"))
     toggleCareerModules(true)
   else
     if removeVehicles then
@@ -280,7 +279,7 @@ local function onSaveCurrentSaveSlot(currentSavePath)
   -- read the info file
   local data = {}
 
-  data.level = getCurrentLevelIdentifier()
+  data.level = "west_coast_usa"
   data.boughtStarterVehicle = boughtStarterVehicle
   data.debugModuleOpenStates = {}
   for _, module in ipairs(debugModules) do

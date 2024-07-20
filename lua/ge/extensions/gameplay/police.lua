@@ -125,6 +125,7 @@ local function resetPursuitVars() -- resets pursuit variables to default
     arrestRadius = 20,
     evadeLimit = 45,
     evadeRadius = 80,
+    pitTimer = 0,
     suspectFrequency = 0.5, -- this is disabled if traffic random events are disabled
     roadblockFrequency = 0.5,
     autoRelease = true -- set to true to automatically unfreeze the vehicle after an arrest
@@ -363,11 +364,11 @@ local function releaseVehicle(id, showMessages) -- unfreezes controls and lets a
   setPursuitMode(0, id)
 end
 
-local function getPursuitData(id) -- returns pursuit data from the given vehicle, or the player vehicle by default
-  -- exists for backwards compatibility
+local function getPursuitData(id)
   id = id or be:getPlayerVehicleID(0)
   local veh = id and gameplay_traffic.getTrafficData()[id]
   if veh then
+    veh.pursuit.lastUpdated = os.clock()
     return veh.pursuit
   end
 end
@@ -526,6 +527,10 @@ local function onUpdate(dt, dtSim)
           break
         end
       end
+    elseif pursuit.mode >= 2 then -- Only allow PIT maneuvers in higher pursuit modes
+      pursuit.pitTimer = math.max(0, pursuit.pitTimer - dtSim)
+    else
+      pursuit.pitTimer = 30 -- Reset timer to 30 seconds when not in high pursuit mode
     end
 
     -- active pursuit
