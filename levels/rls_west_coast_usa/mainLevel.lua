@@ -1007,7 +1007,7 @@ end
 local function displayStagedMessage(race, times)
     local message
 
-    if times.bestTime > race.bestTime then
+    if times.bestTime and times.bestTime > race.bestTime then
         local potentialReward = raceReward(race.bestTime, race.reward, times.bestTime)  -- Calculate potential reward
         message = string.format(
             "Staged for %s.\nYour Best Time: %s\nBeat your time to win more than $%.2f!",

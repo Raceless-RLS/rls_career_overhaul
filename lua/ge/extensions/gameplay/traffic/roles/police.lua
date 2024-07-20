@@ -35,7 +35,7 @@ function C:init()
           obj:queueLuaCommand('ai.setMode("follow")')
           obj:queueLuaCommand('ai.driveInLane("off")')
         else -- aggressive
-          obj:queueLuaCommand('ai.setMode("follow")')
+          obj:queueLuaCommand('ai.setMode("chase")')
           obj:queueLuaCommand('ai.driveInLane("off")')
         end
       end
