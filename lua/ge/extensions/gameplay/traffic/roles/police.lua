@@ -206,7 +206,7 @@ function C:onUpdate(dt, dtSim)
   end
 
   local pursuitData = gameplay_police.getPursuitData(self.targetId)
-  if not pursuitData or os.clock() - pursuitData.lastUpdated > 1 then
+  if not pursuitData or (pursuitData.lastUpdated and os.clock() - pursuitData.lastUpdated > 1) then
     -- Pursuit data is stale or non-existent, end pursuit
     self:endPursuit()
     return

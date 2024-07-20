@@ -132,7 +132,7 @@ local parcelTemplatesById = {}
 local function getDeliveryParcelTemplates()
   if not parcelItemTemplates then
     parcelItemTemplates = {}
-    local levelInfo = core_levels.getLevelByName(getCurrentLevelIdentifier())
+    local levelInfo = core_levels.getLevelByName("west_coast_usa")
     local files = FS:findFiles("gameplay/delivery/", '*.deliveryParcels.json', -1, false, true)
     for _,file in ipairs(files) do
       for k, v in pairs(jsonReadFile(file) or {}) do

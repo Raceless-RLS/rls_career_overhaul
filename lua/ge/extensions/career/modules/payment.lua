@@ -32,7 +32,7 @@ local function reward(price, reason)
     end
     career_modules_playerAttributes.addAttributes(change, reason)
     return true
-  end
+end
 
 M.canPay = canPay
 M.pay = pay

@@ -205,7 +205,8 @@ local function onPursuitAction(vehId, data)
                         amount = pity
                     }
                 }, {
-                    label = "The suspect got away, Here is " .. -pity .. " for repairs"
+                    label = "The suspect got away, Here is " .. -pity .. " for repairs",
+                    tags = {"gameplay", "reward", "police"}
                 })
                 career_saveSystem.saveCurrent()
                 ui_message("The suspect got away, Here is " .. -pity .. " for repairs", 5, "Police", "info")
@@ -217,7 +218,8 @@ local function onPursuitAction(vehId, data)
                             amount = reward
                         }
                     }, {
-                        label = "You sold your dashcam footage for $" .. reward
+                        label = "You sold your dashcam footage for $" .. reward,
+                        tags = {"gameplay", "reward", "criminal"}
                     })
                     career_saveSystem.saveCurrent()
                     ui_message("You sold your dashcam footage for $" .. reward, 5, "Criminal", "info")
@@ -235,7 +237,8 @@ local function onPursuitAction(vehId, data)
                     amount = bonus
                 }
             }, {
-                label = "Arrest Bonus"
+                label = "Arrest Bonus",
+                tags = {"gameplay", "reward", "police"}
             })
             ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
         end
