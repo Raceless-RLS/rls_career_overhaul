@@ -43,7 +43,7 @@ jobs:
           exit 1
         fi
 
-        assets=("rls_career_overhaul.zip" "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip")
+        assets=("rls_career_overhaul.zip" "rls_career_overhaul_noMap.zip")
         for asset in "${assets[@]}"; do
           url="https://github.com/Raceless-RLS/rls_career_overhaul/releases/download/$previous_tag/$asset"
           echo "Downloading $asset from $url"
@@ -61,7 +61,7 @@ jobs:
         # Get the latest tag again to ensure it's correct
         current_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "Current tag: $current_tag"
-        assets=("rls_career_overhaul.zip" "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip")
+        assets=("rls_career_overhaul.zip" "rls_career_overhaul_noMap.zip")
         for asset in "${assets[@]}"; do
           url="https://github.com/Raceless-RLS/rls_career_overhaul/releases/download/$current_tag/$asset"
           echo "Downloading $asset from $url"
@@ -76,7 +76,7 @@ jobs:
 
     - name: Create patch files
       run: |
-        assets=("rls_career_overhaul.zip" "rls_mission_repeat.zip" "rls_save_convertor.zip" "rls_career_overhaul_noMap.zip" "rls_removal_tool.zip" "rls_no_police.zip")
+        assets=("rls_career_overhaul.zip" "rls_career_overhaul_noMap.zip")
         for asset in "${assets[@]}"; do
           echo "Creating patch for $asset"
           xdelta3 -e -s old_$asset new_$asset patch_$asset.xdelta
@@ -88,8 +88,17 @@ jobs:
           fi
         done
 
-    - name: Upload patch files
+    - name: Upload patch files to release
+      uses: softprops/action-gh-release@v1
+      if: github.event_name == 'release'
+      with:
+        files: patch_*.xdelta
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload patch files as artifacts
       uses: actions/upload-artifact@v4
+      if: github.event_name == 'workflow_dispatch'
       with:
         name: patches
         path: patch_*.xdelta
