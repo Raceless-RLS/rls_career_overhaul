@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'career_modules_insurance', 'career_saveSystem'}
+M.dependencies = {'career_career', 'career_modules_insurance', 'career_saveSystem', 'career_modules_playerAttributes'}
 
 local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
 
@@ -547,6 +547,57 @@ local function getOldTime(raceName)
     end
 end
 
+local function raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
+    local raceName = getActivityName(data)
+    local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
+    local raceLabel = races[raceName].label
+    if mAltRoute then
+        raceLabel = raceLabel .. " (Alternative Route)"
+    end
+    if mHotlap == raceName then
+        raceLabel = raceLabel .. " (Hotlap)"
+    end
+    local timeMessage = string.format("New Time: %s\nOld Time: %s", formatTime(in_race_time), formatTime(oldTime))
+    local rewardMessage = string.format("XP: %d | Reward: $%.2f", xp, reward)
+    
+    local message = newBestTimeMessage .. raceLabel .. "\n" .. timeMessage .. "\n" .. rewardMessage
+    
+    if races[raceName].displaySpeed then
+        local speedMessage = string.format("Speed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
+        message = message .. "\n" .. speedMessage
+    end
+    
+    if races[raceName].hotlap then
+        local hotlapMessage = "Hotlap Started\n"
+        if mAltRoute then
+            hotlapMessage = hotlapMessage .. string.format("Target: %s", formatTime(races[raceName].altRoute.hotlap))
+        else
+            hotlapMessage = hotlapMessage .. string.format("Target: %s", formatTime(races[raceName].hotlap))
+        end
+        message = message .. "\n" .. hotlapMessage
+    end
+    
+    return message
+end
+
+local function rewardLabel(raceName, newBestTime)
+    local raceLabel = races[raceName].label
+    local timeLabel = formatTime(in_race_time)
+    local performanceLabel = newBestTime and "New Best Time!" or "Completion"
+    
+    local label = string.format("%s - %s: %s", raceLabel, performanceLabel, timeLabel)
+    
+    if mAltRoute then
+        label = label .. " (Alternative Route)"
+    end
+    
+    if mHotlap == raceName then
+        label = label .. " (Hotlap)"
+    end
+    
+    return label
+end
+
 local function payoutRace(data)
     -- This function handles the payout for a race.
     -- It calculates the reward based on the race's best time and the actual time taken.
@@ -572,7 +623,6 @@ local function payoutRace(data)
     end
     if data.event == "enter" and raceName == mActiveRace then
         mActiveRace = nil
-        local label = races[raceName].label .. " Event reward"
         local time = races[raceName].bestTime
         local reward = races[raceName].reward
         if mHotlap == raceName then
@@ -622,35 +672,26 @@ local function payoutRace(data)
             print("No new best time for" .. raceName)
             reward = reward / 2
         end
+        local xp = math.floor(reward / 20)
         career_modules_payment.reward({
             money = {
                 amount = reward
+            },
+            beamXP = {
+                amount = math.floor(xp / 10)
+            },
+            motorsport = {
+                amount = xp
+            },
+            bonusStars = {
+                amount = oldTime > races[raceName].bestTime and in_race_time < races[raceName].bestTime and 1 or 0
             }
-        }, {
-            label = label
-        })
-        local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
-        local raceLabel = races[raceName].label
-        if mAltRoute then
-            raceLabel = raceLabel .. " (Alternative Route)"
-        end
-        if mHotlap == raceName then
-            raceLabel = raceLabel .. " (Hotlap)"
-        end
-        local timeMessage = string.format("New Time: %s\nOld Time: %s", formatTime(in_race_time), formatTime(oldTime))
-        local rewardMessage = string.format("Reward: $%.2f", reward)
-        if races[raceName].hotlap then
-            local hotlapMessage = string.format("Hotlap Started\n", races[raceName].hotlap)
-            if mAltRoute then
-                hotlapMessage = hotlapMessage .. string.format("Target: %s", formatTime(races[raceName].altRoute.hotlap))
-            end
-        end
-        
-        local message = newBestTimeMessage .. raceLabel .. "\n" .. timeMessage .. "\n" .. rewardMessage
-        if races[raceName].displaySpeed then
-            local speedMessage = string.format("Speed: %.2f Mph", math.abs(be:getObjectVelocityXYZ(data.subjectID) * speedUnit))
-            message = message .. "\n" .. speedMessage
-        end
+            }, 
+            {
+                label = rewardLabel(raceName, newBestTime),
+                tags = {"gameplay", "reward", "mission"}
+            })
+        local message = raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
         ui_message(message, 20, "Reward")
         print("leaderboard:")
         printTable(leaderboard)
@@ -964,19 +1005,32 @@ local function Greenlight(data)
 end
 
 local function displayStagedMessage(race, times)
-    local message = string.format(
-        "Staged for %s.\nYour Best Time: %s\nTarget Time: %s\nPotential Reward: $%.2f",
-        race.label,
-        formatTime(times.bestTime or 0),
-        formatTime(race.bestTime or 0),
-        race.reward or 0
-    )
-    
+    local message
+
+    if times.bestTime > race.bestTime then
+        local potentialReward = raceReward(race.bestTime, race.reward, times.bestTime)  -- Calculate potential reward
+        message = string.format(
+            "Staged for %s.\nYour Best Time: %s\nBeat your time to win more than $%.2f!",
+            race.label,
+            formatTime(times.bestTime or 0),
+            potentialReward
+        )
+    else
+        message = string.format(
+            "Staged for %s.\nYour Best Time: %s\nTarget Time: %s \n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)",
+            race.label,
+            formatTime(times.bestTime or 0),
+            formatTime(race.bestTime or 0),
+            race.reward or 0
+        )
+    end
+
     if race.hotlap then
-        message = message .. string.format("\nHotlap: Your Best: %s | Target: %s | Reward: $%.2f",
+        local hotlapPotentialReward = raceReward(race.hotlap, race.reward, times.hotlapTime)  -- Calculate potential reward for hotlap
+        message = message .. string.format("\nHotlap: Your Best: %s | Target: %s \n(Beat this to win more than $%.2f)",
             formatTime(times.hotlapTime or 0),
             formatTime(race.hotlap or 0),
-            race.reward or 0
+            hotlapPotentialReward
         )
     end
 
@@ -985,16 +1039,18 @@ local function displayStagedMessage(race, times)
         if times.altRoute then
             message = message .. string.format(" Your Best: %s", formatTime(times.altRoute.bestTime or 0))
         end
-        message = message .. string.format(" | Target: %s | Reward: $%.2f",
+        local altRoutePotentialReward = raceReward(race.altRoute.bestTime, race.altRoute.reward, times.altRoute.bestTime)  -- Calculate potential reward for alt route
+        message = message .. string.format(" | Target: %s \n(Beat this to win more than $%.2f and 1 Bonus Star)",
             formatTime(race.altRoute.bestTime or 0),
-            race.altRoute.reward or 0
+            altRoutePotentialReward
         )
         
         if race.altRoute.hotlap then
-            message = message .. string.format("\nAlt Route Hotlap: Your Best: %s | Target: %s | Reward: $%.2f",
+            local altHotlapPotentialReward = raceReward(race.altRoute.hotlap, race.altRoute.reward, times.altRoute.hotlapTime)  -- Calculate potential reward for alt route hotlap
+            message = message .. string.format("\nAlt Route Hotlap: Your Best: %s | Target: %s \n(Beat this to win more than $%.2f)",
                 formatTime((times.altRoute and times.altRoute.hotlapTime) or 0),
                 formatTime(race.altRoute.hotlap or 0),
-                race.altRoute.reward or 0
+                altHotlapPotentialReward
             )
         end
     end
@@ -1019,9 +1075,10 @@ local function Yellowlight(data)
         print("Yellowlight: Vehicle speed =" .. vehicleSpeed)
 
         if vehicleSpeed > 5 then
-            print("Yellowlight: Vehicle too fast to stage")
-            local message = "You are too fast to stage.\n" .. "Please back up and slow down to stage."
-            displayMessage(message, 2)
+            if mActiveRace ~= raceName then
+                local message = "You are too fast to stage.\n" .. "Please back up and slow down to stage."
+                displayMessage(message, 2)
+            end
             staged = nil
         else
             if raceName == "drag" then
