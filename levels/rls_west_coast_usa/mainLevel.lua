@@ -404,13 +404,13 @@ local races = {
         label = "Right Small Crawl"
     },
     hillclimbl = {
-        bestTime = 20,
-        reward = 2000,
+        bestTime = 18,
+        reward = 1800,
         label = "Left Hill Climb"
     },
     hillclimbm = {
         bestTime = 15,
-        reward = 3000,
+        reward = 1500,
         label = "Middle Hill Climb"
     },
     hillclimbr = {
