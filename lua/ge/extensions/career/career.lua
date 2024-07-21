@@ -480,6 +480,11 @@ local function hasBoughtStarterVehicle()
   return boughtStarterVehicle
 end
 
+local function buyStarterVehicle()
+  boughtStarterVehicle = true
+  career_modules_vehicleShopping.generateVehicleList()
+end
+
 local function onVehicleAddedToInventory(data)
   -- if data.vehicleInfo is present, then the vehicle was bought
   if not boughtStarterVehicle and data.vehicleInfo then
@@ -526,6 +531,7 @@ M.sendCurrentSaveSlotData = sendCurrentSaveSlotData
 M.getAutosavesForSaveSlot = getAutosavesForSaveSlot
 M.requestPause = requestPause
 M.hasBoughtStarterVehicle = hasBoughtStarterVehicle
+M.buyStarterVehicle = buyStarterVehicle
 M.closeAllMenus = closeAllMenus
 M.isAutosaveEnabled = isAutosaveEnabled
 M.setAutosaveEnabled = setAutosaveEnabled

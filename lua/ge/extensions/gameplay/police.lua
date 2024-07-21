@@ -547,7 +547,7 @@ local function onUpdate(dt, dtSim)
         end
       -- release
       elseif pursuit.mode == -1 then
-        if (pursuit.timers.arrest <= -5 or not veh.role.flags.freeze) then
+        if veh and (pursuit.timers.arrest <= -5 or not veh.role.flags.freeze) then
           releaseVehicle(id, gameplay_traffic.showMessages)
         end
 

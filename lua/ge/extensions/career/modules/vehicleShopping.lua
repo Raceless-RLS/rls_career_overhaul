@@ -396,6 +396,7 @@ local function onClientStartMission()
   vehiclesInShop = nil
 end
 
+
 local function onAddedVehiclePartsToInventory(inventoryId, newParts)
 
   -- Update the vehicle parts with the actual parts that are installed (they differ from the pc file)
@@ -450,7 +451,7 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
   career_modules_inspectVehicle.setInspectScreen(false)
 
   extensions.hook("onVehicleAddedToInventory", {inventoryId = inventoryId, vehicleInfo = purchaseData and purchaseData.vehicleInfo})
-
+  career_career.buyStarterVehicle()
   if career_career.isAutosaveEnabled() then
     career_saveSystem.saveCurrent()
   end
