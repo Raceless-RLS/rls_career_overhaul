@@ -1051,6 +1051,14 @@ local function hasLicensePlate(inventoryId)
     end
 end
 
+local offenseNames = {
+    ["speeding"] = "Speeding",
+    ["reckless"] = "Reckless Driving",
+    ["intersection"] = "Failure to Yield",
+    ["racing"] = "Felony Speeding",
+    ["wrongWay"] = "Wrong Way"
+}
+
 local function onPursuitAction(vehId, data)
     if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
         if data.type == "arrest" then
@@ -1091,7 +1099,7 @@ local function onPursuitAction(vehId, data)
 
             local offenseNames = {}
             for offenseKey, offenseData in pairs(data.offenses) do
-                local offenseName = offenseData.name or offenseKey
+                local offenseName = offenseNames[offenseKey] or offenseKey
                 table.insert(offenseNames, offenseName)
             end
 

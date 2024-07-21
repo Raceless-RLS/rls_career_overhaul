@@ -529,20 +529,20 @@ function C:checkOffenses() -- tests for vechicle offenses for police
 
   if self.tracking.speedScore <= minScore then
     if self.speed >= max(16.7, self.tracking.speedLimit * 1.2) and not pursuit.offenses.speeding then -- at least 60 km/h
-      self:triggerOffense({key = 'speeding', value = self.speed, maxLimit = self.tracking.speedLimit, score = 100, name = "Speeding"})
+      self:triggerOffense({key = 'speeding', value = self.speed, maxLimit = self.tracking.speedLimit, score = 100})
     end
     if self.speed >= max(27.8, self.tracking.speedLimit * 2) and not pursuit.offenses.racing then -- at least 100 km/h
-      self:triggerOffense({key = 'racing', value = self.speed, maxLimit = self.tracking.speedLimit, score = 200, name = "Racing"})
+      self:triggerOffense({key = 'racing', value = self.speed, maxLimit = self.tracking.speedLimit, score = 200})
     end
   end
   if self.tracking.driveScore <= minScore and not pursuit.offenses.reckless then
-    self:triggerOffense({key = 'reckless', value = self.tracking.driveScore, minLimit = minScore, score = 250, name = "Reckless Driving"})
+    self:triggerOffense({key = 'reckless', value = self.tracking.driveScore, minLimit = minScore, score = 250})
   end
   if self.tracking.directionScore <= minScore and not pursuit.offenses.wrongWay then
-    self:triggerOffense({key = 'wrongWay', value = self.tracking.directionScore, minLimit = minScore, score = 150, name = "Wrong Way"})
+    self:triggerOffense({key = 'wrongWay', value = self.tracking.directionScore, minLimit = minScore, score = 150})
   end
   if self.tracking.signalFault and not pursuit.offenses.intersection then
-    self:triggerOffense({key = 'intersection', value = 1, minLimit = 1, score = 200, name = "Failed to yeild for intersection"})
+    self:triggerOffense({key = 'intersection', value = 1, minLimit = 1, score = 200})
   end
 
   for id, coll in pairs(self.collisions) do
@@ -556,11 +556,11 @@ function C:checkOffenses() -- tests for vechicle offenses for police
 
     if not coll.offense and validCollision then
       if veh.role.name == 'police' and coll.inArea then -- always triggers if police was hit
-        self:triggerOffense({key = 'hitPolice', value = id, score = 200, name = "Police Collision"})
+        self:triggerOffense({key = 'hitPolice', value = id, score = 200})
         pursuit.hitCount = pursuit.hitCount + 1
         coll.offense = true
       elseif pursuit.mode > 0 or coll.state == 'abandoned' then -- fleeing in a pursuit, or abandoning an accident
-        self:triggerOffense({key = 'hitTraffic', value = id, score = 100, name = "Traffic Collision"})
+        self:triggerOffense({key = 'hitTraffic', value = id, score = 100})
         pursuit.hitCount = pursuit.hitCount + 1
         coll.offense = true
       end
