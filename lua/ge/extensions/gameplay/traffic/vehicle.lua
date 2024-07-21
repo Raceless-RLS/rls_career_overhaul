@@ -547,22 +547,24 @@ function C:checkOffenses() -- tests for vechicle offenses for police
 
   for id, coll in pairs(self.collisions) do
     local veh = gameplay_traffic.getTrafficData()[id]
-    local validCollision = coll.dot >= 0.2 -- simple comparison to check if current vehicle is at fault for collision
-    if veh.role.targetId ~= nil and veh.role.targetId ~= self.id then validCollision = false end -- ignore collision if other vehicle is targeting a different vehicle
-    if self.isPerson then
-      local center = vec3(be:getObjectOOBBCenterXYZ(id)) -- for accuracy
-      validCollision = self.pos:z0():squaredDistance(center:z0()) < square(veh.width * 0.6) or coll.count >= 3 -- jumping on car, or multiple hits
-    end
+    if veh then
+      local validCollision = coll.dot >= 0.2 -- simple comparison to check if current vehicle is at fault for collision
+      if veh.role.targetId ~= nil and veh.role.targetId ~= self.id then validCollision = false end -- ignore collision if other vehicle is targeting a different vehicle
+      if self.isPerson then
+        local center = vec3(be:getObjectOOBBCenterXYZ(id)) -- for accuracy
+        validCollision = self.pos:z0():squaredDistance(center:z0()) < square(veh.width * 0.6) or coll.count >= 3 -- jumping on car, or multiple hits
+      end
 
-    if not coll.offense and validCollision then
-      if veh.role.name == 'police' and coll.inArea then -- always triggers if police was hit
-        self:triggerOffense({key = 'hitPolice', value = id, score = 200})
-        pursuit.hitCount = pursuit.hitCount + 1
-        coll.offense = true
-      elseif pursuit.mode > 0 or coll.state == 'abandoned' then -- fleeing in a pursuit, or abandoning an accident
-        self:triggerOffense({key = 'hitTraffic', value = id, score = 100})
-        pursuit.hitCount = pursuit.hitCount + 1
-        coll.offense = true
+      if not coll.offense and validCollision then
+        if veh.role.name == 'police' and coll.inArea then -- always triggers if police was hit
+          self:triggerOffense({key = 'hitPolice', value = id, score = 200})
+          pursuit.hitCount = pursuit.hitCount + 1
+          coll.offense = true
+        elseif pursuit.mode > 0 or coll.state == 'abandoned' then -- fleeing in a pursuit, or abandoning an accident
+          self:triggerOffense({key = 'hitTraffic', value = id, score = 100})
+          pursuit.hitCount = pursuit.hitCount + 1
+          coll.offense = true
+        end
       end
     end
   end
