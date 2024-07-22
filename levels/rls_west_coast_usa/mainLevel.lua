@@ -24,7 +24,7 @@ local staged = nil
 -- This is used to track the time in the race
 local in_race_time = 0
 
-local speedUnit = 2.2369362920544
+local speedUnit = 2.788942922
 local speedThreshold = 5
 local currCheckpoint = nil
 local mHotlap = nil
@@ -404,17 +404,17 @@ local races = {
         label = "Right Small Crawl"
     },
     hillclimbl = {
-        bestTime = 18,
+        bestTime = 13,
         reward = 1800,
         label = "Left Hill Climb"
     },
     hillclimbm = {
-        bestTime = 15,
+        bestTime = 10,
         reward = 1500,
         label = "Middle Hill Climb"
     },
     hillclimbr = {
-        bestTime = 12,
+        bestTime = 9,
         reward = 2000,
         label = "Right Hill Climb"
     },
