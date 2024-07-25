@@ -419,9 +419,9 @@ local races = {
         label = "Right Hill Climb"
     },
     bnyHill = {
-        bestTime = 30,
+        bestTime = 15,
         reward = 3000,
-        checkpoint = 3,
+        checkpoints = 2,
         label = "Bunny Hill Climb"
     },
     track = {
