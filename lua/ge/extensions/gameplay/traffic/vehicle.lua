@@ -547,7 +547,7 @@ function C:checkOffenses() -- tests for vechicle offenses for police
 
   for id, coll in pairs(self.collisions) do
     local veh = gameplay_traffic.getTrafficData()[id]
-    if veh then
+    if veh and veh.role then
       local validCollision = coll.dot >= 0.2 -- simple comparison to check if current vehicle is at fault for collision
       if veh.role.targetId ~= nil and veh.role.targetId ~= self.id then validCollision = false end -- ignore collision if other vehicle is targeting a different vehicle
       if self.isPerson then

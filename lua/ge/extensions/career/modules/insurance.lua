@@ -128,7 +128,7 @@ local gestures = {
         local everyGestures = plHistory.policyHistory[plPolicyData.id].policyScoreDecreases
         local lastGesture = everyGestures[#everyGestures]
         if plPolicyData.totalMetersDriven - math.max(data.distRef, lastGesture and lastGesture.happenedAt or 0) >
-            M.getPlPerkValue(plPolicyData.id, "renewal") then
+            M.getPlPerkValue(plPolicyData.id, "renewal")/2 then
             plPolicyData.bonus = math.floor(plPolicyData.bonus * (1 - bonusDecrease) * 100) / 100
             if plPolicyData.bonus < minimumPolicyScore then
                 plPolicyData.bonus = minimumPolicyScore
@@ -1122,7 +1122,7 @@ local function onPursuitAction(vehId, data)
                 }
             }, {
                 label = eventDescription,
-                tags = {"fine"}
+                tags = {"fine", "criminal"}
             })
             local combinedMessage = string.format(
                 "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f",
@@ -1192,16 +1192,16 @@ local function buildPolicyHistory()
     for _, claim in ipairs(plHistory.generalHistory.testDriveClaims) do
         local effectText = {{
             label = "Money",
-            value = -claim.amount
+            value = claim.amount and -claim.amount or 0
         }, {
             label = "New policy score",
-            value = claim.policyScore
+            value = claim.policyScore and claim.policyScore or 0
         }}
 
         table.insert(list, {
             time = os.date("%c", claim.time),
-            event = claim.reason,
-            policyName = availablePolicies[claim.policyId].name,
+            event = claim.reason and claim.reason or "Test drive",
+            policyName = availablePolicies[claim.policyId or 1].name,
             effect = effectText
         })
     end
@@ -1213,7 +1213,7 @@ local function buildPolicyHistory()
             for currency, amount in pairs(claim.deductible) do
                 table.insert(effectText, {
                     label = currency == "money" and "Money" or "Bonus star",
-                    value = -amount.amount
+                    value = amount.amount and -amount.amount or 0
                 })
             end
             if claim.freeRepair then
@@ -1224,14 +1224,14 @@ local function buildPolicyHistory()
             else
                 table.insert(effectText, {
                     label = "New policy score",
-                    value = claim.policyScore
+                    value = claim.policyScore and claim.policyScore or 0
                 })
             end
             table.insert(list, {
                 time = os.date("%c", claim.time),
                 event = translateLanguage("insurance.history.event.vehicleRepaired.name",
                     "insurance.history.event.vehicleRepaired.name", true) .. claim.vehInfo.niceName,
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end
@@ -1240,14 +1240,14 @@ local function buildPolicyHistory()
         if plPoliciesData[policyHistoryInfo.id].owned then
             local effectText = {{
                 label = "Money",
-                value = policyHistoryInfo.initialPurchase.forFree and -0 or
-                    -availablePolicies[policyHistoryInfo.id].initialBuyPrice
+                value = policyHistoryInfo.initialPurchase.forFree and 0 or
+                    -availablePolicies[policyHistoryInfo.id or 1].initialBuyPrice
             }}
             table.insert(list, {
                 time = os.date("%c", policyHistoryInfo.initialPurchase.purchaseTime),
                 event = translateLanguage("insurance.history.event.initialPurchase.name",
                     "insurance.history.event.initialPurchase.name", true),
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end
@@ -1262,7 +1262,7 @@ local function buildPolicyHistory()
                 time = os.date("%c", bonusDecreaseEvent.time),
                 event = translateLanguage("insurance.history.event.policScoreDecreased.name",
                     "insurance.history.event.policScoreDecreased.name", true),
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end
@@ -1277,7 +1277,7 @@ local function buildPolicyHistory()
                 time = os.date("%c", renewedPolicyEvent.time),
                 event = translateLanguage("insurance.history.event.policyRenewed.name",
                     "insurance.history.event.policyRenewed.name", true),
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end
@@ -1292,7 +1292,7 @@ local function buildPolicyHistory()
                 time = os.date("%c", coverageChangedEvent.time),
                 event = translateLanguage("insurance.history.event.coverageChanged.name",
                     "insurance.history.event.coverageChanged.name", true),
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end
@@ -1307,7 +1307,7 @@ local function buildPolicyHistory()
                 time = os.date("%c", freeRepairEvent.time),
                 event = translateLanguage("insurance.history.event.accidentForgiveness.name",
                     "insurance.history.event.accidentForgiveness.name", true),
-                policyName = availablePolicies[policyHistoryInfo.id].name,
+                policyName = availablePolicies[policyHistoryInfo.id or 1].name,
                 effect = effectText
             })
         end

@@ -203,19 +203,37 @@ local function onPursuitAction(vehId, data)
                 career_modules_payment.reward({
                     money = {
                         amount = pity
+                    },
+                    beamXP = {
+                        amount = math.floor(pity/20)
+                    },
+                    police = {
+                        amount = math.floor(pity/20)
+                    },
+                    specialized = {
+                        amount = math.floor(pity/20)
                     }
                 }, {
-                    label = "The suspect got away, Here is " .. -pity .. " for repairs",
+                    label = "The suspect got away, Here is " .. pity .. " for repairs",
                     tags = {"gameplay", "reward", "police"}
                 })
                 career_saveSystem.saveCurrent()
-                ui_message("The suspect got away, Here is " .. -pity .. " for repairs", 5, "Police", "info")
+                ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
                 if playerIsCop == false then
                     local reward = math.floor(150 * data.score) / 100
                     career_modules_payment.reward({
                         money = {
                             amount = reward
+                        },
+                        beamXP = {
+                            amount = math.floor(reward/20)
+                        },
+                        criminal = {
+                            amount = math.floor(reward/20)
+                        },
+                        adventurer = {
+                            amount = math.floor(reward/20)
                         }
                     }, {
                         label = "You sold your dashcam footage for $" .. reward,
@@ -235,6 +253,15 @@ local function onPursuitAction(vehId, data)
             career_modules_payment.reward({
                 money = {
                     amount = bonus
+                },
+                beamXP = {
+                    amount = math.floor(bonus/20)
+                },
+                police = {
+                    amount = math.floor(bonus/20)
+                },
+                specialized = {
+                    amount = math.floor(bonus/20)
                 }
             }, {
                 label = "Arrest Bonus",
