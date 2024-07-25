@@ -26,6 +26,7 @@ local in_race_time = 0
 
 local speedUnit = 2.788942922
 local speedThreshold = 5
+local lapCount = 0
 local currCheckpoint = nil
 local mHotlap = nil
 local mAltRoute = nil
@@ -158,6 +159,9 @@ end
 
 -- Function to read the leaderboard from the file
 local function loadLeaderboard()
+    if not isCareerModeActive() then
+        return
+    end
     local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
     local file = savePath .. '/' .. leaderboardFile
     local file = io.open(file, "r")
@@ -347,7 +351,7 @@ local function raceReward(x, y, z)
     if z == 0 then
         return 0
     end
-    local ratio = x / in_race_time
+    local ratio = x / z
     if ratio < 1 then
         local reward = math.floor(ratio * y * 100) / 100
         return reward
@@ -368,61 +372,71 @@ local races = {
     mudDrag = {
         bestTime = 9,
         reward = 2000,
-        checkpoint = 1,
-        label = "Mud Track"
+        label = "Mud Track",
+        type = {"motorsport", "adventurer"}
     },
     drag = {
         bestTime = 11,
         reward = 1500,
         checkpoints = 2,
         label = "Drag Strip",
-        displaySpeed = true
+        displaySpeed = true,
+        type = {"motorsport"}
     },
     rockcrawls = {
         bestTime = 35,
         reward = 2500,
-        label = "Left Rock Crawl"
+        label = "Left Rock Crawl",
+        type = {"crawl", "motorsport"}
     },
     rockcrawlm = {
         bestTime = 40,
         reward = 5500,
-        label = "Middle Rock Crawl"
+        label = "Middle Rock Crawl",
+        type = {"crawl", "motorsport"}
     },
     rockcrawll = {
         bestTime = 30,
         reward = 2000,
-        label = "Right Rock Crawl"
+        label = "Right Rock Crawl",
+        type = {"crawl", "motorsport"}
     },
     smallCrawll = {
         bestTime = 20,
         reward = 1500,
-        label = "Left Small Crawl"
+        label = "Left Small Crawl",
+        type = {"crawl", "motorsport"}
     },
     smallCrawlr = {
         bestTime = 20,
         reward = 2000,
-        label = "Right Small Crawl"
+        label = "Right Small Crawl",
+        type = {"crawl", "motorsport"}
     },
     hillclimbl = {
         bestTime = 13,
         reward = 1800,
-        label = "Left Hill Climb"
+        label = "Left Hill Climb",
+        type = {"adventurer"}
     },
     hillclimbm = {
         bestTime = 10,
         reward = 1500,
-        label = "Middle Hill Climb"
+        label = "Middle Hill Climb",
+        type = {"adventurer"}
     },
     hillclimbr = {
         bestTime = 9,
         reward = 2000,
-        label = "Right Hill Climb"
+        label = "Right Hill Climb",
+        type = {"adventurer"}
     },
     bnyHill = {
-        bestTime = 15,
-        reward = 3000,
+        bestTime = 20,
+        reward = 2000,
         checkpoints = 2,
-        label = "Bunny Hill Climb"
+        label = "Bunny Rock Crawl",
+        type = {"crawl", "motorsport"}
     },
     track = {
         bestTime = 140,
@@ -438,19 +452,22 @@ local races = {
             hotlap = 95,
             altCheckpoints = {0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17},
             altInfo = "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
-        }
+        },
+        type = {"motorsport", "apexRacing"}
     },
     dirtCircuit = {
         bestTime = 65,
         reward = 2000,
         checkpoints = 10,
         hotlap = 55,
-        label = "Dirt Circuit"
+        label = "Dirt Circuit",
+        type = {"motorsport", "apexRacing"}
     },
     testTrack = {
         bestTime = 5.5,
         reward = 1000,
-        label = "Test Track"
+        label = "Test Track",
+        type = {"motorsport"}
     }
 }
 
@@ -558,7 +575,10 @@ local function raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
         raceLabel = raceLabel .. " (Hotlap)"
     end
     local timeMessage = string.format("New Time: %s\nOld Time: %s", formatTime(in_race_time), formatTime(oldTime))
-    local rewardMessage = string.format("XP: %d | Reward: $%.2f", xp, reward)
+    local rewardMessage = string.format("XP: %d | Reward: $%.2f", xp, reward)   
+    if races[raceName].hotlap then
+        rewardMessage = rewardMessage .. string.format("\nLap Multiplier: %.2f", 1 + (lapCount - 1)/10)
+    end
     
     local message = newBestTimeMessage .. raceLabel .. "\n" .. timeMessage .. "\n" .. rewardMessage
     
@@ -672,25 +692,33 @@ local function payoutRace(data)
             print("No new best time for" .. raceName)
             reward = reward / 2
         end
+        if races[raceName].hotlap then
+            reward = reward * (1 + (lapCount - 1)/10)
+        end
         local xp = math.floor(reward / 20)
-        career_modules_payment.reward({
+        local totalReward = {
             money = {
                 amount = reward
             },
             beamXP = {
                 amount = math.floor(xp / 10)
             },
-            motorsport = {
-                amount = xp
-            },
             bonusStars = {
-                amount = oldTime > races[raceName].bestTime and in_race_time < races[raceName].bestTime and 1 or 0
+                amount = (oldTime == 0 or oldTime > races[raceName].bestTime) and in_race_time < races[raceName].bestTime and 1 or 0
             }
-            }, 
-            {
-                label = rewardLabel(raceName, newBestTime),
-                tags = {"gameplay", "reward", "mission"}
-            })
+        }
+        for _, type in ipairs(races[raceName].type) do
+            totalReward[type] = {
+                amount = xp
+            }
+        end
+        local reason =  {
+            label = rewardLabel(raceName, newBestTime),
+            tags = {"gameplay", "reward", "mission"}
+        }
+        print("totalReward:")
+        printTable(totalReward)
+        career_modules_payment.reward(totalReward, reason)
         local message = raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
         ui_message(message, 20, "Reward")
         print("leaderboard:")
@@ -848,6 +876,7 @@ local function exitCheckpoint(data)
     end
     if data.event == "enter" and mActiveRace then
         setActiveLight(mActiveRace, "red")
+        lapCount = 0
         mActiveRace = nil
         timerActive = false
         mAltRoute = nil
@@ -972,6 +1001,7 @@ local function Greenlight(data)
             playCheckpointSound()
             print("Greenlight: Final checkpoint reached")
             timerActive = false
+            lapCount = lapCount + 1
             local reward = payoutRace(data)
             print("Greenlight: Race payout =" .. reward)
             currCheckpoint = nil
@@ -1005,53 +1035,36 @@ local function Greenlight(data)
 end
 
 local function displayStagedMessage(race, times)
-    local message
+    printTable(race)
+    printTable(times)
+    local message = string.format("Staged for %s.\n", race.label)
 
-    if times.bestTime and times.bestTime > race.bestTime then
-        local potentialReward = raceReward(race.bestTime, race.reward, times.bestTime)  -- Calculate potential reward
-        message = string.format(
-            "Staged for %s.\nYour Best Time: %s\nBeat your time to win more than $%.2f!",
-            race.label,
-            formatTime(times.bestTime or 0),
-            potentialReward
-        )
-    else
-        message = string.format(
-            "Staged for %s.\nYour Best Time: %s\nTarget Time: %s \n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)",
-            race.label,
-            formatTime(times.bestTime or 0),
-            formatTime(race.bestTime or 0),
-            race.reward or 0
-        )
+    local function addTimeInfo(bestTime, targetTime, reward, label)
+        if not bestTime then
+            return string.format("%s Target Time: %s\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)",
+                label, formatTime(targetTime), reward)
+        elseif bestTime > targetTime then
+            return string.format("%sYour Best: %s | Target: %s\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)",
+                label, formatTime(bestTime), formatTime(targetTime), reward)
+        else
+            local potentialReward = raceReward(targetTime, reward, bestTime)
+            return string.format("%sYour Best: %s\n(Improve to earn atleast $%.2f)",
+                label, formatTime(bestTime), potentialReward)
+        end
     end
 
+    message = message .. addTimeInfo(times.bestTime, race.bestTime, race.reward, "")
+
     if race.hotlap then
-        local hotlapPotentialReward = raceReward(race.hotlap, race.reward, times.hotlapTime)  -- Calculate potential reward for hotlap
-        message = message .. string.format("\nHotlap: Your Best: %s | Target: %s \n(Beat this to win more than $%.2f)",
-            formatTime(times.hotlapTime or 0),
-            formatTime(race.hotlap or 0),
-            hotlapPotentialReward
-        )
+        message = message .. "\n\n" .. addTimeInfo(times.hotlapTime, race.hotlap, race.reward, "Hotlap: ")
     end
 
     if race.altRoute then
-        message = message .. "\n\nAlternative Route:"
-        if times.altRoute then
-            message = message .. string.format(" Your Best: %s", formatTime(times.altRoute.bestTime or 0))
-        end
-        local altRoutePotentialReward = raceReward(race.altRoute.bestTime, race.altRoute.reward, times.altRoute.bestTime)  -- Calculate potential reward for alt route
-        message = message .. string.format(" | Target: %s \n(Beat this to win more than $%.2f and 1 Bonus Star)",
-            formatTime(race.altRoute.bestTime or 0),
-            altRoutePotentialReward
-        )
+        message = message .. "\n\nAlternative Route:\n"
+        message = message .. addTimeInfo(times.altRoute and times.altRoute.bestTime, race.altRoute.bestTime, race.altRoute.reward, "")
         
         if race.altRoute.hotlap then
-            local altHotlapPotentialReward = raceReward(race.altRoute.hotlap, race.altRoute.reward, times.altRoute.hotlapTime)  -- Calculate potential reward for alt route hotlap
-            message = message .. string.format("\nAlt Route Hotlap: Your Best: %s | Target: %s \n(Beat this to win more than $%.2f)",
-                formatTime((times.altRoute and times.altRoute.hotlapTime) or 0),
-                formatTime(race.altRoute.hotlap or 0),
-                altHotlapPotentialReward
-            )
+            message = message .. "\n\n" .. addTimeInfo(times.altRoute and times.altRoute.hotlapTime, race.altRoute.hotlap, race.altRoute.reward, "Alt Route Hotlap: ")
         end
     end
 
@@ -1081,6 +1094,10 @@ local function Yellowlight(data)
             end
             staged = nil
         else
+            activeAssets:hideAllAssets()
+            lapCount = 0
+            mHotlap = nil
+
             if raceName == "drag" then
                 initDisplays()
                 resetDisplays()
@@ -1122,7 +1139,10 @@ local function Finishline(data)
     local raceName = getActivityName(data)
     if data.event == "enter" and mActiveRace == raceName then
         playCheckpointSound()
+        print("currCheckpoint: " .. tostring(currCheckpoint))
         if currCheckpoint then
+            print("currCheckpoint is not nil")
+            print("races[raceName].checkpoints: " .. tostring(races[raceName].checkpoints))
             if currCheckpoint + 1 == races[raceName].checkpoints then
                 timerActive = false
                 currCheckpoint = nil
