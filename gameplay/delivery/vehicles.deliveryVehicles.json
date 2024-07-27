@@ -5,7 +5,7 @@
     "type":"vehicle",
     "unlockTag":"junkerVeh",
     "filterName":"Junker Car",
-    "baseReward":75,
+    "baseReward":150,
     "rewardPerKm":250,
     "filter": {
       "whiteList":{"Years": {"min":1900, "max":2005}, "Mileage":{"min":300000000, "max":650000000}, "Value":{"min":2000, "max":50000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":500}},
@@ -22,7 +22,7 @@
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Car",
-    "baseReward":75,
+    "baseReward":150,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Mileage":{"min":35000000, "max":150000000}, "Value":{"min":10000, "max":80000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":3000}},
@@ -37,7 +37,7 @@
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Police Car",
-    "baseReward":75,
+    "baseReward":150,
     "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Type":["Car"], "Config Type":["Police"]},
@@ -59,7 +59,7 @@
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Ambulance",
-    "baseReward":125,
+    "baseReward":225,
     "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Name":["D-Series D45 Ambulance (A)","H-Series H45 Ambulance (A)"]},
@@ -83,7 +83,7 @@
     "type":"vehicle",
     "unlockTag":"largeVeh",
     "filterName":"Large Truck",
-    "baseReward":500,
+    "baseReward":100,
     "rewardPerKm":450,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":80000000, "max":500000000}},
@@ -100,7 +100,7 @@
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Car",
-    "baseReward":75,
+    "baseReward":175,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":2000, "max":2025}, "Mileage":{"min":5000, "max":80000}, "Value":{"min":10000, "max":100000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":300}},
@@ -112,7 +112,7 @@
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Truck",
-    "baseReward":500,
+    "baseReward":1000,
     "rewardPerKm":500,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":5000, "max":80000}},
@@ -128,7 +128,7 @@
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Customized Car",
-    "baseReward":200,
+    "baseReward":400,
     "rewardPerKm":350,
     "filter": {
       "whiteList":{"Years": {"min":1950}, "Mileage":{"min":2000000, "max":200000000}, "Value":{"min":30000},"Type":["Car"], "Config Type":["Custom"]},
@@ -143,7 +143,7 @@
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Expensive Car",
-    "baseReward":200,
+    "baseReward":400,
     "rewardPerKm":450,
     "filter": {
       "whiteList":{"Years": {"min":1900}, "Mileage":{"min":1000000, "max":50000000}, "Value":{"min":90000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":3}},
@@ -159,7 +159,7 @@
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Oldtimer",
-    "baseReward":100,
+    "baseReward":200,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1900, "max":1980}, "Value":{"min":20000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":2}},
