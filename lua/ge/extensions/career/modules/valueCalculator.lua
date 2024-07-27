@@ -10,11 +10,24 @@ local lossPerKmRelative = 0.0000025
 local scrapValueRelative = 0.50
 
 local function getVehicleMileage(vehicle)
+  if not vehicle or not vehicle.config or not vehicle.config.parts or not vehicle.partConditions then
+    log("E", "valueCalculator", "Invalid vehicle data in getVehicleMileage")
+    return 0 -- Return a default value
+  end
+
   for slot, partName in pairs(vehicle.config.parts) do
     if partName == vehicle.config.mainPartName then
-      return vehicle.partConditions[partName]["odometer"]
+      if vehicle.partConditions[partName] and vehicle.partConditions[partName]["odometer"] then
+        return vehicle.partConditions[partName]["odometer"]
+      else
+        log("W", "valueCalculator", "Odometer not found for main part")
+        return 0 -- Return a default value
+      end
     end
   end
+
+  log("W", "valueCalculator", "Main part not found in vehicle config")
+  return 0 -- Return a default value if main part is not found
 end
 
 local function getDepreciation(year, power)
@@ -98,7 +111,7 @@ local function getPartDifference(originalParts, newParts, changedSlots)
 end
 
 local function getPartValue(part)
-  return getAdjustedVehicleBaseValue(part.value, {age = 2023 - part.year, mileage = part.partCondition["odometer"]})
+  return part.value
 end
 
 -- IMPORTANT the pc file of a config does not contain the correct list of parts in the vehicle. there might be old unused slots/parts there and there might be slots/parts missing that are in the vehicle
@@ -128,8 +141,6 @@ local function getVehicleValue(configInfo, vehicle)
     sumPartValues = sumPartValues -  1.15 * getPartValue(part)
   end
   endValue = math.max(configBaseValue, sumPartValues)
-  endValue = getAdjustedVehicleBaseValue(endValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023), power = configInfo.Power})
-
   return endValue
 end
 
