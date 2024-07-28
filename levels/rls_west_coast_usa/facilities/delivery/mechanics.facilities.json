@@ -10,7 +10,7 @@
       "trailerSpotNames":["belascoGarage_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -31,12 +31,6 @@
           "type":"parcelReceiver",
           "logisticTypes":["parcel"],
           "min":0,
-          "max":1,
-          "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
           "max":1,
           "interval":60
         },
@@ -48,7 +42,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -57,9 +51,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
-        },
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
+        }
+      ]
     },
     {
       "id":"fastAutomotive",
@@ -71,7 +65,7 @@
       "trailerSpotNames":["fastAutomotive_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair","vehLargeTruck"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -94,13 +88,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
         {
           "type":"vehOfferProvider",
           "interval":60,
@@ -108,7 +96,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -117,10 +105,10 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"exoticVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-        },
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
+        }
 
-      ],
+      ]
 
     },
     {
@@ -133,7 +121,7 @@
       "trailerSpotNames":["exhaustShop_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -156,12 +144,6 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
         },
 
         {
@@ -171,7 +153,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -180,7 +162,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -189,9 +171,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         }
-      ],
+      ]
 
     },
     {
@@ -204,7 +186,7 @@
       "trailerSpotNames":["torresTires_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -227,13 +209,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
 
         {
           "type":"vehOfferProvider",
@@ -242,7 +218,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -251,7 +227,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -260,9 +236,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-        },
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
+        }
+      ]
 
     },
     {
@@ -275,7 +251,7 @@
       "trailerSpotNames":["smashAutoRepairs_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -298,13 +274,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
 
         {
           "type":"vehOfferProvider",
@@ -313,7 +283,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -322,7 +292,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -331,9 +301,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-        },
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
+        }
+      ]
 
     },
     {
@@ -346,7 +316,7 @@
       "trailerSpotNames":["jerryRigs_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts", "vehNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -369,13 +339,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
 
         {
           "type":"vehOfferProvider",
@@ -384,7 +348,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -393,7 +357,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -402,9 +366,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-        },
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
+        }
+      ]
 
     },
     {
@@ -417,7 +381,7 @@
       "trailerSpotNames":["shuffleboardLogistics_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["parcel","mechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished", "vehDeliveryAmbulance","vehLargeTruck","vehLargeTruckNeedsRepair"],
-      "logisticTypesReceived":["mechanicalParts", "parcel", "food","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["mechanicalParts","vehNeedsRepair","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -440,13 +404,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
         {
           "type":"vehOfferProvider",
           "interval":60,
@@ -454,7 +412,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":300},
           "filter":"ambulanceFleetVehFilter",
-          "logisticTypes":["vehDeliveryAmbulance"],
+          "logisticTypes":["vehDeliveryAmbulance"]
         },
         {
           "type":"vehOfferProvider",
@@ -463,7 +421,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":300},
           "filter":"largeVehFilter",
-          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"]
         },
         {
           "type":"vehOfferProvider",
@@ -472,13 +430,11 @@
           "max": 1,
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
-          "logisticTypes":["vehLargeTruck"],
-        },
-      ],
+          "logisticTypes":["vehLargeTruck"]
+        }
+      ]
 
     },
-
-    // Dealerships
     {
       "id":"quarrysideAutoSales",
       "name":"Quarryside Auto Sales",
@@ -489,7 +445,7 @@
       "trailerSpotNames":["quarrysideAutoSales_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehRepairFinished"],
-      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","vehRepairFinished"],
+      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -513,20 +469,13 @@
           "max":1,
           "interval":60
         }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
-        {
           "type":"vehOfferProvider",
           "interval":60,
           "min":0,
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"junkerVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate","vehRepairFinished"]
         },
         {
           "type":"vehOfferProvider",
@@ -535,10 +484,10 @@
           "max": 3,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
-        },
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
+        }
 
-      ],
+      ]
 
 
     },
@@ -552,7 +501,7 @@
       "trailerSpotNames":["belascoAuto_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
-      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
+      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts", "trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -575,12 +524,6 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
         },
 
 
@@ -591,7 +534,7 @@
           "max": 3,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -600,10 +543,9 @@
           "max": 3,
           "offerDuration":{"min":300,"max":900},
           "filter":"fleetVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
-        },
-
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
+        }
+      ]
 
       
     },
@@ -617,7 +559,7 @@
       "trailerSpotNames":["jeffersonMotors_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate","vehDeliveryPolice"],
-      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
+      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts","trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -640,13 +582,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
 
 
         {
@@ -656,7 +592,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"fleetVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -665,7 +601,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"smallVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -674,10 +610,10 @@
           "max": 1,
           "offerDuration":{"min":300,"max":300},
           "filter":"policeFleetVehFilter",
-          "logisticTypes":["vehDeliveryPolice"],
-        },
+          "logisticTypes":["vehDeliveryPolice"]
+        }
 
-      ],
+      ]
 
     },
     {
@@ -690,7 +626,7 @@
       "trailerSpotNames":["richsMotorCompany_trailer"],
       "sitesFile":"mechanics.sites.json",
       "logisticTypesProvided":["mechanicalParts","rareMechanicalParts","vehNeedsRepair","vehForPrivate"],
-      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" "parcel", "food","trailer","vehRepairFinished"],
+      "logisticTypesReceived":["mechanicalParts","rareMechanicalParts" ,"trailer","vehRepairFinished"],
       "logisticMaxItems":20,
       "logisticGenerators":[
         {
@@ -713,13 +649,7 @@
           "min":0,
           "max":1,
           "interval":60
-        }, {
-          "type":"parcelReceiver",
-          "logisticTypes":["food"],
-          "min":-1,
-          "max":1,
-          "interval":60
-        },
+        }, 
 
 
 
@@ -730,7 +660,7 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"customizedVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
         },
         {
           "type":"vehOfferProvider",
@@ -739,9 +669,9 @@
           "max": 1,
           "offerDuration":{"min":300,"max":900},
           "filter":"exoticVehFilter",
-          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
-        },
-      ],
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"]
+        }
+      ]
 
     }
   ]
