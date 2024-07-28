@@ -98,9 +98,9 @@ end
 
 local parcelItemMoneyMultiplier = 1
 local function getMoneyRewardForParcelItem(item, distance)
-  local basePrice = item.slots * 1.1 --math.sqrt(item.slots) / 1
-  local distanceExp = distance / 50 --3 + math.sqrt(item.slots)/100
-  local pricePerM = item.weight * 1.2 --7 + math.pow(item.weight, 0.9)
+  local basePrice = item.slots * 0.6 --math.sqrt(item.slots) / 1
+  local distanceExp = distance / 150 --3 + math.sqrt(item.slots)/100
+  local pricePerM = item.weight * 0.3 --7 + math.pow(item.weight, 0.9)
   local modMultiplier = 0.9 + 0.1 * #item.modifiers
   for _, mod in ipairs(item.modifiers) do
     modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
@@ -239,9 +239,32 @@ local function generateItemWithDuplicates(template, origin, destination, timeOff
   return duplicateAmount
 end
 
+
+
+local function printTable(t, indent)
+  -- This function prints all parts of a table with labels.
+  -- It recursively prints nested tables with indentation.
+  --
+  -- Parameters:
+  --   t (table): The table to print.
+  --   indent (number, optional): The current level of indentation. Defaults to 0.
+  indent = indent or 0
+  local indentStr = string.rep("  ", indent)
+
+  for k, v in pairs(t) do
+      if type(v) == "table" then
+          print(indentStr .. tostring(k) .. ":")
+          printTable(v, indent + 1)
+      else
+          print(indentStr .. tostring(k) .. ": " .. tostring(v))
+      end
+  end
+end
+
+
 local function triggerParcelGenerator(fac, generator, timeOffset)
   -- how many new items should be generated?
-  local typeAmount = math.random(5, 8)
+  local typeAmount = math.random(generator.min, generator.max)
   -- proceed only if items are to be generated.
   if typeAmount > 0 then
     local remainingAttempts = 100
@@ -269,11 +292,12 @@ local function triggerParcelGenerator(fac, generator, timeOffset)
         elseif generator.type == "parcelReceiver" then
           local destinationPs = randomFromList(fac.dropOffSpots)
           destination = {type = "facilityParkingspot", facId = fac.id, psPath = destinationPs:getPath()}
-
           local originFac = selectFacilityByLookupKeyByType(template.logisticTypesLookup, "logisticTypesProvidedLookup", fac.id)
+          if originFac == nil then
+            goto continue
+          end
           local originPs = randomFromList(originFac.pickUpSpots)
           origin = {type = "facilityParkingspot", facId = originFac.id, psPath = originPs:getPath()}
-
         end
         profilerPopEvent("Origin and Destination")
         local itemsGeneratedAmount = generateItemWithDuplicates(template, origin, destination, timeOffset, generator.name)
@@ -284,9 +308,11 @@ local function triggerParcelGenerator(fac, generator, timeOffset)
         -- log("E","","Could not generate items after 100 tries: " .. fac.id.. " -> " .. dumps(generator))
         return
       end
+      ::continue::    
     end
   end
 end
+
 
 
 --------------------------------------
@@ -478,7 +504,7 @@ M.triggerGenerator = triggerGenerator
 
 
 local timer = 0
-local interval = 30  -- Interval in seconds
+local interval = 60  -- Interval in seconds
 
 
 local function onUpdate(dtSim)

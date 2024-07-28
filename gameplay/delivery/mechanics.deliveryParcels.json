@@ -10,7 +10,7 @@
     "duplicationChance":[0.5,1,0.5,0.25],
     "offerDuration":180,
     "weight":[1,5,10,20,30,50],
-    "modChance":{"timed":0.0},
+    "modChance":{"timed":0.0}
   },
   "mechanicalToolboxBig": {
     "names":["Tool Shelf","Engine Parts", "Suspension Kit","Multi-Set of Brakes","Special Vehicle Parts"],
@@ -20,9 +20,9 @@
     "rarity":1,
     "worth":0.3,
     "generationChance":0.15,
-    "duplicationChance":[1],
+    "duplicationChance":[1,1,1,1,1],
     "offerDuration":180,
-    "weight":[25,40,50,75],
+    "weight":[25,40,50,75]
   },
   "rareMechanicalBigParts": {
     "names":["Body Kit", "Replacement Engine", "Vehicle Frame Parts", "Vehicle Glassware" ],
@@ -32,9 +32,10 @@
     "rarity":3,
     "worth":2.8,
     "generationChance":0.2,
+    "duplicationChance":[1,1,1,1],
     "offerDuration":180,
     "weight":[200,250,350,400,450,500,750],
-    "modChance":{"timed":0.1},
-  },
+    "modChance":{"timed":0.1}
+  }
 
 }
