@@ -182,14 +182,6 @@
           "min":-1,
           "max": 1,
           "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
           "filter":"mediumCratePlanksTrailers",
           "logisticTypes":["trailerDeliveryConstructionMaterials"],
         }, {
@@ -244,22 +236,6 @@
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 2,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
         }, {
           "type":"vehOfferProvider",
           "interval":60,
@@ -320,22 +296,6 @@
           "min":-1,
           "max": 1,
           "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
           "filter":"bigConstructionMaterials",
           "logisticTypes":["trailerDeliveryConstructionMaterials"],
         }
@@ -355,13 +315,7 @@
       "logisticTypesProvided":[],
       "logisticTypesReceived":["parcel", "food"],
       "logisticGenerators":[
-        {
-          "type":"parcelReceiver",
-          "logisticTypes":["parcel"],
-          "min":0,
-          "max":1,
-          "interval":60
-        }, {
+ {
           "type":"parcelReceiver",
           "logisticTypes":["food"],
           "min":-1,
@@ -382,14 +336,7 @@
       "showIncomingCargo":true,
       "logisticTypesProvided":["parcel","industrial"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
-      "logisticGenerators":[
-        {
-          "type":"parcelReceiver",
-          "logisticTypes":["parcel"],
-          "min":-3,
-          "max":1,
-          "interval":60
-        }, {
+      "logisticGenerators":[{
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
@@ -446,22 +393,6 @@
           "min":-1,
           "max": 1,
           "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
           "filter":"bigConstructionMaterials",
           "logisticTypes":["trailerDeliveryConstructionMaterials"],
         }
@@ -509,22 +440,6 @@
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        }, {
-          "type":"vehOfferProvider",
-          "interval":60,
-          "min":-1,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
         }, {
           "type":"vehOfferProvider",
           "interval":60,

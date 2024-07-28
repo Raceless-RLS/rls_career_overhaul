@@ -32,65 +32,6 @@
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
         },
-
-        //small trailers
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallEmptyTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallFurnitureTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
-        },
-
-        //medium trailers
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumEmptyTrailer",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumFurnitureTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
-        },
-
         //large trailers
         {
           "type":"trailerOfferProvider",
@@ -183,27 +124,6 @@
           "filter":"mediumCratePlanksTrailers",
           "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
         },
-
-        //large trailers
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"bigConstructionMaterials",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        },
-        {
-          "type":"bigEmptyTrailers",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"bigConstructionMaterials",
-          "logisticTypes":["trailerDeliveryConstructionMaterials"],
-        },
-
       ]
     },
     {
@@ -239,65 +159,6 @@
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
         },
-
-        //small trailers
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallEmptyTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallFurnitureTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"smallCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
-        },
-
-        //medium trailers
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumEmptyTrailer",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumFurnitureTrailers",
-          "logisticTypes":["trailerDeliveryResidential"],
-        },
-        {
-          "type":"trailerOfferProvider",
-          "interval":60,
-          "min": 0,
-          "max": 1,
-          "offerDuration":{"min":300,"max":600},
-          "filter":"mediumCratePlanksTrailers",
-          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
-        },
-
         //large trailers
         {
           "type":"trailerOfferProvider",
