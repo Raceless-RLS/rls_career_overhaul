@@ -77,13 +77,19 @@
       "trailerSpotNames":["construction_city_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["industrial","trailerDeliveryConstructionMaterials","vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"],
       "logisticGenerators":[
          {
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":0,
           "max":1,
           "interval":60
         },{
@@ -98,7 +104,7 @@
           "type":"vehOfferProvider",
           "interval":60,
           "min":0,
-          "max": 1,
+          "max": 2,
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"]
@@ -106,7 +112,7 @@
           "type":"vehOfferProvider",
           "interval":60,
           "min":-1,
-          "max": 1,
+          "max": 2,
           "offerDuration":{"min":300,"max":600},
           "filter":"smallCratePlanksTrailers",
           "logisticTypes":["trailerDeliveryConstructionMaterials"]
@@ -114,7 +120,7 @@
           "type":"vehOfferProvider",
           "interval":60,
           "min":-1,
-          "max": 1,
+          "max": 2,
           "offerDuration":{"min":300,"max":600},
           "filter":"mediumCratePlanksTrailers",
           "logisticTypes":["trailerDeliveryConstructionMaterials"]
@@ -146,7 +152,14 @@
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
-          "max":2,
+          "max":5,
+          "interval":60
+        },
+        {
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":1,
+          "max":3,
           "interval":60
         },{
           "type":"vehOfferProvider",
@@ -199,8 +212,14 @@
         {
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
-          "min":-0.5,
-          "max":1.5,
+          "min":1,
+          "max":2,
+          "interval":60
+        }, {
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":1,
+          "max":2,
           "interval":60
         },{
           "type":"vehOfferProvider",
@@ -248,7 +267,13 @@
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
-          "max":1.5,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":1,
+          "max":2,
           "interval":60
         },{
           "type":"vehOfferProvider",
@@ -310,12 +335,19 @@
       "trailerSpotNames":["lensflareLogistics_trailer"],
       "sitesFile":"mixed.sites.json",
       "showIncomingCargo":true,
-      "logisticTypesProvided":["parcel","industrial"],
+      "logisticTypesProvided":["industrial"],
       "logisticTypesReceived":["industrial","parcel","trailerDeliveryConstructionMaterials","vehLargeTruck"],
-      "logisticGenerators":[{
+      "logisticGenerators":[
+        {
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":0,
           "max":1,
           "interval":60
         }
@@ -339,7 +371,13 @@
           "type":"parcelReceiver",
           "logisticTypes":["industrial"],
           "min":-0.5,
-          "max":1.5,
+          "max":1,
+          "interval":60
+        },{
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":0,
+          "max":1,
           "interval":60
         },{
           "type":"vehOfferProvider",
@@ -387,6 +425,12 @@
           "logisticTypes":["industrial"],
           "min":-0.5,
           "max":1,
+          "interval":60
+        },{
+          "type":"parcelProvider",
+          "logisticTypes":["industrial"],
+          "min":1,
+          "max":3,
           "interval":60
         },{
           "type":"vehOfferProvider",
