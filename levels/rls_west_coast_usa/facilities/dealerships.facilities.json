@@ -226,7 +226,277 @@
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
       "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"frameDealership",
+      "name":"Rollers",
+      "description":"Rollers - The perfect start to your build",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["frameDealership_area","frameDealership_icon", 30]],
+      "parkingSpotNames":["frameDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 0,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
     },
+    {
+      "id":"jdmDealership",
+      "name":"JDM Imports",
+      "description":"JDM Imports",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["jdmDealership_area","jdmDealership_icon", 30]],
+      "parkingSpotNames":["jdmDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"edmDealership",
+      "name":"EDM Imports",
+      "description":"EDM Imports",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["edmDealership_area","edmDealership_icon", 30]],
+      "parkingSpotNames":["edmDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"rdmDealership",
+      "name":"Other Imports",
+      "description":"Other Imports",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["rdmDealership_area","rdmDealership_icon", 30]],
+      "parkingSpotNames":["rdmDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"illegalDealership",
+      "name":"Illegal Imports",
+      "description":"Illegal Imports",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["illegalDealership_area","illegalDealership_icon", 30]],
+      "parkingSpotNames":["illegalDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"rallyDealership",
+      "name":"Rocking Rally",
+      "description":"rally cars",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["rallyDealership_area","rallyDealership_icon", 30]],
+      "parkingSpotNames":["rallyDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"dragDealership",
+      "name":"Clockwise Drag Racing",
+      "description":"drag cars",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["dragDealership_area","dragDealership_icon", 30]],
+      "parkingSpotNames":["dragDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"offroadDealership",
+      "name":"off road",
+      "description":"off road",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["offroadDealership_area","offroadDealership_icon", 30]],
+      "parkingSpotNames":["offroadDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"discountedDealership",
+      "name":"Trusted Auto Sales",
+      "description":"Discounted cars",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["discountDealership_area","discountDealership_icon", 30]],
+      "parkingSpotNames":["discountDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+        }
+      ],
+      "fees": 1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
     {
       "id":"fastAutomotiveDealership",
       "name":"Fast Automotive",
@@ -256,11 +526,104 @@
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
       "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"policeDealership",
+      "name":"Police Dealership",
+      "description":"Police Dealership - Purchase Police Vehicles here",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["policeDealer_area","policeDealer_icon", 30]],
+      "parkingSpotNames":["policeDealerParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+		    {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Police"]}
+        }
+      ],
+      "fees": 500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "Police"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
+      "id":"serviceDealership",
+      "name":"Service Dealership",
+      "description":"service Dealership - Purchase Police Vehicles here",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["serviceDealer_area","serviceDealer_icon", 30]],
+      "parkingSpotNames":["serviceDealerParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+		    {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Service"]}
+        }
+      ],
+      "fees": 500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "Police"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
+      "id":"trailerShop",
+      "name":"Trailer Dealer",
+      "description":"Trailer Sales",
+      "preview":"belasco_auto_dealership.jpg",
+      "doors":[["trailershop_area","trailershop_icon", 30]],
+      "parkingSpotNames":["trailerShop"],
+      "activityAcceptProps":[
+        {"keyLabel":"Trucks and Trailers"},
+        {"keyLabel":"New & Used"}
+      ],
+
+      "filter":{
+        "whiteList":{"Type":["Trailer"]}
+      },
+
+      "subFilters": [
+        {
+          "whiteList":{"Type":["Trailer"],"Mileage":{"min":1613, "max":161290323}},
+          "probability":3
+        }
+      ],
+      "fees": 449,
+      "containsStarterVehicles": false,
+      "testDrive" : {
+        "abandonFees" : 100,
+        "timeLimit" : 120,
+        "licencePlate" : "belasco"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
     },
     {
       "id":"truckShop",
-      "name":"Commercial Vehicle Sales",
-      "description":"commercial and service vehicles",
+      "name":"Commercial Truck Sales",
+      "description":"commercial Truck vehicles",
       "preview":"belasco_auto_dealership.jpg",
       "doors":[["truckshop_area_1","truckshop_icon_1", 30]],
       "parkingSpotNames":["truckShop1"],
@@ -275,23 +638,11 @@
 
       "subFilters": [
         {
-          "whiteList":{"Type":["Trailer"],"Mileage":{"min":1613, "max":161290323}},
-          "probability":3
-        },
-		{
-          "whiteList":{"Config Type":["Service"],"Mileage":{"min":72580645, "max":241935484}},
-          "probability":1
-        },
-				{
-          "whiteList":{"Config Type":["Police"],"Mileage":{"min":80645161, "max":137096774}},
-          "probability":1
-        },
-        {
           "whiteList":{"Body Style":["Semi Truck"],"Mileage":{"min":32258065, "max":241935484}},
           "probability":3
         }
       ],
-      "fees": 1449,
+      "fees": 1749,
       "containsStarterVehicles": false,
       "testDrive" : {
         "abandonFees" : 100,
