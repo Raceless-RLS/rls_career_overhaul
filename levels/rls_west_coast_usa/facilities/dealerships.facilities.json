@@ -12,30 +12,21 @@
       ],
 
       "filter":{
-        "whiteList":{"Years": {"min":2000}, "Mileage":{"min":5500000, "max":67500000},"Type":["Car"] ,"Value":{"min":1000, "max":80000}, "Config Type":["Factory"]},
-	  "blackList":{"Type":["Trailer"],"Body Style":["ATV"]}
+ 	  "blackList":{"Type":["Trailer"],"Body Style":["ATV","Buggy","Semi Truck"], "Config Type":["Police","Service"]}
       },
 
       "subFilters": [
         {
           "probability":2,
-          "whiteList":{"Years": {"min":2020}, "Mileage":{"min":9000, "max":70000}, "Config Type":["Factory"]}
+          "whiteList":{"Years": {"min":2020}, "Mileage":{"min":9000, "max":70000}, "Config Type":["Factory"],"Value":{"max":65000}}
         },
         {
           "probability":3,
-          "whiteList":{"Years": {"min":2014, "max":2020}, "Mileage":{"min":15000000, "max":70000000}, "Config Type":["Factory"]}
+          "whiteList":{"Years": {"min":2014, "max":2020}, "Mileage":{"min":15000000, "max":70000000}, "Config Type":["Factory"],"Value":{"max":65000}}
         },
         {
           "probability":2,
-          "whiteList":{"Years": {"min":2007, "max":2015}, "Mileage":{"min":90000000, "max":165000000}, "Config Type":["Factory"]}
-        },
-        {
-          "probability":1,
-          "whiteList":{"Years": {"min":2000, "max":2007}, "Mileage":{"min":10000000, "max":900000000}, "Config Type":["Factory"]}
-        },
-		{
-          "probability":1,
-          "whiteList":{"Years": {"min":2000, "max":2009}, "Mileage":{"min":1000000, "max":90000000}, "Config Type":["Custom"]}
+          "whiteList":{"Years": {"min":2007, "max":2015}, "Mileage":{"min":50000000, "max":165000000}, "Config Type":["Factory"],"Value":{"max":65000}}
         },
         {
           "probability":1,
@@ -65,24 +56,24 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"]}
+        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Bruckell"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Bruckell"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Burnside"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Burnside"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Gavril"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Gavril"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Soliad"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Soliad"]}
         }
       ],
       "fees": 1500,
@@ -108,37 +99,24 @@
         {"keyLabel":"Prestige and High Quality"}
       ],
       "filter": {
-        "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Value":{"min":100000}, "Config Type":["Factory"], "Type":["Car"], "Population":{"min":10, "max":2000}},
-        "blackList":{"Type":["Trailer"]}
+        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":6500000},"Value":{"min":45000}, "Population":{"max":500}}
+          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":45000}}
         },
         {
           "probability":2,
-          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":5000000}}
+          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":65000}}
         },
         {
           "probability":3,
-          "whiteList":{"Years": {"min":2010},"Mileage":{"min":5200000, "max":18000000}}
+          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":65000}}
         },
         {
           "probability":4,
-          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000}}
-        },
-		{
-          "probability":1,
-          "whiteList":{"Years": {"min":2015, "max":2024},"Config Type":["Race"],"Type":["Car"],"Value":{"min":190000}}
-        },
-		{
-          "probability":1,
-          "whiteList":{"Years": {"min":2015, "max":2024},"Config Type":["Custom"],"Type":["Car"],"Value":{"min":190000}}
-        },
-        {
-          "probability":1,
-          "whiteList":{}
+          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":65000}}
         }
       ],
       "fees": 2250,
@@ -164,17 +142,16 @@
         {"keyLabel":"Low Fees"}
       ],
       "filter": {
-        "whiteList":{"Years": {"min":1989, "max":2000}, "Mileage":{"min":17500000, "max":370000000}, "Value":{"min":100, "max":60000}, "Config Type":["Factory"],"Population":{"min":1099}},
-        "blackList":{"Type":["Trailer"]}
+        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":24000000, "max":900000000},"Type":["Truck"], "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Factory","Custom"]}
         },
         {
           "probability":1,
-          "whiteList":{"Years":{"min":1989, "max":2006}, "Mileage":{"min":26000000, "max":900000000},"Config Type":["Factory"]}
+          "whiteList":{"Years":{"min":1989, "max":2006}, "Mileage":{"min":8800028, "max":264000845},"Config Type":["Factory","Custom"]}
         },
         {
           "probability":1,
@@ -193,36 +170,7 @@
       "iconOffsetHeight":1.0,
       "iconLift":0.25
     }, 
-    {
-      "id":"rlsTestDealership",
-      "name":"rlsTestDealership Motors",
-      "description":"rlsTestDealership Motors - unique cars for a unique driver",
-      "preview":"jefferson_dealership.jpg",
-      "doors":[["rlsTestDealership_area","rlsTestDealership_icon", 30]],
-      "parkingSpotNames":["rlsTestDealershipParking"],
-      "activityAcceptProps":[
-        {"keyLabel":"Used Vehicles"}
-      ],
-      "filter": {
-        "blackList":{"Type":["Trailer"]}
-      },
-      "subFilters": [
-        {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
-        }
-      ],
-      "fees": 1500,
-      "containsStarterVehicles": false,
-      "testDrive": {
-        "abandonFees" : 250,
-        "timeLimit" : 120,
-        "licencePlate" : "rlsTestDealership"
-      },
-      "iconOffsetHeight":1.0,
-      "iconLift":0.25,
-      "playModeIconName":"poi_entrance_round"
-    }, 
+
     {
       "id":"frameDealership",
       "name":"Rollers",
@@ -239,7 +187,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":1000, "max":1000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":10, "max":100},"Config Type":["Frame"]}
         }
       ],
       "fees": 0,
@@ -269,11 +217,11 @@
       "subFilters": [
         {
           "probability":2,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Ibishu"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Ibishu"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Hirochi"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Hirochi"]}
         }
       ],
       "fees": 2500,
@@ -303,15 +251,15 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":10000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Civetta"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Civetta"]}
         },
         {
           "probability":4,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["ETK"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["ETK"]}
         },
         {
           "probability":3,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Cherrier"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Cherrier"]}
         }
       ],
       "fees": 3500,
@@ -341,41 +289,11 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Autobello"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Autobello"]}
         },
         {
           "probability":4,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["FPU"]}
-        }
-      ],
-      "fees": 2000,
-      "containsStarterVehicles": false,
-      "testDrive": {
-        "abandonFees" : 250,
-        "timeLimit" : 120,
-        "licencePlate" : "RLS"
-      },
-      "iconOffsetHeight":1.0,
-      "iconLift":0.25,
-      "playModeIconName":"poi_entrance_round"
-    }, 
-    {
-      "id":"AutobelloDealership",
-      "name":"Autobello Online Dealership",
-      "description":"Autobello Online Dealership",
-      "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":[""],
-      "activityAcceptProps":[
-        {"keyLabel":"New Vehicles"}
-      ],
-      "filter": {
-        "blackList":{"Type":["Trailer"]}
-      },
-      "subFilters": [
-        {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":4400014},"Config Type":["Factory","Custom"],"Brand":["Autobello"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["FPU"]}
         }
       ],
       "fees": 2000,
@@ -435,7 +353,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Rally"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Config Type":["Rally"]}
         }
       ],
       "fees": 1500,
@@ -465,23 +383,23 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drag"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (A)"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drag (A)"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (M)"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drag (M)"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (DCT)"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drag (DCT)"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (Sequential"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drag (Sequential"]}
         }
       ],
       "fees": 1500,
@@ -510,16 +428,16 @@
       },
       "subFilters": [
         {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["ATV"]}
+          "probability":2,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["ATV"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["Pickup"], "Brand":["SP"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Pickup"], "Brand":["SP"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["Buggy"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Buggy"]}
         }
       ],
       "fees": 1500,
@@ -544,11 +462,12 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
+        "blackList":{"Body Style":["ATV","Buggy","Semi Truck"], "Config Type":["Police","Service"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":30500000, "max":900000000}}
+          "whiteList":{"Mileage":{"min":305000000, "max":616001971}}
         }
       ],
       "fees": -1500,
@@ -578,7 +497,7 @@
       "subFilters": [
 		    {
           "probability":1,
-          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Race"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056}, "Config Type":["Race"]}
         }
       ],
       "fees": 2000,
@@ -608,7 +527,7 @@
       "subFilters": [
 		    {
           "probability":1,
-          "whiteList":{"Mileage":{"min":2000, "max":2000}, "Config Type":["Police"]}
+          "whiteList":{"Mileage":{"min":2000, "max":88000282}, "Config Type":["Police"]}
         }
       ],
       "fees": 500,
@@ -638,7 +557,7 @@
       "subFilters": [
 		    {
           "probability":1,
-          "whiteList":{"Mileage":{"min":10000, "max":10000}, "Config Type":["Service"]}
+          "whiteList":{"Mileage":{"min":10000, "max":88000282}, "Config Type":["Service"]}
         }
       ],
       "fees": 500,
@@ -686,6 +605,306 @@
       "playModeIconName":"poi_entrance_round"
     },
     {
+      "id":"AutobelloDealership",
+      "name":"Autobello Online Dealership",
+      "description":"Autobello Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Autobello"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"BruckellDealership",
+      "name":"Bruckell Online Dealership",
+      "description":"Bruckell Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Bruckell"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"CherrierDealership",
+      "name":"Cherrier Online Dealership",
+      "description":"Cherrier Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Cherrier"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
+      "id":"CivettaDealership",
+      "name":"Civetta Online Dealership",
+      "description":"Civetta Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Civetta"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
+      "id":"ETKDealership",
+      "name":"ETK Online Dealership",
+      "description":"ETK Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["ETK"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },   
+    {
+      "id":"GavrilcarDealership",
+      "name":"Gavril-Car Online Dealership",
+      "description":"Gavril-Car Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Car"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },   
+    {
+      "id":"GavriltruckDealership",
+      "name":"Gavril-Truck Online Dealership",
+      "description":"Gavril-Truck Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Truck"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },  
+    {
+      "id":"HirochiDealership",
+      "name":"Hirochi Online Dealership",
+      "description":"Hirochi Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"],"Body Style":["Buggy"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Hirochi"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"IbishuDealership",
+      "name":"Ibishu Online Dealership",
+      "description":"Ibishu Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Ibishu"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
+      "id":"SoliadDealership",
+      "name":"Soliad Online Dealership",
+      "description":"Soliad Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":["onlineParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Soliad"]}
+        }
+      ],
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    },
+    {
       "id":"truckShop",
       "name":"Commercial Truck Sales",
       "description":"commercial Truck vehicles",
@@ -698,16 +917,16 @@
       ],
 
       "filter":{
-        "whiteList":{"Mileage":{"min":125000000, "max":470000000}}
+        
       },
 
       "subFilters": [
         {
-          "whiteList":{"Body Style":["Semi Truck"],"Mileage":{"min":32258065, "max":241935484}},
+          "whiteList":{"Body Style":["Semi Truck"],"Mileage":{"min":1760006, "max":970000000}},
           "probability":3
         },
         {
-          "whiteList":{"Body Style":["Bus"],"Mileage":{"min":32258065, "max":241935484}},
+          "whiteList":{"Body Style":["Bus"],"Mileage":{"min":1760006, "max":970000000}},
           "probability":3
         }
       ],
@@ -728,7 +947,7 @@
       "id": "private",
       "name": "Private",
       "filter": {
-        "whiteList":{"Mileage":{"min":20000000, "max":165000000}},
+        "whiteList":{"Mileage":{"min":20000000, "max":264000845}},
         "blackList":{"Type":["Trailer", "Truck"]}
       }
     }
