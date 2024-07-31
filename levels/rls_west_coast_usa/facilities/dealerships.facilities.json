@@ -70,23 +70,19 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":2020}, "Mileage":{"min":100500, "max":175500}, "Config Type":["Race"]}
-        },
-        {
-          "probability":3,
-          "whiteList":{"Years": {"min":1950, "max":2020}, "Mileage":{"min":80500, "max":135500}, "Config Type":["Custom"]}
+          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Bruckell"]}
         },
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":2020}, "Mileage":{"min":30500, "max":115500}, "Config Type":["Rally"]}
-        },
-		{
-          "probability":2,
-          "whiteList":{"Years": {"min":1950, "max":1980}, "Mileage":{"min":3050000, "max":11550000},"Value":{"max":50000}, "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Burnside"]}
         },
         {
           "probability":1,
-          "whiteList":{}
+          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Gavril"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":100500, "max":70000000}, "Config Type":["Custom"],"Brand":["Soliad"]}
         }
       ],
       "fees": 1500,
@@ -159,7 +155,7 @@
     {
       "id":"quarrysideAutoSales",
       "name":"Quarryside Auto Sales",
-      "description":"Quarryside Auto Sales - Used cars and trucks.",
+      "description":"Quarryside Auto Sales - Used trucks and vans.",
       "preview":"quarryside_dealership.jpg",
       "doors":[["garageDealership_area_1","garageDealership_icon_1", 30]],
       "parkingSpotNames":["garageDealership1"],
@@ -174,11 +170,11 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years":{"min":1989, "max":2005}, "Mileage":{"min":24000000, "max":385000000}, "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":24000000, "max":900000000},"Type":["Truck"], "Config Type":["Factory"]}
         },
         {
           "probability":1,
-          "whiteList":{"Years":{"min":1989, "max":2006}, "Mileage":{"min":26000000, "max":385000000},"Config Type":["Factory"]}
+          "whiteList":{"Years":{"min":1989, "max":2006}, "Mileage":{"min":26000000, "max":900000000},"Config Type":["Factory"]}
         },
         {
           "probability":1,
@@ -243,7 +239,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":1000, "max":1000},"Config Type":["Frame"]}
         }
       ],
       "fees": 0,
@@ -272,11 +268,15 @@
       },
       "subFilters": [
         {
+          "probability":2,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Ibishu"]}
+        },
+        {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Hirochi"]}
         }
       ],
-      "fees": 1500,
+      "fees": 2500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -303,10 +303,18 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":10000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Civetta"]}
+        },
+        {
+          "probability":4,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["ETK"]}
+        },
+        {
+          "probability":3,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Cherrier"]}
         }
       ],
-      "fees": 1500,
+      "fees": 3500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -333,10 +341,44 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["Autobello"]}
+        },
+        {
+          "probability":4,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Factory","Custom"],"Brand":["FPU"]}
         }
       ],
-      "fees": 1500,
+      "fees": 2000,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"AutobelloDealership",
+      "name":"Autobello Online Dealership",
+      "description":"Autobello Online Dealership",
+      "preview":"jefferson_dealership.jpg",
+      "doors":[["","", 30]],
+      "parkingSpotNames":[""],
+      "activityAcceptProps":[
+        {"keyLabel":"New Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":15000, "max":4400014},"Config Type":["Factory","Custom"],"Brand":["Autobello"]}
+        }
+      ],
+      "fees": 2000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -350,7 +392,7 @@
     {
       "id":"illegalDealership",
       "name":"Illegal Imports",
-      "description":"Illegal Imports",
+      "description":"Illegally Imported (modded cars without a price)",
       "preview":"jefferson_dealership.jpg",
       "doors":[["illegalDealership_area","illegalDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
@@ -358,15 +400,15 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"]}
+        "blackList":{"Config Type":["Frame"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Value":{"max":1000}}
         }
       ],
-      "fees": 1500,
+      "fees": 30000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -393,7 +435,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Config Type":["Rally"]}
         }
       ],
       "fees": 1500,
@@ -423,7 +465,23 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (A)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (M)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (DCT)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Configuration":["Drag (Sequential"]}
         }
       ],
       "fees": 1500,
@@ -453,7 +511,15 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["ATV"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["Pickup"], "Brand":["SP"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Body Style":["Buggy"]}
         }
       ],
       "fees": 1500,
@@ -478,15 +544,14 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"]}
       },
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":11550000},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":30500000, "max":900000000}}
         }
       ],
-      "fees": 1500,
+      "fees": -1500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -512,8 +577,8 @@
       },
       "subFilters": [
 		    {
-          "probability":2,
-          "whiteList":{"Mileage":{"min":11000, "max":7200000},"Value":{"min":75000},"Off-Road Score":{"max":40}, "Config Type":["Race"]}
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Race"]}
         }
       ],
       "fees": 2000,
@@ -543,7 +608,7 @@
       "subFilters": [
 		    {
           "probability":1,
-          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Police"]}
+          "whiteList":{"Mileage":{"min":2000, "max":2000}, "Config Type":["Police"]}
         }
       ],
       "fees": 500,
@@ -573,7 +638,7 @@
       "subFilters": [
 		    {
           "probability":1,
-          "whiteList":{"Mileage":{"min":11000, "max":7200000}, "Config Type":["Service"]}
+          "whiteList":{"Mileage":{"min":10000, "max":10000}, "Config Type":["Service"]}
         }
       ],
       "fees": 500,
@@ -639,6 +704,10 @@
       "subFilters": [
         {
           "whiteList":{"Body Style":["Semi Truck"],"Mileage":{"min":32258065, "max":241935484}},
+          "probability":3
+        },
+        {
+          "whiteList":{"Body Style":["Bus"],"Mileage":{"min":32258065, "max":241935484}},
           "probability":3
         }
       ],
