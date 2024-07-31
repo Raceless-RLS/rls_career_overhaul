@@ -24,6 +24,8 @@ local staged = nil
 -- This is used to track the time in the race
 local in_race_time = 0
 
+local playerInPursuit = false
+
 local speedUnit = 2.788942922
 local speedThreshold = 5
 local lapCount = 0
@@ -34,6 +36,7 @@ local leaderboardFile = 'career/leaderboard.json'
 local leaderboard = {}
 local mSplitTimes = {}
 local mBestSplitTime = {}
+
 
 local leftTimeDigits = {}
 local rightTimeDigits = {}
@@ -174,8 +177,22 @@ local function loadLeaderboard()
     end
 end
 
-local function displayDragInfo()
-    
+local previousTrafficAmount = nil
+
+local function saveAndSetTrafficAmount(amount)
+    if gameplay_traffic then
+        previousTrafficAmount = gameplay_traffic.getNumOfTraffic()
+        gameplay_traffic.setActiveAmount(amount or 0)
+    else
+        print("Warning: gameplay_traffic not available")
+    end
+end
+
+local function restoreTrafficAmount()
+    if gameplay_traffic and previousTrafficAmount then
+        gameplay_traffic.setActiveAmount(previousTrafficAmount)
+        previousTrafficAmount = nil
+    end
 end
 
 -- Function to save the leaderboard to the file in all autosave folders
@@ -491,6 +508,29 @@ local function printTable(t, indent)
     end
 end
 
+local function onPursuitAction(id, pursuitData)
+    local playerVehicleId = be:getPlayerVehicleID(0)
+    print("playerVehicleId: " .. tostring(playerVehicleId))
+    print("onPursuitAction called with id: " .. tostring(id) .. " and pursuitData:\n")
+    printTable(pursuitData)
+    
+    if id == playerVehicleId then
+        print("id == playerVehicleId")
+        if pursuitData.type == "start" then
+            playerInPursuit = true
+            print("Player entered pursuit state")
+        elseif pursuitData.type == "evade" or pursuitData.type == "reset" then
+            playerInPursuit = false
+            print("Player exited pursuit state")
+        elseif pursuitData.type == "arrest" then
+            playerInPursuit = false
+            print("Player arrested, exiting pursuit state")
+        end
+    else
+        print("id ~= playerVehicleId")
+    end
+end
+
 local function getActivityName(data)
     -- This helper function extracts the race name from the trigger's data.
     -- It expects the triggerName to follow the format "raceName_type".
@@ -756,6 +796,9 @@ local function getDifference(raceName, currentCheckpointIndex)
 end
 
 local function checkpoint(data)
+    if be:getPlayerVehicleID(0) ~= data.subjectID then
+        return
+    end
     if data.event == "exit" then
         print("Checkpoint function exited due to 'exit' event")
         return
@@ -885,6 +928,8 @@ local function exitCheckpoint(data)
         mSplitTimes = {}
         activeAssets:hideAllAssets()
         displayMessage("You exited the race zone, Race cancelled", 3)
+        in_race_time = 0
+        restoreTrafficAmount()
     end
 end
 
@@ -922,6 +967,7 @@ local function manageZone(data)
             mSplitTimes = {}
             displayMessage("You exited the race zone, Race cancelled", 2)
             setActiveLight(raceName, "red")
+            restoreTrafficAmount()
         end
     end
 end
@@ -1024,12 +1070,17 @@ local function Greenlight(data)
         timerActive = true
         in_race_time = 0
         mActiveRace = raceName
+        saveAndSetTrafficAmount()
         print("Greenlight: Race started for" .. raceName)
         print("Greenlight: in_race_time =" .. in_race_time)
         print("Greenlight: mActiveRace =" .. mActiveRace)
         displayMessage(getStartMessage(raceName), 5)
         setActiveLight(raceName, "green")
+    elseif mActiveRace == raceName then
+        restoreTrafficAmount()
+        setActiveLight(raceName, "red")
     else
+        setActiveLight(raceName, "red")
         setActiveLight(raceName, "red")
     end
 end
@@ -1086,6 +1137,12 @@ local function Yellowlight(data)
         print("Yellowlight: Enter event triggered")
         local vehicleSpeed = math.abs(be:getObjectVelocityXYZ(data.subjectID)) * speedUnit
         print("Yellowlight: Vehicle speed =" .. vehicleSpeed)
+
+        if playerInPursuit then
+            local message = "You cannot stage for an event while in a pursuit."
+            displayMessage(message, 2)
+            return
+        end
 
         if vehicleSpeed > 5 then
             if mActiveRace ~= raceName then
@@ -1154,7 +1211,6 @@ local function Finishline(data)
                 end
                 mSplitTimes = {}
                 mActiveRace = nil
-                in_race_time = 0
                 return
             end
         else
@@ -1163,6 +1219,7 @@ local function Finishline(data)
         end
     else
         setActiveLight(raceName, "red")
+        restoreTrafficAmount()
     end
 end
 
@@ -1181,6 +1238,78 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     end
 end
 
+local function spawnAINextToPlayer(data)
+    local function safeGetPlayerVehicle()
+        if be and be.getPlayerVehicle then
+            return be:getPlayerVehicle(0)
+        end
+        return nil
+    end
+    if data.event ~= "enter" then
+        return
+    end
+    local playerVehicle = safeGetPlayerVehicle()
+    if not playerVehicle or playerVehicle:getID() ~= data.subjectID then
+        print("No player vehicle found")
+        return
+    end
+
+    local playerPos = playerVehicle:getPosition()
+    local playerRot = playerVehicle:getRotation()
+
+    if not playerPos or not playerRot then
+        print("Unable to get player position or rotation")
+        return
+    end
+
+    print("Player position: " .. tostring(playerPos))
+    print("Player rotation: " .. tostring(playerRot))
+
+    -- Offset the AI spawn position to the right of the player and slightly above ground
+    local spawnPos = vec3(playerPos.x + 5, playerPos.y, playerPos.z + 1)
+
+    print("Spawn position: " .. tostring(spawnPos))
+
+    -- Use a specific vehicle model that's likely to exist
+    local aiVehicleModel = chooseVehicle()
+
+    print("Attempting to spawn vehicle model: " .. aiVehicleModel)
+
+    -- Spawn the AI vehicle
+    local options = {
+        pos = spawnPos,
+        rot = playerRot,
+        autoEnterVehicle = false
+    }
+    
+    local success, aiVehicle = pcall(function()
+        return core_vehicles.spawnNewVehicle(aiVehicleModel, options)
+    end)
+
+    if not success or not aiVehicle then
+        print("Failed to spawn AI vehicle: " .. tostring(aiVehicle))
+        return
+    end
+
+    print("AI vehicle spawned successfully")
+
+    -- Set up AI driver
+    local success, error = pcall(function()
+        aiVehicle:queueLuaCommand("ai.setMode('chase')")
+        aiVehicle:queueLuaCommand("ai.setTargetVehicle(be:getPlayerVehicle(0))")
+    end)
+
+    if not success then
+        print("Error setting AI to chase player: " .. tostring(error))
+    else
+        print("AI vehicle set to chase player")
+    end
+
+    return aiVehicle
+end
+
+M.spawnAINextToPlayer = spawnAINextToPlayer
+
 M.displayMessage = displayMessage
 M.Finishline = Finishline
 M.Greenlight = Greenlight
@@ -1197,5 +1326,8 @@ M.saveLeaderboard = saveLeaderboard
 M.isCareerModeActive = isCareerModeActive
 M.exitCheckpoint = exitCheckpoint
 M.routeInfo = routeInfo
+M.saveAndSetTrafficAmount = saveAndSetTrafficAmount
+M.restoreTrafficAmount = restoreTrafficAmount
+M.onPursuitAction = onPursuitAction
 
 return M
