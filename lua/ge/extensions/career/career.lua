@@ -197,7 +197,23 @@ local function activateCareer(removeVehicles)
 
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
-  local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
+
+  local careerData = jsonReadFile(savePath .. "/../" .. saveFile)
+  
+  -- If the new location doesn't exist, check the old location
+  if not careerData then
+    local oldFilePath = savePath .. "/career/" .. saveFile
+    careerData = jsonReadFile(oldFilePath)
+    
+    -- If data was found in the old location, save it to the new location
+    if careerData then
+      log("I", "", "Found career data in old location. Moving to new location.")
+      career_saveSystem.jsonWriteFileSafe(savePath .. "/../" .. saveFile, careerData, true)
+    else
+      careerData = {}
+    end
+  end
+  
   boughtStarterVehicle = careerData.boughtStarterVehicle
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
 
@@ -275,7 +291,7 @@ end
 local function onSaveCurrentSaveSlot(currentSavePath)
   if not careerActive then return end
 
-  local filePath = currentSavePath .. "/career/" .. saveFile
+  local filePath = currentSavePath .. "/../" .. saveFile
   -- read the info file
   local data = {}
 
@@ -483,6 +499,15 @@ end
 local function buyStarterVehicle()
   boughtStarterVehicle = true
   career_modules_vehicleShopping.generateVehicleList()
+  
+  -- Save the change immediately
+  local _, savePath = career_saveSystem.getCurrentSaveSlot()
+  if savePath then
+    local filePath = savePath .. "/../" .. saveFile
+    local data = jsonReadFile(filePath) or {}
+    data.boughtStarterVehicle = true
+    career_saveSystem.jsonWriteFileSafe(filePath, data, true)
+  end
 end
 
 local function onVehicleAddedToInventory(data)

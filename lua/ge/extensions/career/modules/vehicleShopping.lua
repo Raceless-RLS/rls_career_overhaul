@@ -104,7 +104,7 @@ local function generateVehicleList()
 
   vehiclesInShop = {}
   for _, seller in ipairs(sellers) do
-    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 50, eligibleVehicles)
+    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 10, eligibleVehicles)
 
     for _, randomVehicleInfo in ipairs(randomVehicleInfos) do
       randomVehicleInfo.sellerId = seller.id
