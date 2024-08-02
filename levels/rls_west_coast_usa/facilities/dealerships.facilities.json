@@ -48,7 +48,7 @@
     {
       "id":"jeffersonmotors",
       "name":"Jefferson Motors",
-      "description":"Jefferson Motors - unique cars for a unique driver",
+      "description":"Jefferson Motors - Custom American cars",
       "preview":"jefferson_dealership.jpg",
       "doors":[["jeffersonmotors_area","jeffersonmotors_icon", 30]],
       "parkingSpotNames":["jeffersonparking1"],
@@ -104,19 +104,19 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":45000}}
+          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":55000}}
         },
         {
           "probability":2,
-          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":65000}}
+          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":75000}}
         },
         {
           "probability":3,
-          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":65000}}
+          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":85000}}
         },
         {
           "probability":4,
-          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":65000}}
+          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":95000}}
         }
       ],
       "fees": 2250,
@@ -173,9 +173,9 @@
 
     {
       "id":"frameDealership",
-      "name":"Rollers",
-      "description":"Rollers - The perfect start to your build",
-      "preview":"jefferson_dealership.jpg",
+      "name":"Smash Rollers",
+      "description":"Smash Rollers - The perfect start to your build",
+      "preview":"smash.jpg",
       "doors":[["frameDealership_area","frameDealership_icon", 30]],
       "parkingSpotNames":["frameDealershipParking"],
       "activityAcceptProps":[
@@ -204,8 +204,8 @@
     {
       "id":"jdmDealership",
       "name":"JDM Imports",
-      "description":"JDM Imports",
-      "preview":"jefferson_dealership.jpg",
+      "description":"JDM Imports - Imported Cars from Asia",
+      "preview":"jdm.jpg",
       "doors":[["jdmDealership_area","jdmDealership_icon", 30]],
       "parkingSpotNames":["jdmDealershipParking"],
       "activityAcceptProps":[
@@ -238,8 +238,8 @@
     {
       "id":"edmDealership",
       "name":"EDM Imports",
-      "description":"EDM Imports",
-      "preview":"jefferson_dealership.jpg",
+      "description":"EDM Imports - Imported Cars from Europe",
+      "preview":"jdm.jpg",
       "doors":[["edmDealership_area","edmDealership_icon", 30]],
       "parkingSpotNames":["edmDealershipParking"],
       "activityAcceptProps":[
@@ -276,8 +276,8 @@
     {
       "id":"rdmDealership",
       "name":"Other Imports",
-      "description":"Other Imports",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Other Imports - Imported Cars from... anywhere else",
+      "preview":"jdm.jpg",
       "doors":[["rdmDealership_area","rdmDealership_icon", 30]],
       "parkingSpotNames":["rdmDealershipParking"],
       "activityAcceptProps":[
@@ -288,11 +288,11 @@
       },
       "subFilters": [
         {
-          "probability":1,
+          "probability":3,
           "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Autobello"]}
         },
         {
-          "probability":4,
+          "probability":1,
           "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["FPU"]}
         }
       ],
@@ -311,7 +311,7 @@
       "id":"illegalDealership",
       "name":"Illegal Imports",
       "description":"Illegally Imported (modded cars without a price)",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"illegal.jpg",
       "doors":[["illegalDealership_area","illegalDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
@@ -340,8 +340,8 @@
     {
       "id":"rallyDealership",
       "name":"Rocking Rally",
-      "description":"rally cars",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Rocking Rally - Best rally builds around",
+      "preview":"rally.jpg",
       "doors":[["rallyDealership_area","rallyDealership_icon", 30]],
       "parkingSpotNames":["rallyDealershipParking"],
       "activityAcceptProps":[
@@ -370,8 +370,8 @@
     {
       "id":"dragDealership",
       "name":"Clockwise Drag Racing",
-      "description":"drag cars",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Clockwise Drag Racing - Building Drag cars around the clock",
+      "preview":"drag.jpg",
       "doors":[["dragDealership_area","dragDealership_icon", 30]],
       "parkingSpotNames":["dragDealershipParking"],
       "activityAcceptProps":[
@@ -415,9 +415,9 @@
     }, 
     {
       "id":"offroadDealership",
-      "name":"off road",
-      "description":"off road",
-      "preview":"jefferson_dealership.jpg",
+      "name":"TJs Offroad World",
+      "description":"TJs Offroad World - The only choice in Offroad from East to West.",
+      "preview":"offroad.jpg",
       "doors":[["offroadDealership_area","offroadDealership_icon", 30]],
       "parkingSpotNames":["offroadDealershipParking"],
       "activityAcceptProps":[
@@ -428,15 +428,19 @@
       },
       "subFilters": [
         {
-          "probability":2,
+          "probability":1,
           "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["ATV"]}
         },
         {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Pickup"], "Brand":["SP"]}
+          "probability":2,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056}, "Brand":["SP"]}
         },
         {
           "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056}, "Brand":["DW"]}
+        },
+        {
+          "probability":3,
           "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Buggy"]}
         }
       ],
@@ -454,8 +458,8 @@
     {
       "id":"discountedDealership",
       "name":"Trusted Auto Sales",
-      "description":"Discounted cars",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Trusted Auto Sales - Discounted cars",
+      "preview":"trusted.jpg",
       "doors":[["discountDealership_area","discountDealership_icon", 30]],
       "parkingSpotNames":["discountDealershipParking"],
       "activityAcceptProps":[
@@ -485,7 +489,7 @@
       "id":"fastAutomotiveDealership",
       "name":"Fast Automotive",
       "description":"Fast Automotive - Fastest race cars available",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"fast.jpg",
       "doors":[["fastAutomotive_area","fastAutomotive_icon", 30]],
       "parkingSpotNames":["fastAutomotiveParking"],
       "activityAcceptProps":[
@@ -514,8 +518,8 @@
     {
       "id":"policeDealership",
       "name":"Police Dealership",
-      "description":"Police Dealership - Purchase Police Vehicles here",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Police Dealership - Purchase police Vehicles here",
+      "preview":"police.jpg",
       "doors":[["policeDealer_area","policeDealer_icon", 30]],
       "parkingSpotNames":["policeDealerParking"],
       "activityAcceptProps":[
@@ -544,8 +548,8 @@
     {
       "id":"serviceDealership",
       "name":"Service Dealership",
-      "description":"service Dealership - Purchase Police Vehicles here",
-      "preview":"jefferson_dealership.jpg",
+      "description":"Service Dealership - Purchase Service Vehicles here",
+      "preview":"police.jpg",
       "doors":[["serviceDealer_area","serviceDealer_icon", 30]],
       "parkingSpotNames":["serviceDealerParking"],
       "activityAcceptProps":[
@@ -575,7 +579,7 @@
       "id":"trailerShop",
       "name":"Trailer Dealer",
       "description":"Trailer Sales",
-      "preview":"belasco_auto_dealership.jpg",
+      "preview":"trailerDealership.jpg",
       "doors":[["trailershop_area","trailershop_icon", 30]],
       "parkingSpotNames":["trailerShop"],
       "activityAcceptProps":[
@@ -907,8 +911,8 @@
     {
       "id":"truckShop",
       "name":"Commercial Truck Sales",
-      "description":"commercial Truck vehicles",
-      "preview":"belasco_auto_dealership.jpg",
+      "description":"Commercial Truck vehicles",
+      "preview":"KEVee_tyrannos_commercial.jpg",
       "doors":[["truckshop_area_1","truckshop_icon_1", 30]],
       "parkingSpotNames":["truckShop1"],
       "activityAcceptProps":[
