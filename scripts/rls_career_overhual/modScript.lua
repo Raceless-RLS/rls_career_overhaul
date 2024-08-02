@@ -1,27 +1,35 @@
 local M = {}
 M.dependencies = {"career_career"}
 
-print("RLS Career Overhaul: activateCareer function overridden")
+-- Store the original module
+local originalCareerCareer = career_career
 
 -- Load your mod's career.lua file
 local myCareerPath = "ge.extensions.career.career"
 local myCareer = require(myCareerPath)
 
-local myBranchPath = "ge.extensions.career.branches"
-local myBranch = require(myBranchPath)
-
-local myTrafficPath = "ge.extensions.gameplay.traffic.vehicle"
-local myTraffic = require(myTrafficPath)
-
 -- Replace the entire module with your implementation
 career_career = myCareer
-career_branches = myBranch
-gameplay_traffic_vehicle = myTraffic
+
+-- If you need to keep some original functionality:
+setmetatable(career_career, {__index = originalCareerCareer})
 
 print("RLS Career Overhaul: Career module replaced with custom implementation")
 
-M.career_career = career_career
-M.career_branches = career_branches
-M.customActivateCareer = customActivateCareer
-M.gameplay_traffic_vehicle = gameplay_traffic_vehicle
+local function reloadEverything()
+    -- Reload Lua scripts
+    extensions.refresh()
+    
+    -- Reload mods
+    core_modmanager.initDB()
+    
+    -- Refresh UI
+    guihooks.trigger('RefreshUI')
+    
+    -- Force update of game state
+    core_gamestate.setGameState(core_gamestate.state.state, core_gamestate.state.mode)
+    
+    print("RLS Career Overhaul: Reloaded")
+end
+
 return M
