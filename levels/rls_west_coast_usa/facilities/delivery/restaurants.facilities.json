@@ -5,18 +5,18 @@
       "name":"Turbo Burger",
       "description":"Ships food and receives shop and food supplies.",
       "preview":"previews/turboBurger.jpg",
-      "pickUpSpotNames":["turboBurger_driveIn"],
+      "pickUpSpotNames":["turboBurger_parking"],
       "dropOffSpotNames":["turboBurger_parking"],
       "sitesFile":"restaurants.sites.json",
       "showIncomingCargo":true,
       "logisticTypesProvided":["food"],
       "logisticTypesReceived":["parcel","shopSupplies", "foodSupplies"],
-      "logisticMaxItems":10,
+      "logisticMaxItems":8,
       "logisticGenerators":[
         {
           "type":"parcelReceiver",
           "logisticTypes":["parcel"],
-          "min":-1,
+          "min":0,
           "max":1,
           "interval":60
         }, {
@@ -26,7 +26,7 @@
           "max":2,
           "interval":60
         }
-      ],
+      ]
     },
     {
       "id":"diner",
@@ -39,12 +39,12 @@
       "showIncomingCargo":true,
       "logisticTypesProvided":["food"],
       "logisticTypesReceived":["parcel","shopSupplies","foodSupplies"],
-      "logisticMaxItems":10,
+      "logisticMaxItems":8,
       "logisticGenerators":[
         {
           "type":"parcelReceiver",
           "logisticTypes":["parcel"],
-          "min":-1,
+          "min":0,
           "max":1,
           "interval":60
         }, {
@@ -54,7 +54,36 @@
           "max":2,
           "interval":60
         }
-      ],
+      ]
+
+    },
+    {
+      "id":"chinatownRestaurant",
+      "name":"Chinatown Restaurant",
+      "description":"Ships food and receives shop and food supplies.",
+      "preview":"previews/chinatownRestaurant.jpg",
+      "pickUpSpotNames":["chinatownRestaurant_parking"],
+      "dropOffSpotNames":["chinatownRestaurant_parking"],
+      "sitesFile":"restaurants.sites.json",
+      "showIncomingCargo":true,
+      "logisticTypesProvided":["food"],
+      "logisticTypesReceived":["parcel","shopSupplies","foodSupplies"],
+      "logisticMaxItems":8,
+      "logisticGenerators":[
+        {
+          "type":"parcelReceiver",
+          "logisticTypes":["parcel"],
+          "min":0,
+          "max":1,
+          "interval":60
+        }, {
+          "type":"parcelReceiver",
+          "logisticTypes":["shopSupplies","foodSupplies"],
+          "min":-1,
+          "max":2,
+          "interval":60
+        }
+      ]
 
     },
     {
@@ -68,12 +97,12 @@
       "showIncomingCargo":true,
       "logisticTypesProvided":["food"],
       "logisticTypesReceived":["parcel","shopSupplies","foodSupplies"],
-      "logisticMaxItems":10,
+      "logisticMaxItems":8,
       "logisticGenerators":[
         {
           "type":"parcelReceiver",
           "logisticTypes":["parcel"],
-          "min":-1,
+          "min":0,
           "max":1,
           "interval":60
         }, {
@@ -83,7 +112,7 @@
           "max":2,
           "interval":60
         }
-      ],
+      ]
 
     }
 

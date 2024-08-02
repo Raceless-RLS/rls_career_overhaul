@@ -512,12 +512,12 @@
     },
     {
       "id":"dragPaddockGarageComputer_area3",
-      "name":"Commercial Garage - Small Vehicles",
+      "name":"Drag Paddock Garage",
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["dragPaddockGarageComputer_area", "dragPaddockGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
-      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
+      "functions": {"painting":false, "tuning":true, "vehicleInventory":true, "vehicleShop":false, "partShop":false, "partInventory":true, "insurancePolicies":false},
       "activityAcceptProps":[
         {"keyLabel":"Vehicle & Parts Management"},
         {"keyLabel":"Vehicle & Parts Shopping"},
