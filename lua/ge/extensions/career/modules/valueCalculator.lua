@@ -140,7 +140,9 @@ local function getVehicleValue(configInfo, vehicle)
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
     sumPartValues = sumPartValues -  1.15 * getPartValue(part)
   end
-  endValue = math.max(configBaseValue, sumPartValues)
+  
+  local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
+  endValue = adjustedBaseValue + sumPartValues
   return endValue
 end
 
