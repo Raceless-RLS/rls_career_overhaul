@@ -38,6 +38,11 @@ local mSplitTimes = {}
 local mBestSplitTime = {}
 local isLoop = false
 local roadNodes = {}
+local altRoadNodes = {}
+local activeMarkers = {}
+local checkpointsHit = 0
+local totalCheckpoints = 0
+local currentExpectedCheckpoint = 1
 
 local leftTimeDigits = {}
 local rightTimeDigits = {}
@@ -52,6 +57,7 @@ local maxActiveAssets = 2
 
 -- Constants for road nodes
 local checkpoints = {}
+local altCheckpoints = {}
 local STRAIGHT_THRESHOLD = math.rad(10)  -- Angle threshold for straight segments
 local HAIRPIN_THRESHOLD = math.rad(120) -- Angle threshold for hairpin turns
 local MIN_SEGMENT_LENGTH = 20  -- Minimum length for a segment in meters
@@ -166,9 +172,9 @@ local races = {
             bestTime = 110,
             reward = 2000,
             label = "Short Track",
-            checkpoints = 14,
+            checkpointRoad = "trackalt",
+            mergeCheckpoints = {1,10},
             hotlap = 95,
-            altCheckpoints = {0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17},
             altInfo = "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
         },
         type = {"motorsport", "apexRacing"}
@@ -1238,117 +1244,125 @@ local function findApex(nodes, startIndex, endIndex)
     return apexIndex
 end
 
-local function processRoadNodes(nodes)
-    print("Starting processRoadNodes with " .. #nodes .. " nodes")
-    local segments = {}
-    local checkpoints = {}
-    local currentSegment = {startIndex = 1, type = "straight", totalAngle = 0, length = 0, direction = nil}
+local function processRoadNodes(mainNodes, altNodes)
+    if not altNodes then
+        altNodes = {}
+    end
+    print("Starting processRoadNodes with " .. #mainNodes .. " main nodes and " .. (#altNodes or 0) .. " alt nodes")
+    
+    local function processRoute(nodes, isAlt)
+        local segments = {}
+        local checkpoints = {}
+        local currentSegment = {startIndex = 1, type = "straight", totalAngle = 0, length = 0, direction = nil}
+        local startIndex = isAlt and 3 or 1  -- Start from the 3rd node for alternative route
 
-    local function addCheckpoint(startIndex, endIndex, type, direction)
-        local apexIndex = findApex(nodes, startIndex, endIndex)
-        local roadWidth = 20
-        
-        
-        -- Check distance from last checkpoint only if the direction is the same
-        if #checkpoints > 0 then
-            local lastCheckpoint = checkpoints[#checkpoints]
-            if lastCheckpoint.direction == direction then
-                local distance = calculateDistance(nodes[lastCheckpoint.index], nodes[apexIndex])
-                if distance < MIN_CHECKPOINT_DISTANCE then
-                    -- If too close, choose the point with higher curvature
-                    if calculateCurvature(nodes, apexIndex) > calculateCurvature(nodes, lastCheckpoint.index) then
-                        checkpoints[#checkpoints] = {pos = nodes[apexIndex], type = type, index = apexIndex, direction = direction}
+        local function addCheckpoint(startIndex, endIndex, type, direction)
+            local apexIndex = findApex(nodes, startIndex, endIndex)
+            local roadWidth = 20
+            
+            if #checkpoints > 0 then
+                local lastCheckpoint = checkpoints[#checkpoints]
+                if lastCheckpoint.direction == direction then
+                    local distance = calculateDistance(nodes[lastCheckpoint.index], nodes[apexIndex])
+                    if distance < MIN_CHECKPOINT_DISTANCE then
+                        if calculateCurvature(nodes, apexIndex) > calculateCurvature(nodes, lastCheckpoint.index) then
+                            checkpoints[#checkpoints] = {pos = nodes[apexIndex], type = type, index = apexIndex, direction = direction}
+                        end
+                        return
                     end
-                    return
+                end
+            end
+            
+            table.insert(checkpoints, {pos = nodes[apexIndex], type = type, index = apexIndex, direction = direction, width = roadWidth})
+            print((isAlt and "Alt " or "") .. "Checkpoint added: Type: " .. type .. ", Index: " .. apexIndex .. ", Direction: " .. direction .. ", Width: " .. roadWidth)
+        end
+
+        local function finishSegment(endIndex)
+            if currentSegment.length >= MIN_SEGMENT_LENGTH then
+                table.insert(segments, currentSegment)
+                if currentSegment.type == "turn" or currentSegment.type == "hairpin" then
+                    addCheckpoint(currentSegment.startIndex, endIndex, currentSegment.type, currentSegment.direction)
                 end
             end
         end
-        
-        table.insert(checkpoints, {pos = nodes[apexIndex], type = type, index = apexIndex, direction = direction, width = roadWidth})
-        print("Checkpoint added: Type: " .. type .. ", Index: " .. apexIndex .. ", Direction: " .. direction .. ", Width: " .. roadWidth)
-    end
 
-    local function finishSegment(endIndex)
-        if currentSegment.length >= MIN_SEGMENT_LENGTH then
-            table.insert(segments, currentSegment)
-            print("Segment " .. #segments .. ": Type: " .. currentSegment.type .. 
-                  ", Start Index: " .. currentSegment.startIndex .. 
-                  ", End Index: " .. endIndex .. 
-                  ", Total Angle: " .. currentSegment.totalAngle .. 
-                  ", Length: " .. currentSegment.length)
-            if currentSegment.type == "turn" or currentSegment.type == "hairpin" then
-                addCheckpoint(currentSegment.startIndex, endIndex, currentSegment.type, currentSegment.direction)
-            end
-        end
-    end
+        for i = startIndex + 1, #nodes - 1 do
+            local angle = calculateAngle(nodes[i-1], nodes[i], nodes[i+1])
+            currentSegment.totalAngle = currentSegment.totalAngle + angle
+            currentSegment.length = currentSegment.length + calculateDistance(nodes[i-1], nodes[i])
 
-    for i = 2, #nodes - 1 do
-        local angle = calculateAngle(nodes[i-1], nodes[i], nodes[i+1])
-        currentSegment.totalAngle = currentSegment.totalAngle + angle
-        currentSegment.length = currentSegment.length + calculateDistance(nodes[i-1], nodes[i])
-
-        print("Processing node " .. i .. ": Angle = " .. angle .. ", Total Angle = " .. currentSegment.totalAngle)
-
-        if math.abs(angle) > STRAIGHT_THRESHOLD then
-            local newDirection = angle > 0 and "left" or "right"
-            if currentSegment.type == "straight" then
-                finishSegment(i-1)
-                currentSegment = {startIndex = i-1, type = "turn", direction = newDirection, totalAngle = angle, length = 0}
-            elseif currentSegment.type == "turn" then
-                if currentSegment.direction ~= newDirection then
-                    -- S-turn: Finish the current turn and start a new one
+            if math.abs(angle) > STRAIGHT_THRESHOLD then
+                local newDirection = angle > 0 and "left" or "right"
+                if currentSegment.type == "straight" then
                     finishSegment(i-1)
                     currentSegment = {startIndex = i-1, type = "turn", direction = newDirection, totalAngle = angle, length = 0}
-                elseif math.abs(currentSegment.totalAngle - angle) > MAX_TURN_MERGE_ANGLE then
-                    -- Turn radius change: Add a checkpoint but continue the current turn
-                    addCheckpoint(currentSegment.startIndex, i, "turn", newDirection)
-                    currentSegment.totalAngle = angle
-                    currentSegment.startIndex = i
+                elseif currentSegment.type == "turn" then
+                    if currentSegment.direction ~= newDirection then
+                        finishSegment(i-1)
+                        currentSegment = {startIndex = i-1, type = "turn", direction = newDirection, totalAngle = angle, length = 0}
+                    elseif math.abs(currentSegment.totalAngle - angle) > MAX_TURN_MERGE_ANGLE then
+                        addCheckpoint(currentSegment.startIndex, i, "turn", newDirection)
+                        currentSegment.totalAngle = angle
+                        currentSegment.startIndex = i
+                    end
+                end
+            elseif currentSegment.type == "turn" and currentSegment.length >= MIN_SEGMENT_LENGTH then
+                finishSegment(i-1)
+                currentSegment = {startIndex = i-1, type = "straight", totalAngle = 0, length = 0, direction = nil}
+            end
+
+            if math.abs(currentSegment.totalAngle) > HAIRPIN_THRESHOLD then
+                currentSegment.type = "hairpin"
+                finishSegment(i)
+                currentSegment = {startIndex = i, type = "straight", totalAngle = 0, length = 0, direction = nil}
+            end
+        end
+
+        finishSegment(#nodes)
+
+        return checkpoints
+    end
+
+    local mainCheckpoints = processRoute(mainNodes, false)
+    local altCheckpoints = altNodes and processRoute(altNodes, true) or nil
+
+    -- Adjust the last checkpoint if it's too close to the first one (for both routes)
+    local function adjustLastCheckpoint(checkpoints, nodes)
+        if #checkpoints >= 2 then
+            local firstCheckpoint = checkpoints[1]
+            local lastCheckpoint = checkpoints[#checkpoints]
+            local distance = calculateDistance(firstCheckpoint.pos, lastCheckpoint.pos)
+            
+            if distance < MIN_CHECKPOINT_DISTANCE then
+                print("Adjusting last checkpoint: too close to first checkpoint")
+                
+                local newLastIndex = lastCheckpoint.index
+                while newLastIndex > 1 and calculateDistance(nodes[newLastIndex], firstCheckpoint.pos) < MIN_CHECKPOINT_DISTANCE do
+                    newLastIndex = newLastIndex - 1
+                end
+                
+                if newLastIndex > 1 and newLastIndex ~= lastCheckpoint.index then
+                    lastCheckpoint.pos = nodes[newLastIndex]
+                    lastCheckpoint.index = newLastIndex
+                    print("Last checkpoint moved to index: " .. newLastIndex)
+                else
+                    print("Could not find a suitable position for the last checkpoint")
                 end
             end
-        elseif currentSegment.type == "turn" and currentSegment.length >= MIN_SEGMENT_LENGTH then
-            finishSegment(i-1)
-            currentSegment = {startIndex = i-1, type = "straight", totalAngle = 0, length = 0, direction = nil}
-        end
-
-        if math.abs(currentSegment.totalAngle) > HAIRPIN_THRESHOLD then
-            currentSegment.type = "hairpin"
-            finishSegment(i)
-            currentSegment = {startIndex = i, type = "straight", totalAngle = 0, length = 0, direction = nil}
         end
     end
 
-    finishSegment(#nodes)
-
-    print("Total segments created: " .. #segments)
-    print("Total checkpoints created: " .. #checkpoints)
-
-    -- Adjust the last checkpoint if it's too close to the first one
-    if #checkpoints >= 2 then
-        local firstCheckpoint = checkpoints[1]
-        local lastCheckpoint = checkpoints[#checkpoints]
-        local distance = calculateDistance(firstCheckpoint.pos, lastCheckpoint.pos)
-        
-        if distance < MIN_CHECKPOINT_DISTANCE then
-            print("Adjusting last checkpoint: too close to first checkpoint")
-            
-            -- Find the next suitable node for the last checkpoint
-            local newLastIndex = lastCheckpoint.index
-            while newLastIndex > 1 and calculateDistance(nodes[newLastIndex], firstCheckpoint.pos) < MIN_CHECKPOINT_DISTANCE do
-                newLastIndex = newLastIndex - 1
-            end
-            
-            if newLastIndex > 1 and newLastIndex ~= lastCheckpoint.index then
-                lastCheckpoint.pos = nodes[newLastIndex]
-                lastCheckpoint.index = newLastIndex
-                print("Last checkpoint moved to index: " .. newLastIndex)
-            else
-                print("Could not find a suitable position for the last checkpoint")
-            end
-        end
+    adjustLastCheckpoint(mainCheckpoints, mainNodes)
+    if altCheckpoints then
+        adjustLastCheckpoint(altCheckpoints, altNodes)
     end
 
-    return checkpoints
+    print("Main route: Total checkpoints created: " .. #mainCheckpoints)
+    if altCheckpoints then
+        print("Alt route: Total checkpoints created: " .. #altCheckpoints)
+    end
+
+    return mainCheckpoints, altCheckpoints
 end
 
 -- Function to get DecalRoad by name
@@ -1521,12 +1535,18 @@ local function mergeRoads(road1, road2)
     return mergedNodes
 end
 
-local function createCheckpoint(index)
-    local checkpoint = checkpoints[index]
+local function createCheckpoint(index, alt)
+    local checkpoint = {}
+    if alt then
+        checkpoint = altCheckpoints[index]
+    else
+        checkpoint = checkpoints[index]
+    end
     if not checkpoint then
         print("Error: No checkpoint data found for index " .. index)
         return
     end
+    printTable(checkpoint)
     if not checkpoint.width then checkpoint.width = 20 end
 
     local position = vec3(checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z)
@@ -1538,14 +1558,21 @@ local function createCheckpoint(index)
     checkpoint.object:setPosition(position)
     checkpoint.object:setScale(vec3(triggerRadius, triggerRadius, triggerRadius))
     checkpoint.object.triggerType = 0 -- Use 0 for Sphere type
-    local triggerName = "checkpoint_" .. index
+    local triggerName = alt and "alt" or ""
+    triggerName = triggerName .. "checkpoint_" .. index
     checkpoint.object:registerObject(triggerName)
 
     print("Checkpoint " .. index .. " created at: " .. tostring(position) .. " with radius: " .. radius)
+    return checkpoint
 end
 
-local function createCheckpointMarker(index)
-    local checkpoint = checkpoints[index]
+local function createCheckpointMarker(index, alt)
+    local checkpoint = {}
+    if alt then
+        checkpoint = altCheckpoints[index]
+    else
+        checkpoint = checkpoints[index]
+    end
     if not checkpoint then return end
 
     local marker = createObject('TSStatic')
@@ -1563,18 +1590,30 @@ local function createCheckpointMarker(index)
 
     checkpoint.marker = marker
     print("Checkpoint marker " .. index .. " created at position: " .. tostring(position) .. " with width: " .. checkpoint.width)
+    return checkpoint
 end
 
-local function removeCheckpointMarker(index)
-    local checkpoint = checkpoints[index]
+local function removeCheckpointMarker(index, alt)
+    local checkpoint = {}
+    if alt then
+        checkpoint = altCheckpoints[index]
+    else
+        checkpoint = checkpoints[index]
+    end
     if checkpoint and checkpoint.marker then
         checkpoint.marker:delete()
         checkpoint.marker = nil
     end
+    return checkpoint
 end
 
-local function removeCheckpoint(index)
-    local checkpoint = checkpoints[index]
+local function removeCheckpoint(index, alt)
+    local checkpoint = {}
+    if alt then
+        checkpoint = altCheckpoints[index]
+    else
+        checkpoint = checkpoints[index]
+    end
     if checkpoint then
         if checkpoint.object then
             checkpoint.object:delete()
@@ -1586,18 +1625,38 @@ local function removeCheckpoint(index)
         end
         print("Checkpoint " .. index .. " removed")
     end
+    return checkpoint
 end
 
-
 local function createCheckpoints()
+    print("Removing checkpoints")
+    printTable(checkpoints)
     -- Clear existing checkpoint objects and markers
     for i = 1, #checkpoints do
+        print("Removing checkpoint " .. i)
         removeCheckpoint(i)
     end
-
+    print("Creating checkpoints")
+    printTable(checkpoints)
     -- Create new checkpoint objects and markers
     for i = 1, #checkpoints do
+        print("Creating checkpoint " .. i)
         createCheckpoint(i)
+    end
+
+    if altCheckpoints then
+        print("Removing alt checkpoints")
+        printTable(altCheckpoints)
+        for i = 1, #altCheckpoints do
+            print("Removing alt checkpoint " .. i)
+            removeCheckpoint(i, true)
+        end
+        print("Creating alt checkpoints")
+        printTable(altCheckpoints)
+        for i = 1, #altCheckpoints do
+            print("Creating alt checkpoint " .. i)
+            createCheckpoint(i, true)
+        end
     end
 end
 
@@ -1621,30 +1680,63 @@ local function isNodeGroupLoop(nodeGroup)
     return isLoop
 end
 
-local function enableCheckpoint(checkpointIndex)
-    local index = checkpointIndex
+local function enableCheckpoint(checkpointIndex, alt)
+    local ALT = {alt, alt}
+    local index = {checkpointIndex, checkpointIndex + 1}
     if isLoop then
-        index = index % #checkpoints + 1
+        index = {index[1] % #checkpoints + 1, index[2] % #checkpoints + 1}
     end
-    if checkpoints[index] then
-        if not checkpoints[index].marker then
-            createCheckpointMarker(index)
-        end
-        
-        if checkpoints[index].marker then
-            checkpoints[index].marker.instanceColor = ColorF(0, 1, 0, 0.7):asLinear4F()  -- Green
-        end
-        print("enableCheckpoint isLoop: " .. tostring(isLoop))        
-        if isLoop or #checkpoints > checkpointIndex then  -- Changed this line
-            local nextCheckpointIndex = (index % #checkpoints) + 1
-            print("Next checkpoint index: " .. nextCheckpointIndex)
-            if checkpoints[nextCheckpointIndex] and not checkpoints[nextCheckpointIndex].marker then
-                createCheckpointMarker(nextCheckpointIndex)
+    print("Index")
+    printTable(index)
+    print("ALT")
+    printTable(ALT)
+    for i = 1,2 do
+        if ALT[i] then
+            if #altCheckpoints < index[i] then
+                index[i] = races[mActiveRace].altRoute.mergeCheckpoints[2] + ((index[i] - 1) - #altCheckpoints)
+                ALT[i] = false
             end
-            
-            if checkpoints[nextCheckpointIndex] and checkpoints[nextCheckpointIndex].marker then
-                checkpoints[nextCheckpointIndex].marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F()  -- Red
+        end
+    end
+    print("Index")
+    printTable(index)
+    print("ALT")
+    printTable(ALT)
+
+    local checkpoint = {}
+    if ALT[1] then
+        checkpoint = altCheckpoints[index[1]]
+    else
+        checkpoint = checkpoints[index[1]]
+    end
+    local nextCheckpoint = {}
+    if ALT[2] then
+        nextCheckpoint = altCheckpoints[index[2]]
+    else
+        nextCheckpoint = checkpoints[index[2]]
+    end
+
+    if checkpoint then
+        if not checkpoint.marker then
+            checkpoint = createCheckpointMarker(index[1], ALT[1])
+        end
+        if not ALT[1] then
+            checkpoint.marker.instanceColor = ColorF(0, 1, 0, 0.7):asLinear4F()  -- Green
+        else
+            checkpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F()  -- Blue
+        end
+        if races[mActiveRace].altRoute and altCheckpoints and races[mActiveRace].altRoute.mergeCheckpoints[1] == index[1] then
+            if not altCheckpoints[1].marker then
+                local altCheckpoint = createCheckpointMarker(1, true)
+                altCheckpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F()  -- Blue
             end
+        end
+
+        if nextCheckpoint then
+            if not nextCheckpoint.marker then
+                nextCheckpoint = createCheckpointMarker(index[2], ALT[2])
+            end
+            nextCheckpoint.marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F()  -- Red
         end
     end
 end
@@ -1764,7 +1856,7 @@ local function test(data)
 
     -- Visualize checkpoints
     print("\nVisualizing checkpoints...")
-    createCheckpoints(checkpoints)
+    createCheckpoints()
     isLoop = isNodeGroupLoop(roadNodes)
     enableCheckpoint(#checkpoints)
     
@@ -1794,7 +1886,7 @@ local function Greenlight(data)
             if races[mActiveRace].checkpoints then
                 checkpointCount = races[mActiveRace].checkpoints - 1
             end
-            if currCheckpoint == checkpointCount then
+            if currCheckpoint == #checkpoints then
                 displayAssets(data)
                 playCheckpointSound()
                 print("Greenlight: Final checkpoint reached")
@@ -1805,8 +1897,12 @@ local function Greenlight(data)
                 currCheckpoint = nil
                 mSplitTimes = {}
                 mActiveRace = raceName
+                mAltRoute = nil
                 in_race_time = 0
                 timerActive = true
+                checkpointsHit = 0
+                totalCheckpoints = #checkpoints
+                currentExpectedCheckpoint = 1
                 if races[raceName].hotlap then
                     mHotlap = raceName
                     print("Greenlight: Hotlap started for" .. raceName)
@@ -1829,8 +1925,13 @@ local function Greenlight(data)
             setActiveLight(raceName, "green")
             if races[raceName].checkpointRoad then
                 roadNodes = getRoadNodes(races[raceName].checkpointRoad)
-                checkpoints = processRoadNodes(roadNodes)
-                createCheckpoints(checkpoints)
+                if races[raceName].altRoute.checkpointRoad then
+                    altRoadNodes = getRoadNodes(races[raceName].altRoute.checkpointRoad)
+                    checkpoints, altCheckpoints = processRoadNodes(roadNodes, altRoadNodes)
+                else
+                    checkpoints = processRoadNodes(roadNodes)
+                end
+                createCheckpoints()
                 isLoop = isNodeGroupLoop(roadNodes)
                 enableCheckpoint(#checkpoints)
                 currCheckpoint = 0
@@ -1841,43 +1942,76 @@ local function Greenlight(data)
     end
 end
 
+local function calculateTotalCheckpoints(race)
+    local altCheckpoints = altCheckpoints and #altCheckpoints or 0
+    local mergePoints = race.altRoute and race.altRoute.mergeCheckpoints or {0, 0}
+    
+    return #checkpoints - (mergePoints[2] - (mergePoints[1] - 1)) + altCheckpoints
+end
+
+local function calculateTotalCheckpoints(race)
+    local mainCheckpoints = #checkpoints
+    local altCheckpoints = altCheckpoints and #altCheckpoints or 0
+    local mergePoints = race.altRoute and race.altRoute.mergeCheckpoints or {0, 0}
+    
+    return mainCheckpoints - (mergePoints[2] - (mergePoints[1])) + altCheckpoints
+end
+
 local function onBeamNGTrigger(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID then
         return
     end
 
-    if mActiveRace and data.triggerName:find(mActiveRace) and races[mActiveRace].checkpoints then
+    if mActiveRace and data.triggerName:find(mActiveRace) then
         checkpoint(data)
         return
     end
     
-    if data.event == "enter" and data.triggerName:find("checkpoint_") then
-        local checkpointIndex = tonumber(data.triggerName:match("checkpoint_(%d+)"))
+    if data.event == "enter" and data.triggerName:find(".*checkpoint_") then
+        local checkpointIndex = tonumber(data.triggerName:match(".*checkpoint_(%d+)"))
+        local isAlt = data.triggerName:find("alt")
+        currCheckpoint = checkpointIndex
         
         print(string.format("Trigger entered: %s", data.triggerName))
-        print(string.format("mActiveRace: %s, currCheckpoint: %s, checkpointIndex: %s", 
-                            tostring(mActiveRace), tostring(currCheckpoint), tostring(checkpointIndex)))
+        print(string.format("mActiveRace: %s, checkpointsHit: %s, checkpointIndex: %s, mAltRoute: %s, currentExpectedCheckpoint: %s", 
+                            tostring(mActiveRace), tostring(checkpointsHit), tostring(checkpointIndex), tostring(mAltRoute), tostring(currentExpectedCheckpoint)))
         
         if mActiveRace then
-            if currCheckpoint == nil then
-                print("currCheckpoint is nil, initializing to 0")
-                currCheckpoint = 0
+            if checkpointsHit == 0 then
+                print("First checkpoint, initializing")
+                totalCheckpoints = #checkpoints
+                print("Total checkpoints calculated: " .. totalCheckpoints)
+            end
+            if isAlt then
+                totalCheckpoints = calculateTotalCheckpoints(races[mActiveRace])
             end
             
-            local expectedCheckpoint = (currCheckpoint % #checkpoints) + 1
-            print(string.format("Current checkpoint: %s, Expected next checkpoint: %s, Total checkpoints: %s", 
-                                tostring(currCheckpoint), tostring(expectedCheckpoint), tostring(#checkpoints)))
+            local mergePoints = races[mActiveRace].altRoute and races[mActiveRace].altRoute.mergeCheckpoints or {0, 0}
+            print(string.format("Checkpoints hit: %s, Current expected checkpoint: %s, Total checkpoints: %s", 
+                                tostring(checkpointsHit), tostring(currentExpectedCheckpoint), tostring(totalCheckpoints)))
 
-            if checkpointIndex == expectedCheckpoint then
-                print(string.format("Correct checkpoint %d reached", checkpointIndex))
-                currCheckpoint = checkpointIndex
-                mSplitTimes[checkpointIndex] = in_race_time
+            local isCorrectCheckpoint = false
+            if not mAltRoute and isAlt and checkpointIndex == mergePoints[1] then
+                mAltRoute = true
+                isCorrectCheckpoint = true
+                currentExpectedCheckpoint = 1  -- Reset for alt route
+            elseif mAltRoute and not isAlt and checkpointIndex == mergePoints[2] then
+                isCorrectCheckpoint = true
+                currentExpectedCheckpoint = mergePoints[2] + 1  -- Set next expected checkpoint after merge
+            else
+                isCorrectCheckpoint = checkpointIndex == currentExpectedCheckpoint
+            end
+
+            if isCorrectCheckpoint then
+                checkpointsHit = checkpointsHit + 1
+                print(string.format("Correct checkpoint %d reached, total hit: %d", checkpointIndex, checkpointsHit))
+                mSplitTimes[checkpointsHit] = in_race_time
                 playCheckpointSound()
                 
                 local checkpointMessage = string.format("Checkpoint %d/%d reached\nTime: %s", 
-                                                        checkpointIndex, #checkpoints, formatTime(in_race_time))
+                                                        checkpointsHit, totalCheckpoints, formatTime(in_race_time))
                 
-                local difference = getDifference(mActiveRace, checkpointIndex)
+                local difference = getDifference(mActiveRace, checkpointsHit)
                 if difference then
                     checkpointMessage = checkpointMessage .. "\n" .. formatTime(difference)
                 end
@@ -1889,26 +2023,34 @@ local function onBeamNGTrigger(data)
                 displayMessage(checkpointMessage, 7)
                 displayAssets(data)
                 
-                removeCheckpointMarker(checkpointIndex)
+                removeCheckpointMarker(checkpointIndex, isAlt)
                 
-                if checkpointIndex < #checkpoints then
-                    enableCheckpoint(checkpointIndex)
+                local mergePoints = races[mActiveRace].altRoute and races[mActiveRace].altRoute.mergeCheckpoints or {0, 0}
+
+                if checkpointsHit <= totalCheckpoints then
+                    if mAltRoute and not isAlt and checkpointIndex == mergePoints[2] then
+                        currentExpectedCheckpoint = mergePoints[2] + 1
+                    else
+                        currentExpectedCheckpoint = (checkpointIndex % #checkpoints) + 1
+                    end
+                    enableCheckpoint(checkpointIndex, isAlt)
                 else
                     if isLoop then
-                        enableCheckpoint(checkpointIndex)
-                        print("Final checkpoint reached")
+                        checkpointsHit = 0  -- Reset for next lap
+                        currentExpectedCheckpoint = 1
+                        print("Lap completed, starting next lap")
                     else
                         exitRace()
                     end
                 end
+                print(string.format("Next expected checkpoint: %d", currentExpectedCheckpoint))
             else
-                print(string.format("Wrong checkpoint. Expected: %d, Got: %d", expectedCheckpoint, checkpointIndex))
-                -- Do not update currCheckpoint here
-                local missedCheckpoints = checkpointIndex - expectedCheckpoint
+                print(string.format("Wrong checkpoint. Expected: %d, Got: %d", currentExpectedCheckpoint, checkpointIndex))
+                local missedCheckpoints = checkpointIndex - currentExpectedCheckpoint
                 
                 if missedCheckpoints > 0 then
                     displayMessage(string.format("You missed %d checkpoint(s). Go back to checkpoint %d.", 
-                                   missedCheckpoints, expectedCheckpoint), 10)
+                                   missedCheckpoints, currentExpectedCheckpoint), 10)
                 else
                     displayMessage("Wrong checkpoint! Go to the next checkpoint in sequence.", 10)
                 end
@@ -1938,10 +2080,10 @@ local function distanceToLineSegment(point, lineStart, lineEnd)
     return (point - projection):length(), t
 end
 
-local function findNearestNode(vehiclePos)
+local function findNearestNode(vehiclePos, nodes)
     local nearestIndex = 1
     local minDistance = math.huge
-    for i, node in ipairs(roadNodes) do
+    for i, node in ipairs(nodes) do
         local distance = (vehiclePos - vec3FromTable(node)):length()
         if distance < minDistance then
             minDistance = distance
@@ -1964,14 +2106,22 @@ local function checkPlayerOnRoad()
     log("Vehicle position: " .. tostring(vehiclePos))
     log("Vehicle velocity: " .. tostring(vehicleVel))
     
-    local nearestNodeIndex, distanceToNearestNode = findNearestNode(vehiclePos)
-    log("Nearest node index: " .. nearestNodeIndex .. ", Distance: " .. distanceToNearestNode)
+    -- Check both main and alt routes
+    local mainNearestIndex, mainDistance = findNearestNode(vehiclePos, roadNodes)
+    local altNearestIndex, altDistance = findNearestNode(vehiclePos, altRoadNodes)
     
-    local currentNode = roadNodes[nearestNodeIndex]
-    local nextNodeIndex = (nearestNodeIndex % #roadNodes) + 1
-    local prevNodeIndex = ((nearestNodeIndex - 2) % #roadNodes) + 1
-    local nextNode = roadNodes[nextNodeIndex]
-    local prevNode = roadNodes[prevNodeIndex]
+    local useAltRoute = altDistance < mainDistance
+    local currentNodes = useAltRoute and altRoadNodes or roadNodes
+    local nearestNodeIndex = useAltRoute and altNearestIndex or mainNearestIndex
+    
+    log("Using " .. (useAltRoute and "alternative" or "main") .. " route")
+    log("Nearest node index: " .. nearestNodeIndex .. ", Distance: " .. (useAltRoute and altDistance or mainDistance))
+    
+    local currentNode = currentNodes[nearestNodeIndex]
+    local nextNodeIndex = (nearestNodeIndex % #currentNodes) + 1
+    local prevNodeIndex = ((nearestNodeIndex - 2) % #currentNodes) + 1
+    local nextNode = currentNodes[nextNodeIndex]
+    local prevNode = currentNodes[prevNodeIndex]
     
     log("Current node position: " .. tostring(currentNode))
     log("Next node position: " .. tostring(nextNode))
@@ -1989,7 +2139,7 @@ local function checkPlayerOnRoad()
             log("Using previous segment. New distance from path: " .. distanceFromPath .. ", t: " .. t)
         end
     elseif t > 0.9 then
-        local nextNextNode = roadNodes[(nextNodeIndex % #roadNodes) + 1]
+        local nextNextNode = currentNodes[(nextNodeIndex % #currentNodes) + 1]
         local nextDistance, nextT = distanceToLineSegment(vehiclePos, nextNode, nextNextNode)
         if nextDistance < distanceFromPath then
             distanceFromPath = nextDistance
@@ -2061,8 +2211,8 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     --   dtSim (number): Simulated delta time.
     --   dtRaw (number): Raw delta time.
     if mActiveRace and races[mActiveRace].checkpointRoad then
-        checkPlayerOnRoad()
-        print("checking player on road")
+        --checkPlayerOnRoad()
+        --print("checking player on road")
     end
     if timerActive == true then
         in_race_time = in_race_time + dtSim
@@ -2142,80 +2292,6 @@ local function spawnAINextToPlayer(data)
 end
 
 M.spawnAINextToPlayer = spawnAINextToPlayer
-
-local function spawnAINextToPlayer(data)
-    local function safeGetPlayerVehicle()
-        if be and be.getPlayerVehicle then
-            return be:getPlayerVehicle(0)
-        end
-        return nil
-    end
-    if data.event ~= "enter" then
-        return
-    end
-    local playerVehicle = safeGetPlayerVehicle()
-    if not playerVehicle or playerVehicle:getID() ~= data.subjectID then
-        print("No player vehicle found")
-        return
-    end
-
-    local playerPos = playerVehicle:getPosition()
-    local playerRot = playerVehicle:getRotation()
-
-    if not playerPos or not playerRot then
-        print("Unable to get player position or rotation")
-        return
-    end
-
-    print("Player position: " .. tostring(playerPos))
-    print("Player rotation: " .. tostring(playerRot))
-
-    -- Offset the AI spawn position to the right of the player and slightly above ground
-    local spawnPos = vec3(playerPos.x + 5, playerPos.y, playerPos.z + 1)
-
-    print("Spawn position: " .. tostring(spawnPos))
-
-    -- Use a specific vehicle model that's likely to exist
-    local aiVehicleModel = chooseVehicle()
-
-    print("Attempting to spawn vehicle model: " .. aiVehicleModel)
-
-    -- Spawn the AI vehicle
-    local options = {
-        pos = spawnPos,
-        rot = playerRot,
-        autoEnterVehicle = false
-    }
-    
-    local success, aiVehicle = pcall(function()
-        return core_vehicles.spawnNewVehicle(aiVehicleModel, options)
-    end)
-
-    if not success or not aiVehicle then
-        print("Failed to spawn AI vehicle: " .. tostring(aiVehicle))
-        return
-    end
-
-    print("AI vehicle spawned successfully")
-
-    -- Set up AI driver
-    local success, error = pcall(function()
-        aiVehicle:queueLuaCommand("ai.setMode('chase')")
-        aiVehicle:queueLuaCommand("ai.setTargetVehicle(be:getPlayerVehicle(0))")
-    end)
-
-    if not success then
-        print("Error setting AI to chase player: " .. tostring(error))
-    else
-        print("AI vehicle set to chase player")
-    end
-
-    return aiVehicle
-end
-
-M.spawnAINextToPlayer = spawnAINextToPlayer
-
-
 M.test = test
 M.displayMessage = displayMessage
 M.Finishline = Finishline
