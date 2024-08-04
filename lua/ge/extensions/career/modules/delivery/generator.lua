@@ -98,9 +98,9 @@ end
 
 local parcelItemMoneyMultiplier = 1
 local function getMoneyRewardForParcelItem(item, distance)
-  local basePrice = item.slots * 0.6 --math.sqrt(item.slots) / 1
-  local distanceExp = distance / 150 --3 + math.sqrt(item.slots)/100
-  local pricePerM = item.weight * 0.3 --7 + math.pow(item.weight, 0.9)
+  local basePrice = item.slots * 0.9 --math.sqrt(item.slots) / 1
+  local distanceExp = distance / 100--3 + math.sqrt(item.slots)/100
+  local pricePerM = item.weight * 0.02 --7 + math.pow(item.weight, 0.9)
   local modMultiplier = 0.9 + 0.1 * #item.modifiers
   for _, mod in ipairs(item.modifiers) do
     modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
