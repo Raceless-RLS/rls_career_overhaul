@@ -182,10 +182,10 @@ local races = {
     dirtCircuit = {
         bestTime = 65,
         reward = 2000,
-        checkpoints = 10,
+        checkpointRoad = "dirtCircuit",
         hotlap = 55,
         label = "Dirt Circuit",
-        type = {"motorsport", "apexRacing"}
+        type = {"motorsport"}
     },
     testTrack = {
         bestTime = 5.5,
