@@ -142,20 +142,16 @@
         {"keyLabel":"Low Fees"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service"]}
+        "blackList":{"Type":["Trailer"], "Type":["car"], "Config Type":["Police","Service"]}
       },
       "subFilters": [
         {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Factory","Custom"]}
+          "probability":3,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Factory"]}
         },
         {
           "probability":1,
-          "whiteList":{"Years":{"min":1989, "max":2006}, "Mileage":{"min":8800028, "max":264000845},"Config Type":["Factory","Custom"]}
-        },
-        {
-          "probability":1,
-          "whiteList":{}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Custom"]}
         }
       ],
 
