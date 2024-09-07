@@ -542,7 +542,7 @@ local function onUpdate(dt, dtSim)
 
       -- arrest
       if pursuit.mode >= 1 then
-        if pursuit.timers.arrest >= vars.arrestLimit then
+        if pursuit.timers and pursuit.timers.arrest and pursuit.timers.arrest >= vars.arrestLimit then
           arrestVehicle(id, gameplay_traffic.showMessages)
         end
       -- release

@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'career_modules_payment', 'career_modules_playerAttributes'}
+M.dependencies = {'career_career', 'career_modules_payment', 'career_modules_playerAttributes', 'career_saveSystem'}
 
 local plInsuranceDataFileName = "insurance"
 

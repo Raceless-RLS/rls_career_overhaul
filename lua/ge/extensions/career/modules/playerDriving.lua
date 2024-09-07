@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career'}
+M.dependencies = {'career_career', 'core_modmanager'}
 
 local playerData = {
     trafficActive = 0 -- traffic data, parking data, etc.
@@ -92,6 +92,7 @@ local function setTrafficVars()
         precision = 0.2
     }) -- allows for relaxed parking detection
 end
+
 local function isNoPoliceModActive()
     local mods = core_modmanager.getMods()
     for modName, modData in pairs(mods) do
