@@ -13,28 +13,57 @@ M.tutorialEnabled = false
 local careerModuleDirectory = '/lua/ge/extensions/career/modules/'
 local saveFile = "general.json"
 local levelName = "west_coast_usa"
-local defaultLevel = "/levels/rls_west_coast_usa/main.level.json"
+local defaultLevel = path.getPathLevelMain("west_coast_usa")
 local autosaveEnabled = true
 
 local careerActive = false
 local careerModules = {}
 local debugActive = true
 local boughtStarterVehicle
+local organizationInteraction = {}
 
-local actionsToBlockOnlyInShippingMode = {"dropPlayerAtCameraNoReset"}
+local devActions = {"dropPlayerAtCameraNoReset"}
+local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabberStrength"}
 
-local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls", "vehicleSwitching", "funStuff"}, actionsToBlockOnlyInShippingMode)
+
+local actionWhitelist = deepcopy(devActions)
+arrayConcat(actionWhitelist, nodegrabberActions)
+local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls", "vehicleSwitching", "funStuff"}, actionWhitelist)
 
 -- TODO maybe save whenever we go into the esc menu
 
+local function updateNodegrabberBlocking()
+  -- enable node grabber only in walking mode
+  if careerActive and (core_camera.getActiveGlobalCameraName() or not gameplay_walk.isWalking()) then
+    core_input_actionFilter.setGroup('careerNodeGrabberActions', nodegrabberActions)
+    core_input_actionFilter.addAction(0, 'careerNodeGrabberActions', true)
+    be.nodeGrabber:onMouseButton(false)
+    return
+  end
+  core_input_actionFilter.setGroup('careerNodeGrabberActions', nodegrabberActions)
+  core_input_actionFilter.addAction(0, 'careerNodeGrabberActions', false)
+end
+
 local function blockInputActions(block)
   if shipping_build then
-    core_input_actionFilter.setGroup('careerBlockedDevActions', actionsToBlockOnlyInShippingMode)
+    core_input_actionFilter.setGroup('careerBlockedDevActions', devActions)
     core_input_actionFilter.addAction(0, 'careerBlockedDevActions', block)
   end
 
   core_input_actionFilter.setGroup('careerBlockedActions', blockedActions)
   core_input_actionFilter.addAction(0, 'careerBlockedActions', block)
+
+  updateNodegrabberBlocking()
+end
+
+local function onCameraModeChanged(modeName)
+  if not careerActive then return end
+  updateNodegrabberBlocking()
+end
+
+local function onGlobalCameraSet(modeName)
+  if not careerActive then return end
+  updateNodegrabberBlocking()
 end
 
 local debugModules = {}
@@ -94,11 +123,7 @@ local function debugMenu()
       imgui.Separator()
     end
   end
-
-
   imgui.End()
-
-
 
   if endCareerMode then
     M.deactivateCareer()
@@ -165,7 +190,6 @@ end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
   if not careerActive then return end
-  --debugMenu()
   if not shipping_build then
     if debugMenu() then
       return
@@ -193,33 +217,19 @@ local function activateCareer(removeVehicles)
   if removeVehicles == nil then
     removeVehicles = true
   end
-  if core_groundMarkers then core_groundMarkers.setFocus(nil) end
+  if core_groundMarkers then core_groundMarkers.setPath(nil) end
 
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
-
-  local careerData = jsonReadFile(savePath .. "/../" .. saveFile)
-  
-  -- If the new location doesn't exist, check the old location
-  if not careerData then
-    local oldFilePath = savePath .. "/career/" .. saveFile
-    careerData = jsonReadFile(oldFilePath)
-    
-    -- If data was found in the old location, save it to the new location
-    if careerData then
-      log("I", "", "Found career data in old location. Moving to new location.")
-      career_saveSystem.jsonWriteFileSafe(savePath .. "/../" .. saveFile, careerData, true)
-    else
-      careerData = {}
-    end
-  end
-  
+  local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
+  local levelToLoad = careerData.level or levelName
   boughtStarterVehicle = careerData.boughtStarterVehicle
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
+  organizationInteraction = careerData.organizationInteraction or {}
 
-  if not getCurrentLevelIdentifier() then
+  if not getCurrentLevelIdentifier() or (getCurrentLevelIdentifier() ~= levelToLoad) then
     spawn.preventPlayerSpawning = true
-    freeroam_freeroam.startFreeroam(path.getPathLevelMain("rls_west_coast_usa"))
+    freeroam_freeroam.startFreeroam(path.getPathLevelMain(levelToLoad))
     toggleCareerModules(true)
   else
     if removeVehicles then
@@ -248,9 +258,6 @@ end
 local function deactivateCareer(saveCareer)
   if not careerActive then return end
   M.onUpdate = nil
-  if saveCareer then
-    --career_saveSystem.saveCurrent(true) -- not sure if we want to allow saving here
-  end
   careerActive = false
   toggleCareerModules(false)
   blockInputActions(false)
@@ -291,13 +298,14 @@ end
 local function onSaveCurrentSaveSlot(currentSavePath)
   if not careerActive then return end
 
-  local filePath = currentSavePath .. "/../" .. saveFile
+  local filePath = currentSavePath .. "/career/" .. saveFile
   -- read the info file
   local data = {}
 
-  data.level = "west_coast_usa"
+  data.level = getCurrentLevelIdentifier()
   data.boughtStarterVehicle = boughtStarterVehicle
   data.debugModuleOpenStates = {}
+  data.organizationInteraction = organizationInteraction or {}
   for _, module in ipairs(debugModules) do
     if module.getDebugMenuActive then
       data.debugModuleOpenStates[module.___extensionName___] = module.getDebugMenuActive()
@@ -359,7 +367,7 @@ local function formatSaveSlotForUi(saveSlot)
     data.tutorialActive = career_modules_linearTutorial.isLinearTutorialActive()
     data.money = career_modules_playerAttributes.getAttribute("money")
     data.beamXP = career_modules_playerAttributes.getAttribute("beamXP")
-    data.bonusStars = career_modules_playerAttributes.getAttribute("bonusStars")
+    data.vouchers = career_modules_playerAttributes.getAttribute("vouchers")
     data.beamXP.level, data.beamXP.curLvlProgress, data.beamXP.neededForNext = getBeamXPLevel(data.beamXP.value)
 
     for bId, br in pairs(career_branches.getBranches()) do
@@ -377,7 +385,7 @@ local function formatSaveSlotForUi(saveSlot)
     if attData then
       data.money = deepcopy(attData.money) or {value=0}
       data.beamXP = deepcopy(attData.beamXP) or {value=0}
-      data.bonusStars = deepcopy(attData.bonusStars) or {value=0}
+      data.vouchers = deepcopy(attData.vouchers) or {value=0}
       data.beamXP.level, data.beamXP.curLvlProgress, data.beamXP.neededForNext = getBeamXPLevel(data.beamXP.value)
       for bId, br in pairs(career_branches.getBranches()) do
         local attKey = br.attributeKey
@@ -396,6 +404,7 @@ local function formatSaveSlotForUi(saveSlot)
 
   -- add the infoData raw
   if infoData and infoData.version then
+    infoData.incompatibleVersion = career_saveSystem.getBackwardsCompVersion() > infoData.version
     infoData.outdatedVersion = career_saveSystem.getSaveSystemVersion() > infoData.version
     tableMerge(data, infoData)
   end
@@ -496,18 +505,13 @@ local function hasBoughtStarterVehicle()
   return boughtStarterVehicle
 end
 
-local function buyStarterVehicle()
-  boughtStarterVehicle = true
-  career_modules_vehicleShopping.generateVehicleList()
-  
-  -- Save the change immediately
-  local _, savePath = career_saveSystem.getCurrentSaveSlot()
-  if savePath then
-    local filePath = savePath .. "/../" .. saveFile
-    local data = jsonReadFile(filePath) or {}
-    data.boughtStarterVehicle = true
-    career_saveSystem.jsonWriteFileSafe(filePath, data, true)
-  end
+local function hasInteractedWithOrganization(id)
+  return organizationInteraction[id]
+end
+
+local function interactWithOrganization(id)
+  --print("Interact with: " .. dumps(id))
+  organizationInteraction[id] = true
 end
 
 local function onVehicleAddedToInventory(data)
@@ -534,11 +538,12 @@ local function getAdditionalMenuButtons()
   local ret = {}
   --table.insert(ret, {label = "Test", luaFun = "print('Test!')"})
   if career_modules_delivery_general.isDeliveryModeActive() then
-    table.insert(ret, {label = "My Cargo", luaFun = "career_modules_delivery_cargoScreen.enterCargoOverviewScreen(nil, nil)"})
+    table.insert(ret, {label = "Map (My Cargo)", luaFun = "career_modules_delivery_cargoScreen.enterMyCargo()"})
+  else
+    table.insert(ret, {label = "Map", luaFun = "freeroam_bigMapMode.enterBigMap({instant=true})"})
   end
   if not career_modules_linearTutorial.isLinearTutorialActive() and M.hasBoughtStarterVehicle() then
-    table.insert(ret, {label = "Progress", luaFun = "guihooks.trigger('ChangeState', {state = 'progressLanding'})"})
-    table.insert(ret, {label = "Milestones", luaFun = "guihooks.trigger('ChangeState', {state = 'milestones'})"})
+    table.insert(ret, {label = "Progress", luaFun = "guihooks.trigger('ChangeState', {state = 'progressLanding'})", showIndicator = career_modules_milestones_milestones.unclaimedMilestonesCount() > 0})
   end
   return ret
 end
@@ -556,7 +561,8 @@ M.sendCurrentSaveSlotData = sendCurrentSaveSlotData
 M.getAutosavesForSaveSlot = getAutosavesForSaveSlot
 M.requestPause = requestPause
 M.hasBoughtStarterVehicle = hasBoughtStarterVehicle
-M.buyStarterVehicle = buyStarterVehicle
+M.hasInteractedWithOrganization = hasInteractedWithOrganization
+M.interactWithOrganization = interactWithOrganization
 M.closeAllMenus = closeAllMenus
 M.isAutosaveEnabled = isAutosaveEnabled
 M.setAutosaveEnabled = setAutosaveEnabled
@@ -572,6 +578,8 @@ M.onExtensionLoaded = onExtensionLoaded
 M.onAnyMissionChanged = onAnyMissionChanged
 M.onSimTimePauseCalled = onSimTimePauseCalled
 M.onVehicleAddedToInventory = onVehicleAddedToInventory
+M.onCameraModeChanged = onCameraModeChanged
+M.onGlobalCameraSet = onGlobalCameraSet
 
 M.sendCurrentSaveSlotName = sendCurrentSaveSlotName
 

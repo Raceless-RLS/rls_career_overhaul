@@ -1,237 +1,131 @@
 -- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
+
 local M = {}
 
 local leaderboardFolder = "/career/speedTrapLeaderboards/"
 
-M.dependencies = {'career_career', 'gameplay_speedTraps', 'career_modules_insurance'}
+M.dependencies = {'career_career', 'gameplay_speedTraps'}
+local fines = {
+  {overSpeed = 6.7056, fine = {money = {amount = 35, canBeNegative = true}}},
+  {overSpeed = 11.176, fine = {money = {amount = 70, canBeNegative = true}}},
+}
+local maxFine = {money = {amount = 100, canBeNegative = true}}
 
--- RLS
-local function getVehicleConfigType()
-    local playerVehicleId = be:getPlayerVehicleID(0)
-
-    if not playerVehicleId then
-        print("Player is not in a vehicle.")
-        return nil
+local function getFineFromSpeed(overSpeed)
+  for _, fineInfo in ipairs(fines) do
+    if overSpeed <= fineInfo.overSpeed then
+      return fineInfo.fine
     end
-
-    local playerVehicle = be:getObjectByID(playerVehicleId)
-
-    if not playerVehicle then
-        print("Unable to find the player's vehicle object.")
-        return nil
-    end
-
-    local configContent = playerVehicle:getField('partConfig', '')
-
-    if not configContent or configContent == '' then
-        print("Player's vehicle has an empty or undefined config path.")
-        return nil
-    end
-
-    if configContent and string.find(configContent, 'soundscape_siren') then
-        return "police"
-    else
-        print("Player's vehicle is not a police vehicle.")
-        return nil
-    end
-end
-
-local function isPlayerInPoliceVehicle()
-    local configType = getVehicleConfigType()
-    if configType then
-        print("Vehicle Config Type: " .. configType)
-        if configType == "police" then
-            print("Player is in a police vehicle!")
-            return true
-        else
-            print("Player is not in a police vehicle.")
-            return false
-        end
-    end
-    return false
-end
-
-local function getFine(speedLimit, playerSpeed, policyScore)
-    local speedLimit = speedLimit * 2.23694
-    local playerSpeed = playerSpeed * 2.23694
-    local x = (playerSpeed - 10) / (speedLimit - 5)
-    local y = (playerSpeed - speedLimit) / 20
-    local z = 2 * policyScore / (math.sqrt(2 * policyScore))
-    return {
-        money = {
-            amount = math.floor((x * y * z * 300) * 100) / 100,
-            canBeNegative = true
-        }
-    }
-end
-
-local function informInsurance(inventoryId, speedLimit, playerSpeed)
-    local speedLimit = speedLimit * 2.23694
-    local playerSpeed = playerSpeed * 2.23694
-    local x = (playerSpeed - 10) / (speedLimit - 5)
-    local y = (x / math.sqrt(x)) - 1
-    local rate = math.floor((1 + y / 1.5) * 100) / 100
-    local score = career_modules_insurance.changePolicyScore(inventoryId, rate)
-    local label = string.format("Your Insurance Increased by " .. rate .. " to " .. score)
-    ui_message(label)
+  end
+  return maxFine
 end
 
 local function hasLicensePlate(inventoryId)
-    for partId, part in pairs(career_modules_partInventory.getInventory()) do
-        if part.location == inventoryId then
-            if string.find(part.name, "licenseplate") then
-                return true
-            end
-        end
+  for partId, part in pairs(career_modules_partInventory.getInventory()) do
+    if part.location == inventoryId then
+      if string.find(part.name, "licenseplate") then
+        return true
+      end
     end
+  end
 end
 
 local function onSpeedTrapTriggered(speedTrapData, playerSpeed, overSpeed)
-    if not speedTrapData.speedLimit then
-        return
-    end
-    local vehId = speedTrapData.subjectID
-    if not vehId then
-        return
-    end
+  if not speedTrapData.speedLimit then return end
+  local vehId = speedTrapData.subjectID
+  if not vehId then
+    return
+  end
 
-    if vehId ~= be:getPlayerVehicleID(0) then
-        return
+  if vehId ~= be:getPlayerVehicleID(0) then
+    return
+  end
+  local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+
+  local veh = getPlayerVehicle(0)
+  local vehInfo = career_modules_inventory.getVehicles()[inventoryId]
+
+  local penaltyType
+  if not inventoryId then
+    penaltyType = "default"
+  elseif hasLicensePlate(inventoryId) then
+    if vehInfo.owned then
+      penaltyType = "default"
+    elseif vehInfo.loanType == "work" then
+      penaltyType = "workVehicle"
     end
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+  else
+    penaltyType = "noLicensePlate"
+  end
 
-    local veh = getPlayerVehicle(0)
-    local highscore, leaderboard = gameplay_speedTrapLeaderboards.addRecord(speedTrapData, playerSpeed, overSpeed, veh)
+  if penaltyType == "default" then
+    local fine = getFineFromSpeed(overSpeed)
+    career_modules_payment.pay(fine, {label="Fine for speeding", tags={"fine"}})
+    ui_message(string.format("Traffic Violation: \n - %q | Fine %d$\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})", core_vehicles.getVehicleLicenseText(veh), fine.money.amount, playerSpeed, speedTrapData.speedLimit), 10, "speedTrap")
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')
 
-    local playerIsCop = isPlayerInPoliceVehicle()
-    if playerIsCop == true then
+  elseif penaltyType == "noLicensePlate" then
+    ui_message(string.format("Traffic Violation: \n - No license plate detected | Fine could not be issued\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})", playerSpeed, speedTrapData.speedLimit), 10, "speedTrap")
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')
+
+  elseif penaltyType == "workVehicle" then
+    if vehInfo.owningOrganization then
+      local fine = {}
+      fine[vehInfo.owningOrganization .. "Reputation"] = {amount = 10, canBeNegative = true}
+      career_modules_payment.pay(fine, {label="Reputation cost for speeding", tags={"fine"}})
+    end
+  end
+
+  local highscore, leaderboard = gameplay_speedTrapLeaderboards.addRecord(speedTrapData, playerSpeed, overSpeed, veh)
+
+  local message
+  if highscore then
+    if leaderboard[2] then
+      message = {txt="ui.freeroam.speedTrap.newRecord", context={recordedSpeed = playerSpeed, previousSpeed = leaderboard[2].speed}}
     else
-        if not inventoryId or hasLicensePlate(inventoryId) then
-            local policyScore = career_modules_insurance.getPolicyScore(inventoryId)
-            local fine = getFine(speedTrapData.speedLimit, playerSpeed, policyScore)
-            career_modules_payment.pay(fine, {
-                label = "Fine for speeding",
-                tags = {"fine"}
-            })
-            Engine.Audio.playOnce('AudioGui', 'event:>UI>Career>Speedcam_Snapshot')
-            local label = string.format(
-                "Traffic Violation: \n Fine %d$\n - %0.2f mph in a %0.2f mph zone", fine.money.amount, playerSpeed* 2.23694, speedTrapData.speedLimit* 2.23694)
-            ui_message(label, 10, "speedTrap")
-            informInsurance(inventoryId, speedTrapData.speedLimit, playerSpeed)
-            local effectText = {{
-                label = "Money",
-                value = -fine.money.amount
-            }, {
-                label = "New policy score",
-                value = career_modules_insurance.getPolicyScore(inventoryId)
-            }}
-            career_modules_insurance.addTicketEvent(label, effectText, inventoryId)
-        else
-            ui_message(string.format(
-                "Traffic Violation: \n - No license plate detected | Fine could not be issued\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})",
-                playerSpeed, speedTrapData.speedLimit), 10, "speedTrap")
-        end
-
-        local message
-        if highscore then
-            if leaderboard[2] then
-                message = {
-                    txt = "ui.freeroam.speedTrap.newRecord",
-                    context = {
-                        recordedSpeed = playerSpeed,
-                        previousSpeed = leaderboard[2].speed
-                    }
-                }
-            else
-                message = {
-                    txt = "ui.freeroam.speedTrap.newRecordNoOld",
-                    context = {
-                        recordedSpeed = playerSpeed
-                    }
-                }
-            end
-        else
-            message = {
-                txt = "ui.freeroam.speedTrap.noNewRecord",
-                context = {
-                    recordedSpeed = playerSpeed,
-                    recordSpeed = leaderboard[1].speed
-                }
-            }
-        end
-
-        ui_message(message, 10, 'speedTrapRecord')
+      message = {txt="ui.freeroam.speedTrap.newRecordNoOld", context={recordedSpeed = playerSpeed}}
     end
+  else
+    message = {txt="ui.freeroam.speedTrap.noNewRecord", context={recordedSpeed = playerSpeed, recordSpeed = leaderboard[1].speed}}
+  end
+
+  ui_message(message, 10, 'speedTrapRecord')
 end
 
 local function onRedLightCamTriggered(speedTrapData, playerSpeed)
-    local vehId = speedTrapData.subjectID
-    if not vehId then
-        return
-    end
+  local vehId = speedTrapData.subjectID
+  if not vehId then
+    return
+  end
 
-    if vehId ~= be:getPlayerVehicleID(0) then
-        return
-    end
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+  if vehId ~= be:getPlayerVehicleID(0) then
+    return
+  end
+  local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
 
-    local veh = getPlayerVehicle(0)
-
-    local playerIsCop = isPlayerInPoliceVehicle()
-    if playerIsCop == true then
-    else
-
-        if not inventoryId or hasLicensePlate(inventoryId) then
-            local policyScore = career_modules_insurance.getPolicyScore(inventoryId)
-            local amount = math.floor(((2 * policyScore / (math.sqrt(2 * policyScore))) * 250) * 100) / 100
-            local fine = {
-                money = {
-                    amount = amount,
-                    canBeNegative = true
-                }
-            }
-            career_modules_payment.pay(fine, {
-                label = "Fine for running a red light",
-                tags = {"fine"}
-            })
-            Engine.Audio.playOnce('AudioGui', 'event:>UI>Career>Speedcam_Snapshot')
-            local label = string.format("Traffic Violation (Failure to stop at Red Light): \n - %q | Fine %d$",
-            core_vehicles.getVehicleLicenseText(veh), fine.money.amount)
-            ui_message(label, 10, "speedTrap")
-            local bonus = career_modules_insurance.changePolicyScore(inventoryId, 0.10, function(bonus, rate)
-                return bonus + rate
-            end)
-            local effectText = {{
-                label = "Money",
-                value = -amount
-            }, {
-                label = "New policy score",
-                value = career_modules_insurance.getPolicyScore(inventoryId)
-            }}
-            career_modules_insurance.addTicketEvent(label, effectText, inventoryId)
-            label = string.format("Your Insurance Increased by %f to %f", 0.10, bonus)
-            ui_message(label)
-        else
-            ui_message(string.format(
-                "Traffic Violation (Failure to stop at Red Light): \n - No license plate detected | Fine could not be issued"),
-                10, "speedTrap")
-        end
-    end
+  local veh = getPlayerVehicle(0)
+  if not inventoryId or hasLicensePlate(inventoryId) then
+    local fine = {money = {amount = 500, canBeNegative = true}}
+    career_modules_payment.pay(fine, {label="Fine for driving over a red light", tags={"fine"}})
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')
+    ui_message(string.format("Traffic Violation (Failure to stop at Red Light): \n - %q | Fine %d$", core_vehicles.getVehicleLicenseText(veh), fine.money.amount), 10, "speedTrap")
+  else
+    ui_message(string.format("Traffic Violation (Failure to stop at Red Light): \n - No license plate detected | Fine could not be issued"), 10, "speedTrap")
+  end
 end
 
 local function onExtensionLoaded()
-    if not career_career.isActive() then
-        return false
-    end
-    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-    gameplay_speedTrapLeaderboards.loadLeaderboards(savePath .. leaderboardFolder)
+  if not career_career.isActive() then return false end
+  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+
+  gameplay_speedTrapLeaderboards.loadLeaderboards(savePath .. leaderboardFolder)
 end
 
-local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, forceSyncSave)
-    -- TODO maybe add option to only save file for current level
-    gameplay_speedTrapLeaderboards.saveLeaderboards(currentSavePath .. leaderboardFolder, true)
+local function onSaveCurrentSaveSlot(currentSavePath)
+  -- TODO maybe add option to only save file for current level
+  gameplay_speedTrapLeaderboards.saveLeaderboards(currentSavePath .. leaderboardFolder, true)
 end
 
 M.onSpeedTrapTriggered = onSpeedTrapTriggered

@@ -21,7 +21,6 @@ C.pinSchema = {
   {dir = 'out', type = 'flow', impulse = true, name = 'arrest', description = 'Sends an impulse when the target is busted.'},
   {dir = 'out', type = 'flow', impulse = true, name = 'evade', description = 'Sends an impulse when the target evades the police.'},
   {dir = 'out', type = 'number', name = 'mode', description = 'Pursuit mode; 0 = off, 1 - 3 = chase (heat levels), -1 = busted.'},
-  {dir = 'out', type = 'number', name = 'pitTimer', description = 'Time until PIT maneuver is approved.'},
   {dir = 'out', type = 'number', name = 'score', description = 'Pursuit score.'},
   {dir = 'out', type = 'number', name = 'sightValue', hidden = true, description = 'Visibility to nearest police vehicle (from 0 to 1)'},
   {dir = 'out', type = 'number', name = 'arrestValue', hidden = true, description = 'Arrest progress (from 0 to 1)'},
@@ -55,29 +54,24 @@ end
 function C:work()
   self.vehId = self.pinIn.vehId.value or be:getPlayerVehicleID(0)
   local pursuit = gameplay_police.getPursuitData(self.vehId)
-  
-  if not pursuit or pursuit.mode <= 0 then 
-    self:reset()  -- Clear all data if there's no active pursuit
-    return 
+  if not pursuit then return end
+
+  self.pinOut.active.value = pursuit.mode > 0
+  if not self.evadeFlag then -- if vehicle evaded, keep the pursuit info for one more frame
+    self.pinOut.mode.value = pursuit.mode
+    self.pinOut.score.value = pursuit.score
+    self.pinOut.sightValue.value = pursuit.sightValue
+    self.pinOut.arrestValue.value = pursuit.timers.arrestValue
+    self.pinOut.evadeValue.value = pursuit.timers.evadeValue
+    self.pinOut.timeElapsed.value = pursuit.timers.main
+    self.pinOut.roadblocks.value = pursuit.roadblocks
+    self.pinOut.collisions.value = pursuit.hitCount
+    self.pinOut.policeWrecks.value = pursuit.policeWrecks
+    self.pinOut.offenses.value = pursuit.offensesCount
+    self.pinOut.uniqueOffenses.value = pursuit.uniqueOffensesCount
+    self.pinOut.offensesList.value = pursuit.offensesList
   end
 
-  -- Update data only for active pursuits
-  self.pinOut.active.value = true
-  self.pinOut.mode.value = pursuit.mode
-  self.pinOut.score.value = pursuit.score
-  self.pinOut.sightValue.value = pursuit.sightValue
-  self.pinOut.arrestValue.value = pursuit.timers.arrestValue
-  self.pinOut.evadeValue.value = pursuit.timers.evadeValue
-  self.pinOut.timeElapsed.value = pursuit.timers.main
-  self.pinOut.roadblocks.value = pursuit.roadblocks
-  self.pinOut.collisions.value = pursuit.hitCount
-  self.pinOut.policeWrecks.value = pursuit.policeWrecks
-  self.pinOut.offenses.value = pursuit.offensesCount
-  self.pinOut.uniqueOffenses.value = pursuit.uniqueOffensesCount
-  self.pinOut.offensesList.value = pursuit.offensesList
-  self.pinOut.pitTimer.value = pursuit.pitTimer or 0
-
-  -- Handle arrest and evade events
   self.pinOut.arrest.value = self.arrestFlag
   self.pinOut.evade.value = self.evadeFlag
   self.arrestFlag, self.evadeFlag = false, false

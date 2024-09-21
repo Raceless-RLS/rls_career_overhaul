@@ -8,8 +8,8 @@ M.dependencies = {'career_career'}
 
 local routePlanner = require('gameplay/route/route')()
 
-local basePrice = 0
-local pricePerM = 0.08
+local basePrice = 5
+local pricePerM = 0.004
 
 local function getDistanceToPoint(pos)
   routePlanner:setupPath(getPlayerVehicle(0):getPosition(), pos)
@@ -19,9 +19,9 @@ end
 local function getPriceForQuickTravel(pos)
   local distance = getDistanceToPoint(pos)
   if distance < 300 then
-    return basePrice
+    return 0, distance
   end
-  return basePrice + round(distance * pricePerM * 100) / 100
+  return basePrice + round(distance * pricePerM * 100) / 100, distance
 end
 
 local function turnTowardsPos(pos)
@@ -42,9 +42,13 @@ local function quickTravelToPos(pos, useWalkingMode, reasonString)
   career_modules_playerAttributes.addAttributes({money=-price}, {tags={"quickTravel","buying"}, label=(reasonString or "Paid for Quicktraveling")})
 end
 
-local function quickTravelToGarage(garage)
-  local pos, rot = freeroam_facilities.getGaragePosRot(garage)
-  quickTravelToPos(pos, true, "Took a taxi to your garage")
+local function quickTravelToGarage(garagePoi)
+  local garage = freeroam_facilities.getGarage(garagePoi.id)
+  if not garage then return end
+  local parkingSpots = freeroam_facilities.getParkingSpotsForFacility(garage)
+  if parkingSpots[1] then
+    quickTravelToPos(parkingSpots[1].pos, true, "Took a taxi to your garage")
+  end
 end
 
 local function getPriceForQuickTravelToGarage(garage)
