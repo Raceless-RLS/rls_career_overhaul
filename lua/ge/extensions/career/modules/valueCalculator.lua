@@ -7,7 +7,7 @@ local M = {}
 M.dependencies = {'career_career'}
 
 local lossPerKmRelative = 0.0000025
-local scrapValueRelative = 0.05
+local scrapValueRelative = 0.50
 
 local function getVehicleMileage(vehicle)
   for slot, partName in pairs(vehicle.config.parts) do
@@ -15,20 +15,48 @@ local function getVehicleMileage(vehicle)
       return vehicle.partConditions[partName]["odometer"]
     end
   end
+  return 0 -- Return a default value if main part is not found
 end
 
 local function getVehicleMileageById(inventoryId)
   return getVehicleMileage(career_modules_inventory.getVehicles()[inventoryId])
 end
 
-local depreciationByYear = {-0.20, -0.15, -0.10, -0.10, -0.07, -0.06, -0.05, -0.05, -0.04, -0.04, -0.03, -0.03, -0.02, -0.02, -0.01, -0.01, -0.01, -0.01, -0.01, -0.01, -0.01, -0.01, -0.005, 0.0, 0.0, 0.005, 0.005, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.012, 0.012, 0.012, 0.012, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.020, 0.020, 0.020, 0.020, 0.020, 0.020, 0.020, 0.020, 0.020, 0.020, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025, 0.025}
 
-local function getValueByAge(value, age)
-  local tempValue = value
-  for i=1, age do
-    tempValue = tempValue + tempValue * (depreciationByYear[i] or 0)
+local function getDepreciation(year, power)
+  local powerFactor = power / 300
+  local depreciation = 1
+  local isSlowCar = power < 275
+
+  for i = 1, year do
+    if i == 1 then
+      depreciation = depreciation * (1 - 0.05 * (1 / powerFactor))  -- 15% depreciation for the first year
+    elseif i == 2 then
+      depreciation = depreciation * (1 - 0.10 * (1 / powerFactor))  -- 10% depreciation for the second year
+    elseif i <= 12 then
+      depreciation = depreciation * (1 - 0.05 * math.exp(-0.15 * (i - 2)) * (1 / powerFactor))  -- Adjusted exponential decay for the next 10 years
+    elseif i <= 20 then
+      depreciation = depreciation * (1 + 0.01 * math.exp(0.03 * (i - 12)) * (1.15 * powerFactor))  -- Slower exponential growth from year 13 to 20
+    elseif i <= 30 then
+      depreciation = depreciation * (1 + 0.015 * math.exp(0.01 * (i - 20)) * (1.2 * powerFactor))  -- Adjusted exponential growth from year 21 to 30
+    else
+      depreciation = depreciation * (1 - 0.01 * math.exp(-0.05 * (i - 30)) * (1 / powerFactor))  -- Slow exponential decay after year 30
+    end
+
+    -- Additional depreciation for slow cars
+    if isSlowCar then
+      depreciation = depreciation * 0.975  -- Additional 2% depreciation per year for cars with less than 250 HP
+    end
   end
-  return tempValue
+
+  return depreciation
+end
+
+local function getValueByAge(value, age, power)
+  if power == nil then
+    power = 300
+  end
+  return value * getDepreciation(age, power)
 end
 
 local function getAdjustedVehicleBaseValue(value, vehicleCondition)
@@ -36,7 +64,7 @@ local function getAdjustedVehicleBaseValue(value, vehicleCondition)
   local scrapValue = valueByAge * scrapValueRelative
   local valueLossFromMileage = valueByAge * vehicleCondition.mileage/1000 * lossPerKmRelative
   local valueTemp = math.max(0, valueByAge - valueLossFromMileage)
-  return valueTemp + scrapValue
+  return math.max(valueTemp, scrapValue)
 end
 
 local function getPartDifference(originalParts, newParts, changedSlots)
@@ -95,13 +123,13 @@ local function getVehicleValue(configBaseValue, vehicle)
     if not part then
       log("E", "valueCalculator", "Couldnt find part " .. partName .. ", in slot " .. slot .. " of vehicle " .. vehicle.id)
     else
-      sumPartValues = sumPartValues + 0.5 * getPartValue(part)
+      sumPartValues = sumPartValues + 1.15 * getPartValue(part)
     end
   end
 
   for slot, partName in pairs(removedParts) do
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
-    sumPartValues = sumPartValues - 0.5 * getPartValue(part)
+    sumPartValues = sumPartValues -  1.15 * getPartValue(part)
   end
 
   local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
@@ -117,6 +145,7 @@ end
 M.getPartDifference = getPartDifference
 
 M.getInventoryVehicleValue = getInventoryVehicleValue
+M.getVehicleValue = getVehicleValue
 M.getPartValue = getPartValue
 M.getAdjustedVehicleBaseValue = getAdjustedVehicleBaseValue
 M.getVehicleMileageById = getVehicleMileageById

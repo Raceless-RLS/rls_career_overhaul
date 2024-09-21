@@ -66,7 +66,7 @@ local function setupTraffic(forceSetup)
     end
 
     -- police amount and vehicle pooling
-    local policeAmount = M.debugMode and testTrafficAmounts.police or 0 -- temporarily disabled by default
+    local policeAmount = M.debugMode and testTrafficAmounts.police or 2 -- temporarily disabled by default
     local extraAmount = policeAmount -- enables traffic pooling
     playerData.trafficActive = restrict and testTrafficAmounts.active or amount -- store the amount here for future usage
     if playerData.trafficActive == 0 then playerData.trafficActive = math.huge end

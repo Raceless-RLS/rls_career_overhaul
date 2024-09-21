@@ -12,8 +12,8 @@ local jbeamIO = require('jbeam/io')
 local imgui = ui_imgui
 
 local vehicleDeliveryDelay = 60
-local shopGenerationDelay = 15 * 60
-local salesTax = 0.07
+local shopGenerationDelay = 5 * 60
+local salesTax = 0.06
 local customLicensePlatePrice = 300
 
 local starterVehicleMileages = {bx = 165746239, etki = 285817342, covet = 80174611}
@@ -64,6 +64,22 @@ local function getShoppingData()
   return data
 end
 
+local function getRandomizedPrice(price)
+  local rand = math.random(0, 100) / 100
+  if rand == 0 then
+    return price * 0.5
+  elseif rand == 100 then
+    return price * 1.15
+  elseif rand < 10 then
+    return price * (0.75 + rand/2)
+  elseif rand < 90 then
+    return price * (0.80 + (rand - 10)/8)
+  else
+    return price * (0.95 + (rand - 90)/100)
+  end
+end
+
+
 local function normalizePopulations(configs, scalingFactor)
   local sum = 0
   for _, configInfo in ipairs(configs) do
@@ -107,7 +123,7 @@ local function generateVehicleList()
 
   vehiclesInShop = {}
   for _, seller in ipairs(sellers) do
-    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 10, eligibleVehicles, "adjustedPopulation")
+    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 15, eligibleVehicles, "adjustedPopulation")
 
     for _, randomVehicleInfo in ipairs(randomVehicleInfos) do
       randomVehicleInfo.sellerId = seller.id
@@ -128,7 +144,7 @@ local function generateVehicleList()
         randomVehicleInfo.Mileage = starterVehicleMileages[randomVehicleInfo.model_key]
       end
 
-      randomVehicleInfo.Value = career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year})
+      randomVehicleInfo.Value = getRandomizedPrice(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}))
       randomVehicleInfo.shopId = tableSize(vehiclesInShop) + 1
 
       -- compute taxes and fees
