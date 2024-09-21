@@ -153,7 +153,7 @@ local function updateVehicleThumbnail(inventoryId, filename, callback)
     resolution = resolution,
     fov = fov,
     nearPlane = nearPlane,
-    screenshotDelay = 0.1
+    screenshotDelay = 0.5
   }
   render_renderViews.takeScreenshot(options, callback)
 end
@@ -217,7 +217,7 @@ local function saveVehiclesData(currentSavePath, oldSaveDate, vehiclesThumbnailU
       vehicle.partConditions = serialize(vehicle.partConditions)
 
       local thumbnailFilename = currentSavePath .. "/career/vehicles/" .. id .. ".png"
-      if vehiclesThumbnailUpdate and tableContains(vehiclesThumbnailUpdate, id) then
+      if vehiclesThumbnailUpdate and tableContains(vehiclesThumbnailUpdate, id) and inventoryIdToVehId[id] then
         finishedSaveTasks["thumbnail" .. id] = false
         updateVehicleThumbnail(id, thumbnailFilename, function()
           finishedSaveTasks["thumbnail" .. id] = true
@@ -1217,6 +1217,10 @@ local function onGetRawPoiListForLevel(levelIdentifier, elements)
   end
 end
 
+local function getDirtiedVehicles()
+  return dirtiedVehicles
+end
+
 M.addVehicle = addVehicle
 M.removeVehicle = removeVehicle
 M.enterVehicle = enterVehicle
@@ -1263,6 +1267,7 @@ M.applyTuningCallback = applyTuningCallback
 M.applyPartConditions = applyPartConditions
 M.teleportedFromBigmap = teleportedFromBigmap
 M.setVehicleDirty = setVehicleDirty
+M.getDirtiedVehicles = getDirtiedVehicles
 M.getVehicles = getVehicles
 M.spawnVehicle = spawnVehicle
 M.getInventoryIdsInClosestGarage = getInventoryIdsInClosestGarage
