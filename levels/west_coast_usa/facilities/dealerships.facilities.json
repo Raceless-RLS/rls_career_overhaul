@@ -13,7 +13,8 @@
       ],
 
       "filter":{
- 	  "blackList":{"Type":["Trailer"],"Body Style":["ATV","Buggy","Semi Truck"], "Config Type":["Police","Service","Frame"]}
+        "whiteList":{"Type":["Car"]},
+ 	       "blackList":{"Type":["Trailer"],"Body Style":["ATV","Buggy"]}
       },
 
       "subFilters": [
@@ -28,10 +29,6 @@
         {
           "probability":2,
           "whiteList":{"Years": {"min":2007, "max":2015}, "Mileage":{"min":50000000, "max":165000000}, "Config Type":["Factory"],"Value":{"max":65000}}
-        },
-        {
-          "probability":1,
-          "whiteList":{}
         }
       ],
 
@@ -58,7 +55,7 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service","Frame"],"Body Style":["Semi Truck","Bus", "Tanker Truck", "Flatbed Truck","Box Truck","Truck","Fifth Wheel Truck", "Chassis Cab"]}
+        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service","Frame"],"Body Style":["Semi Truck","Bus", "Tanker Truck", "Flatbed Truck","Box Truck","Truck","Fifth Wheel Truck", "Chassis Cab","Dump Truck","Flatbed","Mixer Truck","Logging Truck"]}
       },
       "subFilters": [
         {
@@ -71,7 +68,11 @@
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Gavril"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Gavril"],"Body Style":["Pickup"]}
+        },
+        {
+          "probability":2,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845}, "Config Type":["Custom"],"Brand":["Gavril"],"Type":["Car"]}
         },
         {
           "probability":1,
@@ -102,7 +103,8 @@
         {"keyLabel":"Prestige and High Quality"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"], "Config Type":["Police","Frame"], "model_key":["md_series"]}
+        "whiteList":{"Type":["Car"]},
+        "blackList":{"Type":["Trailer","Truck"], "Config Type":["Police","Frame","Race"]}
       },
       "subFilters": [
         {
@@ -151,23 +153,23 @@
       "subFilters": [
         {
           "probability":4,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Pickup"], "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Pickup"], "Config Type":["Factory"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Pickup"], "Config Type":["Custom"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Pickup"], "Config Type":["Custom"]}
         },
         {
           "probability":2,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Van"], "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Van"], "Config Type":["Factory"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Van"], "Config Type":["Custom"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Van"], "Config Type":["Custom"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Chassis Cab"], "Config Type":["Factory"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Chassis Cab"], "Config Type":["Factory"]}
         }
       ],
 
@@ -441,7 +443,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["ATV"],"Config Type":["Factory","race"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["ATV"],"Config Type":["Factory","Race"]}
         },
         {
           "probability":2,
@@ -453,7 +455,7 @@
         },
         {
           "probability":3,
-          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Buggy"],"Config Type":["Factory","race"]}
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Body Style":["Buggy"],"Config Type":["Factory","Race"]}
         }
       ],
       "fees": 1500,
