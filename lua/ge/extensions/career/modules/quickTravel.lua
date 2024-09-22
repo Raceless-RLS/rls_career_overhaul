@@ -9,7 +9,7 @@ M.dependencies = {'career_career'}
 local routePlanner = require('gameplay/route/route')()
 
 local basePrice = 5
-local pricePerM = 0.004
+local pricePerM = 0.08
 
 local function getDistanceToPoint(pos)
   routePlanner:setupPath(getPlayerVehicle(0):getPosition(), pos)
