@@ -38,39 +38,38 @@ local function setPlayerData(newId, oldId)
     playerData.parking = gameplay_parking.getTrackingData()[newId]
 end
 
--- RLS
-local function getVehicleConfigType()
-    local playerVehicleId = be:getPlayerVehicleID(0)
+local function printTable(t, indent)
+    -- This function prints all parts of a table with labels.
+    -- It recursively prints nested tables with indentation.
+    --
+    -- Parameters:
+    --   t (table): The table to print.
+    --   indent (number, optional): The current level of indentation. Defaults to 0.
+    indent = indent or 0
+    local indentStr = string.rep("  ", indent)
 
-    if not playerVehicleId then
-        return nil
-    end
-
-    local playerVehicle = be:getObjectByID(playerVehicleId)
-
-    if not playerVehicle then
-        return nil
-    end
-
-    local configContent = playerVehicle:getField('partConfig', '')
-
-    if not configContent or configContent == '' then
-        return nil
-    end
-
-    if configContent and string.find(configContent, 'soundscape_siren') then
-        return "police"
-    else
-        return nil
+    for k, v in pairs(t) do
+        if type(v) == "table" then
+            print(indentStr .. tostring(k) .. ":")
+            printTable(v, indent + 1)
+        else
+            print(indentStr .. tostring(k) .. ": " .. tostring(v))
+        end
     end
 end
 
 local function isPlayerInPoliceVehicle()
-    local configType = getVehicleConfigType()
-    if configType then
-        return configType == "police"
+
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+    for partId, part in pairs(career_modules_partInventory.getInventory()) do
+        if part.location == inventoryId then
+            if string.find(part.name, "siren") then
+                gameplay_traffic.setTrafficRole(be:getPlayerVehicleID(0))
+                return true
+            end
+        end
     end
-    return false
+    return nil
 end
 
 local function setTrafficVars()
@@ -218,7 +217,7 @@ local function onPursuitAction(vehId, data)
             if not gameplay_walk.isWalking() then
                 gameplay_parking.enableTracking(vehId)
                 if playerIsCop == true then
-                    local pity = -750
+                    local pity = 750
                     career_saveSystem.saveCurrent()
                     career_modules_payment.reward({
                         money = {
@@ -438,12 +437,6 @@ end
 
 local function onPlayerCameraReady()
     setupTraffic() -- spawns traffic while the loading screen did not fade out yet
-end
-
-local function onVehicleSwitched(oldId, newId)
-    if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
-        setPlayerData(newId, oldId)
-    end
 end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
