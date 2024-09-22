@@ -568,6 +568,7 @@ M.retrieveFavoriteVehicle = retrieveFavoriteVehicle
 M.playerPursuitActive = playerPursuitActive
 M.resetPlayerState = resetPlayerState
 M.teleportToGarage = teleportToGarage
+M.showPosition = showPosition
 
 M.ui_message = ui_message
 M.isPlayerInPoliceVehicle = isPlayerInPoliceVehicle
