@@ -58,7 +58,7 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service","Frame"]}
+        "blackList":{"Type":["Trailer"], "Config Type":["Police","Service","Frame"],"Body Style":["Semi Truck","Bus", "Tanker Truck", "Flatbed Truck","Box Truck","Truck","Fifth Wheel Truck", "Chassis Cab"]}
       },
       "subFilters": [
         {
@@ -150,12 +150,24 @@
       },
       "subFilters": [
         {
-          "probability":3,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Factory"]}
+          "probability":4,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Pickup"], "Config Type":["Factory"]}
         },
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Truck"], "Config Type":["Custom"]}
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Pickup"], "Config Type":["Custom"]}
+        },
+        {
+          "probability":2,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Van"], "Config Type":["Factory"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Van"], "Config Type":["Custom"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Type":["Chassis Cab"], "Config Type":["Factory"]}
         }
       ],
 
@@ -556,7 +568,7 @@
         {"keyLabel":"Used Vehicles"}
       ],
       "filter": {
-        "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
+        "blackList":{"Type":["Trailer"],"Config Type":["Frame"],"Body Style":["Semi Truck","Bus", "Tanker Truck", "Flatbed Truck","Truck","Fifth Wheel Truck", "Chassis Cab"]}
       },
       "subFilters": [
 		    {
@@ -805,6 +817,10 @@
         {
           "probability":1,
           "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Truck"]}
+        },
+        {
+          "probability":4,
+          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Pickup"]}
         }
       ],
       "fees": 2000,
@@ -923,12 +939,16 @@
   ],
   "filter":{
     "whiteList":{"Mileage":{"min":1760006, "max":970000000}},
-    "blackList":{"hasLoad":[true],"Type":["Trailer"],"Tags":["ambulance"]}
+    "blackList":{"hasLoad":[true],"Config Type":["Frame"],"Type":["Trailer"],"Tags":["Ambulance"],"Body Style":["Ambulance","Pickup"]}
   },
 
   "subFilters": [
     {
-      "whiteList":{"Body Style":["Semi Truck", "Tanker Truck", "Flatbed Truck", "Fifth Wheel Truck", "Chassis Cab"]},
+      "whiteList":{"Body Style":["Semi Truck", "Tanker Truck", "Flatbed Truck", "Fifth Wheel Truck", "Chassis Cab","Truck"]},
+      "probability":5
+    },
+    {
+      "whiteList":{"Body Style":["Bus"]},
       "probability":1
     }
   ],
