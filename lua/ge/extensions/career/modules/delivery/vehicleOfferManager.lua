@@ -312,7 +312,7 @@ local function spawnOffer(offerId, fadeToBlack, callback)
     step.makeStepReturnTrueFunction(function()
       -- move vehicle to right spot
       local ps = dGenerator.getParkingSpotByPath(offer.spawnLocation.psPath)
-      ps:moveResetVehicleTo(vehId, nil, true, nil, nil, true)
+      ps:moveResetVehicleTo(vehId, nil, nil, nil, nil, true)
       -- setup mileage
       local veh = be:getObjectByID(vehId)
       local mileage = offer.vehicle.mileage or 0
