@@ -466,11 +466,11 @@ local function formatVehicleOfferForUi(offers)
       goto continue
     end
 
-    if next(dVehicleTasks.getVehicleTasks()) or hasSpawnWhenCommitingCargoOffer then
-      item.enabled = false
-      item.disableReason = {type="limit", limit=1, label ="You can deliver at most 1 vehicle at a time."}
-      goto continue
-    end
+    --if next(dVehicleTasks.getVehicleTasks()) or hasSpawnWhenCommitingCargoOffer then
+    --  item.enabled = false
+    --  item.disableReason = {type="limit", limit=1, label ="You can deliver at most 1 vehicle at a time."}
+    --  goto continue
+   -- end
 
     ::continue::
 
