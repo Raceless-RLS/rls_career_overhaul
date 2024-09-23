@@ -59,7 +59,6 @@ local function printTable(t, indent)
 end
 
 local function isPlayerInPoliceVehicle()
-
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
     for partId, part in pairs(career_modules_partInventory.getInventory()) do
         if part.location == inventoryId then
@@ -75,7 +74,7 @@ end
 local function setTrafficVars()
     -- temporary police adjustment
     local playerIsCop = isPlayerInPoliceVehicle()
-    if playerIsCop == true then
+    if playerIsCop then
         gameplay_traffic.setTrafficVars({
             enableRandomEvents = true
         })
@@ -191,7 +190,7 @@ local function hasLicensePlate(inventoryId)
 end
 
 local function onPursuitAction(vehId, data)
-    if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
+    if vehId == be:getPlayerVehicleID(0) then
         local playerIsCop = isPlayerInPoliceVehicle()
         local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
         if data.type == "start" then -- pursuit started
