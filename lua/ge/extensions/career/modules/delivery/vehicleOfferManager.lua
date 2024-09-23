@@ -56,21 +56,21 @@ local vehicleTags = {
   },
   largeVeh = {
     requirements = {
-      vehicleDelivery = 3
+      vehicleDelivery = 2
     },
     labelPlural = "Large Vehicles",
     labelSingular = "Large Vehicle",
   },
   fleetVeh = {
     requirements = {
-      vehicleDelivery = 4
+      vehicleDelivery = 3
     },
     labelPlural = "Fleet Cars",
     labelSingular = "Fleet Car",
   },
   exoticVeh = {
     requirements = {
-      vehicleDelivery = 5
+      vehicleDelivery = 4
     },
     labelPlural = "Exotic Cars",
     labelSingular = "Exotic Car",
@@ -79,42 +79,42 @@ local vehicleTags = {
 
   emptySmallTrailers = {
     requirements = {
-      delivery = 3
+      delivery = 1
     },
     labelPlural = "Small Empty Trailers",
     labelSingular = "Small Empty Trailer",
   },
   loadedSmallTrailers = {
     requirements = {
-      delivery = 3
+      delivery = 1
     },
     labelPlural = "Small Loaded Trailers",
     labelSingular = "Small Loaded Trailer",
   },
   emptyMediumTrailers = {
     requirements = {
-      delivery = 3
+      delivery = 1
     },
     labelPlural = "Medium Empty Trailers",
     labelSingular = "Medium Empty Trailer",
   },
   loadedMediumTrailers = {
     requirements = {
-      delivery = 3
+      delivery = 2
     },
     labelPlural = "Medium Loaded Trailers",
     labelSingular = "Medium Loaded Trailer",
   },
   emptyLargeTrailer = {
     requirements = {
-      delivery = 4
+      delivery = 2
     },
     labelPlural = "Large Empty Trailers",
     labelSingular = "Large Empty Trailer",
   },
   loadedLargeTrailers = {
     requirements = {
-      delivery = 4
+      delivery = 3
     },
     labelPlural = "Large Loaded Trailers",
     labelSingular = "Large Loaded Trailer",
