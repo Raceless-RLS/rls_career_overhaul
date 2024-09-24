@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career'}
+M.dependencies = {'career_career', 'core_modmanager'}
 
 local playerData = {
     trafficActive = 0
@@ -38,43 +38,26 @@ local function setPlayerData(newId, oldId)
     playerData.parking = gameplay_parking.getTrackingData()[newId]
 end
 
-local function printTable(t, indent)
-    -- This function prints all parts of a table with labels.
-    -- It recursively prints nested tables with indentation.
-    --
-    -- Parameters:
-    --   t (table): The table to print.
-    --   indent (number, optional): The current level of indentation. Defaults to 0.
-    indent = indent or 0
-    local indentStr = string.rep("  ", indent)
-
-    for k, v in pairs(t) do
-        if type(v) == "table" then
-            print(indentStr .. tostring(k) .. ":")
-            printTable(v, indent + 1)
-        else
-            print(indentStr .. tostring(k) .. ": " .. tostring(v))
-        end
-    end
-end
-
-local function isPlayerInPoliceVehicle()
-
+-- RLS
+local function getPlayerIsCop()
+   
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
     for partId, part in pairs(career_modules_partInventory.getInventory()) do
         if part.location == inventoryId then
             if string.find(part.name, "siren") then
-                gameplay_traffic.setTrafficRole(be:getPlayerVehicleID(0))
                 return true
             end
         end
     end
     return nil
 end
+   
+
+
 
 local function setTrafficVars()
     -- temporary police adjustment
-    local playerIsCop = isPlayerInPoliceVehicle()
+    local playerIsCop = getPlayerIsCop()
     if playerIsCop == true then
         gameplay_traffic.setTrafficVars({
             enableRandomEvents = true
@@ -191,8 +174,8 @@ local function hasLicensePlate(inventoryId)
 end
 
 local function onPursuitAction(vehId, data)
-    if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
-        local playerIsCop = isPlayerInPoliceVehicle()
+ --   if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
+        local playerIsCop = getPlayerIsCop()
         local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
         if data.type == "start" then -- pursuit started
             gameplay_parking.disableTracking(vehId)
@@ -289,12 +272,12 @@ local function onPursuitAction(vehId, data)
                 ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
             end
             career_saveSystem.saveCurrent()
-        end
+ --       end
     end
 end
 
 local function onVehicleSwitched(oldId, newId)
-    local playerIsCop = isPlayerInPoliceVehicle()
+    local playerIsCop = getPlayerIsCop()
     if playerIsCop then
         ui_message("You are now a cop", 5, "Police", "info")
     end
@@ -564,8 +547,7 @@ M.teleportToGarage = teleportToGarage
 M.showPosition = showPosition
 
 M.ui_message = ui_message
-M.isPlayerInPoliceVehicle = isPlayerInPoliceVehicle
-M.getVehicleConfigType = getVehicleConfigType
+M.getPlayerIsCop = getPlayerIsCop
 
 M.onPlayerCameraReady = onPlayerCameraReady
 M.onTrafficStarted = onTrafficStarted

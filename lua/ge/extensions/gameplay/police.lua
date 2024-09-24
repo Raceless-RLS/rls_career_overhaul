@@ -169,8 +169,9 @@ end
 
 local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1 = busted, 0 = off, 1 and higher = pursuit level
   --print(tostring(mode)..", "..tostring(targetId)..", "..tostring(policeId))
-  targetId = targetId or be:getPlayerVehicleID(0) -- if targetId is not provided, uses player vehicle (intended as a backwards compatibility measure)
   if not targetId then return end
+  targetId = targetId or be:getPlayerVehicleID(0) -- if targetId is not provided, uses player vehicle (intended as a backwards compatibility measure)
+ -- if not targetId then return end
 
   local traffic = gameplay_traffic.getTrafficData()
   local targetVeh = traffic[targetId]
