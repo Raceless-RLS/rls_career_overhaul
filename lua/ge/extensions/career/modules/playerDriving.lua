@@ -40,7 +40,7 @@ end
 
 -- RLS
 local function getPlayerIsCop()
-   
+
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
     for partId, part in pairs(career_modules_partInventory.getInventory()) do
         if part.location == inventoryId then
@@ -49,11 +49,8 @@ local function getPlayerIsCop()
             end
         end
     end
-    return nil
+    return false
 end
-   
-
-
 
 local function setTrafficVars()
     -- temporary police adjustment
@@ -174,105 +171,105 @@ local function hasLicensePlate(inventoryId)
 end
 
 local function onPursuitAction(vehId, data)
- --   if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
-        local playerIsCop = getPlayerIsCop()
-        local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-        if data.type == "start" then -- pursuit started
-            gameplay_parking.disableTracking(vehId)
-            if inventoryId and hasLicensePlate(inventoryId) then
-                gameplay_police.setPursuitVars({
-                    evadeLimit = 55
+    --   if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
+    local playerIsCop = getPlayerIsCop()
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+    if data.type == "start" then -- pursuit started
+        gameplay_parking.disableTracking(vehId)
+        if inventoryId and hasLicensePlate(inventoryId) then
+            gameplay_police.setPursuitVars({
+                evadeLimit = 55
+            })
+        else
+            gameplay_police.setPursuitVars({
+                evadeLimit = 35
+            })
+        end
+        -- core_recoveryPrompt.deactivateAllButtons()
+        log("I", "career", "Police pursuing player, now deactivating recovery prompt buttons")
+    elseif data.type == "reset" then -- pursuit ended, return to normal
+        if not gameplay_walk.isWalking() then
+            gameplay_parking.enableTracking(vehId)
+        end
+        -- core_recoveryPrompt.setDefaultsForCareer()
+        log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
+    elseif data.type == "evade" then
+        if not gameplay_walk.isWalking() then
+            gameplay_parking.enableTracking(vehId)
+            if playerIsCop == true then
+                local pity = 750
+                career_saveSystem.saveCurrent()
+                career_modules_payment.reward({
+                    money = {
+                        amount = pity
+                    },
+                    beamXP = {
+                        amount = math.floor(pity / 20)
+                    },
+                    police = {
+                        amount = math.floor(pity / 20)
+                    },
+                    specialized = {
+                        amount = math.floor(pity / 20)
+                    }
+                }, {
+                    label = "The suspect got away, Here is " .. pity .. " for repairs",
+                    tags = {"gameplay", "reward", "police"}
                 })
+                career_saveSystem.saveCurrent()
+                ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
-                gameplay_police.setPursuitVars({
-                    evadeLimit = 35
-                })
-            end
-            -- core_recoveryPrompt.deactivateAllButtons()
-            log("I", "career", "Police pursuing player, now deactivating recovery prompt buttons")
-        elseif data.type == "reset" then -- pursuit ended, return to normal
-            if not gameplay_walk.isWalking() then
-                gameplay_parking.enableTracking(vehId)
+                if playerIsCop == false then
+                    local reward = math.floor(150 * data.score) / 100
+                    career_modules_payment.reward({
+                        money = {
+                            amount = reward
+                        },
+                        beamXP = {
+                            amount = math.floor(reward / 20)
+                        },
+                        criminal = {
+                            amount = math.floor(reward / 20)
+                        },
+                        adventurer = {
+                            amount = math.floor(reward / 20)
+                        }
+                    }, {
+                        label = "You sold your dashcam footage for $" .. reward,
+                        tags = {"gameplay", "reward", "criminal"}
+                    })
+                    career_saveSystem.saveCurrent()
+                    ui_message("You sold your dashcam footage for $" .. reward, 5, "Criminal", "info")
+                end
             end
             -- core_recoveryPrompt.setDefaultsForCareer()
             log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
-        elseif data.type == "evade" then
-            if not gameplay_walk.isWalking() then
-                gameplay_parking.enableTracking(vehId)
-                if playerIsCop == true then
-                    local pity = 750
-                    career_saveSystem.saveCurrent()
-                    career_modules_payment.reward({
-                        money = {
-                            amount = pity
-                        },
-                        beamXP = {
-                            amount = math.floor(pity / 20)
-                        },
-                        police = {
-                            amount = math.floor(pity / 20)
-                        },
-                        specialized = {
-                            amount = math.floor(pity / 20)
-                        }
-                    }, {
-                        label = "The suspect got away, Here is " .. pity .. " for repairs",
-                        tags = {"gameplay", "reward", "police"}
-                    })
-                    career_saveSystem.saveCurrent()
-                    ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
-                else
-                    if playerIsCop == false then
-                        local reward = math.floor(150 * data.score) / 100
-                        career_modules_payment.reward({
-                            money = {
-                                amount = reward
-                            },
-                            beamXP = {
-                                amount = math.floor(reward / 20)
-                            },
-                            criminal = {
-                                amount = math.floor(reward / 20)
-                            },
-                            adventurer = {
-                                amount = math.floor(reward / 20)
-                            }
-                        }, {
-                            label = "You sold your dashcam footage for $" .. reward,
-                            tags = {"gameplay", "reward", "criminal"}
-                        })
-                        career_saveSystem.saveCurrent()
-                        ui_message("You sold your dashcam footage for $" .. reward, 5, "Criminal", "info")
-                    end
-                end
-                -- core_recoveryPrompt.setDefaultsForCareer()
-                log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
-            end
-        elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
-            if playerIsCop == true then
-                local bonus = math.floor(200 * data.score) / 100
+        end
+    elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
+        if playerIsCop == true then
+            local bonus = math.floor(200 * data.score) / 100
 
-                career_modules_payment.reward({
-                    money = {
-                        amount = bonus
-                    },
-                    beamXP = {
-                        amount = math.floor(bonus / 20)
-                    },
-                    police = {
-                        amount = math.floor(bonus / 20)
-                    },
-                    specialized = {
-                        amount = math.floor(bonus / 20)
-                    }
-                }, {
-                    label = "Arrest Bonus",
-                    tags = {"gameplay", "reward", "police"}
-                })
-                ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
-            end
-            career_saveSystem.saveCurrent()
- --       end
+            career_modules_payment.reward({
+                money = {
+                    amount = bonus
+                },
+                beamXP = {
+                    amount = math.floor(bonus / 20)
+                },
+                police = {
+                    amount = math.floor(bonus / 20)
+                },
+                specialized = {
+                    amount = math.floor(bonus / 20)
+                }
+            }, {
+                label = "Arrest Bonus",
+                tags = {"gameplay", "reward", "police"}
+            })
+            ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
+        end
+        career_saveSystem.saveCurrent()
+        --       end
     end
 end
 
