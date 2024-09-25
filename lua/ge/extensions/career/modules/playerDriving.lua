@@ -543,7 +543,6 @@ M.resetPlayerState = resetPlayerState
 M.teleportToGarage = teleportToGarage
 M.showPosition = showPosition
 
-M.ui_message = ui_message
 M.getPlayerIsCop = getPlayerIsCop
 
 M.onPlayerCameraReady = onPlayerCameraReady
