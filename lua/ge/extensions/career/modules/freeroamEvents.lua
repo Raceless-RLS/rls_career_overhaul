@@ -1368,13 +1368,9 @@ local function createCheckpoint(index, isAlt)
     return checkpoint
 end
 local function createCheckpointMarker(index, alt)
-    local checkpoint = {}
-    if alt then
-        checkpoint = altCheckpoints[index]
-    else
-        checkpoint = checkpoints[index]
-    end
+    local checkpoint = alt and altCheckpoints[index] or checkpoints[index]
     if not checkpoint then
+        print("No checkpoint data for index " .. index)
         return
     end
 
@@ -1505,7 +1501,8 @@ local function enableCheckpoint(checkpointIndex, alt)
     printTable(index)
     print("ALT")
     printTable(ALT)
-
+    currentExpectedCheckpoint = index[1]
+    print("Current expected checkpoint: " .. currentExpectedCheckpoint)
     local checkpoint = {}
     if ALT[1] then
         checkpoint = altCheckpoints[index[1]]
@@ -1632,45 +1629,6 @@ local function exitCheckpoint(data)
     end
 end
 
-local function test(data)
-    if data.event == "exit" then
-        return
-    end
-    print("Starting testCheckpointSystem")
-
-    -- Merge the roads
-    -- roadNodes = mergeRoads("section1", "section2")
-    roadNodes = getRoadNodes("trackloop")
-    if not roadNodes then
-        print("Failed to merge roads. Exiting test.")
-        return
-    end
-
-    -- Process the merged road nodes
-    print("Processing merged road nodes...")
-    checkpoints = processRoadNodes(roadNodes)
-
-    -- Print checkpoint information
-    print("\nGenerated Checkpoints:")
-    for i, checkpoint in ipairs(checkpoints) do
-        print(string.format("Checkpoint %d: Type: %s, Position: (%.2f, %.2f, %.2f), Direction: %s, Width: %.2f", i,
-            checkpoint.type, checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z, checkpoint.direction or "N/A",
-            checkpoint.width or 0))
-    end
-
-    -- Visualize checkpoints
-    print("\nVisualizing checkpoints...")
-    createCheckpoints()
-    isLoop = isNodeGroupLoop(roadNodes)
-    enableCheckpoint(#checkpoints)
-
-    printRoadInfo()
-
-    currCheckpoint = 0
-
-    print("testCheckpointSystem completed")
-end
-
 local function calculateTotalCheckpoints(race)
     local mainCount = #checkpoints
     local altCount = altCheckpoints and #altCheckpoints or 0
@@ -1700,18 +1658,43 @@ local function onBeamNGTrigger(data)
         return
     end
 
+    -- Remove the 'fre_' prefix for processing
     triggerName = triggerName:sub(5)
 
     -- Extract trigger information
-    local triggerType, raceName, index = triggerName:match("([^_]+)_([^_]+)_?(%d*)")
+    local triggerType, raceName, rest = triggerName:match("^([^_]+)_([^_]+)(.*)$")
 
     if not triggerType or not raceName then
         print("Trigger name doesn't match expected pattern.")
         return
     end
 
-    -- Convert index to a number if it exists
-    local checkpointIndex = tonumber(index)
+    -- Initialize altFlag and index
+    local altFlag = nil
+    local index = nil
+
+    -- Process the rest of the trigger name
+    if rest ~= "" then
+        -- Remove leading underscores
+        rest = rest:gsub("^_+", "")
+        
+        -- Check if rest starts with 'alt'
+        if rest:sub(1, 3) == "alt" then
+            altFlag = "alt"
+            rest = rest:sub(4)  -- Remove 'alt' and move forward
+            rest = rest:gsub("^_+", "")  -- Remove any additional underscores
+        end
+        
+        -- If there's still something left, it's the index
+        if rest ~= "" then
+            index = rest
+        end
+    end
+
+    -- Convert index to number if it exists
+    local checkpointIndex = index and tonumber(index) or nil
+
+    local isAlt = altFlag == "alt" -- TEMP must change to acount for alt routes that intersect with the main route multiple times
 
     if triggerType == "staging" then
         if event == "enter" then
@@ -1761,45 +1744,22 @@ local function onBeamNGTrigger(data)
                 return
             end
 
+            displayAssets(data)
+            playCheckpointSound()
+            timerActive = false
             lapCount = lapCount + 1
-
-            if lapCount >= (maxLaps or 500)then
-                -- Finish the race
-                timerActive = false
-                currCheckpoint = nil
-                local reward = payoutRace()
-                mSplitTimes = {}
-                mActiveRace = nil
-                setActiveLight(raceName, "red")
-                restoreTrafficAmount()
-                displayMessage("Race Finished!", 5)
-
-                -- Hide assets and remove checkpoints
-                activeAssets:hideAllAssets()
-                removeCheckpoints()
-                checkpoints = {}
-                altCheckpoints = {}
-                roadNodes = {}
-                altRoadNodes = {}
-                lastVehiclePos = nil
-                mAltRoute = nil
-                lapCount = 0
-                currCheckpoint = nil
-                checkpointsHit = 0
-                currentExpectedCheckpoint = nil
-            else
-                -- Start next lap
-                displayMessage("Lap " .. lapCount .. " completed. Starting next lap!", 5)
-                currCheckpoint = 0
-                checkpointsHit = 0
-                currentExpectedCheckpoint = 1
-                mAltRoute = false
-                if lapCount > 1 then
-                    payoutRace()
-                end
-                -- Re-enable checkpoints
-                createCheckpoints()
-                enableCheckpoint(0)
+            local reward = payoutRace(data)
+            currCheckpoint = nil
+            mSplitTimes = {}
+            mActiveRace = raceName
+            mAltRoute = nil
+            in_race_time = 0
+            timerActive = true
+            checkpointsHit = 0
+            totalCheckpoints = #checkpoints
+            currentExpectedCheckpoint = 1
+            if races[raceName].hotlap then
+                mHotlap = raceName
             end
         elseif event == "enter" and staged == raceName then
             -- Start the race
@@ -1809,7 +1769,7 @@ local function onBeamNGTrigger(data)
             in_race_time = 0
             mActiveRace = raceName
             lapCount = 0 -- Initialize lap count
-            maxLaps = races[raceName].laps or 1 -- Get the number of laps, default to 1
+            local maxLaps = races[raceName].laps or 1 -- Get the number of laps, default to 1
             displayMessage(getStartMessage(raceName), 5)
             setActiveLight(raceName, "green")
 
@@ -1822,11 +1782,9 @@ local function onBeamNGTrigger(data)
                 if races[raceName].altRoute and races[raceName].altRoute.checkpointRoad then
                     altRoadNodes = getRoadNodes(races[raceName].altRoute.checkpointRoad)
                     checkpoints, altCheckpoints = processRoadNodes(roadNodes, altRoadNodes)
-                    mergeCheckpoints = races[raceName].altRoute.mergeCheckpoints
                 else
                     checkpoints = processRoadNodes(roadNodes)
                     altCheckpoints = nil
-                    mergeCheckpoints = nil
                 end
 
                 createCheckpoints()
@@ -1860,11 +1818,13 @@ local function onBeamNGTrigger(data)
                 displayAssets(data)
 
                 -- Remove the marker for this checkpoint
-                removeCheckpointMarker(checkpointIndex)
+                removeCheckpointMarker(checkpointIndex, isAlt)
 
                 -- Prepare the next checkpoint
-                enableCheckpoint(currentExpectedCheckpoint)
-                currentExpectedCheckpoint = currentExpectedCheckpoint + 1
+                enableCheckpoint(currentExpectedCheckpoint, isAlt)
+                if isAlt and not mAltRoute then
+                    mAltRoute = true
+                end
             else
                 -- Player missed a checkpoint
                 local missedCheckpoints = checkpointIndex - currentExpectedCheckpoint
@@ -2047,7 +2007,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     --   dtSim (number): Simulated delta time.
     --   dtRaw (number): Raw delta time.
     if mActiveRace and races[mActiveRace].checkpointRoad then
-        checkPlayerOnRoad()
+        -- checkPlayerOnRoad()
         -- print("checking player on road")
     end
     if timerActive == true then
@@ -2128,7 +2088,6 @@ local function spawnAINextToPlayer(data)
 end
 
 M.spawnAINextToPlayer = spawnAINextToPlayer
-M.test = test
 M.displayMessage = displayMessage
 M.isNodeGroupLoop = isNodeGroupLoop
 M.onBeamNGTrigger = onBeamNGTrigger
@@ -2140,7 +2099,6 @@ M.onUpdate = onUpdate
 
 M.payoutRace = payoutRace
 M.raceReward = raceReward
-M.manageZone = manageZone
 M.loadLeaderboard = loadLeaderboard
 M.saveLeaderboard = saveLeaderboard
 M.isCareerModeActive = isCareerModeActive

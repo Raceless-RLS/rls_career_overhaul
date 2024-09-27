@@ -40,8 +40,8 @@ end
 
 -- RLS
 local function getPlayerIsCop()
-
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+    local vehId = be:getPlayerVehicleID(0)
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
     for partId, part in pairs(career_modules_partInventory.getInventory()) do
         if part.location == inventoryId then
             if string.find(part.name, "siren") then
