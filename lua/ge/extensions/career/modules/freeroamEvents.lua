@@ -15,6 +15,8 @@ local function playCheckpointSound()
     })
 end
 
+local debug = nil
+
 -- This is used to track if the timer is active
 local timerActive = false
 
@@ -185,7 +187,7 @@ local races = {
     dirtCircuit = {
         bestTime = 65,
         reward = 2000,
-        checkpoints = 10,
+        checkpointRoad = "dirtloop",
         hotlap = 55,
         label = "Dirt Circuit",
         type = {"motorsport", "apexRacing"}
@@ -1543,7 +1545,9 @@ local function enableCheckpoint(checkpointIndex, alt)
 end
 
 local function log(message)
-    print("[RoadCheck] " .. message)
+    if debug then
+        print("[RoadCheck] " .. message)
+    end
 end
 
 local function vec3FromTable(t)
@@ -2007,7 +2011,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     --   dtSim (number): Simulated delta time.
     --   dtRaw (number): Raw delta time.
     if mActiveRace and races[mActiveRace].checkpointRoad then
-        -- checkPlayerOnRoad()
+        checkPlayerOnRoad()
         -- print("checking player on road")
     end
     if timerActive == true then

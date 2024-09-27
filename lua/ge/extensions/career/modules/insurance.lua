@@ -1103,16 +1103,29 @@ local function hasLicensePlate(inventoryId)
     end
 end
 
+local function getPlayerIsCop()
+    local vehId = be:getPlayerVehicleID(0)
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+    for partId, part in pairs(career_modules_partInventory.getInventory()) do
+        if part.location == inventoryId then
+            if string.find(part.name, "siren") then
+                return true
+            end
+        end
+    end
+    return false
+end
 local offenseNames = {
     ["speeding"] = "Speeding",
     ["reckless"] = "Reckless Driving",
     ["intersection"] = "Failure to Yield",
     ["racing"] = "Felony Speeding",
-    ["wrongWay"] = "Wrong Way"
+    ["wrongWay"] = "Wrong Way",
+    ["hitPolice"] = "Hitting a Police Vehicle"
 }
 
 local function onPursuitAction(vehId, data)
-    if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
+    if vehId == be:getPlayerVehicleID(0) and not getPlayerIsCop() then
         if data.type == "arrest" then
             local fine = math.floor(data.score * 130) / 100
 
