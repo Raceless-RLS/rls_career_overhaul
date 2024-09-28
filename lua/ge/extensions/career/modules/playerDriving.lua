@@ -41,7 +41,7 @@ end
 -- RLS
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    if vehId and vehId > -1 and gameplay_traffic.getRole then
+    if vehId and vehId > -1 and gameplay_traffic.getRole() then
         local role = gameplay_traffic.getRole(vehId)
         print(role)
         return role == 'police'
