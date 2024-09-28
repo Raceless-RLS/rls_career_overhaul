@@ -41,25 +41,25 @@ end
 -- RLS
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    if vehId and vehId > -1 then
+    if vehId and gameplay_traffic.getTrafficData()[vehId] then
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
-        return role == 'police'
+        if role == 'police' then
+            gameplay_traffic.setTrafficVars({
+                enableRandomEvents = true
+            })
+            return true
+        else 
+            gameplay_traffic.setTrafficVars({
+                enableRandomEvents = false
+            })
+            return false
+        end
     end
     return false
 end
 
 local function setTrafficVars()
     -- temporary police adjustment
-    local playerIsCop = getPlayerIsCop()
-    if playerIsCop == true then
-        gameplay_traffic.setTrafficVars({
-            enableRandomEvents = true
-        })
-    else
-        gameplay_traffic.setTrafficVars({
-            enableRandomEvents = false
-        })
-    end
     gameplay_police.setPursuitVars({
         arrestRadius = 15
     })
@@ -270,13 +270,13 @@ local function onPursuitAction(vehId, data)
 end
 
 local function onVehicleSwitched(oldId, newId)
-    local playerIsCop = getPlayerIsCop()
-    if playerIsCop then
-        ui_message("You are now a cop", 5, "Police", "info")
-    end
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
         setPlayerData(newId, oldId)
         setTrafficVars()
+        local playerIsCop = getPlayerIsCop()
+        if playerIsCop then
+            ui_message("You are now a cop", 5, "Police", "info")
+        end
     end
 end
 
