@@ -1382,7 +1382,7 @@ local function getTrafficVars()
   return vars
 end
 
-local function getTrafficRole(id)
+local function getRole(id)
   return traffic[id].role.name
 end
 -- public interface
@@ -1439,6 +1439,6 @@ M.onClientEndMission = onClientEndMission
 M.onUiWaitingState = onUiWaitingState
 M.onSerialize = onSerialize
 M.onDeserialized = onDeserialized
-M.getTrafficRole = getTrafficRole
+M.getRole = getRole
 
 return M
