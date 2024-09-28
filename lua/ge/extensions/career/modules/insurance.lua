@@ -1105,16 +1105,9 @@ end
 
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-    for partId, part in pairs(career_modules_partInventory.getInventory()) do
-        if part.location == inventoryId then
-            if string.find(part.name, "siren") then
-                return true
-            end
-        end
-    end
-    return false
+    return gameplay_traffic.getTrafficRole(vehId) == 'police'
 end
+
 local offenseNames = {
     ["speeding"] = "Speeding",
     ["reckless"] = "Reckless Driving",

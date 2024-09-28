@@ -3,7 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'core_modmanager'}
+M.dependencies = {'career_career', 'core_modmanager', 'gameplay_traffic'}
 
 local playerData = {
     trafficActive = 0
@@ -41,15 +41,7 @@ end
 -- RLS
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-    for partId, part in pairs(career_modules_partInventory.getInventory()) do
-        if part.location == inventoryId then
-            if string.find(part.name, "siren") then
-                return true
-            end
-        end
-    end
-    return false
+    return gameplay_traffic.getTrafficRole(vehId) == 'police'
 end
 
 local function setTrafficVars()
