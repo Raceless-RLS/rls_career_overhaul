@@ -1,0 +1,475 @@
+{
+  "deliveryProviders":[
+    {
+      "id":"industrialWarehouse",
+      "name":"Industrial Warehouse",
+      "description":"Ships and receives a wide variety of cargo types.",
+      "associatedOrganization":"industrialWarehouse",
+      "preview":"previews/industrialWarehouse.jpg",
+      "manualAccessPoints": [
+        {
+          "psName":"industrialWarehouse_parkingA",
+          "isInspectSpot":true,
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"]
+        },
+        {
+          "psName":"industrialWarehouse_parkingB",
+          "isInspectSpot":true,
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":[]
+        },
+
+        // trailer yard
+        {
+          "psName":"industrialWarehouse_trailer",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypesReceived":[],
+        },
+
+        // warehouse
+        {
+          "psName":"industrialWarehouse_hallA1",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts", "industrial"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"industrialWarehouse_hallA4",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts", "industrial"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"industrialWarehouse_hallA5",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts", "industrial"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"industrialWarehouse_hallA6",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts", "industrial"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"industrialWarehouse_hallB1",
+          "logisticTypesProvided":["foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+      ],
+      //"pickUpSpotNames":["industrialWarehouse_parkingB"],
+      //"dropOffSpotNames":["industrialWarehouse_parkingB"],
+      //"trailerSpotNames":["industrialWarehouse_trailer"],
+      "sitesFile":"warehouses.sites.json",
+      "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticMaxItems":12,
+      "logisticGenerators":[
+
+        {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":2,
+          "max": 4,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        },
+
+        //small trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallEmptyTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":180,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //medium trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumEmptyTrailer",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //large trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigEmptyTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+      ]
+    },
+    {
+      "id":"rentabox",
+      "name":"Rent-A-Box",
+      "description":"Ships and receives a wide variety of cargo types.",
+      "associatedOrganization":"rentabox",
+      "preview":"previews/rentabox.jpg",
+      "manualAccessPoints": [
+        {
+          "psName":"rentabox_parking",
+          "isInspectSpot":true,
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"]
+        },
+        {
+          "psName":"rentabox_trailer",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+          "logisticTypesReceived":["trailerDeliveryConstructionMaterials"]
+        },
+      ],
+      //"pickUpSpotNames":["rentabox_parking"],
+      //"dropOffSpotNames":["rentabox_parking"],
+      //"trailerSpotNames":["rentabox_trailer"],
+      "sitesFile":"warehouses.sites.json",
+      "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies","trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+      "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies","trailerDeliveryConstructionMaterials"],
+      "logisticMaxItems":8,
+      "logisticGenerators":[
+        //small trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallEmptyTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":180,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //medium trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumEmptyTrailer",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //large trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigEmptyTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+
+      ]
+    },
+    {
+      "id":"spearleafLogistics",
+      "name":"Spearleaf Marine Logistics",
+      "description":"Ships and receives a wide variety of cargo types.",
+      "associatedOrganization":"spearleafLogistics",
+      "preview":"previews/spearleafLogistics.jpg",
+
+      "manualAccessPoints": [
+        {
+          "psName":"spearleafLogistics_parkingA",
+          "isInspectSpot":true,
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"]
+        },
+        {
+          "psName":"spearleafLogistics_parkingB",
+          "isInspectSpot":true,
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":[]
+        },
+
+        // container yard
+        {
+          "psName":"spearleafLogistics_container03",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_container14",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_container22",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_container34",
+          "logisticTypesProvided":["trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
+          "logisticTypesReceived":[],
+        }
+
+        // warehouse gates
+        {
+          "psName":"spearleafLogistics_gate1",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_gate2",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+
+        // warehouse halls
+        {
+          "psName":"spearleafLogistics_hall5",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_hall7",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+        {
+          "psName":"spearleafLogistics_hall8",
+          "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies"],
+          "logisticTypesReceived":[],
+        },
+
+        //cranes
+        {
+          "psName":"spearleafLogistics_crane1",
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":["trailerDeliveryConstructionMaterials"],
+        },
+        {
+          "psName":"spearleafLogistics_crane2",
+          "logisticTypesProvided":[],
+          "logisticTypesReceived":["trailerDeliveryConstructionMaterials"],
+        },
+        // Yard
+        {
+          "psName":"spearleafLogistics_yardA",
+          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypesReceived":["industrial", "vehLargeTruck"],
+        },
+        {
+          "psName":"spearleafLogistics_yardB",
+          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypesReceived":["industrial", "vehLargeTruck"],
+        },
+
+      ],
+
+      //"pickUpSpotNames":["spearleafLogistics_parkingB", "spearleafLogistics_container03", "spearleafLogistics_container14","spearleafLogistics_container22","spearleafLogistics_container34"],
+      //"dropOffSpotNames":["spearleafLogistics_parkingB"],
+      //"trailerSpotNames":["spearleafLogistics_trailer"],
+
+      "sitesFile":"warehouses.sites.json",
+      "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"],
+      "logisticMaxItems":22,
+      "logisticGenerators":[
+
+        {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":1,
+          "max": 4,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"largeVehFilter",
+          "logisticTypes":["vehLargeTruck","vehLargeTruckNeedsRepair"],
+        }, {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":300},
+          "filter":"fleetLargeVehFilter",
+          "logisticTypes":["vehLargeTruck"],
+        },
+
+        //small trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallEmptyTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":180,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"smallCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //medium trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumEmptyTrailer",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumFurnitureTrailers",
+          "logisticTypes":["trailerDeliveryResidential"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"mediumCratePlanksTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials", "trailerDeliveryResidential"],
+        },
+
+        //large trailers
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigConstructionMaterials",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+        {
+          "type":"trailerOfferProvider",
+          "interval":210,
+          "min": 0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":600},
+          "filter":"bigEmptyTrailers",
+          "logisticTypes":["trailerDeliveryConstructionMaterials"],
+        },
+      ]
+    }
+  ]
+}
