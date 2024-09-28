@@ -60,7 +60,7 @@
       "sitesFile":"warehouses.sites.json",
       "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"],
-      "logisticMaxItems":12,
+      "logisticMaxItems":32,
       "logisticGenerators":[
 
         {
@@ -75,7 +75,7 @@
           "type":"vehOfferProvider",
           "interval":300,
           "min":0,
-          "max": 2,
+          "max": 4,
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
@@ -185,7 +185,7 @@
       "sitesFile":"warehouses.sites.json",
       "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies","trailerDeliveryResidential","trailerDeliveryConstructionMaterials"],
       "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies","trailerDeliveryConstructionMaterials"],
-      "logisticMaxItems":8,
+      "logisticMaxItems":28,
       "logisticGenerators":[
         //small trailers
         {
@@ -353,12 +353,12 @@
         // Yard
         {
           "psName":"spearleafLogistics_yardA",
-          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair","vehNeedsRepair","vehForPrivate"],
           "logisticTypesReceived":["industrial", "vehLargeTruck"],
         },
         {
           "psName":"spearleafLogistics_yardB",
-          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair"],
+          "logisticTypesProvided":["industrial","vehLargeTruck","vehLargeTruckNeedsRepair","vehNeedsRepair","vehForPrivate"],
           "logisticTypesReceived":["industrial", "vehLargeTruck"],
         },
 
@@ -369,9 +369,9 @@
       //"trailerSpotNames":["spearleafLogistics_trailer"],
 
       "sitesFile":"warehouses.sites.json",
-      "logisticTypesProvided":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
+      "logisticTypesProvided":["vehNeedsRepair","vehForPrivate","parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryResidential","trailerDeliveryConstructionMaterials", "vehLargeTruck","vehLargeTruckNeedsRepair"],
       "logisticTypesReceived":["parcel","shopSupplies","officeSupplies","mechanicalParts","foodSupplies", "industrial","trailerDeliveryConstructionMaterials","vehLargeTruck"],
-      "logisticMaxItems":22,
+      "logisticMaxItems":62,
       "logisticGenerators":[
 
         {
@@ -386,11 +386,38 @@
           "type":"vehOfferProvider",
           "interval":300,
           "min":0,
-          "max": 2,
+          "max": 3,
           "offerDuration":{"min":300,"max":300},
           "filter":"fleetLargeVehFilter",
           "logisticTypes":["vehLargeTruck"],
         },
+        {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":0,
+          "max": 4,
+          "offerDuration":{"min":300,"max":900},
+          "filter":"fleetVehFilter",
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+        },
+        {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":0,
+          "max": 5,
+          "offerDuration":{"min":300,"max":900},
+          "filter":"smallVehFilter",
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+        },
+        {
+          "type":"vehOfferProvider",
+          "interval":300,
+          "min":0,
+          "max": 2,
+          "offerDuration":{"min":300,"max":900},
+          "filter":"customizedVehFilter",
+          "logisticTypes":["vehNeedsRepair","vehForPrivate"],
+        }
 
         //small trailers
         {
