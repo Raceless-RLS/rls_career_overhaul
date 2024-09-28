@@ -1708,8 +1708,10 @@ local function onBeamNGTrigger(data)
             end
 
             local vehicleSpeed = math.abs(be:getObjectVelocityXYZ(data.subjectID)) * speedUnit
-
-            if vehicleSpeed > 5 and not mActiveRace then
+            if vehicleSpeed > 5 and mActiveRace then
+                return
+            end
+            if vehicleSpeed > 5 then
                 displayMessage("You are too fast to stage.\nPlease back up and slow down to stage.", 2)
                 staged = nil
             else
