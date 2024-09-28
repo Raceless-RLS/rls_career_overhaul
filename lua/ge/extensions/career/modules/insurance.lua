@@ -1105,7 +1105,12 @@ end
 
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    return gameplay_traffic.getTrafficRole(vehId) == 'police'
+    if vehId and vehId > -1 then
+        local role = gameplay_traffic.getRole(vehId)
+        print(role)
+        return role == 'police'
+    end
+    return false
 end
 
 local offenseNames = {
