@@ -4,7 +4,10 @@
   },
   "careerSetup":{
     "branch":"motorsport",
-    "defaultStarKeys":{},
+    "defaultStarKeys":[
+      "silver",
+      "gold"
+    ],
     "showInCareer":true,
     "showInFreeroam":true,
     "skill":"apexRacing",
@@ -18,27 +21,53 @@
       "bronze":[
         {
           "attributeKey":"money",
-          "rewardAmount":2000
+          "rewardAmount":1500
         },
         {
           "attributeKey":"beamXP",
+          "rewardAmount":5
+        },
+        {
+          "attributeKey":"motorsport",
+          "rewardAmount":5
+        }
+      ],
+      "gold":[
+        {
+          "attributeKey":"money",
+          "rewardAmount":3000
+        },
+        {
+          "attributeKey":"beamXP",
+          "rewardAmount":5
+        },
+        {
+          "attributeKey":"motorsport",
           "rewardAmount":5
         }
       ],
       "silver":[
         {
           "attributeKey":"money",
-          "rewardAmount":150000
+          "rewardAmount":1000
+        },
+        {
+          "attributeKey":"beamXP",
+          "rewardAmount":5
+        },
+        {
+          "attributeKey":"motorsport",
+          "rewardAmount":5
         }
       ]
     },
     "starsActive":{
       "bronze":true,
-      "gold":false,
+      "gold":true,
       "reactionBronze":false,
       "reactionGold":false,
       "reactionSilver":false,
-      "silver":false
+      "silver":true
     }
   },
   "customAdditionalAttributes":{},
@@ -52,15 +81,15 @@
   "missionTypeData":{
     "bronzeReaction":0.5,
     "bronzeThreshold":1,
-    "bronzeTimer":25,
+    "bronzeTimer":10,
     "camPath":false,
     "dragFilepath":"/gameplay/missions/west_coast_usa/dragRaceNewSystem/001-adlerDrag_400/data.dragData.json",
     "goldReaction":0.2,
     "goldThreshold":4,
-    "goldTimer":9,
+    "goldTimer":7,
     "silverReaction":0.3000000119,
     "silverThreshold":2,
-    "silverTimer":10,
+    "silverTimer":8.5,
     "startDesc":"missions.dragRace.gameplay.description",
     "startMessage":"missions.dragRaceNewSystem.wcusa.title_400"
   },
