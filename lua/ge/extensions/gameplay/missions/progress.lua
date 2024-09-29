@@ -376,9 +376,9 @@ local function aggregateAttempt(id, attempt, progressKey)
   local starRewards = {list = {}, sums = {}, sumList = {}}
   for star, _ in pairs(attempt.unlockedStars or {}) do
     if mission.careerSetup.starsActive[star] then
-      if mission.saveData.unlockedStars[star] then mission.saveData.unlockedStars[star] = 1 end
+      if mission.saveData.unlockedStars[star] then mission.saveData.unlockedStars[star] = 0 end
       mission.saveData.unlockedStars[star] = mission.saveData.unlockedStars[star] or 0
-      --if attempt.unlockedStars[star] then --rls- allows repeat star rewards
+      if attempt.unlockedStars[star] then
         unlockedStarsChanged[star] = true
         mission.saveData.unlockedStars[star] = mission.saveData.unlockedStars[star] + 1
         for _, reward in ipairs(mission.careerSetup.starRewards[star] or {}) do
@@ -387,7 +387,7 @@ local function aggregateAttempt(id, attempt, progressKey)
           rCopy.sourceStar = star
           table.insert(starRewards.list, rCopy)
         end
-      --end
+      end
     end
   end
   local ordered = tableKeysSorted(starRewards.sums)
