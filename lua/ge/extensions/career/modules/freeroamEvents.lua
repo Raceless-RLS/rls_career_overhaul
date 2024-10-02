@@ -104,6 +104,14 @@ local races = {
         displaySpeed = true,
         type = {"motorsport"}
     },
+    roadOval = {
+        bestTime = 20,
+        reward = 1500,
+        checkpointRoad = "roadOval",
+        label = "Paved Oval",
+        displaySpeed = true,
+        type = {"motorsport"}
+    },
     dirtOval = {
         bestTime = 20,
         reward = 1500,
