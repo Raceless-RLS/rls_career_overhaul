@@ -120,6 +120,14 @@ local races = {
         displaySpeed = true,
         type = {"motorsport"}
     },
+    quarryCircuit = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "quarryCircuit",
+        label = "Quarry Circuit",
+        displaySpeed = true,
+        type = {"motorsport"}
+    },
     rockcrawls = {
         bestTime = 35,
         reward = 2500,
