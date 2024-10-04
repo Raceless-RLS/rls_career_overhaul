@@ -1577,38 +1577,44 @@ end
 local function removeCheckpoints()
     print("Removing all checkpoints and markers")
 
-    if not checkpoints then
-        print("No checkpoints to remove")
-        return
-    end
+    -- Function to remove checkpoints from a given list
+    local function removeCheckpointList(checkpointList)
+        if not checkpointList or #checkpointList == 0 then
+            return
+        end
 
-    for i = 1, #checkpoints do
-        local checkpoint = checkpoints[i]
-        if checkpoint then
-            -- Remove the checkpoint object
-            if checkpoint.object then
-                print("Removing checkpoint object " .. i)
-                checkpoint.object:delete()
-                checkpoint.object = nil
-            else
-                print("No checkpoint object to remove for checkpoint " .. i)
-            end
+        for i = 1, #checkpointList do
+            local checkpoint = checkpointList[i]
+            if checkpoint then
+                -- Remove the checkpoint object
+                if checkpoint.object then
+                    checkpoint.object:delete()
+                    checkpoint.object = nil
+                end
 
-            -- Remove the checkpoint marker
-            if checkpoint.marker then
-                print("Removing checkpoint marker " .. i)
-                checkpoint.marker:delete()
-                checkpoint.marker = nil
-            else
-                print("No checkpoint marker to remove for checkpoint " .. i)
+                -- Remove the checkpoint marker
+                if checkpoint.marker then
+                    checkpoint.marker:delete()
+                    checkpoint.marker = nil
+                end
             end
-        else
-            print("No checkpoint data found for index " .. i)
+        end
+
+        -- Clear the checkpoint list
+        for i = 1, #checkpointList do
+            checkpointList[i] = nil
         end
     end
 
-    -- Clear the checkpoints table
+    -- Remove main checkpoints
+    removeCheckpointList(checkpoints)
+
+    -- Remove alternative checkpoints
+    removeCheckpointList(altCheckpoints)
+
+    -- Reset the checkpoint tables
     checkpoints = {}
+    altCheckpoints = {}
     print("All checkpoints and markers removed")
 end
 
@@ -1752,7 +1758,7 @@ local function onBeamNGTrigger(data)
         end
     elseif triggerType == "start" then
         if event == "enter" and mActiveRace == raceName then
-            if currCheckpoint and currCheckpoint ~= totalCheckpoints then
+            if not currCheckpoint or currCheckpoint ~= totalCheckpoints then
                 -- Player hasn't completed all checkpoints yet
                 displayMessage("You have not completed all checkpoints!", 5)
                 return
@@ -1788,6 +1794,7 @@ local function onBeamNGTrigger(data)
             setActiveLight(raceName, "green")
 
             -- Initialize checkpoints if applicable
+            removeCheckpoints()
             if races[raceName].checkpointRoad then
                 -- Load main route nodes
                 roadNodes = getRoadNodes(races[raceName].checkpointRoad)
