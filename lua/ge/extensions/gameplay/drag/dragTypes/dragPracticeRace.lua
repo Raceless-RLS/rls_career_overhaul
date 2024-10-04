@@ -182,6 +182,7 @@ local function startTreeLight(phase, racer, dtSim)
       log('I', logTag, 'Desqualifying '..racer.vehId)
       M.resetDragRace()
       freeroamEvents.restoreTrafficAmount()
+      freeroamEvents.displayMessage("You Jumped the Start", 5)
       return
     end
   end
