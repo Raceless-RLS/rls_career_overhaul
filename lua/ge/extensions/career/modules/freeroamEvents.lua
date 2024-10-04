@@ -2242,13 +2242,6 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     --   dtReal (number): Real delta time.
     --   dtSim (number): Simulated delta time.
     --   dtRaw (number): Raw delta time.
-
-    if gameplay_drift_scoring and gameplay_drift_general.getContext() == "inChallenge" then
-        local score = gameplay_drift_scoring.getScore()
-        if score and score.cachedScore > 10 then
-            ui_message("Drift Score: " .. tostring(math.floor(score.cachedScore)) .. " x " .. tostring(score.combo), 1, "info")
-        end
-    end
     if mActiveRace and races[mActiveRace].checkpointRoad then
         checkPlayerOnRoad()
         -- print("checking player on road")
