@@ -120,6 +120,29 @@ local races = {
         displaySpeed = true,
         type = {"motorsport"}
     },
+    quarryCircuit = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "quarryCircuit",
+        label = "Quarry Circuit",
+        displaySpeed = true,
+        type = {"motorsport"}
+    },
+    beachCircuit = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "beachCircuit",
+        label = "Beach Circuit",
+        displaySpeed = true,
+        type = {"motorsport"}
+    },
+    dragHighway = {
+        bestTime = 18,
+        reward = 1000,
+        checkpointRoad = "dragHighway",
+        label = "No Prep Highway Drag",
+        type = {"motorsport"}
+    },
     rockcrawls = {
         bestTime = 35,
         reward = 2500,
