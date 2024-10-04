@@ -4,7 +4,7 @@
 local M = {}
 
 M.dependencies = {'career_career', 'career_modules_insurance', 'career_saveSystem', 'career_modules_playerAttributes',
-                  'gameplay_traffic'}
+                  'gameplay_traffic', 'gameplay_drift_general', 'gameplay_drift_scoring'}
 
 local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
 
@@ -1745,6 +1745,10 @@ local function exitRace()
         lastVehiclePos = nil
         displayMessage("You exited the race zone, Race cancelled", 3)
         restoreTrafficAmount()
+        if gameplay_drift_general.getContext() == "inChallenge" then
+            gameplay_drift_general.setContext("inFreeRoam")
+            gameplay_drift_general.reset()
+        end
     end
 end
 
@@ -1902,6 +1906,14 @@ local function onBeamNGTrigger(data)
             local maxLaps = races[raceName].laps or 1 -- Get the number of laps, default to 1
             displayMessage(getStartMessage(raceName), 5)
             setActiveLight(raceName, "green")
+            if races[raceName].type.contains("drift") then
+                gameplay_drift_general.setContext("inChallenge")
+                if gameplay_drift_drift then
+                    gameplay_drift_drift.setVehId(data.subjectID)
+                else
+                    print("Warning: gameplay_drift_drift module not available")
+                end
+            end
 
             -- Initialize checkpoints if applicable
             removeCheckpoints()
@@ -1977,6 +1989,23 @@ local function onBeamNGTrigger(data)
                 -- For drag races, update the display
                 local side = "l" -- Determine side based on context if necessary
                 updateDisplay(side, in_race_time, be:getObjectVelocityXYZ(data.subjectID) * speedUnit)
+            end
+            if races[raceName].type.contains("drift") then
+                local finalScore = 0
+                if gameplay_drift_scoring then
+                    local scoreData = gameplay_drift_scoring.getScore()
+                    if scoreData then
+                        finalScore = scoreData.score or 0
+                        if scoreData.cachedScore then
+                            finalScore = finalScore + math.floor(scoreData.cachedScore * scoreData.combo)
+                        end
+                        gameplay_drift_general.reset()
+                    end
+                end
+                if gameplay_drift_general.getContext() == "inChallenge" then
+                    gameplay_drift_general.setContext("inFreeRoam")
+                    ui_message("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
+                end
             end
 
             mSplitTimes = {}
@@ -2129,25 +2158,6 @@ local function checkPlayerOnRoad()
     return true
 end
 
-local function onUpdate(dtReal, dtSim, dtRaw)
-    -- This function updates the race time.
-    -- It increments the in_race_time if the timer is active.
-    --
-    -- Parameters:
-    --   dtReal (number): Real delta time.
-    --   dtSim (number): Simulated delta time.
-    --   dtRaw (number): Raw delta time.
-    if mActiveRace and races[mActiveRace].checkpointRoad then
-        checkPlayerOnRoad()
-        -- print("checking player on road")
-    end
-    if timerActive == true then
-        in_race_time = in_race_time + dtSim
-    else
-        in_race_time = 0
-    end
-end
-
 local function spawnAINextToPlayer(data)
     local function safeGetPlayerVehicle()
         if be and be.getPlayerVehicle then
@@ -2216,6 +2226,34 @@ local function spawnAINextToPlayer(data)
     end
 
     return aiVehicle
+end
+
+
+local function onUpdate(dtReal, dtSim, dtRaw)
+
+    -- This function updates the race time.
+    -- It increments the in_race_time if the timer is active.
+    --
+    -- Parameters:
+    --   dtReal (number): Real delta time.
+    --   dtSim (number): Simulated delta time.
+    --   dtRaw (number): Raw delta time.
+
+    if gameplay_drift_scoring and gameplay_drift_general.getContext() == "inChallenge" then
+        local score = gameplay_drift_scoring.getScore()
+        if score and score.cachedScore > 10 then
+            ui_message("Drift Score: " .. tostring(math.floor(score.cachedScore)) .. " x " .. tostring(score.combo), 1, "info")
+        end
+    end
+    if mActiveRace and races[mActiveRace].checkpointRoad then
+        checkPlayerOnRoad()
+        -- print("checking player on road")
+    end
+    if timerActive == true then
+        in_race_time = in_race_time + dtSim
+    else
+        in_race_time = 0
+    end
 end
 
 M.spawnAINextToPlayer = spawnAINextToPlayer
