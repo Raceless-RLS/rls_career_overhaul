@@ -128,6 +128,12 @@ local races = {
         displaySpeed = true,
         type = {"motorsport"}
     },
+    dragHighway = {
+        bestTime = 18,
+        reward = 1000,
+        label = "No Prep Highway Drag",
+        type = {"motorsport"}
+    },
     rockcrawls = {
         bestTime = 35,
         reward = 2500,
