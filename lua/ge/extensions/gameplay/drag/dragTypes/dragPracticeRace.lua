@@ -207,7 +207,7 @@ local function race(phase, racer, dtSim)
       phase.completed = true
       extensions.hook("dragRaceEndLineReached", racer.vehId)
       log('I', logTag, 'Completed Phase '..phase.name..' for '..racer.vehId)
-      freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed)
+      freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed * 2.2369362921)
       return
     else
       local dist = calculateDistanceFromStagePos(racer)
@@ -218,7 +218,7 @@ local function race(phase, racer, dtSim)
         extensions.hook("jumpDescualifiedDrag", racer.vehId)
         log('I', logTag, 'Desqualifying '..racer.vehId)
         M.resetDragRace()
-        freeroamEvents.restoreTrafficAmount()
+        freeroamEvents.displayMessage("You Jumped the Start", 5)
       end
     end
   end
