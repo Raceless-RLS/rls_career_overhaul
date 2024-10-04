@@ -90,12 +90,6 @@ local lastCountdownTime = 0
 -- The reward is the potential reward for the race.
 -- The label is the name of the race.
 local races = {
-    mudDrag = {
-        bestTime = 9,
-        reward = 2000,
-        label = "Mud Track",
-        type = {"motorsport", "adventurer"}
-    },
     drag = {
         bestTime = 11,
         reward = 1000,
@@ -134,7 +128,7 @@ local races = {
         checkpointRoad = "beachCircuit",
         label = "Beach Circuit",
         displaySpeed = true,
-        type = {"motorsport"}
+        type = {"motorsport", "drift"}
     },
     dragHighway = {
         bestTime = 18,
@@ -489,6 +483,15 @@ local function initDisplays()
         table.insert(leftSpeedDigits, leftSpeedDigit)
     end
     resetDisplays()
+end
+
+local function tableContains(tbl, val)
+    for _, v in ipairs(tbl) do
+        if v == val then
+            return true
+        end
+    end
+    return false
 end
 
 local function formatTime(seconds)
@@ -1906,7 +1909,8 @@ local function onBeamNGTrigger(data)
             local maxLaps = races[raceName].laps or 1 -- Get the number of laps, default to 1
             displayMessage(getStartMessage(raceName), 5)
             setActiveLight(raceName, "green")
-            if races[raceName].type.contains("drift") then
+            if tableContains(races[raceName].type, "drift") then
+                print("Drift race detected")
                 gameplay_drift_general.setContext("inChallenge")
                 if gameplay_drift_drift then
                     gameplay_drift_drift.setVehId(data.subjectID)
@@ -1990,7 +1994,7 @@ local function onBeamNGTrigger(data)
                 local side = "l" -- Determine side based on context if necessary
                 updateDisplay(side, in_race_time, be:getObjectVelocityXYZ(data.subjectID) * speedUnit)
             end
-            if races[raceName].type.contains("drift") then
+            if tableContains(races[raceName].type, "drift") then
                 local finalScore = 0
                 if gameplay_drift_scoring then
                     local scoreData = gameplay_drift_scoring.getScore()
