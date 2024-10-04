@@ -137,8 +137,8 @@ local races = {
         type = {"motorsport"}
     },
     dragHighway = {
-        bestTime = 18,
-        reward = 1000,
+        bestTime = 1,
+        reward = 3000,
         checkpointRoad = "dragHighway",
         label = "No Prep Highway Drag",
         type = {"motorsport"}
