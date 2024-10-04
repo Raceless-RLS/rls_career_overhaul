@@ -56,17 +56,17 @@
     "goalTime":180,
     "lapCount":10,
     "mapPreviewMode":"navgraph",
-    "maxRacerCount":9,
+    "maxRacerCount":7,
     "minRacerCount":7,
     "prefabActive":true,
     "raceFile":"/gameplay/missions/west_coast_usa/aiRace/040-RLS500/race.race.json",
-    "racerAggression":1.200000048,
+    "racerAggression":1,
     "racerAwareness":true,
     "racerCount":7,
     "racerRandomnessScale":1,
     "racerRough":false,
     "racerRubberbandMode":false,
-    "racerSkill":1.200000048,
+    "racerSkill":1,
     "recoverLimit":-1,
     "shuffleGroup":true,
     "smartStartPlace":true,
@@ -76,7 +76,7 @@
     "useGroundmarkers":false,
     "vehicleGroupActive":true
   },
-  "name":"RLS500",
+  "name":"RLS100",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -91,8 +91,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"RLS 500 Marshal",
-          "configPath":"vehicles/fullsize/RLS 500 Marshal.pc",
+          "config":"RLS-500-Marshal",
+          "configPath":"vehicles/fullsize/RLS-500-Marshal.pc",
           "model":"fullsize",
           "useCustomConfig":false
         }
