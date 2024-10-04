@@ -98,7 +98,7 @@ local races = {
     },
     drag = {
         bestTime = 11,
-        reward = 1500,
+        reward = 1000,
         checkpoints = 2,
         label = "Drag Strip",
         displaySpeed = true,
@@ -814,6 +814,91 @@ local function payoutRace(data)
     end
 end
 
+-- Simplified payoutRace function for drag races
+local function payoutDragRace(raceName, finishTime, finishSpeed)
+    -- Check if career mode is active
+    if not isCareerModeActive() then
+        local message = string.format("%s\nTime: %s\nSpeed: %.2f mph", races[raceName].label, formatTime(finishTime), finishSpeed)
+        displayMessage(message, 10)
+        return 0
+    end
+
+    -- Load the leaderboard
+    loadLeaderboard()
+    local oldTime = getOldTime(raceName) or math.huge
+    local newBestTime = finishTime < oldTime
+
+    -- Get race data
+    local raceData = races[raceName]
+    local targetTime = raceData.bestTime
+    local baseReward = raceData.reward
+
+    -- Calculate reward based on performance
+    local reward = raceReward(targetTime, baseReward, finishTime)
+    if reward <= 0 then
+        reward = baseReward / 2  -- Minimum reward for completion
+    end
+
+    -- Update leaderboard if new best time
+    if newBestTime then
+        leaderboard[raceName] = {
+            bestTime = finishTime,
+            bestSpeed = finishSpeed
+        }
+    end
+
+    -- Calculate experience points
+    local xp = math.floor(reward / 20)
+
+    -- Prepare total reward
+    local totalReward = {
+        money = {
+            amount = reward
+        },
+        beamXP = {
+            amount = math.floor(xp / 10)
+        },
+        bonusStars = {
+            amount = newBestTime and 1 or 0
+        }
+    }
+    -- Assuming 'type' is defined in raceData for categorizing XP
+    for _, raceType in ipairs(raceData.type or {}) do
+        totalReward[raceType] = {
+            amount = xp
+        }
+    end
+
+    -- Create reason for reward
+    local reason = {
+        label = raceData.label .. (newBestTime and " - New Best Time!" or " - Completion"),
+        tags = {"gameplay", "reward", "drag"}
+    }
+
+    -- Process the reward
+    career_modules_payment.reward(totalReward, reason)
+
+    -- Prepare the completion message
+    local message = string.format(
+        "%s\n%s\nTime: %s\nSpeed: %.2f mph\nXP: %d | Reward: $%.2f",
+        newBestTime and "Congratulations! New Best Time!" or "",
+        raceData.label,
+        formatTime(finishTime),
+        finishSpeed,
+        xp,
+        reward
+    )
+
+    -- Display the message
+    ui_message(message, 20, "Reward")
+
+    -- Save the leaderboard and game state
+    saveLeaderboard()
+    career_saveSystem.saveCurrent()
+
+    return reward
+end
+
 local function getDifference(raceName, currentCheckpointIndex)
     if not leaderboard[raceName] then
         return 0
@@ -883,7 +968,9 @@ local function getStartMessage(raceName)
     return string.format("**%s Event Started!\n%s**", activity.label, message)
 end
 
-local function displayStagedMessage(race, times)
+local function displayStagedMessage(raceName)
+    local race = races[raceName]
+    local times = leaderboard[raceName]
     printTable(race)
     local message = string.format("Staged for %s.\n", race.label)
 
@@ -1577,38 +1664,44 @@ end
 local function removeCheckpoints()
     print("Removing all checkpoints and markers")
 
-    if not checkpoints then
-        print("No checkpoints to remove")
-        return
-    end
+    -- Function to remove checkpoints from a given list
+    local function removeCheckpointList(checkpointList)
+        if not checkpointList or #checkpointList == 0 then
+            return
+        end
 
-    for i = 1, #checkpoints do
-        local checkpoint = checkpoints[i]
-        if checkpoint then
-            -- Remove the checkpoint object
-            if checkpoint.object then
-                print("Removing checkpoint object " .. i)
-                checkpoint.object:delete()
-                checkpoint.object = nil
-            else
-                print("No checkpoint object to remove for checkpoint " .. i)
-            end
+        for i = 1, #checkpointList do
+            local checkpoint = checkpointList[i]
+            if checkpoint then
+                -- Remove the checkpoint object
+                if checkpoint.object then
+                    checkpoint.object:delete()
+                    checkpoint.object = nil
+                end
 
-            -- Remove the checkpoint marker
-            if checkpoint.marker then
-                print("Removing checkpoint marker " .. i)
-                checkpoint.marker:delete()
-                checkpoint.marker = nil
-            else
-                print("No checkpoint marker to remove for checkpoint " .. i)
+                -- Remove the checkpoint marker
+                if checkpoint.marker then
+                    checkpoint.marker:delete()
+                    checkpoint.marker = nil
+                end
             end
-        else
-            print("No checkpoint data found for index " .. i)
+        end
+
+        -- Clear the checkpoint list
+        for i = 1, #checkpointList do
+            checkpointList[i] = nil
         end
     end
 
-    -- Clear the checkpoints table
+    -- Remove main checkpoints
+    removeCheckpointList(checkpoints)
+
+    -- Remove alternative checkpoints
+    removeCheckpointList(altCheckpoints)
+
+    -- Reset the checkpoint tables
     checkpoints = {}
+    altCheckpoints = {}
     print("All checkpoints and markers removed")
 end
 
@@ -1740,7 +1833,7 @@ local function onBeamNGTrigger(data)
                 -- Set staged race
                 staged = raceName
                 print("Staged race: " .. raceName)
-                displayStagedMessage(races[raceName], leaderboard[raceName])
+                displayStagedMessage(raceName)
                 setActiveLight(raceName, "yellow")
             end
         elseif event == "exit" then
@@ -1752,7 +1845,7 @@ local function onBeamNGTrigger(data)
         end
     elseif triggerType == "start" then
         if event == "enter" and mActiveRace == raceName then
-            if currCheckpoint and currCheckpoint ~= totalCheckpoints then
+            if not currCheckpoint or currCheckpoint ~= totalCheckpoints then
                 -- Player hasn't completed all checkpoints yet
                 displayMessage("You have not completed all checkpoints!", 5)
                 return
@@ -1788,6 +1881,7 @@ local function onBeamNGTrigger(data)
             setActiveLight(raceName, "green")
 
             -- Initialize checkpoints if applicable
+            removeCheckpoints()
             if races[raceName].checkpointRoad then
                 -- Load main route nodes
                 roadNodes = getRoadNodes(races[raceName].checkpointRoad)
@@ -2121,5 +2215,8 @@ M.routeInfo = routeInfo
 M.saveAndSetTrafficAmount = saveAndSetTrafficAmount
 M.restoreTrafficAmount = restoreTrafficAmount
 M.onPursuitAction = onPursuitAction
+M.displayStagedMessage = displayStagedMessage
+M.payoutDragRace = payoutDragRace
+M.getStartMessage = getStartMessage
 
 return M
