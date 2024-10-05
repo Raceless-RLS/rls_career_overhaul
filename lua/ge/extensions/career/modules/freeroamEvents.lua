@@ -100,7 +100,7 @@ local races = {
     },
     roadOval = {
         bestTime = 20,
-        reward = 1500,
+        reward = 500,
         checkpointRoad = "roadOval",
         label = "Paved Oval",
         displaySpeed = true,
@@ -108,7 +108,7 @@ local races = {
     },
     dirtOval = {
         bestTime = 20,
-        reward = 1500,
+        reward = 500,
         checkpointRoad = "dirtOval",
         label = "Dirt Oval",
         displaySpeed = true,
@@ -139,7 +139,7 @@ local races = {
     },
     track = {
         bestTime = 140,
-        reward = 3000,
+        reward = 2500,
         label = "Track",
         checkpointRoad = "trackloop",
         hotlap = 125,
@@ -471,7 +471,7 @@ local function setActiveLight(event, color)
 
 end
 
-local function raceReward(x, y, z)
+local function raceReward(goal, reward, time)
     -- The raceReward function calculates the reward based on the time taken to complete the race.
     -- If the actual time is greater than the ideal time, the reward (y) is reduced proportionally.
     -- If the actual time is less than or equal to the ideal time, the reward (y) is increased exponentially.
@@ -483,6 +483,9 @@ local function raceReward(x, y, z)
     --
     -- Returns:
     --   number: Calculated reward based on the time taken.
+    local x = goal
+    local y = reward
+    local z = time
     z = z or in_race_time
     if z == 0 then
         return 0
@@ -673,6 +676,33 @@ local function rewardLabel(raceName, newBestTime)
     return label
 end
 
+local function saveNewBestTime(raceName)
+    if not leaderboard[raceName] then
+        leaderboard[raceName] = {}
+    end
+    if mAltRoute then
+        if not leaderboard[raceName].altRoute then
+            leaderboard[raceName].altRoute = {}
+        end
+
+        if mHotlap == raceName then
+            leaderboard[raceName].altRoute.hotlapTime = in_race_time
+            leaderboard[raceName].altRoute.hotlapSplitTimes = mSplitTimes
+        else
+            leaderboard[raceName].altRoute.bestTime = in_race_time
+            leaderboard[raceName].altRoute.splitTimes = mSplitTimes
+        end
+    else
+        if mHotlap == raceName then
+            leaderboard[raceName].hotlapTime = in_race_time
+            leaderboard[raceName].hotlapSplitTimes = mSplitTimes
+        else
+            leaderboard[raceName].bestTime = in_race_time
+            leaderboard[raceName].splitTimes = mSplitTimes
+        end
+    end
+end
+
 local function payoutRace(data)
     -- This function handles the payout for a race.
     -- It calculates the reward based on the race's best time and the actual time taken.
@@ -719,30 +749,7 @@ local function payoutRace(data)
         local oldTime = getOldTime(raceName) or 0
         local newBestTime = isNewBestTime(raceName, in_race_time)
         if newBestTime then
-            if not leaderboard[raceName] then
-                leaderboard[raceName] = {}
-            end
-            if mAltRoute then
-                if not leaderboard[raceName].altRoute then
-                    leaderboard[raceName].altRoute = {}
-                end
-
-                if mHotlap == raceName then
-                    leaderboard[raceName].altRoute.hotlapTime = in_race_time
-                    leaderboard[raceName].altRoute.hotlapSplitTimes = mSplitTimes
-                else
-                    leaderboard[raceName].altRoute.bestTime = in_race_time
-                    leaderboard[raceName].altRoute.splitTimes = mSplitTimes
-                end
-            else
-                if mHotlap == raceName then
-                    leaderboard[raceName].hotlapTime = in_race_time
-                    leaderboard[raceName].hotlapSplitTimes = mSplitTimes
-                else
-                    leaderboard[raceName].bestTime = in_race_time
-                    leaderboard[raceName].splitTimes = mSplitTimes
-                end
-            end
+            saveNewBestTime(raceName)
         else
             print("No new best time for" .. raceName)
             reward = reward / 2
