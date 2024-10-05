@@ -114,7 +114,7 @@ local races = {
     },
     quarryCircuit = {
         bestTime = 30,
-        reward = 1500,
+        reward = 1250,
         checkpointRoad = "quarryCircuit",
         label = "Quarry Circuit",
         type = {"motorsport"}
@@ -854,7 +854,7 @@ local function payoutRace(data)
         end
 
         if newBest then
-            saveNewBestTime(raceName)
+            saveNewBestTime(raceName, driftScore)
         else
             print("No new best time for" .. raceName)
             reward = reward / 2
@@ -1086,20 +1086,25 @@ local function displayStagedMessage(raceName)
     if race.driftGoal then
         -- Handle drift event staging message
         local bestScore = times.driftScore
-        local bestTime = times.bestTime
+        local bestTime = times.driftTime
         local targetScore = race.driftGoal
-        local targetTime = race.bestTime
+        local targetTime = race.driftTargetTime  -- Assuming this is set in race configuration
 
-        if not bestScore or not bestTime then
-            -- No previous best score/time
-            message = message .. string.format(
-                "Target Drift Score: %d\nTarget Time: %s\n(Achieve these to earn a reward of $%.2f and 1 Bonus Star)",
-                targetScore, formatTime(targetTime), race.reward)
-        else
+        -- Fallback to race.bestTime if driftTargetTime is not set
+        if not targetTime then
+            targetTime = race.bestTime
+        end
+
+        if bestScore and bestTime then
             -- Show player's best score and time
             message = message .. string.format(
                 "Your Best Drift Score: %d | Target Drift Score: %d\nYour Best Time: %s | Target Time: %s\n(Achieve targets to earn a reward of $%.2f and 1 Bonus Star)",
                 bestScore, targetScore, formatTime(bestTime), formatTime(targetTime), race.reward)
+        else
+            -- No previous best score/time
+            message = message .. string.format(
+                "Target Drift Score: %d\nTarget Time: %s\n(Achieve these to earn a reward of $%.2f and 1 Bonus Star)",
+                targetScore, formatTime(targetTime), race.reward)
         end
     else
         -- Handle normal time-based events
