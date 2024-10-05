@@ -102,13 +102,13 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Reward**: **$1,250**
 
 - **Beach Circuit**:
-  - **Description**: Race along the scenic beachside track, combining speed with beautiful views.
+  - **Description**: Race along the scenic beachside track under the bridge.
   - **Requirements**:
     - **Target Time**: **30 seconds**
     - **Reward**: **$1,500**
 
 - **Dirt Circuit**:
-  - **Description**: Conquer the dirt track with off-road vehicles. Expect slippery surfaces and uneven terrain.
+  - **Description**: Conquer the dirt track with off-road vehicles.
   - **Requirements**:
     - **Target Time**: **65 seconds**
     - **Reward**: **$2,000**
@@ -152,7 +152,7 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Reward**: **$1,500**
 
 - **Island Touge Drift**:
-  - **Description**: Navigate a winding mountain pass inspired by classic touge races. Ideal for skilled drivers.
+  - **Description**: Navigate a winding mountain pass inspired by classic touge races on the Island. Ideal for skilled drivers.
   - **Requirements**:
     - **Target Time**: **25 seconds**
     - **Drift Score**: **3,500**
