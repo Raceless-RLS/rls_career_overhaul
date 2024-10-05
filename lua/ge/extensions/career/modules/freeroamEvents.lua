@@ -856,7 +856,7 @@ local function payoutRace(data)
         local oldScore = leaderboard[raceName] and leaderboard[raceName].driftScore or 0
         local newBest = false
         if races[raceName].driftGoal then
-            newBest = not leaderboard[raceName].driftScore or driftReward(raceName, in_race_time, driftScore) > driftReward(raceName, oldTime, oldScore)
+            newBest = not leaderboard[raceName] or driftReward(raceName, in_race_time, driftScore) > driftReward(raceName, oldTime, oldScore)
         else
             newBest = isNewBestTime(raceName, in_race_time)
         end
