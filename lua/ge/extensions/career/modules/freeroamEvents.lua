@@ -179,8 +179,8 @@ local races = {
         type = {"motorsport", "apexRacing"}
     },
     commRally = {
-        bestTime = 120,
-        reward = 2500,
+        bestTime = 85,
+        reward = 2000,
         checkpointRoad = "commRally",
         label = "Commercial Rally",
         type = {"motorsport"}
@@ -850,7 +850,7 @@ local function payoutRace(data)
         local oldScore = leaderboard[raceName] and leaderboard[raceName].driftScore or 0
         local newBest = false
         if races[raceName].driftGoal then
-            newBest = driftReward(raceName, time, driftScore) > driftReward(raceName, oldTime, oldScore)
+            newBest = driftReward(raceName, in_race_time, driftScore) > driftReward(raceName, oldTime, oldScore)
         else
             newBest = isNewBestTime(raceName, in_race_time)
         end
@@ -895,7 +895,7 @@ local function payoutRace(data)
                 oldScore,
                 oldTime,
                 driftScore,
-                time,
+                in_race_time,
                 reward,
                 xp,
                 data
