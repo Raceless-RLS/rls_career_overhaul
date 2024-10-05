@@ -178,6 +178,13 @@ local races = {
         label = "Dirt Circuit",
         type = {"motorsport", "apexRacing"}
     },
+    commRally = {
+        bestTime = 120,
+        reward = 2500,
+        checkpointRoad = "commRally",
+        label = "Commercial Rally",
+        type = {"motorsport"}
+    },
     testTrack = {
         bestTime = 5.5,
         reward = 1000,
@@ -653,9 +660,9 @@ local function driftCompletionMessage(oldScore, oldTime, driftScore, finishTime,
     -- Calculate rewards based on old and new performances
     local oldReward = 0
     if oldScore and oldTime then
-        oldReward = calculateDriftReward(raceName, oldScore, oldTime)
+        oldReward = driftReward(raceName, oldTime, oldScore)
     end
-    local newReward = calculateDriftReward(raceName, driftScore, finishTime)
+    local newReward = driftReward(raceName, finishTime, driftScore)
 
     -- Determine if this is a new best based on the reward
     local newBest = newReward > (oldReward or 0)
