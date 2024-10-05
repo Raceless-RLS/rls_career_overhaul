@@ -145,8 +145,9 @@ local races = {
         type = {"motorsport", "drift"}
     },
     islandTouge = {
-        bestTime = 30,
+        bestTime = 25,
         reward = 1500,
+        driftGoal = 3500,
         checkpointRoad = "islandTouge",
         label = "Island Touge Drift",
         type = {"motorsport", "drift"}
