@@ -128,7 +128,8 @@ local races = {
         checkpointRoad = "beachCircuit",
         label = "Beach Circuit",
         displaySpeed = true,
-        type = {"motorsport", "drift"}
+        type = {"motorsport", "drift"},
+        minCheckpointDistance = 45
     },
     hotrolledDrift = {
         bestTime = 30,
@@ -1880,6 +1881,7 @@ local function onBeamNGTrigger(data)
 
             -- Initialize checkpoints if applicable
             removeCheckpoints()
+            MIN_CHECKPOINT_DISTANCE = races[raceName].minCheckpointDistance or 90
             if races[raceName].checkpointRoad then
                 -- Load main route nodes
                 roadNodes = getRoadNodes(races[raceName].checkpointRoad)
