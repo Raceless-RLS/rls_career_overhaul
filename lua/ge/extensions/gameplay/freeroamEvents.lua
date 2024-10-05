@@ -138,6 +138,13 @@ local races = {
         label = "Hotrolled Drift",
         type = {"motorsport", "drift"}
     },
+    sealbrikDrift = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "sealbrikDrift",
+        label = "Sealbrik Drift",
+        type = {"motorsport", "drift"}
+    },
     islandTouge = {
         bestTime = 30,
         reward = 1500,
