@@ -103,7 +103,6 @@ local races = {
         reward = 500,
         checkpointRoad = "roadOval",
         label = "Paved Oval",
-        displaySpeed = true,
         type = {"motorsport"}
     },
     dirtOval = {
@@ -111,7 +110,6 @@ local races = {
         reward = 500,
         checkpointRoad = "dirtOval",
         label = "Dirt Oval",
-        displaySpeed = true,
         type = {"motorsport"}
     },
     quarryCircuit = {
@@ -119,7 +117,6 @@ local races = {
         reward = 1500,
         checkpointRoad = "quarryCircuit",
         label = "Quarry Circuit",
-        displaySpeed = true,
         type = {"motorsport"}
     },
     beachCircuit = {
@@ -148,9 +145,10 @@ local races = {
     },
     dragHighway = {
         bestTime = 16,
-        reward = 3000,
+        reward = 1500,
         checkpointRoad = "dragHighway",
         label = "No Prep Highway Drag",
+        displaySpeed = true,
         type = {"motorsport"}
     },
     track = {
@@ -179,7 +177,7 @@ local races = {
         type = {"motorsport", "apexRacing"}
     },
     commRally = {
-        bestTime = 85,
+        bestTime = 90,
         reward = 2000,
         checkpointRoad = "commRally",
         label = "Commercial Rally",
