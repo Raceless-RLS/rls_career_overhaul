@@ -135,7 +135,6 @@ local races = {
         reward = 1500,
         checkpointRoad = "hotrolledDrift",
         label = "Hotrolled Drift",
-        displaySpeed = true,
         type = {"motorsport", "drift"}
     },
     dragHighway = {
@@ -1968,7 +1967,7 @@ local function onBeamNGTrigger(data)
                 end
                 if gameplay_drift_general.getContext() == "inChallenge" then
                     gameplay_drift_general.setContext("inFreeRoam")
-                    ui_message("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
+                    print("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
                 end
             end
 
