@@ -1,13 +1,12 @@
 local M = {}
 M.dependencies = {"util_stepHandler"}
-local dParcelManager, dCargoScreen, dGeneral, dGenerator, dPages, dProgress, dVehicleTasks
+local dParcelManager, dCargoScreen, dGeneral, dGenerator, dProgress, dVehicleTasks
 local step
 M.onCareerActivated = function()
   dParcelManager = career_modules_delivery_parcelManager
   dCargoScreen = career_modules_delivery_cargoScreen
   dGeneral = career_modules_delivery_general
   dGenerator = career_modules_delivery_generator
-  dPages = career_modules_delivery_pages
   dProgress = career_modules_delivery_progress
   dVehicleTasks = career_modules_delivery_vehicleTasks
   step = util_stepHandler
@@ -43,28 +42,28 @@ M.makeTaskLabel = makeTaskLabel
 local vehicleTags = {
   junkerVeh = {
     requirements = {
-      delivery = 1
+      vehicleDelivery = 1
     },
     labelPlural = "Junker Cars",
     labelSingular = "Junker Car",
   },
   smallVeh = {
     requirements = {
-      vehicleDelivery = 1
+      vehicleDelivery = 2
     },
     labelPlural = "Small Vehicles",
     labelSingular = "Small Vehicle",
   },
   largeVeh = {
     requirements = {
-      vehicleDelivery = 3
+      vehicleDelivery = 2
     },
     labelPlural = "Large Vehicles",
     labelSingular = "Large Vehicle",
   },
   fleetVeh = {
     requirements = {
-      vehicleDelivery = 2
+      vehicleDelivery = 3
     },
     labelPlural = "Fleet Cars",
     labelSingular = "Fleet Car",
@@ -94,7 +93,7 @@ local vehicleTags = {
   },
   emptyMediumTrailers = {
     requirements = {
-      delivery = 2
+      delivery = 1
     },
     labelPlural = "Medium Empty Trailers",
     labelSingular = "Medium Empty Trailer",
@@ -108,14 +107,14 @@ local vehicleTags = {
   },
   emptyLargeTrailer = {
     requirements = {
-      delivery = 3
+      delivery = 2
     },
     labelPlural = "Large Empty Trailers",
     labelSingular = "Large Empty Trailer",
   },
   loadedLargeTrailers = {
     requirements = {
-      delivery = 4
+      delivery = 3
     },
     labelPlural = "Large Loaded Trailers",
     labelSingular = "Large Loaded Trailer",
@@ -135,7 +134,9 @@ local function isVehicleTagUnlocked(tag)
     if career_branches.getBranchLevel(skill) < level then
       unlocked = false
     end
-    reason = {icon = skillIcons[skill] or "noIcon", level = level}
+    local name = career_branches.getBranchById(skill).name
+    name = translateLanguage(name, name, true)
+    reason = { type="locked", icon = skillIcons[skill] or "noIcon", level = level, skill = skill, longLabel = string.format("Requires Skill '%s' lvl %d", name, level), shortLabel = string.format("lvl %d", level)}
   end
   return unlocked, reason
 end
@@ -159,6 +160,14 @@ local function getVehicleTagLabelPlural(tag)
   return vehicleTags[tag].labelPlural
 end
 M.getVehicleTagLabelPlural = getVehicleTagLabelPlural
+
+local function getDefaultVehicleModifiersForUI()
+  return {
+    {type = "route", icon = "routeSimple", active = true, label = "Responsible", description = "Bonus rewards if you stay on route and dont waste time.", important = true},
+    {type = "damage", icon = "cogsDamaged", active = true, label = "Careful", description = "Large penalty if vehicle is damaged.", important = true}
+  }
+end
+M.getDefaultVehicleModifiersForUI = getDefaultVehicleModifiersForUI
 
 
 --[[
@@ -285,10 +294,12 @@ local function getOfferById(id)
   return nil
 end
 
-local function spawnOffer(offerId, callback)
+local function spawnOffer(offerId, fadeToBlack, callback)
   local offer = getOfferById(offerId)
   if not offer then log("E","","Could not find offer with it "..dumps(offerId)) return end
+  log("I","","Spawning offer " .. offerId)
   offer.spawned = true
+  if fadeToBlack == nil then fadeToBlack = true end
   local vehId = nil
   local options = {
     model = offer.vehicle.model,
@@ -296,7 +307,6 @@ local function spawnOffer(offerId, callback)
     autoEnterVehicle = false,
   }
   local sequence = {
-    step.makeStepFadeToBlack(0.4),
     step.makeStepSpawnVehicle(options, function(_, id)
       vehId = id end),
     step.makeStepReturnTrueFunction(function()
@@ -306,6 +316,7 @@ local function spawnOffer(offerId, callback)
       -- setup mileage
       local veh = be:getObjectByID(vehId)
       local mileage = offer.vehicle.mileage or 0
+      offer.vehicle.vehId = vehId
       veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, career_modules_vehicleShopping.getVisualValueFromMileage(mileage)))
       -- turn vehicle off
       core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
@@ -341,17 +352,32 @@ local function spawnOffer(offerId, callback)
         gameplay_walk.setRot(veh:getPosition() - getPlayerVehicle(0):getPosition())
       end
 
-      --if offer.data.type == "trailer" then
-      --  gameplay_walk.addVehicleToBlacklist(vehId)
-      --end
-
       --career_modules_vehicleDeletionService.flagForDeletion(vehId)
       dVehicleTasks.addVehicleTask(vehId, offer)
       dGeneral.startDeliveryMode()
       return true
     end),
-    step.makeStepFadeFromBlack(0.4)
+    step.makeStepReturnTrueFunction(function()
+      guihooks.trigger("updateCargoData")
+      return true
+    end),
+
+    step.makeStepReturnTrueFunction(function()
+      local veh = be:getObjectByID(vehId)
+      local camDir = veh:getPosition() - getPlayerVehicle(0):getPosition()
+      if gameplay_walk.isWalking() then
+        gameplay_walk.setRot(camDir)
+      end
+      return true
+    end)
    }
+
+   if fadeToBlack then
+    table.insert(sequence, 1, step.makeStepFadeToBlack(0.4))
+    table.insert(sequence, 1, step.makeStepWait(0.15))
+    table.insert(sequence, step.makeStepFadeFromBlack(0.4))
+   end
+
    step.startStepSequence(sequence, callback)
 end
 M.spawnOffer = spawnOffer
@@ -360,10 +386,19 @@ M.spawnOffer = spawnOffer
 
 local function onBranchTierReached(skill, tier)
   if skill == "vehicleDelivery" then
-    local prevMult, nextMult = dProgress.getMoneyMultiplerForSystem('vehicleDelivery', tier-1), dProgress.getMoneyMultiplerForSystem('vehicleDelivery', tier)
+    local prevMult, nextMult = dProgress.getMoneyMultiplerForSkill('vehicleDelivery', tier-1), dProgress.getMoneyMultiplerForSkill('vehicleDelivery', tier)
     log("I","",string.format("Reached tier %d of vehicle delivery. Increasing money rewards from %0.2f to %0.2f", tier, prevMult, nextMult))
     for _, offer in ipairs(allOffers) do
-      if offer.rewards and offer.rewards.money then
+      if offer.data.type == "vehicle" and  offer.rewards and offer.rewards.money then
+        offer.rewards.money = offer.rewards.money / prevMult * nextMult
+      end
+    end
+  end
+  if skill == "delivery" then
+    local prevMult, nextMult = dProgress.getMoneyMultiplerForSkill('delivery', tier-1), dProgress.getMoneyMultiplerForSkill('delivery', tier)
+    log("I","",string.format("Reached tier %d of delivery. Increasing money rewards from %0.2f to %0.2f", tier, prevMult, nextMult))
+    for _, offer in ipairs(allOffers) do
+      if offer.data.type == "trailer" and  offer.rewards and offer.rewards.money then
         offer.rewards.money = offer.rewards.money / prevMult * nextMult
       end
     end

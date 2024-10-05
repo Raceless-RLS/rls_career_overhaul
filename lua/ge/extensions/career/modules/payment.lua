@@ -25,13 +25,14 @@ local function pay(price, reason)
   return true
 end
 
+
 local function reward(price, reason)
-    local change = {}
-    for currency, info in pairs(price) do
-      change[currency] = info.amount
-    end
-    career_modules_playerAttributes.addAttributes(change, reason)
-    return true
+  local change = {}
+  for currency, info in pairs(price) do
+    change[currency] = info.amount
+  end
+  career_modules_playerAttributes.addAttributes(change, reason)
+  return true
 end
 
 M.canPay = canPay

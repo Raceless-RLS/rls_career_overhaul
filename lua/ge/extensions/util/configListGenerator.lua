@@ -80,13 +80,13 @@ local function chooseFromListBasedOnValue(list, popKey)
   end
 end
 
-local function chooseRandomModel(configs)
+local function chooseRandomModel(configs, popAttribute)
   local modelPops = {}
   for index, config in ipairs(configs) do
     if not modelPops[config.model_key] then
-      modelPops[config.model_key] = (config.Population or 1)
+      modelPops[config.model_key] = (config[popAttribute] or 1)
     else
-      modelPops[config.model_key] = math.max(modelPops[config.model_key], (config.Population or 1))
+      modelPops[config.model_key] = math.max(modelPops[config.model_key], (config[popAttribute] or 1))
     end
   end
 
@@ -112,7 +112,7 @@ local function chooseFilter(filters)
   return chooseFromListBasedOnValue(filters, "probability")
 end
 
-local function chooseRandomConfig(configs, filter)
+local function chooseRandomConfig(configs, filter, popAttribute)
   -- Use the filter to filter the config list
   local filteredConfigList = listFiltered(configs,
   function(vehInfo)
@@ -125,13 +125,13 @@ local function chooseRandomConfig(configs, filter)
     config.index = index
   end
 
-  local model_key = chooseRandomModel(filteredConfigList)
+  local model_key = chooseRandomModel(filteredConfigList, popAttribute)
   local configsForModel = listFiltered(filteredConfigList,
   function(vehInfo)
     return vehInfo.model_key == model_key
   end)
 
-  local config = chooseFromListBasedOnValue(configsForModel, "Population")
+  local config = chooseFromListBasedOnValue(configsForModel, popAttribute)
   if config then
     return config.index
   end
@@ -173,7 +173,8 @@ local function getEligibleVehicles(allowAuxiliaryVehicles, allowLoadedTrailers)
   return eligibleVehicles
 end
 
-local function getRandomVehicleInfos(filterSet, numberOfVehicles, eligibleVehicles)
+local function getRandomVehicleInfos(filterSet, numberOfVehicles, eligibleVehicles, popAttribute)
+  popAttribute = popAttribute or "Population"
   eligibleVehicles = eligibleVehicles or getEligibleVehicles()
   numberOfVehicles = numberOfVehicles or defaultNumberOfVehicles
   local vehicleCount = 0
@@ -185,7 +186,7 @@ local function getRandomVehicleInfos(filterSet, numberOfVehicles, eligibleVehicl
   while vehicleCount < numberOfVehicles and not tableIsEmpty(configs) do
     -- Choose one of the filters
     local filter = chooseFilter(filters)
-    local index = chooseRandomConfig(configs, filter)
+    local index = chooseRandomConfig(configs, filter, popAttribute)
     if not index then
       -- remove the filter that doesnt have any eligible vehicles
       table.remove(filters, filter.index)

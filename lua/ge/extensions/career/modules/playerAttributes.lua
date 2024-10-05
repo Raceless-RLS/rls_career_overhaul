@@ -16,7 +16,7 @@ local function init()
   attributes = {}
   attributes["beamXP"] = deepcopy(baseAttribute)
   attributes["money"] = deepcopy(baseAttribute)
-  attributes["bonusStars"] = deepcopy(baseAttribute)
+  attributes["vouchers"] = deepcopy(baseAttribute)
   for _, branch in ipairs(career_branches.getSortedBranches()) do
     attributes[branch.attributeKey] = deepcopy(baseAttribute)
     attributes[branch.attributeKey].value = branch.defaultValue or baseAttribute.value
@@ -28,6 +28,7 @@ local function init()
   M.setAttributes({money=startingCapital}, {label="Starting Capital"})
 end
 
+-- reason should be table with label, list of tags
 local function addAttributes(change, reason)
 
   -- make sure a reason exists!
@@ -47,7 +48,7 @@ local function addAttributes(change, reason)
   for attributeName, value in pairs(change) do
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)
     local attribute = attributes[attributeName]
-    attribute.value = attribute.value + value
+    attribute.value = clamp(attribute.value + value, attribute.min or -math.huge, attribute.max or math.huge)
     for tag, en in pairs(reason.tags) do
       if en and value > 0 then
         attribute.gains[tag] = (attribute.gains[tag] or 0) + value
@@ -61,6 +62,11 @@ local function addAttributes(change, reason)
     end
     if value < 0 then
       attribute.losses.all = (attribute.losses.all or 0) + value
+    end
+
+    if attributeName:endswith("Reputation") then
+      local orgId = attributeName:sub(1, -11)
+      career_career.interactWithOrganization(orgId)
     end
   end
 
@@ -109,6 +115,13 @@ local function onExtensionLoaded()
   if not saveSlot then return end
   local jsonData = (savePath and jsonReadFile(savePath .. "/career/playerAttributes.json")) or {}
 
+  local saveInfo = savePath and jsonReadFile(savePath .. "/info.json")
+  if saveInfo and saveInfo.version < 37 then
+    -- rename bonusStars to vouchers
+    jsonData.vouchers = jsonData.bonusStars
+    jsonData.bonusStars = nil
+  end
+
   for name, data in pairs(jsonData) do
     attributes[name] = attributes[name] or deepcopy(baseAttribute)
     for k,v in pairs(data) do
@@ -126,6 +139,16 @@ local function onSaveCurrentSaveSlot(currentSavePath)
 end
 
 
+local function onCareerModulesActivated()
+  for orgId, organization in pairs(freeroam_organizations.getOrganizations()) do
+    if not attributes[orgId .. "Reputation"] then
+      local attribute = deepcopy(baseAttribute)
+      attribute.min = career_modules_reputation.getMinimumValue()
+      attribute.max = career_modules_reputation.getMaximumValue()
+      attributes[orgId .. "Reputation"] = attribute
+    end
+  end
+end
 
 -- logbook integration
 local function onLogbookGetEntries(list)
@@ -169,7 +192,11 @@ local function onLogbookGetEntries(list)
       --local changeText = ""
       local rewards = {}
       for _, key in ipairs(career_branches.orderAttributeKeysByBranchOrder(tableKeys(change.attributeChange))) do
-        table.insert(rewards, {attributeKey = key, rewardAmount = change.attributeChange[key] })
+        if key:endswith("Reputation") then
+          table.insert(rewards, {attributeKey = "reputation", rewardAmount = change.attributeChange[key], icon="peopleOutline"})
+        else
+          table.insert(rewards, {attributeKey = key, rewardAmount = change.attributeChange[key], icon = career_branches.getBranchIcon(key)})
+        end
       --  changeText = changeText .. string.format('<span><b>%s</b>: %s%0.2f</span><br>', key, change.attributeChange[key] > 0 and "+" or "", change.attributeChange[key])
       end
       table.insert(gameplayTable.rows,
@@ -203,4 +230,5 @@ M.logAttributeChange = logAttributeChange
 M.onLogbookGetEntries = onLogbookGetEntries
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
 M.onExtensionLoaded = onExtensionLoaded
+M.onCareerModulesActivated = onCareerModulesActivated
 return M

@@ -6,13 +6,15 @@ local M = {}
 
 M.dependencies = {'career_career', 'career_modules_inspectVehicle', 'util_configListGenerator'}
 
+local moduleVersion = 42
+
 local jbeamIO = require('jbeam/io')
-local routePlanner = require('gameplay/route/route')()
 local imgui = ui_imgui
 
 local vehicleDeliveryDelay = 60
 local shopGenerationDelay = 5 * 60
 local salesTax = 0.06
+local customLicensePlatePrice = 300
 
 local starterVehicleMileages = {bx = 165746239, etki = 285817342, covet = 80174611}
 local starterVehicleYears = {bx = 1990, etki = 1989, covet = 1989}
@@ -50,12 +52,13 @@ local function getShoppingData()
 
   data.tutorialPurchase = (not career_modules_linearTutorial.getTutorialFlag("purchasedFirstCar")) or nil
 
-  local permissionStatus, permissionLabel = career_modules_permissions.getStatusForTag("vehicleShopping")
-
   data.disableShopping = false
-  if permissionStatus == "forbidden" then
+  local reason = career_modules_permissions.getStatusForTag("vehicleShopping")
+  if not reason.allow then
     data.disableShopping = true
-    data.disableShoppingReason = permissionLabel
+  end
+  if reason.permission ~= "allowed" then
+    data.disableShoppingReason = reason.label or "not allowed (TODO)"
   end
 
   return data
@@ -76,8 +79,24 @@ local function getRandomizedPrice(price)
   end
 end
 
+
+local function normalizePopulations(configs, scalingFactor)
+  local sum = 0
+  for _, configInfo in ipairs(configs) do
+    configInfo.adjustedPopulation = configInfo.Population or 1
+    sum = sum + configInfo.adjustedPopulation
+  end
+  local average = sum / tableSize(configs)
+  for _, configInfo in ipairs(configs) do
+    local distanceFromAverage = configInfo.adjustedPopulation - average
+    configInfo.adjustedPopulation = round(configInfo.adjustedPopulation - scalingFactor * distanceFromAverage)
+  end
+end
+
 local function generateVehicleList()
   local eligibleVehicles = util_configListGenerator.getEligibleVehicles(not career_career.hasBoughtStarterVehicle())
+  normalizePopulations(eligibleVehicles, 0.4)
+
   local sellers = {}
 
   -- get the dealerships from the level
@@ -104,7 +123,7 @@ local function generateVehicleList()
 
   vehiclesInShop = {}
   for _, seller in ipairs(sellers) do
-    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 10, eligibleVehicles)
+    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(seller, 15, eligibleVehicles, "adjustedPopulation")
 
     for _, randomVehicleInfo in ipairs(randomVehicleInfos) do
       randomVehicleInfo.sellerId = seller.id
@@ -190,7 +209,9 @@ local function getVisualValueFromMileage(mileage)
   end
 end
 
-local function spawnVehicle(vehicleInfo, dealershipToMoveTo, followUpAction)
+local spawnFollowUpActions
+
+local function spawnVehicle(vehicleInfo, dealershipToMoveTo)
   local spawnOptions = {}
   spawnOptions.config = vehicleInfo.key
   spawnOptions.autoEnterVehicle = false
@@ -198,18 +219,22 @@ local function spawnVehicle(vehicleInfo, dealershipToMoveTo, followUpAction)
   if dealershipToMoveTo then moveVehicleToDealership(newVeh, dealershipToMoveTo) end
   core_vehicleBridge.executeAction(newVeh,'setIgnitionLevel', 0)
 
-  local closestGarage = career_modules_inventory.getClosestGarage()
-  local garagePos, _ = freeroam_facilities.getGaragePosRot(closestGarage)
-  local delay = getDeliveryDelay(vehicleInfo.pos:distance(garagePos))
-  newVeh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f) obj:queueGameEngineLua('career_modules_vehicleShopping.onVehicleSpawnFinished(%d, %d, %d)')", vehicleInfo.Mileage, getVisualValueFromMileage(vehicleInfo.Mileage), newVeh:getID(), followUpAction or -1, delay))
+  newVeh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f) obj:queueGameEngineLua('career_modules_vehicleShopping.onVehicleSpawnFinished(%d)')", vehicleInfo.Mileage, getVisualValueFromMileage(vehicleInfo.Mileage), newVeh:getID()))
   return newVeh
 end
 
-local function onVehicleSpawnFinished(vehId, followUpAction, delay)
+local function onVehicleSpawnFinished(vehId)
   local veh = be:getObjectByID(vehId)
   local inventoryId = career_modules_inventory.addVehicle(vehId)
-  if followUpAction == 1 then -- add to inventory
-    career_modules_inventory.delayVehicleAccess(inventoryId, delay, "bought")
+
+  if spawnFollowUpActions then
+    if spawnFollowUpActions.delayAccess then
+      career_modules_inventory.delayVehicleAccess(inventoryId, spawnFollowUpActions.delayAccess, "bought")
+    end
+    if spawnFollowUpActions.licensePlateText then
+      career_modules_inventory.setLicensePlateText(inventoryId, spawnFollowUpActions.licensePlateText)
+    end
+    spawnFollowUpActions = nil
   end
 end
 
@@ -223,22 +248,28 @@ local function payForVehicle()
 end
 
 local deleteAddedVehicle
-local function buyVehicleAndSendToGarage()
+local function buyVehicleAndSendToGarage(options)
   if career_modules_playerAttributes.getAttributeValue("money") < purchaseData.prices.finalPrice
   or not career_modules_inventory.hasFreeSlot() then
     return
   end
   payForVehicle()
-  spawnVehicle(purchaseData.vehicleInfo, nil, 1)
+
+  local closestGarage = career_modules_inventory.getClosestGarage()
+  local garagePos, _ = freeroam_facilities.getGaragePosRot(closestGarage)
+  local delay = getDeliveryDelay(purchaseData.vehicleInfo.pos:distance(garagePos))
+  spawnFollowUpActions = {delayAccess = delay, licensePlateText = options.licensePlateText}
+  spawnVehicle(purchaseData.vehicleInfo)
   deleteAddedVehicle = true
 end
 
-local function buyVehicleAndSpawnInParkingSpot()
+local function buyVehicleAndSpawnInParkingSpot(options)
   if career_modules_playerAttributes.getAttributeValue("money") < purchaseData.prices.finalPrice
   or not career_modules_inventory.hasFreeSlot() then
     return
   end
   payForVehicle()
+  spawnFollowUpActions = {licensePlateText = options.licensePlateText}
   local newVehObj = spawnVehicle(purchaseData.vehicleInfo, purchaseData.vehicleInfo.sellerId)
   if gameplay_walk.isWalking() then
     gameplay_walk.setRot(newVehObj:getPosition() - getPlayerVehicle(0):getPosition())
@@ -247,13 +278,8 @@ end
 
 local function navigateToPos(pos)
   -- TODO this should better take vec3s directly
-  core_groundMarkers.setFocus(vec3(pos.x, pos.y, pos.z))
+  core_groundMarkers.setPath(vec3(pos.x, pos.y, pos.z))
   guihooks.trigger('ChangeState', {state = 'play', params = {}})
-end
-
-local function getDistanceToPoint(pos)
-  routePlanner:setupPath(getPlayerVehicle(0):getPosition(), pos)
-  return routePlanner.path[1].distToTarget
 end
 
 -- TODO At this point, the part conditions of the previous vehicle should have already been saved. for example when entering the garage
@@ -274,10 +300,25 @@ local function openShop(seller, _originComputerId)
     generateVehicleList()
   end
 
+  local sellerInfos = {}
   for id, vehicleInfo in ipairs(vehiclesInShop) do
     if vehicleInfo.pos then
-      vehicleInfo.distance = getDistanceToPoint(vehicleInfo.pos)
-      vehicleInfo.quickTravelPrice = career_modules_quickTravel.getPriceForQuickTravel(vehicleInfo.pos)
+      if vehicleInfo.sellerId ~= "private" then
+        local sellerInfo = sellerInfos[vehicleInfo.sellerId]
+        if sellerInfo then
+          vehicleInfo.distance = sellerInfo.distance
+          vehicleInfo.quickTravelPrice = sellerInfo.quicktravelPrice
+        else
+          local quicktravelPrice, distance = career_modules_quickTravel.getPriceForQuickTravel(vehicleInfo.pos)
+          sellerInfos[vehicleInfo.sellerId] = {distance = distance, quicktravelPrice = quicktravelPrice}
+          vehicleInfo.distance = distance
+          vehicleInfo.quickTravelPrice = quicktravelPrice
+        end
+      else
+        local quicktravelPrice, distance = career_modules_quickTravel.getPriceForQuickTravel(vehicleInfo.pos)
+        vehicleInfo.distance = distance
+        vehicleInfo.quickTravelPrice = quicktravelPrice
+      end
     else
       vehicleInfo.distance = 0
     end
@@ -327,14 +368,15 @@ local function removeUnusedPlayerVehicles()
   end
 end
 
-local function buySpawnedVehicle()
+local function buySpawnedVehicle(buyVehicleOptions)
   if career_modules_playerAttributes.getAttributeValue("money") >= purchaseData.prices.finalPrice
   and career_modules_inventory.hasFreeSlot() then
     local vehObj = be:getObjectByID(purchaseData.vehId)
-    local plateText = core_vehicles.regenerateVehicleLicenseText(vehObj)
-    core_vehicles.setPlateText(plateText, vehObj:getID())
     payForVehicle()
     local newInventoryId = career_modules_inventory.addVehicle(vehObj:getID())
+    if buyVehicleOptions.licensePlateText then
+      career_modules_inventory.setLicensePlateText(newInventoryId, buyVehicleOptions.licensePlateText)
+    end
     removeNonUsedPlayerVehicles = true
     if be:getPlayerVehicleID(0) == vehObj:getID() then
       career_modules_inventory.enterVehicle(newInventoryId)
@@ -352,7 +394,7 @@ local function sendPurchaseDataToUi()
   local tradeInValue = purchaseData.tradeInVehicleInfo and purchaseData.tradeInVehicleInfo.Value or 0
   local taxes = math.max((vehicleShopInfo.Value + vehicleShopInfo.fees - tradeInValue) * salesTax, 0)
   local finalPrice = vehicleShopInfo.Value + vehicleShopInfo.fees + taxes - tradeInValue
-  purchaseData.prices = {fees = vehicleShopInfo.fees, taxes = taxes, finalPrice = finalPrice}
+  purchaseData.prices = {fees = vehicleShopInfo.fees, taxes = taxes, finalPrice = finalPrice, customLicensePlate = customLicensePlatePrice}
   local spawnedVehicleInfo = career_modules_inspectVehicle.getSpawnedVehicleInfo()
   purchaseData.vehId = spawnedVehicleInfo and spawnedVehicleInfo.vehId
 
@@ -396,7 +438,6 @@ local function onClientStartMission()
   vehiclesInShop = nil
 end
 
-
 local function onAddedVehiclePartsToInventory(inventoryId, newParts)
 
   -- Update the vehicle parts with the actual parts that are installed (they differ from the pc file)
@@ -410,8 +451,8 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
 
   for partName, part in pairs(newParts) do
     part.year = vehicle.year
-    vehicle.config.parts[part.slot] = part.name
-    vehicle.originalParts[part.slot] = {name = part.name, value = part.value}
+    vehicle.config.parts[part.containingSlot] = part.name
+    vehicle.originalParts[part.containingSlot] = {name = part.name, value = part.value}
 
     if part.description.slotInfoUi then
       for slot, _ in pairs(part.description.slotInfoUi) do
@@ -451,7 +492,7 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
   career_modules_inspectVehicle.setInspectScreen(false)
 
   extensions.hook("onVehicleAddedToInventory", {inventoryId = inventoryId, vehicleInfo = purchaseData and purchaseData.vehicleInfo})
-  career_career.buyStarterVehicle()
+
   if career_career.isAutosaveEnabled() then
     career_saveSystem.saveCurrent()
   end
@@ -492,24 +533,27 @@ local function openPurchaseMenu(purchaseType, shopId)
   extensions.hook("onVehicleShoppingPurchaseMenuOpened", {purchaseType = purchaseType, shopId = shopId})
 end
 
-local function buyFromPurchaseMenu(purchaseType, makeDelivery)
+local function buyFromPurchaseMenu(purchaseType, options)
   if purchaseData.tradeInVehicleInfo then
     career_modules_inventory.removeVehicle(purchaseData.tradeInVehicleInfo.id)
   end
 
+  local buyVehicleOptions = {licensePlateText = options.licensePlateText}
   if purchaseType == "inspect" then
-    if makeDelivery then
+    if options.makeDelivery then
       deleteAddedVehicle = true
     end
-    career_modules_inspectVehicle.buySpawnedVehicle()
+    career_modules_inspectVehicle.buySpawnedVehicle(buyVehicleOptions)
   elseif purchaseType == "instant" then
     career_modules_inspectVehicle.showVehicle(nil)
-    if makeDelivery then
-      buyVehicleAndSendToGarage()
+    if options.makeDelivery then
+      buyVehicleAndSendToGarage(buyVehicleOptions)
     else
-      buyVehicleAndSpawnInParkingSpot()
+      buyVehicleAndSpawnInParkingSpot(buyVehicleOptions)
     end
   end
+
+  career_modules_playerAttributes.addAttributes({money=-purchaseData.prices.customLicensePlate}, {tags={"buying"}, label=string.format("Bought custom license plate for new vehicle")})
 
   -- remove the vehicle from the shop and update the other vehicles shopIds
   table.remove(vehiclesInShop, purchaseData.vehicleInfo.shopId)
@@ -533,18 +577,24 @@ end
 
 local function openInventoryMenuForTradeIn()
   career_modules_inventory.openMenu(
-    {{callback = function(inventoryId)
-      local vehicle = career_modules_inventory.getVehicles()[inventoryId]
-      if vehicle then
-        purchaseData.tradeInVehicleInfo = {id = inventoryId, niceName = vehicle.niceName, Value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)}
-        guihooks.trigger('ChangeState', {state = 'vehiclePurchase', params = {}})
-      end
-    end, buttonText = "Trade-In", repairRequired = true}}, "Trade-In",
+    {{
+      callback = function(inventoryId)
+        local vehicle = career_modules_inventory.getVehicles()[inventoryId]
+        if vehicle then
+          purchaseData.tradeInVehicleInfo = {id = inventoryId, niceName = vehicle.niceName, Value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)}
+          guihooks.trigger('ChangeState', {state = 'vehiclePurchase', params = {}})
+        end
+      end,
+      buttonText = "Trade-In",
+      repairRequired = true,
+      ownedRequired = true,
+    }}, "Trade-In",
     {
       repairEnabled = false,
       sellEnabled = false,
       favoriteEnabled = false,
-      storingEnabled = false
+      storingEnabled = false,
+      returnLoanerEnabled = false
     },
     function()
       guihooks.trigger('ChangeState', {state = 'vehiclePurchase', params = {}})
@@ -559,7 +609,10 @@ local function onExtensionLoaded()
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
   if not saveSlot or not savePath then return end
 
-  local data = jsonReadFile(savePath .. "/career/vehicleShop.json")
+  local saveInfo = savePath and jsonReadFile(savePath .. "/info.json")
+  local outdated = not saveInfo or saveInfo.version < moduleVersion
+
+  local data = not outdated and jsonReadFile(savePath .. "/career/vehicleShop.json")
   if data then
     lastGenerationTime = os.time(data.lastGenerationTime)
   else
@@ -567,7 +620,7 @@ local function onExtensionLoaded()
   end
 end
 
-local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, forceSyncSave)
+local function onSaveCurrentSaveSlot(currentSavePath)
   local data = {}
   data.lastGenerationTime = os.date("*t", lastGenerationTime)
   career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/career/vehicleShop.json", data, true)
@@ -579,12 +632,27 @@ end
 
 local function onComputerAddFunctions(menuData, computerFunctions)
   if not menuData.computerFacility.functions["vehicleShop"] then return end
+
   local computerFunctionData = {
     id = "vehicleShop",
     label = "Purchase Vehicles",
     callback = function() openShop(nil, menuData.computerFacility.id) end,
-    disabled = menuData.tutorialPartShoppingActive or menuData.tutorialTuningActive
+    order = 10
   }
+  -- tutorial active
+  if menuData.tutorialPartShoppingActive or menuData.tutorialTuningActive then
+    computerFunctionData.disabled = true
+    computerFunctionData.reason = career_modules_computer.reasons.tutorialActive
+  end
+  -- generic gameplay reason
+  local reason = career_modules_permissions.getStatusForTag("vehicleShopping")
+  if not reason.allow then
+    computerFunctionData.disabled = true
+  end
+  if reason.permission ~= "allowed" then
+    computerFunctionData.reason = reason
+  end
+
   computerFunctions.general[computerFunctionData.id] = computerFunctionData
 end
 

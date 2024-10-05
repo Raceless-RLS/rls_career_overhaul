@@ -10,25 +10,18 @@ local lossPerKmRelative = 0.0000025
 local scrapValueRelative = 0.50
 
 local function getVehicleMileage(vehicle)
-  if not vehicle or not vehicle.config or not vehicle.config.parts or not vehicle.partConditions then
-    log("E", "valueCalculator", "Invalid vehicle data in getVehicleMileage")
-    return 0 -- Return a default value
-  end
-
   for slot, partName in pairs(vehicle.config.parts) do
     if partName == vehicle.config.mainPartName then
-      if vehicle.partConditions[partName] and vehicle.partConditions[partName]["odometer"] then
-        return vehicle.partConditions[partName]["odometer"]
-      else
-        log("W", "valueCalculator", "Odometer not found for main part")
-        return 0 -- Return a default value
-      end
+      return vehicle.partConditions[partName]["odometer"]
     end
   end
-
-  log("W", "valueCalculator", "Main part not found in vehicle config")
   return 0 -- Return a default value if main part is not found
 end
+
+local function getVehicleMileageById(inventoryId)
+  return getVehicleMileage(career_modules_inventory.getVehicles()[inventoryId])
+end
+
 
 local function getDepreciation(year, power)
   local powerFactor = power / 300
@@ -111,15 +104,13 @@ local function getPartDifference(originalParts, newParts, changedSlots)
 end
 
 local function getPartValue(part)
-  return part.value
+  return getAdjustedVehicleBaseValue(part.value, {age = 2023 - part.year, mileage = part.partCondition["odometer"]})
 end
 
 -- IMPORTANT the pc file of a config does not contain the correct list of parts in the vehicle. there might be old unused slots/parts there and there might be slots/parts missing that are in the vehicle
 -- the empty strings in the pc file are important, because otherwise the game will use the default part
 
-local function getVehicleValue(configInfo, vehicle)
-  local endValue = 0
-  local configBaseValue = configInfo.Value
+local function getVehicleValue(configBaseValue, vehicle)
   local mileage = getVehicleMileage(vehicle)
 
   local newParts = vehicle.config.parts
@@ -140,24 +131,15 @@ local function getVehicleValue(configInfo, vehicle)
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
     sumPartValues = sumPartValues -  1.15 * getPartValue(part)
   end
-  
+
   local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
-  endValue = adjustedBaseValue + sumPartValues
-  return endValue
+  return adjustedBaseValue + sumPartValues
 end
 
 local function getInventoryVehicleValue(inventoryId)
   local vehicle = career_modules_inventory.getVehicles()[inventoryId]
   if not vehicle then return end
-
-  if tableIsEmpty(core_vehicles.getModel(vehicle.model)) or not FS:fileExists(vehicle.config.partConfigFilename) then
-    -- TODO ideally we would save the original config value with the vehicle, so we can always use it here
-    return getVehicleValue({Value = 1000}, vehicle)
-  else
-    local dir, configName, ext = path.splitWithoutExt(vehicle.config.partConfigFilename)
-    local baseConfig = core_vehicles.getConfig(vehicle.model, configName)
-    return getVehicleValue(baseConfig, vehicle)
-  end
+  return getVehicleValue(vehicle.configBaseValue, vehicle)
 end
 
 M.getPartDifference = getPartDifference
@@ -166,5 +148,6 @@ M.getInventoryVehicleValue = getInventoryVehicleValue
 M.getVehicleValue = getVehicleValue
 M.getPartValue = getPartValue
 M.getAdjustedVehicleBaseValue = getAdjustedVehicleBaseValue
+M.getVehicleMileageById = getVehicleMileageById
 
 return M

@@ -13,76 +13,12 @@ local branchIcon = {
   adventurer = "jump",
 }
 
-local function calculateXPForLevels(levels, growthRate, maxLevel, constantLevel)
-  local xpLevels = {}
-  for i, level in ipairs(levels) do
-    xpLevels[i] = level.requiredValue
-  end
-
-  local lastLevelXP = levels[#levels].requiredValue
-  local secondLastLevelXP = levels[#levels - 1].requiredValue
-  local difference = lastLevelXP - secondLastLevelXP
-
-  for level = #levels + 1, maxLevel do
-    if level <= constantLevel then
-      local requiredXP = lastLevelXP + difference * ((level - #levels) ^ growthRate)
-      table.insert(xpLevels, math.floor(requiredXP))
-    else
-      local requiredXP = xpLevels[constantLevel] + difference * (level - constantLevel)
-      table.insert(xpLevels, math.floor(requiredXP))
-    end
-  end
-  return xpLevels
-end
-local function calcBranchLevelFromValue(val, id)
-  local branch = career_branches.getBranchById(id)
-  if not branch then
-    print("Error: Branch not found for id: " .. tostring(id))
-    return 0, 0, 0, 0, 0
-  end
-
-  local level = 0
-  local curLvlProgress, neededForNext, prevThreshold, nextThreshold = 0, 0, 0, 0
-
-  local levels = branch.levels or {}
-  local maxLevel = 50  -- Define the maximum level you want to calculate up to
-  local constantLevel = 25  -- Define the level after which XP required becomes constant
-  local growthRate = 1.05  -- Define the growth rate
-
-  -- Calculate the XP required for each level up to maxLevel
-  local xpLevels = calculateXPForLevels(levels, growthRate, maxLevel, constantLevel)
-
-  -- Determine the current level based on the XP value
-  for i, requiredXP in ipairs(xpLevels) do
-    if val >= requiredXP then
-      level = i
-    else
-      break
-    end
-  end
-
-  -- Calculate the thresholds and progress
-  if xpLevels[level] and xpLevels[level + 1] then
-    prevThreshold = xpLevels[level]
-    neededForNext = xpLevels[level + 1] - xpLevels[level]
-    curLvlProgress = val - prevThreshold
-    nextThreshold = xpLevels[level + 1]
-  else
-    -- Handle case where we're at or beyond the last calculated level
-    prevThreshold = xpLevels[#xpLevels] or 0
-    neededForNext = 0
-    curLvlProgress = val - prevThreshold
-    nextThreshold = prevThreshold
-  end
-
-  return level, curLvlProgress, neededForNext, prevThreshold, nextThreshold
-end
-
 M.onGeneralMilestonesCollect = function(milestonesList)
   milestones = career_modules_milestones_milestones
 
   for i, branchInfo in ipairs(career_branches.getSortedBranches()) do
     if not branchInfo.isInDevelopment then
+      local levelCount = branchInfo.maxReachableLevel -1 -- account for entry 0
       local attKey = branchInfo.attributeKey
       local isBranch = not branchInfo.isSkill
       local color = branchInfo.color
@@ -100,32 +36,13 @@ M.onGeneralMilestonesCollect = function(milestonesList)
         minValueIsPreviousStepTarget = true,
         icon = branchIcon[branchInfo.parentBranch or branchInfo.id],
         color=color,
-        getValue = function() 
-          local val = career_modules_playerAttributes.getAttributeValue(attKey)
-          local level, curLvlProgress, neededForNext, prevThreshold, nextThreshold = calcBranchLevelFromValue(val, branchInfo.id)
-          -- Return the current level progress and the XP needed for next level
-          return curLvlProgress, neededForNext
-        end,
-        getLabel = function(step, displayValue, target) 
-          return {txt=isBranch and "ui.career.branchSemicolon" or "ui.career.skillSemicolon", context = {branch = branchInfo.name}} 
-        end,
-        getDescription = function(step, displayValue, target)
-          local val = career_modules_playerAttributes.getAttributeValue(attKey)
-          local level = calcBranchLevelFromValue(val, branchInfo.id)
-          return {txt=isBranch and "ui.career.milestones.branches.reachBranchLevel.description" or "ui.career.milestones.branches.reachSkillLevel.description", context={lvl = level + 1, name = branchInfo.name}}
-        end,
-        getProgressLabel = function(step, current, target) 
-          local val = career_modules_playerAttributes.getAttributeValue(attKey)
-          local level, curLvlProgress, neededForNext = calcBranchLevelFromValue(val, branchInfo.id)
-          return string.format("Level %d: %d / %d XP", level, curLvlProgress, neededForNext)
-        end,
-        getTarget = function(step)
-          local val = career_modules_playerAttributes.getAttributeValue(attKey)
-          local level, curLvlProgress, neededForNext, prevThreshold, nextThreshold = calcBranchLevelFromValue(val, branchInfo.id)
-          return nextThreshold
-        end,
+        getValue = function() return career_modules_playerAttributes.getAttributeValue(attKey) end,
+        getLabel = function(step, displayValue, target) return {txt=isBranch and "ui.career.branchSemicolon" or "ui.career.skillSemicolon", context = {branch = branchInfo.name}} end,
+        getDescription = function(step, displayValue, target) return {txt=isBranch and "ui.career.milestones.branches.reachBranchLevel.description" or "ui.career.milestones.branches.reachSkillLevel.description", context={lvl = step+1, name = branchInfo.name}} end,
+        getProgressLabel = function(step, current, target) return string.format("%d xp / %d xp", current, target) end,
+        getTarget = function(step) return branchInfo.levels[step+1].requiredValue end,
         getRewards = isBranch and milestones.majorLinear or milestones.minorLinear,
-        maxStep = 100  -- Set a very high number to allow for many levels
+        maxStep = levelCount
       }
       if isBranch then
         milestoneConfig.filter.general = true
@@ -147,11 +64,10 @@ end
 -- branch related updates
 local function setNotificationTarget(attKey)
   local milestoneConfig = attKeyToMilestone[attKey]
-  local step = milestones.saveData.general[milestoneConfig.id].notificationStep
+  local step = milestones.saveData.general[milestoneConfig.id].notificationStep +1
   -- check if milestone is completed
-  if milestoneConfig.maxStep and step >= milestoneConfig.maxStep then return end
-  local level, curLvlProgress, neededForNext = milestoneConfig.getValue()
-  local target = milestoneConfig.getTarget(level)
+  if milestoneConfig.maxStep and step > milestoneConfig.maxStep then return end
+  local target = milestoneConfig.getTarget(step)
   if target then
     milestoneConfig._target = target
   end
@@ -162,13 +78,12 @@ local function onPlayerAttributesChanged(change)
     if val > 0 then
       local milestoneConfig = attKeyToMilestone[attKey]
       if not milestoneConfig then return end
-      local level, curLvlProgress, neededForNext = milestoneConfig.getValue()
-      local step = milestones.saveData.general[milestoneConfig.id].notificationStep
-      if milestoneConfig._target and level > step then
-        extensions.hook("onBranchTierReached", milestoneConfig.branchKey, level)
+      local step = milestones.saveData.general[milestoneConfig.id].notificationStep +1
+      if milestoneConfig._target and milestoneConfig.getValue() >= milestoneConfig._target then
+        extensions.hook("onBranchTierReached",milestoneConfig.branchKey, step+1)
         milestones.milestoneReached(milestoneConfig.getLabel(step))
         milestoneConfig._target = nil
-        milestones.saveData.general[milestoneConfig.id].notificationStep = level
+        milestones.saveData.general[milestoneConfig.id].notificationStep = step
         M.setNotificationTarget(attKey)
       end
     end

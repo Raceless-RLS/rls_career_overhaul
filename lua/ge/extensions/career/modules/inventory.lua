@@ -4,8 +4,9 @@
 
 local M = {}
 
-M.dependencies = {'career_career', "career_modules_log"}
+M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
 
+local moduleVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
 
 local xVec, yVec, zVec = vec3(1,0,0), vec3(0,1,0), vec3(0,0,1)
@@ -29,6 +30,7 @@ local unicycleSavedPosition
 
 local vehicleToEnterId
 local vehiclesMovedToStorage
+local loanedVehicleReturned
 
 local function getClosestGarage(pos)
   local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
@@ -46,6 +48,31 @@ local function getClosestGarage(pos)
   return closestGarage
 end
 
+-- Function to parse ISO 8601 date-time string
+local function parse_iso8601(datetime)
+  local pattern = "(%d+)-(%d+)-(%d+)T(%d+):(%d+):(%d+)Z"
+  local year, month, day, hour, min, sec = datetime:match(pattern)
+
+  -- Convert to Unix timestamp
+  return os.time({
+    year = tonumber(year),
+    month = tonumber(month),
+    day = tonumber(day),
+    hour = tonumber(hour),
+    min = tonumber(min),
+    sec = tonumber(sec),
+    isdst = false
+  })
+end
+
+-- Function to calculate time difference
+local function time_since(datetime)
+  local past = parse_iso8601(datetime)
+  local now = os.time(os.date("!*t"))
+  local diff = os.difftime(now, past)
+  return diff
+end
+
 local function onExtensionLoaded()
   if not career_career.isActive() then return false end
 
@@ -53,12 +80,24 @@ local function onExtensionLoaded()
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
   if not saveSlot or not savePath then return end
 
-  -- load the vehicles
   table.clear(vehicles)
+
+  local saveInfo = jsonReadFile(savePath .. "/info.json")
+  if not saveInfo or saveInfo.version < moduleVersion then return end
+
+  -- load the vehicles
   local files = FS:findFiles(savePath .. "/career/vehicles/", '*.json', 0, false, false)
   for i = 1, tableSize(files) do
     local vehicleData = jsonReadFile(files[i])
-    vehicleData.partConditions = lpack.decode(vehicleData.partConditions)
+    vehicleData.partConditions = deserialize(vehicleData.partConditions)
+    if vehicleData.timeToAccess then
+      vehicleData.timeToAccess = vehicleData.timeToAccess - time_since(saveInfo.date)
+      if vehicleData.timeToAccess <= 0 then
+        vehicleData.timeToAccess = nil
+        vehicleData.delayReason = nil
+      end
+    end
+
     vehicles[vehicleData.id] = vehicleData
     if tableIsEmpty(core_vehicles.getModel(vehicleData.model)) or not FS:fileExists(vehicleData.config.partConfigFilename) then
       vehicleData.missingFile = true
@@ -94,35 +133,29 @@ local function onExtensionLoaded()
   end
 end
 
-local function saveVehiclesData(currentSavePath, oldSaveDate)
-  local vehiclesCopy = deepcopy(vehicles)
-  local currentDate = os.date("!%Y-%m-%dT%XZ")
-  for id, vehicle in pairs(vehiclesCopy) do
-    if dirtiedVehicles[id] or not vehicle.dirtyDate then
-      vehicles[id].dirtyDate = currentDate
-      vehicle.dirtyDate = currentDate
-      dirtiedVehicles[id] = nil
-    end
-    if (vehicle.dirtyDate > oldSaveDate) then
-      vehicle.partConditions = lpack.encode(vehicle.partConditions)
-      career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/career/vehicles/" .. id .. ".json", vehicle, true)
-    end
-  end
+local function updateVehicleThumbnail(inventoryId, filename, callback)
+  local vehId = M.getVehicleIdFromInventoryId(inventoryId)
+  if not vehId then return end
+  local vehObj = be:getObjectByID(vehId)
+  local bb = vehObj:getSpawnWorldOOBB()
+  local bbCenter = bb:getCenter()
 
-  if currentVehicle then
-    dirtiedVehicles[currentVehicle] = true
-  end
+  local resolution = vec3(500, 281, 0)
+  local fov = 50
+  local nearPlane = 0.1
+  local camPos = util_screenshotCreator.frameVehicle(vehObj, fov, nearPlane, resolution.x / resolution.y)
 
-  -- Remove vehicle files for vehicles that have been deleted
-  local files = FS:findFiles(currentSavePath .. "/career/vehicles/", '*.json', 0, false, false)
-  for i = 1, tableSize(files) do
-    local dir, filename, ext = path.split(files[i])
-    local fileNameNoExt = string.sub(filename, 1, -6)
-    local inventoryId = tonumber(fileNameNoExt)
-    if not vehicles[inventoryId] then
-      FS:removeFile(dir .. filename)
-    end
-  end
+  local options = {
+    pos = camPos,
+    rot = quatFromDir(bbCenter - camPos),
+    filename = filename,
+    renderViewName = "careerVehicleRenderView" .. inventoryId,
+    resolution = resolution,
+    fov = fov,
+    nearPlane = nearPlane,
+    screenshotDelay = 0.5
+  }
+  render_renderViews.takeScreenshot(options, callback)
 end
 
 local function setVehicleDirty(inventoryId)
@@ -149,8 +182,9 @@ local function updatePartConditionsOfSpawnedVehicles(callback)
 end
 
 local extensionName = "inventory"
-local function saveFinished(currentSavePath, oldSaveDate, forceSyncSave)
-  extensions.hook("onVehicleSaveFinished", currentSavePath, oldSaveDate, forceSyncSave)
+local function inventorySaveFinished(currentSavePath, oldSaveDate)
+  -- if there are more async saving steps waiting for the vehicle save to finish, we need to call registerAsyncSaveExtension inside their onVehicleSaveFinished function first
+  extensions.hook("onVehicleSaveFinished", currentSavePath, oldSaveDate)
   career_saveSystem.asyncSaveExtensionFinished(extensionName)
   guihooks.trigger("saveFinished")
 end
@@ -159,23 +193,67 @@ local function onSaveCurrentSaveSlotAsyncStart()
   career_saveSystem.registerAsyncSaveExtension(extensionName)
 end
 
-local function saveVehiclesCallback(currentSavePath, oldSaveDate)
-  saveVehiclesData(currentSavePath, oldSaveDate)
-  saveFinished(currentSavePath, oldSaveDate)
-end
-
-local function isVehicleInGarage(veh, garage)
-  local zones = freeroam_facilities.getZonesForFacility(garage)
-  for _, zone in ipairs(zones) do
-    if zone:containsVehicle(veh) then
-      return true
+local finishedSaveTasks = {}
+local function checkSaveFinished(currentSavePath, oldSaveDate)
+  for _, fin in pairs(finishedSaveTasks) do
+    if not fin then
+      return --not finished
     end
   end
-  return false
+  inventorySaveFinished(currentSavePath, oldSaveDate)
+end
+
+local function saveVehiclesData(currentSavePath, oldSaveDate, vehiclesThumbnailUpdate)
+  local vehiclesCopy = deepcopy(vehicles)
+  local currentDate = os.date("!%Y-%m-%dT%XZ")
+
+  for id, vehicle in pairs(vehiclesCopy) do
+    if dirtiedVehicles[id] or not vehicle.dirtyDate then
+      vehicles[id].dirtyDate = currentDate
+      vehicle.dirtyDate = currentDate
+      dirtiedVehicles[id] = nil
+    end
+    if (vehicle.dirtyDate > oldSaveDate) then
+      vehicle.partConditions = serialize(vehicle.partConditions)
+
+      local thumbnailFilename = currentSavePath .. "/career/vehicles/" .. id .. ".png"
+      if vehiclesThumbnailUpdate and tableContains(vehiclesThumbnailUpdate, id) and inventoryIdToVehId[id] then
+        finishedSaveTasks["thumbnail" .. id] = false
+        updateVehicleThumbnail(id, thumbnailFilename, function()
+          finishedSaveTasks["thumbnail" .. id] = true
+          checkSaveFinished(currentSavePath, oldSaveDate)
+        end)
+        vehicle.defaultThumbnail = nil
+        vehicles[id].defaultThumbnail = nil
+
+      elseif not vehicle.defaultThumbnail then
+        local _, oldSavePath = career_saveSystem.getCurrentSaveSlot()
+        FS:copyFile(oldSavePath .. "/career/vehicles/" .. id .. ".png", thumbnailFilename)
+      end
+
+      career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/career/vehicles/" .. id .. ".json", vehicle, true)
+    end
+  end
+
+  if currentVehicle then
+    dirtiedVehicles[currentVehicle] = true
+  end
+
+  -- Remove vehicle files for vehicles that have been deleted
+  local files = FS:findFiles(currentSavePath .. "/career/vehicles/", '*.json', 0, false, false)
+  for i = 1, tableSize(files) do
+    local dir, filename, ext = path.split(files[i])
+    local fileNameNoExt = string.sub(filename, 1, -6)
+    local inventoryId = tonumber(fileNameNoExt)
+    if not vehicles[inventoryId] then
+      FS:removeFile(dir .. filename)
+      FS:removeFile(dir .. inventoryId .. ".png")
+    end
+  end
 end
 
 -- TODO update a vehicles part conditions in the table when you exit a vehicle
-local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, forceSyncSave)
+local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, vehiclesThumbnailUpdate)
   local data = {}
   data.currentVehicle = currentVehicle
   data.lastVehicle = lastVehicle
@@ -189,27 +267,21 @@ local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, forceSyncSave
     end
   end
 
-  local useSaveVehiclesCallback = true
   if gameplay_walk.isWalking() then
     local playerVeh = getPlayerVehicle(0)
     data.unicyclePos = playerVeh:getPosition()
   end
 
-  -- when forceSyncSave is not active, then saveVehiclesData gets called in the callback
-  if not forceSyncSave then
-    updatePartConditionsOfSpawnedVehicles(function() saveVehiclesCallback(currentSavePath, oldSaveDate) end)
-    useSaveVehiclesCallback = false
-  end
+  table.clear(finishedSaveTasks)
 
-  if useSaveVehiclesCallback then
-    saveVehiclesData(currentSavePath, oldSaveDate)
-  end
+  finishedSaveTasks.updatePartConditions = false
+  updatePartConditionsOfSpawnedVehicles(function()
+    saveVehiclesData(currentSavePath, oldSaveDate, vehiclesThumbnailUpdate)
+    finishedSaveTasks.updatePartConditions = true
+    checkSaveFinished(currentSavePath, oldSaveDate)
+  end)
 
   career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/career/inventory.json", data, true)
-
-  if useSaveVehiclesCallback then
-    saveFinished(currentSavePath, oldSaveDate, forceSyncSave)
-  end
 end
 
 local function assignInventoryIdToVehId(inventoryId, vehId)
@@ -220,17 +292,24 @@ local function assignInventoryIdToVehId(inventoryId, vehId)
   inventoryIdToVehId[inventoryId] = vehId
 end
 
-local function hasFreeSlot()
-  return tableSize(vehicles) < slotAmount
+local function getNumberOfFreeSlots()
+  local ownedVehiclesAmount = 0
+  for inventoryId, vehicle in pairs(vehicles) do
+    if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
+  end
+  return slotAmount - ownedVehiclesAmount
 end
 
-local function getNumberOfFreeSlots()
-  return slotAmount - tableSize(vehicles)
+local function hasFreeSlot()
+  return getNumberOfFreeSlots() > 0
 end
 
 local inventoryIdAfterUpdatingPartConditions
-local function addVehicle(vehId, inventoryId)
-  if not hasFreeSlot() then return end
+local function addVehicle(vehId, inventoryId, options)
+  options = options or {}
+  if options.owned == nil then options.owned = true end
+  if options.owned and not hasFreeSlot() then return end
+
   local vehicle = scenetree.findObjectById(vehId)
   local vehicleData = core_vehicle_manager.getVehicleData(vehId)
 
@@ -251,6 +330,18 @@ local function addVehicle(vehId, inventoryId)
     vehicles[inventoryId].config = vehicleData.config
     vehicles[inventoryId].id = inventoryId
     vehicles[inventoryId].niceName = niceName
+    vehicles[inventoryId].config.licenseName = core_vehicles.getVehicleLicenseText(vehicle)
+    vehicles[inventoryId].owned = options.owned
+    vehicles[inventoryId].defaultThumbnail = true
+
+    if vehicle.JBeam and vehicleData.config and vehicleData.config.partConfigFilename then
+      local dir, configName, ext = path.splitWithoutExt(vehicleData.config.partConfigFilename)
+      local baseConfig = core_vehicles.getConfig(vehicle.JBeam, configName)
+      vehicles[inventoryId].configBaseValue = baseConfig.Value
+    else
+      log("D", "", "Couldnt find base value for added vehicle, so using default value")
+      vehicles[inventoryId].configBaseValue = 1000
+    end
 
     assignInventoryIdToVehId(inventoryId, vehId)
 
@@ -283,10 +374,9 @@ local function removeVehicleObject(inventoryId)
   inventoryIdToVehId[inventoryId] = nil
 end
 
-
 local function removeVehicle(inventoryId)
-  vehicles[inventoryId] = nil
   removeVehicleObject(inventoryId)
+  vehicles[inventoryId] = nil
   extensions.hook("onVehicleRemoved", inventoryId)
 
   if favoriteVehicle == inventoryId then
@@ -354,6 +444,7 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     vehicleData.config = carConfigToLoad
     vehicleData.keepOtherVehRotation = true
 
+    core_vehicle_manager.queueAdditionalVehicleData({spawnWithEngineRunning = false})
     if replaceOption == 1 then
       vehObj = core_vehicles.replaceVehicle(carModelToLoad, vehicleData)
     elseif replaceOption == 2 then
@@ -385,12 +476,7 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
       core_vehicleBridge.requestValue(vehObj, function(res) career_modules_inventory.updatePartConditions(nil, inventoryId, callback) end, 'ping')
     end
 
-    local vehDetails = core_vehicles.getVehicleDetails(vehObj:getId())
-    if vehDetails.configs.aggregates.Type.Trailer then
-      gameplay_walk.addVehicleToBlacklist(vehObj:getId())
-    else
-      gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
-    end
+    gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
     return vehObj
   end
 end
@@ -443,22 +529,40 @@ local saveCareer
 local function setupInventory()
   if career_modules_linearTutorial.getLinearStep() == -1 then
     if loadedVehiclesLocations then
+      local vehiclesToTeleportToGarage = {}
       for inventoryId, location in pairs(loadedVehiclesLocations) do
-        if not career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
-          local veh = spawnVehicle(inventoryId)
-          if veh then
-            if location.option == "garage" then
-              local garage = getClosestGarage(location.pos)
-              freeroam_facilities.teleportToGarage(garage.id, veh)
-            else
+        local vehInfo = vehicles[inventoryId]
+        if vehInfo.loanType == "work" then
+          career_modules_loanerVehicles.returnVehicle(inventoryId)
+          loanedVehicleReturned = true
+        else
+          if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
+            vehiclesMovedToStorage = true
+          else
+            local veh = spawnVehicle(inventoryId)
+            if veh then
+              if location.option == "garage" then
+                location.vehId = veh:getID()
+                vehiclesToTeleportToGarage[inventoryId] = location
+              end
               spawn.safeTeleport(veh, location.pos, location.rot)
             end
           end
-        else
-          vehiclesMovedToStorage = true
         end
       end
       loadedVehiclesLocations = nil
+
+      -- The teleport to garage needs to happen with one frame delay because that's when the OOBBs get updated
+      extensions.core_jobsystem.create(
+        function (job)
+          for inventoryId, location in pairs(vehiclesToTeleportToGarage) do
+            local veh = be:getObjectByID(location.vehId)
+            local garage = getClosestGarage(location.pos)
+            freeroam_facilities.teleportToGarage(garage.id, veh)
+            job.sleep(0.1)
+          end
+        end
+      )
     end
 
     if vehicleToEnterId and inventoryIdToVehId[vehicleToEnterId] then
@@ -605,8 +709,31 @@ local function removeVehiclesFromGarageExcept(inventoryId)
   local inventoryIdsInGarage = getVehiclesInGarage(garage, true)
   for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
     if otherInventoryId ~= inventoryId then
-      M.removeVehicleObject(otherInventoryId)
+      local vehInfo = vehicles[otherInventoryId]
+      if vehInfo.owned then
+        M.removeVehicleObject(otherInventoryId)
+      end
     end
+  end
+end
+
+local function getDefaultVehicleThumb(vehInfo)
+  local model = core_vehicles.getModel(vehInfo.model)
+  if not model then return nil end
+  local _, configKey = path.splitWithoutExt(vehInfo.config.partConfigFilename)
+  local config = model.configs[configKey]
+  if not config then return nil end
+  return config.preview
+end
+
+local function getVehicleThumbnail(inventoryId)
+  local vehicle = vehicles[inventoryId]
+  local _, savePath = career_saveSystem.getCurrentSaveSlot()
+  local thumbnailPath = savePath .. "/career/vehicles/" .. inventoryId .. ".png"
+  if not vehicle.defaultThumbnail and FS:fileExists(thumbnailPath) then
+    return thumbnailPath
+  else
+    return getDefaultVehicleThumb(vehicle)
   end
 end
 
@@ -620,11 +747,8 @@ local function sendDataToUi()
   menuIsOpen = true
   local data = {vehicles = {}}
   data.menuHeader = menuHeader
-  data.repairEnabled = buttonsActive.repairEnabled
-  data.sellEnabled = buttonsActive.sellEnabled
-  data.favoriteEnabled = buttonsActive.favoriteEnabled
-  data.storingEnabled = buttonsActive.storingEnabled
   data.chooseButtonsData = chooseButtonsData
+  data.buttonsActive = buttonsActive
   local vehiclesCopy = deepcopy(vehicles)
 
   local garage = getClosestGarage()
@@ -634,7 +758,8 @@ local function sendDataToUi()
 
   for inventoryId, vehicle in pairs(vehiclesCopy) do
     vehicle.value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-    vehicle.repairCost = career_modules_insurance.getPolicyDeductible(inventoryId)
+    vehicle.quickRepairExtraPrice = career_modules_insurance.getQuickRepairExtraPrice()
+    vehicle.initialRepairTime = career_modules_insurance.getRepairTime(inventoryId)
 
     if inventoryIdToVehId[inventoryId] then
       local vehObj = be:getObjectByID(inventoryIdToVehId[inventoryId])
@@ -642,8 +767,6 @@ local function sendDataToUi()
         vehicle.distance = vehObj:getPosition():distance(getPlayerVehicle(0):getPosition())
         vehicle.inGarage = inventoryIdsInGarage[inventoryId]
       end
-    else
-      vehicle.inStorage = true
     end
 
     for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
@@ -665,6 +788,15 @@ local function sendDataToUi()
     else
       vehicle.ownsRequiredInsurance = false
     end
+
+    vehicle.thumbnail = getVehicleThumbnail(inventoryId)
+
+    vehicle.repairPermission = career_modules_permissions.getStatusForTag("vehicleRepair", {inventoryId = inventoryId})
+    vehicle.sellPermission = career_modules_permissions.getStatusForTag("vehicleSelling", {inventoryId = inventoryId})
+    vehicle.favoritePermission = career_modules_permissions.getStatusForTag("vehicleFavorite", {inventoryId = inventoryId})
+    vehicle.storePermission = career_modules_permissions.getStatusForTag("vehicleStoring", {inventoryId = inventoryId})
+    vehicle.licensePlateChangePermission = career_modules_permissions.getStatusForTag({"vehicleLicensePlate", "vehicleModification"}, {inventoryId = inventoryId})
+    vehicle.returnLoanerPermission = career_modules_permissions.getStatusForTag("returnLoanedVehicle", {inventoryId = inventoryId})
   end
 
   -- convert the keys to strings, so this table wont be converted to an array on js side
@@ -694,8 +826,13 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   end
 
   if vehiclesMovedToStorage then
-    guihooks.trigger("toastrMsg", {type="warning", title="Vehicle stored", msg="One or more of your vehicles were damaged at the end of your last session. They have been moved to your storage and have to be repaired."})
+    guihooks.trigger("toastrMsg", {type="warning", label = "vehStored", title="Vehicle stored", msg="One or more of your vehicles were damaged at the end of your last session. They have been moved to your storage and have to be repaired."})
     vehiclesMovedToStorage = nil
+  end
+
+  if loanedVehicleReturned then
+    guihooks.trigger("toastrMsg", {type="warning", label = "loanReturned", title="Loaner returned", msg="Your loaned vehicles have been returned to their respective owners."})
+    loanedVehicleReturned = nil
   end
 
   for inventoryId, vehInfo in pairs(vehicles) do
@@ -760,6 +897,7 @@ local function openMenu(_chooseButtonsData, header, _buttonsActive, _closeMenuCa
   if buttonsActive.sellEnabled == nil then buttonsActive.sellEnabled = true end
   if buttonsActive.favoriteEnabled == nil then buttonsActive.favoriteEnabled = true end
   if buttonsActive.storingEnabled == nil then buttonsActive.storingEnabled = true end
+  if buttonsActive.returnLoanerEnabled == nil then buttonsActive.returnLoanerEnabled = true end
   menuHeader = header or "Vehicle Inventory"
 
   chooseButtonsData = _chooseButtonsData or {{}}
@@ -767,6 +905,7 @@ local function openMenu(_chooseButtonsData, header, _buttonsActive, _closeMenuCa
     buttonData.buttonText = buttonData.buttonText or "Choose Vehicle"
     if buttonData.repairRequired == nil then buttonData.repairRequired = true end
     if buttonData.insuranceRequired == nil then buttonData.insuranceRequired = false end
+    if buttonData.ownedRequired == nil then buttonData.ownedRequired = false end
     buttonData.callback = buttonData.callback or function() end
   end
 
@@ -799,20 +938,6 @@ local function spawnVehicleAfterFade(enterAfterSpawn, inventoryId, callback)
   end
 end
 
-local function buildCamPath(targetPos, endDir)
-  local camMode = core_camera.getGlobalCameras().bigMap
-
-  local path = { looped = false, manualFov = false}
-  local startPos = core_camera.getPosition() + vec3(0,0,30)
-
-  local m1 = { fov = 30, movingEnd = false, movingStart = false, positionSmooth = 0.5, pos = startPos, rot = quatFromDir(targetPos - startPos), time = 0, trackPosition = false  }
-  local m2 = { fov = 30, movingEnd = false, movingStart = false, positionSmooth = 0.5, pos = startPos, rot = quatFromDir(targetPos - startPos), time = 0.5, trackPosition = false  }
-  local m3 = { fov = core_camera.getFovDeg(), movingEnd = false, movingStart = false, positionSmooth = 0.5, pos = core_camera.getPosition(), rot = endDir and quatFromDir(endDir) or core_camera.getQuat(), time = 5.5, trackPosition = false }
-  path.markers = {m1, m2, m3}
-
-  return path
-end
-
 local function spawnVehicleAndTeleportToGarage(enterAfterSpawn, inventoryId, replaceOthers)
   if inventoryId == currentVehicle then return end
   spawnVehicleAfterFade(enterAfterSpawn, inventoryId,
@@ -825,28 +950,12 @@ local function spawnVehicleAndTeleportToGarage(enterAfterSpawn, inventoryId, rep
       function()
         local closestGarage = getClosestGarage()
         freeroam_facilities.teleportToGarage(closestGarage.id, vehObj, false)
+        career_modules_fuel.minimumRefuelingCheck(vehObj:getId())
         setVehicleDirty(inventoryId)
         ui_fadeScreen.stop(0.5)
 
         local pos, _ = freeroam_facilities.getGaragePosRot(closestGarage, vehObj)
-        local camDir
-        if gameplay_walk.isWalking() then
-          camDir = pos - getPlayerVehicle(0):getPosition()
-          gameplay_walk.setRot(camDir)
-        end
-
-        local camDirLength = camDir:length()
-        local rayDist = castRayStatic(getPlayerVehicle(0):getPosition(), camDir, camDirLength)
-
-        if rayDist < camDirLength then
-          -- Play cam path to show where the vehicle spawned
-          local camPath = buildCamPath(pos, camDir)
-          local initData = {}
-          initData.finishedPath = function(this)
-            core_camera.setVehicleCameraByIndexOffset(0, 1)
-          end
-          core_paths.playPath(camPath, 0, initData)
-        end
+        career_modules_playerDriving.showPosition(pos)
 
         career_modules_log.addLog(string.format("Spawned vehicle %d in garage %s. replaceOthers == %s", inventoryId, closestGarage.id, replaceOthers), "inventory")
       end)
@@ -939,7 +1048,6 @@ local function sellVehicle(inventoryId)
   if not vehicle then return end
 
   local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-  value = math.max(value - career_modules_insurance.getRepairDetailsWithoutPolicy(vehicle).price, value * 0.2)
   career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")})
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
@@ -953,6 +1061,19 @@ local function sellVehicleFromInventory(inventoryId)
     career_saveSystem.saveCurrent()
     sendDataToUi()
   end
+end
+
+local function returnLoanedVehicleFromInventory(inventoryId)
+  career_modules_loanerVehicles.returnVehicle(inventoryId, function()
+    career_saveSystem.saveCurrent()
+    sendDataToUi()
+  end)
+end
+
+local function expediteRepairFromInventory(inventoryId, price)
+  career_modules_insurance.expediteRepair(inventoryId, price)
+  career_saveSystem.saveCurrent()
+  sendDataToUi()
 end
 
 local function delayVehicleAccess(inventoryId, delay, reason)
@@ -987,9 +1108,117 @@ local function onComputerAddFunctions(menuData, computerFunctions)
     id = "vehicleInventory",
     label = "My Vehicles",
     callback = function() openMenuFromComputer(menuData.computerFacility.id) end,
-    disabled = menuData.tutorialPartShoppingActive or menuData.tutorialTuningActive
+    order = 1
   }
+  if menuData.tutorialPartShoppingActive or menuData.tutorialTuningActive then
+    computerFunctionData.disabled = true
+    computerFunctionData.reason = career_modules_computer.reasons.tutorialActive
+  end
   computerFunctions.general[computerFunctionData.id] = computerFunctionData
+end
+
+local function setLicensePlateText(inventoryId, text)
+  local vehId = getVehicleIdFromInventoryId(inventoryId)
+  if inventoryId then
+    core_vehicles.setPlateText(text, vehId)
+  end
+  vehicles[inventoryId].config.licenseName = text
+end
+
+local function purchaseLicensePlateText(inventoryId, text, money)
+  local price = {money = {amount = money}}
+  if not career_modules_payment.canPay(price) then return end
+  career_modules_payment.pay(price, {label = string.format("Change the license plate text"), tags = {"licensePlate", "buying"}})
+  setLicensePlateText(inventoryId, text)
+  Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
+  setVehicleDirty(inventoryId)
+end
+
+local permissionTags = {
+  notOwned = {
+    vehicleSelling = "forbidden", --selling a vehicle
+    vehicleRepair = "forbidden",
+    interactMission = "forbidden", --use the mission POI to start a mission
+    painting = "forbidden",
+    partBuying = "forbidden",
+    vehicleLicensePlate = "forbidden",
+    tuning = "forbidden",
+    vehicleStoring = "forbidden",
+    partSwapping = "forbidden",
+    recoveryTowToGarage = "forbidden",
+    returnLoanedVehicle = "allowed",
+    vehicleFavorite = "forbidden"
+  }
+}
+
+local function onCheckPermission(tags, permissions, additionalData)
+  if not additionalData or not additionalData.inventoryId then return end
+  local vehData = vehicles[additionalData.inventoryId]
+  if not vehData then return end
+
+  for _, tag in ipairs(tags) do
+    if not vehData.owned then
+      if permissionTags.notOwned[tag] then
+        table.insert(permissions, {permission = permissionTags.notOwned[tag]})
+      end
+    elseif tag == "returnLoanedVehicle" then
+      table.insert(permissions, {permission = "hidden"})
+    end
+
+    if tag == "vehicleRepair" and (vehData.timeToAccess or vehData.missingFile) then
+      table.insert(permissions, {permission = "forbidden"})
+    end
+    if tag == "vehicleSelling" and vehData.timeToAccess then
+      table.insert(permissions, {permission = "forbidden"})
+    end
+    if tag == "vehicleFavorite" and (vehData.favorite or vehData.missingFile) then
+      table.insert(permissions, {permission = "forbidden"})
+    end
+    if tag == "vehicleStoring" and not inventoryIdToVehId[additionalData.inventoryId] then
+      table.insert(permissions, {permission = "forbidden"})
+    end
+  end
+end
+
+local function onGetRawPoiListForLevel(levelIdentifier, elements)
+  if next(inventoryIdToVehId) then
+    for invId, vehId in pairs(inventoryIdToVehId) do
+      if be:getPlayerVehicleID(0) ~= vehId then -- don't display the current player's vehicle
+        if map.objects[vehId] then
+          local desc = "Player's vehicle"
+          if vehicles[invId].loanType then
+            desc = "Loaned vehicle"
+          end
+
+          local id = "plVeh"..vehId
+          local dist, distUnit = translateDistance(map.objects[vehId].pos:distance(be:getPlayerVehicle(0):getPosition()), true)
+          local plate = vehicles[invId].config.licenseName
+          local odometer, odoUnit = translateDistance(career_modules_valueCalculator.getVehicleMileageById(invId), true)
+
+          desc = string.format("%s | Distance: %0.2f %s | Licence plate: %s | Odometer: %i %s", desc, dist, distUnit, plate, odometer, odoUnit)
+          table.insert(elements, {
+            id = id,
+            data = {type = "playerVehicle", id = id},
+            markerInfo = {
+              bigmapMarker = {
+                pos = map.objects[vehId].pos,
+                icon = "vehicle_marker_outlined",
+                name = vehicles[invId].niceName,
+                description = desc,
+                thumbnail = getVehicleThumbnail(invId),
+                previews = getVehicleThumbnail(invId),
+                cluster = false
+              }
+            }
+          })
+        end
+      end
+    end
+  end
+end
+
+local function getDirtiedVehicles()
+  return dirtiedVehicles
 end
 
 M.addVehicle = addVehicle
@@ -997,6 +1226,8 @@ M.removeVehicle = removeVehicle
 M.enterVehicle = enterVehicle
 M.sellVehicle = sellVehicle
 M.sellVehicleFromInventory = sellVehicleFromInventory
+M.returnLoanedVehicleFromInventory = returnLoanedVehicleFromInventory
+M.expediteRepairFromInventory = expediteRepairFromInventory
 M.updatePartConditions = updatePartConditions
 M.updatePartConditionsOfSpawnedVehicles = updatePartConditionsOfSpawnedVehicles
 M.removeVehicleObject = removeVehicleObject
@@ -1011,6 +1242,9 @@ M.getNumberOfFreeSlots = getNumberOfFreeSlots
 M.setFavoriteVehicle = setFavoriteVehicle
 M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
+M.setLicensePlateText = setLicensePlateText
+M.purchaseLicensePlateText = purchaseLicensePlateText
+M.getVehicleThumbnail = getVehicleThumbnail
 
 M.onExtensionLoaded = onExtensionLoaded
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
@@ -1025,12 +1259,15 @@ M.onScreenFadeState = onScreenFadeState
 M.onAvailableMissionsSentToUi = onAvailableMissionsSentToUi
 M.onComputerAddFunctions = onComputerAddFunctions
 M.onSaveCurrentSaveSlotAsyncStart = onSaveCurrentSaveSlotAsyncStart
+M.onCheckPermission = onCheckPermission
+M.onGetRawPoiListForLevel = onGetRawPoiListForLevel
 
 M.getPartConditionsCallback = getPartConditionsCallback
 M.applyTuningCallback = applyTuningCallback
 M.applyPartConditions = applyPartConditions
 M.teleportedFromBigmap = teleportedFromBigmap
 M.setVehicleDirty = setVehicleDirty
+M.getDirtiedVehicles = getDirtiedVehicles
 M.getVehicles = getVehicles
 M.spawnVehicle = spawnVehicle
 M.getInventoryIdsInClosestGarage = getInventoryIdsInClosestGarage
