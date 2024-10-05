@@ -133,6 +133,7 @@ local races = {
     },
     hotrolledDrift = {
         bestTime = 30,
+        driftGoal = 3500,
         reward = 1500,
         checkpointRoad = "hotrolledDrift",
         label = "Hotrolled Drift",
@@ -518,6 +519,14 @@ local function raceReward(goal, reward, time)
     end
 end
 
+local function driftReward(raceName, time, driftScore)
+    local goalTime = races[raceName].bestTime
+    local goalDrift = races[raceName].driftGoal
+    local timeFactor = (goalTime / time) ^ 1.2
+    local driftFactor = (driftScore / goalDrift) ^ 1.2
+    return races[raceName].reward * timeFactor * driftFactor
+end
+
 local function printTable(t, indent)
     -- This function prints all parts of a table with labels.
     -- It recursively prints nested tables with indentation.
@@ -636,6 +645,25 @@ local function getOldTime(raceName)
     end
 end
 
+local function driftCompletionMessage(newBestScore, oldScore, reward, xp, driftScore, finishTime, data)
+    local raceName = getActivityName(data)
+    local newBestScoreMessage = newBestScore and "Congratulations! New Best Drift Score!\n" or ""
+    local raceLabel = races[raceName].label
+
+    local scoreMessage = string.format("Drift Score: %d", driftScore)
+    if oldScore then
+        scoreMessage = scoreMessage .. string.format("\nPrevious Best Score: %d", oldScore)
+    end
+
+    local timeMessage = string.format("Time: %s", formatTime(finishTime))
+
+    local rewardMessage = string.format("XP: %d | Reward: $%.2f", xp, reward)
+
+    local message = newBestScoreMessage .. raceLabel .. "\n" .. scoreMessage .. "\n" .. timeMessage .. "\n" .. rewardMessage
+
+    return message
+end
+
 local function raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
     local raceName = getActivityName(data)
     local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
@@ -691,11 +719,17 @@ local function rewardLabel(raceName, newBestTime)
     return label
 end
 
-local function saveNewBestTime(raceName)
+local function saveNewBestTime(raceName, driftScore)
     if not leaderboard[raceName] then
         leaderboard[raceName] = {}
     end
-    if mAltRoute then
+
+    if races[raceName].driftGoal then
+        -- Save the driftScore into the leaderboard for drift events
+        if not leaderboard[raceName].driftScore or driftScore > leaderboard[raceName].driftScore then
+            leaderboard[raceName].driftScore = driftScore
+        end
+    elseif mAltRoute then
         if not leaderboard[raceName].altRoute then
             leaderboard[raceName].altRoute = {}
         end
@@ -716,6 +750,21 @@ local function saveNewBestTime(raceName)
             leaderboard[raceName].splitTimes = mSplitTimes
         end
     end
+end
+
+local function getDriftScore()
+    local finalScore = 0
+    if gameplay_drift_scoring then
+        local scoreData = gameplay_drift_scoring.getScore()
+        if scoreData then
+            finalScore = scoreData.score or 0
+            if scoreData.cachedScore then
+                finalScore = finalScore + math.floor(scoreData.cachedScore * scoreData.combo)
+            end
+            gameplay_drift_general.reset()
+        end
+    end
+    return finalScore
 end
 
 local function payoutRace(data)
@@ -755,7 +804,13 @@ local function payoutRace(data)
                 time = races[raceName].altRoute.hotlap
             end
         end
-        local reward = raceReward(time, reward)
+        local driftScore = 0
+        if races[raceName].driftGoal then
+            driftScore = getDriftScore()
+            reward = driftReward(raceName, time, driftScore)
+        else
+            reward = raceReward(time, reward)
+        end
         if reward <= 0 then
             return 0
         end
@@ -797,10 +852,13 @@ local function payoutRace(data)
         print("totalReward:")
         printTable(totalReward)
         career_modules_payment.reward(totalReward, reason)
-        local message = raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
+        local message = ""
+        if races[raceName].driftGoal then
+            message = driftCompletionMessage(newBestTime, oldTime, reward, xp, driftScore, in_race_time, data)
+        else
+            message = raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
+        end
         ui_message(message, 20, "Reward")
-        print("leaderboard:")
-        printTable(leaderboard)
         saveLeaderboard()
         career_saveSystem.saveCurrent()
         return reward
@@ -969,15 +1027,15 @@ local function displayStagedMessage(raceName)
 
     local function addTimeInfo(bestTime, targetTime, reward, label)
         if not bestTime then
-            return string.format("%s Target Time: %s\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)", label,
+            return string.format("%sTarget Time: %s\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)", label,
                 formatTime(targetTime), reward)
         elseif bestTime > targetTime then
             return string.format(
-                "%sYour Best: %s | Target: %s\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)", label,
-                formatTime(bestTime), formatTime(targetTime), reward)
+                "%sYour Best Time: %s | Target Time: %s\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)",
+                label, formatTime(bestTime), formatTime(targetTime), reward)
         else
             local potentialReward = raceReward(targetTime, reward, bestTime)
-            return string.format("%sYour Best: %s\n(Improve to earn atleast $%.2f)", label, formatTime(bestTime),
+            return string.format("%sYour Best Time: %s\n(Improve to earn at least $%.2f)", label, formatTime(bestTime),
                 potentialReward)
         end
     end
@@ -985,29 +1043,49 @@ local function displayStagedMessage(raceName)
     if not times then
         times = {}
     end
-    message = message .. addTimeInfo(times.bestTime, race.bestTime, race.reward, "")
 
+    if race.driftGoal then
+        -- Handle drift event staging message
+        local bestScore = times.driftScore
+        if not bestScore then
+            message = message .. string.format("Target Drift Score: %d\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)",
+                race.driftGoal, race.reward)
+        else
+            message = message .. string.format("Your Best Drift Score: %d | Target Drift Score: %d\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)",
+                bestScore, race.driftGoal, race.reward)
+        end
+    else
+        -- Handle normal time-based events
+        message = message .. addTimeInfo(times.bestTime, race.bestTime, race.reward, "")
+    end
+
+    -- Handle hotlap if it exists
     if race.hotlap then
         message = message .. "\n\n" .. addTimeInfo(times.hotlapTime, race.hotlap, race.reward, "Hotlap: ")
     end
 
+    -- Handle alternative route if it exists
     if race.altRoute then
         if not times.altRoute then
             times.altRoute = {}
         end
         message = message .. "\n\nAlternative Route:\n"
         message = message ..
-                      addTimeInfo(times.altRoute and times.altRoute.bestTime, race.altRoute.bestTime,
+            addTimeInfo(times.altRoute and times.altRoute.bestTime, race.altRoute.bestTime,
                 race.altRoute.reward, "")
 
         if race.altRoute.hotlap then
             message = message .. "\n\n" ..
-                          addTimeInfo(times.altRoute and times.altRoute.hotlapTime, race.altRoute.hotlap,
+                addTimeInfo(times.altRoute and times.altRoute.hotlapTime, race.altRoute.hotlap,
                     race.altRoute.reward, "Alt Route Hotlap: ")
         end
     end
 
-    message = message .. "\n\n**Note: All rewards are cut by 50% if they are below your best time.**"
+    -- Add note for time-based events
+    if not race.driftGoal then
+        message = message .. "\n\n**Note: All rewards are cut by 50% if they are below your best time.**"
+    end
+
     displayMessage(message, 10)
 end
 
@@ -1966,17 +2044,7 @@ local function onBeamNGTrigger(data)
                 updateDisplay(side, in_race_time, be:getObjectVelocityXYZ(data.subjectID) * speedUnit)
             end
             if tableContains(races[raceName].type, "drift") then
-                local finalScore = 0
-                if gameplay_drift_scoring then
-                    local scoreData = gameplay_drift_scoring.getScore()
-                    if scoreData then
-                        finalScore = scoreData.score or 0
-                        if scoreData.cachedScore then
-                            finalScore = finalScore + math.floor(scoreData.cachedScore * scoreData.combo)
-                        end
-                        gameplay_drift_general.reset()
-                    end
-                end
+                local finalScore = getDriftScore()
                 if gameplay_drift_general.getContext() == "inChallenge" then
                     gameplay_drift_general.setContext("inFreeRoam")
                     print("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
