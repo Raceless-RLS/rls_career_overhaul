@@ -1574,6 +1574,8 @@ local function enableCheckpoint(checkpointIndex, alt)
     local index = {checkpointIndex, checkpointIndex + 1}
     if isLoop then
         index = {index[1] % #checkpoints + 1, index[2] % #checkpoints + 1}
+    else
+        index = {index[1] + 1, index[2] + 1}    
     end
     print("Index")
     printTable(index)
