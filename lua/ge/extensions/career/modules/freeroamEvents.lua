@@ -130,8 +130,16 @@ local races = {
         displaySpeed = true,
         type = {"motorsport", "drift"}
     },
+    hotrolledDrift = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "hotrolledDrift",
+        label = "Hotrolled Drift",
+        displaySpeed = true,
+        type = {"motorsport", "drift"}
+    },
     dragHighway = {
-        bestTime = 1,
+        bestTime = 16,
         reward = 3000,
         checkpointRoad = "dragHighway",
         label = "No Prep Highway Drag",
