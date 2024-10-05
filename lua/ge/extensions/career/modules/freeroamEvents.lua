@@ -128,13 +128,20 @@ local races = {
         checkpointRoad = "beachCircuit",
         label = "Beach Circuit",
         displaySpeed = true,
-        type = {"motorsport", "drift"}
+        type = {"motorsport"}
     },
     hotrolledDrift = {
         bestTime = 30,
         reward = 1500,
         checkpointRoad = "hotrolledDrift",
         label = "Hotrolled Drift",
+        type = {"motorsport", "drift"}
+    },
+    islandTouge = {
+        bestTime = 30,
+        reward = 1500,
+        checkpointRoad = "islandTouge",
+        label = "Island Touge Drift",
         type = {"motorsport", "drift"}
     },
     dragHighway = {
