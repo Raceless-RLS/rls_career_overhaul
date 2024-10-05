@@ -8,7 +8,7 @@ M.dependencies = {"gameplay_drag_general"}
 local logTag = ""
 local dragData
 local hasActivityStarted = false
-local freeroamEvents = require("career/modules/freeroamEvents")
+local freeroamEvents = require("gameplay/freeroamEvents")
 
 local minDistance = 0.8 --m
 local minVelToStop = 20 --m/s
