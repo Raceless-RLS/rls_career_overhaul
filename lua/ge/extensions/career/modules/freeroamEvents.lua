@@ -137,61 +137,6 @@ local races = {
         label = "No Prep Highway Drag",
         type = {"motorsport"}
     },
-    rockcrawls = {
-        bestTime = 35,
-        reward = 2500,
-        label = "Left Rock Crawl",
-        type = {"crawl", "motorsport"}
-    },
-    rockcrawlm = {
-        bestTime = 40,
-        reward = 5500,
-        label = "Middle Rock Crawl",
-        type = {"crawl", "motorsport"}
-    },
-    rockcrawll = {
-        bestTime = 30,
-        reward = 2000,
-        label = "Right Rock Crawl",
-        type = {"crawl", "motorsport"}
-    },
-    smallCrawll = {
-        bestTime = 20,
-        reward = 1500,
-        label = "Left Small Crawl",
-        type = {"crawl", "motorsport"}
-    },
-    smallCrawlr = {
-        bestTime = 20,
-        reward = 2000,
-        label = "Right Small Crawl",
-        type = {"crawl", "motorsport"}
-    },
-    hillclimbl = {
-        bestTime = 13,
-        reward = 1800,
-        label = "Left Hill Climb",
-        type = {"adventurer"}
-    },
-    hillclimbm = {
-        bestTime = 10,
-        reward = 1500,
-        label = "Middle Hill Climb",
-        type = {"adventurer"}
-    },
-    hillclimbr = {
-        bestTime = 9,
-        reward = 2000,
-        label = "Right Hill Climb",
-        type = {"adventurer"}
-    },
-    bnyHill = {
-        bestTime = 20,
-        reward = 2000,
-        checkpoints = 2,
-        label = "Bunny Rock Crawl",
-        type = {"crawl", "motorsport"}
-    },
     track = {
         bestTime = 140,
         reward = 3000,
