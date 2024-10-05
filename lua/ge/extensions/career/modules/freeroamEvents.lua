@@ -840,7 +840,7 @@ local function payoutRace(data)
         -- Save the best time to the leaderboard
         loadLeaderboard()
         local oldTime = getOldTime(raceName) or 0
-        local oldScore = leaderboard[raceName] and leaderboard[raceName].driftScore
+        local oldScore = leaderboard[raceName] and leaderboard[raceName].driftScore or 0
         local newBest = false
         if races[raceName].driftGoal then
             newBest = driftReward(raceName, time, driftScore) > driftReward(raceName, oldTime, oldScore)
