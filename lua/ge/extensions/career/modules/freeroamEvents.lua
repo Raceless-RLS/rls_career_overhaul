@@ -1947,6 +1947,7 @@ local function onBeamNGTrigger(data)
             timerActive = false
             currCheckpoint = nil
             local reward = payoutRace(data)
+            activeAssets:hideAllAssets()
 
             if raceName == "drag" then
                 -- For drag races, update the display
