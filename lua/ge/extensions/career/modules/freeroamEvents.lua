@@ -128,7 +128,7 @@ local races = {
         checkpointRoad = "beachCircuit",
         label = "Beach Circuit",
         displaySpeed = true,
-        type = {"motorsport", "drift"},
+        type = {"motorsport"},
         minCheckpointDistance = 45
     },
     hotrolledDrift = {
