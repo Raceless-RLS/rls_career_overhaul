@@ -138,7 +138,7 @@ local races = {
     },
     sealbrikDrift = {
         bestTime = 30,
-        driftGoal = 3500,
+        driftGoal = 4500,
         reward = 1500,
         checkpointRoad = "sealbrikDrift",
         label = "Sealbrik Drift",
