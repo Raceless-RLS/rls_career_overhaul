@@ -37,7 +37,7 @@ function C:init()
                 -- avoids head collisions if coming from opposing direction
                 if modeNum < 3 then -- passive
                     obj:queueLuaCommand('ai.setMode("follow")')
-                    obj:queueLuaCommand('ai.driveInLane("on")')
+                    obj:queueLuaCommand('ai.driveInLane("off")')
                 else -- aggressive
                     obj:queueLuaCommand('ai.setMode("follow")')
                     obj:queueLuaCommand('ai.driveInLane("off")')
