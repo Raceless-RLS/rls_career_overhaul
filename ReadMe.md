@@ -41,9 +41,9 @@ Welcome to the **RLS Career Overhaul** mod for BeamNG.drive! This mod enhances v
 2. **Move to Mods Folder**:
    - Locate your BeamNG.drive `mods` folder. The default path is:
      ```
-     %AppData%\BeamNG.drive\0.32\mods
+     %AppData%\BeamNG.drive\0.33\mods
      ```
-     *Note: Replace `0.32` with your current game version.*
+     *Note: Replace `0.33` with your current game version.*
    - Copy the downloaded ZIP file into the `mods` folder.
 
 3. **Enable the Mod**:
