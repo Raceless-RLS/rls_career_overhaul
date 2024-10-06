@@ -39,15 +39,13 @@ local function getVehicleConfigType()
     end
   end
 
-local function isPlayerInPoliceVehicle()
-    local configType = getVehicleConfigType()
-    if configType then
-        print("Vehicle Config Type: " .. configType)
-        if configType == "police" then
-            print("Player is in a police vehicle!")
+  local function isPlayerInPoliceVehicle()
+    local vehId = be:getPlayerVehicleID(0)
+    if vehId and gameplay_traffic.getTrafficData()[vehId] then
+        local role = gameplay_traffic.getTrafficData()[vehId].role.name
+        if role == 'police' then
             return true
-        else
-            print("Player is not in a police vehicle.")
+        else 
             return false
         end
     end
