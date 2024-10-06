@@ -166,6 +166,15 @@ local function hasLicensePlate(inventoryId)
     end
 end
 
+local function resetPursuit()
+    local vehId = be:getPlayerVehicleID(0)
+    local playerTrafficData = gameplay_traffic.getTrafficData()[vehId]
+    if playerTrafficData and playerTrafficData.pursuit then
+        playerTrafficData.pursuit.mode = 0
+        playerTrafficData.pursuit.score = 0
+    end
+end
+
 local function onPursuitAction(vehId, data)
     --   if vehId == be:getPlayerVehicleID(0) then
     local playerIsCop = getPlayerIsCop()
@@ -189,6 +198,7 @@ local function onPursuitAction(vehId, data)
         end
         -- core_recoveryPrompt.setDefaultsForCareer()
         log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
+        resetPursuit()
     elseif data.type == "evade" then
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
@@ -240,6 +250,7 @@ local function onPursuitAction(vehId, data)
             end
             -- core_recoveryPrompt.setDefaultsForCareer()
             log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
+            resetPursuit()
         end
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then

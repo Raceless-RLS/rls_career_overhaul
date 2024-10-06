@@ -1192,6 +1192,12 @@ local function onPursuitAction(vehId, data)
             )
             ui_message(combinedMessage, 8, "Insurance", "info")
             career_saveSystem.saveCurrent()
+            local vehId = be:getPlayerVehicleID(0)
+            local playerTrafficData = gameplay_traffic.getTrafficData()[vehId]
+            if playerTrafficData and playerTrafficData.pursuit then
+                playerTrafficData.pursuit.mode = 0
+                playerTrafficData.pursuit.score = 0
+            end
         end
     end
 end
