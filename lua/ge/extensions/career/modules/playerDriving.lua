@@ -203,7 +203,7 @@ local function onPursuitAction(vehId, data)
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
             if playerIsCop == true then
-                local pity = 200
+                local pity = math.floor(30 * data.score) / 100
                 career_saveSystem.saveCurrent()
                 career_modules_payment.reward({
                     money = {
@@ -226,7 +226,7 @@ local function onPursuitAction(vehId, data)
                 ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
                 if playerIsCop == false then
-                    local reward = math.floor(75 * data.score) / 100
+                    local reward = math.floor(110 * data.score) / 100
                     career_modules_payment.reward({
                         money = {
                             amount = reward
@@ -254,7 +254,7 @@ local function onPursuitAction(vehId, data)
         end
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
-            local bonus = math.floor(100 * data.score) / 100
+            local bonus = math.floor(120 * data.score) / 100
 
             career_modules_payment.reward({
                 money = {
