@@ -4,8 +4,8 @@ M.dependencies = {"career_career", "gameplay_missions"}
 print("RLS Career Overhaul: activateCareer function overridden")
 
 -- Load your mod's career.lua file
---local myCareerPath = "ge.extensions.career.career"
---local myCareer = require(myCareerPath)
+local myCareerPath = "ge.extensions.career.career"
+local myCareer = require(myCareerPath)
 
 --local myBranchPath = "ge.extensions.career.branches"
 --local myBranch = require(myBranchPath)
@@ -14,7 +14,7 @@ local myProgressPath = "ge.extensions.gameplay.missions.progress"
 local myProgress = require(myProgressPath)
 
 -- Replace the entire module with your implementation
---career_career = myCareer
+career_career = myCareer
 --career_branches = myBranch
 M.gameplay_missions_progress = myProgress
 

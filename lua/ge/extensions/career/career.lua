@@ -28,7 +28,7 @@ local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabber
 
 local actionWhitelist = deepcopy(devActions)
 arrayConcat(actionWhitelist, nodegrabberActions)
-local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls", "vehicleSwitching", "funStuff"}, actionWhitelist)
+local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls",  "funStuff"}, actionWhitelist)
 
 -- TODO maybe save whenever we go into the esc menu
 
