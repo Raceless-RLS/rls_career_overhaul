@@ -1,28 +1,79 @@
 {
   "usedSmallMechanicalParts": {
-    "names":["Small Parts","Spark Plugs", "Bolts and Screws","Mechanical Components","Oil Filters", "Wiper Fluid","Toolbox","Tool Crate", "Brake parts","Windshield Wipers"],
+    "names":["Small Parts","Spark Plugs", "Bolts and Screws"],
     "logisticTypes":["mechanicalParts"],
-    "slots":[1,2,4,8,16],
+    "slots":1,
     "cargoType":"parcel",
     "rarity":1,
     "worth":0.5,
     "generationChance":0.5,
     "duplicationChance":[0.5,1,0.5,0.25],
-    "offerDuration":180,
-    "weight":[1,5,10,20,30,50],
+    "offerDuration":300,
+    "weight":[1],
     "modChance":{"timed":0.0}
   },
-  "mechanicalToolboxBig": {
-    "names":["Tool Shelf","Engine Parts", "Suspension Kit","Multi-Set of Brakes","Special Vehicle Parts"],
+  "smallMechanicalParts": {
+    "names":["Mechanical Components","Oil Filters", "Wiper Fluid"],
     "logisticTypes":["mechanicalParts"],
-    "slots":[8,16,32,64],
+    "slots":[1,1,2],
+    "cargoType":"parcel",
+    "rarity":1,
+    "worth":0.4,
+    "generationChance":0.5,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[2],
+    "modChance":{"timed":0.0}
+  },
+  "mechanicalToolbox": {
+    "names":["Toolbox","Tool Crate", "Brake parts","Windshield Wipers"],
+    "logisticTypes":["mechanicalParts"],
+    "slots":[3,4,4],
+    "cargoType":"parcel",
+    "rarity":1,
+    "worth":0.3,
+    "generationChance":0.3,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[8,10,12]
+  },
+  "mechanicalToolboxBig": {
+    "names":["Tool Shelf","Engine Parts", "Suspension Kit"],
+    "logisticTypes":["mechanicalParts"],
+    "slots":8,
     "cargoType":"parcel",
     "rarity":1,
     "worth":0.3,
     "generationChance":0.15,
-    "duplicationChance":[1,1,1,1,1],
-    "offerDuration":180,
-    "weight":[25,40,50,75]
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[25,30,35]
+  },
+  "bigMechanicalParts": {
+    "names":["Multi-Set of Brakes","Special Vehicle Parts"],
+    "logisticTypes":["mechanicalParts"],
+    "slots":[12,14,16],
+    "cargoType":"parcel",
+    "rarity":2,
+    "worth":1,
+    "generationChance":0.6,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[30],
+    "modChance":{"timed":0.1}
+  },
+  "biggerMechanicalParts": {
+    "names":["Replacement Wheel","Big Vehicle Parts"],
+    "logisticTypes":["mechanicalParts"],
+    "slots":32,
+    "cargoType":"parcel",
+    "rarity":2,
+    "worth":1,
+    "generationChance":0.4,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[25,35],
+    "modChance":{"timed":0.1}
   },
   "rareMechanicalBigParts": {
     "names":["Body Kit", "Replacement Engine", "Vehicle Frame Parts", "Vehicle Glassware" ],
@@ -32,10 +83,21 @@
     "rarity":3,
     "worth":2.8,
     "generationChance":0.2,
-    "duplicationChance":[1,1,1,1],
-    "offerDuration":180,
-    "weight":[200,250,350,400,450,500,750],
+    "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8],    
+    "offerDuration":300,
+    "weight":[200,250,500],
     "modChance":{"timed":0.1}
+  },
+  "rareMechanicalSmallParts": {
+    "names":["Vehicle Electronics Kit", "Engine Management Kit", "Vehicle Authenticator Chip"],
+    "logisticTypes":["mechanicalParts"],
+    "slots":2,
+    "cargoType":"parcel",
+    "rarity":4,
+    "worth":1.5,
+    "generationChance":0.3,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[1]
   }
-
 }

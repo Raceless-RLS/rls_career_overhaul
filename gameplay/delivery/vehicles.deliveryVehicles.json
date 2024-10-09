@@ -1,6 +1,6 @@
 {
-  
-  
+  //tier 1 vehicles
+  //junker: bad "old" cars with lots of milage (300k-650k), but often used
   "junkerVehFilter": {
     "type":"vehicle",
     "unlockTag":"junkerVeh",
@@ -12,17 +12,17 @@
       "blackList":{"Type":["Trailer"]}
     },
     "subFilters": [
-    ]
+    ],
   },
 
-  
-  
-  
+  //tier 2 vehicles
+  // TODO: Change this filter to reflect "Transport small vehicles to clients, emphasizing efficiency and the maintenance of vehicle condition."
+  //fleet: "default" vehicles from dealership, "relatively" new with lower (35k-150k) mileage, very common.
   "smallVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Car",
-    "baseReward":150,
+    "baseReward":250,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Mileage":{"min":35000000, "max":150000000}, "Value":{"min":10000, "max":80000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":3000}},
@@ -30,9 +30,9 @@
     },
     "subFilters": [
 
-    ]
+    ],
   },
-  
+  //police filter only for police vehicles with used (20k-200k) or unused" (0.5k-25k)
   "policeFleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
@@ -51,15 +51,15 @@
         "probability":1,
         "whiteList":{"Mileage":{"min":500000 , "max":25000000 }}
       }
-    ]
+    ],
   },
 
-  
+  //Ambulance Filter used (20k-200k) or unused" (0.5k-25k)
   "ambulanceFleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Ambulance",
-    "baseReward":225,
+    "baseReward":625,
     "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Name":["D-Series D45 Ambulance (A)","H-Series H45 Ambulance (A)"]},
@@ -73,93 +73,93 @@
         "probability":1,
         "whiteList":{"Mileage":{"min":500000 , "max":25000000 }}
       }
-    ]
+    ],
   },
 
-  
-  
-  
+  //tier 3 vehicles
+  // This is a hardcoded filter that reads a particular property from the info.json: "careerCarJockey"
+  // mileage from 80k-500k
   "largeVehFilter": {
     "type":"vehicle",
     "unlockTag":"largeVeh",
     "filterName":"Large Truck",
-    "baseReward":100,
-    "rewardPerKm":450,
+    "baseReward":1300,
+    "rewardPerKm":650,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":80000000, "max":500000000}},
-      "blackList":{"hasLoad":[true]}
+      "blackList":{"hasLoad":[true]},
     },
-    "subFilters": []
+    "subFilters": [],
   },
 
 
 
-  
-  
+  //tier 4 vehicles
+  //fleet: "default" vehicles from dealership, "relatively" new with lower (5km-80km) mileage, very common. low chance for police or service cars
   "fleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Car",
-    "baseReward":175,
+    "baseReward":275,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":2000, "max":2025}, "Mileage":{"min":5000, "max":80000}, "Value":{"min":10000, "max":100000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":300}},
       "blackList":{"Type":["Trailer"]}
-    }
+    },
   },
-  
+  //large vehicles like in tier 3, but "new" (5km-80km)
   "fleetLargeVehFilter": {
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Truck",
-    "baseReward":1000,
+    "baseReward":2000,
     "rewardPerKm":500,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":5000, "max":80000}},
-      "blackList":{"hasLoad":[true]}
-    }, 
-    "subFilters": []
+      "blackList":{"hasLoad":[true]},
+    },
+    "subFilters": [],
   },
 
 
-  
-  
+  //tier 5 vehicles
+  //customized: non-trivial "Custom"-config-type vehicles with lots of mileage (2k-200k)
   "customizedVehFilter": {
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Customized Car",
-    "baseReward":400,
-    "rewardPerKm":350,
+    "baseReward":800,
+    "rewardPerKm":450,
     "filter": {
       "whiteList":{"Years": {"min":1950}, "Mileage":{"min":2000000, "max":200000000}, "Value":{"min":30000},"Type":["Car"], "Config Type":["Custom"]},
       "blackList":{"Type":["Trailer"]}
     },
     "subFilters": [
-    ]
+    ],
   },
 
-  
+  //exotic: basically "expensive" cars (>90k) with relatively low mileage (10k-50k)
   "exoticVehFilter": {
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Expensive Car",
-    "baseReward":400,
+    "baseReward":500,
     "rewardPerKm":450,
     "filter": {
       "whiteList":{"Years": {"min":1900}, "Mileage":{"min":1000000, "max":50000000}, "Value":{"min":90000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":3}},
       "blackList":{"Type":["Trailer"]}
     },
     "subFilters": [
-    ]
+    ],
   },
 
-  
-  
+  //cars up to 1980 with 20k value.
+  //oldTimer: two subfilters for "driven" old cars (50k-250k) and "ununsed" (0.5k-25k)
   "oldTimerVeh": {
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Oldtimer",
-    "baseReward":200,
+    "baseReward":400,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1900, "max":1980}, "Value":{"min":20000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":2}},
@@ -170,15 +170,15 @@
         "probability":1,
         "whiteList":{"Mileage":{"min":500000 , "max":25000000 }}
       }
-    ]
+    ],
   },
 
 
-  
+  //trailers
 
-  
+  //empty small trailers
 
-  "smallEmptyTrailers": { 
+  "smallEmptyTrailers": { //1
     "type":"trailer",
     "unlockTag":"emptySmallTrailers",
     "filterName":"Small Trailer",
@@ -187,10 +187,10 @@
     "rewardPerKm":125,
     "filter" : {
       "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"] },
-      "blackList":{"hasLoad":[true]}
-   }
+      "blackList":{"hasLoad":[true]},
+   },
   },
-  "smallCratePlanksTrailers":{ 
+  "smallCratePlanksTrailers":{ //2
     "type":"trailer",
     "unlockTag":"loadedSmallTrailers",
     "filterName":"Small Trailer",
@@ -199,10 +199,10 @@
     "rewardPerKm":150,
     "filter" : {
       "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"], "hasLoad":[true] },
-      "blackList":{"key":["loaded_couch","loaded_armchairs"]}
-   }
+      "blackList":{"key":["loaded_couch","loaded_armchairs","unsafe"]}
+   },
   },
-  "smallFurnitureTrailers":{ 
+  "smallFurnitureTrailers":{ //2
     "type":"trailer",
     "unlockTag":"loadedSmallTrailers",
     "filterName":"Small Trailer",
@@ -210,12 +210,12 @@
     "baseReward":200,
     "rewardPerKm":175,
     "filter" : {
-      "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]}
-   }
+      "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]},
+   },
   },
 
-  
-  "mediumEmptyTrailer": { 
+  // medium trailer
+  "mediumEmptyTrailer": { //2
     "type":"trailer",
     "unlockTag":"emptyMediumTrailers",
     "filterName":"Medium Trailer",
@@ -224,10 +224,10 @@
     "rewardPerKm":250,
     "filter" : {
       "whiteList" : {"model_key" : ["cargotrailer"] },
-      "blackList":{"hasLoad":[true]}
-   }
+      "blackList":{"hasLoad":[true]},
+   },
   },
-  "mediumCratePlanksTrailers":{ 
+  "mediumCratePlanksTrailers":{ //3
     "type":"trailer",
     "unlockTag":"loadedMediumTrailers",
     "filterName":"Medium Trailer",
@@ -237,9 +237,9 @@
     "filter" : {
       "whiteList" : {"model_key" : ["cargotrailer"], "hasLoad":[true] },
       "blackList":{"key":["loaded_couch","loaded_armchairs"]}
-   }
+   },
   },
-  "mediumFurnitureTrailers":{ 
+  "mediumFurnitureTrailers":{ //3
     "type":"trailer",
     "unlockTag":"loadedMediumTrailers",
     "filterName":"Medium Trailer",
@@ -247,11 +247,11 @@
     "baseReward":500,
     "rewardPerKm":500,
     "filter" : {
-      "whiteList" : {"model_key" : ["cargotrailer"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]}
-   }
+      "whiteList" : {"model_key" : ["cargotrailer"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]},
+   },
   },
 
-  "bigEmptyTrailers": { 
+  "bigEmptyTrailers": { //3
     "type":"trailer",
     "unlockTag":"emptyLargeTrailer",
     "filterName":"Large Trailer",
@@ -260,11 +260,11 @@
     "rewardPerKm":500,
     "filter" : {
       "whiteList" : {"model_key" : ["flatbed","containerTrailer","dryvan"]},
-      "blackList":{"hasLoad":[true], "key":["48ft_loadingramp", "48ft_loadingramp_offset"]}
-   }
+      "blackList":{"hasLoad":[true], "key":["48ft_loadingramp", "48ft_loadingramp_offset"]},
+   },
   },
 
-  "bigConstructionMaterials":{ 
+  "bigConstructionMaterials":{ //4
     "type":"trailer",
     "unlockTag":"loadedLargeTrailers",
     "filterName":"Large Trailer",
@@ -272,12 +272,43 @@
     "baseReward":2000,
     "rewardPerKm":1000,
     "filter" : {
-      "whiteList" : {"model_key" : ["flatbed","containerTrailer"], "hasLoad":[true]}
-   }
-  }
+      "whiteList" : {"model_key" : ["flatbed","containerTrailer"], "hasLoad":[true]},
+   },
+  },
 
+  "bigDump":{ //4
+  "type":"trailer",
+  "unlockTag":"loadedLargeTrailers",
+  "filterName":"Large Trailer",
+  "connector":"towhitch",
+  "baseReward":1500,
+  "rewardPerKm":8000,
+  "filter" : {
+    "whiteList" : {"model_key" : ["frameless_dump"]},
+ },
+},
 
+"bigLogsEmpty":{ //4
+"type":"trailer",
+"unlockTag":"loadedLargeTrailers",
+"filterName":"Large Trailer",
+"connector":"towhitch",
+"baseReward":1000,
+"rewardPerKm":8000,
+"filter" : {
+  "whiteList" : {"model_key" : ["log_trailer"], "hasLoad":[false]},
+},
+},
 
-
-
+"bigLogsLoad":{ //4
+"type":"trailer",
+"unlockTag":"loadedLargeTrailers",
+"filterName":"Large Trailer",
+"connector":"towhitch",
+"baseReward":2500,
+"rewardPerKm":1200,
+"filter" : {
+  "whiteList" : {"model_key" : ["log_trailer"], "hasLoad":[true]}
+}
+}
 }
