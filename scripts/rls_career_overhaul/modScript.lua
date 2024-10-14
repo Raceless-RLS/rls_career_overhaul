@@ -20,7 +20,7 @@ M.gameplay_missions_progress = myProgress
 
 print("RLS Career Overhaul: Career module replaced with custom implementation")
 
---M.career_career = career_career
+M.career_career = career_career
 --M.career_branches = career_branches
 M.customActivateCareer = customActivateCareer
 M.gameplay_missions_progress = gameplay_missions_progress
