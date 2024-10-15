@@ -5,7 +5,7 @@
     "type":"vehicle",
     "unlockTag":"junkerVeh",
     "filterName":"Junker Car",
-    "baseReward":150,
+    "baseReward":250,
     "rewardPerKm":250,
     "filter": {
       "whiteList":{"Years": {"min":1900, "max":2005}, "Mileage":{"min":300000000, "max":650000000}, "Value":{"min":2000, "max":50000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":500}},
@@ -22,7 +22,7 @@
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Car",
-    "baseReward":250,
+    "baseReward":350,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Mileage":{"min":35000000, "max":150000000}, "Value":{"min":10000, "max":80000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":3000}},
@@ -37,7 +37,7 @@
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Police Car",
-    "baseReward":150,
+    "baseReward":350,
     "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Type":["Car"], "Config Type":["Police"]},
@@ -83,7 +83,7 @@
     "type":"vehicle",
     "unlockTag":"largeVeh",
     "filterName":"Large Truck",
-    "baseReward":1300,
+    "baseReward":1800,
     "rewardPerKm":650,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":80000000, "max":500000000}},
@@ -100,7 +100,7 @@
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Car",
-    "baseReward":275,
+    "baseReward":375,
     "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":2000, "max":2025}, "Mileage":{"min":5000, "max":80000}, "Value":{"min":10000, "max":100000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":300}},
@@ -112,7 +112,7 @@
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Truck",
-    "baseReward":2000,
+    "baseReward":2500,
     "rewardPerKm":500,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":5000, "max":80000}},
@@ -146,7 +146,7 @@
     "baseReward":500,
     "rewardPerKm":450,
     "filter": {
-      "whiteList":{"Years": {"min":1900}, "Mileage":{"min":1000000, "max":50000000}, "Value":{"min":90000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":3}},
+      "whiteList":{"Years": {"min":1900}, "Mileage":{"min":1000000, "max":50000000}, "Value":{"min":110000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":3}},
       "blackList":{"Type":["Trailer"]}
     },
     "subFilters": [
@@ -162,7 +162,7 @@
     "baseReward":400,
     "rewardPerKm":275,
     "filter": {
-      "whiteList":{"Years": {"min":1900, "max":1980}, "Value":{"min":20000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":2}},
+      "whiteList":{"Years": {"min":1900, "max":1980}, "Value":{"min":110000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":2}},
       "blackList":{"Type":["Trailer"]}
     },
     "subFilters": [
