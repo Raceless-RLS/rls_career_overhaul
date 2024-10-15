@@ -4,7 +4,7 @@
       "id":"belascoAuto",
       "name":"Belasco Auto",
       "description":"Belasco Auto - New & quality used vehicle sales.",
-      "stock": 15,
+      "stock": 30,
       "associatedOrganization":"belascoAuto",
       "preview":"belasco_auto_dealership.jpg",
       "doors":[["belascoAuto_area_1","belascoAuto_icon_1", 30]],
@@ -48,7 +48,7 @@
       "id":"jeffersonmotors",
       "name":"Jefferson Motors",
       "description":"Jefferson Motors - Custom American cars",
-      "stock": 15,
+      "stock": 10,
       "associatedOrganization":"jeffersonMotors",
       "preview":"jefferson_dealership.jpg",
       "doors":[["jeffersonmotors_area","jeffersonmotors_icon", 30]],
@@ -96,7 +96,7 @@
       "id":"richsmotorcompany",
       "name":"Rich's Motor Company",
       "description":"Rich's Motor Company - Prestige auto sales, only the finest quality vehicles are sold here!",
-      "stock": 15,
+      "stock": 20,
       "associatedOrganization":"richsMotorCompany",
       "preview":"richsmotorcompany_dealership.jpg",
       "doors":[["richsmotorcompany_area_1","richsmotorcompany_icon_1", 30]],
@@ -112,19 +112,19 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":55000}}
+          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":100000}}
         },
         {
           "probability":2,
-          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":75000}}
+          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":100000}}
         },
         {
           "probability":3,
-          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":85000}}
+          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":100000}}
         },
         {
           "probability":4,
-          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":95000}}
+          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":100000}}
         }
       ],
       "fees": 1250,
@@ -142,7 +142,7 @@
       "id":"quarrysideAutoSales",
       "name":"Quarryside Auto Sales",
       "description":"Quarryside Auto Sales - Used trucks and vans.",
-      "stock": 15,
+      "stock": 30,
       "associatedOrganization":"quarrysideAutoSales",
       "preview":"quarryside_dealership.jpg",
       "doors":[["garageDealership_area_1","garageDealership_icon_1", 30]],
@@ -193,7 +193,7 @@
       "id":"frameDealership",
       "name":"Smash Rollers",
       "description":"Smash Rollers - The perfect start to your build",
-      "stock": 5,
+      "stock": 7,
       "preview":"smash.jpg",
       "doors":[["frameDealership_area","frameDealership_icon", 30]],
       "parkingSpotNames":["frameDealershipParking"],
@@ -224,10 +224,10 @@
       "id":"jdmDealership",
       "name":"JDM Imports",
       "description":"JDM Imports - Imported Cars from Asia",
-      "stock": 15,
+      "stock": 10,
       "preview":"jdm.jpg",
       "doors":[["jdmDealership_area","jdmDealership_icon", 30]],
-      "parkingSpotNames":["jdmDealershipParking"],
+      "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
         {"keyLabel":"Used Vehicles"}
       ],
@@ -259,10 +259,10 @@
       "id":"edmDealership",
       "name":"EDM Imports",
       "description":"EDM Imports - Imported Cars from Europe",
-      "stock": 15,
+      "stock": 10,
       "preview":"jdm.jpg",
       "doors":[["edmDealership_area","edmDealership_icon", 30]],
-      "parkingSpotNames":["edmDealershipParking"],
+      "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
         {"keyLabel":"Used Vehicles"}
       ],
@@ -298,10 +298,10 @@
       "id":"rdmDealership",
       "name":"Other Imports",
       "description":"Other Imports - Imported Cars from... anywhere else",
-      "stock": 15,
+      "stock": 7,
       "preview":"jdm.jpg",
       "doors":[["rdmDealership_area","rdmDealership_icon", 30]],
-      "parkingSpotNames":["rdmDealershipParking"],
+      "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
         {"keyLabel":"Used Vehicles"}
       ],
@@ -333,7 +333,7 @@
       "id":"illegalDealership",
       "name":"Illegal Imports",
       "description":"Illegally Imported (modded cars without a price)",
-      "stock": 15,
+      "stock": 30,
       "preview":"illegal.jpg",
       "doors":[["illegalDealership_area","illegalDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
@@ -365,7 +365,7 @@
       "name":"Rocking Rally",
       "description":"Rocking Rally - Best rally builds around",
       "preview":"rally.jpg",
-      "stock": 15,
+      "stock": 7,
       "doors":[["rallyDealership_area","rallyDealership_icon", 30]],
       "parkingSpotNames":["rallyDealershipParking"],
       "activityAcceptProps":[
@@ -396,7 +396,7 @@
       "name":"Clockwise Drag Racing",
       "description":"Clockwise Drag Racing - Building Drag cars around the clock",
       "preview":"drag.jpg",
-      "stock": 15,
+      "stock": 7,
       "doors":[["dragDealership_area","dragDealership_icon", 30]],
       "parkingSpotNames":["dragDealershipParking"],
       "activityAcceptProps":[
@@ -443,7 +443,7 @@
       "name":"TJs Offroad World",
       "description":"TJs Offroad World - The only choice in Offroad from East to West.",
       "preview":"offroad.jpg",
-      "stock": 15,
+      "stock": 10,
       "doors":[["offroadDealership_area","offroadDealership_icon", 30]],
       "parkingSpotNames":["offroadDealershipParking"],
       "activityAcceptProps":[
@@ -486,7 +486,7 @@
       "name":"Trusted Auto Sales",
       "description":"Trusted Auto Sales - Discounted cars",
       "preview":"trusted.jpg",
-      "stock": 15,
+      "stock": 30,
       "doors":[["discountDealership_area","discountDealership_icon", 30]],
       "parkingSpotNames":["discountDealershipParking"],
       "activityAcceptProps":[
@@ -517,6 +517,7 @@
       "name":"Fast Automotive",
       "description":"Fast Automotive - Fastest race cars available",
       "preview":"fast.jpg",
+      "stock": 10,
       "doors":[["fastAutomotive_area","fastAutomotive_icon", 30]],
       "parkingSpotNames":["fastAutomotiveParking"],
       "activityAcceptProps":[
@@ -578,7 +579,7 @@
       "name":"Service Dealership",
       "description":"Service Dealership - Purchase Service Vehicles here",
       "preview":"police.jpg",
-      "stock": 15,
+      "stock": 18,
       "doors":[["serviceDealer_area","serviceDealer_icon", 30]],
       "parkingSpotNames":["serviceDealerParking"],
       "activityAcceptProps":[
@@ -609,7 +610,7 @@
       "name":"Trailer Dealer",
       "description":"Trailer Sales",
       "preview":"trailerDealership.jpg",
-      "stock": 15,
+      "stock": 20,
       "doors":[["trailershop_area","trailershop_icon", 30]],
       "parkingSpotNames":["trailerShop"],
       "activityAcceptProps":[
@@ -643,9 +644,9 @@
       "name":"Autobello Online Dealership",
       "description":"Autobello Online Dealership",
       "preview":"jefferson_dealership.jpg",
-      "stock": 15,
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "stock": 30,
+      "doors":[["AutobelloDealership_area","AutobelloDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -655,10 +656,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Autobello"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Autobello"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -673,10 +674,10 @@
       "id":"BruckellDealership",
       "name":"Bruckell Online Dealership",
       "description":"Bruckell Online Dealership",
-      "preview":"jefferson_dealership.jpg",
-      "stock": 15,
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "preview":"jeffe  rson_dealership.jpg",
+      "stock": 40,
+      "doors":[["BruckellDealership_area","BruckellDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -686,10 +687,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Bruckell"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Bruckell"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -704,10 +705,10 @@
       "id":"CherrierDealership",
       "name":"Cherrier Online Dealership",
       "description":"Cherrier Online Dealership",
-      "stock": 15,
+      "stock": 40,
       "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "doors":[["CherrierDealership_area","CherrierDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -717,10 +718,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Cherrier"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Cherrier"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -735,10 +736,10 @@
       "id":"CivettaDealership",
       "name":"Civetta Online Dealership",
       "description":"Civetta Online Dealership",
-      "stock": 15,
+      "stock": 20,
       "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "doors":[["CivettaDealership_area","CivettaDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -748,10 +749,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Civetta"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Civetta"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -767,9 +768,9 @@
       "name":"ETK Online Dealership",
       "description":"ETK Online Dealership",
       "preview":"jefferson_dealership.jpg",
-      "stock": 15,
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "stock": 40,
+      "doors":[["ETKDealership_area","ETKDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -779,10 +780,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["ETK"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["ETK"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -797,10 +798,10 @@
       "id":"GavrilcarDealership",
       "name":"Gavril-Car Online Dealership",
       "description":"Gavril-Car Online Dealership",
-      "stock": 15,
+      "stock": 50,
       "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "doors":[["GavrilcarDealership_area","GavrilcarDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -810,10 +811,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Car"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Car"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -828,10 +829,10 @@
       "id":"GavriltruckDealership",
       "name":"Gavril-Truck Online Dealership",
       "description":"Gavril-Truck Online Dealership",
-      "stock": 15,
+      "stock": 50,
       "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "doors":[["GavriltruckDealership_area","GavriltruckDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -841,14 +842,14 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Truck"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Truck"]}
         },
         {
           "probability":4,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Pickup"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Pickup"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -864,9 +865,9 @@
       "name":"Hirochi Online Dealership",
       "description":"Hirochi Online Dealership",
       "preview":"jefferson_dealership.jpg",
-      "stock": 15,
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "stock": 30,
+      "doors":[["HirochiDealership_area","HirochiDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -876,10 +877,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Hirochi"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Hirochi"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -895,9 +896,9 @@
       "name":"Ibishu Online Dealership",
       "description":"Ibishu Online Dealership",
       "preview":"jefferson_dealership.jpg",
-      "stock": 15,
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "stock": 50,
+      "doors":[["IbishuDealership_area","IbishuDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -907,10 +908,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Ibishu"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Ibishu"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -925,10 +926,10 @@
       "id":"SoliadDealership",
       "name":"Soliad Online Dealership",
       "description":"Soliad Online Dealership",
-      "stock": 15,
+      "stock": 40,
       "preview":"jefferson_dealership.jpg",
-      "doors":[["","", 30]],
-      "parkingSpotNames":["onlineParking"],
+      "doors":[["SoliadDealership_area","SoliadDealership_icon", 30]],
+      "parkingSpotNames":["onlineParking","onlineParkingBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -938,10 +939,10 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":15000, "max":35200113},"Config Type":["Factory"],"Brand":["Soliad"]}
+          "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Soliad"]}
         }
       ],
-      "fees": 2000,
+      "fees": 5000,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -958,7 +959,7 @@
   "description":"Tractors and Trailers",
   "associatedOrganization":"commercialVehicleSales",
   "preview":"commercialGarage_dealership.jpg",
-  "stock": 15,
+  "stock": 25,
   "doors":[["truckshop_area_1","truckshop_icon_1", 30]],
   "screens":["commercialOfficeComputer_screen_1"],
   "parkingSpotNames":["truckShop1"],
@@ -997,7 +998,7 @@
     {
       "id": "private",
       "name": "Private",
-      "stock": 15,
+      "stock": 10,
       "filter": {
         "whiteList":{"Mileage":{"min":25000000, "max":380000000}, "Value":{"min":450}},
         "blackList":{"Type":["Trailer", "Semi Truck"]}
