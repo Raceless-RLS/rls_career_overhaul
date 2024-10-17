@@ -285,30 +285,6 @@
   "rewardPerKm":800,
   "filter" : {
     "whiteList" : {"model_key" : ["frameless_dump"]},
- },
-},
-
-"bigLogsEmpty":{ //4
-"type":"trailer",
-"unlockTag":"loadedLargeTrailers",
-"filterName":"Large Trailer",
-"connector":"towhitch",
-"baseReward":1000,
-"rewardPerKm":800,
-"filter" : {
-  "whiteList" : {"model_key" : ["log_trailer"], "hasLoad":[false]},
-},
-},
-
-"bigLogsLoad":{ //4
-"type":"trailer",
-"unlockTag":"loadedLargeTrailers",
-"filterName":"Large Trailer",
-"connector":"towhitch",
-"baseReward":2500,
-"rewardPerKm":1200,
-"filter" : {
-  "whiteList" : {"model_key" : ["log_trailer"], "hasLoad":[true]}
-}
+ }
 }
 }

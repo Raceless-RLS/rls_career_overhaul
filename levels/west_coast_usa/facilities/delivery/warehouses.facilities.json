@@ -257,20 +257,6 @@
           "logisticTypes": [
             "trailerDeliveryConstructionMaterials"
           ]
-        },
-        {
-          "type": "trailerOfferProvider",
-          "interval": 300,
-          "min": -1,
-          "max": 4,
-          "offerDuration": {
-            "min": 300,
-            "max": 600
-          },
-          "filter": "bigLogsEmpty",
-          "logisticTypes": [
-            "trailerDeliveryConstructionMaterials"
-          ]
         }
       ]
     },
@@ -798,20 +784,6 @@
             "max": 600
           },
           "filter": "bigConstructionMaterials",
-          "logisticTypes": [
-            "trailerDeliveryConstructionMaterials"
-          ]
-        },
-        {
-          "type": "trailerOfferProvider",
-          "interval": 300,
-          "min": -1,
-          "max": 6,
-          "offerDuration": {
-            "min": 300,
-            "max": 600
-          },
-          "filter": "bigLogsLoad",
           "logisticTypes": [
             "trailerDeliveryConstructionMaterials"
           ]
