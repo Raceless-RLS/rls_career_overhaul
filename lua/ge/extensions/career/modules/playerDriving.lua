@@ -30,6 +30,8 @@ local function getPlayerData()
     return playerData
 end
 
+local repoJob
+
 local function setPlayerData(newId, oldId)
     -- oldId is optional and is used if the vehicle was switched
     playerData.isParked = gameplay_parking.getCurrentParkingSpot(newId) and true or false
@@ -292,7 +294,11 @@ local function onVehicleSwitched(oldId, newId)
         local vehicle = scenetree.findObjectById(newId)
         local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
         if licenseText and licenseText:lower() == "repo" then
-            repo.spawnVehicleAtParkingSpot()
+            if repoJob then
+                repoJob:destroy()
+            end
+            repoJob = repo.VehicleRepoJob.new()
+            repoJob:generateJob()
         end
         setPlayerData(newId, oldId)
         setTrafficVars()
@@ -457,6 +463,10 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         if playerData.preStartTicks == 0 then
             playerData.preStartTicks = nil
         end
+    end
+
+    if repoJob then
+        repoJob:onUpdate()
     end
 
     if not playerPursuitActive() then

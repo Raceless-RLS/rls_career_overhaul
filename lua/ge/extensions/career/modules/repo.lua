@@ -9,16 +9,63 @@ M.dependencies = {
   'career_career',
   'util_configListGenerator',
   'gameplay_parking',
+  'freeroam_facilities',
+  'gameplay_sites_sitesManager',
+  'gameplay_walk',
+  'core_groundMarkers',
+  'career_modules_valueCalculator',
 }
 
 -- Require necessary modules
 local configListGenerator = require('util.configListGenerator')
 local parking = require('gameplay.parking')
 local career_career = require('career.career')
+local freeroam_facilities = require('freeroam.facilities')
+local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
+local gameplay_walk = require('gameplay.walk')
+local valueCalculator = require('career.modules.valueCalculator')
 
--- Function to spawn a random vehicle at the nearest parking spot
-local function spawnVehicleAtParkingSpot()
-  print('[repo] spawnVehicleAtParkingSpot() called')
+local VehicleRepoJob = {}
+VehicleRepoJob.__index = VehicleRepoJob
+
+function VehicleRepoJob:new()
+  local self = setmetatable({}, VehicleRepoJob)
+  self.vehicleId = nil
+  self.vehicleValue = nil
+  self.pickupSpot = nil
+  self.deliverySpot = nil
+  self.jobStartTime = nil
+  self.monitoring = false
+  self.selectedDealership = nil
+  return self
+end
+
+function VehicleRepoJob:destroy()
+    if self.vehicleId then
+      local vehicle = be:getObjectByID(self.vehicleId)
+      if vehicle then
+        vehicle:delete()
+        print('[repo] Vehicle with ID ' .. tostring(self.vehicleId) .. ' has been removed.')
+      end
+    end
+  
+    -- Clear all data associated with this job
+    self.vehicleId = nil
+    self.vehicleValue = nil
+    self.pickupSpot = nil
+    self.deliverySpot = nil
+    self.jobStartTime = nil
+    self.monitoring = false
+    self.selectedDealership = nil
+  print('[repo] VehicleRepoJob instance has been destroyed.')
+end
+
+function VehicleRepoJob:generateJob()
+  self:spawnVehicle()
+end
+
+function VehicleRepoJob:spawnVehicle()
+  print('[repo] spawnVehicle() called')
 
   -- Get the player's current vehicle and position
   local playerVehicle = be:getPlayerVehicle(0)
@@ -58,32 +105,45 @@ local function spawnVehicleAtParkingSpot()
   print('[repo] Nearest parking spot found at distance: ' .. tostring(shortestDistance))
   print('[repo] Parking spot position: ' .. tostring(nearestSpot.pos))
 
-  -- Generate eligible vehicle configurations
+  -- Get all dealerships and select one randomly
+  local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
+  local dealerships = facilities.dealerships
+  if not dealerships or #dealerships == 0 then
+    print('[repo] Error: No dealerships found.')
+    return
+  end
+  self.selectedDealership = dealerships[math.random(#dealerships)]
+  print('[repo] Selected dealership: ' .. self.selectedDealership.name)
+
+  -- Generate a random vehicle configuration based on the dealership's filters
   local eligibleVehicles = configListGenerator.getEligibleVehicles(false, false)
-  if not eligibleVehicles or #eligibleVehicles == 0 then
-    print('[repo] Error: No eligible vehicles found.')
+  local randomVehicleInfos = configListGenerator.getRandomVehicleInfos(self.selectedDealership, 1, eligibleVehicles, "adjustedPopulation")
+  if not randomVehicleInfos or #randomVehicleInfos == 0 then
+    print('[repo] Error: No vehicles could be generated for the selected dealership.')
     return
   end
-  print('[repo] Total eligible vehicles: ' .. tostring(#eligibleVehicles))
 
-  -- Select an ETK 800 series vehicle
-  local vehicleModel = 'etk800' -- ETK 800 series model key
-  local vehicleConfigs = {}
-  for _, vehicleInfo in ipairs(eligibleVehicles) do
-    if vehicleInfo.model_key == vehicleModel then
-      table.insert(vehicleConfigs, vehicleInfo)
-    end
-  end
-
-  if #vehicleConfigs == 0 then
-    print('[repo] Error: No eligible ETK 800 vehicles found.')
-    return
-  end
-  print('[repo] Total ETK 800 configurations: ' .. tostring(#vehicleConfigs))
-
-  local randomVehicleInfo = vehicleConfigs[math.random(#vehicleConfigs)]
+  local randomVehicleInfo = randomVehicleInfos[1]
   local vehicleConfig = randomVehicleInfo.key
   print('[repo] Selected vehicle config: ' .. vehicleConfig)
+
+  -- Ensure the year and mileage are set
+  local years = randomVehicleInfo.Years or randomVehicleInfo.aggregates.Years
+  randomVehicleInfo.year = years and math.random(years.min, years.max) or 2023
+
+  local filter = randomVehicleInfo.filter
+  if filter.whiteList and filter.whiteList.Mileage then
+    randomVehicleInfo.Mileage = math.random(filter.whiteList.Mileage.min, filter.whiteList.Mileage.max)
+  else
+    randomVehicleInfo.Mileage = 0
+  end
+
+  -- Calculate the vehicle's value
+  local vehicleValue = valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {
+    mileage = randomVehicleInfo.Mileage,
+    age = 2023 - randomVehicleInfo.year
+  })
+  print('[repo] Vehicle value: ' .. tostring(vehicleValue))
 
   -- Prepare the spawn options
   local spawnOptions = {}
@@ -102,32 +162,66 @@ local function spawnVehicleAtParkingSpot()
   }
 
   print('[repo] Spawning vehicle at position: ' .. tostring(spawnOptions.pos))
-  local newVeh = core_vehicles.spawnNewVehicle(vehicleModel, spawnOptions)
+  local newVeh = core_vehicles.spawnNewVehicle(randomVehicleInfo.model_key, spawnOptions)
   if not newVeh then
     print('[repo] Error: Failed to spawn vehicle.')
     return
   end
 
   print('[repo] Vehicle spawned with ID: ' .. tostring(newVeh:getID()))
+  print('[repo] Selected dealership: ' .. self.selectedDealership.name)
+  print('[repo] Vehicle value: ' .. tostring(vehicleValue))
 
-  -- Ensure the parking brake is released
-  print('[repo] Releasing parking brake on spawned vehicle.')
+  -- Save vehicle data for later use
+  self.vehicleId = newVeh:getID()
+  self.vehicleValue = vehicleValue
+  self.pickupSpot = nearestSpot.pos
+  self.deliverySpot = gameplay_sites_sitesManager.getBestParkingSpotForVehicleFromList(newVeh:getID(), freeroam_facilities.getParkingSpotsForFacility(self.selectedDealership))
+  self.monitoring = true
+
+  -- Set initial path to the parking spot
+  core_groundMarkers.setPath(nearestSpot.pos)
+
+  -- Turn off the parking brake
   newVeh:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
 
-  -- Turn off the ignition to prevent driving
-  print('[repo] Turning off ignition on spawned vehicle.')
-  newVeh:queueLuaCommand('electrics.setIgnitionLevel(0)')
-
-  -- Mark the spot as occupied
-  nearestSpot.vehicle = newVeh:getID()
-  print('[repo] Marked parking spot as occupied.')
-
   -- Display the custom message to the player
-  ui_message("New Repo Job Available!\nSomeone missed a payment on their ETK 800.\nPick it up for a reward.", 10, "info", "info")
+  ui_message("New Repo Job Available!\nSomeone missed a payment on their \n" .. randomVehicleInfo.Brand .. " " .. randomVehicleInfo.Name .. ".\nPick it up for a reward.", 10, "info", "info")
   print('[repo] Displayed message to the player.')
 end
 
--- Export the function
-M.spawnVehicleAtParkingSpot = spawnVehicleAtParkingSpot
+
+
+function VehicleRepoJob:onUpdate()
+  if not self.monitoring or not self.vehicleId then return end
+
+  local playerVehicle = be:getPlayerVehicle(0)
+  if not playerVehicle then return end
+
+  local playerPos = playerVehicle:getPosition()
+  local vehicle = be:getObjectByID(self.vehicleId)
+  if not vehicle then return end
+
+  local vehiclePos = vehicle:getPosition()
+  local distance = (vehiclePos - playerPos):length()
+
+  if distance <= 10 and not self.jobStartTime then
+    self.jobStartTime = os.time()
+    print('[repo] Job started at time: ' .. tostring(self.jobStartTime))
+  end
+
+  if distance <= 10 then
+    local velocity = vehicle:getVelocity():length()
+    print("velocity" .. velocity)
+    if velocity > 1 then
+      self.monitoring = false
+      core_groundMarkers.setPath(self.deliverySpot.pos)
+      ui_message('Please Deliver the Vehicle to ' .. self.selectedDealership.name, 10, "info", "info")
+    end
+  end
+end
+
+-- Export the class
+M.VehicleRepoJob = VehicleRepoJob
 
 return M
