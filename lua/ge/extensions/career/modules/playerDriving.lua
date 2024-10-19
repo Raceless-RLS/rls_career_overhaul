@@ -3,7 +3,14 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'core_modmanager', 'gameplay_traffic'}
+M.dependencies = {
+    'career_career',
+    'core_modmanager',
+    'gameplay_traffic',
+    'career_modules_repo',
+}
+
+local repo = require('career.modules.repo')
 
 local playerData = {
     trafficActive = 0
@@ -282,6 +289,11 @@ end
 
 local function onVehicleSwitched(oldId, newId)
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
+        local vehicle = scenetree.findObjectById(newId)
+        local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
+        if licenseText and licenseText:lower() == "repo" then
+            repo.spawnVehicleAtParkingSpot()
+        end
         setPlayerData(newId, oldId)
         setTrafficVars()
         local playerIsCop = getPlayerIsCop()
