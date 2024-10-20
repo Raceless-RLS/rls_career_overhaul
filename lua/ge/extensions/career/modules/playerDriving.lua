@@ -30,7 +30,7 @@ local function getPlayerData()
     return playerData
 end
 
-local repoJob = nil
+local repoJob = repo.VehicleRepoJob.new()
 
 local function setPlayerData(newId, oldId)
     -- oldId is optional and is used if the vehicle was switched
@@ -299,7 +299,6 @@ local function onVehicleSwitched(oldId, newId)
             if repoJob then
                 repoJob:onVehicleSwitched(oldId, newId)
             else
-                repoJob = repo.VehicleRepoJob.new()
                 repoJob.generateJob()
             end
         end

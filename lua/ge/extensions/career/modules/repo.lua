@@ -10,10 +10,8 @@ M.dependencies = {'career_career', 'util_configListGenerator', 'gameplay_parking
 -- Require necessary modules
 local configListGenerator = require('util.configListGenerator')
 local parking = require('gameplay.parking')
-local career_career = require('career.career')
 local freeroam_facilities = require('freeroam.facilities')
 local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
-local gameplay_walk = require('gameplay.walk')
 local valueCalculator = require('career.modules.valueCalculator')
 
 local VehicleRepoJob = {}
@@ -40,7 +38,7 @@ function VehicleRepoJob:destroy()
         local vehicle = be:getObjectByID(self.vehicleId)
         if vehicle then
             vehicle:delete()
-            print('[repo] Vehicle with ID ' .. tostring(self.vehicleId) .. ' has been removed.')
+            --print('[repo] Vehicle with ID ' .. tostring(self.vehicleId) .. ' has been removed.')
         end
     end
 
@@ -56,144 +54,192 @@ function VehicleRepoJob:destroy()
     self.completed = false
     self.countdown = nil
     self.totalDistance = 0
-    print('[repo] VehicleRepoJob instance has been destroyed.')
+    --print('[repo] VehicleRepoJob instance has been destroyed.')
 end
 
-function VehicleRepoJob:generateJob()
-    self:spawnVehicle()
+function VehicleRepoJob:generateJob() -- Call this to generate a new job
+    -- Start the coroutine for job generation
+    self.jobCoroutine = coroutine.create(function()
+        self:initializePlayerVehicle()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+
+        self:findParkingSpots()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+
+        self:selectDealership()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+
+        self:determineDeliverySpot()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+
+        self:filterValidSpots()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+        self:selectRandomSpot()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+        self:generateVehicleConfig()
+        for i = 1, 25 do
+            coroutine.yield()
+        end
+        local playerVelocity = be:getPlayerVehicle(0):getVelocity():length()
+        while not self.spawnedVehicle and playerVelocity <= 1 do
+            coroutine.yield()
+            playerVelocity = be:getPlayerVehicle(0):getVelocity():length()
+        end
+        if not self.spawnedVehicle then
+            self:spawnVehicle()
+            self.spawnedVehicle = true
+        end
+    end)
 end
 
-function VehicleRepoJob:spawnVehicle()
-    print('[repo] spawnVehicle() called')
-
-    -- Get the player's current vehicle and position
+function VehicleRepoJob:initializePlayerVehicle()
+    --print('[repo] Initializing player vehicle...')
     local playerVehicle = be:getPlayerVehicle(0)
     self.repoVehicle = playerVehicle
     if not playerVehicle then
-        print('[repo] Error: Player vehicle not found.')
+        --print('[repo] Error: Player vehicle not found.')
         return
     end
-    local playerPos = playerVehicle:getPosition()
-    print('[repo] Player position: ' .. tostring(playerPos))
+    self.playerPos = playerVehicle:getPosition()
+    --print('[repo] Player position: ' .. tostring(self.playerPos))
+end
 
-    -- Get available parking spots
-    local parkingSpots = parking.getParkingSpots()
-    if not parkingSpots or not parkingSpots.objects then
-        print('[repo] Error: Parking spots not available.')
+function VehicleRepoJob:findParkingSpots()
+    --print('[repo] Finding parking spots...')
+    self.parkingSpots = parking.getParkingSpots()
+    if not self.parkingSpots or not self.parkingSpots.objects then
+        --print('[repo] Error: Parking spots not available.')
         return
     end
-    print('[repo] Total parking spots: ' .. tostring(#parkingSpots.objects))
+    --print('[repo] Total parking spots: ' .. tostring(#self.parkingSpots.objects))
+end
 
-    -- Get all dealerships and select one randomly
+function VehicleRepoJob:selectDealership()
+    --print('[repo] Selecting dealership...')
     local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
     local dealerships = facilities.dealerships
     if not dealerships or #dealerships == 0 then
-        print('[repo] Error: No dealerships found.')
+        --print('[repo] Error: No dealerships found.')
         return
     end
     self.selectedDealership = dealerships[math.random(#dealerships)]
-    print('[repo] Selected dealership: ' .. self.selectedDealership.name)
+    --print('[repo] Selected dealership: ' .. self.selectedDealership.name)
+end
 
-    -- Determine the delivery spot
+function VehicleRepoJob:determineDeliverySpot()
+    --print('[repo] Determining delivery spot...')
     self.deliverySpot = gameplay_sites_sitesManager.getBestParkingSpotForVehicleFromList(nil,
         freeroam_facilities.getParkingSpotsForFacility(self.selectedDealership))
+end
 
-    -- Filter parking spots based on distance criteria
-    local validSpots = {}
-    for _, spot in pairs(parkingSpots.objects) do
+function VehicleRepoJob:filterValidSpots()
+    --print('[repo] Filtering valid parking spots...')
+    self.validSpots = {}
+    for _, spot in pairs(self.parkingSpots.objects) do
         if spot.pos and not spot.vehicle then
-            local distanceFromPlayer = (spot.pos - playerPos):length()
+            local distanceFromPlayer = (spot.pos - self.playerPos):length()
             local distanceFromDestination = (spot.pos - self.deliverySpot.pos):length()
             if distanceFromPlayer >= 300 and distanceFromDestination >= 600 then
-                table.insert(validSpots, spot)
+                table.insert(self.validSpots, spot)
             end
         end
     end
 
-    if #validSpots == 0 then
-        print('[repo] Warning: No valid parking spots found.')
+    if #self.validSpots == 0 then
+        --print('[repo] Warning: No valid parking spots found.')
         return
     end
+end
 
-    -- Select a random valid parking spot
-    local nearestSpot = validSpots[math.random(#validSpots)]
-    print('[repo] Selected parking spot at position: ' .. tostring(nearestSpot.pos))
+function VehicleRepoJob:selectRandomSpot()
+    --print('[repo] Selecting random parking spot...')
+    self.nearestSpot = self.validSpots[math.random(#self.validSpots)]
+    --print('[repo] Selected parking spot at position: ' .. tostring(self.nearestSpot.pos))
+end
 
-    -- Generate a random vehicle configuration based on the dealership's filters
+function VehicleRepoJob:generateVehicleConfig()
+    --print('[repo] Generating vehicle configuration...')
     local eligibleVehicles = configListGenerator.getEligibleVehicles(false, false)
     local randomVehicleInfos = configListGenerator.getRandomVehicleInfos(self.selectedDealership, 1, eligibleVehicles,
         "adjustedPopulation")
     if not randomVehicleInfos or #randomVehicleInfos == 0 then
-        print('[repo] Error: No vehicles could be generated for the selected dealership.')
+        --print('[repo] Error: No vehicles could be generated for the selected dealership.')
         return
     end
 
-    local randomVehicleInfo = randomVehicleInfos[1]
-    local vehicleConfig = randomVehicleInfo.key
-    print('[repo] Selected vehicle config: ' .. vehicleConfig)
+    self.randomVehicleInfo = randomVehicleInfos[1]
+    self.vehicleConfig = self.randomVehicleInfo.key
+    --print('[repo] Selected vehicle config: ' .. self.vehicleConfig)
 
-    -- Ensure the year and mileage are set
-    local years = randomVehicleInfo.Years or randomVehicleInfo.aggregates.Years
-    randomVehicleInfo.year = years and math.random(years.min, years.max) or 2023
+    local years = self.randomVehicleInfo.Years or self.randomVehicleInfo.aggregates.Years
+    self.randomVehicleInfo.year = years and math.random(years.min, years.max) or 2023
 
-    local filter = randomVehicleInfo.filter
+    local filter = self.randomVehicleInfo.filter
     if filter.whiteList and filter.whiteList.Mileage then
-        randomVehicleInfo.Mileage = math.random(filter.whiteList.Mileage.min, filter.whiteList.Mileage.max)
+        self.randomVehicleInfo.Mileage = math.random(filter.whiteList.Mileage.min, filter.whiteList.Mileage.max)
     else
-        randomVehicleInfo.Mileage = 0
+        self.randomVehicleInfo.Mileage = 0
     end
 
-    -- Calculate the vehicle's value
-    local vehicleValue = valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {
-        mileage = randomVehicleInfo.Mileage,
-        age = 2023 - randomVehicleInfo.year
+    self.vehicleValue = valueCalculator.getAdjustedVehicleBaseValue(self.randomVehicleInfo.Value, {
+        mileage = self.randomVehicleInfo.Mileage,
+        age = 2023 - self.randomVehicleInfo.year
     })
-    print('[repo] Vehicle value: ' .. tostring(vehicleValue))
+    --print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
+end
 
-    -- Prepare the spawn options
+function VehicleRepoJob:spawnVehicle()
+    --print('[repo] Spawning vehicle...')
     local spawnOptions = {}
-    spawnOptions.config = vehicleConfig
+    spawnOptions.config = self.vehicleConfig
     spawnOptions.autoEnterVehicle = false
-    spawnOptions.pos = nearestSpot.pos
-    spawnOptions.rot = nearestSpot.rot or quat(0, 0, 0, 1)
+    spawnOptions.pos = self.nearestSpot.pos
+    spawnOptions.rot = self.nearestSpot.rot or quat(0, 0, 0, 1)
     spawnOptions.cling = true
     spawnOptions.paint = {
         baseColor = {math.random(), math.random(), math.random(), 1},
         metallic = false
     }
-    -- Ensure parking brake is off when vehicle spawns
     spawnOptions.electrics = {
         parkingbrake = 0
     }
 
-    print('[repo] Spawning vehicle at position: ' .. tostring(spawnOptions.pos))
-    local newVeh = core_vehicles.spawnNewVehicle(randomVehicleInfo.model_key, spawnOptions)
+    local newVeh = core_vehicles.spawnNewVehicle(self.randomVehicleInfo.model_key, spawnOptions)
     if not newVeh then
-        print('[repo] Error: Failed to spawn vehicle.')
+        --print('[repo] Error: Failed to spawn vehicle.')
         return
     end
 
-    print('[repo] Vehicle spawned with ID: ' .. tostring(newVeh:getID()))
-    print('[repo] Selected dealership: ' .. self.selectedDealership.name)
-    print('[repo] Vehicle value: ' .. tostring(vehicleValue))
+    --print('[repo] Vehicle spawned with ID: ' .. tostring(newVeh:getID()))
+    --print('[repo] Selected dealership: ' .. self.selectedDealership.name)
+    --print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
 
-    -- Save vehicle data for later use
     self.vehicleId = newVeh:getID()
-    self.vehicleValue = vehicleValue
-    self.pickupSpot = nearestSpot.pos
+    self.vehicleValue = self.vehicleValue
+    self.pickupSpot = self.nearestSpot.pos
     self.monitoring = true
 
-    -- Set initial path to the parking spot
-    core_groundMarkers.setPath(nearestSpot.pos)
+    core_groundMarkers.setPath(self.nearestSpot.pos)
     self.totalDistance = core_groundMarkers.getPathLength()
 
-    print('[repo] Total distance: ' .. tostring(self.totalDistance))
+    --print('[repo] Total distance: ' .. tostring(self.totalDistance))
 
-    self.vehInfo = randomVehicleInfo
-    -- Display the custom message to the player
-    ui_message("New Repo Job Available!\nSomeone missed a payment on their \n" .. randomVehicleInfo.Brand .. " " ..
-                   randomVehicleInfo.Name .. ".\nPick it up for a reward.", 10, "info", "info")
-    print('[repo] Displayed message to the player.')
+    self.vehInfo = self.randomVehicleInfo
+    ui_message("New Repo Job Available!\nSomeone missed a payment on their \n" .. self.randomVehicleInfo.Brand .. " " ..
+                   self.randomVehicleInfo.Name .. ".\nPick it up for a reward.", 10, "info", "info")
+    --print('[repo] Displayed message to the player.')
 end
 
 function VehicleRepoJob:onVehicleSwitched(oldId, newId)
@@ -215,8 +261,22 @@ function VehicleRepoJob:calculateReward()
 end
 
 function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
+    if self.jobCoroutine and coroutine.status(self.jobCoroutine) ~= "dead" then
+        local success, message = coroutine.resume(self.jobCoroutine)
+        if not success then
+            --print('[repo] Error in job coroutine: ' .. message)
+            self.jobCoroutine = nil
+        end
+    end
+
     if self.completed then
-        self:destroy()
+        local playerPos = be:getPlayerVehicle(0):getPosition()
+        local vehicle = be:getObjectByID(self.vehicleId)
+        local vehiclePos = vehicle:getPosition()
+
+        if (playerPos - vehiclePos):length() >= 15 then
+            self:destroy()
+        end
         return
     end
 
@@ -247,20 +307,23 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             core_groundMarkers.setPath(self.deliverySpot.pos)
         end
     else
-        if distance > 100 then
+        if distance > 90 and distance < 100 then
+            ui_message("You have driven too far from the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease return it to the parking spot.", 10, "info", "info")
+        elseif distance > 100 then
             if not self.countdown then
-                self.countdown = 15
+                self.countdown = 10
             else
                 ui_message("You have " .. math.floor(self.countdown) .. " seconds to return the  " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 1, "info", "info")
                 self.countdown = self.countdown - dtSim
                 if self.countdown <= 0 then
+                    ui_message("Someone else has picked up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 10, "info", "info")
                     self:destroy()
                     return
                 end
             end
         else
             if self.countdown then
-                ui_message("You have returned the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 3, "info", "info")
+                ui_message("You have returned to the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 3, "info", "info")
                 self.countdown = nil
                 local vehiclePos = vehicle:getPosition()
                 core_groundMarkers.setPath(vehiclePos)
@@ -275,7 +338,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if distanceFromDestination <= 2 and velocity <= 1 then
             --Reward should be a combination of Vehicle Value, Time Taken, and Distance Traveled.
             local reward = self:calculateReward()
-            ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 10, "info", "info")
+            ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")
             career_modules_payment.reward({
                 money = {
                     amount = reward
@@ -308,7 +371,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
               electrics.setIgnitionLevel(0)
             end
           ]])
-            print('[repo] Vehicle moved more than 25 meters from repo vehicle. Ignition turned off.')
+            --print('[repo] Vehicle moved more than 25 meters from repo vehicle. Ignition turned off.')
         end
     end
 
@@ -318,8 +381,8 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             self.jobStartTime = os.time()
             core_groundMarkers.setPath(self.deliverySpot.pos)
             self.totalDistance = self.totalDistance + core_groundMarkers.getPathLength()
-            print('[repo] Total distance: ' .. tostring(self.totalDistance))
-            print('[repo] Vehicle is moving. Path set to delivery spot.')
+            --print('[repo] Total distance: ' .. tostring(self.totalDistance))
+            --print('[repo] Vehicle is moving. Path set to delivery spot.')
         end
     end
 end
