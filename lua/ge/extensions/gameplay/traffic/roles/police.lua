@@ -69,6 +69,8 @@ function C:init()
             self.state = 'stop'
 
             self.targetPursuitMode = 0
+            self.targetId = nil
+            self.pursuit = nil
         end,
         disabled = function()
             if self.veh.isAi then
@@ -215,6 +217,13 @@ function C:onUpdate(dt, dtSim)
     if not self.flags.pursuit or self.state == 'none' then
         return
     end
+
+    -- Check if targetId or veh.id is nil and clear pursuit if so
+    if not self.targetId or not self.veh.id then
+        self:clearPursuit()
+        return
+    end
+
     local targetVeh = self.targetId and gameplay_traffic.getTrafficData()[self.targetId]
     if not targetVeh or (targetVeh and not targetVeh.role.flags.flee) then
         self:resetAction()
@@ -277,6 +286,15 @@ function C:onUpdate(dt, dtSim)
             end
         end
     end
+end
+
+-- Function to clear the pursuit
+function C:clearPursuit()
+    self.flags.pursuit = nil
+    self.state = 'none'
+    self.targetId = nil
+    self.pursuit = nil
+    -- Additional cleanup logic if needed
 end
 
 return function(...)
