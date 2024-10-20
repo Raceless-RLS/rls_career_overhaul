@@ -1,0 +1,56 @@
+{
+    "boom1_up": {
+        "order": 1,
+        "onChange": "custom_input.liftboom1(1 * VALUE)",
+        "title": "Tilt Up",
+        "desc": "Tilt the boom up"
+    },
+    "boom1_dn": {
+        "order": 2,
+        "onChange": "custom_input.liftboom1(-1 * VALUE)",
+        "title": "Tilt Down",
+        "desc": "Tilt the boom down"
+    },
+    "boom2_up": {
+        "order": 3,
+        "onChange": "custom_input.liftboom2(-1 * VALUE)",
+        "title": "Fold",
+        "desc": "Fold the boom"
+    },
+    "boom2_dn": {
+        "order": 4,
+        "onChange": "custom_input.liftboom2(1 * VALUE)",
+        "title": "Unfold",
+        "desc": "Unfold the boom"
+    },
+    "tele_out": {
+        "order": 5,
+        "onChange": "custom_input.tele_trger(1 * VALUE)",
+        "title": "Boom Out",
+        "desc": "Extend the boom out"
+    },
+    "tele_in": {
+        "order": 6,
+        "onChange": "custom_input.tele_trger(-1 * VALUE)",
+        "title": "Boom In",
+        "desc": "Retract the boom"
+    },
+    "hr": {
+        "order": 7,
+        "onChange": "custom_input.hand_out(1 * VALUE)",
+        "title": "Turn Right",
+        "desc": "Turn the hand right"
+    },
+    "hl": {
+        "order": 8,
+        "onChange": "custom_input.hand_out(-1 * VALUE)",
+        "title": "Turn Left",
+        "desc": "Turn the hand left"
+    },
+    "oc": {
+        "order": 9,
+        "onDown": "electrics.values.fingh = 1 - (electrics.values.fingh or -1)",
+        "title": "Open/Close",
+        "desc": "Toggle open/close"
+    }
+}
