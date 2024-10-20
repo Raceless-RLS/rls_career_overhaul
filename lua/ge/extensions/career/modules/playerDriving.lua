@@ -30,7 +30,7 @@ local function getPlayerData()
     return playerData
 end
 
-local repoJob
+local repoJob = nil
 
 local function setPlayerData(newId, oldId)
     -- oldId is optional and is used if the vehicle was switched
@@ -297,15 +297,10 @@ local function onVehicleSwitched(oldId, newId)
         local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
         if licenseText and licenseText:lower() == "repo" then
             if repoJob then
-                if not repoJob.jobStartTime then
-                    repoJob:destroy()
-                    repoJob = repo.VehicleRepoJob.new()
-                    repoJob:generateJob()
-                end
-                return
+                repoJob:onVehicleSwitched(oldId, newId)
             else
                 repoJob = repo.VehicleRepoJob.new()
-                repoJob:generateJob()
+                repoJob.generateJob()
             end
         end
 
@@ -473,7 +468,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     end
 
     if repoJob then
-        repoJob:onUpdate()
+        repoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     if not playerPursuitActive() then

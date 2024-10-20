@@ -28,6 +28,10 @@ function VehicleRepoJob:new()
     self.jobStartTime = nil
     self.monitoring = false
     self.selectedDealership = nil
+    self.startedJob = false
+    self.completed = false
+    self.countdown = nil
+    self.totalDistance = 0
     return self
 end
 
@@ -48,6 +52,10 @@ function VehicleRepoJob:destroy()
     self.jobStartTime = nil
     self.monitoring = false
     self.selectedDealership = nil
+    self.startedJob = false
+    self.completed = false
+    self.countdown = nil
+    self.totalDistance = 0
     print('[repo] VehicleRepoJob instance has been destroyed.')
 end
 
@@ -60,6 +68,7 @@ function VehicleRepoJob:spawnVehicle()
 
     -- Get the player's current vehicle and position
     local playerVehicle = be:getPlayerVehicle(0)
+    self.repoVehicle = playerVehicle
     if not playerVehicle then
         print('[repo] Error: Player vehicle not found.')
         return
@@ -176,9 +185,10 @@ function VehicleRepoJob:spawnVehicle()
 
     -- Set initial path to the parking spot
     core_groundMarkers.setPath(nearestSpot.pos)
+    self.totalDistance = core_groundMarkers.getPathLength()
 
-    -- Turn off the parking brake
-    newVeh:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
+    print('[repo] Total distance: ' .. tostring(self.totalDistance))
+
     self.vehInfo = randomVehicleInfo
     -- Display the custom message to the player
     ui_message("New Repo Job Available!\nSomeone missed a payment on their \n" .. randomVehicleInfo.Brand .. " " ..
@@ -186,14 +196,27 @@ function VehicleRepoJob:spawnVehicle()
     print('[repo] Displayed message to the player.')
 end
 
-function VehicleRepoJob:onUpdate()
-    if self.completed then
-        local playerPos = be:getPlayerVehicle(0):getPosition()
-        local vehicle = be:getObjectByID(self.vehicleId)
-        local vehiclePos = vehicle:getPosition()
-        if (vehiclePos - playerPos):length() > 10 then
+function VehicleRepoJob:onVehicleSwitched(oldId, newId)
+    if core_vehicles.getVehicleLicenseText(be:getObjectByID(newId)) == "repo" then
+        self.repoVehicle = be:getObjectByID(newId)
+        if not self.startedJob then
             self:destroy()
+            self:generateJob()
         end
+    end
+end
+
+function VehicleRepoJob:calculateReward()
+    print('[repo] calculateReward() called')
+    print('[repo] Total distance: ' .. tostring(self.totalDistance))
+    print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
+    print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
+    return math.floor(self.vehicleValue * 24) / 100
+end
+
+function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
+    if self.completed then
+        self:destroy()
         return
     end
 
@@ -213,14 +236,45 @@ function VehicleRepoJob:onUpdate()
     end
 
     local vehiclePos = vehicle:getPosition()
-    local distance = (vehiclePos - playerPos):length()
+    local repoPos = self.repoVehicle:getPosition()
+    local distance = (vehiclePos - repoPos):length()
+
+    if not self.startedJob then
+        if distance <= 20 then
+            self.startedJob = true
+            ui_message("Pick up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease drive it to " .. self.selectedDealership.name .. ".", 10, "info", "info")
+            vehicle:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
+            core_groundMarkers.setPath(self.deliverySpot.pos)
+        end
+    else
+        if distance > 100 then
+            if not self.countdown then
+                self.countdown = 15
+            else
+                ui_message("You have " .. math.floor(self.countdown) .. " seconds to return the  " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 1, "info", "info")
+                self.countdown = self.countdown - dtSim
+                if self.countdown <= 0 then
+                    self:destroy()
+                    return
+                end
+            end
+        else
+            if self.countdown then
+                ui_message("You have returned the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 3, "info", "info")
+                self.countdown = nil
+                local vehiclePos = vehicle:getPosition()
+                core_groundMarkers.setPath(vehiclePos)
+                self.startedJob = false
+            end
+        end
+    end
 
     if self.jobStartTime then
         local distanceFromDestination = (vehiclePos - self.deliverySpot.pos):length()
         local velocity = vehicle:getVelocity():length()
         if distanceFromDestination <= 2 and velocity <= 1 then
             --Reward should be a combination of Vehicle Value, Time Taken, and Distance Traveled.
-            local reward = math.floor(self.vehicleValue * 24) / 100
+            local reward = self:calculateReward()
             ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 10, "info", "info")
             career_modules_payment.reward({
                 money = {
@@ -237,6 +291,7 @@ function VehicleRepoJob:onUpdate()
                 tags = {"gameplay", "reward", "laborer"}
             })
             career_saveSystem.saveCurrent()
+            self.startedJob = false
             self.completed = true
             self.monitoring = false
             core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
@@ -247,14 +302,13 @@ function VehicleRepoJob:onUpdate()
 
     
     if self.jobStartTime and playerVehicle:getID() == self.vehicleId then
-        local distanceFromPickup = (vehiclePos - self.pickupSpot):length()
-        if distanceFromPickup > 25 then
+        if distance > 25 then
             vehicle:queueLuaCommand([[
             if electrics.values.ignition then
               electrics.setIgnitionLevel(0)
             end
           ]])
-            print('[repo] Vehicle moved more than 100 meters from pickup spot. Ignition turned off.')
+            print('[repo] Vehicle moved more than 25 meters from repo vehicle. Ignition turned off.')
         end
     end
 
@@ -263,6 +317,8 @@ function VehicleRepoJob:onUpdate()
         if velocity > 2 then
             self.jobStartTime = os.time()
             core_groundMarkers.setPath(self.deliverySpot.pos)
+            self.totalDistance = self.totalDistance + core_groundMarkers.getPathLength()
+            print('[repo] Total distance: ' .. tostring(self.totalDistance))
             print('[repo] Vehicle is moving. Path set to delivery spot.')
         end
     end
