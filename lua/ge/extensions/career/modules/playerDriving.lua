@@ -50,7 +50,7 @@ end
 -- RLS
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
-    if vehId and gameplay_traffic.getTrafficData()[vehId] then
+    if vehId and gameplay_traffic.getTrafficData()[vehId] and career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
         if role == 'police' then
             gameplay_traffic.setTrafficVars({
@@ -291,17 +291,24 @@ end
 
 local function onVehicleSwitched(oldId, newId)
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
+        setPlayerData(newId, oldId)
+        setTrafficVars()
         local vehicle = scenetree.findObjectById(newId)
         local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
         if licenseText and licenseText:lower() == "repo" then
             if repoJob then
-                repoJob:destroy()
+                if not repoJob.jobStartTime then
+                    repoJob:destroy()
+                    repoJob = repo.VehicleRepoJob.new()
+                    repoJob:generateJob()
+                end
+                return
+            else
+                repoJob = repo.VehicleRepoJob.new()
+                repoJob:generateJob()
             end
-            repoJob = repo.VehicleRepoJob.new()
-            repoJob:generateJob()
         end
-        setPlayerData(newId, oldId)
-        setTrafficVars()
+
         local playerIsCop = getPlayerIsCop()
         if playerIsCop then
             ui_message("You are now a cop", 5, "Police", "info")
