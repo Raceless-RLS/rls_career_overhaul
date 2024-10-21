@@ -1221,6 +1221,12 @@ local function getDirtiedVehicles()
   return dirtiedVehicles
 end
 
+local function getVehicleTimeToAccess(inventoryId)
+  return vehicles[inventoryId].timeToAccess
+end
+
+M.getVehicleTimeToAccess = getVehicleTimeToAccess
+
 M.addVehicle = addVehicle
 M.removeVehicle = removeVehicle
 M.enterVehicle = enterVehicle
