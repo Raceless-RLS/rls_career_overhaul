@@ -471,13 +471,13 @@ end
 -- TODO could even update once every time before removing a part
 local function updatePartConditionsInInventory()
   for partId, part in pairs(partInventory) do
-    if not career_modules_inventory.getVehicles()[part.location].partConditions then
-      local vehObj = be:getObjectByID(career_modules_inventory.getVehicleIdFromInventoryId(part.location))
-      core_vehicleBridge.executeAction(vehObj, 'initPartConditions', career_modules_inventory.getVehicles()[part.location].partConditions, 0, 1, 1)
+    if not career_modules_inventory.getVehicles()[part.location] then
+      goto continue
     end
     if career_modules_inventory.getVehicles()[part.location].partConditions[part.name] then
       part.partCondition = career_modules_inventory.getVehicles()[part.location].partConditions[part.name]
     end
+    ::continue::
   end
 end
 
