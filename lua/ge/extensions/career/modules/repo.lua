@@ -49,6 +49,9 @@ function VehicleRepoJob:new()
     instance.returnCountdown = nil
     instance.totalDistanceTraveled = 0
     instance.spawnedVehicle = false
+    if core_groundMarkers then
+        core_groundMarkers.resetAll()
+    end
     return instance
 end
 
@@ -74,6 +77,9 @@ function VehicleRepoJob:destroy()
     self.returnCountdown = nil
     self.totalDistanceTraveled = 0
     self.spawnedVehicle = false
+    if core_groundMarkers then
+        core_groundMarkers.resetAll()
+    end
 end
 
 -- Generate a new repo job
@@ -257,7 +263,10 @@ function VehicleRepoJob:calculateReward()
     print('[repo] Total distance: ' .. tostring(self.totalDistanceTraveled))
     print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
     print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
-    return math.floor(self.vehicleValue * 24) / 100
+    local distanceMultiplier = self.totalDistanceTraveled / 1500
+    local timeMultiplier = ((self.totalDistanceTraveled / (os.time() - self.jobStartTime - 30)) / 7)
+    local reward = math.floor((self.vehicleValue * 50) * distanceMultiplier * timeMultiplier) / 100
+    return reward
 end
 
 -- Update function called every frame
@@ -383,7 +392,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     if self.jobStartTime and playerVehicle:getID() == self.vehicleId then
-        if distance > 25 then
+        if distance > 50 then
             vehicle:queueLuaCommand([[
             if electrics.values.ignition then
               electrics.setIgnitionLevel(0)
@@ -392,7 +401,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         end
     end
 
-    if distance <= 25 and not self.jobStartTime then
+    if distance <= 15 and not self.jobStartTime then
         local velocity = vehicle:getVelocity():length()
         if velocity > 2 then
             self.jobStartTime = os.time()
