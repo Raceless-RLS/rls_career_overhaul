@@ -1743,10 +1743,6 @@ local function enableCheckpoint(checkpointIndex, alt)
             end
         end
     end
-    print("Index")
-    printTable(index)
-    print("ALT")
-    printTable(ALT)
     currentExpectedCheckpoint = index[1]
     print("Current expected checkpoint: " .. currentExpectedCheckpoint)
     local checkpoint = {}
@@ -1755,11 +1751,14 @@ local function enableCheckpoint(checkpointIndex, alt)
     else
         checkpoint = checkpoints[index[1]]
     end
-    local nextCheckpoint = {}
-    if ALT[2] then
-        nextCheckpoint = altCheckpoints[index[2]]
-    else
-        nextCheckpoint = checkpoints[index[2]]
+    local nextCheckpoint = nil
+    local checkpointCount = ALT[2] and #altCheckpoints or #checkpoints
+    if checkpointCount > 1 then
+        if ALT[2] then
+            nextCheckpoint = altCheckpoints[index[2]]
+        else
+            nextCheckpoint = checkpoints[index[2]]
+        end
     end
 
     if checkpoint then
@@ -1771,8 +1770,8 @@ local function enableCheckpoint(checkpointIndex, alt)
         else
             checkpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F() -- Blue
         end
-        if races[mActiveRace].altRoute and altCheckpoints and races[mActiveRace].altRoute.mergeCheckpoints[1] ==
-            index[1] then
+
+        if races[mActiveRace].altRoute and altCheckpoints and races[mActiveRace].altRoute.mergeCheckpoints[1] == index[1] then
             if not altCheckpoints[1].marker then
                 local altCheckpoint = createCheckpointMarker(1, true)
                 altCheckpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F() -- Blue
