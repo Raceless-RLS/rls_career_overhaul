@@ -239,14 +239,14 @@ local races = {
         type = {"motorsport"}
     },
     rally2 = {
-        bestTime = 80,
+        bestTime = 120,
         reward = 2000,
         checkpointRoad = "rally2",
         label = "Rally Stage 2",
         type = {"motorsport"}
     },
     rally3 = {
-        bestTime = 80,
+        bestTime = 185,
         reward = 2000,
         checkpointRoad = "rally3",
         label = "Rally Stage 3",
@@ -261,17 +261,17 @@ local races = {
     },
     rubberBand = {
         bestTime = 60,
-        reward = 3000,
+        reward = 2000,
         label = "Rubberband Ridge",
         checkpointRoad = "rubberBandMain",
-        hotlap = 50,
+        hotlap = 45,
         altRoute = {
             bestTime = 70,
-            reward = 3000,
+            reward = 2000,
             label = "Rubberband Ridge Joker",
             checkpointRoad = "rubberBandJoker",
             mergeCheckpoints = {6, 7},
-            hotlap = 60,
+            hotlap = 50,
             altInfo = "**Continue Right at the fork for the joker lap."
         },
         type = {"motorsport"}
