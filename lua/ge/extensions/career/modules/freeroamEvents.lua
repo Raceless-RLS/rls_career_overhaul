@@ -189,6 +189,79 @@ local races = {
         displaySpeed = true,
         type = {"motorsport"}
     },
+    rockClimbS = {
+        bestTime = 15,
+        reward = 2000,
+        checkpointRoad = "rockClimbS",
+        label = "Rock Crawl Short",
+        type = {"motorsport", "crawl"}
+    },
+    rockClimbL = {
+        bestTime = 20,
+        reward = 2000,
+        checkpointRoad = "rockClimbL",
+        label = "Rock Crawl Long",
+        type = {"motorsport", "crawl"}
+    },
+    mudDrag1 = {
+        bestTime = 9,
+        reward = 1500,
+        checkpointRoad = "mudDrag1",
+        label = "Mud Drag Easy",
+        type = {"motorsport"}
+    },
+    mudDrag2 = {
+        bestTime = 10,
+        reward = 3000,
+        checkpointRoad = "mudDrag2",
+        label = "Mud Drag Hard",
+        type = {"motorsport"}
+    },
+    koh1 = {
+        bestTime = 120,
+        reward = 3000,
+        checkpointRoad = "koh1",
+        label = "King of the Hammer 1",
+        type = {"motorsport"}
+    },
+    koh2 = {
+        bestTime = 180,
+        reward = 4000,
+        checkpointRoad = "koh2",
+        label = "King of the Hammer 2",
+        type = {"motorsport"}
+    },
+    rally1 = {
+        bestTime = 60,
+        reward = 2000,
+        checkpointRoad = "rally1",
+        label = "Rally Stage 1",
+        type = {"motorsport"}
+    },
+    rally2 = {
+        bestTime = 80,
+        reward = 2000,
+        checkpointRoad = "rally2",
+        label = "Rally Stage 2",
+        type = {"motorsport"}
+    },
+    rubberBand = {
+        bestTime = 60,
+        reward = 3000,
+        label = "Rubberband Ridge",
+        checkpointRoad = "rubberBandMain",
+        hotlap = 50,
+        altRoute = {
+            bestTime = 70,
+            reward = 3000,
+            label = "Rubberband Ridge Joker",
+            checkpointRoad = "rubberBandJoker",
+            mergeCheckpoints = {6, 7},
+            hotlap = 60,
+            altInfo = "**Continue Right at the fork for the joker lap."
+        },
+        type = {"motorsport"}
+    },
     track = {
         bestTime = 140,
         reward = 2500,
