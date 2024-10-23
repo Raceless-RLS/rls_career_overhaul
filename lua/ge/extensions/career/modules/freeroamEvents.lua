@@ -2148,7 +2148,7 @@ local function onBeamNGTrigger(data)
     elseif triggerType == "checkpoint" and checkpointIndex then
         if event == "enter" and mActiveRace == raceName then
             -- Ensure that the checkpoint is the expected one
-            if (checkpointIndex == currentExpectedCheckpoint) or (checkpointIndex == races[raceName].altRoute.mergeCheckpoints[1] and isAlt) then
+            if (checkpointIndex == currentExpectedCheckpoint) or (checkpointIndex == 1 and currentExpectedCheckpoint == races[raceName].altRoute.mergeCheckpoints[1] and isAlt) then
                 checkpointsHit = checkpointsHit + 1
                 currCheckpoint = checkpointIndex
                 mSplitTimes[checkpointsHit] = in_race_time
