@@ -265,7 +265,7 @@ function VehicleRepoJob:calculateReward()
     print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
     local distanceMultiplier = self.totalDistanceTraveled / 1500
     local timeMultiplier = ((self.totalDistanceTraveled / (os.time() - self.jobStartTime - 30)) / 7)
-    local reward = math.floor((self.vehicleValue * 50) * distanceMultiplier * timeMultiplier) / 100
+    local reward = math.floor((self.vehicleValue * 12) * distanceMultiplier * timeMultiplier) / 100
     return reward
 end
 
