@@ -1804,10 +1804,6 @@ local function enableCheckpoint(checkpointIndex, alt)
     else
         index = {index[1] + 1, index[2] + 1}
     end
-    print("Index")
-    printTable(index)
-    print("ALT")
-    printTable(ALT)
     for i = 1, 2 do
         if ALT[i] then
             if #altCheckpoints < index[i] then
@@ -1818,11 +1814,17 @@ local function enableCheckpoint(checkpointIndex, alt)
     end
     currentExpectedCheckpoint = index[1]
     print("Current expected checkpoint: " .. currentExpectedCheckpoint)
+    print("Index")
+    printTable(index)
+    print("ALT")
+    printTable(ALT)
     local checkpoint = {}
     if ALT[1] then
         checkpoint = altCheckpoints[index[1]]
+        currentExpectedCheckpoint = ALT[1]
     else
         checkpoint = checkpoints[index[1]]
+        currentExpectedCheckpoint = index[1]
     end
     local nextCheckpoint = nil
     local checkpointCount = ALT[2] and #altCheckpoints or #checkpoints
@@ -2164,6 +2166,10 @@ local function onBeamNGTrigger(data)
                 removeCheckpointMarker(checkpointIndex, isAlt)
 
                 -- Prepare the next checkpoint
+                if isAlt then
+                    currentExpectedCheckpoint = checkpointIndex
+                end
+
                 enableCheckpoint(currentExpectedCheckpoint, isAlt)
                 if isAlt and not mAltRoute then
                     mAltRoute = true
