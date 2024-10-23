@@ -99,17 +99,17 @@ local races = {
         type = {"motorsport"}
     },
     roadOval = {
-        bestTime = 22,
+        bestTime = 25,
         reward = 500,
-        hotlap = 20,
+        hotlap = 22,
         checkpointRoad = "roadOval",
         label = "Paved Oval",
         type = {"motorsport"}
     },
     dirtOval = {
-        bestTime = 22,
+        bestTime = 25,
         reward = 500,
-        hotlap = 20,
+        hotlap = 22,
         checkpointRoad = "dirtOval",
         label = "Dirt Oval",
         type = {"motorsport"}
@@ -175,15 +175,15 @@ local races = {
     },
     islandTouge = {
         bestTime = 25,
-        reward = 1500,
+        reward = 3000,
         driftGoal = 3500,
         checkpointRoad = "islandTouge",
         label = "Island Touge Drift",
         type = {"motorsport", "drift"}
     },
     dragHighway = {
-        bestTime = 16,
-        reward = 1500,
+        bestTime = 17,
+        reward = 1700,
         checkpointRoad = "dragHighway",
         label = "No Prep Highway Drag",
         displaySpeed = true,
@@ -191,14 +191,14 @@ local races = {
     },
     rockClimbS = {
         bestTime = 15,
-        reward = 2000,
+        reward = 2500,
         checkpointRoad = "rockClimbS",
         label = "Rock Crawl Short",
         type = {"motorsport", "crawl"}
     },
     rockClimbL = {
         bestTime = 20,
-        reward = 2000,
+        reward = 2500,
         checkpointRoad = "rockClimbL",
         label = "Rock Crawl Long",
         type = {"motorsport", "crawl"}
@@ -219,14 +219,14 @@ local races = {
     },
     koh1 = {
         bestTime = 120,
-        reward = 3000,
+        reward = 5000,
         checkpointRoad = "koh1",
         label = "King of the Hammer 1",
         type = {"motorsport"}
     },
     koh2 = {
         bestTime = 180,
-        reward = 4000,
+        reward = 6000,
         checkpointRoad = "koh2",
         label = "King of the Hammer 2",
         type = {"motorsport"}
@@ -240,14 +240,14 @@ local races = {
     },
     rally2 = {
         bestTime = 120,
-        reward = 2000,
+        reward = 2500,
         checkpointRoad = "rally2",
         label = "Rally Stage 2",
         type = {"motorsport"}
     },
     rally3 = {
         bestTime = 185,
-        reward = 2000,
+        reward = 3000,
         checkpointRoad = "rally3",
         label = "Rally Stage 3",
         type = {"motorsport"}
@@ -261,13 +261,13 @@ local races = {
     },
     rubberBand = {
         bestTime = 60,
-        reward = 2000,
+        reward = 2500,
         label = "Rubberband Ridge",
         checkpointRoad = "rubberBandMain",
         hotlap = 45,
         altRoute = {
             bestTime = 70,
-            reward = 2000,
+            reward = 2500,
             label = "Rubberband Ridge Joker",
             checkpointRoad = "rubberBandJoker",
             mergeCheckpoints = {6, 7},
@@ -300,13 +300,6 @@ local races = {
         hotlap = 55,
         label = "Dirt Circuit",
         type = {"motorsport", "apexRacing"}
-    },
-    commRally = {
-        bestTime = 90,
-        reward = 2000,
-        checkpointRoad = "commRally",
-        label = "Commercial Rally",
-        type = {"motorsport"}
     },
     testTrack = {
         bestTime = 5.5,
