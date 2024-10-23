@@ -1342,34 +1342,52 @@ local function processRoadNodes(mainNodes, altNodes)
         local function addCheckpoint(startIndex, endIndex, type, direction)
             local apexIndex = findApex(nodes, startIndex, endIndex)
             local roadWidth = 20
-
+        
+            -- Function to check if position already exists in checkpoints
+            local function isDuplicatePosition(newPos)
+                for _, checkpoint in ipairs(checkpoints) do
+                    if checkpoint.pos.x == newPos.x and checkpoint.pos.y == newPos.y and checkpoint.pos.z == newPos.z then
+                        print("Duplicate checkpoint position found, skipping...")
+                        return true
+                    end
+                end
+                return false
+            end
+        
+            -- Check for existing checkpoints with same direction
             if #checkpoints > 0 then
                 local lastCheckpoint = checkpoints[#checkpoints]
                 if lastCheckpoint.direction == direction then
                     local distance = calculateDistance(nodes[lastCheckpoint.index], nodes[apexIndex])
                     if distance < MIN_CHECKPOINT_DISTANCE then
                         if calculateCurvature(nodes, apexIndex) > calculateCurvature(nodes, lastCheckpoint.index) then
-                            checkpoints[#checkpoints] = {
-                                pos = nodes[apexIndex],
-                                type = type,
-                                index = apexIndex,
-                                direction = direction
-                            }
+                            -- Check if new position is duplicate before updating
+                            if not isDuplicatePosition(nodes[apexIndex]) then
+                                checkpoints[#checkpoints] = {
+                                    pos = nodes[apexIndex],
+                                    type = type,
+                                    index = apexIndex,
+                                    direction = direction
+                                }
+                            end
                         end
                         return
                     end
                 end
             end
-
-            table.insert(checkpoints, {
-                pos = nodes[apexIndex],
-                type = type,
-                index = apexIndex,
-                direction = direction,
-                width = roadWidth
-            })
-            print((isAlt and "Alt " or "") .. "Checkpoint added: Type: " .. type .. ", Index: " .. apexIndex ..
-                      ", Direction: " .. direction .. ", Width: " .. roadWidth)
+        
+            -- Check if new position is duplicate before inserting
+            if not isDuplicatePosition(nodes[apexIndex]) then
+                table.insert(checkpoints, {
+                    pos = nodes[apexIndex],
+                    type = type,
+                    index = apexIndex,
+                    direction = direction,
+                    width = roadWidth
+                })
+                print((isAlt and "Alt " or "") .. "Checkpoint added: Type: " .. type .. ", Index: " .. apexIndex ..
+                          ", Direction: " .. direction .. ", Width: " .. roadWidth)
+            end
         end
 
         local function finishSegment(endIndex)
