@@ -259,8 +259,8 @@ local function onPursuitAction(vehId, data)
             end
             -- core_recoveryPrompt.setDefaultsForCareer()
             log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
-            resetPursuit()
         end
+        resetPursuit()
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
             local bonus = math.floor(120 * data.score) / 100

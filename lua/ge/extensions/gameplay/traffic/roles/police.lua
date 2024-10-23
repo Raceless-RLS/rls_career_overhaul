@@ -5,7 +5,7 @@ local C = {}
 
 function C:init()
     self.class = 'emergency'
-    self.keepActionOnRefresh = true
+    self.keepActionOnRefresh = false
     self.personalityModifiers = {
         aggression = {
             median = 0.2
@@ -123,6 +123,7 @@ function C:onRefresh()
     self.preventPullOver = nil
 
     if self.flags.reset then
+        self:setAction('pursuitEnd')
         self:resetAction()
     end
 
@@ -142,6 +143,7 @@ function C:onRefresh()
         self.veh:modifyRespawnValues(750 - self.targetPursuitMode * 150, 50, dirBias)
     else
         if self.flags.pursuit then
+            self:setAction('pursuitEnd')
             self:resetAction()
         end
     end
@@ -226,6 +228,7 @@ function C:onUpdate(dt, dtSim)
 
     local targetVeh = self.targetId and gameplay_traffic.getTrafficData()[self.targetId]
     if not targetVeh or (targetVeh and not targetVeh.role.flags.flee) then
+        self:setAction('pursuitEnd')
         self:resetAction()
         return
     end

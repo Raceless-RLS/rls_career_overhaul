@@ -1043,6 +1043,12 @@ local function getVehicles()
   return vehicles
 end
 
+local function getVehicleTimeToAccess(inventoryId)
+  return vehicles[inventoryId].timeToAccess
+end
+
+M.getVehicleTimeToAccess = getVehicleTimeToAccess
+
 local function sellVehicle(inventoryId)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
@@ -1220,12 +1226,6 @@ end
 local function getDirtiedVehicles()
   return dirtiedVehicles
 end
-
-local function getVehicleTimeToAccess(inventoryId)
-  return vehicles[inventoryId].timeToAccess
-end
-
-M.getVehicleTimeToAccess = getVehicleTimeToAccess
 
 M.addVehicle = addVehicle
 M.removeVehicle = removeVehicle

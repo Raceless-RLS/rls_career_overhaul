@@ -672,24 +672,15 @@ end
 
 local function onPursuitAction(id, pursuitData)
     local playerVehicleId = be:getPlayerVehicleID(0)
-    print("playerVehicleId: " .. tostring(playerVehicleId))
-    print("onPursuitAction called with id: " .. tostring(id) .. " and pursuitData:\n")
-    printTable(pursuitData)
 
     if id == playerVehicleId then
-        print("id == playerVehicleId")
         if pursuitData.type == "start" then
             playerInPursuit = true
-            print("Player entered pursuit state")
         elseif pursuitData.type == "evade" or pursuitData.type == "reset" then
             playerInPursuit = false
-            print("Player exited pursuit state")
         elseif pursuitData.type == "arrest" then
             playerInPursuit = false
-            print("Player arrested, exiting pursuit state")
         end
-    else
-        print("id ~= playerVehicleId")
     end
 end
 

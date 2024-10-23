@@ -276,14 +276,18 @@ local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1
 
     for id, veh in pairs(policeVehs) do
         if veh.role.state ~= 'disabled' and (not policeId or id == policeId) then
+            print("veh.role.targetId: " .. tostring(veh.role.targetId))
+            print("policeId: " .. tostring(id))
+            print("police veh: " .. tostring(veh))
+            print("Mode: " .. tostring(mode))
             if mode == -1 then -- player is busted
-                if veh.role.targetId == targetId then
+                if not veh.role.targetId or veh.role.targetId == targetId then
                     veh.role:setAction('pursuitEnd')
                 end
             elseif mode == 0 then
-                if veh.role.targetId == targetId then
+                if not veh.role.targetId or veh.role.targetId == targetId then
+                    veh.role:setAction('pursuitEnd')
                     veh.role:resetAction()
-                    
                 end
             elseif mode >= 1 then
                 veh.role:setTarget(targetId)
@@ -376,7 +380,7 @@ local function evadeVehicle(id, showMessages) -- instantly sets a vehicle as eva
     local tempData = deepcopy(veh.pursuit)
     tempData.type = 'evade'
     extensions.hook('onPursuitAction', id, tempData)
-    setPursuitMode(-1, id)
+    setPursuitMode(0, id)
 end
 
 local function releaseVehicle(id, showMessages) -- unfreezes controls and lets a vehicle continue after an arrest

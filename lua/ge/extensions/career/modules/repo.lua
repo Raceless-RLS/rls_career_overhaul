@@ -8,7 +8,7 @@ local M = {}
 M.dependencies = {
     'career_career', 'util_configListGenerator', 'gameplay_parking', 
     'freeroam_facilities', 'gameplay_sites_sitesManager', 
-    'gameplay_walk', 'core_groundMarkers', 'career_modules_valueCalculator'
+    'gameplay_walk', 'core_groundMarkers', 'career_modules_valueCalculator', 'career_vehicleDeletionService'
 }
 
 -- Require necessary modules
@@ -17,6 +17,7 @@ local parking = require('gameplay.parking')
 local freeroam_facilities = require('freeroam.facilities')
 local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
 local valueCalculator = require('career.modules.valueCalculator')
+local vehicleDeletionService = require('career.modules.vehicleDeletionService')
 local marker
 
 
@@ -58,10 +59,7 @@ end
 -- Destroy the current job and clean up resources
 function VehicleRepoJob:destroy()
     if self.vehicleId then
-        local vehicle = be:getObjectByID(self.vehicleId)
-        if vehicle then
-            vehicle:delete()
-        end
+        vehicleDeletionService.flagForDeletion(self.vehicleId)
     end
 
     -- Reset all job-related data
@@ -265,7 +263,7 @@ function VehicleRepoJob:calculateReward()
     print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
     local distanceMultiplier = self.totalDistanceTraveled / 1500
     local timeMultiplier = ((self.totalDistanceTraveled / (os.time() - self.jobStartTime - 30)) / 7)
-    local reward = math.floor((self.vehicleValue * 12) * distanceMultiplier * timeMultiplier) / 100
+    local reward = math.floor((self.vehicleValue * 20) * distanceMultiplier * timeMultiplier) / 100
     return reward
 end
 
@@ -376,7 +374,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             career_modules_payment.reward({
                 money = { amount = reward },
                 beamXP = { amount = math.floor(reward / 20) },
-                laborer = { amount = math.floor(reward / 20) }
+                labourer = { amount = math.floor(reward / 20) }
             }, {
                 label = "You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. reward,
                 tags = {"gameplay", "reward", "laborer"}
