@@ -51,6 +51,11 @@ end
 local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
     if vehId and gameplay_traffic.getTrafficData()[vehId] and career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
+        local vehicle = scenetree.findObjectById(vehId)
+        local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
+        if licenseText and licenseText:lower() == "repo" then
+            return false
+        end
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
         if role == 'police' then
             gameplay_traffic.setTrafficVars({
