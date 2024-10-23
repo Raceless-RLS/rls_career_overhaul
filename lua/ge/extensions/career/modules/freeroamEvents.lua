@@ -1819,13 +1819,7 @@ local function enableCheckpoint(checkpointIndex, alt)
     print("ALT")
     printTable(ALT)
     local checkpoint = {}
-    if ALT[1] then
-        checkpoint = altCheckpoints[index[1]]
-        currentExpectedCheckpoint = ALT[1]
-    else
-        checkpoint = checkpoints[index[1]]
-        currentExpectedCheckpoint = index[1]
-    end
+    checkpoint = altCheckpoints[index[1]]
     local nextCheckpoint = nil
     local checkpointCount = ALT[2] and #altCheckpoints or #checkpoints
     if checkpointCount > 1 then
