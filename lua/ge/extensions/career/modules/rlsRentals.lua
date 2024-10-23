@@ -65,6 +65,7 @@ local function startRental()
     local inventoryId = career_modules_inventory.getCurrentVehicle()
     print("inventory id" .. inventoryId or "none")
     career_modules_inventory.delayVehicleAccess(inventoryId, rentalTime, "rented")
+    career_saveSystem.saveCurrent()
     --  extensions.core_vehicles.spawnNewVehicle("unicycle", {removeTraffic = false})
     local reward = rentalReward()
     career_modules_payment.reward({
