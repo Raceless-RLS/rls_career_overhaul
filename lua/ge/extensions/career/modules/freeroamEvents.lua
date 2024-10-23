@@ -232,7 +232,7 @@ local races = {
         type = {"motorsport"}
     },
     rally1 = {
-        bestTime = 60,
+        bestTime = 70,
         reward = 2000,
         checkpointRoad = "rally1",
         label = "Rally Stage 1",
@@ -243,6 +243,20 @@ local races = {
         reward = 2000,
         checkpointRoad = "rally2",
         label = "Rally Stage 2",
+        type = {"motorsport"}
+    },
+    rally3 = {
+        bestTime = 80,
+        reward = 2000,
+        checkpointRoad = "rally3",
+        label = "Rally Stage 3",
+        type = {"motorsport"}
+    },
+    rally4 = {
+        bestTime = 90,
+        reward = 2000,
+        checkpointRoad = "rally4",
+        label = "Rally Stage 4 - Final",
         type = {"motorsport"}
     },
     rubberBand = {
