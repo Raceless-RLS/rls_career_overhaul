@@ -42,9 +42,9 @@ local function printTable(t, indent)
 end
 
 local function rentalReward()
-    local reward = math.floor((vehicleValue * 0.05) * (rentalTime / (30 * 90)))
-    ui_message("vehicle rented for: " .. rentalTime / 60 .. " minutes for total of " .. reward .. "!", 10, "info", "info")
-    print("vehicle rented for: " .. rentalTime /60 .. " minutes for total of " .. reward .. "!")
+    local reward = math.floor((vehicleValue * 0.25) * (rentalTime / 480))
+    ui_message("vehicle rented for: " .. rentalTime .. " minutes for total of " .. reward .. "!", 10, "info", "info")
+    print("vehicle rented for: " .. rentalTime .. " minutes for total of " .. reward .. "!")
     return reward
 end
 
@@ -110,7 +110,7 @@ local function onBeamNGTrigger(data)
         if value and value > 100000 then
             local studioStage
             local message
-            rentalTime = math.random(30, 180) * 60
+            rentalTime = math.random(60, 480)
             vehicleValue = value
             for index, value in ipairs(availableStudios) do
                 if value == true then
@@ -128,7 +128,7 @@ local function onBeamNGTrigger(data)
                 trigger:setHidden(false)
                 core_groundMarkers.setPath(trigger:getPosition())
             end
-            message = "Lens Flare Studios will rent your vehicle for " .. rentalTime / 60 .. " minutes, paying you " ..
+            message = "Lens Flare Studios will rent your vehicle for " .. rentalTime .. " minutes, paying you " ..
                           formatMoney(rentalReward()) .. ". proceed to "
             ui_message(message, 10, "info", "info")
             print(message)
