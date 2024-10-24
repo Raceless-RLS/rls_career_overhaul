@@ -42,7 +42,7 @@ local function printTable(t, indent)
 end
 
 local function rentalReward()
-    local reward = math.floor((vehicleValue * 0.05) * (rentalTime / (30 * 60)))
+    local reward = math.floor((vehicleValue * 0.05) * (rentalTime / (30 * 90)))
     ui_message("vehicle rented for: " .. rentalTime / 60 .. " minutes for total of " .. reward .. "!", 10, "info", "info")
     print("vehicle rented for: " .. rentalTime /60 .. " minutes for total of " .. reward .. "!")
     return reward
@@ -110,7 +110,7 @@ local function onBeamNGTrigger(data)
         if value and value > 100000 then
             local studioStage
             local message
-            rentalTime = math.random(15, 60) * 60
+            rentalTime = math.random(30, 180) * 60
             vehicleValue = value
             for index, value in ipairs(availableStudios) do
                 if value == true then
