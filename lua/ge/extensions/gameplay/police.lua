@@ -276,10 +276,6 @@ local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1
 
     for id, veh in pairs(policeVehs) do
         if veh.role.state ~= 'disabled' and (not policeId or id == policeId) then
-            print("veh.role.targetId: " .. tostring(veh.role.targetId))
-            print("policeId: " .. tostring(id))
-            print("police veh: " .. tostring(veh))
-            print("Mode: " .. tostring(mode))
             if mode == -1 then -- player is busted
                 if not veh.role.targetId or veh.role.targetId == targetId then
                     veh.role:setAction('pursuitEnd')

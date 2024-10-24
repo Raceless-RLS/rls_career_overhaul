@@ -25,10 +25,11 @@ local function createMarker(position)
     if not marker then
         marker = createObject('TSStatic')
         marker.shapeName = "art/shapes/interface/checkpoint_marker.dae"
-        marker.scale = vec3(2, 2, 2)
+        marker.scale = vec3(4, 4, 4)
         marker.useInstanceRenderData = true
-        marker.instanceColor = ColorF(0, 1, 0, 0.5):asLinear4F()
+        marker.instanceColor = ColorF(0, 0.8, 0.2, 0.7):asLinear4F() 
         marker:setPosition(position)
+        marker:registerObject("repo_delivery_marker")
     end
 end
 
@@ -63,6 +64,13 @@ function VehicleRepoJob:destroy()
         if vehicle then
             vehicle:delete()
         end
+    end
+
+    -- Add marker cleanup
+    if marker then
+        marker:unregisterObject()
+        marker:delete()
+        marker = nil
     end
 
     -- Reset all job-related data
@@ -209,7 +217,7 @@ function VehicleRepoJob:generateVehicleConfig()
 
     self.vehicleValue = valueCalculator.getAdjustedVehicleBaseValue(self.randomVehicleInfo.Value, {
         mileage = self.randomVehicleInfo.Mileage,
-        age = 2023 - self.randomVehicleInfo.year
+        age = 2025 - self.randomVehicleInfo.year
     })
 end
 
@@ -264,14 +272,17 @@ function VehicleRepoJob:calculateReward()
     print('[repo] Total distance: ' .. tostring(self.totalDistanceTraveled))
     print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
     print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
-    local distanceMultiplier = self.totalDistanceTraveled / 1500
-    local timeMultiplier = ((self.totalDistanceTraveled / (os.time() - self.jobStartTime - 30)) / 7)
-    local reward = math.floor((self.vehicleValue * 20) * distanceMultiplier * timeMultiplier) / 100
+    local distanceMultiplier = self.totalDistanceTraveled / 3500
+    local timeMultiplier = ((self.totalDistanceTraveled / (os.time() - self.jobStartTime - 30)) / 12.5)
+    local reward = math.floor((self.vehicleValue * 7) * distanceMultiplier * timeMultiplier) / 100
     return reward
 end
 
 -- Update function called every frame
 function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
+        if not self.vehicleId and self.isCompleted then
+        return
+    end
     if self.jobCoroutine and coroutine.status(self.jobCoroutine) ~= "dead" then
         local success, message = coroutine.resume(self.jobCoroutine)
         if not success then
@@ -373,7 +384,13 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if distanceFromDestination <= 2 and velocity <= 1 then
             local reward = self:calculateReward()
             ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")
-            marker:delete()
+            
+            -- Add safety check for marker
+            if marker then
+                marker:delete()
+                marker = nil
+            end
+            
             career_modules_payment.reward({
                 money = { amount = reward },
                 beamXP = { amount = math.floor(reward / 20) },
@@ -386,7 +403,12 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             self.isJobStarted = false
             self.isCompleted = true
             self.isMonitoring = false
-            core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
+            
+            -- Add safety check for vehicle
+            local vehicle = be:getObjectByID(self.vehicleId)
+            if vehicle then
+                core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
+            end
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
         end
