@@ -204,7 +204,7 @@ local races = {
         type = {"motorsport", "crawl"}
     },
     mudDrag1 = {
-        bestTime = 9,
+        bestTime = 8,
         reward = 1500,
         checkpointRoad = "mudDrag1",
         label = "Mud Drag Easy",
@@ -219,14 +219,14 @@ local races = {
     },
     koh1 = {
         bestTime = 120,
-        reward = 5000,
+        reward = 4000,
         checkpointRoad = "koh1",
         label = "King of the Hammer 1",
         type = {"motorsport"}
     },
     koh2 = {
         bestTime = 180,
-        reward = 6000,
+        reward = 5000,
         checkpointRoad = "koh2",
         label = "King of the Hammer 2",
         type = {"motorsport"}
