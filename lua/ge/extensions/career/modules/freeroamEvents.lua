@@ -1279,7 +1279,7 @@ local function calculateDistance(node1, node2)
 end
 
 local function hasFinishTrigger(race)
-    return scenetree.findObject("fre_finish_" .. race.name) ~= nil
+    return scenetree.findObject("fre_finish_" .. race) ~= nil
 end
 
 
@@ -2090,7 +2090,7 @@ local function onBeamNGTrigger(data)
             end
         end
     elseif triggerType == "start" then
-        if event == "enter" and mActiveRace == raceName and not hasFinishTrigger(races[raceName]) then
+        if event == "enter" and mActiveRace == raceName and not hasFinishTrigger(raceName) then
             if not currCheckpoint or currCheckpoint ~= totalCheckpoints then
                 -- Player hasn't completed all checkpoints yet
                 displayMessage("You have not completed all checkpoints!", 5)

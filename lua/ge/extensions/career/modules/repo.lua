@@ -59,7 +59,10 @@ end
 -- Destroy the current job and clean up resources
 function VehicleRepoJob:destroy()
     if self.vehicleId then
-        vehicleDeletionService.flagForDeletion(self.vehicleId)
+        local vehicle = be:getObjectByID(self.vehicleId)
+        if vehicle then
+            vehicle:delete()
+        end
     end
 
     -- Reset all job-related data

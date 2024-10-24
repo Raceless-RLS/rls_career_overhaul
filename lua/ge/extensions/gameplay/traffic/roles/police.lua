@@ -123,7 +123,6 @@ function C:onRefresh()
     self.preventPullOver = nil
 
     if self.flags.reset then
-        self:setAction('pursuitEnd')
         self:resetAction()
     end
 
@@ -228,7 +227,6 @@ function C:onUpdate(dt, dtSim)
 
     local targetVeh = self.targetId and gameplay_traffic.getTrafficData()[self.targetId]
     if not targetVeh or (targetVeh and not targetVeh.role.flags.flee) then
-        self:setAction('pursuitEnd')
         self:resetAction()
         return
     end

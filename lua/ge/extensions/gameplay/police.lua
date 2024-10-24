@@ -286,7 +286,6 @@ local function setPursuitMode(mode, targetId, policeId) -- sets pursuit mode; -1
                 end
             elseif mode == 0 then
                 if not veh.role.targetId or veh.role.targetId == targetId then
-                    veh.role:setAction('pursuitEnd')
                     veh.role:resetAction()
                 end
             elseif mode >= 1 then
