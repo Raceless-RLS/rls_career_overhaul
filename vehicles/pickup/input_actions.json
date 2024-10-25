@@ -1,54 +1,117 @@
 {
-    "boom1_up": {
+    // Actions from the first file
+    "toggle_doors": {
         "order": 1,
+        "onDown": "electrics.values.doorR = 1-(electrics.values.doorR or 0); electrics.values.doorL = electrics.values.doorR; electrics.values.tailgate = 1-(electrics.values.tailgate or 0)",
+        "title": "ui.inputActions.van.toggle_doors.title",
+        "desc": "ui.inputActions.van.toggle_doors.description"
+    },
+    "toggle_doorL": {
+        "order": 2,
+        "onDown": "electrics.values.doorL = 1-(electrics.values.doorL or 0)",
+        "title": "ui.inputActions.van.toggle_doorL.title",
+        "desc": "ui.inputActions.van.toggle_doorL.description"
+    },
+    "toggle_doorR": {
+        "order": 3,
+        "onDown": "electrics.values.doorR = 1-(electrics.values.doorR or 0)",
+        "title": "ui.inputActions.van.toggle_doorR.title",
+        "desc": "ui.inputActions.van.toggle_doorR.description"
+    },
+    "tiltUp": {
+        "order": 4,
+        "onChange": "custom_input.tiltBed(0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.tiltUp.title",
+        "desc": "ui.inputActions.pickup.tiltUp.description"
+    },
+    "tiltDown": {
+        "order": 5,
+        "onChange": "custom_input.tiltBed(-0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.tiltDown.title",
+        "desc": "ui.inputActions.pickup.tiltDown.description"
+    },
+    "extend": {
+        "order": 6,
+        "onChange": "custom_input.extendBed(0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.extend.title",
+        "desc": "ui.inputActions.pickup.extend.description"
+    },
+    "retract": {
+        "order": 7,
+        "onChange": "custom_input.extendBed(-0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.retract.title",
+        "desc": "ui.inputActions.pickup.retract.description"
+    },
+    "extendFeet": {
+        "order": 8,
+        "onChange": "custom_input.extendFeet(0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.extendFeet.title",
+        "desc": "ui.inputActions.pickup.extendFeet.description"
+    },
+    "retractFeet": {
+        "order": 9,
+        "onChange": "custom_input.extendFeet(-0.5 * VALUE)",
+        "title": "ui.inputActions.pickup.retractFeet.title",
+        "desc": "ui.inputActions.pickup.retractFeet.description"
+    },
+    "toggle_jato": {
+        "order": 30,
+        "onDown": "electrics.values.jatoInput = 1 - (electrics.values.jatoInput or 0)",
+        "title": "ui.inputActions.citybus.toggle_jato.title",
+        "desc": "ui.inputActions.citybus.toggle_jato.description"
+    },
+
+    // Actions from the second file
+    "boom1_up": {
+        "order": 31,
         "onChange": "custom_input.liftboom1(1 * VALUE)",
         "title": "Tilt Up",
         "desc": "Tilt the boom up"
     },
     "boom1_dn": {
-        "order": 2,
+        "order": 32,
         "onChange": "custom_input.liftboom1(-1 * VALUE)",
         "title": "Tilt Down",
         "desc": "Tilt the boom down"
     },
     "boom2_up": {
-        "order": 3,
+        "order": 33,
         "onChange": "custom_input.liftboom2(-1 * VALUE)",
         "title": "Fold",
         "desc": "Fold the boom"
     },
     "boom2_dn": {
-        "order": 4,
+        "order": 34,
         "onChange": "custom_input.liftboom2(1 * VALUE)",
         "title": "Unfold",
         "desc": "Unfold the boom"
     },
     "tele_out": {
-        "order": 5,
+        "order": 35,
         "onChange": "custom_input.tele_trger(1 * VALUE)",
         "title": "Boom Out",
         "desc": "Extend the boom out"
     },
     "tele_in": {
-        "order": 6,
+        "order": 36,
         "onChange": "custom_input.tele_trger(-1 * VALUE)",
         "title": "Boom In",
         "desc": "Retract the boom"
     },
     "hr": {
-        "order": 7,
+        "order": 37,
         "onChange": "custom_input.hand_out(1 * VALUE)",
         "title": "Turn Right",
         "desc": "Turn the hand right"
     },
     "hl": {
-        "order": 8,
+        "order": 38,
         "onChange": "custom_input.hand_out(-1 * VALUE)",
         "title": "Turn Left",
         "desc": "Turn the hand left"
     },
     "oc": {
-        "order": 9,
+        "order": 39,
         "onDown": "electrics.values.fingh = 1 - (electrics.values.fingh or -1)",
         "title": "Open/Close",
         "desc": "Toggle open/close"
