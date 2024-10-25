@@ -24,11 +24,12 @@ local isParked
 local function getHrMin(seconds)
     local minutes = math.floor(seconds / 60)
     local hours = math.floor(minutes / 60)
+    minutes = minutes - (hours * 60)
     return hours .. " hours and " .. minutes .. " minutes"
 end
 
 local function rentalReward()
-    local reward = math.floor((vehicleValue * 0.25) * (rentalTime / 480))
+    local reward = math.floor((vehicleValue * 0.25) * (rentalTime / (480 * 60))
     return reward
 end
 
