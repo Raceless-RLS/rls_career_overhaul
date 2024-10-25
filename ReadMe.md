@@ -1,4 +1,4 @@
-# RLS Career Overhaul v2.1.2 (0.33.3)
+# RLS Career Overhaul v2.1.3 (0.33.3)
 
 Welcome to the **RLS Career Overhaul** mod for BeamNG.drive! This mod enhances various aspects of the game, including freeroam events, police interactions, the economy, deliveries, insurance, garage space, and dealerships. Dive into a more immersive and challenging career mode enriched with new features and improvements.
 
@@ -14,6 +14,9 @@ Welcome to the **RLS Career Overhaul** mod for BeamNG.drive! This mod enhances v
     - [Rally Events](#rally-events)
     - [Circuit Events](#circuit-events)
     - [Drift Events](#drift-events)
+    - [Rock Crawl Events](#rock-crawl-events)
+  - [Vehicle Rental](#vehicle-rental)
+  - [Freeroam Repo Missions](#freeroam-repo-missions)
   - [Police](#police)
   - [Economy](#economy)
   - [Deliveries](#deliveries)
@@ -85,7 +88,43 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Target Time**: **11 seconds**
     - **Reward**: **$1,000**
 
+- **Shallow Mud Drag**:
+  - **Description**: A high-speed drag race along the mud track. Test your vehicle's capabilties in the shallow mud.
+  - **Requirements**:
+    - **Target Time**: **8 seconds**
+    - **Reward**: **$1,500**
+
+- **Deep Mud Drag**:
+    - **Description**: A high-speed drag race along the mud track. Test your vehicle's capabilties in the deep mud. Can you make it through?
+  - **Requirements**:
+    - **Target Time**: **10 seconds**
+    - **Reward**: **$3,00**
+
 #### Rally Events
+
+- **Rally Event #1**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **70 seconds**
+    - **Reward**: **$2,000**
+
+- **Rally Event #2**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **120 seconds**
+    - **Reward**: **$2,500**
+
+- **Rally Event #3**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **185 seconds**
+    - **Reward**: **$3,000**
+
+- **Rally Event #4**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **90 seconds**
+    - **Reward**: **$2,000**
 
 - **Commercial Rally**:
   - **Description**: Navigate through commercial areas in a timed rally event. Sharp turns and urban obstacles await.
@@ -135,6 +174,28 @@ Experience an array of new racing events designed to challenge and entertain you
       - **Target Time**: **110 seconds**
       - **Reward**: **$2,000**
 
+- **Rubberband Ridge**:
+  - **Description**: A challenging circuit with elevation changes and tight corners.
+  - **Requirements**:
+    - **Standard Lap**:
+      - **Target Time**: **60 seconds**
+      - **Reward**: **$2,500**
+    - **Joker Lap**:
+      - **Target Time**: **70 seconds**
+      - **Reward**: **$2,500**
+
+- **King of the Hammer #1**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **120 seconds**
+    - **Reward**: **$4,000**
+
+- **King of the Hammer #2**:
+  - **Description**: A timed rally event with a mix of dirt and paved roads.
+  - **Requirements**:
+    - **Target Time**: **180 seconds**
+    - **Reward**: **$5,000**
+
 #### Drift Events
 
 - **Hotrolled Drift**:
@@ -158,7 +219,42 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Drift Score**: **3,500**
     - **Reward**: **$1,500**
 
+#### Rock Crawl Events
+
+- Rock crawls have been added a part of the west coat adjustments and additions to the map we added.
+
+- **Small Rock Crawl**:
+  - **Description**: A timed rock crawl event with a mix of dirt and rocks.
+  - **Requirements**:
+    - **Target Time**: **15 seconds**
+    - **Reward**: **$2,500**
+
+- **Large Rock Crawl**:
+  - **Description**: A timed rock crawl event with a mix of dirt and rocks. 
+  - **Requirements**:
+    - **Target Time**: **20 seconds**
+    - **Reward**: **$2,500**
+
 ---
+
+### Vehicle Rental
+
+- **Movie Rental**:
+  - Lens Flare Studio will pay you for renting your vehicle to them.
+  - **Requirements**:
+    - **Vehicle**: Any vehicle valued over $100,000
+    - **Location**: Lens Flare Studio (Next to Residential Area)
+    - **Time**: 1 - 8 hours
+    - **Reward**: Variable based on the vehicle value and time rented.
+
+### Freeroam Repo Missions
+
+- **Purchase Vehicle**: Purchase a vehicle that is capable of towing a vehicle. (Tilt Decks work great)
+- **Assign Towing Vehicle**: Set the license plate of the towing vehicle to "repo"
+- **Start Event**: Enter the vehicle you will have a repo mission show up after a couple of seconds. You can reroll the mission by getting out and getting back in.
+- **Pick Up Vehicle**: Drive to the vehicle to repo and pick it up. If you decide you dont want to pick it up just drive away.
+- **Complete Event**: Tow the vehicle to the dealership to complete the event.
+- **Reward**: Receive a reward based on the vehicle you towed, total distance, and amount of time it took.
 
 ### Police
 
@@ -169,9 +265,7 @@ Experience an array of new racing events designed to challenge and entertain you
   
 - **Troubleshooting**:
   - If police are not spawning:
-    - Switch to free roam.
-    - Spawn traffic with police.
-    - Return to career mode.
+    - Make sure to disable the gameplay setting "Start traffic in freeroam"
     
 - **Role Notification**:
   - A message will appear indicating your role if you're playing as the police.
@@ -278,7 +372,7 @@ This system encourages safer driving and careful management of your insurance to
     - **Wider Price Range**: Vehicle prices vary more, allowing for profitable buying and selling.
     - **Realistic Valuation**: Vehicles depreciate over time but remain valuable based on functionality and demand.
 
-#### Dealership Lore
+#### Dealership Lore 
 
 - **Belasco Auto**:
   - **Specialization**: New and lightly used reasonably priced cars.

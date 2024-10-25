@@ -21,30 +21,14 @@ local isParked
 -- make 3 triggers with names 1,2,3
 -- math random for 1,2,3
 
-local function printTable(t, indent)
-    -- This function prints all parts of a table with labels.
-    -- It recursively prints nested tables with indentation.
-    --
-    -- Parameters:
-    --   t (table): The table to print.
-    --   indent (number, optional): The current level of indentation. Defaults to 0.
-    indent = indent or 0
-    local indentStr = string.rep("  ", indent)
-
-    for k, v in pairs(t) do
-        if type(v) == "table" then
-            print(indentStr .. tostring(k) .. ":")
-            printTable(v, indent + 1)
-        else
-            print(indentStr .. tostring(k) .. ": " .. tostring(v))
-        end
-    end
+local function getHrMin(seconds)
+    local minutes = math.floor(seconds / 60)
+    local hours = math.floor(minutes / 60)
+    return hours .. " hours and " .. minutes .. " minutes"
 end
 
 local function rentalReward()
     local reward = math.floor((vehicleValue * 0.25) * (rentalTime / 480))
-    ui_message("vehicle rented for: " .. rentalTime .. " minutes for total of " .. reward .. "!", 10, "info", "info")
-    print("vehicle rented for: " .. rentalTime .. " minutes for total of " .. reward .. "!")
     return reward
 end
 
@@ -65,7 +49,6 @@ local function startRental()
     local inventoryId = career_modules_inventory.getCurrentVehicle()
     print("inventory id" .. inventoryId or "none")
     career_modules_inventory.delayVehicleAccess(inventoryId, rentalTime, "rented")
-    career_saveSystem.saveCurrent()
     --  extensions.core_vehicles.spawnNewVehicle("unicycle", {removeTraffic = false})
     local reward = rentalReward()
     career_modules_payment.reward({
@@ -75,7 +58,9 @@ local function startRental()
     }, {
         label = "You rented your vehicle!"
     })
-
+    ui_message("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!", 10, "info", "info")
+    print("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!")
+    career_saveSystem.saveCurrent()
 end
 
 local function onBeamNGTrigger(data)
@@ -85,7 +70,6 @@ local function onBeamNGTrigger(data)
     if gameplay_walk.isWalking() then
         return
     end
-    printTable(data)
 
     local match = string.match(data.triggerName, "movieRental%d")
 
@@ -110,7 +94,7 @@ local function onBeamNGTrigger(data)
         if value and value > 100000 then
             local studioStage
             local message
-            rentalTime = math.random(60, 480)
+            rentalTime = math.random(60, 480) * 60
             vehicleValue = value
             for index, value in ipairs(availableStudios) do
                 if value == true then
@@ -128,7 +112,7 @@ local function onBeamNGTrigger(data)
                 trigger:setHidden(false)
                 core_groundMarkers.setPath(trigger:getPosition())
             end
-            message = "Lens Flare Studios will rent your vehicle for " .. rentalTime .. " minutes, paying you " ..
+            message = "Lens Flare Studios will rent your vehicle for " .. getHrMin(rentalTime) .. ", paying you " ..
                           formatMoney(rentalReward()) .. ". proceed to "
             ui_message(message, 10, "info", "info")
             print(message)
@@ -165,15 +149,13 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     if not isRented then
         return
     end
-    if frequency < 60 then
+    if frequency and frequency < 60 then
         frequency = frequency + dtSim
     else
         isRented = false
         for index, value in ipairs(availableStudios) do
             if value ~= true then
                 local timeToAccess = career_modules_inventory.getVehicleTimeToAccess(value)
-                print(index)
-                print(timeToAccess)
                 if timeToAccess <= 0 then
                     availableStudios[index] = true
                 else
