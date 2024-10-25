@@ -247,6 +247,8 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Time**: 1 - 8 hours
     - **Reward**: Variable based on the vehicle value and time rented.
 
+---
+
 ### Freeroam Repo Missions
 
 - **Purchase Vehicle**: Purchase a vehicle that is capable of towing a vehicle. (Tilt Decks work great)
@@ -255,6 +257,8 @@ Experience an array of new racing events designed to challenge and entertain you
 - **Pick Up Vehicle**: Drive to the vehicle to repo and pick it up. If you decide you dont want to pick it up just drive away.
 - **Complete Event**: Tow the vehicle to the dealership to complete the event.
 - **Reward**: Receive a reward based on the vehicle you towed, total distance, and amount of time it took.
+
+---
 
 ### Police
 
