@@ -29,7 +29,7 @@ local function getHrMin(seconds)
 end
 
 local function rentalReward()
-    local reward = math.floor((vehicleValue * 0.25) * (rentalTime / (480 * 60))
+    local reward = math.floor((vehicleValue * 0.25) * (rentalTime / (480 * 60)))
     return reward
 end
 
@@ -61,7 +61,6 @@ local function startRental()
     })
     ui_message("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!", 10, "info", "info")
     print("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!")
-    career_saveSystem.saveCurrent()
 end
 
 local function onBeamNGTrigger(data)
@@ -132,6 +131,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 stagedRental))
             stagedRental = nil
             isParked = nil
+            career_saveSystem.saveCurrent()
         end
     end
     if isStopped then
