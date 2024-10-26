@@ -144,7 +144,7 @@ end
 local function getInventoryVehicleValue(inventoryId)
   local vehicle = career_modules_inventory.getVehicles()[inventoryId]
   if not vehicle then return end
-  return getVehicleValue(vehicle.configBaseValue, vehicle)
+  return math.max(getVehicleValue(vehicle.configBaseValue, vehicle), 0)
 end
 
 M.getPartDifference = getPartDifference

@@ -7,8 +7,7 @@ local M = {}
 -- Dependencies
 M.dependencies = {
     'career_career', 'util_configListGenerator', 'gameplay_parking', 
-    'freeroam_facilities', 'gameplay_sites_sitesManager', 
-    'gameplay_walk', 'core_groundMarkers', 'career_modules_valueCalculator', 'career_modules_vehicleDeletionService'
+    'freeroam_facilities', 'gameplay_sites_sitesManager'
 }
 
 -- Require necessary modules
@@ -17,7 +16,6 @@ local parking = require('gameplay.parking')
 local freeroam_facilities = require('freeroam.facilities')
 local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
 local valueCalculator = require('career.modules.valueCalculator')
-local vehicleDeletionService = require('career.modules.vehicleDeletionService')
 local marker
 
 
