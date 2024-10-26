@@ -8,7 +8,7 @@ local M = {}
 M.dependencies = {
     'career_career', 'util_configListGenerator', 'gameplay_parking', 
     'freeroam_facilities', 'gameplay_sites_sitesManager', 
-    'gameplay_walk', 'core_groundMarkers', 'career_modules_valueCalculator', 'career_vehicleDeletionService'
+    'gameplay_walk', 'core_groundMarkers', 'career_modules_valueCalculator', 'career_modules_vehicleDeletionService'
 }
 
 -- Require necessary modules
