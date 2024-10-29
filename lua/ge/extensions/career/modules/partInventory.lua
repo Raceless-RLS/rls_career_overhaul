@@ -471,7 +471,7 @@ end
 -- TODO could even update once every time before removing a part
 local function updatePartConditionsInInventory()
   for partId, part in pairs(partInventory) do
-    if not career_modules_inventory.getVehicles()[part.location] then
+    if not career_modules_inventory.getVehicles()[part.location] or not career_modules_inventory.getVehicles()[part.location].partConditions then
       goto continue
     end
     if career_modules_inventory.getVehicles()[part.location].partConditions[part.name] then

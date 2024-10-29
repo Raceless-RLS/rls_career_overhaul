@@ -12,9 +12,12 @@ local scrapValueRelative = 0.50
 local function getVehicleMileage(vehicle)
   for slot, partName in pairs(vehicle.config.parts) do
     if partName == vehicle.config.mainPartName then
-      if vehicle.partConditions[partName] then
+      if vehicle.partConditions and vehicle.partConditions[partName] then
         return vehicle.partConditions[partName]["odometer"]
       else
+        if not vehicle.partConditions then
+          vehicle.partConditions = {}
+        end
         vehicle.partConditions[partName] = {odometer = 0}
         return 0
       end

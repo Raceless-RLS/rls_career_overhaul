@@ -92,6 +92,9 @@ local function isNoPoliceModActive()
 end
 
 local function setupTraffic(forceSetup)
+    if MPCoreNetwork and MPCoreNetwork.isMPSession() then
+        return
+    end
     if forceSetup or
         (gameplay_traffic.getState() == "off" and not gameplay_traffic.getTrafficList(true)[1] and
             playerData.trafficActive == 0) then
