@@ -7,7 +7,9 @@
       "preview":"garage_servicestation.jpg",
       "zoneNames":["servicestationGarage1", "servicestationGarage2"],
       "parkingSpotNames":["serviceStationParking1", "serviceStationParking2"],
-      "icon":"poi_garage_2_round"
+      "icon":"poi_garage_2_round",
+      "defaultPrice": 0,
+      "capacity": 5
     },
     {
       "id":"commercialGarage",
@@ -17,7 +19,9 @@
       "zoneNames":["commercialGarage1"],
       "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
       "icon":"poi_garage_2_round",
-      "tags":["truck"]
+      "tags":["truck"],
+      "defaultPrice": 45000,
+      "capacity": 15
     },
 	{
       "id":"dragPaddockGarage",
@@ -27,7 +31,9 @@
       "zoneNames":["dragPaddockGarage"],
       "parkingSpotNames":["dragPaddockPark1", "dragPaddockPark2"],
       "icon":"poi_garage_2_round",
-      "tags":["truck"]
+      "tags":["truck"],
+      "defaultPrice": 15000,
+      "capacity": 2
     }
   ],
   "gasStations":[
@@ -448,6 +454,7 @@
   "computers":[
     {
       "id":"servicestationGarageComputer",
+      "garageId":"servicestationGarage",
       "name":"Garage Computer",
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"servicestationgaragecomputer.jpg",
@@ -465,6 +472,7 @@
     },
     {
       "id":"servicestationOfficeComputer",
+      "garageId":"servicestationGarage",
       "name":"Office Computer",
       "description":"ui.career.computer.bigmapLabel.office",
       "preview":"servicestationofficecomputer.jpg",
@@ -480,6 +488,7 @@
     },
     {
       "id":"commercialGarageComputer",
+      "garageId":"commercialGarage",
       "name":"Commercial Garage - Large Vehicles",
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer.jpg",
@@ -496,6 +505,7 @@
     },
     {
       "id":"commercialGarageComputer2",
+      "garageId":"commercialGarage",
       "name":"Commercial Garage - Small Vehicles",
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
@@ -512,6 +522,7 @@
     },
     {
       "id":"dragPaddockGarageComputer_area3",
+      "garageId":"dragPaddockGarage",
       "name":"Drag Paddock Garage",
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
