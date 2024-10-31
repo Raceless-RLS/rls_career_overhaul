@@ -433,7 +433,7 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
         traffic[id].respawnSpeed = max(3.333, dir:dot(vecUp) * 30) -- 12 km/h, or higher if uphill is steep enough
         local link = mapNodes[spawnData.n1].links[spawnData.n2] or mapNodes[spawnData.n2].links[spawnData.n1]
         if link then
-          traffic[id].respawnSpeed = max(traffic[id].respawnSpeed, (link.speedLimit - 8.333) * 0.5) -- bigger speed boost at higher speed limits
+          traffic[id].respawnSpeed = max(traffic[id].respawnSpeed, (link.speedLimit - 8.333) * 2) -- bigger speed boost at higher speed limits
         end
       end
     end
