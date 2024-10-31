@@ -1025,30 +1025,63 @@ local function laneChange(plan, dist, signedDisp)
   if not plan and currentRoute then plan = currentRoute.plan end
   if not plan then return end
 
-  -- Apply node displacement
+  -- Increase minimum distance for lane change to ensure smoother transitions
+  dist = max(dist, aiSpeed * 2.5)
   local invDist = 1 / (dist + 1e-30)
-  local curDist, normalDispVec = 0, vec3()
+  local curDist = 0
+  
+  -- Enhanced smooth step function for more gradual transitions
+  local function smoothStep(x)
+    x = clamp(x, 0, 1)
+    -- Using enhanced smoothstep for smoother acceleration/deceleration
+    return x * x * x * (x * (x * 6 - 15) + 10)
+  end
+
+  -- Check if we should accelerate during lane change
+  local shouldAccelerate = true
+  for _, v in ipairs(trafficTable or {}) do
+    if v.pos:squaredDistance(aiPos) < square(50) then
+      local relativePos = v.pos - aiPos
+      local lateralDist = relativePos:dot(ai.rightVec)
+      -- Check if vehicle is in target lane
+      if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
+        local forwardDist = relativePos:dot(aiDirVec)
+        if forwardDist < aiSpeed * 3 then
+          shouldAccelerate = false
+          break
+        end
+      end
+    end
+  end
+
+  -- Adjust speed during lane change if clear
+  if shouldAccelerate then
+    plan.targetSpeed = min(plan.targetSpeed * 1.15, parameters.maxSpeed)
+  end
+
   for i = 2, plan.planCount do
     openLaneToLaneRange(plan[i])
     curDist = curDist + plan[i-1].length
-    plan[i].lateralXnorm = clamp(plan[i].lateralXnorm + signedDisp * min(curDist * invDist, 1), plan[i].laneLimLeft, plan[i].laneLimRight)
+    
+    -- Use enhanced smooth transition
+    local progress = smoothStep(curDist * invDist)
+    plan[i].lateralXnorm = clamp(
+      plan[i].lateralXnorm + signedDisp * progress,
+      plan[i].laneLimLeft,
+      plan[i].laneLimRight
+    )
+
+    local normalDispVec = vec3()
     normalDispVec:setScaled2(plan[i].normal, plan[i].lateralXnorm)
     plan[i].pos:setAdd2(plan[i].posOrig, normalDispVec)
 
-    -- Recalculate vec and dirVec
-    plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos); plan[i].vec.z = 0
+    plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos)
+    plan[i].vec.z = 0
     plan[i].dirVec:set(plan[i].vec)
     plan[i].dirVec:normalize()
   end
 
   updatePlanLen(plan)
-
-  --[[ For debugging
-  table.clear(newPositionsDebug)
-  for i = 1, #newPositions do
-    newPositionsDebug[i] = vec3(newPositions[i])
-  end
-  --]]
 end
 
 local function setStopPoint(plan, dist, args)
@@ -1956,10 +1989,17 @@ local function planAhead(route, baseRoute)
     if numOfLanesInDirection(getEdgeLaneConfig(wp1, wp2), '+') > 1 then
       local minNode = roadNaturalContinuation(wp1, wp2)
       local wp3 = route.path[route.lastLaneChangeIdx+1]
+      -- Add early lane change planning
+      local distToTurn = route.pathLength[route.lastLaneChangeIdx+1] - route.pathLength[route.lastLaneChangeIdx]
+      local idealDist = min(800, max(200, aiSpeed * aiSpeed * 1.2))
+      
       if minNode and minNode ~= wp3 then -- road natural continuation at wp2 is not in our path
         local edgeNormal = gravityDir:cross(mapData.positions[minNode] - mapData.positions[wp2]):normalized()
         local side = sign2(edgeNormal:dot(mapData.positions[wp3]) - edgeNormal:dot(mapData.positions[minNode]))
-        table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3})
+        -- Start lane change earlier if we have enough distance
+        if distToTurn < idealDist then
+          table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3, commit = false})
+        end
       end
     end
     route.lastLaneChangeIdx = route.lastLaneChangeIdx + 1
@@ -2181,23 +2221,35 @@ local function planAhead(route, baseRoute)
 
     if dispLeft > 0 or dispRight > 0 then
       local sideDisp = sqrt(dispLeft) - sqrt(dispRight)
-      sideDisp = min(dt * parameters.awarenessForceCoef * 10, abs(sideDisp)) * sign2(sideDisp) -- limited displacement per frame
-      -- maybe needs some smoother to prevent left / right "bouncing"
+      -- Smoother lane change transitions
+      local maxDisplacement = dt * parameters.awarenessForceCoef * 8  -- Reduced from 10 to 8 for smoother changes
+      sideDisp = min(maxDisplacement, abs(sideDisp)) * sign2(sideDisp)
+      
       local curDist = 0
       local lastPlanIdx = 2
-      local targetDist = square(aiSpeed) / (2 * g * aggression) + max(30, aiSpeed * 3) -- longer adjustment at higher speeds
+      -- Increase distance for smoother transitions at higher speeds
+      local targetDist = square(aiSpeed) / (2 * g * aggression) + max(50, aiSpeed * 3.5)
 
       local tmpVec = vec3()
       for i = 2, plan.planCount - 1 do
         openLaneToLaneRange(plan[i])
-        plan[i].lateralXnorm = clamp(plan[i].lateralXnorm + sideDisp * (targetDist - curDist) / targetDist, plan[i].laneLimLeft, plan[i].laneLimRight)
+        -- Add smoothing function for lateral movement
+        local progress = smoothStep(curDist / targetDist)
+        local lateralAdjustment = sideDisp * (targetDist - curDist) / targetDist * progress
+        
+        plan[i].lateralXnorm = clamp(
+          plan[i].lateralXnorm + lateralAdjustment,
+          plan[i].laneLimLeft,
+          plan[i].laneLimRight
+        )
         tmpVec:setScaled2(plan[i].normal, plan[i].lateralXnorm)
         plan[i].pos:setAdd2(plan[i].posOrig, tmpVec)
 
         curDist = curDist + plan[i - 1].length
         lastPlanIdx = i
 
-        plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos); plan[i].vec.z = 0
+        plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos)
+        plan[i].vec.z = 0
         plan[i].dirVec:set(plan[i].vec)
         plan[i].dirVec:normalize()
 
@@ -3312,7 +3364,7 @@ local function trafficActions()
     if aiSpeed < 10 then
       pullOver = true
     else
-      laneChange(plan, 75, -trafficStates.side.displacement)
+      laneChange(plan, 25, -trafficStates.side.displacement)
       setSpeed(aiSpeed * 0.999)
     end
     trafficStates.action.nearestPoliceId = nearestPoliceId
