@@ -1021,6 +1021,12 @@ local function openPlanLanesToLaneRange(plan, idx)
   end
 end
 
+local function smoothStep(x)
+  x = clamp(x, 0, 1)
+  -- Using enhanced smoothstep for smoother acceleration/deceleration
+  return x * x * x * (x * (x * 6 - 15) + 10)
+end
+
 local function laneChange(plan, dist, signedDisp)
   if not plan and currentRoute then plan = currentRoute.plan end
   if not plan then return end
@@ -1029,13 +1035,6 @@ local function laneChange(plan, dist, signedDisp)
   dist = max(dist, aiSpeed * 2.5)
   local invDist = 1 / (dist + 1e-30)
   local curDist = 0
-  
-  -- Enhanced smooth step function for more gradual transitions
-  local function smoothStep(x)
-    x = clamp(x, 0, 1)
-    -- Using enhanced smoothstep for smoother acceleration/deceleration
-    return x * x * x * (x * (x * 6 - 15) + 10)
-  end
 
   -- Check if we should accelerate during lane change
   local shouldAccelerate = true
@@ -1056,7 +1055,7 @@ local function laneChange(plan, dist, signedDisp)
 
   -- Adjust speed during lane change if clear
   if shouldAccelerate then
-    plan.targetSpeed = min(plan.targetSpeed * 1.15, parameters.maxSpeed)
+    plan.targetSpeed = plan.targetSpeed * 1.15
   end
 
   for i = 2, plan.planCount do
@@ -1989,17 +1988,12 @@ local function planAhead(route, baseRoute)
     if numOfLanesInDirection(getEdgeLaneConfig(wp1, wp2), '+') > 1 then
       local minNode = roadNaturalContinuation(wp1, wp2)
       local wp3 = route.path[route.lastLaneChangeIdx+1]
-      -- Add early lane change planning
-      local distToTurn = route.pathLength[route.lastLaneChangeIdx+1] - route.pathLength[route.lastLaneChangeIdx]
-      local idealDist = min(800, max(200, aiSpeed * aiSpeed * 1.2))
       
       if minNode and minNode ~= wp3 then -- road natural continuation at wp2 is not in our path
         local edgeNormal = gravityDir:cross(mapData.positions[minNode] - mapData.positions[wp2]):normalized()
         local side = sign2(edgeNormal:dot(mapData.positions[wp3]) - edgeNormal:dot(mapData.positions[minNode]))
-        -- Start lane change earlier if we have enough distance
-        if distToTurn < idealDist then
-          table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3, commit = false})
-        end
+
+        table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3, commit = false})
       end
     end
     route.lastLaneChangeIdx = route.lastLaneChangeIdx + 1
