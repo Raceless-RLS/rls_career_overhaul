@@ -8,7 +8,7 @@ M.dependencies = {"gameplay_drag_general", "gameplay_drag_utils"}
 local dGeneral, dUtils
 local dragData
 local logTag = ""
-local freeroamEvents = require("career/modules/freeroamEvents")
+local freeroamEvents = require("gameplay/events/freeroamEvents")
 local hasActivityStarted = false
 local function onExtensionLoaded()
   log("I", logTag, "dragRace extension loaded")
