@@ -236,7 +236,7 @@ local function resetParameters()
   parameters = {
     turnForceCoef = 2.5, -- coefficient for curve spring forces
     awarenessForceCoef = 0.75, -- coefficient for vehicle awareness displacement
-    edgeDist = -0.15, -- minimum distance from the edge of the road
+    edgeDist = 0.1, -- minimum distance from the edge of the road
     trafficWaitTime = 1, -- traffic delay after stopping at intersection
     enableElectrics = true, -- allows the ai to automatically use electrics such as hazard lights (especially for traffic)
     driveStyle = 'default',
