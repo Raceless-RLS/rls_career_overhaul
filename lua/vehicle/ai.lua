@@ -234,17 +234,17 @@ resetInternalStates()
 local function resetParameters()
   -- parameters are used for finer AI control
   parameters = {
-    turnForceCoef = 2, -- coefficient for curve spring forces
-    awarenessForceCoef = 0.25, -- coefficient for vehicle awareness displacement
-    edgeDist = 0, -- minimum distance from the edge of the road
-    trafficWaitTime = 2, -- traffic delay after stopping at intersection
+    turnForceCoef = 2.5, -- coefficient for curve spring forces
+    awarenessForceCoef = 0.75, -- coefficient for vehicle awareness displacement
+    edgeDist = -0.15, -- minimum distance from the edge of the road
+    trafficWaitTime = 1, -- traffic delay after stopping at intersection
     enableElectrics = true, -- allows the ai to automatically use electrics such as hazard lights (especially for traffic)
     driveStyle = 'default',
-    staticFrictionCoefMult = 0.95,
-    lookAheadKv = 0.6,
+    staticFrictionCoefMult = 1.1,
+    lookAheadKv = 1.5,
     applyWidthMarginOffset = true,
     planErrorSmoothing = true,
-    springForceIntegratorDispLim = 0.1 -- node displacement force magnitude limit
+    springForceIntegratorDispLim = 0.15 -- node displacement force magnitude limit
   }
 end
 resetParameters()
@@ -1031,38 +1031,98 @@ local function laneChange(plan, dist, signedDisp)
   if not plan and currentRoute then plan = currentRoute.plan end
   if not plan then return end
 
-  -- Increase minimum distance for lane change to ensure smoother transitions
-  dist = max(dist, aiSpeed * 2.5)
-  local invDist = 1 / (dist + 1e-30)
+  -- Check if we're on a highway based on speed limit
+  local speedLimit = plan[2].speedLimit or 35
+  local isHighway = speedLimit >= 55
+
+  -- Base distance on current speed - higher speeds need more room
+  local speedBasedDist = max(dist, aiSpeed * (isHighway and 6.0 or 4.5))
+  local invDist = 1 / (speedBasedDist + 1e-30)
   local curDist = 0
 
-  -- Check if we should accelerate during lane change
-  local shouldAccelerate = true
-  for _, v in ipairs(trafficTable or {}) do
-    if v.pos:squaredDistance(aiPos) < square(50) then
-      local relativePos = v.pos - aiPos
-      local lateralDist = relativePos:dot(ai.rightVec)
-      -- Check if vehicle is in target lane
-      if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
+  -- Check if we're approaching our destination/exit
+  local isNearDestination = false
+  if currentRoute and currentRoute.plan.stopSeg then
+    local distToStop = getPlanLen(plan, plan.aiSeg, plan.stopSeg)
+    isNearDestination = distToStop < (aiSpeed * (isHighway and 15 or 10))
+  end
+
+  -- Only proceed with lane change if not near destination
+  if not isNearDestination then
+    local laneIsClear = true
+    local minPassingDist = aiSpeed * (isHighway and 8 or 6)
+    local targetGapFound = false
+    local gapAheadDist = math.huge
+    local gapBehindDist = -math.huge
+    local targetVehicleSpeed = 0
+    
+    -- Scan for vehicles in target lane
+    for _, v in ipairs(trafficTable or {}) do
+      if v.pos:squaredDistance(aiPos) < square(minPassingDist) then
+        local relativePos = v.pos - aiPos
+        local lateralDist = relativePos:dot(ai.rightVec)
         local forwardDist = relativePos:dot(aiDirVec)
-        if forwardDist < aiSpeed * 3 then
-          shouldAccelerate = false
-          break
+        
+        if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
+          if forwardDist > 0 then
+            gapAheadDist = min(gapAheadDist, forwardDist)
+            targetVehicleSpeed = (v.vel or vec3(0,0,0)):dot(aiDirVec)
+          else
+            gapBehindDist = max(gapBehindDist, forwardDist)
+          end
+          
+          if forwardDist > 0 and forwardDist < minPassingDist then
+  local relativeSpeed = (v.vel or vec3(0,0,0)):dot(aiDirVec) - aiSpeed
+  if relativeSpeed > -20 then  -- More aggressive gap acceptance (changed from -10)
+    laneIsClear = false
+  end
+end
         end
+      end
+    end
+
+    local gapSize = gapAheadDist - gapBehindDist
+    local minGapSize = aiSpeed * (isHighway and 4 or 3)
+    
+    if laneIsClear then
+      -- Clear lane - proceed with acceleration
+      local speedBoost = isHighway and 1.2 or
+                        (aiSpeed < 10 and 1.4 or
+                         aiSpeed < 30 and 1.25 or
+                         1.15)
+      plan.targetSpeed = plan.targetSpeed * speedBoost
+    else
+      -- Lane not clear - adjust speed without stopping
+      if gapSize > minGapSize then
+        if targetVehicleSpeed > aiSpeed then
+          -- Match speed of faster vehicle ahead
+          plan.targetSpeed = targetVehicleSpeed * (isHighway and 1.05 or 1.1)
+          if not isHighway then return end
+        else
+          -- Maintain speed relative to slower vehicle
+          plan.targetSpeed = max(targetVehicleSpeed * 1.1, aiSpeed * 0.95)
+          if not isHighway then return end
+        end
+      else
+        -- No suitable gap - adjust speed while maintaining movement
+        if gapAheadDist < minPassingDist then
+          -- Vehicle ahead - reduce speed but maintain movement
+          plan.targetSpeed = max(targetVehicleSpeed * 0.9, 
+                               isHighway and aiSpeed * 0.85 or aiSpeed * 0.75)
+        else
+          -- Vehicle behind - increase speed to create gap
+          plan.targetSpeed = max(targetVehicleSpeed * 1.15, aiSpeed * 1.1)
+        end
+        if not isHighway then return end
       end
     end
   end
 
-  -- Adjust speed during lane change if clear
-  if shouldAccelerate then
-    plan.targetSpeed = plan.targetSpeed * 1.15
-  end
-
+  -- Execute the lane change if conditions are met
   for i = 2, plan.planCount do
     openLaneToLaneRange(plan[i])
     curDist = curDist + plan[i-1].length
     
-    -- Use enhanced smooth transition
     local progress = smoothStep(curDist * invDist)
     plan[i].lateralXnorm = clamp(
       plan[i].lateralXnorm + signedDisp * progress,
@@ -2327,6 +2387,7 @@ local function planAhead(route, baseRoute)
         end
 
         local limWidth = v.targetType == 'follow' and 2 * max(n1.radiusOrig, n2.radiusOrig) or plWidth
+        limWidth = limWidth + 1.5
 
         if minSqDist < square((ai.width + limWidth) * 0.8) then
           local velProjOnSeg = max(0, v.vel:dot(nDir))

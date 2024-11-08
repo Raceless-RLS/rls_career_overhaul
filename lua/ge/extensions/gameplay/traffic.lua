@@ -112,6 +112,8 @@ local function checkSpawnPos(pos, camRadius, plRadius, vehRadius) -- tests if th
 
   vehRadius = vehRadius or 15
   plRadius = plRadius or 80
+  vehRadius = vehRadius + 2
+  plRadius = plRadius + 2
 
   for _, v in ipairs(getAllVehicles()) do
     local vehId = v:getId()
@@ -371,7 +373,7 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
         end
 
         local minDist = clamp(100 / spawnValue, 40, 400) + addedDist
-        local maxDist = clamp(minDist * 3, 120, 1200)
+        local maxDist = clamp(minDist * 3, 160, 1200)
         local spawnRandomValue = traffic[id] and traffic[id].respawn.spawnRandomization or 1
         local maxLateralDist = spawnRandomValue * max(30, 100 - speedValue) * 0.2
         dirVec:setAdd(dirVec:cross(vecUp):normalized() * (random() * spawnRandomValue * 2 - spawnRandomValue)) -- small randomization of start direction
