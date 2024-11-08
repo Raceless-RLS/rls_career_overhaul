@@ -1021,34 +1021,66 @@ local function openPlanLanesToLaneRange(plan, idx)
   end
 end
 
+local function smoothStep(x)
+  x = clamp(x, 0, 1)
+  -- Using enhanced smoothstep for smoother acceleration/deceleration
+  return x * x * x * (x * (x * 6 - 15) + 10)
+end
+
 local function laneChange(plan, dist, signedDisp)
   if not plan and currentRoute then plan = currentRoute.plan end
   if not plan then return end
 
-  -- Apply node displacement
+  -- Increase minimum distance for lane change to ensure smoother transitions
+  dist = max(dist, aiSpeed * 2.5)
   local invDist = 1 / (dist + 1e-30)
-  local curDist, normalDispVec = 0, vec3()
+  local curDist = 0
+
+  -- Check if we should accelerate during lane change
+  local shouldAccelerate = true
+  for _, v in ipairs(trafficTable or {}) do
+    if v.pos:squaredDistance(aiPos) < square(50) then
+      local relativePos = v.pos - aiPos
+      local lateralDist = relativePos:dot(ai.rightVec)
+      -- Check if vehicle is in target lane
+      if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
+        local forwardDist = relativePos:dot(aiDirVec)
+        if forwardDist < aiSpeed * 3 then
+          shouldAccelerate = false
+          break
+        end
+      end
+    end
+  end
+
+  -- Adjust speed during lane change if clear
+  if shouldAccelerate then
+    plan.targetSpeed = plan.targetSpeed * 1.15
+  end
+
   for i = 2, plan.planCount do
     openLaneToLaneRange(plan[i])
     curDist = curDist + plan[i-1].length
-    plan[i].lateralXnorm = clamp(plan[i].lateralXnorm + signedDisp * min(curDist * invDist, 1), plan[i].laneLimLeft, plan[i].laneLimRight)
+    
+    -- Use enhanced smooth transition
+    local progress = smoothStep(curDist * invDist)
+    plan[i].lateralXnorm = clamp(
+      plan[i].lateralXnorm + signedDisp * progress,
+      plan[i].laneLimLeft,
+      plan[i].laneLimRight
+    )
+
+    local normalDispVec = vec3()
     normalDispVec:setScaled2(plan[i].normal, plan[i].lateralXnorm)
     plan[i].pos:setAdd2(plan[i].posOrig, normalDispVec)
 
-    -- Recalculate vec and dirVec
-    plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos); plan[i].vec.z = 0
+    plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos)
+    plan[i].vec.z = 0
     plan[i].dirVec:set(plan[i].vec)
     plan[i].dirVec:normalize()
   end
 
   updatePlanLen(plan)
-
-  --[[ For debugging
-  table.clear(newPositionsDebug)
-  for i = 1, #newPositions do
-    newPositionsDebug[i] = vec3(newPositions[i])
-  end
-  --]]
 end
 
 local function setStopPoint(plan, dist, args)
@@ -1110,8 +1142,18 @@ end
 -- Returns the lane configuration of an edge as traversed in the fromNode -> toNode direction
 -- if an edge does not have lane data they are deduced from the node radii
 local function getEdgeLaneConfig(fromNode, toNode)
+  -- Early safety checks
+  if not fromNode or not toNode or not mapData.graph[fromNode] then
+    return string.rep("+", numOfLanesFromRadius(3)) -- Default single direction lanes
+  end
+
+  -- Check if edge exists between nodes
+  local edge = mapData.graph[fromNode] and mapData.graph[fromNode][toNode]
+  if not edge then
+    return string.rep("+", numOfLanesFromRadius(3)) -- Default if no edge exists
+  end
+
   local lanes
-  local edge = mapData.graph[fromNode][toNode]
   if edge.lanes then
     lanes = edge.lanes
   else -- make up some lane data in case they don't exist
@@ -1128,7 +1170,7 @@ local function getEdgeLaneConfig(fromNode, toNode)
     end
   end
 
-  return edge.inNode == fromNode and lanes or flipLanes(lanes) -- flip lanes string based on inNode data
+  return edge.inNode == fromNode and lanes or flipLanes(lanes)
 end
 
 -- Calculate the edge incident on wp2 which is most similar to the edge wp1->wp2
@@ -1956,10 +1998,12 @@ local function planAhead(route, baseRoute)
     if numOfLanesInDirection(getEdgeLaneConfig(wp1, wp2), '+') > 1 then
       local minNode = roadNaturalContinuation(wp1, wp2)
       local wp3 = route.path[route.lastLaneChangeIdx+1]
+      
       if minNode and minNode ~= wp3 then -- road natural continuation at wp2 is not in our path
         local edgeNormal = gravityDir:cross(mapData.positions[minNode] - mapData.positions[wp2]):normalized()
         local side = sign2(edgeNormal:dot(mapData.positions[wp3]) - edgeNormal:dot(mapData.positions[minNode]))
-        table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3})
+
+        table.insert(route.laneChanges, {pathIdx = route.lastLaneChangeIdx, side = side, alternate = wp3, commit = false})
       end
     end
     route.lastLaneChangeIdx = route.lastLaneChangeIdx + 1
@@ -2181,23 +2225,35 @@ local function planAhead(route, baseRoute)
 
     if dispLeft > 0 or dispRight > 0 then
       local sideDisp = sqrt(dispLeft) - sqrt(dispRight)
-      sideDisp = min(dt * parameters.awarenessForceCoef * 10, abs(sideDisp)) * sign2(sideDisp) -- limited displacement per frame
-      -- maybe needs some smoother to prevent left / right "bouncing"
+      -- Smoother lane change transitions
+      local maxDisplacement = dt * parameters.awarenessForceCoef * 8  -- Reduced from 10 to 8 for smoother changes
+      sideDisp = min(maxDisplacement, abs(sideDisp)) * sign2(sideDisp)
+      
       local curDist = 0
       local lastPlanIdx = 2
-      local targetDist = square(aiSpeed) / (2 * g * aggression) + max(30, aiSpeed * 3) -- longer adjustment at higher speeds
+      -- Increase distance for smoother transitions at higher speeds
+      local targetDist = square(aiSpeed) / (2 * g * aggression) + max(50, aiSpeed * 3.5)
 
       local tmpVec = vec3()
       for i = 2, plan.planCount - 1 do
         openLaneToLaneRange(plan[i])
-        plan[i].lateralXnorm = clamp(plan[i].lateralXnorm + sideDisp * (targetDist - curDist) / targetDist, plan[i].laneLimLeft, plan[i].laneLimRight)
+        -- Add smoothing function for lateral movement
+        local progress = smoothStep(curDist / targetDist)
+        local lateralAdjustment = sideDisp * (targetDist - curDist) / targetDist * progress
+        
+        plan[i].lateralXnorm = clamp(
+          plan[i].lateralXnorm + lateralAdjustment,
+          plan[i].laneLimLeft,
+          plan[i].laneLimRight
+        )
         tmpVec:setScaled2(plan[i].normal, plan[i].lateralXnorm)
         plan[i].pos:setAdd2(plan[i].posOrig, tmpVec)
 
         curDist = curDist + plan[i - 1].length
         lastPlanIdx = i
 
-        plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos); plan[i].vec.z = 0
+        plan[i].vec:setSub2(plan[i-1].pos, plan[i].pos)
+        plan[i].vec.z = 0
         plan[i].dirVec:set(plan[i].vec)
         plan[i].dirVec:normalize()
 
@@ -3260,6 +3316,153 @@ local function setPullOver(val)
   M.pullOver = val
 end
 
+local function getNearbyVehicles(aiPos, aiDirVec, radius)
+  local nearby = {}
+  local searchRadius = radius or 25 -- Default 50m search radius
+  
+  for id, veh in pairs(mapmgr.getObjects()) do
+    if id ~= objectId then -- Don't include self
+      local vehPos = veh.pos
+      local dist = vehPos:distance(aiPos)
+      
+      if dist < searchRadius then
+        -- Get relative position data
+        local toVehicle = vehPos - aiPos
+        local rightVec = aiDirVec:cross(vec3(0,0,1)):normalized()
+        local forward = toVehicle:dot(aiDirVec)
+        local right = toVehicle:dot(rightVec)
+        
+        table.insert(nearby, {
+          id = id,
+          pos = vehPos,
+          vel = veh.vel,
+          distance = dist,
+          inFront = forward > 0,
+          behind = forward < 0,
+          onRight = right > 0,
+          onLeft = right < 0,
+          lateralDist = abs(right),
+          longitudinalDist = abs(forward)
+        })
+      end
+    end
+  end
+  
+  return nearby
+end
+
+
+local function getLateralPosition(planSegment, pos)
+  -- Comprehensive input validation
+  if not planSegment then 
+    return 0 
+  end
+  
+  if not pos or type(pos) ~= 'userdata' or not pos.length then
+    return 0
+  end
+  
+  -- Validate waypoint data
+  if not planSegment.wp or not planSegment.wp.pos then
+    return 0
+  end
+  
+  -- Get road direction with fallbacks
+  local roadDir
+  if planSegment.dirVec and planSegment.dirVec:length() > 0.1 then
+    roadDir = planSegment.dirVec:normalized()
+  elseif planSegment.wp.dirVec and planSegment.wp.dirVec:length() > 0.1 then
+    roadDir = planSegment.wp.dirVec:normalized()
+  else
+    return 0
+  end
+  
+  -- Safe vector calculations
+  local toVehicle = pos - planSegment.wp.pos
+  if toVehicle:length() > 100 then -- Sanity check for reasonable distance
+    return 0
+  end
+  
+  -- Get right vector with validation
+  local rightVec = roadDir:cross(vec3(0,0,1))
+  local rightLength = rightVec:length()
+  if rightLength < 0.1 then
+    return 0
+  end
+  rightVec = rightVec:normalized()
+  
+  -- Calculate lateral offset with bounds checking
+  local lateralOffset = toVehicle:dot(rightVec)
+  local laneWidth = planSegment.laneWidth or 4.0
+  if laneWidth < 0.1 then laneWidth = 4.0 end -- Prevent division by zero
+  
+  -- Bound the result to reasonable values
+  return math.max(-4, math.min(4, lateralOffset / laneWidth))
+end
+
+local function isLaneChangeSafe(plan, targetLane, nearby)
+  -- Validate inputs
+  if not plan or not plan[2] then
+    return false
+  end
+  
+  if not targetLane or type(targetLane) ~= 'number' then
+    return false
+  end
+  
+  if not nearby or type(nearby) ~= 'table' then
+    return false
+  end
+  
+  -- Safety margins with reasonable bounds
+  local safetyMarginSide = math.max(2.0, math.min(5.0, 3.0))
+  local safetyMarginFront = math.max(10.0, math.min(25.0, 15.0 + aiSpeed * 0.5))
+  local safetyMarginRear = math.max(8.0, math.min(20.0, 10.0 + aiSpeed * 0.3))
+  
+  -- Track closest vehicle for debugging
+  local closestVeh = math.huge
+  local closestLateralDist = math.huge
+  
+  for _, veh in ipairs(nearby) do
+    -- Validate vehicle data
+    if veh and veh.pos and veh.vel then
+      local vehSpeed = type(veh.vel) == 'userdata' and veh.vel:length() or 0
+      
+      -- Check longitudinal safety with speed-dependent margins
+      if veh.longitudinalDist and veh.longitudinalDist < safetyMarginFront + aiSpeed and 
+         veh.longitudinalDist < safetyMarginRear + vehSpeed then
+        
+        -- Get and validate lateral position
+        local vehLanePos = getLateralPosition(plan[2], veh.pos)
+        local laneWidth = plan[2].laneWidth or 4.0
+        if laneWidth < 0.1 then laneWidth = 4.0 end
+        
+        -- Track closest approach for debugging
+        local lateralDist = abs(vehLanePos - targetLane)
+        if lateralDist < closestLateralDist then
+          closestLateralDist = lateralDist
+          closestVeh = veh.id
+        end
+        
+        -- Check if too close for safety
+        if lateralDist < (1 + safetyMarginSide/laneWidth) then
+          print("Lane change unsafe: vehicle %d too close (lateral dist: %.2f)", 
+                  veh.id or 0, lateralDist)
+          return false
+        end
+      end
+    end
+  end
+  
+  -- Log successful safety check
+  if M.debugMode ~= 'off' then
+    print("Lane change safe - closest vehicle: %d at %.2f lateral distance", 
+            closestVeh, closestLateralDist)
+  end
+  
+  return true
+end
+
 local function trafficActions()
   if not currentRoute then return end
   local path, plan = currentRoute.path, currentRoute.plan
@@ -3308,12 +3511,119 @@ local function trafficActions()
       end
     end
   end
+  -- Add these helper functions
+  local function isHighwaySpeed(speedLimit)
+    return speedLimit >= 55 -- 55 mph is typical minimum highway speed
+  end
+
+  local function getRelativePosition(aiPos, aiDirVec, emergencyVehiclePos)
+    local toEmergency = emergencyVehiclePos - aiPos
+    local rightVec = aiDirVec:cross(vec3(0,0,1)):normalized()
+    
+    -- Get relative position components
+    local forward = toEmergency:dot(aiDirVec)
+    local right = toEmergency:dot(rightVec)
+    
+    return {
+      inFront = forward > 0,
+      behind = forward < 0,
+      onRight = right > 0,
+      onLeft = right < 0,
+      distance = toEmergency:length(),
+      lateralDistance = abs(right)
+    }
+  end
+
+  -- Update the emergency vehicle response logic
+  local function handleEmergencyVehicle(plan, police)
+    local speedLimit = plan[2].speedLimit or 35
+    local laneConfig = getEdgeLaneConfig(plan[1].wp, plan[2].wp)
+    local numLanes = numOfLanesInDirection(laneConfig, '+')
+    local currentLane = plan[2].lateralXnorm
+    local isHighway = isHighwaySpeed(speedLimit)
+    
+    local relPos = getRelativePosition(aiPos, aiDirVec, police.pos)
+    local nearbyVehicles = getNearbyVehicles(aiPos, aiDirVec)
+    
+    -- Ignore emergency vehicles on other side of divided highway
+    if relPos.lateralDistance > 20 then
+      return false
+    end
+  
+    if relPos.behind then
+      if numLanes > 1 then
+        -- Calculate rightmost lane position
+        local rightmostLanePos = 1.0
+        
+        if currentLane < rightmostLanePos - 0.1 then
+          -- Move one lane at a time towards the right
+          local targetLane = min(currentLane + 0.4, rightmostLanePos)
+          
+          -- Check if lane change is safe
+          if isLaneChangeSafe(plan, targetLane, nearbyVehicles) then
+            laneChange(plan, 25, targetLane)
+            setSpeed(aiSpeed * 0.9)
+          else
+            -- If can't change lanes safely, slow down and wait
+            setSpeed(aiSpeed * 0.8)
+            -- Signal intention to change lanes
+            if parameters.enableElectrics then
+              electrics.toggle_right_signal()
+            end
+          end
+        else
+          -- In rightmost lane, get as far right as safely possible
+          local safetyMargin = ai.width * 0.5 + 0.5
+          local maxRightOffset = plan[2].laneLimRight - safetyMargin
+          local rightOffset = min(rightmostLanePos + 0.5, maxRightOffset)
+          
+          -- Check if moving right is safe
+          if isLaneChangeSafe(plan, rightOffset, nearbyVehicles) then
+            laneChange(plan, 25, rightOffset)
+            setSpeed(aiSpeed * 0.8)
+          else
+            setSpeed(aiSpeed * 0.7)
+          end
+        end
+      else
+        -- Single lane road behavior with safety checks
+        if speedLimit < 35 then
+          local safetyMargin = ai.width * 0.5 + 0.3
+          local maxRightOffset = plan[2].laneLimRight - safetyMargin
+          local rightOffset = min(1.5, maxRightOffset)
+          
+          if isLaneChangeSafe(plan, rightOffset, nearbyVehicles) then
+            laneChange(plan, 25, rightOffset)
+            if aiSpeed < 10 then
+              return true
+            end
+            setSpeed(5)
+          else
+            setSpeed(aiSpeed * 0.5)
+          end
+        else
+          local safetyMargin = ai.width * 0.5 + 0.5
+          local maxRightOffset = plan[2].laneLimRight - safetyMargin
+          local rightOffset = min(1.0, maxRightOffset)
+          
+          if isLaneChangeSafe(plan, rightOffset, nearbyVehicles) then
+            laneChange(plan, 25, rightOffset)
+            setSpeed(aiSpeed * 0.7)
+          else
+            setSpeed(aiSpeed * 0.6)
+          end
+        end
+      end
+    end
+  
+    return false
+  end
+
+  -- Update the existing emergency vehicle check code
   if minSirenSqDist <= 10000 then
-    if aiSpeed < 10 then
-      pullOver = true
-    else
-      laneChange(plan, 75, -trafficStates.side.displacement)
-      setSpeed(aiSpeed * 0.999)
+    local police = mapmgr.objects[nearestPoliceId]
+    if police and police.states and police.states.lightbar then
+      pullOver = handleEmergencyVehicle(plan, police)
     end
     trafficStates.action.nearestPoliceId = nearestPoliceId
   end

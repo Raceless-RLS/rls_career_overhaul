@@ -190,15 +190,15 @@ local races = {
         type = {"motorsport"}
     },
     rockClimbS = {
-        bestTime = 15,
-        reward = 2500,
+        bestTime = 12,
+        reward = 2000,
         checkpointRoad = "rockClimbS",
         label = "Rock Crawl Short",
         type = {"motorsport", "crawl"}
     },
     rockClimbL = {
-        bestTime = 20,
-        reward = 2500,
+        bestTime = 17,
+        reward = 2000,
         checkpointRoad = "rockClimbL",
         label = "Rock Crawl Long",
         type = {"motorsport", "crawl"}

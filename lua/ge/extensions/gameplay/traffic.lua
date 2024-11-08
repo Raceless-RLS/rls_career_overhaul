@@ -22,6 +22,11 @@ local min = math.min
 local max = math.max
 local random = math.random
 
+-- traffic visibility settings --
+local TRAFFIC_VISIBLE_DISTANCE = 145  -- Visible range in meters
+local TRAFFIC_COLLISION_DISTANCE = 10  -- Collision range in meters
+local lastVisibilityUpdate = 0
+
 --------
 local queuedVehicle = 0
 local globalSpawnDist = 0 -- dynamic respawn distance ahead for all traffic vehicles
@@ -433,7 +438,7 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
         traffic[id].respawnSpeed = max(3.333, dir:dot(vecUp) * 30) -- 12 km/h, or higher if uphill is steep enough
         local link = mapNodes[spawnData.n1].links[spawnData.n2] or mapNodes[spawnData.n2].links[spawnData.n1]
         if link then
-          traffic[id].respawnSpeed = max(traffic[id].respawnSpeed, (link.speedLimit - 8.333) * 0.5) -- bigger speed boost at higher speed limits
+          traffic[id].respawnSpeed = max(traffic[id].respawnSpeed, link.speedLimit * 1.1) -- bigger speed boost at higher speed limits
         end
       end
     end
@@ -442,24 +447,70 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
   end
 end
 
-local function respawnVehicle(id, pos, rot, strict) -- moves the vehicle to a new position and rotation
+local function updateTrafficVisibility(dt, playerVeh, playerPos)
+  lastVisibilityUpdate = lastVisibilityUpdate + dt
+  if lastVisibilityUpdate < 0.1 then return end
+  
+  lastVisibilityUpdate = 0
+  
+  if not playerVeh then 
+    playerVeh = be:getPlayerVehicle(0)
+  end
+  
+  local playerPos = playerVeh:getPosition()
+  
+  for id, veh in pairs(traffic) do
+      local obj = scenetree.findObjectById(id)
+      if obj then
+          local dist = veh.pos:distance(playerPos)
+          
+          -- Manage visibility
+          if dist > TRAFFIC_VISIBLE_DISTANCE then
+              if not veh._wasHidden then
+                  obj:setHidden(true)
+                  veh._wasHidden = true
+              end
+          else
+              if veh._wasHidden then
+                  obj:setHidden(false)
+                  veh._wasHidden = false
+              end
+              
+              -- Manage collision ghosting
+              if dist < TRAFFIC_COLLISION_DISTANCE then
+                  if veh._wasGhosted then
+                      obj:queueLuaCommand("obj:setGhostEnabled(false)")
+                      veh._wasGhosted = false
+                  end
+              else
+                  if not veh._wasGhosted then
+                      obj:queueLuaCommand("obj:setGhostEnabled(true)")
+                      veh._wasGhosted = true
+                  end
+              end
+          end
+      end
+  end
+end
+
+local function respawnVehicle(id, pos, rot, strict)
   local obj = id and be:getObjectByID(id)
   if not obj or not pos or not rot then return end
 
   if not strict then
-    spawn.safeTeleport(obj, pos, rot, true, nil, false) -- this is slower, but prevents vehicles from spawning inside static geometry
+      spawn.safeTeleport(obj, pos, rot, true, nil, false)
   else
-    rot = rot * quat(0, 0, 1, 0)
-    obj:setPositionRotation(pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, rot.w)
-    obj:autoplace(false)
-    obj:resetBrokenFlexMesh()
+      rot = rot * quat(0, 0, 1, 0)
+      obj:setPositionRotation(pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, rot.w)
+      obj:autoplace(false)
+      obj:resetBrokenFlexMesh()
   end
 
   if traffic[id] then
-    traffic[id].pos = vec3(pos)
-    traffic[id]._teleport = nil
-    traffic[id]._teleportDist = nil
-    traffic[id]:onRespawn()
+      traffic[id].pos = vec3(pos)
+      traffic[id]._teleport = nil
+      traffic[id]._teleportDist = nil
+      traffic[id]:onRespawn()
   end
 end
 
@@ -1239,30 +1290,32 @@ end
 
 local function onUpdate(dtReal, dtSim)
   if state == 'loading' then
-    spawnTraffic(spawnProcess.amount, spawnProcess.group, spawnProcess.multiSpawnOptions)
+      spawnTraffic(spawnProcess.amount, spawnProcess.group, spawnProcess.multiSpawnOptions)
   end
 
   -- these hooks activate the frame after the first or last traffic vehicle gets inserted or removed
   if state ~= 'on' and trafficAiVehsList[1] then
-    extensions.hook('onTrafficStarted')
+      extensions.hook('onTrafficStarted')
   end
   if state == 'on' and not trafficAiVehsList[1] then
-    extensions.hook('onTrafficStopped')
+      extensions.hook('onTrafficStopped')
   end
 
   if state == 'on' then
-    if vehPool and vehPool._updateFlag and not spawnProcess.vehList then
-      updateTrafficPool()
-      vehPool._updateFlag = nil
-    end
+      if vehPool and vehPool._updateFlag and not spawnProcess.vehList then
+          updateTrafficPool()
+          vehPool._updateFlag = nil
+      end
 
-    if M.queueTeleport then
-      scatterTraffic()
-      M.queueTeleport = false
-    end
-    if be:getEnabled() and not freeroam_bigMapMode.bigMapActive() then
-      doTraffic(dtReal, dtSim)
-    end
+      if M.queueTeleport then
+          scatterTraffic()
+          M.queueTeleport = false
+      end
+      if be:getEnabled() and not freeroam_bigMapMode.bigMapActive() then
+          -- Add visibility update
+          updateTrafficVisibility(dtReal)
+          doTraffic(dtReal, dtSim)
+      end
   end
 end
 

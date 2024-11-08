@@ -23,7 +23,7 @@ local boughtStarterVehicle
 local organizationInteraction = {}
 
 local devActions = {"dropPlayerAtCameraNoReset"}
-local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabberStrength"}
+local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabberStrength", "nodegrabberAction"}
 
 
 local actionWhitelist = deepcopy(devActions)
