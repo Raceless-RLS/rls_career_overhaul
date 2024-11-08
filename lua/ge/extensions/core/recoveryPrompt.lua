@@ -353,7 +353,9 @@ local function addTowingButtons()
 
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
-    print("garage: " .. dumps(garage))
+
+    if career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
+
     local function getPrice(target)
       if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
         if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
@@ -398,6 +400,7 @@ local function addTowingButtons()
       price = getPrice,
       confirmationText = "Do you want to tow your vehicle to this garage?"
     }
+    ::continue::
   end
 end
 
@@ -407,6 +410,8 @@ local function addTaxiButtons()
 
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
+    
+    if career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
     buttonOptions[string.format("taxiTo%s", garage.id)] =
     {
       type = "walk",
@@ -428,6 +433,7 @@ local function addTaxiButtons()
       price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)}} end,
       confirmationText = "Do you want to use the taxi?"
     }
+    ::continue::
   end
 
   local function getPrice()
@@ -867,7 +873,8 @@ M.uiPopupButtonPressed = uiPopupButtonPressed
 M.uiPopupCancelPressed = uiPopupCancelPressed
 M.openDefaultPopup = openDefaultPopup
 M.isOpen = isOpen
-
+M.addTowingButtons = addTowingButtons
+M.addTaxiButtons = addTaxiButtons
 M.onCareerModulesActivated = onCareerModulesActivated
 M.onClientStartMission = onClientStartMission
 return M

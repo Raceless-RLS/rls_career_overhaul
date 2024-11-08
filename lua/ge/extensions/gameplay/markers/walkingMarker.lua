@@ -92,6 +92,9 @@ function C:update(data)
     if overlap and not area.overlap then
       if screenObjTemp then
         Engine.Audio.playOnce('AudioGui','event:>UI>Career>Computer', {position = vec3(self.pos.x, self.pos.y, self.pos.z)})
+        if self.cluster.garageId and career_career.isActive() then
+          career_modules_extraSaveData.addDiscoveredGarage(self.cluster.garageId)
+        end
       end
       area.overlap = true
     end
@@ -198,7 +201,6 @@ function C:interactInPlayMode(interactData, interactableElements)
       local garageId = self.cluster.garageId
       if garageId then
         if career_career.isActive() then
-          local career_modules_extraSaveData = require('career_modules_extraSaveData')
           if not career_modules_extraSaveData.isPurchasedGarage(garageId) then
           -- Don't add interaction elements if garage isn't purchased
           return
