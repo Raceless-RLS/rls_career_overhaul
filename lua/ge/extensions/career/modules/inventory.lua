@@ -40,7 +40,7 @@ local function getClosestGarage(pos)
   for _, garage in ipairs(facilities.garages) do
     local zones = freeroam_facilities.getZonesForFacility(garage)
     local dist = zones[1].center:distance(playerPos)
-    if dist < minDist then
+    if dist < minDist and career_modules_extraSaveData.isDiscoveredGarage(garage.id) then
       closestGarage = garage
       minDist = dist
     end
