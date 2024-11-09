@@ -3,8 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'career_career', 'career_modules_insurance', 'career_saveSystem', 'career_modules_playerAttributes',
-                  'gameplay_traffic', 'gameplay_drift_general', 'gameplay_drift_scoring'}
+M.dependencies = {}
 
 local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
 

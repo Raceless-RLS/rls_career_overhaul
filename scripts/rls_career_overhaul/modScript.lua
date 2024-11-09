@@ -8,3 +8,6 @@ setExtensionUnloadMode("core/recoveryPrompt", "manual")
 -- Load career next since many modules depend on it
 load("career/career")
 setExtensionUnloadMode("career/career", "manual")
+
+load("gameplay_events_freeroamEvents")
+setExtensionUnloadMode("gameplay_events_freeroamEvents", "manual")

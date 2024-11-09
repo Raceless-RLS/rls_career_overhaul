@@ -234,17 +234,17 @@ resetInternalStates()
 local function resetParameters()
   -- parameters are used for finer AI control
   parameters = {
-    turnForceCoef = 2.5, -- coefficient for curve spring forces
-    awarenessForceCoef = 0.75, -- coefficient for vehicle awareness displacement
-    edgeDist = 0.1, -- minimum distance from the edge of the road
-    trafficWaitTime = 1, -- traffic delay after stopping at intersection
+    turnForceCoef = 2, -- coefficient for curve spring forces
+    awarenessForceCoef = 0.25, -- coefficient for vehicle awareness displacement
+    edgeDist = 0, -- minimum distance from the edge of the road
+    trafficWaitTime = 2, -- traffic delay after stopping at intersection
     enableElectrics = true, -- allows the ai to automatically use electrics such as hazard lights (especially for traffic)
     driveStyle = 'default',
-    staticFrictionCoefMult = 1.1,
-    lookAheadKv = 1.5,
+    staticFrictionCoefMult = 0.95,
+    lookAheadKv = 0.6,
     applyWidthMarginOffset = true,
     planErrorSmoothing = true,
-    springForceIntegratorDispLim = 0.15 -- node displacement force magnitude limit
+    springForceIntegratorDispLim = 0.1 -- node displacement force magnitude limit
   }
 end
 resetParameters()
@@ -1057,13 +1057,13 @@ local function laneChange(plan, dist, signedDisp)
     local targetVehicleSpeed = 0
     
     -- Scan for vehicles in target lane
-    for _, v in ipairs(trafficTable or {}) do
+  for _, v in ipairs(trafficTable or {}) do
       if v.pos:squaredDistance(aiPos) < square(minPassingDist) then
-        local relativePos = v.pos - aiPos
-        local lateralDist = relativePos:dot(ai.rightVec)
+      local relativePos = v.pos - aiPos
+      local lateralDist = relativePos:dot(ai.rightVec)
         local forwardDist = relativePos:dot(aiDirVec)
         
-        if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
+      if (signedDisp < 0 and lateralDist < 0) or (signedDisp > 0 and lateralDist > 0) then
           if forwardDist > 0 then
             gapAheadDist = min(gapAheadDist, forwardDist)
             targetVehicleSpeed = (v.vel or vec3(0,0,0)):dot(aiDirVec)
@@ -1076,10 +1076,10 @@ local function laneChange(plan, dist, signedDisp)
   if relativeSpeed > -20 then  -- More aggressive gap acceptance (changed from -10)
     laneIsClear = false
   end
-end
         end
       end
     end
+  end
 
     local gapSize = gapAheadDist - gapBehindDist
     local minGapSize = aiSpeed * (isHighway and 4 or 3)
@@ -1123,6 +1123,7 @@ end
     openLaneToLaneRange(plan[i])
     curDist = curDist + plan[i-1].length
     
+    -- Use enhanced smooth transition
     local progress = smoothStep(curDist * invDist)
     plan[i].lateralXnorm = clamp(
       plan[i].lateralXnorm + signedDisp * progress,
@@ -2387,7 +2388,6 @@ local function planAhead(route, baseRoute)
         end
 
         local limWidth = v.targetType == 'follow' and 2 * max(n1.radiusOrig, n2.radiusOrig) or plWidth
-        limWidth = limWidth + 1.5
 
         if minSqDist < square((ai.width + limWidth) * 0.8) then
           local velProjOnSeg = max(0, v.vel:dot(nDir))
