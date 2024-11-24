@@ -34,6 +34,18 @@
       "tags":["truck"],
       "defaultPrice": 15000,
       "capacity": 2
+    },
+    {
+      "id":"chinatownGarage",
+      "name":"Chinatown Garage",
+      "description":"start here...",
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":["dragPaddockGarage"],
+      "parkingSpotNames":["chinatown_parking1", "chinatown_parking2"],
+      "icon":"poi_garage_2_round",
+      "tags":["truck"],
+      "defaultPrice": 15000,
+      "capacity": 2
     }
   ],
   "gasStations":[
@@ -527,6 +539,23 @@
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["dragPaddockGarageComputer_area", "dragPaddockGarageComputer_icon"]],
+      "screens":["commercialGarageComputer_screen_2"],
+      "functions": {"painting":false, "tuning":true, "vehicleInventory":true, "vehicleShop":false, "partShop":false, "partInventory":true, "insurancePolicies":false},
+      "activityAcceptProps":[
+        {"keyLabel":"Vehicle & Parts Management"},
+        {"keyLabel":"Vehicle & Parts Shopping"}
+      ],
+      "iconOffsetHeight":0.24,
+      "iconLift":0.24,
+      "icon":"poi_laptop_round"
+    },
+    {
+      "id":"chinatownGarageComputer_area",
+      "garageId":"chinatownGarage",
+      "name":"Chinatown Garage",
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "preview":"commercialGarageComputer2.jpg",
+      "doors":[["chinatownGarageComputer_area", "chinatownGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
       "functions": {"painting":false, "tuning":true, "vehicleInventory":true, "vehicleShop":false, "partShop":false, "partInventory":true, "insurancePolicies":false},
       "activityAcceptProps":[

@@ -883,7 +883,7 @@
       },
       "isMultiSpot":false,
       "name":"illegalDealershipParking",
-      "oldId":1861,
+      "oldId":1859,
       "pos":[
         334.3110352,
         1544.787109,
@@ -919,7 +919,7 @@
       },
       "isMultiSpot":false,
       "name":"offroadDealershipParking",
-      "oldId":1862,
+      "oldId":1860,
       "pos":[
         528.152771,
         -81.9838562,
@@ -955,7 +955,7 @@
       },
       "isMultiSpot":false,
       "name":"dragDealershipParking",
-      "oldId":1863,
+      "oldId":1861,
       "pos":[
         315.8274231,
         -136.2704468,
@@ -991,7 +991,7 @@
       },
       "isMultiSpot":false,
       "name":"rallyDealershipParking",
-      "oldId":1864,
+      "oldId":1862,
       "pos":[
         312.6099854,
         -168.2041779,
@@ -1027,7 +1027,7 @@
       },
       "isMultiSpot":false,
       "name":"discountDealershipParking",
-      "oldId":1866,
+      "oldId":1863,
       "pos":[
         -126.7744751,
         -39.35709763,
@@ -1063,7 +1063,7 @@
       },
       "isMultiSpot":false,
       "name":"onlineParking",
-      "oldId":1867,
+      "oldId":1864,
       "pos":[
         428.014679,
         1681.86792,
@@ -1099,7 +1099,7 @@
       },
       "isMultiSpot":false,
       "name":"onlineParkingBus",
-      "oldId":1868,
+      "oldId":1865,
       "pos":[
         430.9890747,
         1686.119019,
@@ -1115,6 +1115,78 @@
         4,
         14,
         8
+      ],
+      "spotAmount":1,
+      "spotDirection":"Left",
+      "spotOffset":0,
+      "spotRotation":0
+    },
+    {
+      "color":[
+        1,
+        1,
+        1
+      ],
+      "customFields":{
+        "names":{},
+        "tags":{},
+        "types":{},
+        "values":{}
+      },
+      "isMultiSpot":false,
+      "name":"chinatown_parking1",
+      "oldId":2212,
+      "pos":[
+        -736.3143921,
+        602.4072266,
+        115.6663055
+      ],
+      "rot":[
+        0,
+        0,
+        0,
+        1
+      ],
+      "scl":[
+        2.5,
+        6,
+        3
+      ],
+      "spotAmount":1,
+      "spotDirection":"Left",
+      "spotOffset":0,
+      "spotRotation":0
+    },
+    {
+      "color":[
+        1,
+        1,
+        1
+      ],
+      "customFields":{
+        "names":{},
+        "tags":{},
+        "types":{},
+        "values":{}
+      },
+      "isMultiSpot":false,
+      "name":"chinatown_parking2",
+      "oldId":2213,
+      "pos":[
+        -733.5112305,
+        602.2235718,
+        115.662384
+      ],
+      "rot":[
+        0,
+        0,
+        0,
+        1
+      ],
+      "scl":[
+        2.5,
+        6,
+        3
       ],
       "spotAmount":1,
       "spotDirection":"Left",
@@ -1497,6 +1569,69 @@
           -214.4368744,
           -213.8125916,
           118.9058685
+        ]
+      ]
+    },
+    {
+      "bot":{
+        "active":false,
+        "normal":[
+          0,
+          0,
+          -1
+        ],
+        "pos":[
+          0,
+          0,
+          -10
+        ]
+      },
+      "color":[
+        1,
+        1,
+        1
+      ],
+      "customFields":{
+        "names":{},
+        "tags":{},
+        "types":{},
+        "values":{}
+      },
+      "name":"chinatownGarage",
+      "oldId":2214,
+      "top":{
+        "active":false,
+        "normal":[
+          0,
+          0,
+          1
+        ],
+        "pos":[
+          0,
+          0,
+          10
+        ]
+      },
+      "vertices":[
+        [
+          -727.8471069,
+          598.585144,
+          113.2155685
+        ],
+        [
+          -727.8780518,
+          605.6002197,
+          115.7227631
+        ],
+        [
+          -738.5219727,
+          605.736145,
+          112.7482681
+        ],
+        [
+          -738.2688599,
+          598.9611206,
+          114.0600433
         ]
       ]
     }
