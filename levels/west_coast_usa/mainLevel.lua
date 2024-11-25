@@ -15,12 +15,18 @@ local M = {}
 --end
 
 local function setAllLightsEnabled(group, value)
-  for i = 0, group.obj:getCount(), 1 do
-      local id = group.obj:idAt(i)
-      local obj = scenetree.findObjectById(id)
-      if obj and obj.obj:isSubClassOf('LightBase') then
-          obj.obj:setLightEnabled( value )
+  if not group or not group.obj then return end
+  
+  for i = 0, group.obj:getCount() - 1 do
+    local id = group.obj:idAt(i)
+    local obj = scenetree.findObjectById(id)
+    if obj then
+      if obj.obj:isSubClassOf('LightBase') then
+        obj.obj:setLightEnabled(value)
+      elseif obj.obj:isSubClassOf('SimGroup') then
+        setAllLightsEnabled(obj, value)
       end
+    end
   end
 end
 
