@@ -32,118 +32,118 @@
             </div>
           </template>
 
-          <!-- Inventory Group -->
-          <template v-if="group.id === 0">
-            <!-- Summary Item at Top -->
-            <div class="part-item" bng-ui-scope="veh-part-inv">
-              <div class="part-info-col">
-                <div>
-                  <span class="part-name">{{ group.parts.length }} Parts</span>
+            <!-- Inventory Group -->
+            <template v-if="group.id === 0">
+              <!-- Summary Item at Top -->
+              <div class="part-item" bng-ui-scope="veh-part-inv">
+                <div class="part-info-col">
+                  <div>
+                    <span class="part-name">{{ group.parts.length }} Parts</span>
+                  </div>
+                  <div class="part-info-row">
+                    <span class="right"></span>
+                    <span class="right">
+                      <BngPropVal :iconType="icons.beamCurrency" :valueLabel="totalInventoryValue" />
+                    </span>
+                    <span class="center"></span>
+                  </div>
                 </div>
-                <div class="part-info-row">
-                  <span class="right"></span>
-                  <span class="right">
-                    <BngPropVal :iconType="icons.beamCurrency" :valueLabel="totalInventoryValue" />
-                  </span>
-                  <span class="center"></span>
-                </div>
+                <BngButton
+                  v-if="group.parts.length > 0"
+                  :accent="ACCENTS.outlined"
+                  class="part-button"
+                  @click="confirmSellAllParts"
+                >
+                  Sell All
+                </BngButton>
               </div>
-              <BngButton
-                v-if="group.parts.length > 0"
-                :accent="ACCENTS.outlined"
-                class="part-button"
-                @click="confirmSellAllParts"
-              >
-                Sell All
-              </BngButton>
-            </div>
 
-            <!-- Individual Parts List -->
-            <div
-              v-for="(part, index) in group.parts"
-              :key="part.data.id"
-              class="part-item"
-              bng-ui-scope="veh-part-inv"
-              v-bng-on-ui-nav:back="() => group.onExpanded(false)"
-            >
-              <!-- Part Item Layout -->
-              <div class="part-info-col" v-if="group.ready || index < immediateLimit">
-                <div>
-                  <span class="part-name">{{ part.name }}</span>
-                </div>
-                <div class="part-info-row">
-                  <span class="right">{{ part.mileage }}</span>
-                  <span class="right">
-                    <BngPropVal :iconType="icons.beamCurrency" :valueLabel="part.valueFormatted" />
-                  </span>
-                  <span v-if="groupBy !== 'location'" class="center">{{ part.location }}</span>
-                  <span v-else-if="groupBy !== 'model'" class="center">{{ part.model }}</span>
-                </div>
+              <!-- Individual Parts List -->
+                <div
+                  v-for="(part, index) in group.parts"
+                  :key="part.data.id"
+                  class="part-item"
+                  bng-ui-scope="veh-part-inv"
+                  v-bng-on-ui-nav:back="() => group.onExpanded(false)"
+                >
+                  <!-- Part Item Layout -->
+                  <div class="part-info-col" v-if="group.ready || index < immediateLimit">
+                    <div>
+                      <span class="part-name">{{ part.name }}</span>
+                    </div>
+                    <div class="part-info-row">
+                      <span class="right">{{ part.mileage }}</span>
+                      <span class="right">
+                        <BngPropVal :iconType="icons.beamCurrency" :valueLabel="part.valueFormatted" />
+                      </span>
+                      <span v-if="groupBy !== 'location'" class="center">{{ part.location }}</span>
+                      <span v-else-if="groupBy !== 'model'" class="center">{{ part.model }}</span>
+                    </div>
+                  </div>
+                  <BngButton
+                    v-if="(group.ready || index < immediateLimit) && part.functions.sell"
+                    :accent="ACCENTS.outlined"
+                    class="part-button"
+                    @click="confirmSellPart(part.data)"
+                  >
+                    Sell
+                  </BngButton>
               </div>
-              <BngButton
-                v-if="(group.ready || index < immediateLimit) && part.functions.sell"
-                :accent="ACCENTS.outlined"
-                class="part-button"
-                @click="confirmSellPart(part.data)"
-              >
-                Sell
-              </BngButton>
-            </div>
-          </template>
+            </template>
 
-          <!-- Display parts for other groups -->
-          <template v-else>
-            <div
-              v-for="(part, index) in group.parts"
-              :key="part.data.id"
-              class="part-item"
-              bng-ui-scope="veh-part-inv"
-              v-bng-on-ui-nav:back="() => group.onExpanded(false)"
-            >
-              <!-- Part Item Layout -->
-              <div class="part-info-col" v-if="group.ready || index < immediateLimit">
-                <div>
-                  <span class="part-name">{{ part.name }}</span>
-                </div>
-                <div class="part-info-row">
-                  <span class="right">{{ part.mileage }}</span>
-                  <span class="right">
-                    <BngPropVal :iconType="icons.beamCurrency" :valueLabel="part.valueFormatted" />
-                  </span>
-                  <span v-if="groupBy !== 'location'" class="center">{{ part.location }}</span>
-                  <span v-else-if="groupBy !== 'model'" class="center">{{ part.model }}</span>
-                </div>
+            <!-- Display parts for other groups -->
+            <template v-else>
+                <div
+                  v-for="(part, index) in group.parts"
+                  :key="part.data.id"
+                  class="part-item"
+                  bng-ui-scope="veh-part-inv"
+                  v-bng-on-ui-nav:back="() => group.onExpanded(false)"
+                >
+                  <!-- Part Item Layout -->
+                  <div class="part-info-col" v-if="group.ready || index < immediateLimit">
+                    <div>
+                      <span class="part-name">{{ part.name }}</span>
+                    </div>
+                    <div class="part-info-row">
+                      <span class="right">{{ part.mileage }}</span>
+                      <span class="right">
+                        <BngPropVal :iconType="icons.beamCurrency" :valueLabel="part.valueFormatted" />
+                      </span>
+                      <span v-if="groupBy !== 'location'" class="center">{{ part.location }}</span>
+                      <span v-else-if="groupBy !== 'model'" class="center">{{ part.model }}</span>
+                    </div>
+                  </div>
+                  <BngButton
+                    v-if="group.ready || index < immediateLimit"
+                    :disabled="!part.functions.install"
+                    :accent="ACCENTS.outlined"
+                    class="part-button"
+                    @click="movePartToLocation(partInventoryStore.partInventoryData.currentVehicle, part.data.id)"
+                    v-bng-tooltip="'Put into current vehicle'"
+                  >
+                    Install
+                  </BngButton>
+                  <BngButton
+                    v-if="(group.ready || index < immediateLimit) && !part.functions.sell"
+                    :disabled="!part.functions.uninstall"
+                    :accent="ACCENTS.outlined"
+                    class="part-button"
+                    @click="movePartToLocation(0, part.data.id)"
+                    v-bng-tooltip="'Remove from vehicle'"
+                  >
+                    Uninstall
+                  </BngButton>
+                  <BngButton
+                    v-if="(group.ready || index < immediateLimit) && part.functions.sell"
+                    :accent="ACCENTS.outlined"
+                    class="part-button"
+                    @click="confirmSellPart(part.data)"
+                  >
+                    Sell
+                  </BngButton>
               </div>
-              <BngButton
-                v-if="group.ready || index < immediateLimit"
-                :disabled="!part.functions.install"
-                :accent="ACCENTS.outlined"
-                class="part-button"
-                @click="movePartToLocation(partInventoryStore.partInventoryData.currentVehicle, part.data.id)"
-                v-bng-tooltip="'Put into current vehicle'"
-              >
-                Install
-              </BngButton>
-              <BngButton
-                v-if="(group.ready || index < immediateLimit) && !part.functions.sell"
-                :disabled="!part.functions.uninstall"
-                :accent="ACCENTS.outlined"
-                class="part-button"
-                @click="movePartToLocation(0, part.data.id)"
-                v-bng-tooltip="'Remove from vehicle'"
-              >
-                Uninstall
-              </BngButton>
-              <BngButton
-                v-if="(group.ready || index < immediateLimit) && part.functions.sell"
-                :accent="ACCENTS.outlined"
-                class="part-button"
-                @click="confirmSellPart(part.data)"
-              >
-                Sell
-              </BngButton>
-            </div>
-          </template>
+            </template>
         </AccordionItem>
       </Accordion>
     </div>
@@ -346,9 +346,9 @@ const confirmSellAllParts = async () => {
 const sellAllParts = () => {
   const inventoryGroup = groups.value.find((group) => group.id === 0);
   if (inventoryGroup) {
-    inventoryGroup.parts.forEach((part) => {
-      sellPart(part.data);
-    });
+    const partIds = inventoryGroup.parts.map(part => part.data.id);
+    lua.career_modules_partInventory.sellParts(partIds);
+    emit("partSold");
   }
 };
 </script>

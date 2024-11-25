@@ -70,6 +70,32 @@ local function sellPart(partId)
   end
 end
 
+local function sellParts(partIds)
+  local totalValue = 0
+  local soldCount = 0
+  
+  for _, partId in ipairs(partIds) do
+    local part = partInventory[partId]
+    if part and part.location == 0 then
+      totalValue = totalValue + career_modules_valueCalculator.getPartValue(part)
+      partInventory[partId] = nil
+      soldCount = soldCount + 1
+    end
+  end
+
+  if soldCount > 0 then
+    career_modules_playerAttributes.addAttributes(
+      {money=totalValue}, 
+      {tags={"partsSold","selling"}, label = string.format("Sold %d Parts", soldCount)}
+    )
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
+    
+    if partInventoryOpen then
+      M.sendUIData()
+    end
+  end
+end
+
 local function removePartRec(partId, config, removedParts)
   local part = partInventory[partId]
   if not part then return end
@@ -858,6 +884,7 @@ M.addPartToInventory = addPartToInventory
 M.getPart = getPart
 M.updatePartConditionsInInventory = updatePartConditionsInInventory
 M.sellPart = sellPart
+M.sellParts = sellParts
 
 M.onExtensionLoaded = onExtensionLoaded
 M.onUpdate = onUpdate
