@@ -128,7 +128,6 @@ local function generateVehicleList()
     for _, randomVehicleInfo in ipairs(randomVehicleInfos) do
       randomVehicleInfo.sellerId = seller.id
       randomVehicleInfo.sellerName = seller.name
-      randomVehicleInfo.sellerDescription = seller.description
       local filter = randomVehicleInfo.filter
       local years = randomVehicleInfo.Years or randomVehicleInfo.aggregates.Years
 
