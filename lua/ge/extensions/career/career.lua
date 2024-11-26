@@ -210,22 +210,24 @@ end
 
 local function activateCareer(removeVehicles)
   if careerActive then return end
-  -- load career
+  -- Load career
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
   if not saveSlot then return end
   extensions.hook("onBeforeCareerActivate")
-  if removeVehicles == nil then
-    removeVehicles = true
-  end
+  removeVehicles = removeVehicles ~= nil and removeVehicles or true
   if core_groundMarkers then core_groundMarkers.setPath(nil) end
 
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
   local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
   local levelToLoad = careerData.level or levelName
-  boughtStarterVehicle = careerData.boughtStarterVehicle
+  boughtStarterVehicle = true
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
   organizationInteraction = careerData.organizationInteraction or {}
+
+  -- Disable the tutorial
+  M.tutorialEnabled = false
+  log("I", "", "Tutorial for career disabled.")
 
   if not getCurrentLevelIdentifier() or (getCurrentLevelIdentifier() ~= levelToLoad) then
     spawn.preventPlayerSpawning = true
@@ -249,10 +251,8 @@ local function activateCareer(removeVehicles)
 
   career_modules_playerDriving.ensureTraffic = true
 
-  if career_modules_linearTutorial.isLinearTutorialActive() then
-    M.setAutosaveEnabled(false)
-    print("Disabling autosave because we are in tutorial!")
-  end
+  -- Ensure autosave is enabled since the tutorial is disabled
+  M.setAutosaveEnabled(true)
 end
 
 local function deactivateCareer(saveCareer)

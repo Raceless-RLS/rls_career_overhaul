@@ -6,10 +6,13 @@ local discoveredGarages = {}
 local saveFile = "purchasedGarages.json"
 
 local function savePurchasedGarages()
+  print("Saving purchased garages")
   if not career_career.isActive() then return end
+  print("Career is active")
   local _, currentSavePath = career_saveSystem.getCurrentSaveSlot()
+  print("Current save path: " .. currentSavePath)
   if not currentSavePath then return end
-
+  print("Current save path is valid")
   -- Ensure directory exists
   local dirPath = currentSavePath .. "/career/rls_career"
   if not FS:directoryExists(dirPath) then
@@ -36,6 +39,10 @@ local function isDiscoveredGarage(garageId)
 end
 
 local function addPurchasedGarage(garageId)
+  if purchasedGarages == {} then
+    print("Showing non-tutorial welcome splashscreen")
+    career_modules_linearTutorial.showNonTutorialWelcomeSplashscreen()
+  end
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   savePurchasedGarages()

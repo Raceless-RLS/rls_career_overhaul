@@ -580,8 +580,10 @@ local function setupInventory()
 
     if career_modules_linearTutorial.getLinearStep() == -1 then
       -- default placement is in front of the dealership, facing it
-      spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
-      gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
+      --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
+      --gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
+      freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+      career_modules_extraSaveData.addPurchasedGarage("chinatownGarage")
     else
       -- spawn the tutorial vehicle
       local model, config = "covet","vehicles/covet/covet_tutorial.pc"

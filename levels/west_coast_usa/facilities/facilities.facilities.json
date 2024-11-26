@@ -8,7 +8,7 @@
       "zoneNames":["servicestationGarage1", "servicestationGarage2"],
       "parkingSpotNames":["serviceStationParking1", "serviceStationParking2"],
       "icon":"poi_garage_2_round",
-      "defaultPrice": 0,
+      "defaultPrice": 250000,
       "capacity": 5
     },
     {
@@ -20,7 +20,7 @@
       "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 45000,
+      "defaultPrice": 450000,
       "capacity": 15
     },
 	{
@@ -32,7 +32,7 @@
       "parkingSpotNames":["dragPaddockPark1", "dragPaddockPark2"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 15000,
+      "defaultPrice": 150000,
       "capacity": 2
     },
     {
@@ -44,7 +44,7 @@
       "parkingSpotNames":["chinatown_parking1", "chinatown_parking2"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 15000,
+      "defaultPrice": 0,
       "capacity": 2
     }
   ],
@@ -557,7 +557,7 @@
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["chinatownGarageComputer_area", "chinatownGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
-      "functions": {"painting":false, "tuning":true, "vehicleInventory":true, "vehicleShop":false, "partShop":false, "partInventory":true, "insurancePolicies":false},
+      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
       "activityAcceptProps":[
         {"keyLabel":"Vehicle & Parts Management"},
         {"keyLabel":"Vehicle & Parts Shopping"}
