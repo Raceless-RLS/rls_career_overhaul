@@ -355,9 +355,13 @@ const sellAllParts = () => {
 
 <style scoped lang="scss">
 .part-groups {
-  max-height: 100%;
-  overflow: hidden auto;
+  min-height: 0;
+  max-height: 80vh; // Add this to limit height
+  overflow-y: auto;
+  display: flex;  // Add this
+  flex-direction: column; // Add this
 }
+
 
 .veh-part-caption {
   display: flex;
@@ -407,7 +411,7 @@ const sellAllParts = () => {
   flex-flow: row nowrap;
   justify-content: stretch;
   align-items: center;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
   height: 4em;
   color: #fff;
