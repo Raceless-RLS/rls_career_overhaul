@@ -346,9 +346,9 @@ const confirmSellAllParts = async () => {
 const sellAllParts = () => {
   const inventoryGroup = groups.value.find((group) => group.id === 0);
   if (inventoryGroup) {
-    const partIds = inventoryGroup.parts.map(part => part.data.id);
-    lua.career_modules_partInventory.sellParts(partIds);
-    emit("partSold");
+    inventoryGroup.parts.forEach((part) => {
+      sellPart(part.data);
+    });
   }
 };
 </script>

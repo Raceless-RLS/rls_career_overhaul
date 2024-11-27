@@ -46,6 +46,7 @@ local function addPurchasedGarage(garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   savePurchasedGarages()
+  career_modules_inventory.updateGarageSize()
 end
 
 local function addDiscoveredGarage(garageId)
@@ -89,6 +90,21 @@ local function loadPurchasedGarages()
   purchaseDefaultGarage()
 end
 
+local function getTotalGarageCapacity()
+  local totalCapacity = 0
+  local garages = freeroam_facilities.getFacilitiesByType("garage")
+  
+  if garages then
+    for _, garage in pairs(garages) do
+      if purchasedGarages[garage.id] then
+        totalCapacity = totalCapacity + (garage.capacity or 0)
+      end
+    end
+  end
+  
+  return totalCapacity
+end
+
 local function onCareerModulesActivated()
   loadPurchasedGarages()
 end
@@ -100,6 +116,7 @@ local function onUpdate()
   end
 end
 
+M.getTotalGarageCapacity = getTotalGarageCapacity
 M.onCareerModulesActivated = onCareerModulesActivated
 M.isPurchasedGarage = isPurchasedGarage
 M.addPurchasedGarage = addPurchasedGarage

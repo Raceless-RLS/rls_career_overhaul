@@ -63,9 +63,7 @@
                 <div class="career-status-value justifyContentLeft bottomMargin">
                   Premium :
                   <BngUnit
-                    :beambucks="
-                      (currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && tempPolicyPremiumDetails.price) || policy.premium
-                    " />
+                    :money="(currEditedPolicyId == policy.id && tempPolicyPremiumDetails !== undefined && tempPolicyPremiumDetails.price) || policy.premium" />
                 </div>
               </div>
               <div class="details" v-else>
@@ -87,7 +85,7 @@
                           v-for="(choice, e) in perk.changeability.changeParams.choices"
                           :key="e">
                           <BngButton
-                            :accent="getPerkDataByName(perkName, policy.id, false).value !== choice ? 'secondary' : ''"
+                            :accent="getPerkDataByName(perkName, policy.id, false).value !== choice ? ACCENTS.secondary : ''"
                             @click="changeTempPolicyPerk(perkName, choice)">
                             {{
                               (perk.unit === "distance" && choice / 1000 + " kms") ||
@@ -106,7 +104,7 @@
                     <!-- FIXME: please don't use inline styles unless absolutely necessary -->
                     <td style="text-align: center; padding: 0px 20px">
                       <div class="career-status-value" v-if="true">
-                        <BngUnit :beambucks="getPerkDataByName(perkName, policy.id, false).premiumInfluence" />
+                        <BngUnit :money="getPerkDataByName(perkName, policy.id, false).premiumInfluence" />
                       </div>
                     </td>
                   </tr>
@@ -127,7 +125,7 @@
                           =
                         </p>
                         <BngUnit
-                          :beambucks="
+                          :money="
                             (currEditedPolicyId == policy.id &&
                               tempPolicyPremiumDetails !== undefined &&
                               tempPolicyPremiumDetails.price * policy.plData.bonus) ||
@@ -155,10 +153,10 @@
                 >Customize coverage</BngButton
               >
               <div v-if="policy.plData.owned && currEditedPolicyId !== undefined && currEditedPolicyId === policy.id">
-                <BngButton accent="attention" @click="cancelPerksChanges()">Cancel</BngButton>
-                <BngButton accent="secondary" :disabled="insurancePoliciesStore.careerMoney < policy.paperworkFees" @click="confirmPerksChanges()">
+                <BngButton :accent="ACCENTS.attention" @click="cancelPerksChanges()">Cancel</BngButton>
+                <BngButton :accent="ACCENTS.secondary" :disabled="insurancePoliciesStore.careerMoney < policy.paperworkFees" @click="confirmPerksChanges()">
                   <div v-if="insurancePoliciesStore.careerMoney < policy.paperworkFees">Insufficient funds</div>
-                  <div v-else>Confirm changes for <BngUnit :beambucks="policy.paperworkFees" /></div>
+                  <div v-else>Confirm changes for <BngUnit :money="policy.paperworkFees" /></div>
                 </BngButton>
               </div>
             </div>
@@ -169,16 +167,16 @@
             <!-- FIXME: please don't use inline styles unless absolutely necessary -->
             <BngButton
               style="margin-left: 20px"
-              :disabled="insurancePoliciesStore.careerBonusStars < policy.resetBonus.price.bonusStars.amount"
+              :disabled="!policy.resetBonus.price.careerVouchers || insurancePoliciesStore.careerVouchers < policy.resetBonus.price.careerVouchers.amount"
               @click="payBonusReset(policy.id)"
-              accent="secondary"
+              :accent="ACCENTS.secondary"
               v-if="policy.resetBonus && policy.plData.bonus > policy.resetBonus.conditions.minBonus">
-              Pay {{ policy.resetBonus.price.bonusStars && policy.resetBonus.price.bonusStars.amount + " bonus stars" }} for a favor ..
+              Pay {{ policy.resetBonus.price.careerVouchers && policy.resetBonus.price.careerVouchers.amount + " vouchers" }} for a favor ..
             </BngButton>
           </div>
           <div>
             <BngButton v-if="!policy.plData.owned" :disabled="insurancePoliciesStore.careerMoney < policy.initialBuyPrice" @click="purchasePolicy(policy.id)"
-              >Purchase for <BngUnit :beambucks="policy.initialBuyPrice"
+              >Purchase for <BngUnit :money="policy.initialBuyPrice"
             /></BngButton>
           </div>
         </div>
@@ -190,7 +188,7 @@
 <script setup>
 import { ref } from "vue"
 import { lua, useBridge } from "@/bridge"
-import { BngButton, BngUnit } from "@/common/components/base"
+import { BngButton, ACCENTS, BngUnit } from "@/common/components/base"
 import { useInsurancePoliciesStore } from "../../stores/insurancePoliciesStore"
 const { units } = useBridge()
 
@@ -328,4 +326,3 @@ tr:nth-child(even) {
   }
 }
 </style>
-

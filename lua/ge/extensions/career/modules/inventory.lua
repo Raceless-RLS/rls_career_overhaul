@@ -13,7 +13,7 @@ local xVec, yVec, zVec = vec3(1,0,0), vec3(0,1,0), vec3(0,0,1)
 
 local saveAnyVehiclePosDEBUG = false
 
-local slotAmount = 15
+local slotAmount = 0
 
 local vehicles = {}
 local dirtiedVehicles = {}
@@ -75,6 +75,7 @@ end
 
 local function onExtensionLoaded()
   if not career_career.isActive() then return false end
+  slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
 
   -- load from saveslot
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
@@ -297,6 +298,7 @@ local function getNumberOfFreeSlots()
   for inventoryId, vehicle in pairs(vehicles) do
     if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
   end
+  slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
   return slotAmount - ownedVehiclesAmount
 end
 
