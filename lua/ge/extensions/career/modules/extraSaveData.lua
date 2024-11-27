@@ -46,7 +46,6 @@ local function addPurchasedGarage(garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   savePurchasedGarages()
-  career_modules_inventory.updateGarageSize()
 end
 
 local function addDiscoveredGarage(garageId)

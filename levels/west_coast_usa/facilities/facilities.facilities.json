@@ -38,7 +38,7 @@
     {
       "id":"chinatownGarage",
       "name":"Chinatown Garage",
-      "description":"start here...",
+      "description":"This is the starter garage, humble beginnings.",
       "preview":"garage_servicestation.jpg",
       "zoneNames":["dragPaddockGarage"],
       "parkingSpotNames":["chinatown_parking1", "chinatown_parking2"],
@@ -46,6 +46,18 @@
       "tags":["truck"],
       "defaultPrice": 0,
       "capacity": 2
+    },
+    {
+      "id":"cul-de-sacGarage",
+      "name":"Cul-de-Sac Garage",
+      "description":"A Large Mansion with a Huge Garage to store any vehicle.",
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":["dragPaddockGarage"],
+      "parkingSpotNames":["cul-de-sacGarageParkingS", "cul-de-sacGarageParkingL"],
+      "icon":"poi_garage_2_round",
+      "tags":["truck"],
+      "defaultPrice": 400000,
+      "capacity": 5
     }
   ],
   "gasStations":[
@@ -556,6 +568,23 @@
       "description":"ui.career.computer.bigmapLabel.garage",
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["chinatownGarageComputer_area", "chinatownGarageComputer_icon"]],
+      "screens":["commercialGarageComputer_screen_2"],
+      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
+      "activityAcceptProps":[
+        {"keyLabel":"Vehicle & Parts Management"},
+        {"keyLabel":"Vehicle & Parts Shopping"}
+      ],
+      "iconOffsetHeight":0.24,
+      "iconLift":0.24,
+      "icon":"poi_laptop_round"
+    },
+    {
+      "id":"cul-de-sacGarageComputer_area",
+      "garageId":"cul-de-sacGarage",
+      "name":"Cul-de-Sac Garage",
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "preview":"commercialGarageComputer2.jpg",
+      "doors":[["cul-de-sacGarageComputer_area", "cul-de-sacGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
       "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
       "activityAcceptProps":[
