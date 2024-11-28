@@ -75,7 +75,9 @@ end
 
 local function onExtensionLoaded()
   if not career_career.isActive() then return false end
-  slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
+  if career_modules_extraSaveData then
+    slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
+  end
 
   -- load from saveslot
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
