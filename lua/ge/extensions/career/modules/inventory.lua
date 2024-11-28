@@ -4,7 +4,7 @@
 
 local M = {}
 
-M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
+M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator", "career_modules_extraSaveData"}
 
 local moduleVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
