@@ -6,10 +6,10 @@
       "description":"levels.west_coast_usa.garagePoints.servicestation.description",
       "preview":"garage_servicestation.jpg",
       "zoneNames":["servicestationGarage1", "servicestationGarage2"],
-      "parkingSpotNames":["serviceStationParking1", "serviceStationParking2"],
+      "parkingSpotNames":["serviceStationParking1", "serviceStationParking2" , "serviceStationParking3", "serviceStationParking4", "serviceStationParking5", "serviceStationParking6", "serviceStationParking7" , "serviceStationParking8", "serviceStationParking9"],
       "icon":"poi_garage_2_round",
-      "defaultPrice": 500000,
-      "capacity": 5
+      "defaultPrice": 5500000,
+      "capacity": 8
     },
     {
       "id":"commercialGarage",
@@ -17,10 +17,10 @@
       "description":"Commercial vehicle garage, transport trucks, heavy machinery, buses, large vans, trailers, and more.",
       "preview":"garage_servicestation.jpg",
       "zoneNames":["commercialGarage1"],
-      "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
+      "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParking3", "commercialGarageParking4", "commercialGarageParking5", "commercialGarageParking6", "commercialGarageParking7", "commercialGarageParking8", "commercialGarageParking9", "commercialGarageParking10", "commercialGarageParking11", "commercialGarageParking12", "commercialGarageParking13", "commercialGarageParking14", "commercialGarageParking15", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 1000000,
+      "defaultPrice": 857000,
       "capacity": 15
     },
 	{
@@ -32,7 +32,7 @@
       "parkingSpotNames":["dragPaddockPark1", "dragPaddockPark2"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 150000,
+      "defaultPrice": 115000,
       "capacity": 2
     },
     {
@@ -46,7 +46,31 @@
       "tags":["truck"],
       "defaultPrice": 0,
       "capacity": 2
+    },   
+    {
+      "id":"chinatownGarageOverflow",
+      "name":"Chinatown Overflow",
+      "description":"This is the starter garage, humble beginnings.",
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":["chinatownGarageOverflow"],
+      "parkingSpotNames":["chinatownOverflow_parking1", "chinatownOverflow_parking2" , "chinatownOverflow_parking3" , "chinatownOverflow_parking4"],
+      "icon":"poi_garage_2_round",
+      "tags":["truck"],
+      "defaultPrice": 75000,
+      "capacity": 2
     },
+    {
+      "id":"racePaddockGarage",
+      "name":"Race Paddock",
+      "description":"This is the starter garage, humble beginnings.",
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":["racePaddockGarage"],
+      "parkingSpotNames":["racePaddock_parking"],
+      "icon":"poi_garage_2_round",
+      "tags":["truck"],
+      "defaultPrice": 155000,
+      "capacity": 1
+    },   
     {
       "id":"Sealbrick1058Garage",
       "name":"1058 Sealbrick Street Garage",
@@ -56,7 +80,7 @@
       "parkingSpotNames":["Sealbrick1058Parking1", "Sealbrick1058Parking2", "Sealbrick1058Parking3","Sealbrick1058Parking3"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 120000,
+      "defaultPrice": 180000,
       "capacity": 3
     },
     {
@@ -68,8 +92,8 @@
       "parkingSpotNames":["cul-de-sacGarageParking1", "cul-de-sacGarageParking2", "cul-de-sacGarageParking3","cul-de-sacGarageParking4", "cul-de-sacGarageParking5"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
-      "defaultPrice": 400000,
-      "capacity": 5
+      "defaultPrice": 425000,
+      "capacity": 4
     }
   ],
   "gasStations":[
@@ -582,6 +606,40 @@
       "doors":[["chinatownGarageComputer_area", "chinatownGarageComputer_icon"]],
       "screens":["commercialGarageComputer_screen_2"],
       "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
+      "activityAcceptProps":[
+        {"keyLabel":"Vehicle & Parts Management"},
+        {"keyLabel":"Vehicle & Parts Shopping"}
+      ],
+      "iconOffsetHeight":0.24,
+      "iconLift":0.24,
+      "icon":"poi_laptop_round"
+    },
+    {
+      "id":"chinatownGarageOverflow_area",
+      "garageId":"chinatownGarageOverflow",
+      "name":"Chinatown Overflow",
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "preview":"commercialGarageComputer2.jpg",
+      "doors":[["chinatownGarageOverflow_area", "chinatownGarageOverhaul_icon"]],
+      "screens":["commercialGarageComputer_screen_2"],
+      "functions": {},
+      "activityAcceptProps":[
+        {"keyLabel":"Vehicle & Parts Management"},
+        {"keyLabel":"Vehicle & Parts Shopping"}
+      ],
+      "iconOffsetHeight":0.24,
+      "iconLift":0.24,
+      "icon":"poi_laptop_round"
+    },
+    {
+      "id":"racePaddockGarage_area",
+      "garageId":"racePaddockGarage",
+      "name":"Race Paddock",
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "preview":"commercialGarageComputer2.jpg",
+      "doors":[["racePaddockGarage_area", "racePaddockGarage_icon"]],
+      "screens":["commercialGarageComputer_screen_2"],
+      "functions": {"tuning":true, "vehicleInventory":true, "partInventory":true, "insurancePolicies":true},
       "activityAcceptProps":[
         {"keyLabel":"Vehicle & Parts Management"},
         {"keyLabel":"Vehicle & Parts Shopping"}

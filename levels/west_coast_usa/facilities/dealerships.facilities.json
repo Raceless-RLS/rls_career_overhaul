@@ -331,9 +331,9 @@
     }, 
     {
       "id":"illegalDealership",
-      "name":"Illegal Imports",
-      "description":"Illegally Imported (modded cars without a price)",
-      "stock": 15,
+      "name":"Misc Imports",
+      "description":"Misc Imported Vehicles (modded cars without a price)",
+      "stock": 5,
       "preview":"illegal.jpg",
       "doors":[["illegalDealership_area","illegalDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
@@ -346,7 +346,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Value":{"max":1000}}
+          "whiteList":{"Mileage":{"min":3050000, "max":900000000},"Value":{"max":100}}
         }
       ],
       "fees": 30000,
