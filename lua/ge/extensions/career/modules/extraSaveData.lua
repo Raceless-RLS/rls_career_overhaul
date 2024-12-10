@@ -6,13 +6,9 @@ local discoveredGarages = {}
 local saveFile = "purchasedGarages.json"
 
 local function savePurchasedGarages()
-  print("Saving purchased garages")
   if not career_career.isActive() then return end
-  print("Career is active")
   local _, currentSavePath = career_saveSystem.getCurrentSaveSlot()
-  print("Current save path: " .. currentSavePath)
   if not currentSavePath then return end
-  print("Current save path is valid")
   -- Ensure directory exists
   local dirPath = currentSavePath .. "/career/rls_career"
   if not FS:directoryExists(dirPath) then
@@ -24,10 +20,25 @@ local function savePurchasedGarages()
     discovered = discoveredGarages
   }
   career_saveSystem.jsonWriteFileSafe(dirPath .. "/" .. saveFile, data, true)
+  print("Saved Garage Data to: " .. dirPath .. "/" .. saveFile)
 end
 
 local function onSaveCurrentSaveSlotAsyncStart()
   savePurchasedGarages()
+end
+
+local function onSaveCurrentSaveSlot(currentSavePath)
+  local dirPath = currentSavePath .. "/career/rls_career"
+  if not FS:directoryExists(dirPath) then
+    FS:directoryCreate(dirPath)
+  end
+
+  local data = {
+    garages = purchasedGarages,
+    discovered = discoveredGarages
+  }
+  career_saveSystem.jsonWriteFileSafe(dirPath .. "/" .. saveFile, data, true)
+  print("Saved Garage Data to: " .. dirPath .. "/" .. saveFile)
 end
 
 local function isPurchasedGarage(garageId)

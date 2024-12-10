@@ -369,7 +369,7 @@ local function addTowingButtons()
       if not career_modules_extraSaveData.isPurchasedGarage(garage.id) then
         price = price + garage.defaultPrice
       end
-      return {money = {amount = price, canBeNegative = true}}
+      return {money = {amount = price, canBeNegative = false}}
     end
 
     buttonOptions[string.format("towTo%s", garage.id)] =
