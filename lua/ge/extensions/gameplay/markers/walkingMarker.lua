@@ -206,6 +206,7 @@ end
 function C:interactInPlayMode(interactData, interactableElements)
   if interactData.canInteract and self.anyOverlap then
       local garageId = self.cluster.garageId
+      print("garageId: " .. garageId)
       if garageId then
         if career_career.isActive() then
           if not career_modules_extraSaveData.isPurchasedGarage(garageId) then
@@ -317,7 +318,8 @@ local function cluster(pois, allClusters)
       visibilityRadius = wm.radius,
       screens = wm.screens,
       elemData = {},
-      create = create
+      create = create,
+      garageId = wm.garageId
     }
     for _, poi in ipairs(poisInCluster) do
       table.insert(cluster.elemData, poi.data)

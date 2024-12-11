@@ -1,4 +1,5 @@
 <template>
+  <!--div class="vehicle-shop-wrapper"-->
   <BngCard class="vehicle-shop-wrapper" v-bng-blur bng-ui-scope="vehicleList">
     <div class="address-bar">
       <BngButton v-bng-on-ui-nav:back,menu.asMouse @click="close" :accent="ACCENTS.attention">
@@ -10,8 +11,14 @@
       </div>
       <div class="spacer" style="width: 8em"></div>
     </div>
-    
     <div class="site-body" bng-nav-scroll bng-nav-scroll-force>
+      <!-- <div class="heading">
+        Place for customizing the shop's appearance, planning to add some image here
+        <h1 style="width:100%; text-align:center;">{{ getHeaderText() }}</h1>
+      </div> -->
+      <!-- <div class="layo-ut">
+        <span v-for="(layout, key) of layouts" :key="key" @click="switchLayout(key)" :class="{'layout-selected': layout.selected}">{{ layout.name }}</span>
+      </div> disabled temporarily -->
       <div class="price-notice"><span>*&nbsp;</span><span>Additional taxes and fees are applicable</span></div>
       
       <!-- Show regular list if at a specific dealer -->
@@ -63,6 +70,7 @@
       </div>
     </div>
   </BngCard>
+  <!--/div-->
 </template>
 
 <script setup>

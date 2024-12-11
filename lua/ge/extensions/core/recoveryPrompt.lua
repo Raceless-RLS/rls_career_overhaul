@@ -265,7 +265,7 @@ local buttonOptions = {
     atFadeFunction = function()
       local veh = getPlayerVehicle(0)
       if veh then
-        if career_career.isActive() then
+        if career_career and career_career.isActive() then
           if career_modules_inventory.getCurrentVehicle() then
             career_modules_inventory.updatePartConditions(nil, career_modules_inventory.getCurrentVehicle(), function() career_modules_insurance.startRepair(nil) end)
           end
@@ -357,7 +357,7 @@ local function addTowingButtons()
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
 
-    if career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
+    if career_career and career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
 
     local function getPrice(target)
       if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
@@ -415,7 +415,7 @@ local function addTaxiButtons()
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
     
-    if career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
+    if career_career and career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
     buttonOptions[string.format("taxiTo%s", garage.id)] =
     {
       type = "walk",
@@ -493,7 +493,7 @@ local function onCareerModulesActivated(alreadyInLevel)
 end
 
 local function onClientStartMission(levelPath)
-  if career_career.isActive() then
+  if career_career and career_career.isActive() then
     M.setDefaultsForCareer()
     addTowingButtons()
     addTaxiButtons()
@@ -847,7 +847,7 @@ end
 local function getUIData()
   if not popupData then return {} end
   popupData.warningMessage = nil
-  if career_career.isActive() then
+  if career_career and career_career.isActive() then
     local reason = career_modules_permissions and career_modules_permissions.getStatusForTag("recoveryTowToGarage")
     if reason.label then
       popupData.warningMessage = reason.label

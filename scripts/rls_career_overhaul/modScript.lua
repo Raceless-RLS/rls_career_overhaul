@@ -7,13 +7,13 @@ else
 end
 setExtensionUnloadMode("career/career", "manual")
 
-if extensions.isExtensionLoaded("core_recoveryPrompt") then
-    extensions.unload("core_recoveryPrompt")
-    load("core/recoveryPrompt")
+if extensions.isExtensionLoaded("UIloader") then
+    extensions.unload("UIloader")
+    load("UIloader")
 else
-    load("core/recoveryPrompt")
+    load("UIloader")
 end
-setExtensionUnloadMode("core_recoveryPrompt", "manual")
+setExtensionUnloadMode("UIloader", "manual")
 
 if extensions.isExtensionLoaded("gameplay_events_freeroamEvents") then
     extensions.unload("gameplay_events_freeroamEvents")
@@ -23,10 +23,10 @@ else
 end
 setExtensionUnloadMode("gameplay_events_freeroamEvents", "manual")
 
-if extensions.isExtensionLoaded("UIloader") then
-    extensions.unload("UIloader")
-    load("UIloader")
+if extensions.isExtensionLoaded("core_recoveryPrompt") then
+    extensions.unload("core_recoveryPrompt")
+    load("core/recoveryPrompt")
 else
-    load("UIloader")
+    load("core/recoveryPrompt")
 end
-setExtensionUnloadMode("UIloader", "manual")
+setExtensionUnloadMode("core_recoveryPrompt", "manual")
