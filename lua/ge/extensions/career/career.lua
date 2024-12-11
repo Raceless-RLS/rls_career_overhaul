@@ -224,7 +224,7 @@ local function activateCareer(removeVehicles)
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
   local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
   local levelToLoad = careerData.level or levelName
-  boughtStarterVehicle = careerData.boughtStarterVehicle
+  boughtStarterVehicle = true
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
   organizationInteraction = careerData.organizationInteraction or {}
 
