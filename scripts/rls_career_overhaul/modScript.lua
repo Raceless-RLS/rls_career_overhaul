@@ -1,12 +1,3 @@
--- Load core modules after the delay
-if extensions.isExtensionLoaded("core_recoveryPrompt") then
-    extensions.unload("core_recoveryPrompt")
-    load("core/recoveryPrompt")
-else
-    load("core/recoveryPrompt")
-end
-setExtensionUnloadMode("core_recoveryPrompt", "manual")
-
 -- Load career modules
 if extensions.isExtensionLoaded("career/career") then
     extensions.unload("career/career")
@@ -15,6 +6,14 @@ else
     load("career/career")
 end
 setExtensionUnloadMode("career/career", "manual")
+
+if extensions.isExtensionLoaded("core_recoveryPrompt") then
+    extensions.unload("core_recoveryPrompt")
+    load("core/recoveryPrompt")
+else
+    load("core/recoveryPrompt")
+end
+setExtensionUnloadMode("core_recoveryPrompt", "manual")
 
 if extensions.isExtensionLoaded("gameplay_events_freeroamEvents") then
     extensions.unload("gameplay_events_freeroamEvents")
