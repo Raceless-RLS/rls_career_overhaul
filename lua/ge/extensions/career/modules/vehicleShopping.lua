@@ -12,8 +12,9 @@ local jbeamIO = require('jbeam/io')
 local imgui = ui_imgui
 
 local vehicleDeliveryDelay = 60
-local shopGenerationDelay = 5 * 60
-local salesTax = 0.06
+local shopGenerationDelay = 15 * 60
+local vehiclesPerDealership = 10
+local salesTax = 0.07
 local customLicensePlatePrice = 300
 
 local starterVehicleMileages = {bx = 165746239, etki = 285817342, covet = 80174611}
@@ -29,6 +30,15 @@ local paySoundId
 
 local tether
 local tetherRange = 4 --meter
+
+local function getVehiclesPerDealership() return vehiclesPerDealership end
+local function setVehiclesPerDealership(amount)
+  vehiclesPerDealership = amount
+  lastGenerationTime = 0
+end
+
+local function getShopGenerationDelay() return shopGenerationDelay end
+local function setShopGenerationDelay(amount) shopGenerationDelay = amount end
 
 local function convertKeysToStrings(t)
   local newTable = {}
@@ -677,6 +687,11 @@ M.cancelShopping = cancelShopping
 M.cancelPurchase = cancelPurchase
 
 M.getVehiclesInShop = getVehiclesInShop
+
+M.getVehiclesPerDealership = getVehiclesPerDealership
+M.setVehiclesPerDealership = setVehiclesPerDealership
+M.getShopGenerationDelay = getShopGenerationDelay
+M.setShopGenerationDelay = setShopGenerationDelay
 
 M.onClientStartMission = onClientStartMission
 M.onVehicleSpawnFinished = onVehicleSpawnFinished

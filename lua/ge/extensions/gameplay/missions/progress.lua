@@ -347,6 +347,7 @@ local function sanitizeAttempt(attempt, mission)
     currentType = "completed"
   end
   attempt.type = currentType
+  --dumpz(attempt, 3)
 end
 
 local function aggregateAttempt(id, attempt, progressKey)
@@ -357,7 +358,11 @@ local function aggregateAttempt(id, attempt, progressKey)
   end
   progressKey = progressKey or mission.defaultProgressKey or "default"
   local progress = mission.saveData.progress[progressKey]
-  local unlockBefore = gameplay_missions_unlocks.getSimpleUnlockedStatus()
+  local unlockMissionsBefore = gameplay_missions_unlocks.getSimpleUnlockedStatus()
+  local unlockLeaguesBefore = {}
+  if career_career.isActive() then
+    unlockLeaguesBefore = career_modules_branches_leagues.getSimpleUnlockedStatus()
+  end
   -- sanitize attempt
   sanitizeAttempt(attempt, mission)
   extensions.hook("onMissionAttemptAggregated", attempt, mission)
@@ -371,16 +376,18 @@ local function aggregateAttempt(id, attempt, progressKey)
     plog("I", "aggregating regular progress.")
   end
 
+
   -- aggregate stars
   local unlockedStarsChanged = {}
   local starRewards = {list = {}, sums = {}, sumList = {}}
   for star, _ in pairs(attempt.unlockedStars or {}) do
     if mission.careerSetup.starsActive[star] then
-      if mission.saveData.unlockedStars[star] then mission.saveData.unlockedStars[star] = 1 end
-      mission.saveData.unlockedStars[star] = 0
+      mission.saveData.unlockedStars[star] = mission.saveData.unlockedStars[star] or 0
+
       if attempt.unlockedStars[star] then
-        unlockedStarsChanged[star] = true
+        unlockedStarsChanged[star] = mission.saveData.unlockedStars[star] == 0
         mission.saveData.unlockedStars[star] = mission.saveData.unlockedStars[star] + 1
+
         for _, reward in ipairs(mission.careerSetup.starRewards[star] or {}) do
           starRewards.sums[reward.attributeKey] = (starRewards.sums[reward.attributeKey] or 0) + reward.rewardAmount
           local rCopy = deepcopy(reward)
@@ -393,7 +400,7 @@ local function aggregateAttempt(id, attempt, progressKey)
   local ordered = tableKeysSorted(starRewards.sums)
   career_branches.orderAttributeKeysByBranchOrder(ordered)
   for _, key in ipairs(ordered) do
-    table.insert(starRewards.sumList,{attributeKey = key, rewardAmount = starRewards.sums[key]})
+    table.insert(starRewards.sumList,{attributeKey = key, rewardAmount = starRewards.sums[key], icon = career_branches.getBranchIcon(key) })
   end
 
 
@@ -401,10 +408,11 @@ local function aggregateAttempt(id, attempt, progressKey)
 
   -- aggregate generic values
   progress.aggregate = aggregateProgress(progress, attempt, aggregateChange, mission)
+
   -- configurable aggregates
   for _, config in ipairs(mission.autoAggregates or {}) do
     if autoAggregate[config.type] then
-      plog("I", "aggregating auto-" .. config.type)
+      plog("I", "aggregating auto-" .. config.type .. ": " .. config.attemptKey)
       autoAggregate[config.type](progress, attempt, config, mission, aggregateChange)
     end
   end
@@ -454,8 +462,8 @@ local function aggregateAttempt(id, attempt, progressKey)
 
   if not batchMode then
     gameplay_missions_unlocks.updateUnlockStatus()
-    local unlockAfter = gameplay_missions_unlocks.getSimpleUnlockedStatus()
-    local unlockChange = gameplay_missions_unlocks.getUnlockDiff(unlockBefore, unlockAfter)
+    local unlockMissionsAfter = gameplay_missions_unlocks.getSimpleUnlockedStatus()
+    local unlockChange = gameplay_missions_unlocks.getUnlockDiff(unlockMissionsBefore, unlockMissionsAfter)
     local unlockedMissions = unlockChange.missionsList or {}
     -- notify career for unlocked missions
     if career_career and career_career.isActive() and career_modules_logbook then
@@ -467,7 +475,9 @@ local function aggregateAttempt(id, attempt, progressKey)
     end
 
 
+
     local ret = {
+      formattedAttempt = M.formatAttemptSimple(attempt, mission),
       aggregateChange = aggregateChange,
       unlockChange = unlockChange,
       nextMissionsUnlock = gameplay_missions_unlocks.getMissionBasedUnlockDiff(mission, unlockChange),
@@ -476,6 +486,10 @@ local function aggregateAttempt(id, attempt, progressKey)
       unlockedStarsChanged = unlockedStarsChanged,
       starRewards = starRewards,
     }
+    if career_career.isActive() then
+      local unlockLeaguesAfter = career_modules_branches_leagues.getSimpleUnlockedStatus()
+      ret.unlockedLeagues = career_modules_branches_leagues.getLeaguesForUnlockChange(unlockLeaguesBefore, unlockLeaguesAfter)
+    end
 
     if quickTravelBefore ~= mission.saveData.quickTravelUnlocked then
       ret.quickTravelUnlockedChange = true
@@ -483,7 +497,9 @@ local function aggregateAttempt(id, attempt, progressKey)
     if userSettingsBefore ~= mission.saveData.userSettingsUnlocked then
       ret.userSettingsUnlockedChange = true
     end
-    permaLog(ret)
+    if not shipping_build then
+      permaLog(ret)
+    end
     return ret
   else
     return {}
@@ -607,6 +623,13 @@ local function loadMissionSaveData(mission)
   if FS:fileExists(path) then
     local state, result = xpcall(function()
       local saveData = jsonReadFile(path)
+      -- fallback for old savedata format
+      if saveData.unlockedStars then
+        for k, v in pairs(saveData.unlockedStars) do
+          if v == false then saveData.unlockedStars[k] = 0 end
+          if v == true then saveData.unlockedStars[k] = 1 end
+        end
+      end
       if career_career and career_career.isActive() then
         career_modules_missionWrapper.onMissionLoaded(id, saveData.dirtyDate)
       end
@@ -644,7 +667,7 @@ end
 
 local function reduceCareerRewardsForDefaultStars(mission)
   if career_career.isActive() then
-    for key, count in pairs(mission.saveData.unlockedStars) do
+    for key, starCount in pairs(mission.saveData.unlockedStars) do
       if mission.careerSetup._activeStarCache.defaultStarKeysByKey[key] then
         local list = mission.careerSetup.starRewards[key] or {}
         local starCount = count
@@ -665,7 +688,7 @@ local function reduceCareerRewardsForDefaultStars(mission)
   for key, list in pairs(mission.careerSetup.starRewards) do
     local newList = {}
     for _, reward in ipairs(list) do
-      local elem = {rewardAmount = reward.rewardAmount, icon = "star", attributeKey = reward.attributeKey}
+      local elem = {rewardAmount = reward.rewardAmount, icon = career_branches.getBranchIcon(reward.attributeKey), attributeKey = reward.attributeKey}
       table.insert(newList, elem)
     end
     mission.careerSetup._activeStarCache.sortedStarRewardsByKey[key] = newList
@@ -845,7 +868,7 @@ local function tryFormatValueForFunction(val, fun, m)
     local txt = ""
     local sortedKeys = m.careerSetup._activeStarCache.sortedStars
     local simpleStars = ""
-
+    local defaults, bonus = {}, {}
     --dump(sortedKeys)
     for i = 1, #sortedKeys do
       if i == #m.careerSetup.defaultStarKeys+1 then
@@ -854,11 +877,13 @@ local function tryFormatValueForFunction(val, fun, m)
       txt = txt .. (val[sortedKeys[i]] and "X" or "-")
       if i <= #m.careerSetup.defaultStarKeys then
         simpleStars = simpleStars .. (val[sortedKeys[i]] and "D" or "d")
+        table.insert(defaults, val[sortedKeys[i]] or false)
       else
         simpleStars = simpleStars .. (val[sortedKeys[i]] and "B" or "b")
+        table.insert(bonus, val[sortedKeys[i]] or false)
       end
     end
-    return {format = simpleStars, text = txt, simpleStars = simpleStars }
+    return {format = 'simpleStars', text = txt, simpleStars = simpleStars, defaults=defaults, bonus=bonus }
   else
     return { text = tostring(val) }
   end
@@ -890,6 +915,24 @@ local function getValueForAggregateUiProgressType(aggregate, config)
 
   return res
 end
+
+local function formatAttemptSimple(attempt, mission)
+  local ret = {
+    list = {}
+  }
+  -- automaticData column headers
+  for _, col in pairs(mission.autoUiAttemptProgress or {}) do
+    local value = tryFormatValueForFunction(getValueForAttemptUiProgressType(attempt, col), col.formatFunction, mission)
+    local label = col.columnLabel
+
+    table.insert(ret.list, {
+      value = value,
+      label = label
+    })
+  end
+  return ret
+end
+M.formatAttemptSimple = formatAttemptSimple
 
 
 -- in-situ reversal
@@ -946,6 +989,7 @@ local function formatAttempts(mission, progressKey, limit, includeMostRecentAtte
       table.insert(res.rows, row)
     end
   end
+
   if includeMostRecentAttempt then
     local attempt = attemptsForProgressKey[#attemptsForProgressKey]
     local row = {}--{ { text = translateLanguage(mission.name, mission.name, true) } }
@@ -1050,11 +1094,10 @@ local function formatStars(mission)
   local totalUnlockedStarCount = 0
   local defaultUnlockedStarCount, totalDefaultStarCount = 0,0
   local bonusUnlockedStarCount, totalBonusStarCount = 0,0
+  local defaults, bonus = {},{}
 
   for i, key in ipairs(starKeys) do
-    local count = mission.saveData.unlockedStars[key]
-    if count == true then count = 1 end
-    if count == nil or count == false then count = 0 end
+    local count = mission.saveData.unlockedStars[key] or 0
 
     local elem = {
       key = key,
@@ -1062,17 +1105,19 @@ local function formatStars(mission)
         txt = mission.starLabels[key] or "Missing Star Description",
         context = tryBuildContext(mission.starLabels[key], mission.missionTypeData),
       },
-      rewards = mission.careerSetup._activeStarCache.sortedStarRewardsByKey[key] or {},
+      rewards = career_career.isActive() and mission.careerSetup._activeStarCache.sortedStarRewardsByKey[key] or {},
       unlocked = count > 0,
       isDefaultStar = defaultCache[key] and true or false,
       defaultStarIndex = defaultStarKeysToIndex[key] or false,
       globalStarIndex = i,
+      count = count,
     }
     totalUnlockedStarCount = totalUnlockedStarCount + (elem.unlocked and 1 or 0)
     totalDefaultStarCount = totalDefaultStarCount + (elem.isDefaultStar and 1 or 0)
     defaultUnlockedStarCount = defaultUnlockedStarCount + (elem.unlocked and elem.isDefaultStar and 1 or 0)
     totalBonusStarCount = totalBonusStarCount + ((not elem.isDefaultStar) and 1 or 0)
     bonusUnlockedStarCount = bonusUnlockedStarCount + (elem.unlocked and (not elem.isDefaultStar) and 1 or 0)
+    table.insert(defaultCache[key] and defaults or bonus, elem.unlocked)
     table.insert(unlockedStarsFormatted.stars, elem)
   end
 
@@ -1083,6 +1128,9 @@ local function formatStars(mission)
 
   unlockedStarsFormatted.bonusUnlockedStarCount = bonusUnlockedStarCount
   unlockedStarsFormatted.totalBonusStarCount = totalBonusStarCount
+
+  unlockedStarsFormatted.defaults = defaults
+  unlockedStarsFormatted.bonus = bonus
 
   return unlockedStarsFormatted
 end
@@ -1158,6 +1206,34 @@ local function formatSaveDataForBigmap(id)
 
   return ret
 end
+
+local function getUnlockedStarCountsForMissionById(id)
+  local mission = gameplay_missions_missions.getMissionById(id)
+  if not mission then
+    log("E","","Mission not found! " .. dumps(id))
+    return 0, 0, 0
+  end
+  if not mission.saveData.unlockedStars
+    or not mission.careerSetup.starsActive or not next(mission.careerSetup.starsActive) then
+    return 0, 0
+  end
+  local starKeys, defaultCache = mission.careerSetup._activeStarCache.sortedStars, mission.careerSetup._activeStarCache.defaultStarKeysByKey
+
+  local defaultUnlockedStarCount = 0
+  local bonusUnlockedStarCount = 0
+  for i, key in ipairs(starKeys) do
+
+    local count = mission.saveData.unlockedStars[key] or 0
+    local unlocked = count > 0
+
+    defaultUnlockedStarCount = defaultUnlockedStarCount + (unlocked and defaultCache[key] and 1 or 0)
+    bonusUnlockedStarCount = bonusUnlockedStarCount + (unlocked and (not defaultCache[key]) and 1 or 0)
+  end
+
+  return (defaultUnlockedStarCount + bonusUnlockedStarCount), defaultUnlockedStarCount, bonusUnlockedStarCount
+end
+
+M.getUnlockedStarCountsForMissionById = getUnlockedStarCountsForMissionById
 
 M.aggregateAttempt = aggregateAttempt
 M.saveMissionSaveData = saveMissionSaveData
@@ -1278,7 +1354,6 @@ M.endBatchMode = function()
 end
 
 M.exportAllProgressToCSV = function()
-
 
 end
 

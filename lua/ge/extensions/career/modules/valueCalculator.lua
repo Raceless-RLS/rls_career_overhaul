@@ -7,23 +7,20 @@ local M = {}
 M.dependencies = {'career_career'}
 
 local lossPerKmRelative = 0.0000025
-local scrapValueRelative = 0.50
+local scrapValueRelative = 0.05
+
+-- vehicle damage related variables
+local repairTimePerPart = 20 -- amount of seconds needed to repair one part
+local brokenPartsThreshold = 3 -- a vehicle is considered to need repair after x broken parts
+local minimumCarValue = 500
+local minimumCarValueRelativeToNew = 0.05
 
 local function getVehicleMileage(vehicle)
   for slot, partName in pairs(vehicle.config.parts) do
     if partName == vehicle.config.mainPartName then
-      if vehicle.partConditions and vehicle.partConditions[partName] then
-        return vehicle.partConditions[partName]["odometer"]
-      else
-        if not vehicle.partConditions then
-          vehicle.partConditions = {}
-        end
-        vehicle.partConditions[partName] = {odometer = 0}
-        return 0
-      end
+      return vehicle.partConditions[partName]["odometer"]
     end
   end
-  return 0 -- Return a default value if main part is not found
 end
 
 local function getVehicleMileageById(inventoryId)
@@ -115,10 +112,46 @@ local function getPartValue(part)
   return getAdjustedVehicleBaseValue(part.value, {age = 2023 - part.year, mileage = part.partCondition["odometer"]})
 end
 
+-- for now every damaged part needs to be replaced
+local function getDamagedParts(vehInfo)
+  local damagedParts = {
+    partsToBeReplaced = {}
+  }
+  for partName, info in pairs(vehInfo.partConditions) do
+    if info.integrityValue and info.integrityValue == 0 then
+      for slotName, partName2 in pairs(vehInfo.config.parts) do
+        if partName2 == partName then
+          local part = career_modules_partInventory.getPart(vehInfo.id, slotName)
+          table.insert(damagedParts.partsToBeReplaced, part)
+          break
+        end
+      end
+    end
+  end
+
+  return damagedParts
+end
+
+local function getRepairDetails(invVehInfo)
+  local details = {
+    price = 0,
+    repairTime = 0
+  }
+
+  local damagedParts = getDamagedParts(invVehInfo)
+  for _, part in pairs(damagedParts.partsToBeReplaced) do
+    local price = part.value or 700
+    details.price = details.price + price * 0.6-- lower the price a bit..
+    details.repairTime = details.repairTime + repairTimePerPart
+  end
+
+  return details
+end
+
 -- IMPORTANT the pc file of a config does not contain the correct list of parts in the vehicle. there might be old unused slots/parts there and there might be slots/parts missing that are in the vehicle
 -- the empty strings in the pc file are important, because otherwise the game will use the default part
 
-local function getVehicleValue(configBaseValue, vehicle)
+local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   local mileage = getVehicleMileage(vehicle)
 
   local newParts = vehicle.config.parts
@@ -140,22 +173,50 @@ local function getVehicleValue(configBaseValue, vehicle)
     sumPartValues = sumPartValues -  1.15 * getPartValue(part)
   end
 
+  local repairDetails = getRepairDetails(vehicle)
+  if ignoreDamage then
+    repairDetails.price = 0
+  end
+
   local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
-  return adjustedBaseValue + sumPartValues
+  local minValue = math.min(minimumCarValue, configBaseValue * minimumCarValueRelativeToNew)
+  return math.max(adjustedBaseValue + sumPartValues - repairDetails.price, minValue)
 end
 
-local function getInventoryVehicleValue(inventoryId)
+local function getInventoryVehicleValue(inventoryId, ignoreDamage)
   local vehicle = career_modules_inventory.getVehicles()[inventoryId]
   if not vehicle then return end
-  return math.max(getVehicleValue(vehicle.configBaseValue, vehicle), 0)
+  return math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
+end
+
+local function getNumberOfBrokenParts(partConditions)
+  local counter = 0
+  for partName, info in pairs(partConditions) do
+    if info.integrityValue and info.integrityValue == 0 then
+      counter = counter + 1
+    end
+  end
+  return counter
+end
+
+local function partConditionsNeedRepair(partConditions)
+  return getNumberOfBrokenParts(partConditions) >= brokenPartsThreshold
+end
+
+local function getBrokenPartsThreshold()
+  return brokenPartsThreshold
 end
 
 M.getPartDifference = getPartDifference
 
 M.getInventoryVehicleValue = getInventoryVehicleValue
-M.getVehicleValue = getVehicleValue
 M.getPartValue = getPartValue
 M.getAdjustedVehicleBaseValue = getAdjustedVehicleBaseValue
 M.getVehicleMileageById = getVehicleMileageById
+M.getBrokenPartsThreshold = getBrokenPartsThreshold
 
+-- Vehicle damage related API
+M.getRepairDetails = getRepairDetails
+M.getNumberOfBrokenParts = getNumberOfBrokenParts
+M.partConditionsNeedRepair = partConditionsNeedRepair
 return M

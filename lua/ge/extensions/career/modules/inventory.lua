@@ -4,16 +4,16 @@
 
 local M = {}
 
-M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator", "career_modules_extraSaveData"}
+M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
 
-local moduleVersion = 42
+local minimumVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
 
 local xVec, yVec, zVec = vec3(1,0,0), vec3(0,1,0), vec3(0,0,1)
 
 local saveAnyVehiclePosDEBUG = false
 
-local slotAmount = 0
+local slotAmount = 5
 
 local vehicles = {}
 local dirtiedVehicles = {}
@@ -22,6 +22,7 @@ local inventoryIdToVehId = {}
 local currentVehicle
 local lastVehicle
 local favoriteVehicle
+local sellAllVehicles
 
 local carConfigToLoad
 local carModelToLoad
@@ -40,7 +41,7 @@ local function getClosestGarage(pos)
   for _, garage in ipairs(facilities.garages) do
     local zones = freeroam_facilities.getZonesForFacility(garage)
     local dist = zones[1].center:distance(playerPos)
-    if dist < minDist and career_modules_extraSaveData.isDiscoveredGarage(garage.id) then
+    if dist < minDist then
       closestGarage = garage
       minDist = dist
     end
@@ -75,9 +76,6 @@ end
 
 local function onExtensionLoaded()
   if not career_career.isActive() then return false end
-  if career_modules_extraSaveData then
-    slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
-  end
 
   -- load from saveslot
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
@@ -86,7 +84,7 @@ local function onExtensionLoaded()
   table.clear(vehicles)
 
   local saveInfo = jsonReadFile(savePath .. "/info.json")
-  if not saveInfo or saveInfo.version < moduleVersion then return end
+  if not saveInfo or saveInfo.version < minimumVersion then return end
 
   -- load the vehicles
   local files = FS:findFiles(savePath .. "/career/vehicles/", '*.json', 0, false, false)
@@ -108,6 +106,17 @@ local function onExtensionLoaded()
   end
 
   local inventoryData = jsonReadFile(savePath .. "/career/inventory.json")
+
+  -- Sell all vehicles when the save version is not the newest one
+  if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
+    sellAllVehicles = true
+    if inventoryData then
+      inventoryData.currentVehicle = nil
+      inventoryData.lastVehicle = nil
+      inventoryData.spawnedPlayerVehicles = nil
+    end
+  end
+
   if inventoryData then
     vehicleToEnterId = tonumber(inventoryData.currentVehicle)
     lastVehicle = tonumber(inventoryData.lastVehicle)
@@ -128,7 +137,7 @@ local function onExtensionLoaded()
     end
 
     -- if the last currentVehicle is not spawned, then dont enter it
-    if not loadedVehiclesLocations[vehicleToEnterId] then
+    if not (loadedVehiclesLocations and loadedVehiclesLocations[vehicleToEnterId]) then
       vehicleToEnterId = nil
     end
 
@@ -465,8 +474,8 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     end
 
     assignInventoryIdToVehId(inventoryId, vehObj:getID())
-    local numberOfBrokenParts = career_modules_insurance.getNumberOfBrokenParts(vehInfo.partConditions)
-    if numberOfBrokenParts > 0 and numberOfBrokenParts < career_modules_insurance.getBrokenPartsThreshold() then
+    local numberOfBrokenParts = career_modules_valueCalculator.getNumberOfBrokenParts(vehInfo.partConditions)
+    if numberOfBrokenParts > 0 and numberOfBrokenParts < career_modules_valueCalculator.getBrokenPartsThreshold() then
       career_modules_insurance.repairPartConditions({partConditions = vehInfo.partConditions})
     end
 
@@ -617,6 +626,19 @@ local function setupInventory()
 end
 
 local function onCareerModulesActivated(alreadyInLevel)
+  if sellAllVehicles then
+    for inventoryId, vehicle in pairs(vehicles) do
+      if vehicle.owned then
+        M.sellVehicle(inventoryId)
+      elseif vehicle.loanType == "work" then
+        career_modules_loanerVehicles.returnVehicle(inventoryId)
+        loanedVehicleReturned = true
+      else
+        M.removeVehicle(inventoryId)
+      end
+    end
+    sellAllVehicles = nil
+  end
   if alreadyInLevel then
     setupInventory()
   end
@@ -733,7 +755,9 @@ local function getDefaultVehicleThumb(vehInfo)
 end
 
 local function getVehicleThumbnail(inventoryId)
+  if not inventoryId then return end
   local vehicle = vehicles[inventoryId]
+  if not vehicle then return end
   local _, savePath = career_saveSystem.getCurrentSaveSlot()
   local thumbnailPath = savePath .. "/career/vehicles/" .. inventoryId .. ".png"
   if not vehicle.defaultThumbnail and FS:fileExists(thumbnailPath) then
@@ -764,6 +788,7 @@ local function sendDataToUi()
 
   for inventoryId, vehicle in pairs(vehiclesCopy) do
     vehicle.value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+    vehicle.valueRepaired = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId, true)
     vehicle.quickRepairExtraPrice = career_modules_insurance.getQuickRepairExtraPrice()
     vehicle.initialRepairTime = career_modules_insurance.getRepairTime(inventoryId)
 
@@ -783,17 +808,13 @@ local function sendDataToUi()
     end
 
     vehicle.needsRepair = career_modules_insurance.inventoryVehNeedsRepair(vehicle.id)
-    vehicle.policyInfo = career_modules_insurance.getVehPolicyInfo(inventoryId)
     if inventoryId == favoriteVehicle then
       vehicle.favorite = true
     end
 
-    local playerInsuranceData = playerPolicyData[vehicle.policyInfo.id]
-    if playerInsuranceData then
-      vehicle.ownsRequiredInsurance = playerInsuranceData.owned
-    else
-      vehicle.ownsRequiredInsurance = false
-    end
+    local vehPolicyInfo = career_modules_insurance.getVehPolicyInfo(inventoryId)
+    vehicle.policyInfo = vehPolicyInfo.policyInfo
+    vehicle.ownsRequiredInsurance = vehPolicyInfo.policyOwned
 
     vehicle.thumbnail = getVehicleThumbnail(inventoryId)
 
@@ -880,6 +901,16 @@ local function getInventoryIdsInClosestGarage(onlyFirst)
   for inventoryId, _ in pairs(inventoryIdsInGarage) do
     table.insert(inventoryIdsList, inventoryId)
   end
+
+  if getPlayerVehicle(0) then
+    local playerPos = getPlayerVehicle(0):getPosition()
+    table.sort(inventoryIdsList, function(id1, id2)
+      local veh1 = be:getObjectByID(inventoryIdToVehId[id1])
+      local veh2 = be:getObjectByID(inventoryIdToVehId[id2])
+      return veh1:getPosition():distance(playerPos) < veh2:getPosition():distance(playerPos)
+    end)
+  end
+
   if onlyFirst then
     return next(inventoryIdsInGarage)
   else
@@ -1052,8 +1083,6 @@ end
 local function getVehicleTimeToAccess(inventoryId)
   return vehicles[inventoryId].timeToAccess
 end
-
-M.getVehicleTimeToAccess = getVehicleTimeToAccess
 
 local function sellVehicle(inventoryId)
   local vehicle = vehicles[inventoryId]
@@ -1294,4 +1323,6 @@ M.getVehicleIdFromInventoryId = getVehicleIdFromInventoryId
 M.getInventoryIdFromVehicleId = getInventoryIdFromVehicleId
 M.getMapInventoryIdToVehId = getMapInventoryIdToVehId
 
+-- RLS
+M.getVehicleTimeToAccess = getVehicleTimeToAccess
 return M

@@ -11,7 +11,7 @@ local logTag = ""
 local freeroamEvents = require("gameplay/events/freeroamEvents")
 local hasActivityStarted = false
 local function onExtensionLoaded()
-  log("I", logTag, "dragRace extension loaded")
+  --log("I", logTag, "dragRace extension loaded")
   dGeneral = gameplay_drag_general
   dUtils = gameplay_drag_utils
 
@@ -30,16 +30,6 @@ local function onExtensionLoaded()
   dragData.isStarted = true
 
   hasActivityStarted = dragData.isStarted
-end
-
-local function changeRacerPhase(racer)
-  local index = racer.currentPhase + 1
-  if index > #dragData.phases then
-    racer.isFinished = true
-    return
-  end
-  racer.currentPhase = index
-  log("I", logTag, "This is the new phase: " .. racer.phases[racer.currentPhase].name .. " for vehicle: " .. tostring(racer.vehId))
 end
 
 local function resetDragRace()

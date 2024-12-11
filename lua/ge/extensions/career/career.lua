@@ -6,7 +6,7 @@ local M = {}
 
 local imgui = ui_imgui
 
-M.dependencies = {'career_saveSystem', 'core_recoveryPrompt'}
+M.dependencies = {'career_saveSystem', 'core_recoveryPrompt', 'gameplay_traffic'}
 
 M.tutorialEnabled = false
 
@@ -28,7 +28,7 @@ local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabber
 
 local actionWhitelist = deepcopy(devActions)
 arrayConcat(actionWhitelist, nodegrabberActions)
-local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls",  "funStuff"}, actionWhitelist)
+local blockedActions = core_input_actionFilter.createActionTemplate({"vehicleTeleporting", "vehicleMenues", "physicsControls", "aiControls", "vehicleSwitching", "funStuff"}, actionWhitelist)
 
 -- TODO maybe save whenever we go into the esc menu
 
@@ -158,6 +158,7 @@ local function toggleCareerModules(active, alreadyInLevel)
       --end
     end
     extensions.load(careerModules)
+    extensions.disableSerialization(careerModules)
 
     -- prevent these extensions from being unloaded when switching level
     for _, extension in ipairs(extensionFiles) do
@@ -210,18 +211,20 @@ end
 
 local function activateCareer(removeVehicles)
   if careerActive then return end
-  -- Load career
+  -- load career
   local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
   if not saveSlot then return end
   extensions.hook("onBeforeCareerActivate")
-  removeVehicles = removeVehicles ~= nil and removeVehicles or true
+  if removeVehicles == nil then
+    removeVehicles = true
+  end
   if core_groundMarkers then core_groundMarkers.setPath(nil) end
 
   careerActive = true
   log("I", "Loading career from " .. savePath .. "/career/" .. saveFile)
   local careerData = (savePath and jsonReadFile(savePath .. "/career/" .. saveFile)) or {}
   local levelToLoad = careerData.level or levelName
-  boughtStarterVehicle = true
+  boughtStarterVehicle = careerData.boughtStarterVehicle
   debugModuleOpenStates = careerData.debugModuleOpenStates or {}
   organizationInteraction = careerData.organizationInteraction or {}
 
@@ -251,8 +254,10 @@ local function activateCareer(removeVehicles)
 
   career_modules_playerDriving.ensureTraffic = true
 
-  -- Ensure autosave is enabled since the tutorial is disabled
-  M.setAutosaveEnabled(true)
+  if career_modules_linearTutorial.isLinearTutorialActive() then
+    M.setAutosaveEnabled(false)
+    print("Disabling autosave because we are in tutorial!")
+  end
 end
 
 local function deactivateCareer(saveCareer)
@@ -369,11 +374,18 @@ local function formatSaveSlotForUi(saveSlot)
     data.beamXP = career_modules_playerAttributes.getAttribute("beamXP")
     data.vouchers = career_modules_playerAttributes.getAttribute("vouchers")
     data.beamXP.level, data.beamXP.curLvlProgress, data.beamXP.neededForNext = getBeamXPLevel(data.beamXP.value)
+    data.branches = {}
 
-    for bId, br in pairs(career_branches.getBranches()) do
-      local attKey = br.attributeKey
-      data[attKey] = deepcopy(career_modules_playerAttributes.getAttribute(attKey) or {value=br.defaultValue or 0})
-      data[attKey].level, data[attKey].curLvlProgress, data[attKey].neededForNext = career_branches.calcBranchLevelFromValue(data[attKey].value, bId)
+    for _, br in ipairs(career_branches.getSortedBranches()) do
+      if br.isBranch then
+        local attKey = br.attributeKey
+        local brData = deepcopy(career_modules_playerAttributes.getAttribute(attKey) or {value=br.defaultValue or 0})
+        brData.level, brData.curLvlProgress, brData.neededForNext = career_branches.calcBranchLevelFromValue(brData.value, br.id)
+        brData.id = attKey
+        table.insert(data.branches, brData)
+        -- remove this assigment once UI side works with the new branch list
+        data[attKey] = brData
+      end
     end
     data.currentVehicle = career_modules_inventory.getCurrentVehicle() and career_modules_inventory.getVehicles()[career_modules_inventory.getCurrentVehicle()]
   else
@@ -387,10 +399,17 @@ local function formatSaveSlotForUi(saveSlot)
       data.beamXP = deepcopy(attData.beamXP) or {value=0}
       data.vouchers = deepcopy(attData.vouchers) or {value=0}
       data.beamXP.level, data.beamXP.curLvlProgress, data.beamXP.neededForNext = getBeamXPLevel(data.beamXP.value)
-      for bId, br in pairs(career_branches.getBranches()) do
-        local attKey = br.attributeKey
-        data[attKey] = deepcopy(attData[attKey] or {value=br.defaultValue or 0})
-        data[attKey].level, data[attKey].curLvlProgress, data[attKey].neededForNext = career_branches.calcBranchLevelFromValue(data[attKey].value, bId)
+      data.branches = {}
+      for _, br in ipairs(career_branches.getSortedBranches()) do
+        if br.isBranch then
+          local attKey = br.attributeKey
+          local brData = deepcopy(attData[attKey] or {value=br.defaultValue or 0})
+          brData.level, brData.curLvlProgress, brData.neededForNext = career_branches.calcBranchLevelFromValue(brData.value, br.id)
+          brData.id = attKey
+          table.insert(data.branches, brData)
+          -- remove this assigment once UI side works with the new branch list
+          data[attKey] = brData
+        end
       end
     end
 
@@ -574,7 +593,6 @@ M.onSerialize = onSerialize
 M.onDeserialized = onDeserialized
 M.onClientStartMission = onClientStartMission
 M.onClientEndMission = onClientEndMission
-M.onExtensionLoaded = onExtensionLoaded
 M.onAnyMissionChanged = onAnyMissionChanged
 M.onSimTimePauseCalled = onSimTimePauseCalled
 M.onVehicleAddedToInventory = onVehicleAddedToInventory

@@ -134,8 +134,15 @@ function C:update(data)
     end
   end
 
-  self.anyOverlap = anyOverlap
+  if anyOverlap ~= self.isInAreaLastFrame then
+    if anyOverlap then self.isInAreaChanged = "in" end
+    if not anyOverlap then self.isInAreaChanged = "out" end
+  else
+    self.isInAreaChanged = nil
+  end
+  self.isInAreaLastFrame = anyOverlap
 
+  self.anyOverlap = anyOverlap
 end
 
 
@@ -310,8 +317,7 @@ local function cluster(pois, allClusters)
       visibilityRadius = wm.radius,
       screens = wm.screens,
       elemData = {},
-      create = create,
-      garageId = wm.garageId
+      create = create
     }
     for _, poi in ipairs(poisInCluster) do
       table.insert(cluster.elemData, poi.data)

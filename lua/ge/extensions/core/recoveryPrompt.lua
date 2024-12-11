@@ -99,7 +99,7 @@ local openRecoveryPrompt
 local function getPriceFunction(basePrice)
   return function(target)
     if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
-      return nil
+      return {money = {amount = 0, canBeNegative = true}}
     end
     return {money = {amount = basePrice, canBeNegative = true}}
   end
@@ -169,8 +169,10 @@ local buttonOptions = {
     enabled = true,
     fadeActive = false,
     keepMenuOpen = true,
-    icon = "toGarage"
+    icon = "toGarage",
+    ["goto"] = "/sandbox/recovery/towing/"
   },
+  -- TODO get rid of this
   taxi = {
     type = "walk",
     label = function(options)
@@ -187,6 +189,7 @@ local buttonOptions = {
     enabled = true,
     fadeActive = false,
     keepMenuOpen = true,
+    ["goto"] = "/sandbox/recovery/taxi/",
     icon = "taxiCar3"
   },
   getFavoriteVehicle = {
@@ -359,7 +362,7 @@ local function addTowingButtons()
     local function getPrice(target)
       if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
         if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
-          return nil
+        return nil
         else
           return {money = {amount = garage.defaultPrice, canBeNegative = true}}
         end
@@ -398,7 +401,8 @@ local function addTowingButtons()
       fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
       icon = "toGarage",
       price = getPrice,
-      confirmationText = "Do you want to tow your vehicle to this garage?"
+      confirmationText = "Do you want to tow your vehicle to this garage?",
+      path = "towing/",
     }
     ::continue::
   end
@@ -431,7 +435,8 @@ local function addTaxiButtons()
       fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
       icon = "toGarage",
       price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)}} end,
-      confirmationText = "Do you want to use the taxi?"
+      confirmationText = "Do you want to use the taxi?",
+      path = "taxi/",
     }
     ::continue::
   end
@@ -475,7 +480,8 @@ local function addTaxiButtons()
       fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
       icon = "car",
       price = getPrice,
-      confirmationText = "Do you want to use the taxi?"
+      confirmationText = "Do you want to use the taxi?",
+      path = "taxi/",
     }
 end
 
@@ -507,7 +513,9 @@ local function setDefaultsForCareer()
   buttonOptions.towToRoad.active = true
   buttonOptions.towToGarage.active = true
   buttonOptions.flipUpright.active = true
+  -- TODO get rid of this
   buttonOptions.taxi.active = true
+
   buttonOptions.getFavoriteVehicle.active = true
   buttonOptions.stopTestdrive.active = true
   buttonOptions.giveBackDeliveryVehicle.active = true
@@ -743,7 +751,7 @@ local function getRecoveryTargets()
 end
 
 local function sortByOrder(a,b) return a.order < b.order end
-local function getButtonsForTarget(target)
+local function getButtonsForTarget(target, forNewRadial)
   local buttons = {}
   for id, option in pairs(buttonOptions) do
     if (option.type or "none") == target.type and option.active then
@@ -751,7 +759,7 @@ local function getButtonsForTarget(target)
       for key, cond in ipairs(option.includeConditions or {}) do
         add = cond(target.type, target.vehId)
       end
-      add = add and (option.menuTag == currentMenuTag)
+      add = add and (option.menuTag == currentMenuTag or forNewRadial)
       if add then
         local enabled = type(option.enabled) == "function" and option.enabled(option, target) or option.enabled
         local reason = nil
@@ -778,7 +786,9 @@ local function getButtonsForTarget(target)
           disableReason = disableReason,
           soundClass = (option.fadeStartSound and "bng_click_empty" or nil),
           icon = option.icon,
-          confirmationText = option.confirmationText
+          confirmationText = option.confirmationText,
+          ["goto"] = option["goto"],
+          path = option.path
         }
         table.insert(buttons, btn)
       end
@@ -788,23 +798,24 @@ local function getButtonsForTarget(target)
   return buttons
 end
 
-openRecoveryPrompt = function(title, updatePopupData)
-  if not active then return end
-  if popupData and not updatePopupData then return end
+local function createPopupData(forNewRadial)
+  if not active then popupData = nil return false end
   local buttons = {}
   local targets = getRecoveryTargets()
   for i, target in ipairs(targets) do
-    for _, btn in ipairs(getButtonsForTarget(target)) do
+    for _, btn in ipairs(getButtonsForTarget(target, forNewRadial)) do
       table.insert(buttons, btn)
     end
   end
-  for _, btn in ipairs(getButtonsForTarget({type="none"})) do
+  for _, btn in ipairs(getButtonsForTarget({type="none"}, forNewRadial)) do
     table.insert(buttons, btn)
   end
   if not next(buttons) then
     log("W","","Tried to open recovery prompt, but no buttons were active. Not opening prompt.")
-    return
+    return false
   end
+
+  -- TODO this "cancel" and "back" button can probably go
   local cancelButton
   if currentMenuTag then
     cancelButton = { label = "Back", keepMenuOpen = true, luaCallback = function() core_recoveryPrompt.openDefaultPopup(true) end}
@@ -815,7 +826,15 @@ openRecoveryPrompt = function(title, updatePopupData)
     buttons[1].default = true
   end
 
+  -- TODO in the future the file could probably be refactored so we dont need popupData at all anymore, but for now it works
   popupData = {title = title or "Recovery Menu", buttons = buttons, cancelButton = cancelButton, class = "recoveryPrompt"}
+  return true
+end
+
+openRecoveryPrompt = function(title, updatePopupData)
+  if not active then return end
+  if popupData and not updatePopupData then return end
+  if not createPopupData() then return end
   if not updatePopupData then
     guihooks.trigger('OpenRecoveryPrompt')
     simTimeAuthority.pause(true)
@@ -837,6 +856,8 @@ local function getUIData()
   return popupData
 end
 
+
+-- TODO these functions can both go
 local function uiPopupButtonPressed(index)
   local button = popupData.buttons[index]
   if not button then return end
@@ -863,6 +884,58 @@ local function isOpen()
   return popupData ~= nil
 end
 
+local function addButtonsForLevel(level)
+  core_quickAccessNew.addEntry(
+    {
+      level = "/sandbox/recovery/" .. (level or ""),
+      generator = function(entries)
+        createPopupData(true)
+        local uiData = getUIData()
+        if not uiData then return end
+        for _, button in ipairs(uiData.buttons or {}) do
+          if button.path == level then
+            local entry = {
+              title = button.label,
+              icon = button.icon,
+              priority = 90,
+              holdToClick = button.confirmationText,
+              price = button.price,
+              enabled = button.enabled,
+              disableReason = button.disableReason,
+              onSelect = function()
+                button.luaCallback()
+                if button["goto"] then
+                  return {"goto", button["goto"]}
+                end
+                return button.keepMenuOpen and {"reload"} or {"hide"}
+              end
+            }
+            table.insert(entries, entry)
+          end
+        end
+      end
+    }
+  )
+end
+
+local quickAccessInitialized
+local function onBeforeRadialOpened()
+  if quickAccessInitialized then return end
+  quickAccessInitialized = true
+  addButtonsForLevel(nil)
+  addButtonsForLevel("taxi/")
+  addButtonsForLevel("towing/")
+end
+
+local function onHideRadialMenu()
+  currentMenuTag = nil
+  popupData = nil
+end
+
+local function onQuickAccessLoaded()
+  quickAccessInitialized = nil
+end
+
 M.buttonPressed = buttonPressed
 M.onPopupClosed = onPopupClosed
 M.onResetGameplay = onResetGameplay
@@ -873,8 +946,10 @@ M.uiPopupButtonPressed = uiPopupButtonPressed
 M.uiPopupCancelPressed = uiPopupCancelPressed
 M.openDefaultPopup = openDefaultPopup
 M.isOpen = isOpen
-M.addTowingButtons = addTowingButtons
-M.addTaxiButtons = addTaxiButtons
+
 M.onCareerModulesActivated = onCareerModulesActivated
 M.onClientStartMission = onClientStartMission
+M.onBeforeRadialOpened = onBeforeRadialOpened
+M.onHideRadialMenu = onHideRadialMenu
+M.onQuickAccessLoaded = onQuickAccessLoaded
 return M
