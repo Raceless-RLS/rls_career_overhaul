@@ -946,7 +946,8 @@ M.uiPopupButtonPressed = uiPopupButtonPressed
 M.uiPopupCancelPressed = uiPopupCancelPressed
 M.openDefaultPopup = openDefaultPopup
 M.isOpen = isOpen
-
+M.addTowingButtons = addTowingButtons
+M.addTaxiButtons = addTaxiButtons
 M.onCareerModulesActivated = onCareerModulesActivated
 M.onClientStartMission = onClientStartMission
 M.onBeforeRadialOpened = onBeforeRadialOpened

@@ -206,7 +206,6 @@ end
 function C:interactInPlayMode(interactData, interactableElements)
   if interactData.canInteract and self.anyOverlap then
       local garageId = self.cluster.garageId
-      print("garageId: " .. garageId)
       if garageId then
         if career_career.isActive() then
           if not career_modules_extraSaveData.isPurchasedGarage(garageId) then
@@ -308,6 +307,7 @@ local function cluster(pois, allClusters)
   end
   for key, poisInCluster in pairs(poisByObjectNames) do
     local wm = poisInCluster[1].markerInfo.walkingMarker
+    dump(wm)
     local cluster = {
       id = 'walkingMarker#'..key,
       doors = wm.doors,
