@@ -428,9 +428,12 @@ local function changePolicyScore(invVehId, rate, operation)
             return bonus * rate
         end
     end
-    local policyId = 1
+    local policyId
     if invVehId then
         policyId = getPolicyIdFromInvVehId(invVehId)
+    end
+    if not policyId then
+        policyId = 1
     end
     plPoliciesData[policyId].bonus = math.max(operation(math.floor(plPoliciesData[policyId].bonus * 100) / 100, rate),
         minimumPolicyScore)
