@@ -23,7 +23,7 @@ local function init()
   end
   local startingCapital = 10000
   if not career_career.tutorialEnabled then
-    startingCapital = startingCapital + 3500
+    startingCapital = startingCapital
   end
   M.setAttributes({money=startingCapital}, {label="Starting Capital"})
 end
