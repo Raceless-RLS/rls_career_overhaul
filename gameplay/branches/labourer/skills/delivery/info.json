@@ -1,0 +1,101 @@
+{
+  "name":"ui.career.labourer.delivery.name",
+  "description":"ui.career.labourer.delivery.description",
+  "order": 2100,
+  "isSkill":true,
+  "icon":"boxPickUp03",
+  "parentBranch":"labourer",
+  "levels":[
+    {
+      // Level 1
+      "requiredValue":0,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Standard Cargo",
+        "description":"Start with the essentials of delivering standard parcels, focusing on efficiency and reliability.",
+      },
+      "unlocks":[
+        {
+          "unlockTag":"smallPackagesDelivery",
+          "type":"unlockCard",
+          "icon":"boxPickUp03",
+          "heading":"Small Packages",
+          "description":"Deliver small and light-weight packages."
+        },
+      ],
+    },
+    {
+      // Level 2
+      "requiredValue":100,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Premium Cargo",
+        "description":"Transporting larger, heavier packages challenges your delivery skills and route optimization for higher rewards and increased demand.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"boxPickUp03",
+          "heading":"Large Packages",
+          "description":"Deliver larger and heavier packages."
+        }
+      ],
+    },
+    {
+      // Level 3
+      "requiredValue":250,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Trailer Delivery",
+        "description":"Begin transporting trailers from location A to B, enhancing your delivery capacity and logistical challenges.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"smallTrailer",
+          "heading":"Small Trailers",
+          "description":"Deliver small and medium-sized trailers using cars and pickup trucks."
+        }
+      ],
+    },
+    {
+      // Level 4
+      "requiredValue":400,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Heavy-duty Trailers",
+        "description":"Take on the challenge of delivering large trailers. Hone your skills in truck handling and logistics for major hauls.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"semiTrailer",
+          "heading":"Large Trailers",
+          "description":"Deliver full-sized transport trailers."
+        }
+      ],
+    },
+    {
+      // Level 5!
+      "requiredValue":600,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Fluids Delivery",
+        "description":"Specialize in transporting fluid materials with tanker trailers, coordinating multiple drop-offs per journey.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"hazardLights",
+          "heading":"Hazardous Materials",
+          "description":"Deliver hazardous waste fluids."
+        }
+      ],
+    }
+  ],
+}

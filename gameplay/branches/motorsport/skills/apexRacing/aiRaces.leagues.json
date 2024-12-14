@@ -1,0 +1,124 @@
+[
+  {
+    "id": "aiLeague1",
+    "name": "Beginner Series",
+    "description": "Introductory Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/006-basic",
+      "west_coast_usa/aiRace/007-house",
+      "west_coast_usa/aiRace/008-pipeline",
+    ],
+    "unlock":[]
+  },
+  {
+    "id": "aiLeague2",
+    "name": "Intermediate Series",
+    "description": "Intermediate Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/003-street",
+      "west_coast_usa/aiRace/004-drive",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "aiLeague1",
+        "stars": 5
+      }
+    ]
+  },
+  {
+    "id": "aiLeague3",
+    "name": "Advanced Series",
+    "description": "Advanced Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/001-circuit",
+      "west_coast_usa/aiRace/002-highway",
+      "west_coast_usa/aiRace/005-highway",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "aiLeague2",
+        "stars": 4
+      }
+    ]
+  },
+  {
+    "id": "rlsaiLeague1",
+    "name": "RLS Beginner Series",
+    "description": "RLS added Introductory Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/163-RLSFACTORYS",
+      "west_coast_usa/aiRace/165-RLSFACTORYL",
+      "west_coast_usa/aiRace/121-RLSFACTORYCUSTOM1S", 
+      "west_coast_usa/aiRace/123-RLSFACTORYCUSTOM3F",
+
+    ],
+    "unlock":[]
+  },
+  {
+    "id": "rlsaiLeague2",
+    "name": "RLS Intermediate Series",
+    "description": "RLS added Intermediate Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/131-RLSPROAM1F",
+      "west_coast_usa/aiRace/135-RLSPROAM2S",
+      "west_coast_usa/aiRace/103-RLSVINTAGE2S",
+      "west_coast_usa/aiRace/105-RLSVINTAGE3L",
+
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "rlsaiLeague1",
+        "stars": 9
+      }
+    ] 
+   },
+  {
+    "id": "rlsaiLeague3",
+    "name": "RLS Advanced Series",
+    "description": "RLS added IntrAdvancedoductory Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/145-RLSGT2S",
+      "west_coast_usa/aiRace/147-RLSGT3L",
+
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "rlsaiLeague2",
+        "stars": 9
+      }
+    ] 
+    },
+  {
+    "id": "rlsaiLeague4",
+    "name": "RLS Expert Series",
+    "description": "RLS added Expert Races",
+    "skillId": "apexRacing",
+    "missions": [
+      "west_coast_usa/aiRace/151-RLSULTRA1F",
+      "west_coast_usa/aiRace/153-RLSULTRA2S",
+      "west_coast_usa/aiRace/157-RLSULTRA3L",
+      "west_coast_usa/aiRace/111-RLSSCINTILLARACE1F",
+      "west_coast_usa/aiRace/113-RLSSCINTILLARACE2S",
+
+
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "rlsaiLeague3",
+        "stars": 9
+      }
+    ] 
+    }
+  
+]
