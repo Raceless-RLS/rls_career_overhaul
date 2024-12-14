@@ -34,7 +34,7 @@
       <div v-else>
         <Accordion class="dealer-groups" singular>
           <AccordionItem
-            v-for="dealer in vehicleShoppingStore.vehiclesByDealer"
+            v-for="dealer in sortedDealers"
             :key="dealer.id"
             :data-dealerid="dealer.id"
             navigable
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref } from "vue"
+import { reactive, onMounted, ref, computed } from "vue"
 import VehicleCard from "./VehicleCard.vue"
 import { BngCard, BngButton, ACCENTS, BngBinding } from "@/common/components/base"
 import { vBngBlur, vBngOnUiNav } from "@/common/directives"
@@ -135,6 +135,14 @@ function switchLayout(key) {
 const onDealerExpanded = (dealer, state) => {
   dealer.expanded = state
 }
+
+const sortedDealers = computed(() => {
+  return vehicleShoppingStore.vehiclesByDealer.slice().sort((a, b) => {
+    const nameA = dealerMetadata.value[a.id]?.name || a.name;
+    const nameB = dealerMetadata.value[b.id]?.name || b.name;
+    return nameA.localeCompare(nameB);
+  });
+});
 </script>
 
 <style scoped lang="scss">
