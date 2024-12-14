@@ -1436,6 +1436,7 @@ M.onVehicleRemoved = onVehicleRemovedFromInventory
 -- internal use only
 M.getActualRepairPrice = getActualRepairPrice
 M.getPlPerkValue = getPlPerkValue
+M.changePolicyScore = changePolicyScore
 
 -- career debug
 M.resetPlPolicyData = function()
