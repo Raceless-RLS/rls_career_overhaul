@@ -83,10 +83,11 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         elseif phase.name == "countdown" then
           freeroamEvents.displayMessage(freeroamEvents.getStartMessage("drag"), 5)
           freeroamEvents.saveAndSetTrafficAmount(0)
-        else
+        elseif phase.name == "race" then
           freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed * 2.2369362921)
           freeroamEvents.restoreTrafficAmount()
         end
+        dUtils.changeRacerPhase(racer)
       end
 
       if not dUtils.isRacerInsideBoundary(racer) then

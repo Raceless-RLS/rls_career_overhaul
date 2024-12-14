@@ -1996,7 +1996,7 @@ local function calculateTotalCheckpoints(race)
 end
 
 local function onBeamNGTrigger(data)
-    if be:getPlayerVehicleID(0) ~= data.subjectID then
+    if be:getPlayerVehicleID(0) ~= data.subjectID or gameplay_walk.isWalking() then
         return
     end
 
