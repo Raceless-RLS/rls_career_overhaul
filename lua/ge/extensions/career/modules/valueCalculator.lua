@@ -179,8 +179,7 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   end
 
   local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
-  local minValue = math.min(minimumCarValue, configBaseValue * minimumCarValueRelativeToNew)
-  return math.max(adjustedBaseValue + sumPartValues - repairDetails.price, minValue)
+  return adjustedBaseValue + sumPartValues
 end
 
 local function getInventoryVehicleValue(inventoryId, ignoreDamage)
