@@ -87,7 +87,6 @@ local function onUpdate(dtReal, dtSim, dtRaw)
           freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed * 2.2369362921)
           freeroamEvents.restoreTrafficAmount()
         end
-        changeRacerPhase(racer)
       end
 
       if not dUtils.isRacerInsideBoundary(racer) then

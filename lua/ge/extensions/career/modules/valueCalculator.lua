@@ -7,7 +7,7 @@ local M = {}
 M.dependencies = {'career_career'}
 
 local lossPerKmRelative = 0.0000025
-local scrapValueRelative = 0.05
+local scrapValueRelative = 0.5
 
 -- vehicle damage related variables
 local repairTimePerPart = 20 -- amount of seconds needed to repair one part
@@ -18,9 +18,18 @@ local minimumCarValueRelativeToNew = 0.05
 local function getVehicleMileage(vehicle)
   for slot, partName in pairs(vehicle.config.parts) do
     if partName == vehicle.config.mainPartName then
+      if vehicle.partConditions and vehicle.partConditions[partName] then
       return vehicle.partConditions[partName]["odometer"]
+      else
+        if not vehicle.partConditions then
+          vehicle.partConditions = {}
+        end
+        vehicle.partConditions[partName] = {odometer = 0}
+        return 0
+      end
     end
   end
+  return 0 -- Return a default value if main part is not found
 end
 
 local function getVehicleMileageById(inventoryId)
