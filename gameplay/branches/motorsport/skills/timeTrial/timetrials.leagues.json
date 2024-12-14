@@ -1,0 +1,208 @@
+[
+  {
+    "id": "timeTrialBeginnerSeries",
+    "name": "Beginner Series",
+    "description": "Introductory Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_001",
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_002",
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_003",
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_004",
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_005",
+      "west_coast_usa/timeTrial/wcusa_tt_beginner_006",
+    ],
+  },
+  {
+    "id": "timeTrialIntermediateSeries",
+    "name": "Intermediate Series",
+    "description": "Intermediate Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_intermediate_001",
+      "west_coast_usa/timeTrial/wcusa_tt_intermediate_002",
+      "west_coast_usa/timeTrial/wcusa_tt_intermediate_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialBeginnerSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialAdvancedSeries",
+    "name": "Advanced Series",
+    "description": "Advanced Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_advanced_001",
+      "west_coast_usa/timeTrial/wcusa_tt_advanced_002",
+      "west_coast_usa/timeTrial/wcusa_tt_advanced_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialIntermediateSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialCommercialSeries",
+    "name": "Commercial Series",
+    "description": "Technical Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_commercial_001",
+      "west_coast_usa/timeTrial/wcusa_tt_commercial_002",
+      "west_coast_usa/timeTrial/wcusa_tt_commercial_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialAdvancedSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialOffroadSeries",
+    "name": "Off-Road Series",
+    "description": "Gravel Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_001",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_002",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_003",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_004",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_005",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_006",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_007",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_008",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_009",
+      "west_coast_usa/timeTrial/wcusa_tt_gravel_010",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialAdvancedSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialTrackAttackSeries",
+    "name": "Track Attack Series",
+    "description": "BMP Race Track Circuits",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_trackAttack_001",
+      "west_coast_usa/timeTrial/wcusa_tt_trackAttack_002",
+      "west_coast_usa/timeTrial/wcusa_tt_trackAttack_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialAdvancedSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialVintageSeries",
+    "name": "Vintage Series",
+    "description": "Classic Car Series",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_vintage_001",
+      "west_coast_usa/timeTrial/wcusa_tt_vintage_002",
+      "west_coast_usa/timeTrial/wcusa_tt_vintage_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialAdvancedSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  {
+    "id": "timeTrialEnduranceSeries",
+    "name": "Endurance Series",
+    "description": "Extended driving times",
+    "skillId": "timeTrial",
+    "missions": [
+      "west_coast_usa/timeTrial/wcusa_tt_endurance_001",
+      "west_coast_usa/timeTrial/wcusa_tt_endurance_002",
+      "west_coast_usa/timeTrial/wcusa_tt_endurance_003",
+    ],
+    "unlock": [
+      {
+        "type": "leagueStars",
+        "leagueId": "timeTrialAdvancedSeries",
+        "stars": 5
+      },
+    ],
+    "comingSoon":[
+      {
+        "icon":"fastTravel",
+        "label":"More challenges coming soon!"
+      }
+    ]
+  },
+  //{
+  //"id": "apexSeries",
+  //"name": "Apex",
+  //"description": "Personal Vehicle Required",
+  //"skillId": "timeTrial",
+  //"missions": [
+  //  "west_coast_usa/timeTrial/wcusa_tt_residential_001",
+  //],
+  //"unlock": [
+  //  {
+  //    "type": "leagueStars",
+  //    "leagueId": "enduranceSeries",
+  //    "stars": 9
+  //  },
+  //]
+  //}
+]
+
