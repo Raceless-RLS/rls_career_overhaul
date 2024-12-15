@@ -106,7 +106,7 @@ function VehicleRepoJob:generateJob()
         for i = 1, 25 do coroutine.yield() end
 
         -- Determine delivery location and yield
-        self:determineDeliveryLocation()
+        self:determineDeliveryLocation() 
         for i = 1, 25 do coroutine.yield() end
 
         -- Filter valid parking spots and yield
@@ -278,9 +278,14 @@ end
 
 -- Update function called every frame
 function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
-        if not self.vehicleId and self.isCompleted then
+    if not self.vehicleId and self.isCompleted then
         return
     end
+    
+    -- Add timer for distance checks
+    if not self.updateTimer then self.updateTimer = 0 end
+    self.updateTimer = self.updateTimer + dtSim
+    
     if self.jobCoroutine and coroutine.status(self.jobCoroutine) ~= "dead" then
         local success, message = coroutine.resume(self.jobCoroutine)
         if not success then
@@ -289,12 +294,12 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     if self.isCompleted then
-        local playerPos = be:getPlayerVehicle(0):getPosition()
-        local vehicle = be:getObjectByID(self.vehicleId)
-        local vehiclePos = vehicle:getPosition()
+            local playerPos = be:getPlayerVehicle(0):getPosition()
+            local vehicle = be:getObjectByID(self.vehicleId)
+            local vehiclePos = vehicle:getPosition()
 
-        if (playerPos - vehiclePos):length() >= 15 then
-            self:destroy()
+            if (playerPos - vehiclePos):length() >= 15 then
+                self:destroy()
         end
         return
     end
@@ -302,6 +307,14 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     if not self.isMonitoring or not self.vehicleId then
         return
     end
+
+    -- Only do distance checks once per second
+    if self.updateTimer < 1 then
+        return
+    end
+
+    -- Reset timer after checks
+    self.updateTimer = 0
 
     local playerVehicle = be:getPlayerVehicle(0)
     if not playerVehicle then
@@ -334,7 +347,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
                 self.returnCountdown = 10
             else
                 ui_message("You have " .. math.floor(self.returnCountdown) .. " seconds to return to your Repo Vehicle.", 1, "info", "info")
-                self.returnCountdown = self.returnCountdown - dtSim
+                self.returnCountdown = self.returnCountdown - 1 -- Changed from dtSim to 1 since we're updating once per second
                 if self.returnCountdown <= 0 then
                     ui_message("Someone else has picked up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 10, "info", "info")
                     self:destroy()
@@ -358,7 +371,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
                 self.returnCountdown = 10
             else
                 ui_message("You have " .. math.floor(self.returnCountdown) .. " seconds to return the  " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 1, "info", "info")
-                self.returnCountdown = self.returnCountdown - dtSim
+                self.returnCountdown = self.returnCountdown - 1 -- Changed from dtSim to 1 since we're updating once per second
                 if self.returnCountdown <= 0 then
                     ui_message("Someone else has picked up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".", 10, "info", "info")
                     self:destroy()
