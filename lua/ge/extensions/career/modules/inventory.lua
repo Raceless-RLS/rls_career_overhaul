@@ -1166,6 +1166,11 @@ local function setLicensePlateText(inventoryId, text)
   vehicles[inventoryId].config.licenseName = text
 end
 
+local function getLicensePlateText(vehId)
+  local inventoryId = getInventoryIdFromVehicleId(vehId)
+  return inventoryId and vehicles[inventoryId] and vehicles[inventoryId].config.licenseName or nil
+end
+
 local function purchaseLicensePlateText(inventoryId, text, money)
   local price = {money = {amount = money}}
   if not career_modules_payment.canPay(price) then return end
@@ -1284,6 +1289,7 @@ M.setFavoriteVehicle = setFavoriteVehicle
 M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
 M.setLicensePlateText = setLicensePlateText
+M.getLicensePlateText = getLicensePlateText
 M.purchaseLicensePlateText = purchaseLicensePlateText
 M.getVehicleThumbnail = getVehicleThumbnail
 

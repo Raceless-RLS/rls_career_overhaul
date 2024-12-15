@@ -41,11 +41,12 @@ local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
     if vehId and gameplay_traffic.getTrafficData()[vehId] and career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
         local vehicle = scenetree.findObjectById(vehId)
-        local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
+        local licenseText = career_modules_inventory.getLicensePlateText(vehId)
         if licenseText and licenseText:lower() == "repo" then
             return false
         end
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
+        print("role: " .. role)
         if role == 'police' then
             gameplay_traffic.setTrafficVars({
                 enableRandomEvents = true
@@ -116,6 +117,7 @@ local function setupTraffic(forceSetup)
 
     -- this will spawn vehicles near the center of the map (player vehicle not ready yet)
     -- if this would wait until player vehicle active, then the loading screen would fade out early...
+    --gameplay_pedestrian.setAutoSpawning(true)
     gameplay_parking.setupVehicles(restrict and testTrafficAmounts.parkedCars or parkedAmount)
     gameplay_traffic.setupTraffic(restrict and testTrafficAmounts.traffic + extraAmount or amount + extraAmount, 0, {policeAmount = policeAmount, simpleVehs = true, autoLoadFromFile = true})
     setTrafficVars()
@@ -263,9 +265,15 @@ local function onVehicleSwitched(oldId, newId)
     if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
         setPlayerData(newId, oldId)
         setTrafficVars()
-        local vehicle = scenetree.findObjectById(newId)
-        local licenseText = core_vehicles.getVehicleLicenseText(vehicle)
-        if licenseText and licenseText:lower() == "repo" then
+        local licenseText = career_modules_inventory.getLicensePlateText(newId)
+        if licenseText then
+            licenseText = licenseText:lower()
+            for i = 1, #licenseText do
+                print(string.format("[RLS Career][Debug] Char %d: '%s' (byte: %d)", 
+                    i, licenseText:sub(i,i), string.byte(licenseText, i)))
+            end
+        end
+        if licenseText and licenseText == "repo" then
             if repoJob then
                 repoJob:onVehicleSwitched(oldId, newId)
             else
@@ -417,7 +425,13 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         end
       end
     end
-    if playerData.preStartTicks == 0 then playerData.preStartTicks = nil end
+        if playerData.preStartTicks == 0 then
+            playerData.preStartTicks = nil
+        end
+    end
+
+    if repoJob then
+        repoJob:onUpdate(dtReal, dtSim, dtRaw)
   end
 
   if not playerPursuitActive() then return end
@@ -486,6 +500,8 @@ M.playerPursuitActive = playerPursuitActive
 M.resetPlayerState = resetPlayerState
 M.teleportToGarage = teleportToGarage
 M.showPosition = showPosition
+
+M.getPlayerIsCop = getPlayerIsCop
 
 M.onPlayerCameraReady = onPlayerCameraReady
 M.onTrafficStarted = onTrafficStarted

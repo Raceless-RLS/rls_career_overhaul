@@ -434,7 +434,7 @@ local function addTaxiButtons()
       fadeActive = true,
       fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
       icon = "toGarage",
-      price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)}} end,
+      price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage), canBeNegative = true}} end,
       confirmationText = "Do you want to use the taxi?",
       path = "taxi/",
     }
@@ -448,7 +448,7 @@ local function addTaxiButtons()
       local vehObj = be:getObjectByID(vehObjId)
       local pos = vehObj:getPosition()
       local price = career_modules_quickTravel.getPriceForQuickTravel(pos)
-      return {money = {amount = price}}
+      return {money = {amount = price, canBeNegative = true}}
     end
   end
 
