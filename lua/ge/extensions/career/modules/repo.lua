@@ -328,6 +328,20 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     local vehiclePos = vehicle:getPosition()
+    if not self.repoVehicle or not self.repoVehicle:getPosition() then
+        if self.vehicleId then
+            local vehicle = be:getObjectByID(self.vehicleId)
+            if vehicle then
+                vehicle:delete()
+            end
+        end
+        if core_groundMarkers then
+            core_groundMarkers.resetAll()
+        end
+        self:destroy()
+        return
+    end
+
     local repoPos = self.repoVehicle:getPosition()
     local distance = (vehiclePos - repoPos):length()
 
