@@ -1,4 +1,4 @@
-# RLS Career Overhaul v2.2.0 (0.34.1)
+# RLS Career Overhaul v2.2.0 (0.34.2)
 
 Welcome to the **RLS Career Overhaul** mod for BeamNG.drive! This mod enhances various aspects of the game, including freeroam events, police interactions, the economy, deliveries, insurance, garage space, and dealerships. Dive into a more immersive and challenging career mode enriched with new features and improvements.
 
@@ -369,12 +369,12 @@ This system encourages safer driving and careful management of your insurance to
 - **Pricing and Capacity for garages**
   - **Belasco Auto Garage**: ($550,000, 8 Slots)
   - **Commercial Garage**: ($1,000,000, 15 Slots)
-  - **Drag Paddock**: ($150,000, 2 Slots)
+  - **Drag Paddock**: ($115,000, 2 Slots)
 
 - **Added New Garages**
   - **Chinatown Garage**: (FREE, 2 Slots)
   - **Chinatown Overflow**: ($75,000, 2 Slots)
-  - **Cul-de-Sac Garage**: ($400,000, 4 Slots)
+  - **Cul-de-Sac Garage**: ($425,000, 4 Slots)
   - **Sealbrick 1058 Garage**: ($180,000, 3 Slots)
   - **Race Paddock Garage**: ($155,000, 1 Slot)
 
