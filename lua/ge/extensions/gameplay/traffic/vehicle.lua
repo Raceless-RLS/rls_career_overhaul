@@ -12,7 +12,7 @@ local C = {}
 
 local logTag = 'traffic'
 local daylightValues = {0.22, 0.78} -- sunset & sunrise
-local damageLimits = {25, 1000, 30000}
+local damageLimits = {50, 1000, 30000}
 local baseSightDirValue = 200
 local baseSightStrength = 500
 local lowSpeed = 2.5
@@ -98,6 +98,15 @@ function C:applyModelConfigData() -- sets data that depends on the vehicle model
   if modelData.Name then
     modelName = modelData.Brand and modelData.Brand..' '..modelData.Name or modelData.Name
   end
+  if modelName == 'Simplified Traffic Vehicles' then -- NOTE: this is hacky
+    local partConfigStr = obj.partConfig
+    local _, key = path.splitWithoutExt(partConfigStr)
+    key = string.match(key, '%w*')
+    if key then
+      local tempModel = core_vehicles.getModelList().models[key] or {Name = 'Unknown'}
+      modelName = tempModel.Brand and tempModel.Brand..' '..tempModel.Name or tempModel.Name
+    end
+  end
 
   if modelData.paints and next(modelData.paints) and (not configType or configType == 'Factory' or vehType == 'Traffic') then
     paintMode = 1
@@ -113,16 +122,16 @@ function C:applyModelConfigData() -- sets data that depends on the vehicle model
   local configTypeLower = string.lower(configType or '')
   if configTypeLower == 'police' or string.find(string.lower(obj.partConfig), 'police') then
     role = 'police'
-  elseif configTypeLower == 'service' then -- TODO: check vehicle tags
-    role = 'service'
+  end
+  if configTypeLower == 'service' then
+    self._serviceConfigFlag = 1 -- temporary flag
   end
 
   self.autoRole = role
   self.model = {
     key = obj.jbeam,
     name = modelName,
-    tags = configData and configData.Tags or {},
-    paintMode = paintMode, -- paint action after respawning (0 = none, 1 = common, 2 = any)
+    paintMode = paintMode, -- paint selection mode after respawning (0 = none, 1 = common, 2 = any)
     paintPaired = tostring(obj.color) == tostring(obj.colorPalette0) -- matching dual paint style (i.e. roamer)
   }
   self.width = width
@@ -178,6 +187,12 @@ function C:honkHorn(duration) -- set horn with duration
   self.queuedFuncs.horn = {timer = duration or 1, vLua = 'electrics.horn(false)'}
 end
 
+function C:useSiren(duration, disableAfterUse) -- set siren with duration
+  be:getObjectByID(self.id):queueLuaCommand('electrics.set_lightbar_signal(2)')
+  local cmd = disableAfterUse and 'electrics.set_lightbar_signal(0)' or 'electrics.set_lightbar_signal(1)'
+  self.queuedFuncs.horn = {timer = duration or 1, vLua = cmd}
+end
+
 function C:setAiMode(mode) -- sets the AI mode
   mode = mode or self.vars.aiMode
 
@@ -211,8 +226,16 @@ function C:setRole(roleName) -- sets the driver role
     end
 
     self.role = roleClass({veh = self, name = roleName})
+
+    if self._serviceConfigFlag then
+      self.role.ignorePersonality = true
+      self._serviceConfigFlag = nil
+    end
+
     self.role:onRoleStarted()
     extensions.hook('onTrafficAction', self.id, {targetId = self.role.targetId or 0, name = 'role'..string.sentenceCase(roleName), prevName = prevName and 'role'..string.sentenceCase(prevName), data = {}})
+
+    self.roleName = roleName
   end
 end
 
@@ -379,7 +402,7 @@ function C:trackDriving(dt, fullTracking) -- basic tracking for how a vehicle dr
   local legalSide = mapRules.rightHandDrive and -1 or 1
   if n1 and mapNodes[n1] then
     local link = mapNodes[n1].links[n2] or mapNodes[n2].links[n1]
-    self.tracking.isPublicRoad = link.type ~= 'private' and link.drivability >= self.vars.minRoadDrivability
+    self.tracking.isPublicRoad = link.type ~= 'private' and link.drivability >= 0.25
     self.tracking.speedLimit = max(5.556, link.speedLimit)
     local overSpeedValue = clamp(self.speed / self.tracking.speedLimit, 1, 3) * dt * 0.1
 
@@ -687,26 +710,25 @@ function C:onTrafficTick(tickTime)
   if self.isAi then
     self.camVisible = self:checkRayCast(self.playerData.camPos)
 
-    local isDaytime = self:checkTimeOfDay()
-    local terrainHeight = core_terrain.getTerrain() and core_terrain.getTerrainHeight(self.pos) or 0
-    local terrainHeightDefault = core_terrain.getTerrain() and core_terrain.getTerrain():getPosition().z or 0
-    local isTunnel = self.pos.z < terrainHeight
-    if terrainHeight == terrainHeightDefault then -- no terrain, or out of terrain bounds
-      local raisedPos = self.pos + vecUp * 10
-      local sideVec = map.objects[self.id].dirVec:cross(map.objects[self.id].dirVecUp) * 5
-      isTunnel = not self:checkRayCast(nil, raisedPos) and not self:checkRayCast(nil, raisedPos - sideVec) and not self:checkRayCast(nil, raisedPos + sideVec)
-    end
-    if (isTunnel or not isDaytime) and not self.headlights then
-      if self.state == 'active' then
-        self.queuedFuncs.headlights = {timer = 1 + random() * 4, vLua = 'electrics.setLightsState(1)'}
-      else
-        be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(1)')
+    if self.state == 'active' then
+      local isDaytime = self:checkTimeOfDay()
+      local terrainHeight = core_terrain.getTerrain() and core_terrain.getTerrainHeight(self.pos) or 0
+      local terrainHeightDefault = core_terrain.getTerrain() and core_terrain.getTerrain():getPosition().z or 0
+      local isTunnel = self.pos.z < terrainHeight
+      if terrainHeight == terrainHeightDefault then -- no terrain, or out of terrain bounds
+        local raisedPos = self.pos + vecUp * 10
+        local sideVec = map.objects[self.id].dirVec:cross(map.objects[self.id].dirVecUp) * 5
+        isTunnel = not self:checkRayCast(nil, raisedPos) and not self:checkRayCast(nil, raisedPos - sideVec) and not self:checkRayCast(nil, raisedPos + sideVec)
       end
-      self.headlights = true
-    elseif (not isTunnel and isDaytime) and self.headlights then
-      self.queuedFuncs.headlights = nil
-      be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
-      self.headlights = false
+      if (isTunnel or not isDaytime) and not self.headlights then
+        local coef = min(4, 200 / self.distCam) -- larger if the vehicle is closely observed
+        self.queuedFuncs.headlights = {timer = random() * coef, vLua = 'electrics.setLightsState(1)'}
+        self.headlights = true
+      elseif (not isTunnel and isDaytime) and self.headlights then
+        self.queuedFuncs.headlights = nil
+        be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
+        self.headlights = false
+      end
     end
   end
 
@@ -772,6 +794,12 @@ function C:onUpdate(dt, dtSim)
             self:fade(1)
           end
         end
+
+        if self.headlights then
+          be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
+          self.headlights = false
+        end
+
         self:fade(dtSim * 5, self.state == 'fadeOut')
       end
 

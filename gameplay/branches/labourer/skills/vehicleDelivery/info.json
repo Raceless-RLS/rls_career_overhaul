@@ -1,0 +1,101 @@
+{
+  "name":"ui.career.labourer.vehicleDelivery.name",
+  "description":"ui.career.labourer.vehicleDelivery.description",
+  "order": 2200,
+  "isSkill":true,
+  "icon":"keys1",
+  "startLocked":false,
+  "parentBranch":"labourer",
+  "levels":[
+    {
+       // Level 1
+      "requiredValue":0,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Junker Vehicles",
+        "description":"Deliver low-value vehicles while focusing on careful handling to avoid further depreciation.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"carCrash",
+          "heading":"Junkers and beaters",
+          "description":"Older high-mileage beaters that perform very poorly."
+        },
+      ],
+    },
+    {
+      // Level 2
+      "requiredValue":50,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Used Vehicles",
+        "description":"Deliver small and midsized vehicles, emphasizing efficiency and the maintenance of vehicle condition.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"car",
+          "heading":"Gently used vehicles",
+          "description":"Small/Midsize vehicles of reasonable value and in good working condition."
+        },
+      ],
+    },
+    {
+      // Level 3
+      "requiredValue":250,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Large Vehicles",
+        "description":"Deliver large vehicles and learn to adapt to their unique size and handling requirements.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"deliveryTruck",
+          "heading":"Semi-trucks",
+          "description":"Larger vehicles and semi-trucks and other commercial vehicles."
+        },
+      ],
+    },
+    {
+      // Level 4
+      "requiredValue":400,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"New Vehicles",
+        "description":"Deliver new vehicles while ensuring they arrive in pristine condition.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"boxPickUp03",
+          "heading":"Brand new vehicles",
+          "description":"Factory fresh vehicles in all sizes, complete with that new-car smell."
+        },
+      ],
+    },
+    {
+      // Level 5
+      "requiredValue":600,
+      "description":{
+        "type":"unlockCard",
+        "icon":"info",
+        "heading":"Exotic Vehicles",
+        "description":"Deliver top-tier vehicles, requiring exceptional care, discretion, and skill.",
+      },
+      "unlocks":[
+        {
+          "type":"unlockCard",
+          "icon":"turbineL",
+          "heading":"High-value Vehicles",
+          "description":"High-priced, high-speed, customized, rare classics, and other top-of-the-line vehicles"
+        },
+      ],
+    }
+  ],
+}

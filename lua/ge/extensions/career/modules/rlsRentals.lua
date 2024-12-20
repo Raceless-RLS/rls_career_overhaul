@@ -157,7 +157,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         for index, value in ipairs(availableStudios) do
             if value ~= true then
                 local timeToAccess = career_modules_inventory.getVehicleTimeToAccess(value)
-                if timeToAccess <= 0 then
+                if not timeToAccess or timeToAccess <= 0 then
                     availableStudios[index] = true
                 else
                     isRented = true

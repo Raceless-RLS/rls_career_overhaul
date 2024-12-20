@@ -5,7 +5,7 @@
 local M = {}
 local dlog = function(m) log("D","",m) end -- set to nop to disable loggin
 
-M.dependencies = {'career_career', "career_modules_log"}
+M.dependencies = {'career_career'}
 
 local attributes
 local attributeLog
@@ -21,9 +21,9 @@ local function init()
     attributes[branch.attributeKey] = deepcopy(baseAttribute)
     attributes[branch.attributeKey].value = branch.defaultValue or baseAttribute.value
   end
-  local startingCapital = 17500
+  local startingCapital = 10000
   if not career_career.tutorialEnabled then
-    startingCapital = startingCapital + 5500
+    startingCapital = startingCapital
   end
   M.setAttributes({money=startingCapital}, {label="Starting Capital"})
 end

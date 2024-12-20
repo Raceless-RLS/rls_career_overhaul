@@ -83,6 +83,7 @@ local function showVehicle(vehicleInfo)
 end
 
 local function checkDamage()
+  if not testDriveVehInfo then return end
   career_modules_insurance.genericVehNeedsRepair(testDriveVehInfo.vehId,
     function(needsRepair)
       -- only make a claim if the vehicle is damaged
@@ -242,7 +243,7 @@ local function sendUIData()
       guihooks.trigger('inspectVehicleData',
       {
         spawnedVehicleInfo = testDriveVehInfo,
-        needsRepair = career_modules_insurance.partConditionsNeedRepair(res.result),
+        needsRepair = career_modules_valueCalculator.partConditionsNeedRepair(res.result),
         isTutorial = career_modules_linearTutorial and career_modules_linearTutorial.isLinearTutorialActive() or false,
         didTestDrive = didTestDrive,
         claimPrice = career_modules_insurance.getTestDriveClaimPrice()
@@ -258,9 +259,8 @@ local function onUpdate(dtReal, dtSim, dtRaw)
 
   local playerVehObj = getPlayerVehicle(0)
   local distanceToVeh = vehObj:getPosition():distance(playerVehObj:getPosition())
-  isCloseToSpawnedVehicle = (gameplay_walk.isWalking() or playerVehObj:getID() == vehObj:getID()) and distanceToVeh < inspectScreenDist
 
-  if not leaveSaleTether and distanceToVeh < activateTetherDist then
+  if not leaveSaleTether and distanceToVeh < activateTetherDist and gameplay_walk.isWalking() then
     leaveSaleTether = career_modules_tether.startVehicleTether(testDriveVehInfo.vehId, leaveSaleDist, false, leaveSaleCallback)
   end
 
@@ -275,6 +275,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
 
   -- enable/disable the inspect screen only when in play mode or in the inspect screen.
   -- specifically not in the esc menu
+  isCloseToSpawnedVehicle = (gameplay_walk.isWalking() or playerVehObj:getID() == vehObj:getID()) and distanceToVeh < inspectScreenDist
   if playStateActive or inspectScreenActive then
     if isCloseToSpawnedVehicle and not hasLeftTheSale then
       setInspectScreen(true)

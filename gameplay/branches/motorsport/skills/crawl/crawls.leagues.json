@@ -1,0 +1,33 @@
+[
+  {
+    "id": "crawlIntro",
+    "name": "Rock Crawling Introduction",
+    "description": "Rock Crawling Basic Concepts",
+    "skillId": "crawl",
+    "missions": [
+      "west_coast_usa/crawl/002-freeformintro",
+      "west_coast_usa/crawl/003-Easycrawl_001",
+      "west_coast_usa/crawl/004-Easycrawl_002",
+    ],
+    "unlock":[
+      
+    ]
+  },
+  {
+    "id": "crawlLeague1",
+    "name": "Advanced Rock Crawling",
+    "description": "Advanced Courses",
+    "skillId": "crawl",
+    "missions": [
+      "west_coast_usa/crawl/005-mediumcrawl",
+      "west_coast_usa/crawl/006-hardcrawl",
+    ],
+    "unlock": [
+      {
+        "type": "skillStars",
+        "skillId": "crawl",
+        "stars": 7
+      },
+    ]
+  },
+]
