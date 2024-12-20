@@ -232,7 +232,7 @@ function VehicleRepoJob:spawnVehicle()
             metallic = false
         },
         electrics = {
-            parkingbrake = 0
+            parkingbrake = 1
         }
     }
 
