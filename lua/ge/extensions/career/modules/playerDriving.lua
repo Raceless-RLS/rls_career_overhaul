@@ -112,8 +112,10 @@ local function setupTraffic(forceSetup)
     end
 
     -- parked cars amount
-    if isNoParkedModActive() == false then
-      local parkedAmount = settings.getValue('trafficParkedAmount')
+    local parkedAmount = settings.getValue('trafficParkedAmount')
+    if isNoParkedModActive() then
+      parkedAmount = 0
+    else
       if parkedAmount == 0 then -- auto amount
         parkedAmount = clamp(gameplay_traffic.getIdealSpawnAmount(nil, true), 4, 20)
       end
