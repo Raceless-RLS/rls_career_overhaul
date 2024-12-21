@@ -79,6 +79,16 @@ local function isNoPoliceModActive()
     return false
 end
 
+local function isNoParkedModActive()
+    local mods = core_modmanager.getMods()
+    for modName, modData in pairs(mods) do
+        if modName:lower():find("rls_no_parked") and modData.active then
+            return true
+        end
+    end
+    return false
+end
+
 local function setupTraffic(forceSetup)
   if forceSetup or (gameplay_traffic.getState() == "off" and not gameplay_traffic.getTrafficList(true)[1] and playerData.trafficActive == 0) then
     log("I", "career", "Now spawning traffic for career mode")
@@ -94,16 +104,24 @@ local function setupTraffic(forceSetup)
       amount = amount - 1
     end
     if not M.debugMode then
-      amount = clamp(amount, 2, 50) -- at least 2 vehicles should get spawned
+      if isNoParkedModActive() then
+        amount = clamp(amount, 5, 50) -- at least 5 vehicles should get spawned without parked
+      else
+        amount = clamp(amount, 2, 50) -- at least 2 vehicles should get spawned with parked
+      end
     end
 
     -- parked cars amount
     local parkedAmount = settings.getValue('trafficParkedAmount')
-    if parkedAmount == 0 then -- auto amount
-      parkedAmount = clamp(gameplay_traffic.getIdealSpawnAmount(nil, true), 4, 20)
-    end
-    if not M.debugMode then
-      parkedAmount = clamp(parkedAmount, 2, 50) -- at least 2 vehicles should get spawned
+    if isNoParkedModActive() then
+      parkedAmount = 0
+    else
+      if parkedAmount == 0 then -- auto amount
+        parkedAmount = clamp(gameplay_traffic.getIdealSpawnAmount(nil, true), 4, 20)
+      end
+      if not M.debugMode then
+        parkedAmount = clamp(parkedAmount, 2, 50) -- at least 2 vehicles should get spawned
+      end
     end
 
     -- police amount and vehicle pooling
