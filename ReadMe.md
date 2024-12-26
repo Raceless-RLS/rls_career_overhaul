@@ -44,9 +44,9 @@ Welcome to the **RLS Career Overhaul** mod for BeamNG.drive! This mod enhances v
 2. **Move to Mods Folder**:
    - Locate your BeamNG.drive `mods` folder. The default path is:
      ```
-     %AppData%\BeamNG.drive\0.33\mods
+     %AppData%\BeamNG.drive\"Latest"\mods
      ```
-     *Note: Replace `0.33` with your current game version.*
+     *Note: Replace `Latest` with your current game version.*
    - Copy the downloaded ZIP file into the `mods` folder.
 
 3. **Enable the Mod**:
@@ -98,7 +98,7 @@ Experience an array of new racing events designed to challenge and entertain you
     - **Description**: A high-speed drag race along the mud track. Test your vehicle's capabilties in the deep mud. Can you make it through?
   - **Requirements**:
     - **Target Time**: **10 seconds**
-    - **Reward**: **$3,00**
+    - **Reward**: **$3,000**
 
 #### Rally Events
 
