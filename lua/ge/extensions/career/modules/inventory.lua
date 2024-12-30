@@ -1166,6 +1166,14 @@ local function setLicensePlateText(inventoryId, text)
   vehicles[inventoryId].config.licenseName = text
 end
 
+local function setVehicleRole(inventoryId, role)
+  vehicles[inventoryId].role = role
+end
+
+local function getVehicleRole(inventoryId)
+  return vehicles[inventoryId] and vehicles[inventoryId].role or nil
+end
+
 local function getLicensePlateText(vehId)
   local inventoryId = getInventoryIdFromVehicleId(vehId)
   return inventoryId and vehicles[inventoryId] and vehicles[inventoryId].config.licenseName or nil
@@ -1288,6 +1296,8 @@ M.getNumberOfFreeSlots = getNumberOfFreeSlots
 M.setFavoriteVehicle = setFavoriteVehicle
 M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
+M.setVehicleRole = setVehicleRole
+M.getVehicleRole = getVehicleRole
 M.setLicensePlateText = setLicensePlateText
 M.getLicensePlateText = getLicensePlateText
 M.purchaseLicensePlateText = purchaseLicensePlateText

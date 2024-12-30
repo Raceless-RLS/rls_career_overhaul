@@ -41,6 +41,17 @@ local function getPlayerIsCop()
     local vehId = be:getPlayerVehicleID(0)
     if vehId and gameplay_traffic.getTrafficData()[vehId] and career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
         local vehicle = scenetree.findObjectById(vehId)
+        local invId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+        local vehicleRole = career_modules_inventory.getVehicleRole(invId)
+        if vehicleRole ~= nil then
+          print("setting role to " .. vehicleRole)
+          local trafficVehicle = gameplay_traffic.getTrafficData()[vehId]
+          if trafficVehicle then
+            trafficVehicle:setRole(vehicleRole)
+          else
+            print("no traffic vehicle")
+          end
+        end
         local licenseText = career_modules_inventory.getLicensePlateText(vehId)
         if licenseText and licenseText:lower() == "repo" then
             return false
@@ -48,6 +59,10 @@ local function getPlayerIsCop()
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
         print("role: " .. role)
         if role == 'police' then
+          local vehicleRole = career_modules_inventory.getVehicleRole(invId)
+          if vehicleRole == nil then
+            career_modules_inventory.setVehicleRole(invId, 'police')
+          end
             gameplay_traffic.setTrafficVars({
                 enableRandomEvents = true
             })
