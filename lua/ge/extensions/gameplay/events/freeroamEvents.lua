@@ -250,6 +250,7 @@ local races = {
         reward = 3000,
         checkpointRoad = "rally3",
         label = "Rally Stage 3",
+        apexOffset = 1,
         type = {"motorsport"}
     },
     rally4 = {
