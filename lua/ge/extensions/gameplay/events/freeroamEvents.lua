@@ -838,7 +838,7 @@ end
 
 local function raceCompletionMessage(newBestTime, oldTime, reward, xp, data)
     local raceName = getActivityName(data)
-    local newBestTimeMessage = newBestTime and "Congratulations! New Best Time!\n" or ""
+    local newBestTimeMessage = newBestTime and not invalidLap and "Congratulations! New Best Time!\n" or ""
     local raceLabel = races[raceName].label
     if mAltRoute then
         raceLabel = raceLabel .. " (Alternative Route)"
@@ -963,7 +963,7 @@ local function payoutRace(data)
         mActiveRace = nil
 
         local time = races[raceName].bestTime
-        local reward = invalidLap and 0 or races[raceName].reward 
+        local reward = races[raceName].reward 
         if mHotlap == raceName then
             time = races[raceName].hotlap
         end
@@ -1033,6 +1033,9 @@ local function payoutRace(data)
             return 0
         end
 
+        reward = invalidLap and 0 or reward
+        lapCount = invalidLap and 1 or lapCount
+
         if races[raceName].hotlap then
             reward = reward * (1 + (lapCount - 1) / 10)
         end
@@ -1063,9 +1066,9 @@ local function payoutRace(data)
         career_modules_payment.reward(totalReward, reason)
         local message = invalidLap and "Lap Invalidated/n" or ""
         if races[raceName].driftGoal then
-            message = driftCompletionMessage(oldScore, oldTime, driftScore, in_race_time, reward, xp, data)
+            message = message .. driftCompletionMessage(oldScore, oldTime, driftScore, in_race_time, reward, xp, data)
         else
-            message = raceCompletionMessage(newBest, oldTime, reward, xp, data)
+            message = message .. raceCompletionMessage(newBest, oldTime, reward, xp, data)
         end
         ui_message(message, 20, "Reward")
         
@@ -2402,7 +2405,7 @@ local function onBeamNGTrigger(data)
                     -- Update current checkpoint and hit count
                     currCheckpoint = checkpointIndex
                     currentExpectedCheckpoint = currentExpectedCheckpoint + missedCheckpoints
-                    checkpointsHit = checkpointsHit + missedCheckpoints + 1
+                    checkpointsHit = math.min(checkpointsHit + missedCheckpoints + 1, totalCheckpoints)
                     
                     -- Enable next checkpoint
                     enableCheckpoint(currentExpectedCheckpoint, isAlt)
