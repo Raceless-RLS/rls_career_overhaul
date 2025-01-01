@@ -12,15 +12,6 @@ local frequency = 0
 local isStopped
 local isParked
 
--- ui start menu
--- cancel when you move away from preStage
--- ui pop up instead of print log
--- Price formula 
--- random time range
-
--- make 3 triggers with names 1,2,3
--- math random for 1,2,3
-
 local function getHrMin(seconds)
     local minutes = math.floor(seconds / 60)
     local hours = math.floor(minutes / 60)
@@ -59,8 +50,8 @@ local function startRental()
     }, {
         label = "You rented your vehicle!"
     })
-    ui_message("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!", 10, "info", "info")
-    print("vehicle rented for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!")
+    ui_message("You rented your vehicle for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!", 10, "info", "info")
+    print("You rented your vehicle for: " .. getHrMin(rentalTime) .. " for total of " .. reward .. "!")
 end
 
 local function onBeamNGTrigger(data)
@@ -117,7 +108,7 @@ local function onBeamNGTrigger(data)
             ui_message(message, 10, "info", "info")
             print(message)
         else
-            ui_message("you're care value is too low, come back with a car worth over $100,000.", 10, "info", "info")
+            ui_message("The value of your vehicle is too low, come back with a vehicle worth at least $100,000.", 10, "info", "info")
         end
     end
 end

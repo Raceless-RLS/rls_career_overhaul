@@ -118,7 +118,30 @@ local function getPartDifference(originalParts, newParts, changedSlots)
 end
 
 local function getPartValue(part)
-  return getAdjustedVehicleBaseValue(part.value, {age = 2023 - part.year, mileage = part.partCondition["odometer"]})
+  local mileage   = part.partCondition and part.partCondition.odometer or 0
+  local baseValue = part.value or 0
+  
+  -- 1) If < 50 miles, no depreciation
+  if mileage < 50 then
+    return baseValue
+  end
+
+  -- 2) Quick cut once we pass 50 miles (keep 75% as example)
+  local quickCut = 0.75
+  
+  -- 3) Very slow depreciation for each 1,000 miles over 50
+  --    e.g., 1% drop per 1,000 miles
+  local milesOver50   = mileage - 50
+  local thousands     = milesOver50 / 2500
+  local slowFactor    = math.pow(0.995, thousands)  -- 1% per 1,000 miles
+
+  local rawValue = baseValue * quickCut * slowFactor
+
+  -- 4) Clamp to a minimum fraction of baseValue (e.g., 10%)
+  local minFraction = 0.10
+  local minValue    = baseValue * minFraction
+
+  return math.max(rawValue, minValue)
 end
 
 -- for now every damaged part needs to be replaced
@@ -160,12 +183,21 @@ end
 -- IMPORTANT the pc file of a config does not contain the correct list of parts in the vehicle. there might be old unused slots/parts there and there might be slots/parts missing that are in the vehicle
 -- the empty strings in the pc file are important, because otherwise the game will use the default part
 
+local function getTableSize(t)
+  local count = 0
+  for _ in pairs(t) do
+      count = count + 1
+  end
+  return count
+end
+
 local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   local mileage = getVehicleMileage(vehicle)
 
   local newParts = vehicle.config.parts
   local originalParts = vehicle.originalParts
   local changedSlots = vehicle.changedSlots
+
   local addedParts, removedParts = getPartDifference(originalParts, newParts, changedSlots)
   local sumPartValues = 0
   for slot, partName in pairs(addedParts) do
@@ -173,22 +205,27 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
     if not part then
       log("E", "valueCalculator", "Couldnt find part " .. partName .. ", in slot " .. slot .. " of vehicle " .. vehicle.id)
     else
-      sumPartValues = sumPartValues + 1.15 * getPartValue(part)
+      sumPartValues = sumPartValues + 1.5 * getPartValue(part)
     end
   end
-
+  local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
   for slot, partName in pairs(removedParts) do
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
-    sumPartValues = sumPartValues -  1.15 * getPartValue(part)
+    sumPartValues = sumPartValues -  1.5 * getPartValue(part)
+    adjustedBaseValue = adjustedBaseValue - 1.5 * getPartValue(part)
   end
 
   local repairDetails = getRepairDetails(vehicle)
   if ignoreDamage then
     repairDetails.price = 0
   end
+  
+  local value = math.max(adjustedBaseValue, sumPartValues)
 
-  local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
-  return adjustedBaseValue + sumPartValues
+  if (getTableSize(originalParts) / 2) < (getTableSize(removedParts)) then
+    value = math.max(sumPartValues, 0)
+  end
+  return value
 end
 
 local function getInventoryVehicleValue(inventoryId, ignoreDamage)
