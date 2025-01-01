@@ -364,7 +364,7 @@ local function addTowingButtons()
         if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
         return nil
         else
-          return {money = {amount = garage.defaultPrice, canBeNegative = true}}
+          return {money = {amount = garage.defaultPrice, canBeNegative = false}}
         end
       end
       local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)
