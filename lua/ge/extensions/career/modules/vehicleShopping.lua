@@ -390,6 +390,9 @@ local function buySpawnedVehicle(buyVehicleOptions)
     if buyVehicleOptions.licensePlateText then
       career_modules_inventory.setLicensePlateText(newInventoryId, buyVehicleOptions.licensePlateText)
     end
+    if buyVehicleOptions.dealershipId == "policeDealership" then
+      career_modules_inventory.setVehicleRole(newInventoryId, "police")
+    end
     removeNonUsedPlayerVehicles = true
     if be:getPlayerVehicleID(0) == vehObj:getID() then
       career_modules_inventory.enterVehicle(newInventoryId)
