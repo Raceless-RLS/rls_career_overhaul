@@ -127,7 +127,7 @@ local function getPartValue(part)
   end
 
   -- 2) Quick cut once we pass 50 miles (keep 75% as example)
-  local quickCut = 0.75
+  local quickCut = 0.90
   
   -- 3) Very slow depreciation for each 1,000 miles over 50
   --    e.g., 1% drop per 1,000 miles
