@@ -1,4 +1,27 @@
--- Load career modules
+-- Store career state before unloading
+local wasCareerActive = false
+local previousSaveSlot = nil
+
+-- Check if we were in career mode before Lua reset
+local gameState = core_gamestate.state
+if gameState and gameState.state == "career" then
+    print("Detected previous career state from game state")
+    wasCareerActive = true
+    previousSaveSlot = career_saveSystem.getCurrentSaveSlot()
+    print("Found previous save slot:" .. tostring(previousSaveSlot))
+end
+
+-- Register extension loaded callback before loading extensions
+local function onExtensionLoaded(name)
+    if name == "career/career" and wasCareerActive and previousSaveSlot then
+        print("Career extension loaded, attempting to reload career with save slot:" .. tostring(previousSaveSlot))
+        career_career.createOrLoadCareerAndStart(previousSaveSlot)
+    end
+end
+
+-- Register the callback
+extensions.hookAny("onExtensionLoaded", onExtensionLoaded)
+
 if extensions.isExtensionLoaded("career/career") then
     extensions.unload("career/career")
     load("career/career")
