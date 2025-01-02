@@ -95,31 +95,31 @@ function VehicleRepoJob:generateJob()
     self.jobCoroutine = coroutine.create(function()
         -- Initialize player vehicle and yield to allow other processes
         self:initializePlayerVehicle()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Find parking spots and yield
         self:findParkingSpots()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Select a dealership and yield
         self:selectDealership()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Determine delivery location and yield
         self:determineDeliveryLocation() 
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Filter valid parking spots and yield
         self:filterValidSpots()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Select a random valid parking spot and yield
         self:selectRandomSpot()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Generate vehicle configuration and yield
         self:generateVehicleConfig()
-        for i = 1, 25 do coroutine.yield() end
+        for i = 1, 5 do coroutine.yield() end
 
         -- Wait for player vehicle to be stationary before spawning
         local playerVelocity = be:getPlayerVehicle(0):getVelocity():length()
@@ -357,6 +357,17 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             ui_message("Pick up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease drive it to " .. self.selectedDealership.name .. ".", 10, "info", "info")
             vehicle:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
             
+            -- First insert the vehicle into traffic system
+            gameplay_traffic.insertTraffic(self.vehicleId, true) -- true means ignore AI control
+            
+            -- Now we can get and modify the traffic vehicle
+            local trafficVehicle = gameplay_traffic.getTrafficData()[self.vehicleId]
+            if trafficVehicle then
+                trafficVehicle:setRole("standard")
+                print("Set vehicle role to standard")
+            else
+                print("No traffic vehicle found")
+            end            
             createMarker(self.deliveryLocation.pos)
             core_groundMarkers.setPath(self.deliveryLocation.pos)
         end
