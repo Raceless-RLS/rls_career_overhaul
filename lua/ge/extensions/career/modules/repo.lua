@@ -257,6 +257,7 @@ end
 function VehicleRepoJob:onVehicleSwitched(oldId, newId)
     if core_vehicles.getVehicleLicenseText(be:getObjectByID(newId)) == "repo" then
         self.repoVehicle = be:getObjectByID(newId)
+        self.repoVehicleID = newId
         if not self.isJobStarted then
             self:destroy()
             self:generateJob()
@@ -328,7 +329,11 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     local vehiclePos = vehicle:getPosition()
-    if not self.repoVehicle or not self.repoVehicle:getPosition() then
+    local repoPos
+    local distance
+    if not be:getObjectByID(self.repoVehicleID) then
+        self.repoVehicleID = nil
+        self.repoVehicle = nil
         if self.vehicleId then
             local vehicle = be:getObjectByID(self.vehicleId)
             if vehicle then
@@ -338,18 +343,20 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if core_groundMarkers then
             core_groundMarkers.resetAll()
         end
+        ui_message("Your Repo Vehicle has been removed.\nYou have lost your job.", 10, "info", "info")
         self:destroy()
         return
+    else
+        repoPos = self.repoVehicle:getPosition()
+        distance = (vehiclePos - repoPos):length()
     end
-
-    local repoPos = self.repoVehicle:getPosition()
-    local distance = (vehiclePos - repoPos):length()
 
     if not self.isJobStarted then
         if distance <= 20 then
             self.isJobStarted = true
             ui_message("Pick up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease drive it to " .. self.selectedDealership.name .. ".", 10, "info", "info")
             vehicle:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
+            
             createMarker(self.deliveryLocation.pos)
             core_groundMarkers.setPath(self.deliveryLocation.pos)
         end
