@@ -23,6 +23,7 @@ local function setAllLightsEnabled(group, value)
     if obj then
       if obj.obj:isSubClassOf('LightBase') then
         obj.obj:setLightEnabled(value)
+        obj:setHidden(not value)
       elseif obj.obj:isSubClassOf('SimGroup') then
         setAllLightsEnabled(obj, value)
       end
