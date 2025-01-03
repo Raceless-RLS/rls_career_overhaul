@@ -190,15 +190,15 @@ local races = {
         type = {"motorsport"}
     },
     rockClimbS = {
-        bestTime = 12,
-        reward = 2000,
+        bestTime = 8,
+        reward = 700,
         checkpointRoad = "rockClimbS",
         label = "Rock Crawl Short",
         type = {"motorsport", "crawl"}
     },
     rockClimbL = {
-        bestTime = 17,
-        reward = 2000,
+        bestTime = 12,
+        reward = 1500,
         checkpointRoad = "rockClimbL",
         label = "Rock Crawl Long",
         type = {"motorsport", "crawl"}
@@ -219,14 +219,14 @@ local races = {
     },
     koh1 = {
         bestTime = 120,
-        reward = 4000,
+        reward = 2000,
         checkpointRoad = "koh1",
         label = "King of the Hammer 1",
         type = {"motorsport"}
     },
     koh2 = {
         bestTime = 180,
-        reward = 5000,
+        reward = 3000,
         checkpointRoad = "koh2",
         label = "King of the Hammer 2",
         type = {"motorsport"}
