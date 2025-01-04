@@ -473,9 +473,10 @@ local function saveAndSetTrafficAmount(amount)
 end
 
 local function restoreTrafficAmount()
-    if gameplay_traffic and previousTrafficAmount then
-        gameplay_traffic.setActiveAmount(previousTrafficAmount)
-        previousTrafficAmount = nil
+    if gameplay_traffic then
+        local trafficAmount = settings.getValue('trafficAmount') or previousTrafficAmount
+        local pooledAmount = settings.getValue('trafficExtraAmount') or 0
+        gameplay_traffic.setActiveAmount(trafficAmount + pooledAmount, trafficAmount)
     end
 end
 
