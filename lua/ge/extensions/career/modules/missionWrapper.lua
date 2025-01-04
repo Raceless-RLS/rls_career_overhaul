@@ -60,6 +60,7 @@ end
 
 local function onAnyMissionChanged(state, mission)
   if mission and state == "stopped" then
+    scenetree.tod.play = true
     career_modules_playerDriving.resetPlayerState()
     saveMission(mission.id)
   end
@@ -75,6 +76,7 @@ end
 
 local function preMissionHandling(step, task)
   missionStartStep = step
+  scenetree.tod.play = false
 
   -- create a part condition snapshot
   local vehId = career_modules_inventory.getCurrentVehicleId()
