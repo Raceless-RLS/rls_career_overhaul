@@ -74,24 +74,28 @@ local function getShoppingData()
   return data
 end
 
-local function getRandomizedPrice(price)
-  return price
-  --[[
-  local rand = math.random(0, 100) / 100
-  if rand == 0 then
-    return price * 0.5
-  elseif rand == 100 then
-    return price * 1.15
-  elseif rand < 10 then
-    return price * (0.75 + rand/2)
-  elseif rand < 90 then
-    return price * (0.80 + (rand - 10)/8)
-  else
-    return price * (0.95 + (rand - 90)/100)
-  end
-  --]]
-end
+local function getRandomizedPrice(price, range)
+  -- L is the lowest price (These are extreme cases)
+  -- NL is the Normal lowest price
+  -- NH is the Normal highest price
+  -- H is the highest price (These are extreme cases)
+  range = range or {0.5, 0.90, 1.15, 1.5}
+  local L, NL, NH, H = range[1], range[2], range[3], range[4]
 
+  local rand = math.random(0, 1000) / 1000
+  if rand < 0 then rand = 0 end
+  if rand > 1 then rand = 1 end
+  if rand <= 0.01 then
+    local slope = (NL - L) / 0.01
+    return (L + slope * rand) * price
+  elseif rand <= 0.99 then
+    local slope = (NH - NL) / 0.98
+    return (NL + slope * (rand - 0.01)) * price
+  else
+    local slope = (H - NH) / 0.01
+    return (NH + slope * (rand - 0.99)) * price
+  end
+end
 
 local function normalizePopulations(configs, scalingFactor)
   local sum = 0
@@ -197,7 +201,7 @@ local function generateVehicleList()
       totalPartsValue = career_modules_valueCalculator.getDepreciatedPartValue(totalPartsValue, randomVehicleInfo.Mileage) * 1.081
       local baseValue = math.max(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}), totalPartsValue)
 
-      randomVehicleInfo.Value = getRandomizedPrice(baseValue)
+      randomVehicleInfo.Value = getRandomizedPrice(baseValue, seller.range)
       randomVehicleInfo.shopId = tableSize(vehiclesInShop) + 1
 
       -- compute taxes and fees
