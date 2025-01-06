@@ -422,7 +422,7 @@ local function sendPurchaseDataToUi()
     forceTradeIn = not career_modules_linearTutorial.getTutorialFlag("purchasedFirstCar") or nil,
     tradeInVehicleInfo = purchaseData.tradeInVehicleInfo,
     prices = purchaseData.prices,
-    dealershipId = purchaseData.shopId,
+    dealershipId = vehicleShopInfo.sellerId,
   }
 
   local playerInsuranceData = career_modules_insurance.getPlayerPolicyData()[data.vehicleInfo.requiredInsurance.id]
@@ -554,6 +554,7 @@ local function buyFromPurchaseMenu(purchaseType, options)
   if purchaseData.tradeInVehicleInfo then
     career_modules_inventory.removeVehicle(purchaseData.tradeInVehicleInfo.id)
   end
+  print("Dealership ID: " .. options.dealershipId and options.dealershipId or "none")
 
   local buyVehicleOptions = {licensePlateText = options.licensePlateText, dealershipId = options.dealershipId}
   if purchaseType == "inspect" then
