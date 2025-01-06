@@ -200,35 +200,9 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
   end
 end
 
-local function isVehicleVisible(obj)
-  local camPos = vec3(core_camera.getPosition())
-  local objPos = obj:getPosition()
-  local dist = objPos:distance(camPos)
-  
-  local playerRadius = clamp(15, 15, 75)
-  
-  local dirVec = (objPos - camPos):normalized()
-  local dotDirVecFromCam = core_camera.getForward():dot(dirVec)
-  
-  if dotDirVecFromCam < 0 and dist > playerRadius then
-    return false
-  end
-  
-  local heightValue = max(0, square(camPos.z - objPos.z) / 8 * dotDirVecFromCam)
-  
-  local sightDirValue = dotDirVecFromCam * 25 -- Reduced from 200 to 25m
-  local camRadius = playerRadius + max(0, sightDirValue + heightValue)
-  
-  if dist >= playerRadius and dist >= camRadius then
-    return false
-  end
-  
-  return obj:checkRayCast(camPos)
-end
-
 local function updateTrafficVisibility(dt, playerVeh, playerPos)
   lastVisibilityUpdate = lastVisibilityUpdate + dt
-  if lastVisibilityUpdate < 0.5 then return end
+  if lastVisibilityUpdate < 0.1 then return end
   
   lastVisibilityUpdate = 0
   
@@ -244,28 +218,29 @@ local function updateTrafficVisibility(dt, playerVeh, playerPos)
       if obj then
           local dist = veh.pos:distance(playerPos)
           
-          if not isVehicleVisible(obj) then
-            if not veh._wasHidden then
-                obj:setHidden(true)
-                veh._wasHidden = true
-            end
-          else
-            if veh._wasHidden then
-                obj:setHidden(false)
-                veh._wasHidden = false
-            end
-          end
-
           -- Manage visibility
-          if dist < TRAFFIC_COLLISION_DISTANCE then
-              if veh._wasGhosted then
-                  obj:queueLuaCommand("obj:setGhostEnabled(false)")
-                  veh._wasGhosted = false
+          if dist > TRAFFIC_VISIBLE_DISTANCE then
+              if not veh._wasHidden then
+                  obj:setHidden(true)
+                  veh._wasHidden = true
               end
           else
-              if not veh._wasGhosted then
-                  obj:queueLuaCommand("obj:setGhostEnabled(true)")
-                  veh._wasGhosted = true
+              if veh._wasHidden then
+                  obj:setHidden(false)
+                  veh._wasHidden = false
+              end
+              
+              -- Manage collision ghosting
+              if dist < TRAFFIC_COLLISION_DISTANCE then
+                  if veh._wasGhosted then
+                      obj:queueLuaCommand("obj:setGhostEnabled(false)")
+                      veh._wasGhosted = false
+                  end
+              else
+                  if not veh._wasGhosted then
+                      obj:queueLuaCommand("obj:setGhostEnabled(true)")
+                      veh._wasGhosted = true
+                  end
               end
           end
       end
