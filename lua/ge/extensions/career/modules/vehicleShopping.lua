@@ -75,6 +75,8 @@ local function getShoppingData()
 end
 
 local function getRandomizedPrice(price)
+  return price
+  --[[
   local rand = math.random(0, 100) / 100
   if rand == 0 then
     return price * 0.5
@@ -87,6 +89,7 @@ local function getRandomizedPrice(price)
   else
     return price * (0.95 + (rand - 90)/100)
   end
+  --]]
 end
 
 
@@ -101,6 +104,42 @@ local function normalizePopulations(configs, scalingFactor)
     local distanceFromAverage = configInfo.adjustedPopulation - average
     configInfo.adjustedPopulation = round(configInfo.adjustedPopulation - scalingFactor * distanceFromAverage)
   end
+end
+
+local function getVehiclePartsValue(modelName, configKey)
+  -- Create an IO context for the vehicle directory
+  local ioCtx = {
+      preloadedDirs = {"/vehicles/" .. modelName .. "/"}
+  }
+  
+  -- Get the PC file content first
+  local pcPath = "vehicles/" .. modelName .. "/" .. configKey .. ".pc"
+  local pcData = jsonReadFile(pcPath)
+  
+  if not pcData or not pcData.parts then
+      log('E', 'vehicles', 'Unable to read PC file or no parts data: ' .. pcPath)
+      return 0
+  end
+  
+  local totalValue = 0
+  
+  -- Get all available parts using jbeamIO
+  local parts = jbeamIO.getAvailableParts(ioCtx)
+  
+  -- Iterate through each part in the PC file
+  for slotName, partName in pairs(pcData.parts) do
+      if partName and partName ~= "" then
+          -- Get the part data using jbeamIO
+          local partData = jbeamIO.getPart(ioCtx, partName)
+          if partData and partData.information and partData.information.value then
+              totalValue = totalValue + partData.information.value
+          else
+            log('I', 'vehicles', 'Unable to read part data or no value data: ' .. partName)
+          end
+      end
+  end
+  
+  return totalValue
 end
 
 local function generateVehicleList()
@@ -154,7 +193,11 @@ local function generateVehicleList()
         randomVehicleInfo.Mileage = starterVehicleMileages[randomVehicleInfo.model_key]
       end
 
-      randomVehicleInfo.Value = getRandomizedPrice(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}))
+      local totalPartsValue = getVehiclePartsValue(randomVehicleInfo.model_key, randomVehicleInfo.key)
+      totalPartsValue = career_modules_valueCalculator.getDepreciatedPartValue(totalPartsValue, randomVehicleInfo.Mileage) * 1.081
+      local baseValue = math.max(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}), totalPartsValue)
+
+      randomVehicleInfo.Value = getRandomizedPrice(baseValue)
       randomVehicleInfo.shopId = tableSize(vehiclesInShop) + 1
 
       -- compute taxes and fees
@@ -298,6 +341,7 @@ end
 -- TODO At this point, the part conditions of the previous vehicle should have already been saved. for example when entering the garage
 local originComputerId
 local function openShop(seller, _originComputerId)
+  guihooks.trigger('ChangeState', {state = 'vehicleShopping', params = {}})
   currentSeller = seller
   originComputerId = _originComputerId
 
@@ -345,8 +389,6 @@ local function openShop(seller, _originComputerId)
   end
 
   tether = career_modules_tether.startSphereTether(tetherPos, tetherRange, M.endShopping)
-
-  guihooks.trigger('ChangeState', {state = 'vehicleShopping', params = {}})
   extensions.hook("onVehicleShoppingMenuOpened", {seller = currentSeller})
 end
 
