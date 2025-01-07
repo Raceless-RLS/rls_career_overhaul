@@ -84,7 +84,10 @@ const description = computed(() => props.isTutorial ? "Tutorial Vehicle" : props
 
 const location = computed(() => {
   let res
-  if (locked.value && !locked.value.location) {
+  if (locked.value && locked.value.location && typeof locked.value.location === 'string') {
+    // Check for custom location string
+    res = locked.value.location
+  } else if (locked.value && !locked.value.location) {
     res = locked.value.reason
   } else if (props.data.inGarage) {
     res = "In garage"
@@ -109,7 +112,6 @@ const locked = computed(() => {
   } else if (props.data.missingFile) {
     res = { reason: "Missing File!" }
   } else if (props.data.timeToAccess) {
-    // const eta = formatTime(props.data.timeToAccess, 1)
     const eta = (() => {
       const hours = ~~(props.data.timeToAccess / 3600)
       const minutes = ~~((props.data.timeToAccess % 3600) / 60)
@@ -126,14 +128,15 @@ const locked = computed(() => {
       
       return parts.join(' ')
     })()
+
     if (props.data.delayReason === "bought") {
       res = { reason: "Out for delivery", eta }
     } else if (props.data.delayReason === "repair") {
-      res = { reason: "Being repaired", eta }
+      res = { reason: "Being repaired", eta, location: "Repair Shop" }
     } else if (props.data.delayReason === "rented") {
-      res = { reason: "Rented Out", eta }
+      res = { reason: "Rented Out", eta, location: "Movie Studio" }
     } else if (props.data.delayReason === "certification") {
-      res = { reason: "Certifying", eta }
+      res = { reason: "Certifying", eta, location: "Police Station" }
     } else {
       res = { reason: "Available in", eta }
     }
