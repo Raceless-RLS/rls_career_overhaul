@@ -12,7 +12,9 @@ local lightRegistry = {
 }
 
 local isDaytime = true
-local LIGHT_ACTIVATION_DISTANCE = 200 -- meters
+local LIGHT_ACTIVATION_DISTANCE = 200 -- Base activation distance in meters
+local VELOCITY_SCALE_FACTOR = 4 -- How much to extend the activation distance based on velocity
+local MIN_VELOCITY_THRESHOLD = 2 -- Minimum velocity (m/s) before we start extending the range
 local initialized = false
 local updateTimer = 0  -- Add timer variable
 local UPDATE_INTERVAL = 0.5  -- Update every 0.5 seconds
@@ -58,17 +60,43 @@ local function disableAllLights()
   end
 end
 
-local function updateNearbyLights(playerPos)
+local function getExtendedActivationDistance(lightPos, playerPos, playerVel)
+  -- Get base distance from light to player
+  local toLight = lightPos - playerPos
+  local distance = toLight:length()
+  
+  -- If velocity is below threshold, just return regular distance check
+  local velocity = playerVel:length()
+  if velocity < MIN_VELOCITY_THRESHOLD then
+    return distance <= LIGHT_ACTIVATION_DISTANCE
+  end
+
+  -- Normalize vectors for dot product
+  local velDir = playerVel:normalized()
+  local lightDir = toLight:normalized()
+  
+  -- Get the angle between velocity and direction to light (-1 to 1)
+  local dotProduct = velDir:dot(lightDir)
+  
+  -- Calculate extended range based on velocity and direction
+  -- Maximum extension when light is directly ahead (dotProduct = 1)
+  -- No extension when light is perpendicular or behind (dotProduct <= 0)
+  local extensionMultiplier = math.max(0, dotProduct)
+  local velocityExtension = velocity * VELOCITY_SCALE_FACTOR * extensionMultiplier
+  local extendedRange = LIGHT_ACTIVATION_DISTANCE + velocityExtension
+  
+  return distance <= extendedRange
+end
+
+local function updateNearbyLights(playerPos, playerVel)
   for _, light in ipairs(lightRegistry.nightLights) do
-    local distance = (light.pos - playerPos):length()
-    local shouldBeEnabled = distance <= LIGHT_ACTIVATION_DISTANCE
+    local shouldBeEnabled = getExtendedActivationDistance(light.pos, playerPos, playerVel)
     light.obj.obj:setLightEnabled(shouldBeEnabled)
     light.obj:setHidden(not shouldBeEnabled)
   end
   
   for _, light in ipairs(lightRegistry.nightLightsShadow) do
-    local distance = (light.pos - playerPos):length()
-    local shouldBeEnabled = distance <= LIGHT_ACTIVATION_DISTANCE
+    local shouldBeEnabled = getExtendedActivationDistance(light.pos, playerPos, playerVel)
     light.obj.obj:setLightEnabled(shouldBeEnabled)
     light.obj:setHidden(not shouldBeEnabled)
   end
@@ -111,7 +139,8 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     local playerVehicle = be:getPlayerVehicle(0)
     if playerVehicle then
       local playerPos = playerVehicle:getPosition()
-      updateNearbyLights(playerPos)
+      local playerVel = playerVehicle:getVelocity()
+      updateNearbyLights(playerPos, playerVel)
     end
   end
 end
