@@ -8,6 +8,8 @@ M.dependencies = {'career_career'}
 
 local allMissionData = {}
 
+local preMissionCycle = nil
+
 local function init() end
 
 local function setCurrentSaveSlot()
@@ -60,7 +62,8 @@ end
 
 local function onAnyMissionChanged(state, mission)
   if mission and state == "stopped" then
-    scenetree.tod.play = true
+    scenetree.tod.play = preMissionCycle
+    preMissionCycle = nil
     career_modules_playerDriving.resetPlayerState()
     saveMission(mission.id)
   end
@@ -76,6 +79,9 @@ end
 
 local function preMissionHandling(step, task)
   missionStartStep = step
+  if preMissionCycle == nil then
+    preMissionCycle = scenetree.tod.play
+  end
   scenetree.tod.play = false
 
   -- create a part condition snapshot
