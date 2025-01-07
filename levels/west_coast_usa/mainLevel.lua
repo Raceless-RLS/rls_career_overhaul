@@ -12,12 +12,16 @@ local lightRegistry = {
 }
 
 local isDaytime = true
-local LIGHT_ACTIVATION_DISTANCE = 200 -- Base activation distance in meters
-local VELOCITY_SCALE_FACTOR = 4 -- How much to extend the activation distance based on velocity
-local MIN_VELOCITY_THRESHOLD = 2 -- Minimum velocity (m/s) before we start extending the range
+local BASE_ACTIVATION_DISTANCE = 75
+local VELOCITY_SCALE_FACTOR = 7
+local MIN_VELOCITY_THRESHOLD = 5
+local LIGHT_PERSISTENCE_TIME = 3.0
+local CAMERA_VIEW_ANGLE = 0.5
+local MIN_VIEW_DISTANCE = 500
+local FORWARD_PERSISTENCE_MULTIPLIER = 2.0
 local initialized = false
-local updateTimer = 0  -- Add timer variable
-local UPDATE_INTERVAL = 0.5  -- Update every 0.5 seconds
+local updateTimer = 0
+local UPDATE_INTERVAL = 0.5
 
 local function registerLightsInGroup(group, registryTable)
   if not group or not group.obj then return end
@@ -27,10 +31,10 @@ local function registerLightsInGroup(group, registryTable)
     local obj = scenetree.findObjectById(id)
     if obj then
       if obj.obj:isSubClassOf('LightBase') then
-        -- Store light object with its position
         table.insert(registryTable, {
           obj = obj,
-          pos = obj:getPosition()
+          pos = obj:getPosition(),
+          fadeTimer = 0
         })
       elseif obj.obj:isSubClassOf('SimGroup') then
         registerLightsInGroup(obj, registryTable)
@@ -40,7 +44,6 @@ local function registerLightsInGroup(group, registryTable)
 end
 
 local function initializeLightRegistry()
-  -- Register all lights once at initialization
   if scenetree.night_light then
     registerLightsInGroup(scenetree.night_light, lightRegistry.nightLights)
   end
@@ -60,43 +63,86 @@ local function disableAllLights()
   end
 end
 
-local function getExtendedActivationDistance(lightPos, playerPos, playerVel)
-  -- Get base distance from light to player
+local function getExtendedActivationDistance(lightPos, playerPos, playerVel, cameraDir)
   local toLight = lightPos - playerPos
   local distance = toLight:length()
   
-  -- If velocity is below threshold, just return regular distance check
+  -- Always keep close lights on
+  if distance <= BASE_ACTIVATION_DISTANCE then
+    return true, LIGHT_PERSISTENCE_TIME
+  end
+  
+  -- Check if light is visible to camera
+  local lightDir = toLight:normalized()
+  local cameraDotProduct = cameraDir:dot(lightDir)
+  local isInView = cameraDotProduct > CAMERA_VIEW_ANGLE
+  
+  -- Keep visible lights on within reasonable distance
+  if isInView and distance < MIN_VIEW_DISTANCE then
+    return true, LIGHT_PERSISTENCE_TIME
+  end
+  
+  -- Calculate velocity-based extension
   local velocity = playerVel:length()
   if velocity < MIN_VELOCITY_THRESHOLD then
-    return distance <= LIGHT_ACTIVATION_DISTANCE
+    return false, 0
   end
-
-  -- Normalize vectors for dot product
-  local velDir = playerVel:normalized()
-  local lightDir = toLight:normalized()
   
-  -- Get the angle between velocity and direction to light (-1 to 1)
+  -- Get direction alignment with velocity
+  local velDir = playerVel:normalized()
   local dotProduct = velDir:dot(lightDir)
   
   -- Calculate extended range based on velocity and direction
-  -- Maximum extension when light is directly ahead (dotProduct = 1)
-  -- No extension when light is perpendicular or behind (dotProduct <= 0)
   local extensionMultiplier = math.max(0, dotProduct)
   local velocityExtension = velocity * VELOCITY_SCALE_FACTOR * extensionMultiplier
-  local extendedRange = LIGHT_ACTIVATION_DISTANCE + velocityExtension
+  local extendedRange = BASE_ACTIVATION_DISTANCE + velocityExtension
   
-  return distance <= extendedRange
+  -- Calculate persistence time based on direction
+  local persistenceTime = LIGHT_PERSISTENCE_TIME
+  if dotProduct > 0.7 then -- Light is roughly in front
+    persistenceTime = persistenceTime * 2
+  elseif dotProduct < -0.3 then -- Light is behind
+    persistenceTime = persistenceTime * 0.5
+  end
+  
+  return distance <= extendedRange, persistenceTime
 end
 
-local function updateNearbyLights(playerPos, playerVel)
+local function updateNearbyLights(playerPos, playerVel, dtSim)
+  local cameraDir = core_camera.getForward()
+
   for _, light in ipairs(lightRegistry.nightLights) do
-    local shouldBeEnabled = getExtendedActivationDistance(light.pos, playerPos, playerVel)
+    -- Initialize fadeTimer if it doesn't exist
+    light.fadeTimer = light.fadeTimer or 0
+    
+    -- Check if light should be active
+    local isActive, persistenceTime = getExtendedActivationDistance(light.pos, playerPos, playerVel, cameraDir)
+    
+    -- Update fade timer
+    if isActive then
+      light.fadeTimer = persistenceTime
+    else
+      light.fadeTimer = math.max(0, light.fadeTimer - dtSim)
+    end
+    
+    -- Enable light if either active or fading
+    local shouldBeEnabled = isActive or light.fadeTimer > 0
     light.obj.obj:setLightEnabled(shouldBeEnabled)
     light.obj:setHidden(not shouldBeEnabled)
   end
   
+  -- Do the same for shadow lights
   for _, light in ipairs(lightRegistry.nightLightsShadow) do
-    local shouldBeEnabled = getExtendedActivationDistance(light.pos, playerPos, playerVel)
+    light.fadeTimer = light.fadeTimer or 0
+    local isActive, persistenceTime = getExtendedActivationDistance(light.pos, playerPos, playerVel, cameraDir)
+    
+    if isActive then
+      light.fadeTimer = persistenceTime
+    else
+      light.fadeTimer = math.max(0, light.fadeTimer - dtSim)
+    end
+    
+    local shouldBeEnabled = isActive or light.fadeTimer > 0
     light.obj.obj:setLightEnabled(shouldBeEnabled)
     light.obj:setHidden(not shouldBeEnabled)
   end
@@ -140,7 +186,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     if playerVehicle then
       local playerPos = playerVehicle:getPosition()
       local playerVel = playerVehicle:getVelocity()
-      updateNearbyLights(playerPos, playerVel)
+      updateNearbyLights(playerPos, playerVel, 0.5)
     end
   end
 end
