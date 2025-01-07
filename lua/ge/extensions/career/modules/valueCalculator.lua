@@ -117,31 +117,30 @@ local function getPartDifference(originalParts, newParts, changedSlots)
   return addedParts, removedParts
 end
 
-local function getPartValue(part)
-  local mileage   = part.partCondition and part.partCondition.odometer or 0
-  local baseValue = part.value or 0
-  
-  -- 1) If < 50 miles, no depreciation
+local function getDepreciatedPartValue(value, mileage)
   if mileage < 50 then
-    return baseValue
+    return value
   end
 
-  -- 2) Quick cut once we pass 50 miles (keep 75% as example)
-  local quickCut = 0.90
+  local quickCut = 0.75
   
-  -- 3) Very slow depreciation for each 1,000 miles over 50
-  --    e.g., 1% drop per 1,000 miles
   local milesOver50   = mileage - 50
-  local thousands     = milesOver50 / 2500
-  local slowFactor    = math.pow(0.995, thousands)  -- 1% per 1,000 miles
+  local thousands     = milesOver50 / 1500
+  local slowFactor    = math.pow(0.99, thousands)
 
-  local rawValue = baseValue * quickCut * slowFactor
+  local rawValue = value * quickCut * slowFactor
 
-  -- 4) Clamp to a minimum fraction of baseValue (e.g., 10%)
   local minFraction = 0.10
-  local minValue    = baseValue * minFraction
+  local minValue    = value * minFraction
 
   return math.max(rawValue, minValue)
+end
+
+local function getPartValue(part)
+  local mileage   = part.partCondition and part.partCondition.odometer / 1609.344 or 0 -- convert to miles
+  local baseValue = part.value or 0
+  
+  return getDepreciatedPartValue(baseValue, mileage)
 end
 
 -- for now every damaged part needs to be replaced
@@ -200,19 +199,23 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
 
   local addedParts, removedParts = getPartDifference(originalParts, newParts, changedSlots)
   local sumPartValues = 0
-  for slot, partName in pairs(addedParts) do
+  for slot, partName in pairs(originalParts) do
     local part = career_modules_partInventory.getPart(vehicle.id, slot)
-    if not part then
-      log("E", "valueCalculator", "Couldnt find part " .. partName .. ", in slot " .. slot .. " of vehicle " .. vehicle.id)
-    else
-      sumPartValues = sumPartValues + 1.5 * getPartValue(part)
+    if part and not removedParts[slot] then
+      sumPartValues = sumPartValues + getPartValue(part)
     end
   end
   local adjustedBaseValue = getAdjustedVehicleBaseValue(configBaseValue, {mileage = mileage, age = 2023 - (vehicle.year or 2023)})
+  for slot, partName in pairs(addedParts) do
+    local part = career_modules_partInventory.getPart(vehicle.id, slot)
+    if part then
+      sumPartValues = sumPartValues + 0.90 * getPartValue(part)
+      adjustedBaseValue = adjustedBaseValue + 0.90 * getPartValue(part)
+    end
+  end
   for slot, partName in pairs(removedParts) do
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
-    sumPartValues = sumPartValues -  1.5 * getPartValue(part)
-    adjustedBaseValue = adjustedBaseValue - 1.5 * getPartValue(part)
+    adjustedBaseValue = adjustedBaseValue - getPartValue(part)
   end
 
   local repairDetails = getRepairDetails(vehicle)
@@ -256,6 +259,7 @@ M.getPartDifference = getPartDifference
 
 M.getInventoryVehicleValue = getInventoryVehicleValue
 M.getPartValue = getPartValue
+M.getDepreciatedPartValue = getDepreciatedPartValue
 M.getAdjustedVehicleBaseValue = getAdjustedVehicleBaseValue
 M.getVehicleMileageById = getVehicleMileageById
 M.getBrokenPartsThreshold = getBrokenPartsThreshold

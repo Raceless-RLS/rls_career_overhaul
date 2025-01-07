@@ -871,6 +871,10 @@ local function onUpdate(dtReal, dtSim, dtRaw)
           ui_message(string.format("The %s has been delivered to your vehicle storage.", vehInfo.niceName), nil, "vehicleInventory")
         elseif vehInfo.delayReason == "repair" then
           ui_message(string.format("Your %s has been repaired and returned to your vehicle storage.", vehInfo.niceName), nil, "vehicleInventory")
+        elseif vehInfo.delayReason == "rented" then
+          ui_message(string.format("Your %s has been returned from the Movie Rental.", vehInfo.niceName), nil, "vehicleInventory")
+        elseif vehInfo.delayReason == "certification" then
+          ui_message(string.format("Your %s has been certified and returned to your vehicle storage.", vehInfo.niceName), nil, "vehicleInventory")
         end
         vehInfo.timeToAccess = nil
         vehInfo.delayReason = nil
