@@ -26,7 +26,7 @@
       <div class="day-night-toggle">
         <label>
           <span>Toggle Day/Night Cycle</span>
-          <input type="checkbox" v-model="dayNightCycle" :checked="dayNightEnabled">
+          <input type="checkbox" v-model="dayNightCycle">
         </label>
       </div>
 
@@ -46,17 +46,13 @@ import { lua } from "@/bridge"
 
 const computerStore = useComputerStore()
 const selectedTime = ref(0)
-
-const dayNightEnabled = computed(() => {
-  try {
-    return lua.career_modules_sleep.getDayNightCycle()
-  } catch (e) {
-    console.error('Error getting day/night cycle state:', e)
-    return true
-  }
-})
-
 const dayNightCycle = ref(true)
+
+dayNightCycle.value = getDayNightCycle()
+
+function getDayNightCycle() {
+  return lua.career_modules_sleep.getDayNightCycle()
+}
 
 watch(dayNightCycle, (newValue) => {
   lua.career_modules_sleep.toggleDayNightCycle(newValue)

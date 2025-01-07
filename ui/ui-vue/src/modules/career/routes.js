@@ -229,6 +229,13 @@ export default [
         path: "sleep-menu",
         name: "sleep-menu",
         component: views.Sleep
+      },
+
+      // Police Assignment
+      {
+        path: "policeAssignment",
+        name: "policeAssignment",
+        component: views.PoliceAssignment
       }
     ],
   },

@@ -842,6 +842,11 @@ export default {
     closeAllMenus: () => {},
     toggleDayNightCycle: toggle => Boolean,
     sleep: time => Number,
-    getDayNightCycle: () => Boolean
+    getDayNightCycle: () => {},
   },
+
+  career_modules_assignPolice: {
+    canPay: () => {},
+    startCertification: () => {},
+  }
 }
