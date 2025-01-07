@@ -14,6 +14,8 @@ local lightRegistry = {
 local isDaytime = true
 local LIGHT_ACTIVATION_DISTANCE = 200 -- meters
 local initialized = false
+local updateTimer = 0  -- Add timer variable
+local UPDATE_INTERVAL = 0.5  -- Update every 0.5 seconds
 
 local function registerLightsInGroup(group, registryTable)
   if not group or not group.obj then return end
@@ -83,6 +85,13 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     end
     initialized = true
   end
+
+  -- Update timer
+  updateTimer = updateTimer + dtSim
+  if updateTimer < UPDATE_INTERVAL then
+    return
+  end
+  updateTimer = 0  -- Reset timer
 
   local tod = scenetree.tod
   if not tod then return end
