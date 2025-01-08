@@ -387,7 +387,7 @@ local function addTowingButtons()
       atFadeFunction = function(target)
         career_modules_playerDriving.teleportToGarage(garage.id, scenetree.findObjectById(target.vehId), false)
         local price = getPrice(target)
-        if price then
+        if price and career_modules_payment.canPay(price) then
           career_modules_payment.pay(price, {label = string.format("Towed your vehicle to your garage")})
           career_modules_extraSaveData.addPurchasedGarage(garage.id)
           career_saveSystem.saveCurrent()
@@ -396,7 +396,13 @@ local function addTowingButtons()
       message = "ui.career.towed",
       order = 25,
       active = true,
-      enabled = true,
+      enabled = function()
+        if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
+          return true
+        end
+        local price = {money = {amount = garage.defaultPrice, canBeNegative = false}}
+        return career_modules_payment.canPay(price)
+      end,
       fadeActive = true,
       fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
       icon = "toGarage",

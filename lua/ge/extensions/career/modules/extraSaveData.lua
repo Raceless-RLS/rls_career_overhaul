@@ -61,7 +61,6 @@ local function addDiscoveredGarage(garageId)
   if not discoveredGarages[garageId] then
     local garages = freeroam_facilities.getFacilitiesByType("garage")
     local garage = garages[garageId]
-    dump(garage)
     if garage and garage.defaultPrice == 0 then
       purchasedGarages[garageId] = true
     end

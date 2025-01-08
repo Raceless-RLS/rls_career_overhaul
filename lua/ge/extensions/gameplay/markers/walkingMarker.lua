@@ -307,7 +307,6 @@ local function cluster(pois, allClusters)
   end
   for key, poisInCluster in pairs(poisByObjectNames) do
     local wm = poisInCluster[1].markerInfo.walkingMarker
-    dump(wm)
     local cluster = {
       id = 'walkingMarker#'..key,
       doors = wm.doors,

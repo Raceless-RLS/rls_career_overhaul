@@ -989,7 +989,7 @@ local conditions = {
         elseif values.min and not values.max then
             return data.vehValue >= values.min
         elseif values.max and not values.min then
-            return data.vehValue <= values.min
+            return data.vehValue <= values.max
         end
     end,
     population = function(data, values)
@@ -1037,36 +1037,21 @@ end
 -- the actual logic for finding the best, minimum (cheapest) insurance policy for a vehicle
 -- should always return at least one insurance policy, or we have a hole in insurance applicable conditions
 local function getMinApplicablePolicyId(conditionData)
-    local applicablePolicies = {}
-    local currPriority = 0 -- this is to make sure policies like "commercial" are chosen over lesser priority policies like "Basic" if conditions overlap
-    for _, policyInfo in pairs(availablePolicies) do
-
-        -- check for upgraded policies. If a policy has been upgraded then don't include it
-        if policyInfo.upgradableTo then
-            if plPoliciesData[policyInfo.upgradableTo].owned then
-                goto continue
+    -- First check if it's a commercial vehicle
+    if conditionData.bodyStyle then
+        for _, bodyStyle in pairs({"Bus", "Van", "Semi Truck"}) do
+            if conditionData.bodyStyle[bodyStyle] then
+                return 3  -- Commercial policy
             end
         end
-
-        if policyInfo.applicableConditions and (policyInfo.applicableConditions.priority >= currPriority) then
-            for condition, values in pairs(policyInfo.applicableConditions.conditions) do
-                if conditions[condition](conditionData, values) then
-                    if policyInfo.applicableConditions.priority > currPriority then
-                        applicablePolicies = {}
-                    end
-                    table.insert(applicablePolicies, policyInfo)
-                    currPriority = policyInfo.applicableConditions.priority
-                    break
-                end
-            end
-        end
-
-        ::continue::
     end
-    table.sort(applicablePolicies, function(a, b)
-        return a.initialBuyPrice < b.initialBuyPrice
-    end)
-    return applicablePolicies[1].id
+
+    -- If not commercial, check value for Daily Driver vs Prestige
+    if conditionData.vehValue and conditionData.vehValue > 80000 then
+        return 2  -- Prestige policy
+    end
+
+    return 1  -- Default to Daily Driver policy
 end
 
 local function getMinApplicablePolicyFromVehicleShoppingData(data)

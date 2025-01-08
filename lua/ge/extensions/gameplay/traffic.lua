@@ -208,6 +208,7 @@ local function updateTrafficVisibility(dt, playerVeh, playerPos)
   
   if not playerVeh then 
     playerVeh = be:getPlayerVehicle(0)
+    if not playerVeh then return end
   end
   
   local playerPos = playerVeh:getPosition()
