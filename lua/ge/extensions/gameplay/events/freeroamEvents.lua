@@ -289,7 +289,7 @@ local races = {
             reward = 2000,
             label = "Short Track",
             checkpointRoad = "trackalt",
-            mergeCheckpoints = {1, 11},
+            mergeCheckpoints = {1, 10},
             hotlap = 95,
             altInfo = "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
         },
@@ -1065,7 +1065,7 @@ local function payoutRace(data)
         --print("totalReward:")
         printTable(totalReward)
         career_modules_payment.reward(totalReward, reason)
-        local message = invalidLap and "Lap Invalidated/n" or ""
+        local message = invalidLap and "Lap Invalidated\n" or ""
         if races[raceName].driftGoal then
             message = message .. driftCompletionMessage(oldScore, oldTime, driftScore, in_race_time, reward, xp, data)
         else
@@ -1433,6 +1433,7 @@ local function processRoadNodes(mainNodes, altNodes)
     --print("Starting processRoadNodes with " .. #mainNodes .. " main nodes and " .. (#altNodes or 0) .. " alt nodes")
 
     local function processRoute(nodes, isAlt)
+        print("Processing route with " .. #nodes .. " nodes")
         local segments = {}
         local checkpoints = {}
         local currentSegment = {
@@ -1608,7 +1609,7 @@ local function processRoadNodes(mainNodes, altNodes)
 
         finishSegment(#nodes)
 
-        addStraightCheckpoints()
+        -- addStraightCheckpoints()
 
         return checkpoints
     end
@@ -1885,7 +1886,7 @@ local function createCheckpointMarker(index, alt)
     marker.useInstanceRenderData = true
     marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F() -- Default to red
 
-    local markerName = "checkpoint_" .. index .. "_marker"
+    local markerName = (alt and "alt_" or "") .. "checkpoint_" .. index .. "_marker"
     marker:registerObject(markerName)
 
     checkpoint.marker = marker
@@ -2221,10 +2222,13 @@ local function onBeamNGTrigger(data)
             if vehicleSpeed > 5 and mActiveRace then
                 return
             end
+            mHotlap = nil
             if vehicleSpeed > 5 then
                 if races[raceName].runningStart then
                     displayMessage("Hotlap Staged", 2)
-                    mHotlap = raceName
+                    if races[raceName].hotlap then
+                        mHotlap = raceName
+                    end
                 else
                     displayMessage("You are too fast to stage.\nPlease back up and slow down to stage.", 2)
                     staged = nil
@@ -2233,7 +2237,7 @@ local function onBeamNGTrigger(data)
             end
             activeAssets:hideAllAssets()
             lapCount = 0
-            mHotlap = nil
+
 
             -- Initialize displays if drag race
             if raceName == "drag" then
@@ -2290,17 +2294,16 @@ local function onBeamNGTrigger(data)
             timerActive = true
             in_race_time = 0
             mActiveRace = raceName
-            lapCount = 0 -- Initialize lap count
-            local maxLaps = races[raceName].laps or 1 -- Get the number of laps, default to 1
+            lapCount = 0
+            
             displayMessage(getStartMessage(raceName), 5)
             setActiveLight(raceName, "green")
+            
+            -- Handle drift races
             if tableContains(races[raceName].type, "drift") then
-                --print("Drift race detected")
                 gameplay_drift_general.setContext("inChallenge")
                 if gameplay_drift_drift then
                     gameplay_drift_drift.setVehId(data.subjectID)
-                else
-                    --print("Warning: gameplay_drift_drift module not available")
                 end
             end
 
@@ -2308,6 +2311,11 @@ local function onBeamNGTrigger(data)
             removeCheckpoints()
             MIN_CHECKPOINT_DISTANCE = races[raceName].minCheckpointDistance or 90
             if races[raceName].checkpointRoad then
+                -- Clear existing nodes and checkpoints
+                roadNodes = nil
+                altRoadNodes = nil
+                checkpoints = nil
+                altCheckpoints = nil
                 -- Load main route nodes
                 if type(races[raceName].checkpointRoad) == "table" then
                     roadNodes = mergeRoads(races[raceName].checkpointRoad[1], races[raceName].checkpointRoad[2])
@@ -2325,14 +2333,14 @@ local function onBeamNGTrigger(data)
                 end
 
                 createCheckpoints()
-
+                
                 isLoop = isNodeGroupLoop(roadNodes)
                 currCheckpoint = 0
                 checkpointsHit = 0
                 totalCheckpoints = calculateTotalCheckpoints(races[raceName])
                 currentExpectedCheckpoint = 1
                 mAltRoute = false -- Initialize alt route flag
-
+                
                 enableCheckpoint(0)
             end
         else
@@ -2367,7 +2375,7 @@ local function onBeamNGTrigger(data)
                     if mAltRoute then
                         totalDiff = in_race_time - (leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.splitTimes[checkpointsHit] or 0)
                     else
-                        totalDiff = in_race_time - (leaderboard[raceName].splitTimes[checkpointsHit] or 0)
+                        totalDiff = in_race_time - (leaderboard[raceName] and leaderboard[raceName].splitTimes[checkpointsHit] or 0)
                     end
                     
                     checkpointMessage = string.format("Checkpoint %d/%d - Time: %s\nSplit: %s | Total: %s", 
