@@ -2456,7 +2456,7 @@ local function onBeamNGTrigger(data)
             mActiveRace = nil
             setActiveLight(raceName, "red")
             restoreTrafficAmount()
-            displayMessage("Race Finished!", 5)
+            --displayMessage("Race Finished!", 5)
         end
     else
         --print("Unknown trigger type: " .. triggerType)
@@ -2481,6 +2481,9 @@ local function distanceToLineSegment(point, lineStart, lineEnd)
 end
 
 local function findNearestNode(vehiclePos, nodes)
+    if not nodes then
+        return nil, nil
+    end
     local nearestIndex = 1
     local minDistance = math.huge
     for i, node in ipairs(nodes) do
@@ -2549,6 +2552,13 @@ local function checkPlayerOnRoad()
     -- Check both main and alt routes
     local mainNearestIndex, mainDistance = findNearestNode(vehiclePos, roadNodes)
     local altNearestIndex, altDistance = findNearestNode(vehiclePos, altRoadNodes)
+
+    if not mainNearestIndex and not mainDistance then
+        return true
+    end
+    if not altNearestIndex and not altDistance then
+        altDistance = 1000000
+    end
 
     local useAltRoute = altDistance < mainDistance
     local currentNodes = useAltRoute and altRoadNodes or roadNodes
