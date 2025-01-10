@@ -157,13 +157,14 @@ local races = {
         type = {"motorsport", "drift"}
     },
     raceTrackDrift = {
-        bestTime = 60,
-        hotlap = 45,
-        driftGoal = 6000,
+        bestTime = 35,
+        hotlap = 30,
+        driftGoal = 4000,
         reward = 1500,
         checkpointRoad = "raceTrackDrift",
         label = "Parking Lot Drift",
-        type = {"motorsport", "drift"}
+        type = {"motorsport", "drift"},
+        minCheckpointDistance = 20
     },
     sealbrikDrift = {
         bestTime = 30,

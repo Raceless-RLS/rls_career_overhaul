@@ -113,19 +113,19 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":100000}}
+          "whiteList":{"Years": {"min":1950, "max":1973},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":120000}}
         },
         {
           "probability":2,
-          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":100000}}
+          "whiteList":{"Years": {"min":1973, "max":2010},"Mileage":{"min":2500000, "max":132000422},"Value":{"min":120000}}
         },
         {
           "probability":3,
-          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":100000}}
+          "whiteList":{"Years": {"min":2010},"Mileage":{"min":250000, "max":18000000},"Value":{"min":120000}}
         },
         {
           "probability":4,
-          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":100000}}
+          "whiteList":{"Years": {"min":2017},"Mileage":{"min":10000, "max":50000},"Value":{"min":120000}}
         }
       ],
       "fees": 1250,
@@ -207,7 +207,7 @@
       "subFilters": [
         {
           "probability":1,
-          "whiteList":{"Mileage":{"min":10, "max":100},"Config Type":["Frame"]}
+          "whiteList":{"Mileage":{"min":10, "max":100000},"Config Type":["Frame"]}
         }
       ],
       "fees": 0,
@@ -440,6 +440,53 @@
       "playModeIconName":"poi_entrance_round"
     }, 
     {
+      "id":"driftDealership",
+      "name":"DriftGear Dealer",
+      "description":"Pushing the limits of innovation... and tires",
+      "preview":"drag.jpg",
+      "stock": 7,
+      "doors":[["driftDealership_area","driftDealership_icon", 30]],
+      "parkingSpotNames":["driftDealershipParking"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drift"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drift (A)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drift (M)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drift (DCT)"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":11000, "max":17600056},"Configuration":["Drift (Sequential"]}
+        }
+      ],
+      "fees": 750,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
       "id":"offroadDealership",
       "name":"TJs Offroad World",
       "description":"TJs Offroad World - The only choice in Offroad from East to West.",
@@ -503,6 +550,38 @@
         }
       ],
       "fees": -1500,
+      "containsStarterVehicles": false,
+      "testDrive": {
+        "abandonFees" : 250,
+        "timeLimit" : 120,
+        "licencePlate" : "RLS"
+      },
+      "iconOffsetHeight":1.0,
+      "iconLift":0.25,
+      "playModeIconName":"poi_entrance_round"
+    }, 
+    {
+      "id":"joesJunkDealership",
+      "name":"Joe's Junk",
+      "description":"Joe's Junk - You think you hate it now , wait till you drive it",
+      "preview":"trusted.jpg",
+      "stock": 8,
+      "doors":[["joesJunk_area","joesJunk_icon", 30]],
+      "parkingSpotNames":["joesJunkCar","joesJunkBus"],
+      "activityAcceptProps":[
+        {"keyLabel":"Used Vehicles"}
+      ],
+      "filter": {
+        "blackList":{"Body Style":["ATV","Buggy"], "Config Type":["Frame"]}
+      },
+      "subFilters": [
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":255000000, "max":916001971}, "Value":{"max":2000}}
+
+        }
+      ],
+      "fees": 0,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -647,7 +726,7 @@
       "preview":"jefferson_dealership.jpg",
       "stock": 10,
       "doors":[["AutobelloDealership_area","AutobelloDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["edmImportBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -678,7 +757,7 @@
       "preview":"jeffe  rson_dealership.jpg",
       "stock": 15,
       "doors":[["BruckellDealership_area","BruckellDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -691,7 +770,7 @@
           "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Bruckell"]}
         }
       ],
-      "fees": 5000,
+      "fees": 2500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -709,7 +788,7 @@
       "stock": 15,
       "preview":"jefferson_dealership.jpg",
       "doors":[["CherrierDealership_area","CherrierDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["edmImportBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -740,7 +819,7 @@
       "stock": 10,
       "preview":"jefferson_dealership.jpg",
       "doors":[["CivettaDealership_area","CivettaDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["edmImportBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -771,7 +850,7 @@
       "preview":"jefferson_dealership.jpg",
       "stock": 20,
       "doors":[["ETKDealership_area","ETKDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["edmImportBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -802,7 +881,7 @@
       "stock": 15,
       "preview":"jefferson_dealership.jpg",
       "doors":[["GavrilcarDealership_area","GavrilcarDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -815,7 +894,7 @@
           "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Car"]}
         }
       ],
-      "fees": 5000,
+      "fees": 2500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -833,7 +912,7 @@
       "stock": 20,
       "preview":"jefferson_dealership.jpg",
       "doors":[["GavriltruckDealership_area","GavriltruckDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -850,7 +929,7 @@
           "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Gavril"],"Type":["Pickup"]}
         }
       ],
-      "fees": 5000,
+      "fees": 2500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
@@ -930,7 +1009,7 @@
       "stock": 15,
       "preview":"jefferson_dealership.jpg",
       "doors":[["SoliadDealership_area","SoliadDealership_icon", 30]],
-      "parkingSpotNames":["onlineParking","onlineParkingBus"],
+      "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
         {"keyLabel":"New Vehicles"}
       ],
@@ -943,7 +1022,7 @@
           "whiteList":{"Mileage":{"min":4800, "max":16093},"Config Type":["Factory"],"Brand":["Soliad"]}
         }
       ],
-      "fees": 5000,
+      "fees": 2500,
       "containsStarterVehicles": false,
       "testDrive": {
         "abandonFees" : 250,
