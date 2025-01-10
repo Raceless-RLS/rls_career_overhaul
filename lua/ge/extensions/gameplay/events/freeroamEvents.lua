@@ -191,8 +191,8 @@ local races = {
         type = {"motorsport"}
     },
     rockClimbS = {
-        bestTime = 8,
-        reward = 700,
+        bestTime = 5,
+        reward = 1200,
         checkpointRoad = "rockClimbS",
         label = "Rock Crawl Short",
         type = {"motorsport", "crawl"}
@@ -2283,7 +2283,7 @@ local function onBeamNGTrigger(data)
             timerActive = true
             checkpointsHit = 0
             totalCheckpoints = #checkpoints
-            currentExpectedCheckpoint = 1
+            currentExpectedCheckpoint = 0
             if races[raceName].hotlap then
                 mHotlap = raceName
             end

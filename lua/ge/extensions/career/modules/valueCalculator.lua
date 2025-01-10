@@ -70,6 +70,9 @@ local function getValueByAge(value, age, power)
   if power == nil then
     power = 300
   end
+  if value == nil then
+    value = 10000
+  end
   return value * getDepreciation(age, power)
 end
 
