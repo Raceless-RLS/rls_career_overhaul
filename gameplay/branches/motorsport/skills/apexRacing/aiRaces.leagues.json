@@ -47,71 +47,52 @@
     ]
   },
   {
-    "id": "rlsaiLeague1",
-    "name": "RLS Beginner Series",
-    "description": "RLS added Introductory Races",
+    "id": "rls1LW1",
+    "name": "RLS One Lap Wonders Beginner Series",
+    "description": "...",
     "skillId": "apexRacing",
     "missions": [
-      "west_coast_usa/aiRace/250-RLSGT250F",
-      "west_coast_usa/aiRace/251-RLSGT250S",
-      "west_coast_usa/aiRace/252-RLSGT250L", 
+      "west_coast_usa/aiRace/261-RLSGT2501V1blackout",
+      "west_coast_usa/aiRace/261-RLSGT2501V1brexda",
+      "west_coast_usa/aiRace261-RLSGT2501V1kanator",
+      "west_coast_usa/aiRace/261-RLSGT2501V1mattchew",
+      "west_coast_usa/aiRace/261-RLSGT2501V1mrboojay",
+      "west_coast_usa/aiRace/261-RLSGT2501V1pichu"
 
     ],
     "unlock":[]
   },
   {
-    "id": "rlsaiLeague2",
-    "name": "RLS Intermediate Series",
-    "description": "RLS added Intermediate Races",
+    "id": "rls1LW2",
+    "name": "RLS One Lap Wonders Intermediate Series",
+    "description": "...",
     "skillId": "apexRacing",
     "missions": [
-      "west_coast_usa/aiRace/131-RLSPROAM1F",
-      "west_coast_usa/aiRace/135-RLSPROAM2S",
-      "west_coast_usa/aiRace/103-RLSVINTAGE2S",
-      "west_coast_usa/aiRace/105-RLSVINTAGE3L",
 
     ],
     "unlock": [
       {
         "type": "leagueStars",
-        "leagueId": "rlsaiLeague1",
+        "leagueId": "rls1LW1",
         "stars": 6
       }
     ] 
    },
   {
-    "id": "rlsaiLeague3",
-    "name": "RLS Advanced Series",
-    "description": "RLS added IntrAdvancedoductory Races",
+    "id": "rls1LW3",
+    "name": "RLS One Lap Wonders Advanced Series",
+    "description": "...",
     "skillId": "apexRacing",
     "missions": [
-      "west_coast_usa/aiRace/145-RLSGT2S",
-      "west_coast_usa/aiRace/147-RLSGT3L",
+      "west_coast_usa/aiRace/261-RLSGT2501V1RUNE"
 
     ],
     "unlock": [
       {
         "type": "leagueStars",
-        "leagueId": "rlsaiLeague2",
-        "stars": 9
-      }
-    ] 
-    },
-  {
-    "id": "rlsaiLeague4",
-    "name": "RLS Expert Series",
-    "description": "RLS added Expert Races",
-    "skillId": "apexRacing",
-    "missions": [
-
-    ],
-    "unlock": [
-      {
-        "type": "leagueStars",
-        "leagueId": "rlsaiLeague3",
+        "leagueId": "rls1LW2",
         "stars": 9
       }
     ] 
     }
-  
 ]
