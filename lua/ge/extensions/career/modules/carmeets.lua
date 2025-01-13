@@ -1,40 +1,98 @@
 local M = {}
 
-M.dependencies = {'career_career', 'gameplay_sites_sitesManager'}
+M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configListGenerator'}
 
 local carmeetLocations = {}
+local carMeetVehicles = {}
+local spawnedMeetVehicles = {} -- Track currently spawned vehicles
 
--- List of vehicles that can appear at car meets
-local carMeetVehicles = {
-    'covet',
-    'pessima',
-    'sunburst',
-    'vivace',
-    'barstow',
-    'moonhawk'
-    -- Add more vehicles as needed
-}
-
--- Function to get a random vehicle from the list
-local function getRandomVehicle()
-    return carMeetVehicles[math.random(#carMeetVehicles)]
+-- Function to cleanup previous meet vehicles
+local function cleanupPreviousMeet()
+    for _, vehId in ipairs(spawnedMeetVehicles) do
+        local veh = be:getObjectByID(vehId)
+        if veh then
+            veh:delete()
+        end
+    end
+    spawnedMeetVehicles = {}
 end
 
--- Function to spawn a vehicle at a parking spot
-local function spawnVehicleAtSpot(spot)
-    local vehicleName = getRandomVehicle()
-    local pos = vec3(spot.pos)
-    local rot = quat(spot.rot)
+-- Function to get all carmeet configurations
+local function getCarMeetVehicles()
+    local vehicles = {}
+    local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
     
-    -- Spawn the vehicle using the spawn manager
-    local options = {
-        config = nil, -- Random config
-        paint = nil,  -- Random paint
-        autoEnterVehicle = false,
-        autoFlip = true
+    -- Create a filter for carmeet vehicles
+    local carmeetFilter = {
+        whiteList = {
+            ["Config Type"] = {"CarmeetRLS"}
+        }
     }
     
-    local vehicle = spawn.spawnVehicle(vehicleName, options, pos, rot)
+    -- Get random vehicle infos using the carmeet filter
+    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = carmeetFilter},
+        100,
+        eligibleVehicles,
+        "Population"
+    )
+    
+    -- Store the vehicle infos directly
+    for _, vehicleInfo in ipairs(randomVehicleInfos) do
+        local pcPath = '/vehicles/' .. vehicleInfo.model_key .. '/configurations/' .. vehicleInfo.key .. '.pc'
+        table.insert(vehicles, {
+            model = vehicleInfo.model_key,
+            config = pcPath
+        })
+        print("Found carmeet config: " .. vehicleInfo.model_key .. " - " .. pcPath)
+    end
+    
+    print("Total carmeet configs found: " .. #vehicles)
+    return vehicles
+end
+
+-- Function to get a random vehicle config
+local function getRandomVehicle()
+    if #carMeetVehicles == 0 then 
+        carMeetVehicles = getCarMeetVehicles()
+        if #carMeetVehicles == 0 then
+            print("No carmeet vehicles found")
+            return nil
+        end
+    end
+    
+    -- Select random vehicle config
+    local vehicle = carMeetVehicles[math.random(#carMeetVehicles)]
+    print("Selected vehicle: " .. vehicle.model .. " with config: " .. vehicle.config)
+    return vehicle.model, vehicle.config
+end
+
+-- Update the spawn function to use the specific config
+local function spawnVehicleAtSpot(spot)
+    local vehicleName, configPath = getRandomVehicle()
+    if not vehicleName then return nil end
+    
+    local options = {
+        config = configPath,
+        autoEnterVehicle = false,
+        autoFlip = true,
+        pos = vec3(spot.pos),
+        rot = quat(spot.rot)
+    }
+    
+    print("Spawning vehicle: " .. vehicleName .. " with config: " .. configPath)
+    local vehicle = core_vehicles.spawnNewVehicle(vehicleName, options)
+    
+    -- Set vehicle properties
+    if vehicle then
+        -- Disable entering vehicle
+        vehicle:setDynDataFieldbyName("lockLevel", 0, "full")
+        -- Turn off engine
+        core_vehicleBridge.executeAction(vehicle, 'setIgnitionLevel', 0)
+        -- Add to tracked vehicles
+        table.insert(spawnedMeetVehicles, vehicle:getID())
+    end
+    
     return vehicle
 end
 
@@ -102,6 +160,10 @@ local function onWorldReadyState(state)
 end
 
 local function startCarMeet(meetName)
+    -- Cleanup any previous meet vehicles
+    cleanupPreviousMeet()
+    
+    -- Rest of the existing startCarMeet function
     local meets = (not carmeetLocations or next(carmeetLocations) == nil) and getCarMeetLocations() or carmeetLocations
     
     -- Additional debug
@@ -142,6 +204,8 @@ local function startCarMeet(meetName)
     return spawnedVehicles
 end
 
+-- Add cleanup function to module exports
+M.cleanupPreviousMeet = cleanupPreviousMeet
 M.onInit = onInit
 M.getCarMeetLocations = getCarMeetLocations
 M.onWorldReadyState = onWorldReadyState
