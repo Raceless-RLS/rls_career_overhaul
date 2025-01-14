@@ -1,6 +1,6 @@
 local M = {}
 
-M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configListGenerator'}
+M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configListGenerator', 'gameplay_traffic'}
 
 local carmeetLocations = {}
 local carMeetVehicles = {}
@@ -9,6 +9,7 @@ local spawnedMeetVehicles = {} -- Track currently spawned vehicles
 -- Function to cleanup previous meet vehicles
 local function cleanupPreviousMeet()
     for _, vehId in ipairs(spawnedMeetVehicles) do
+        gameplay_traffic.removeTraffic(vehId)
         local veh = be:getObjectByID(vehId)
         if veh then
             veh:delete()
@@ -83,10 +84,11 @@ local function spawnVehicleAtSpot(spot)
     print("Spawning vehicle: " .. vehicleName .. " with config: " .. configPath)
     local vehicle = core_vehicles.spawnNewVehicle(vehicleName, options)
     
-    -- Set vehicle properties
     if vehicle then
-        -- Disable entering vehicle
-        vehicle:setDynDataFieldbyName("lockLevel", 0, "full")
+        -- Add vehicle to traffic system but mark it as non-AI
+        gameplay_traffic.insertTraffic(vehicle:getID(), true)
+        -- Set vehicle as non-player-usable
+        vehicle.playerUsable = false
         -- Turn off engine
         core_vehicleBridge.executeAction(vehicle, 'setIgnitionLevel', 0)
         -- Add to tracked vehicles
