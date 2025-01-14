@@ -5,6 +5,7 @@ M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configLi
 local carmeetLocations = {}
 local carMeetVehicles = {}
 local spawnedMeetVehicles = {} -- Track currently spawned vehicles
+local usedConfigs = {} -- Track configs used in current meet
 
 -- Function to cleanup previous meet vehicles
 local function cleanupPreviousMeet()
@@ -62,8 +63,25 @@ local function getRandomVehicle()
         end
     end
     
-    -- Select random vehicle config
-    local vehicle = carMeetVehicles[math.random(#carMeetVehicles)]
+    -- Create a list of available (unused) vehicles
+    local availableVehicles = {}
+    for _, vehicle in ipairs(carMeetVehicles) do
+        if not usedConfigs[vehicle.config] then
+            table.insert(availableVehicles, vehicle)
+        end
+    end
+    
+    -- Check if we have any available vehicles left
+    if #availableVehicles == 0 then
+        print("No unused vehicle configs available")
+        return nil
+    end
+    
+    -- Select random vehicle config from available vehicles
+    local vehicle = availableVehicles[math.random(#availableVehicles)]
+    -- Mark this config as used
+    usedConfigs[vehicle.config] = true
+    
     print("Selected vehicle: " .. vehicle.model .. " with config: " .. vehicle.config)
     return vehicle.model, vehicle.config
 end
@@ -162,6 +180,9 @@ local function onWorldReadyState(state)
 end
 
 local function startCarMeet(meetName)
+    -- Clear used configs at the start of each meet
+    usedConfigs = {}
+    
     -- Cleanup any previous meet vehicles
     cleanupPreviousMeet()
     
