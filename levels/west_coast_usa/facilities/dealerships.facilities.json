@@ -601,9 +601,8 @@
       },
       "subFilters": [
         {
-          "probability":1,
-          "whiteList":{"Mileage":{"min":255000000, "max":916001971}, "Value":{"max":2000}}
-
+         "probability":2,
+         "whiteList":{"Mileage":{"min":255000000, "max":916001971},"Config Type":["joesJunk"] }
         }
       ],
       "fees": 0,
@@ -611,7 +610,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : "Joe Junk"
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
