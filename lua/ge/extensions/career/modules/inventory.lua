@@ -617,7 +617,7 @@ local function setupInventory()
       if unicycleSavedPosition then
         spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
       else
-        freeroam_facilities.teleportToGarage("servicestationGarage", getPlayerVehicle(0))
+        freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
       end
     end
   end
