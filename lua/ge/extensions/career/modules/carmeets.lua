@@ -17,7 +17,7 @@ local rsvpData = nil
 local meetStartTime = 0.417 -- 10 PM
 local meetTimeWindow = 0.01 -- Time window to trigger meet
 local lastUpdateCheck = 0
-local updateInterval = 30 -- Check every 30 seconds
+local updateInterval = 5 -- Check every 5 seconds
 
 local attendanceLevels = {
     LOW = 1,
