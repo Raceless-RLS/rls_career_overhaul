@@ -238,11 +238,12 @@ local function startCarMeet(meetName)
     -- Calculate spots based on stored attendance level
     local maxSpots = #meet.parkingSpots - 1  -- Reserve one spot for player
     local spotCount
+    print("attendanceLevel: " .. attendanceLevel)
     if attendanceLevel == 1 then -- LOW
         spotCount = 2
     elseif attendanceLevel == 2 then -- MEDIUM
         spotCount = math.floor(maxSpots / 2)
-    else -- HIGH (3)
+    elseif attendanceLevel == 3 then -- HIGH (3)
         spotCount = maxSpots
     end
     
@@ -316,9 +317,10 @@ local function checkAvailableMeets()
     return meetData
 end
 
-local function rsvpToMeet(attendanceLevel)
+local function rsvpToMeet(level)
     -- Convert string level to number
-    attendanceLevel = attendanceLevels[attendanceLevel] or 2  -- default to MEDIUM (2) if invalid
+    attendanceLevel = attendanceLevels[level] or 2  -- default to MEDIUM (2) if invalid
+    print("attendanceLevel: " .. attendanceLevel)
     rsvpData = meetData
     meetData = nil
 end
