@@ -318,8 +318,7 @@ end
 
 local function rsvpToMeet(attendanceLevel)
     -- Convert string level to number
-    local level = attendanceLevels[attendanceLevel] or 2  -- default to MEDIUM (2) if invalid
-    print("RSVP to meet with attendance level: " .. level)
+    attendanceLevel = attendanceLevels[attendanceLevel] or 2  -- default to MEDIUM (2) if invalid
     rsvpData = meetData
     meetData = nil
 end
