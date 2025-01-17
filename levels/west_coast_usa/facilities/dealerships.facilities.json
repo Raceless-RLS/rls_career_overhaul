@@ -218,7 +218,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -230,7 +230,7 @@
       "description":"JDM Imports - Imported Cars from Asia",
       "stock": 10,
       "range": [0.6, 0.80, 1.3, 1.9],
-      "preview":"jdm.jpg",
+      "preview":"illegal.jpg",
       "doors":[["jdmDealership_area","jdmDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
@@ -247,6 +247,10 @@
         {
           "probability":1,
           "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Hirochi"]}
+        },
+        {
+          "probability":1,
+          "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Config Type":["Custom"],"Brand":["Arima"]}
         }
       ],
       "fees": 2500,
@@ -254,7 +258,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -266,7 +270,7 @@
       "description":"EDM Imports - Imported Cars from Europe",
       "stock": 10,
       "range": [0.7, 0.85, 1.5, 1.9],
-      "preview":"jdm.jpg",
+      "preview":"illegal.jpg",
       "doors":[["edmDealership_area","edmDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
@@ -294,7 +298,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -307,7 +311,7 @@
       "stock": 7,
       "range": [0.6, 0.70, 1.3, 1.8],
 
-      "preview":"jdm.jpg",
+      "preview":"illegal.jpg",
       "doors":[["rdmDealership_area","rdmDealership_icon", 30]],
       "parkingSpotNames":["illegalDealershipParking"],
       "activityAcceptProps":[
@@ -331,7 +335,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -362,7 +366,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -394,7 +398,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -442,7 +446,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -452,7 +456,7 @@
       "id":"driftDealership",
       "name":"DriftGear Dealer",
       "description":"Pushing the limits of innovation... and tires",
-      "preview":"drag.jpg",
+      "preview":"Drift_Car_Dealer_TB.png",
       "stock": 7,
       "range": [0.8, 0.90, 1.35, 1.8],
       "doors":[["driftDealership_area","driftDealership_icon", 30]],
@@ -490,7 +494,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -500,7 +504,7 @@
       "id":"gizamnDealership",
       "name":"Gizamn's Rod Shop",
       "description":"",
-      "preview":"drag.jpg",
+      "preview":"Drift_Car_Dealer_TB.png",
       "stock": 5,
       "range": [0.8, 0.90, 1.35, 1.8],
       "doors":[["gizamnDealership_area","gizamnDealership_icon", 30]],
@@ -522,7 +526,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -578,7 +582,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -610,7 +614,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -620,7 +624,7 @@
       "id":"joesJunkDealership",
       "name":"Joe's Junk",
       "description":"Joe's Junk - You think you hate it now , wait till you drive it",
-      "preview":"trusted.jpg",
+      "preview":"Joes_Junk_Dealer_TB.png",
       "stock": 8,
       "range": [0.6, 0.80, 1.1, 1.3],
       "doors":[["joesJunk_area","joesJunk_icon", 30]],
@@ -782,7 +786,7 @@
       "id":"ArimaDealership",
       "name":"Arima Online Dealership",
       "description":"Arima Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"JDM_Port_Dealer_TB.png",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
       "doors":[["ArimaDealership_area","ArimaDealership_icon", 30]],
@@ -814,7 +818,7 @@
       "id":"AutobelloDealership",
       "name":"Autobello Online Dealership",
       "description":"Autobello Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"JDM_Port_Dealer_TB.png",
       "stock": 10,
       "range": [0.8, 0.9, 1.15, 1.3],
       "doors":[["AutobelloDealership_area","AutobelloDealership_icon", 30]],
@@ -836,7 +840,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -846,7 +850,7 @@
       "id":"BruckellDealership",
       "name":"Bruckell Online Dealership",
       "description":"Bruckell Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"USDM_Dealer_TB.png",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
       "doors":[["BruckellDealership_area","BruckellDealership_icon", 30]],
@@ -868,7 +872,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -880,7 +884,7 @@
       "description":"Cherrier Online Dealership",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
-      "preview":"jefferson_dealership.jpg",
+      "preview":"ETK_Dealer_TB.png",
       "doors":[["CherrierDealership_area","CherrierDealership_icon", 30]],
       "parkingSpotNames":["edmImportBus"],
       "activityAcceptProps":[
@@ -900,7 +904,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -912,7 +916,7 @@
       "description":"Civetta Online Dealership",
       "stock": 10,
       "range": [0.8, 0.95, 1.15, 1.3],
-      "preview":"jefferson_dealership.jpg",
+      "preview":"Civetta_Dealer_TB.png",
       "doors":[["CivettaDealership_area","CivettaDealership_icon", 30]],
       "parkingSpotNames":["civDealership"],
       "activityAcceptProps":[
@@ -932,7 +936,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -942,7 +946,7 @@
       "id":"ETKDealership",
       "name":"ETK Online Dealership",
       "description":"ETK Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"ETK_Dealer_TB.png",
       "range": [0.8, 0.95, 1.15, 1.3],
       "stock": 20,
       "doors":[["ETKDealership_area","ETKDealership_icon", 30]],
@@ -964,7 +968,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -976,7 +980,7 @@
       "description":"Gavril-Car Online Dealership",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
-      "preview":"jefferson_dealership.jpg",
+      "preview":"USDM_Dealer_TB.png",
       "doors":[["GavrilcarDealership_area","GavrilcarDealership_icon", 30]],
       "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
@@ -996,7 +1000,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -1008,7 +1012,7 @@
       "description":"Gavril-Truck Online Dealership",
       "stock": 20,
       "range": [0.8, 0.9, 1.15, 1.3],
-      "preview":"jefferson_dealership.jpg",
+      "preview":"USDM_Dealer_TB.png",
       "doors":[["GavriltruckDealership_area","GavriltruckDealership_icon", 30]],
       "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
@@ -1032,7 +1036,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -1042,7 +1046,7 @@
       "id":"HirochiDealership",
       "name":"Hirochi Online Dealership",
       "description":"Hirochi Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"JDM_Port_Dealer_TB.png",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
       "doors":[["HirochiDealership_area","HirochiDealership_icon", 30]],
@@ -1064,7 +1068,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -1074,7 +1078,7 @@
       "id":"IbishuDealership",
       "name":"Ibishu Online Dealership",
       "description":"Ibishu Online Dealership",
-      "preview":"jefferson_dealership.jpg",
+      "preview":"JDM_Port_Dealer_TB.png",
       "stock": 20,
       "range": [0.8, 0.9, 1.15, 1.3],
       "doors":[["IbishuDealership_area","IbishuDealership_icon", 30]],
@@ -1096,7 +1100,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
@@ -1108,7 +1112,7 @@
       "description":"Soliad Online Dealership",
       "stock": 15,
       "range": [0.8, 0.9, 1.15, 1.3],
-      "preview":"jefferson_dealership.jpg",
+      "preview":"USDM_Dealer_TB.png",
       "doors":[["SoliadDealership_area","SoliadDealership_icon", 30]],
       "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
       "activityAcceptProps":[
@@ -1128,7 +1132,7 @@
       "testDrive": {
         "abandonFees" : 250,
         "timeLimit" : 120,
-        "licencePlate" : "RLS"
+        "licencePlate" : ""
       },
       "iconOffsetHeight":1.0,
       "iconLift":0.25,
