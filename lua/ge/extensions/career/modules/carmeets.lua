@@ -1,11 +1,43 @@
 local M = {}
 
-M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configListGenerator', 'gameplay_traffic'}
+M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'util_configListGenerator', 'gameplay_traffic', 'career_saveSystem'}
 
 local carmeetLocations = {}
 local carMeetVehicles = {}
 local spawnedMeetVehicles = {} -- Track currently spawned vehicles
 local usedConfigs = {} -- Track configs used in current meet
+
+local meetData = nil
+local attendanceLevel = 1
+-- Add new variables for time management
+local saveFile = "carmeets.json"
+local lastGenerationTime = 0
+local generationInterval = 1800 -- 30 minutes in seconds
+local rsvpData = nil
+local meetStartTime = 0.417 -- 10 PM
+local meetTimeWindow = 0.01 -- Time window to trigger meet
+local lastUpdateCheck = 0
+local updateInterval = 30 -- Check every 30 seconds
+
+local attendanceLevels = {
+    LOW = 1,
+    MEDIUM = 2,
+    HIGH = 3
+}
+
+local function loadCarMeetData()
+    if not career_career.isActive() then return end
+    local _, currentSavePath = career_saveSystem.getCurrentSaveSlot()
+    if not currentSavePath then return end
+    
+    local filePath = currentSavePath .. "/career/rls_career/" .. saveFile
+    local data = jsonReadFile(filePath)
+    
+    if data then
+        lastGenerationTime = data.lastGenerationTime or 0
+        rsvpData = data.rsvpData
+    end
+end
 
 -- Function to cleanup previous meet vehicles
 local function cleanupPreviousMeet()
@@ -176,6 +208,7 @@ local function onWorldReadyState(state)
     if state == 2 and careerActive then
         print("Loading carmeet locations")
         carmeetLocations = getCarMeetLocations()
+        loadCarMeetData()
     end
 end
 
@@ -202,8 +235,18 @@ local function startCarMeet(meetName)
         return
     end
     
+    -- Calculate spots based on stored attendance level
+    local maxSpots = #meet.parkingSpots - 1  -- Reserve one spot for player
+    local spotCount
+    if attendanceLevel == 1 then -- LOW
+        spotCount = 2
+    elseif attendanceLevel == 2 then -- MEDIUM
+        spotCount = math.floor(maxSpots / 2)
+    else -- HIGH (3)
+        spotCount = maxSpots
+    end
+    
     local spawnedVehicles = {}
-    local spotCount = math.min(4, #meet.parkingSpots) -- Spawn up to 4 vehicles
     
     -- Create a copy of parking spots array to randomly select from
     local availableSpots = deepcopy(meet.parkingSpots)
@@ -233,5 +276,128 @@ M.onInit = onInit
 M.getCarMeetLocations = getCarMeetLocations
 M.onWorldReadyState = onWorldReadyState
 M.startCarMeet = startCarMeet
+
+-- Add new functions for meet generation and RSVP
+local function shouldGenerateNewMeet()
+    local currentTime = os.time()
+    return (currentTime - lastGenerationTime) >= generationInterval
+end
+
+local function checkAvailableMeets()
+    if not shouldGenerateNewMeet() then
+        return meetData
+    end
+
+    -- Get all meet locations
+    local meets = (not carmeetLocations or next(carmeetLocations) == nil) and getCarMeetLocations() or carmeetLocations
+    if not meets or tableSize(meets) == 0 then
+        return nil
+    end
+
+    -- Convert meets table to array for random selection
+    local meetArray = {}
+    for name, data in pairs(meets) do
+        table.insert(meetArray, {name = name, data = data})
+    end
+
+    -- Select random meet
+    local selectedMeet = meetArray[math.random(#meetArray)]
+    
+    -- Update generation time
+    lastGenerationTime = os.time()
+
+    -- Return meet data
+    meetData = {
+        time = meetStartTime,
+        location = selectedMeet.name,
+        type = "Showcase"
+    }
+
+    return meetData
+end
+
+local function rsvpToMeet(attendanceLevel)
+    -- Convert string level to number
+    local level = attendanceLevels[attendanceLevel] or 2  -- default to MEDIUM (2) if invalid
+    print("RSVP to meet with attendance level: " .. level)
+    rsvpData = meetData
+    meetData = nil
+end
+
+local function decline()
+    rsvpData = nil
+    meetData = nil
+end
+
+-- Function to check if it's time to start the meet
+local function checkMeetStart()
+    if not rsvpData then return end
+
+    local currentTime = scenetree.tod and scenetree.tod.time or 0
+    local timeUntilMeet = math.abs(currentTime - meetStartTime)
+
+    if timeUntilMeet <= meetTimeWindow then
+        -- Get the meet location data
+        local meet = carmeetLocations[rsvpData.location]
+        if meet then
+            -- Set marker to guide player to the meet
+            core_groundMarkers.setPath(meet.pos)
+            -- Start the meet
+            ui_message("Car meet starting at " .. rsvpData.location, 10, "info", "info")
+            startCarMeet(rsvpData.location)
+        end
+        -- Clear RSVP data after starting
+        rsvpData = nil
+    end
+end
+
+-- Throttled update function
+local function onUpdate(dtReal, dtSim, dtRaw)
+    if not career_career.isActive() then return end
+    
+    local currentTime = os.time()
+    if currentTime - lastUpdateCheck >= updateInterval then
+        lastUpdateCheck = currentTime
+        checkMeetStart()
+    end
+end
+
+-- Save/Load functions using career save system
+local function onSaveCurrentSaveSlot(currentSavePath)
+    if not currentSavePath then return end
+
+    local dirPath = currentSavePath .. "/career/rls_career"
+    if not FS:directoryExists(dirPath) then
+        FS:directoryCreate(dirPath)
+    end
+
+    local data = {
+        lastGenerationTime = lastGenerationTime,
+        rsvpData = rsvpData
+    }
+    career_saveSystem.jsonWriteFileSafe(dirPath .. "/" .. saveFile, data, true)
+end
+
+local function openMenu()
+    guihooks.trigger('ChangeState', {state = 'carMeets'})
+end
+
+local function closeMenu()
+    career_career.closeAllMenus()
+end
+
+-- Add new functions to module exports while keeping existing ones
+M.onInit = onInit
+M.getCarMeetLocations = getCarMeetLocations
+M.onWorldReadyState = onWorldReadyState
+M.startCarMeet = startCarMeet
+M.cleanupPreviousMeet = cleanupPreviousMeet
+M.checkAvailableMeets = checkAvailableMeets
+M.rsvpToMeet = rsvpToMeet
+M.onUpdate = onUpdate
+M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
+M.openMenu = openMenu
+M.decline = decline
+M.closeMenu = closeMenu
 
 return M

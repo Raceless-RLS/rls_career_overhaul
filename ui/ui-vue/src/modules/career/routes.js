@@ -236,6 +236,12 @@ export default [
         path: "policeAssignment",
         name: "policeAssignment",
         component: views.PoliceAssignment
+      },
+
+      {
+        path: "carMeets",
+        name: "carMeets",
+        component: views.CarMeets
       }
     ],
   },
