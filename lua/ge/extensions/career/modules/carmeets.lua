@@ -19,6 +19,12 @@ local meetTimeWindow = 0.01 -- Time window to trigger meet
 local lastUpdateCheck = 0
 local updateInterval = 5 -- Check every 5 seconds
 
+-- Add new variables for tracking active meet and player arrival
+local activeMeet = nil
+local playerHasArrived = false
+local playerSpot = nil
+local MEET_CLEANUP_DISTANCE = 150
+
 local attendanceLevels = {
     LOW = 1,
     MEDIUM = 2,
@@ -49,6 +55,10 @@ local function cleanupPreviousMeet()
         end
     end
     spawnedMeetVehicles = {}
+    core_groundMarkers.resetAll()
+    activeMeet = nil  -- Clear active meet
+    playerHasArrived = false  -- Reset arrival flag
+    playerSpot = nil
 end
 
 -- Function to get all carmeet configurations
@@ -78,7 +88,6 @@ local function getCarMeetVehicles()
             model = vehicleInfo.model_key,
             config = pcPath
         })
-        print("Found carmeet config: " .. vehicleInfo.model_key .. " - " .. pcPath)
     end
     
     print("Total carmeet configs found: " .. #vehicles)
@@ -139,8 +148,10 @@ local function spawnVehicleAtSpot(spot)
         gameplay_traffic.insertTraffic(vehicle:getID(), true)
         -- Set vehicle as non-player-usable
         vehicle.playerUsable = false
+        -- Turn on headlights directly through electrics
+        vehicle:queueLuaCommand('electrics.setLightsState(1)')
         -- Turn off engine
-        core_vehicleBridge.executeAction(vehicle, 'setIgnitionLevel', 0)
+        vehicle:queueLuaCommand('electrics.setIgnitionLevel(1)')
         -- Add to tracked vehicles
         table.insert(spawnedMeetVehicles, vehicle:getID())
     end
@@ -191,22 +202,11 @@ local function getCarMeetLocations()
 
     carmeetLocations = locations
 
-    -- Debug print
-    print("Found " .. tableSize(locations) .. " meet locations")
-    for name, data in pairs(locations) do
-        print("Meet: " .. name)
-        print("  Parking spots: " .. tableSize(data.parkingSpots))
-        print("  Tags: " .. table.concat(data.tags or {}, ", "))
-        -- Additional debug to see exact meet name
-        print("  Exact meet name: '" .. name .. "'")
-    end
-
     return locations
 end
 
 local function onWorldReadyState(state)
     if state == 2 and careerActive then
-        print("Loading carmeet locations")
         carmeetLocations = getCarMeetLocations()
         loadCarMeetData()
     end
@@ -222,23 +222,18 @@ local function startCarMeet(meetName)
     -- Rest of the existing startCarMeet function
     local meets = (not carmeetLocations or next(carmeetLocations) == nil) and getCarMeetLocations() or carmeetLocations
     
-    -- Additional debug
-    print("Looking for meet: '" .. meetName .. "'")
-    print("Available meets:")
-    for name, _ in pairs(meets) do
-        print("  '" .. name .. "'")
-    end
-    
     local meet = meets[meetName]
     if not meet then
         print("Car meet location not found: " .. meetName)
         return
     end
     
+    -- Set the active meet and reset player arrival flag
+    activeMeet = meet
+    playerHasArrived = false
     -- Calculate spots based on stored attendance level
     local maxSpots = #meet.parkingSpots - 1  -- Reserve one spot for player
     local spotCount
-    print("attendanceLevel: " .. attendanceLevel)
     if attendanceLevel == 1 then -- LOW
         spotCount = 2
     elseif attendanceLevel == 2 then -- MEDIUM
@@ -251,6 +246,23 @@ local function startCarMeet(meetName)
     
     -- Create a copy of parking spots array to randomly select from
     local availableSpots = deepcopy(meet.parkingSpots)
+
+    playerSpot = gameplay_sites_sitesManager.getBestParkingSpotForVehicleFromList(be:getPlayerVehicleID(0), availableSpots)
+    -- Remove the player's spot from available spots
+    for i, spot in ipairs(availableSpots) do
+        if spot == playerSpot then
+            table.remove(availableSpots, i)
+            break
+        end
+    end
+
+    -- Set navigation to the player's parking spot
+    local options = {
+        color = {1, 0.4, 0}, -- Orange color for car meet markers
+        step = 4,            -- Marker spacing
+        renderDecals = true
+    }
+    core_groundMarkers.setPath(playerSpot.pos, options)
     
     -- Spawn vehicles in random spots
     for i = 1, spotCount do
@@ -270,13 +282,6 @@ local function startCarMeet(meetName)
     
     return spawnedVehicles
 end
-
--- Add cleanup function to module exports
-M.cleanupPreviousMeet = cleanupPreviousMeet
-M.onInit = onInit
-M.getCarMeetLocations = getCarMeetLocations
-M.onWorldReadyState = onWorldReadyState
-M.startCarMeet = startCarMeet
 
 -- Add new functions for meet generation and RSVP
 local function shouldGenerateNewMeet()
@@ -320,7 +325,6 @@ end
 local function rsvpToMeet(level)
     -- Convert string level to number
     attendanceLevel = attendanceLevels[level] or 2  -- default to MEDIUM (2) if invalid
-    print("attendanceLevel: " .. attendanceLevel)
     rsvpData = meetData
     meetData = nil
 end
@@ -328,6 +332,9 @@ end
 local function decline()
     rsvpData = nil
     meetData = nil
+    core_groundMarkers.resetAll()
+    activeMeet = nil
+    playerHasArrived = false
 end
 
 -- Function to check if it's time to start the meet
@@ -341,8 +348,6 @@ local function checkMeetStart()
         -- Get the meet location data
         local meet = carmeetLocations[rsvpData.location]
         if meet then
-            -- Set marker to guide player to the meet
-            core_groundMarkers.setPath(meet.pos)
             -- Start the meet
             ui_message("Car meet starting at " .. rsvpData.location, 10, "info", "info")
             startCarMeet(rsvpData.location)
@@ -360,6 +365,30 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     if currentTime - lastUpdateCheck >= updateInterval then
         lastUpdateCheck = currentTime
         checkMeetStart()
+        
+        -- Check if player has arrived at active meet
+        if activeMeet and not playerHasArrived then
+            local playerVeh = be:getPlayerVehicle(0)
+            if playerVeh and (playerVeh:getPosition() - playerSpot.pos):length() < 10 then
+                ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by 3.5%", 10, "info", "info")
+                local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+                if inventoryId then
+                    career_modules_inventory.addMeetReputation(inventoryId, 1)
+                end
+                core_groundMarkers.resetAll()
+                playerHasArrived = true
+            end
+        elseif activeMeet and playerHasArrived then
+            local playerVeh = be:getPlayerVehicle(0)
+            if playerVeh then
+                local distance = (playerVeh:getPosition() - playerSpot.pos):length()
+                
+                if distance > MEET_CLEANUP_DISTANCE then
+                    cleanupPreviousMeet()
+                    ui_message("Leaving car meet area", 5, "info", "info")
+                end
+            end
+        end
     end
 end
 
@@ -387,7 +416,6 @@ local function closeMenu()
     career_career.closeAllMenus()
 end
 
--- Add new functions to module exports while keeping existing ones
 M.onInit = onInit
 M.getCarMeetLocations = getCarMeetLocations
 M.onWorldReadyState = onWorldReadyState

@@ -455,7 +455,7 @@ local function sendPurchaseDataToUi()
 
   local tradeInValue = purchaseData.tradeInVehicleInfo and purchaseData.tradeInVehicleInfo.Value or 0
   local taxes = math.max((vehicleShopInfo.Value + vehicleShopInfo.fees - tradeInValue) * salesTax, 0)
-  if vehicleShopInfo.sellerId == "discountedDealership" then
+  if vehicleShopInfo.sellerId == "discountedDealership" or vehicleShopInfo.sellerId == "joesJunkDealership" then
     taxes = 0
   end
   local finalPrice = vehicleShopInfo.Value + vehicleShopInfo.fees + taxes - tradeInValue
