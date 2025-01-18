@@ -45,7 +45,7 @@
         <h3 v-else>No vehicle in garage</h3>
 
         <div v-if="computerStore.generalComputerFunctions">
-          <h3>Inventory, shopping, insurance</h3>
+          <h3>Inventory, Shopping, Insurance</h3>
           <div class="actions-list">
             <template v-for="(computerFunction, index) in computerStore.generalComputerFunctions">
               <BngImageTile
@@ -66,6 +66,30 @@
           <div class="disable-reason">
             <BngIcon class="disable-icon" v-show="disableReason[1]" :type="icons.info" />
             <span v-html="disableReason[1] || '&nbsp;'"></span>
+          </div>
+        </div>
+
+        <div>
+          <h3>Activities & Events</h3>
+          <div class="actions-list">
+            <template v-for="(computerFunction, index) in computerStore.activityComputerFunctions">
+              <BngImageTile
+                v-if="!computerFunction.type"
+                :class="{ 'action-disabled': computerFunction.disabled }"
+                tabindex="0"
+                bng-nav-item v-bng-on-ui-nav:ok.asMouse.focusRequired
+                @click="computerButtonCallback(computerFunction)"
+                @mouseover="setReason(2, infoById[computerFunction.id].reason)"
+                @focus="setReason(2, infoById[computerFunction.id].reason)"
+                @mouseleave="setReason(2)"
+                @blur="setReason(2)"
+                :icon="infoById[computerFunction.id].icon"
+                :label="infoById[computerFunction.id].label" />
+            </template>
+          </div>
+          <div class="disable-reason">
+            <BngIcon class="disable-icon" v-show="disableReason[2]" :type="icons.info" />
+            <span v-html="disableReason[2] || '&nbsp;'"></span>
           </div>
         </div>
       </div>
@@ -114,12 +138,14 @@ const iconById = {
   vehicleInventory: icons.keys1,
   partInventory: icons.engine,
   vehicleShop: icons.carCoins,
-  sleep: icons.timer
+  sleep: icons.night,
+  carMeets: icons.cars
 }
 
 const infoById = computed(() => [
   ...computerStore.generalComputerFunctions,
   ...(computerStore.activeInventoryId ? computerStore.vehicleSpecificComputerFunctions[computerStore.activeInventoryId] : undefined) || [],
+  ...computerStore.activityComputerFunctions,
 ].reduce((res, func) => {
   res[func.id] = {
     icon: iconById[func.id] || icons.bug,
@@ -139,10 +165,9 @@ const infoById = computed(() => [
   return res
 }, {}))
 
-const disableReason = ref([null, null])
+const disableReason = ref([null, null, null])
 const setReason = (idx, reason = null) => {
-  disableReason.value[idx] = reason
-  disableReason.value[(idx + 1) % 2] = null
+  disableReason.value = disableReason.value.map((_, i) => i === idx ? reason : null)
 }
 
 const close = () => {

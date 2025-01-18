@@ -617,7 +617,7 @@ local function setupInventory()
       if unicycleSavedPosition then
         spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
       else
-        freeroam_facilities.teleportToGarage("servicestationGarage", getPlayerVehicle(0))
+        freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
       end
     end
   end
@@ -1178,6 +1178,14 @@ local function getVehicleRole(inventoryId)
   return vehicles[inventoryId] and vehicles[inventoryId].role or nil
 end
 
+local function addMeetReputation(inventoryId, amount)
+  vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
+end
+
+local function getMeetReputation(inventoryId)
+  return vehicles[inventoryId].meetReputation or 0
+end
+
 local function getLicensePlateText(vehId)
   local inventoryId = getInventoryIdFromVehicleId(vehId)
   return inventoryId and vehicles[inventoryId] and vehicles[inventoryId].config.licenseName or nil
@@ -1302,6 +1310,8 @@ M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
 M.setVehicleRole = setVehicleRole
 M.getVehicleRole = getVehicleRole
+M.addMeetReputation = addMeetReputation
+M.getMeetReputation = getMeetReputation
 M.setLicensePlateText = setLicensePlateText
 M.getLicensePlateText = getLicensePlateText
 M.purchaseLicensePlateText = purchaseLicensePlateText

@@ -157,13 +157,14 @@ local races = {
         type = {"motorsport", "drift"}
     },
     raceTrackDrift = {
-        bestTime = 60,
-        hotlap = 45,
-        driftGoal = 6000,
+        bestTime = 35,
+        hotlap = 30,
+        driftGoal = 4000,
         reward = 1500,
         checkpointRoad = "raceTrackDrift",
         label = "Parking Lot Drift",
-        type = {"motorsport", "drift"}
+        type = {"motorsport", "drift"},
+        minCheckpointDistance = 20
     },
     sealbrikDrift = {
         bestTime = 30,
@@ -190,8 +191,8 @@ local races = {
         type = {"motorsport"}
     },
     rockClimbS = {
-        bestTime = 8,
-        reward = 700,
+        bestTime = 5,
+        reward = 1200,
         checkpointRoad = "rockClimbS",
         label = "Rock Crawl Short",
         type = {"motorsport", "crawl"}
@@ -474,7 +475,8 @@ end
 
 local function restoreTrafficAmount()
     if gameplay_traffic then
-        local trafficAmount = settings.getValue('trafficAmount') or previousTrafficAmount
+        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount(10) or settings.getValue('trafficAmount')
+        local trafficAmount = settingsAmount or previousTrafficAmount
         local pooledAmount = settings.getValue('trafficExtraAmount') or 0
         gameplay_traffic.setActiveAmount(trafficAmount + pooledAmount, trafficAmount)
     end
@@ -2282,7 +2284,7 @@ local function onBeamNGTrigger(data)
             timerActive = true
             checkpointsHit = 0
             totalCheckpoints = #checkpoints
-            currentExpectedCheckpoint = 1
+            currentExpectedCheckpoint = 0
             if races[raceName].hotlap then
                 mHotlap = raceName
             end
@@ -2456,7 +2458,7 @@ local function onBeamNGTrigger(data)
             mActiveRace = nil
             setActiveLight(raceName, "red")
             restoreTrafficAmount()
-            displayMessage("Race Finished!", 5)
+            --displayMessage("Race Finished!", 5)
         end
     else
         --print("Unknown trigger type: " .. triggerType)
@@ -2481,6 +2483,9 @@ local function distanceToLineSegment(point, lineStart, lineEnd)
 end
 
 local function findNearestNode(vehiclePos, nodes)
+    if not nodes then
+        return nil, nil
+    end
     local nearestIndex = 1
     local minDistance = math.huge
     for i, node in ipairs(nodes) do
@@ -2549,6 +2554,13 @@ local function checkPlayerOnRoad()
     -- Check both main and alt routes
     local mainNearestIndex, mainDistance = findNearestNode(vehiclePos, roadNodes)
     local altNearestIndex, altDistance = findNearestNode(vehiclePos, altRoadNodes)
+
+    if not mainNearestIndex and not mainDistance then
+        return true
+    end
+    if not altNearestIndex and not altDistance then
+        altDistance = 1000000
+    end
 
     local useAltRoute = altDistance < mainDistance
     local currentNodes = useAltRoute and altRoadNodes or roadNodes

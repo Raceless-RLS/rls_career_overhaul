@@ -70,6 +70,9 @@ local function getValueByAge(value, age, power)
   if power == nil then
     power = 300
   end
+  if value == nil then
+    value = 10000
+  end
   return value * getDepreciation(age, power)
 end
 
@@ -234,7 +237,9 @@ end
 local function getInventoryVehicleValue(inventoryId, ignoreDamage)
   local vehicle = career_modules_inventory.getVehicles()[inventoryId]
   if not vehicle then return end
-  return math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
+  local value = math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
+  local meetReputation = career_modules_inventory.getMeetReputation(inventoryId)
+  return value * (1 + meetReputation * 0.035)
 end
 
 local function getNumberOfBrokenParts(partConditions)

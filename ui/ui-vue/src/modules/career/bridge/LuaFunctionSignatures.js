@@ -848,5 +848,14 @@ export default {
   career_modules_assignPolice: {
     canPay: () => {},
     startCertification: () => {},
+  },
+
+  career_modules_carmeets: {
+    rsvpToMeet: attendanceLevel => {},
+    decline: () => {},
+    closeMenu: () => {},
+    openMenu: () => {},
+    checkAvailableMeets: () => {}
   }
+
 }
