@@ -23,7 +23,13 @@ local updateInterval = 5 -- Check every 5 seconds
 local activeMeet = nil
 local playerHasArrived = false
 local playerSpot = nil
-local MEET_CLEANUP_DISTANCE = 150
+local MEET_CLEANUP_DISTANCE = 100
+local MEET_LEAVE_TIMER = 60
+local MEET_LEAVE_INTERVAL = 5
+local meetArrivalTime = nil
+local vehicleDispersed = false
+local lastVehicleLeaveTime = 0
+local vehiclesToLeave = {}
 
 local attendanceLevels = {
     LOW = 1,
@@ -379,14 +385,57 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 playerHasArrived = true
             end
         elseif activeMeet and playerHasArrived then
-            local playerVeh = be:getPlayerVehicle(0)
-            if playerVeh then
-                local distance = (playerVeh:getPosition() - playerSpot.pos):length()
-                
-                if distance > MEET_CLEANUP_DISTANCE then
-                    cleanupPreviousMeet()
-                    ui_message("Leaving car meet area", 5, "info", "info")
+            if not meetArrivalTime then
+                meetArrivalTime = os.time()
+            end
+            
+            if os.time() - meetArrivalTime > MEET_LEAVE_TIMER then
+                -- Initialize vehicle departure if not started
+                if #vehiclesToLeave == 0 and not vehicleDispersed then
+                    ui_message("Car meet is over, vehicles starting to leave!", 10, "info", "info")
+                    vehiclesToLeave = spawnedMeetVehicles
                 end
+                
+                -- Check if it's time for next vehicle to leave
+                if #vehiclesToLeave > 0 and currentTime - lastVehicleLeaveTime >= MEET_LEAVE_INTERVAL then
+                    local vehID = table.remove(vehiclesToLeave, 1)
+                    local veh = be:getObjectByID(vehID)
+                    if veh then
+                        veh:queueLuaCommand('ai.setMode("traffic")')
+                    end
+                    lastVehicleLeaveTime = currentTime
+                end
+                
+                -- When all vehicles have left
+                if #vehiclesToLeave == 0 and not vehicleDispersed then
+                    ui_message("Car meet is over, Thanks for coming!", 10, "info", "info")
+                    activeMeet = nil
+                    playerHasArrived = false
+                    playerSpot = nil
+                    vehicleDispersed = true
+                end
+            end
+        elseif vehicleDispersed then
+            local playerVeh = be:getPlayerVehicle(0)
+            for _, vehID in ipairs(spawnedMeetVehicles) do
+                local veh = be:getObjectByID(vehID)
+                if veh then
+                    local distance = (playerVeh:getPosition() - veh:getPosition()):length()
+                    if distance > MEET_CLEANUP_DISTANCE then
+                        table.remove(spawnedMeetVehicles, vehID)
+                        gameplay_traffic.removeTraffic(vehID)
+                        local veh = be:getObjectByID(vehID)
+                        if veh then
+                            veh:delete()
+                        end
+                    end
+                else
+                    table.remove(spawnedMeetVehicles, vehID)
+                end
+            end
+            if #spawnedMeetVehicles == 0 then
+                vehicleDispersed = false
+                cleanupPreviousMeet()
             end
         end
     end
