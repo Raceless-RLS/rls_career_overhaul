@@ -8,7 +8,7 @@
       <BngCardHeading>Certify Your Vehicle For Police Work</BngCardHeading>
 
       <div class="certification-info">
-        <p>The certification process takes 12 hours and will cost $5,000</p>
+        <p>The certification process takes 4 hours and will cost $10,000</p>
       </div>
 
       <!-- Button in the bottom-right, no separate footer slot -->

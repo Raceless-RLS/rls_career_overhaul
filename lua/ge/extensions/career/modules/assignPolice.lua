@@ -4,7 +4,7 @@ local dependencies = {'career_career', 'career_modules_inventory'}
 
 local certificationPrice = {
     money = {
-        amount = 5000,
+        amount = 10000,
         canBeNegative = false
     }
 }
@@ -28,7 +28,7 @@ local function startCertification()
             tags = {"certification", "police"}
         })
         career_modules_inventory.setVehicleRole(inventoryId, "police")
-        career_modules_inventory.delayVehicleAccess(inventoryId, 43200, "certification")
+        career_modules_inventory.delayVehicleAccess(inventoryId, 14400, "certification")
         core_vehicleBridge.executeAction(be:getPlayerVehicle(0), 'setFreeze', true)
         vehiclePresent = be:getPlayerVehicle(0)
     end
