@@ -206,9 +206,9 @@ onUnmounted(kill)
   flex-direction: column;
   overflow: hidden auto;
   padding: {
-    left: 2em;
-    right: 2em;
-    bottom: 2em;
+    left: 1em;
+    right: 1em;
+    bottom: 1em;
   }
   > :deep(.tile) {
     display: inline-flex;
@@ -220,7 +220,7 @@ onUnmounted(kill)
   font-size: 1rem;
   > * {
     flex: 0 0 auto;
-    min-width: 3em !important;
+    min-width: 2em !important;
     // width: 3em;
   }
 }
@@ -228,9 +228,9 @@ onUnmounted(kill)
 .veh-preview {
   position: absolute;
   top: 1em;
-  right: 2em;
+  right: 1em;
   width: 11em;
-  height: 6em;
+  height: auto;
   background-color: #0008;
   background-image: var(--veh-preview);
   background-size: cover;
@@ -264,10 +264,10 @@ onUnmounted(kill)
   flex-flow: row nowrap;
   justify-content: space-between;
   > * {
-    flex: 0 0 auto;
-    margin-bottom: 1em !important;
+    flex: 0 0 7em;
+    margin-bottom: 0.5em !important;
     &:not(:last-child) {
-      margin-right: 2em !important;
+      margin-right: 0.5em !important;
     }
   }
   & [bng-nav-item] {
@@ -283,7 +283,7 @@ onUnmounted(kill)
 .disable-reason {
   display: flex;
   align-items: baseline;
-  height: 1.2em;
+  height: 0.6em;
   .disable-icon {
     margin-right: 0.1em;
   }
