@@ -1,11 +1,9 @@
-local function loadExtensions()
-    print("Starting extension loading sequence")
-    
-    if extensions.isExtensionLoaded("core_recoveryPrompt") then
-        extensions.unload("core_recoveryPrompt")
+local function loadFRE() -- Loads all associated extensions for freeroam events
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_leaderboardManager") then
+        extensions.unload("gameplay_events_freeroam_leaderboardManager")
     end
-    load("core_recoveryPrompt")
-    setExtensionUnloadMode("core_recoveryPrompt", "manual")
+    load("gameplay_events_freeroam_leaderboardManager")
+    setExtensionUnloadMode("gameplay_events_freeroam_leaderboardManager", "manual")
 
     if extensions.isExtensionLoaded("gameplay_events_freeroam_processRoad") then
         extensions.unload("gameplay_events_freeroam_processRoad")
@@ -18,6 +16,18 @@ local function loadExtensions()
     end
     load("gameplay_events_freeroamEvents")
     setExtensionUnloadMode("gameplay_events_freeroamEvents", "manual")
+end
+
+local function loadExtensions()
+    print("Starting extension loading sequence")
+    
+    if extensions.isExtensionLoaded("core_recoveryPrompt") then
+        extensions.unload("core_recoveryPrompt")
+    end
+    load("core_recoveryPrompt")
+    setExtensionUnloadMode("core_recoveryPrompt", "manual")
+
+    loadFRE()
 
     if extensions.isExtensionLoaded("career_career") then
         extensions.unload("career_career")

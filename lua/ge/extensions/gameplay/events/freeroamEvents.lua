@@ -3,9 +3,10 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local M = {}
 
-M.dependencies = {'gameplay_events_freeroam_processRoad'}
+M.dependencies = {}
 
 local processRoad = require('gameplay/events/freeroam/processRoad')
+local leaderboardManager = require('gameplay/events/freeroam/leaderboardManager')
 
 local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
 
@@ -38,8 +39,6 @@ local lapCount = 0
 local currCheckpoint = nil
 local mHotlap = nil
 local mAltRoute = nil
-local leaderboardFile = 'career/leaderboard.json'
-local leaderboard = {}
 local mSplitTimes = {}
 local mBestSplitTime = {}
 local isLoop = false
@@ -67,242 +66,7 @@ local altCheckpoints = {}
 -- The best time is the ideal time for the race.
 -- The reward is the potential reward for the race.
 -- The label is the name of the race.
-local races = {
-    drag = {
-        bestTime = 11,
-        reward = 1000,
-        checkpoints = 2,
-        label = "Drag Strip",
-        displaySpeed = true,
-        type = {"motorsport"}
-    },
-    roadOval = {
-        bestTime = 25,
-        reward = 500,
-        hotlap = 22,
-        checkpointRoad = "roadOval",
-        label = "Paved Oval",
-        type = {"motorsport"}
-    },
-    dirtOval = {
-        bestTime = 25,
-        reward = 500,
-        hotlap = 22,
-        checkpointRoad = "dirtOval",
-        label = "Dirt Oval",
-        type = {"motorsport"}
-    },
-    quarryCircuit = {
-        bestTime = 30,
-        reward = 1250,
-        hotlap = 25,
-        checkpointRoad = "quarryCircuit",
-        label = "Quarry Circuit",
-        type = {"motorsport"}
-    },
-    beachCircuit = {
-        bestTime = 30,
-        reward = 1500,
-        hotlap = 25,
-        checkpointRoad = "beachCircuit",
-        label = "Beach Circuit",
-        displaySpeed = true,
-        type = {"motorsport"},
-        minCheckpointDistance = 45
-    },
-    hotrolledDrift = {
-        bestTime = 30,
-        driftGoal = 3500,
-        reward = 1500,
-        checkpointRoad = "hotrolledDrift",
-        label = "Hotrolled Drift",
-        type = {"motorsport", "drift"}
-    },
-    redwoodDrift = {
-        bestTime = 60,
-        driftGoal = 6000,
-        reward = 1500,
-        checkpointRoad = "redwoodDrift",
-        label = "Redwood Drift",
-        type = {"motorsport", "drift"}
-    },
-    redwoodDriftR = {
-        bestTime = 60,
-        driftGoal = 6000,
-        reward = 1500,
-        checkpointRoad = "redwoodDriftR",
-        label = "Redwood Drift Reverse",
-        type = {"motorsport", "drift"}
-    },
-    raceTrackDrift = {
-        bestTime = 35,
-        hotlap = 30,
-        driftGoal = 4000,
-        reward = 1500,
-        checkpointRoad = "raceTrackDrift",
-        label = "Parking Lot Drift",
-        type = {"motorsport", "drift"},
-        minCheckpointDistance = 20
-    },
-    sealbrikDrift = {
-        bestTime = 30,
-        driftGoal = 4500,
-        reward = 1500,
-        checkpointRoad = "sealbrikDrift",
-        label = "Sealbrik Drift",
-        type = {"motorsport", "drift"}
-    },
-    islandTouge = {
-        bestTime = 25,
-        reward = 3000,
-        driftGoal = 3500,
-        checkpointRoad = "islandTouge",
-        label = "Island Touge Drift",
-        type = {"motorsport", "drift"}
-    },
-    dragHighway = {
-        bestTime = 17,
-        reward = 1700,
-        checkpointRoad = "dragHighway",
-        label = "No Prep Highway Drag",
-        displaySpeed = true,
-        type = {"motorsport"}
-    },
-    rockClimbS = {
-        bestTime = 5,
-        reward = 1200,
-        checkpointRoad = "rockClimbS",
-        label = "Rock Crawl Short",
-        type = {"motorsport", "crawl"}
-    },
-    rockClimbL = {
-        bestTime = 12,
-        reward = 1500,
-        checkpointRoad = "rockClimbL",
-        label = "Rock Crawl Long",
-        type = {"motorsport", "crawl"}
-    },
-    mudDrag1 = {
-        bestTime = 8,
-        reward = 1500,
-        checkpointRoad = "mudDrag1",
-        label = "Mud Drag Easy",
-        type = {"motorsport"}
-    },
-    mudDrag2 = {
-        bestTime = 10,
-        reward = 3000,
-        checkpointRoad = "mudDrag2",
-        label = "Mud Drag Hard",
-        type = {"motorsport"}
-    },
-    koh1 = {
-        bestTime = 120,
-        reward = 2000,
-        checkpointRoad = "koh1",
-        label = "King of the Hammer 1",
-        type = {"motorsport"}
-    },
-    koh2 = {
-        bestTime = 180,
-        reward = 3000,
-        checkpointRoad = "koh2",
-        label = "King of the Hammer 2",
-        type = {"motorsport"}
-    },
-    rally1 = {
-        bestTime = 70,
-        reward = 2000,
-        checkpointRoad = "rally1",
-        label = "Rally Stage 1",
-        type = {"motorsport"}
-    },
-    rally2 = {
-        bestTime = 120,
-        reward = 2500,
-        checkpointRoad = "rally2",
-        label = "Rally Stage 2",
-        type = {"motorsport"}
-    },
-    rally3 = {
-        bestTime = 185,
-        reward = 3000,
-        checkpointRoad = "rally3",
-        label = "Rally Stage 3",
-        apexOffset = 1,
-        type = {"motorsport"}
-    },
-    rally4 = {
-        bestTime = 90,
-        reward = 2000,
-        checkpointRoad = "rally4",
-        label = "Rally Stage 4 - Final",
-        type = {"motorsport"}
-    },
-    rubberBand = {
-        bestTime = 60,
-        reward = 2500,
-        label = "Rubberband Ridge",
-        checkpointRoad = "rubberBandMain",
-        hotlap = 45,
-        altRoute = {
-            bestTime = 70,
-            reward = 2500,
-            label = "Rubberband Ridge Joker",
-            checkpointRoad = "rubberBandJoker",
-            mergeCheckpoints = {6, 7},
-            hotlap = 50,
-            altInfo = "**Continue Right at the fork for the joker lap."
-        },
-        type = {"motorsport"}
-    },
-    track = {
-        bestTime = 140,
-        reward = 2500,
-        label = "Track",
-        checkpointRoad = "trackloop",
-        hotlap = 125,
-        runningStart = true,
-        altRoute = {
-            bestTime = 110,
-            reward = 2000,
-            label = "Short Track",
-            checkpointRoad = "trackalt",
-            mergeCheckpoints = {1, 10},
-            hotlap = 95,
-            altInfo = "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
-        },
-        type = {"motorsport", "apexRacing"}
-    },
-    dirtCircuit = {
-        bestTime = 65,
-        reward = 2000,
-        checkpointRoad = "dirtloop",
-        hotlap = 55,
-        label = "Dirt Circuit",
-        type = {"motorsport", "apexRacing"}
-    },
-    testTrack = {
-        bestTime = 5.5,
-        reward = 1000,
-        label = "Test Track",
-        type = {"motorsport"}
-    }
-}
-
-
-local function onLeaderboardDataReceived(data)
-    if data and type(data) == "table" then
-        leaderboard = data
-        print("[LeaderboardManager] Received leaderboard data")
-    else
-        print("[LeaderboardManager] Received invalid leaderboard data")
-    end
-end
-
-local function onInit()
-    print("freeroamEvents onInit")
-end
+local races = nil
 
 function ActiveAssets.new()
     local self = setmetatable({}, ActiveAssets)
@@ -415,32 +179,6 @@ local function isCareerModeActive()
     return career_career.isActive()
 end
 
-local function onLeaderboardDataReceived(data)
-    if data and type(data) == "table" then
-        leaderboard = data
-        print("Received leaderboard data from server")
-    else
-        print("Received invalid leaderboard data from server")
-    end
-end
-
--- Function to read the leaderboard from the file
-local function loadLeaderboard()
-    if not isCareerModeActive() then
-        return
-    end
-    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-    local file = savePath .. '/' .. leaderboardFile
-    local file = io.open(file, "r")
-    if file then
-        local content = file:read("*a")
-        leaderboard = jsonDecode(content) or {}
-        file:close()
-    else
-        leaderboard = {} -- Initialize as empty if file does not exist
-    end
-end
-
 local previousTrafficAmount = nil
 
 local function saveAndSetTrafficAmount(amount)
@@ -458,49 +196,6 @@ local function restoreTrafficAmount()
         local trafficAmount = settingsAmount or previousTrafficAmount
         local pooledAmount = settings.getValue('trafficExtraAmount') or 0
         gameplay_traffic.setActiveAmount(trafficAmount + pooledAmount, trafficAmount)
-    end
-end
-
--- Function to save the leaderboard to the file in all autosave folders
-local function saveLeaderboard()
-    --[[
-    if MPCoreNetwork and MPCoreNetwork.isMPSession() then
-        print("[LeaderboardManager] In multiplayer session, saving leaderboard")
-        local data = {
-            playerID = MPCoreNetwork.getPlayerServerID(),
-            data = leaderboard
-        }
-        TriggerServerEvent("saveLeaderboard", jsonEncode(data))
-    else
-        print("[LeaderboardManager] Not in multiplayer session")
-        -- Your existing single player save code here
-    end
-    --]]
-
-    if not isCareerModeActive() then
-        return
-    end
-    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-    --print("saveSlot: " .. saveSlot)
-    --print("savePath: " .. savePath)
-
-    -- Extract the base path by removing the current autosave folder
-    local basePath = savePath:match("(.*/)")
-
-    -- Define the paths for all three autosave folders
-    local autosavePaths = {basePath .. "autosave1/" .. leaderboardFile, basePath .. "autosave2/" .. leaderboardFile,
-                           basePath .. "autosave3/" .. leaderboardFile}
-
-    -- Save the leaderboard to each autosave folder
-    for _, filePath in ipairs(autosavePaths) do
-        local file = io.open(filePath, "w")
-        if file then
-            file:write(jsonEncode(leaderboard))
-            file:close()
-            --print("Saved leaderboard to: " .. filePath)
-        else
-            --print("Error: Unable to open leaderboard file for writing: " .. filePath)
-        end
     end
 end
 
@@ -740,45 +435,6 @@ local function getActivityType(data)
     return activityType
 end
 
-local function isNewBestTime(raceName, in_race_time)
-    if not leaderboard[raceName] then
-        return true
-    end
-
-    local currentBest
-    if mAltRoute then
-        if mHotlap == raceName then
-            currentBest = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.hotlapTime
-        else
-            currentBest = leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.bestTime
-        end
-    else
-        if mHotlap == raceName then
-            currentBest = leaderboard[raceName].hotlapTime
-        else
-            currentBest = leaderboard[raceName].bestTime
-        end
-    end
-
-    return not currentBest or in_race_time < currentBest
-end
-
-local function getOldTime(raceName)
-    if not leaderboard[raceName] then
-        return nil
-    end
-
-    if mAltRoute then
-        if not leaderboard[raceName].altRoute then
-            return nil
-        end
-        return mHotlap == raceName and leaderboard[raceName].altRoute.hotlapTime or
-                   leaderboard[raceName].altRoute.bestTime
-    else
-        return mHotlap == raceName and leaderboard[raceName].hotlapTime or leaderboard[raceName].bestTime
-    end
-end
-
 local function driftCompletionMessage(oldScore, oldTime, driftScore, finishTime, reward, xp, data)
     local raceName = getActivityName(data)
     local raceData = races[raceName]
@@ -873,41 +529,6 @@ local function rewardLabel(raceName, newBestTime)
     return label
 end
 
-local function saveNewBestTime(raceName, driftScore)
-    if not leaderboard[raceName] then
-        leaderboard[raceName] = {}
-    end
-
-    if races[raceName].driftGoal then
-        -- Save the driftScore into the leaderboard for drift events
-        if not leaderboard[raceName].driftScore or driftScore > leaderboard[raceName].driftScore then
-            leaderboard[raceName].driftScore = driftScore
-            leaderboard[raceName].bestTime = in_race_time
-            leaderboard[raceName].splitTimes = mSplitTimes
-        end
-    elseif mAltRoute then
-        if not leaderboard[raceName].altRoute then
-            leaderboard[raceName].altRoute = {}
-        end
-
-        if mHotlap == raceName then
-            leaderboard[raceName].altRoute.hotlapTime = in_race_time
-            leaderboard[raceName].altRoute.hotlapSplitTimes = mSplitTimes
-        else
-            leaderboard[raceName].altRoute.bestTime = in_race_time
-            leaderboard[raceName].altRoute.splitTimes = mSplitTimes
-        end
-    else
-        if mHotlap == raceName then
-            leaderboard[raceName].hotlapTime = in_race_time
-            leaderboard[raceName].hotlapSplitTimes = mSplitTimes
-        else
-            leaderboard[raceName].bestTime = in_race_time
-            leaderboard[raceName].splitTimes = mSplitTimes
-        end
-    end
-end
-
 local function getDriftScore()
     local finalScore = 0
     if gameplay_drift_scoring then
@@ -965,24 +586,28 @@ local function payoutRace(data)
             reward = raceReward(time, reward)
         end
 
-        -- Save the best time to the leaderboard
-        loadLeaderboard()
-        local oldTime = getOldTime(raceName) or 0
-        local oldScore = leaderboard[raceName] and leaderboard[raceName].driftScore or 0
-        local newBest = false
-        if races[raceName].driftGoal then
-            newBest = not leaderboard[raceName] or driftReward(raceName, in_race_time, driftScore) >
-                          driftReward(raceName, oldTime, oldScore)
-        else
-            newBest = isNewBestTime(raceName, in_race_time)
+        local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
+        if mAltRoute then
+            leaderboardEntry = leaderboardEntry.altRoute
         end
 
-        if newBest and not invalidLap then
-            saveNewBestTime(raceName, driftScore)
-        else
+        local oldTime = leaderboardEntry and leaderboardEntry.time or 0
+        local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
+
+        local newEntry = {
+            raceName = raceName,
+            isAltRoute = mAltRoute,
+            isHotlap = mHotlap == raceName,
+            time = in_race_time,
+            splitTimes = mSplitTimes,
+            driftScore = driftScore
+        }
+
+        local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
+
+        if not newBest or invalidLap then
             reward = reward / 2
         end
-        saveLeaderboard()
 
         if not isCareerModeActive() then
             mActiveRace = nil
@@ -1029,7 +654,7 @@ local function payoutRace(data)
             beamXP = {
                 amount = math.floor(xp / 10)
             },
-            bonusStars = {
+            vouchers = {
                 amount = (oldTime == 0 or oldTime > races[raceName].bestTime) and in_race_time <
                     races[raceName].bestTime and 1 or 0
             }
@@ -1062,18 +687,16 @@ end
 -- Simplified payoutRace function for drag races
 local function payoutDragRace(raceName, finishTime, finishSpeed)
     -- Load the leaderboard
-    loadLeaderboard()
-    local oldTime = getOldTime(raceName) or math.huge
-    local newBestTime = finishTime < oldTime
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
+    local oldTime = leaderboardEntry and leaderboardEntry.time or 0
 
-    -- Update leaderboard if new best time
-    if newBestTime then
-        leaderboard[raceName] = {
-            bestTime = finishTime,
-            bestSpeed = finishSpeed
-        }
-    end
-    saveLeaderboard()
+    local newEntry = {
+        raceName = raceName,
+        time = finishTime,
+        splitTimes = mSplitTimes
+    }
+
+    local newBestTime = leaderboardManager.addLeaderboardEntry(newEntry)
 
     if not isCareerModeActive() then
         local message = string.format("%s\nTime: %s\nSpeed: %.2f mph", races[raceName].label, formatTime(finishTime),
@@ -1093,6 +716,8 @@ local function payoutDragRace(raceName, finishTime, finishSpeed)
         reward = baseReward / 2 -- Minimum reward for completion
     end
 
+    reward = newBestTime and reward or reward / 2
+
     -- Calculate experience points
     local xp = math.floor(reward / 20)
 
@@ -1104,16 +729,10 @@ local function payoutDragRace(raceName, finishTime, finishSpeed)
         beamXP = {
             amount = math.floor(xp / 10)
         },
-        bonusStars = {
+        vouchers = {
             amount = newBestTime and 1 or 0
         }
     }
-    -- Assuming 'type' is defined in raceData for categorizing XP
-    for _, raceType in ipairs(raceData.type or {}) do
-        totalReward[raceType] = {
-            amount = xp
-        }
-    end
 
     -- Create reason for reward
     local reason = {
@@ -1139,22 +758,23 @@ local function payoutDragRace(raceName, finishTime, finishSpeed)
 end
 
 local function getDifference(raceName, currentCheckpointIndex)
-    if not leaderboard[raceName] then
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
+    if not leaderboardEntry then
         return nil
     end
 
     local splitTimes = {}
     if mAltRoute then
         if mHotlap == raceName then
-            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].hotlapSplitTimes
+            splitTimes = leaderboardEntry.altRoute.hotlapSplitTimes
         else
-            splitTimes = leaderboard[raceName].altRoute and leaderboard[raceName]["altRoute"].splitTimes
+            splitTimes = leaderboardEntry.altRoute.splitTimes
         end
     else
         if mHotlap == raceName then
-            splitTimes = leaderboard[raceName].hotlapSplitTimes
+            splitTimes = leaderboardEntry.hotlapSplitTimes
         else
-            splitTimes = leaderboard[raceName].splitTimes
+            splitTimes = leaderboardEntry.splitTimes
         end
     end
 
@@ -1223,7 +843,7 @@ end
 
 local function displayStagedMessage(raceName)
     local race = races[raceName]
-    local times = leaderboard[raceName] or {}
+    local times = leaderboardManager.getLeaderboardEntry(raceName) or {}
     local careerMode = isCareerModeActive()
     printTable(race)
     local message = string.format("Staged for %s.\n", race.label)
@@ -1287,12 +907,18 @@ local function displayStagedMessage(raceName)
         end
     else
         -- Handle normal time-based events
-        message = message .. addTimeInfo(times.bestTime, race.bestTime, race.reward, "")
+        if not times.bestTime then
+            times.bestTime = nil
+        end
+        message = message .. addTimeInfo(times and times.bestTime or nil, race.bestTime, race.reward, "")
     end
 
     -- Handle hotlap if it exists
     if race.hotlap then
-        message = message .. "\n\n" .. addTimeInfo(times.hotlapTime, race.hotlap, race.reward, "Hotlap: ")
+        if not times.hotlapTime then
+            times.hotlapTime = nil
+        end
+        message = message .. "\n\n" .. addTimeInfo(times and times.hotlapTime or nil, race.hotlap, race.reward, "Hotlap: ")
     end
 
     -- Handle alternative route if it exists
@@ -1301,11 +927,11 @@ local function displayStagedMessage(raceName)
             times.altRoute = {}
         end
         message = message .. "\n\nAlternative Route:\n"
-        message = message .. addTimeInfo(times.altRoute.bestTime, race.altRoute.bestTime, race.altRoute.reward, "")
+        message = message .. addTimeInfo(times and times.altRoute.bestTime or nil, race.altRoute.bestTime, race.altRoute.reward, "")
 
         if race.altRoute.hotlap then
             message = message .. "\n\n" ..
-                          addTimeInfo(times.altRoute.hotlapTime, race.altRoute.hotlap, race.altRoute.reward,
+                          addTimeInfo(times and times.altRoute.hotlapTime or nil, race.altRoute.hotlap, race.altRoute.reward,
                     "Alt Route Hotlap: ")
         end
     end
@@ -1591,6 +1217,10 @@ local function calculateTotalCheckpoints(race)
     return total
 end
 
+local function hasFinishTrigger(race)
+    return scenetree.findObject("fre_finish_" .. race) ~= nil
+end
+
 local function onBeamNGTrigger(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID then
         return
@@ -1675,9 +1305,6 @@ local function onBeamNGTrigger(data)
                 initDisplays()
                 resetDisplays()
             end
-
-            -- Load leaderboard
-            loadLeaderboard()
 
             -- Set staged race
             staged = raceName
@@ -1784,10 +1411,11 @@ local function onBeamNGTrigger(data)
                 local splitDiff = getDifference(raceName, checkpointsHit)
                 if splitDiff then
                     local totalDiff = nil
+                    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
                     if mAltRoute then
-                        totalDiff = in_race_time - (leaderboard[raceName].altRoute and leaderboard[raceName].altRoute.splitTimes[checkpointsHit] or 0)
+                        totalDiff = in_race_time - (leaderboardEntry.altRoute and leaderboardEntry.altRoute.splitTimes[checkpointsHit] or 0)
                     else
-                        totalDiff = in_race_time - (leaderboard[raceName] and leaderboard[raceName].splitTimes[checkpointsHit] or 0)
+                        totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
                     end
                     
                     checkpointMessage = string.format("Checkpoint %d/%d - Time: %s\nSplit: %s | Total: %s", 
@@ -1875,6 +1503,30 @@ local function onBeamNGTrigger(data)
     end
 end
 
+local function loadRaceData()
+    local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
+    local raceData = jsonReadFile(level)
+    races = raceData.races or {}
+    if races ~= {} then
+        print("Race data loaded")
+    else
+        print("No race data found")
+    end
+end
+
+local function onWorldReadyState(state)
+    if state == 2 then
+        loadRaceData()
+    end
+end
+
+local function onInit()
+    print("freeroamEvents onInit")
+    if getCurrentLevelIdentifier() then
+        loadRaceData()
+    end
+end
+
 local function onUpdate(dtReal, dtSim, dtRaw)
 
     -- This function updates the race time.
@@ -1905,8 +1557,6 @@ M.onUpdate = onUpdate
 
 M.payoutRace = payoutRace
 M.raceReward = raceReward
-M.loadLeaderboard = loadLeaderboard
-M.saveLeaderboard = saveLeaderboard
 M.isCareerModeActive = isCareerModeActive
 M.exitCheckpoint = exitCheckpoint
 M.saveAndSetTrafficAmount = saveAndSetTrafficAmount
@@ -1915,6 +1565,7 @@ M.onPursuitAction = onPursuitAction
 M.displayStagedMessage = displayStagedMessage
 M.payoutDragRace = payoutDragRace
 M.getStartMessage = getStartMessage
+M.onWorldReadyState = onWorldReadyState
 
 M.onInit = onInit
 
