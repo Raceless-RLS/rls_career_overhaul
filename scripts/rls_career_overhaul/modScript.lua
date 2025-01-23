@@ -1,4 +1,10 @@
 local function loadFRE() -- Loads all associated extensions for freeroam events
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_checkpointManager") then
+        extensions.unload("gameplay_events_freeroam_checkpointManager")
+    end
+    load("gameplay_events_freeroam_checkpointManager")
+    setExtensionUnloadMode("gameplay_events_freeroam_checkpointManager", "manual")
+
     if extensions.isExtensionLoaded("gameplay_events_freeroam_activeAssets") then
         extensions.unload("gameplay_events_freeroam_activeAssets")
     end

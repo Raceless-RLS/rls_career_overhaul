@@ -8,6 +8,7 @@ M.dependencies = {}
 local processRoad = require('gameplay/events/freeroam/processRoad')
 local leaderboardManager = require('gameplay/events/freeroam/leaderboardManager')
 local activeAssets = require('gameplay/events/freeroam/activeAssets')
+local checkpointManager = require('gameplay/events/freeroam/checkpointManager')
 
 local Assets = activeAssets.ActiveAssets.new()
 
@@ -55,9 +56,6 @@ local leftTimeDigits = {}
 local rightTimeDigits = {}
 local leftSpeedDigits = {}
 local rightSpeedDigits = {}
-
-local checkpoints = {}
-local altCheckpoints = {}
 
 -- This table stores the best time and reward for each race.
 -- The best time is the ideal time for the race.
@@ -835,245 +833,17 @@ local function displayStagedMessage(raceName)
     displayMessage(message, 15)
 end
 
-local function createCheckpoint(index, isAlt)
-    local checkpoint
-    if isAlt then
-        checkpoint = altCheckpoints[index]
-    else
-        checkpoint = checkpoints[index]
-    end
-    if not checkpoint then
-        --print("Error: No checkpoint data found for index " .. index)
-        return
-    end
-
-    if not checkpoint.width then
-        checkpoint.width = 30
-    end
-
-    local position = vec3(checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z)
-    local radius = checkpoint.width / 2 -- Assuming width is diameter
-
-    local triggerRadius = radius * 0.9 -- 90% of the marker radius for the trigger
-
-    checkpoint.object = createObject('BeamNGTrigger')
-    checkpoint.object:setPosition(position)
-    checkpoint.object:setScale(vec3(triggerRadius, triggerRadius, triggerRadius))
-    checkpoint.object.triggerType = 0 -- Use 0 for Sphere type
-
-    -- Naming the trigger according to the new scheme
-    local triggerName
-    if isAlt then
-        triggerName = string.format("fre_checkpoint_%s_alt_%d", mActiveRace, index)
-    else
-        triggerName = string.format("fre_checkpoint_%s_%d", mActiveRace, index)
-    end
-    checkpoint.object:registerObject(triggerName)
-
-    --print("Checkpoint " .. index .. " created at: " .. tostring(position) .. " with radius: " .. radius)
-    return checkpoint
-end
-
-local function createCheckpointMarker(index, alt)
-    local checkpoint = alt and altCheckpoints[index] or checkpoints[index]
-    if not checkpoint then
-        --print("No checkpoint data for index " .. index)
-        return
-    end
-
-    local marker = createObject('TSStatic')
-    marker.shapeName = "art/shapes/interface/checkpoint_marker.dae"
-
-    marker:setPosRot(checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z, 0, 0, 0, 0)
-
-    marker.scale = vec3(checkpoint.width / 2, checkpoint.width / 2, checkpoint.width)
-    marker.useInstanceRenderData = true
-    marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F() -- Default to red
-
-    local markerName = (alt and "alt_" or "") .. "checkpoint_" .. index .. "_marker"
-    marker:registerObject(markerName)
-
-    checkpoint.marker = marker
-    --print("Checkpoint marker " .. index .. " created at position: " .. tostring(position) .. " with width: " ..
-    --          checkpoint.width)
-    return checkpoint
-end
-
-local function removeCheckpointMarker(index, alt)
-    local checkpoint = {}
-    if alt then
-        checkpoint = altCheckpoints[index]
-    else
-        checkpoint = checkpoints[index]
-    end
-    if checkpoint and checkpoint.marker then
-        checkpoint.marker:delete()
-        checkpoint.marker = nil
-    end
-    return checkpoint
-end
-
-local function removeCheckpoint(index, alt)
-    local checkpoint = {}
-    if alt then
-        checkpoint = altCheckpoints[index]
-    else
-        checkpoint = checkpoints[index]
-    end
-    if checkpoint then
-        if checkpoint.object then
-            checkpoint.object:delete()
-            checkpoint.object = nil
-        end
-        if checkpoint.marker then
-            checkpoint.marker:delete()
-            checkpoint.marker = nil
-        end
-        --print("Checkpoint " .. index .. " removed")
-    end
-    return checkpoint
-end
-
-local function createCheckpoints()
-    for i = 1, #checkpoints do
-        removeCheckpoint(i)
-    end
-    for i = 1, #checkpoints do
-        --print("Creating checkpoint " .. i)
-        createCheckpoint(i)
-    end
-
-    if altCheckpoints then
-        for i = 1, #altCheckpoints do
-            removeCheckpoint(i, true)
-        end
-        for i = 1, #altCheckpoints do
-            createCheckpoint(i, true)
-        end
-    end
-end
-
-local function enableCheckpoint(checkpointIndex, alt)
-    local ALT = {alt, alt}
-    local index = {checkpointIndex, checkpointIndex + 1}
-    if isLoop then
-        index = {index[1] % #checkpoints + 1, index[2] % #checkpoints + 1}
-    else
-        index = {index[1] + 1, index[2] + 1}
-    end
-    for i = 1, 2 do
-        if ALT[i] then
-            if #altCheckpoints < index[i] then
-                index[i] = races[mActiveRace].altRoute.mergeCheckpoints[2] + ((index[i] - 1) - #altCheckpoints)
-                ALT[i] = false
-            end
-        end
-    end
-    currentExpectedCheckpoint = index[1]
-    --print("Current expected checkpoint: " .. currentExpectedCheckpoint)
-    --print("Index")
-    --printTable(index)
-    --print("ALT")
-    --printTable(ALT)
-    local checkpoint = {}
-    if ALT[1] then
-        checkpoint = altCheckpoints[index[1]]
-    else
-        checkpoint = checkpoints[index[1]]
-    end
-    local nextCheckpoint = nil
-    local checkpointCount = ALT[2] and #altCheckpoints or #checkpoints
-    if checkpointCount > 1 then
-        if ALT[2] then
-            nextCheckpoint = altCheckpoints[index[2]]
-        else
-            nextCheckpoint = checkpoints[index[2]]
-        end
-    end
-
-    if checkpoint then
-        if not checkpoint.marker then
-            checkpoint = createCheckpointMarker(index[1], ALT[1])
-        end
-        if not ALT[1] then
-            checkpoint.marker.instanceColor = ColorF(0, 1, 0, 0.7):asLinear4F() -- Green
-        else
-            checkpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F() -- Blue
-        end
-
-        if races[mActiveRace].altRoute and altCheckpoints and races[mActiveRace].altRoute.mergeCheckpoints[1] == index[1] then
-            if not altCheckpoints[1].marker then
-                local altCheckpoint = createCheckpointMarker(1, true)
-                altCheckpoint.marker.instanceColor = ColorF(0, 0, 1, 0.7):asLinear4F() -- Blue
-            end
-        end
-
-        if nextCheckpoint then
-            if not nextCheckpoint.marker then
-                nextCheckpoint = createCheckpointMarker(index[2], ALT[2])
-            end
-            nextCheckpoint.marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F() -- Red
-        end
-    end
-end
-
-local function removeCheckpoints()
-    --print("Removing all checkpoints and markers")
-
-    -- Function to remove checkpoints from a given list
-    local function removeCheckpointList(checkpointList)
-        if not checkpointList or #checkpointList == 0 then
-            return
-        end
-
-        for i = 1, #checkpointList do
-            local checkpoint = checkpointList[i]
-            if checkpoint then
-                -- Remove the checkpoint object
-                if checkpoint.object then
-                    checkpoint.object:delete()
-                    checkpoint.object = nil
-                end
-
-                -- Remove the checkpoint marker
-                if checkpoint.marker then
-                    checkpoint.marker:delete()
-                    checkpoint.marker = nil
-                end
-            end
-        end
-
-        -- Clear the checkpoint list
-        for i = 1, #checkpointList do
-            checkpointList[i] = nil
-        end
-    end
-
-    -- Remove main checkpoints
-    removeCheckpointList(checkpoints)
-
-    -- Remove alternative checkpoints
-    removeCheckpointList(altCheckpoints)
-
-    -- Reset the checkpoint tables
-    checkpoints = {}
-    altCheckpoints = {}
-    --print("All checkpoints and markers removed")
-end
-
 local function exitRace()
     if mActiveRace then
         setActiveLight(mActiveRace, "red")
         lapCount = 0
         mActiveRace = nil
         timerActive = false
-        mAltRoute = nil
         mHotlap = nil
         currCheckpoint = nil
         mSplitTimes = {}
         Assets:hideAllAssets()
-        removeCheckpoints()
-        checkpoints = {}
+        checkpointManager.removeCheckpoints()
         displayMessage("You exited the race zone, Race cancelled", 3)
         restoreTrafficAmount()
         if gameplay_drift_general.getContext() == "inChallenge" then
@@ -1081,31 +851,6 @@ local function exitRace()
             gameplay_drift_general.reset()
         end
     end
-end
-
-local function exitCheckpoint(data)
-    if be:getPlayerVehicleID(0) ~= data.subjectID then
-        return
-    end
-    if data.event == "enter" then
-        exitRace()
-    end
-end
-
-local function calculateTotalCheckpoints(race)
-    local mainCount = #checkpoints
-    local altCount = altCheckpoints and #altCheckpoints or 0
-    local mergePoints = race.altRoute and race.altRoute.mergeCheckpoints or {0, 0}
-
-    -- If the player is on the alt route, adjust total checkpoints accordingly
-    local total
-    if mAltRoute then
-        total = altCount + (mainCount - mergePoints[2] + mergePoints[1])
-    else
-        total = mainCount
-    end
-
-    return total
 end
 
 local function hasFinishTrigger(race)
@@ -1218,6 +963,7 @@ local function onBeamNGTrigger(data)
                     return
                 end
             end
+            checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
             playCheckpointSound()
             timerActive = false
@@ -1226,11 +972,12 @@ local function onBeamNGTrigger(data)
             currCheckpoint = nil
             mSplitTimes = {}
             mActiveRace = raceName
-            mAltRoute = nil
+            checkpointManager.setAltRoute(false)
+            mAltRoute = false
             in_race_time = 0
             timerActive = true
             checkpointsHit = 0
-            totalCheckpoints = #checkpoints
+            totalCheckpoints = checkpointManager.calculateTotalCheckpoints()
             currentExpectedCheckpoint = 0
             if races[raceName].hotlap then
                 mHotlap = raceName
@@ -1239,6 +986,7 @@ local function onBeamNGTrigger(data)
         elseif event == "enter" and staged == raceName then
             -- Start the race
             saveAndSetTrafficAmount(0)
+            checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
             timerActive = true
             in_race_time = 0
@@ -1260,18 +1008,19 @@ local function onBeamNGTrigger(data)
             if races[raceName].checkpointRoad then
                 -- Clear existing nodes and checkpoints
                 processRoad.reset()
-                checkpoints, altCheckpoints = processRoad.getCheckpoints(races[raceName])
+                local checkpoints, altCheckpoints = processRoad.getCheckpoints(races[raceName])
 
-                createCheckpoints()
+                checkpointManager.createCheckpoints(checkpoints, altCheckpoints)
                 
                 isLoop = processRoad.isLoop()
                 currCheckpoint = 0
                 checkpointsHit = 0
-                totalCheckpoints = calculateTotalCheckpoints(races[raceName])
+                totalCheckpoints = checkpointManager.calculateTotalCheckpoints(races[raceName])
                 currentExpectedCheckpoint = 1
                 mAltRoute = false -- Initialize alt route flag
+                checkpointManager.setAltRoute(mAltRoute)
                 
-                enableCheckpoint(0)
+                checkpointManager.enableCheckpoint(0)
             end
         else
             -- Player is not staged or race is not active
@@ -1291,10 +1040,11 @@ local function onBeamNGTrigger(data)
                     currentExpectedCheckpoint = checkpointIndex
                 end
 
-                enableCheckpoint(currentExpectedCheckpoint, isAlt)
+                checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
                 if isAlt and not mAltRoute then
                     mAltRoute = true
-                    totalCheckpoints = calculateTotalCheckpoints(races[raceName])
+                    checkpointManager.setAltRoute(true)
+                    totalCheckpoints = checkpointManager.calculateTotalCheckpoints(races[raceName])
                 end
 
                 -- Display checkpoint message
@@ -1323,24 +1073,11 @@ local function onBeamNGTrigger(data)
                 end
                 displayMessage(checkpointMessage, 7)
                 activeAssets.displayAssets(data)
-
-                -- Remove the marker for this checkpoint
-                removeCheckpointMarker(checkpointIndex, isAlt)
             else
                 local missedCheckpoints = checkpointIndex - currentExpectedCheckpoint
                 if missedCheckpoints > 0 then
                     -- Mark lap as invalid but continue with correct checkpoints
                     invalidLap = true
-                    
-                    -- Remove all existing checkpoint markers
-                    for i = 1, #checkpoints do
-                        removeCheckpointMarker(i, false)
-                    end
-                    if altCheckpoints then
-                        for i = 1, #altCheckpoints do
-                            removeCheckpointMarker(i, true)
-                        end
-                    end
 
                     -- Update current checkpoint and hit count
                     currCheckpoint = checkpointIndex
@@ -1348,7 +1085,7 @@ local function onBeamNGTrigger(data)
                     checkpointsHit = math.min(checkpointsHit + missedCheckpoints + 1, totalCheckpoints)
                     
                     -- Enable next checkpoint
-                    enableCheckpoint(currentExpectedCheckpoint, isAlt)
+                    checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
                     
                     -- Display message about invalid lap but continuing
                     local message = string.format("Missed a checkpoint\nLap Invalidated.", checkpointIndex)
@@ -1441,15 +1178,11 @@ end
 
 M.displayMessage = displayMessage
 M.onBeamNGTrigger = onBeamNGTrigger
-M.createCheckpoints = createCheckpoints
-M.createCheckpoint = createCheckpoint
-M.removeCheckpoint = removeCheckpoint
 M.onUpdate = onUpdate
 
 M.payoutRace = payoutRace
 M.raceReward = raceReward
 M.isCareerModeActive = isCareerModeActive
-M.exitCheckpoint = exitCheckpoint
 M.saveAndSetTrafficAmount = saveAndSetTrafficAmount
 M.restoreTrafficAmount = restoreTrafficAmount
 M.onPursuitAction = onPursuitAction
