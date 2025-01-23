@@ -7,11 +7,11 @@ local function loadExtensions()
     load("core_recoveryPrompt")
     setExtensionUnloadMode("core_recoveryPrompt", "manual")
 
-    if extensions.isExtensionLoaded("gameplay_events_freeroamEvents") then
-        extensions.unload("gameplay_events_freeroamEvents")
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_init") then
+        extensions.unload("gameplay_events_freeroam_init")
     end
-    load("gameplay_events_freeroamEvents")
-    setExtensionUnloadMode("gameplay_events_freeroamEvents", "manual")
+    load("gameplay_events_freeroam_init")
+    setExtensionUnloadMode("gameplay_events_freeroam_init", "manual")
 
     if extensions.isExtensionLoaded("career_career") then
         extensions.unload("career_career")

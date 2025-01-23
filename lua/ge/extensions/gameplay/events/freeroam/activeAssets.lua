@@ -91,7 +91,7 @@ local function displayAssets(data, activeAssets)
 end
 
 local function onInit()
-    print("Initializing activeAssets extension")
+    print("Initializing Active Assets")
     activeAssets = ActiveAssets.new()
 end
 

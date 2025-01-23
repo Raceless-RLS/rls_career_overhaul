@@ -84,7 +84,7 @@ local function addLeaderboardEntry(entry)
 end
 
 local function onInit()
-    print("Initalizing leaderboard manager")
+    print("Initializing Leaderboard Manager")
     level = getCurrentLevelIdentifier()
     if level then
         loadLeaderboard()

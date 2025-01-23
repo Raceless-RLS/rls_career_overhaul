@@ -701,7 +701,7 @@ local function reset()
 end
 
 local function onInit()
-    print("processRoad onInit")
+    print("Initializing Road Processing")
 end
 
 M.getCheckpoints = getCheckpoints
