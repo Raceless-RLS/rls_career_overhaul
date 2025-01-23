@@ -6,12 +6,14 @@ local M = {}
 
 M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
 
+local parking = require('gameplay/parking')
+
 local minimumVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
 
 local xVec, yVec, zVec = vec3(1,0,0), vec3(0,1,0), vec3(0,0,1)
 
-local saveAnyVehiclePosDEBUG = false
+local saveAnyVehiclePosDEBUG = true
 
 local slotAmount = 5
 
@@ -129,6 +131,13 @@ local function onExtensionLoaded()
         inventoryId = tonumber(inventoryId)
         if not saveAnyVehiclePosDEBUG then
           transform.option = "garage"
+        end
+        -- change pos and rot to closest parking spot
+        local psList = parking.findParkingSpots(vec3(transform.pos))
+        if psList and #psList > 0 then
+          local spot = psList[1].ps
+          transform.pos = spot.pos
+          transform.rot = quat(spot.rot)
         end
         loadedVehiclesLocations[inventoryId] = transform
       end
