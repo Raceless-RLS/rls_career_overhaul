@@ -81,7 +81,8 @@ end
 
 local function restoreTrafficAmount()
     if gameplay_traffic then
-        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount(10) or settings.getValue('trafficAmount')
+        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount(10) or
+                                   settings.getValue('trafficAmount')
         local trafficAmount = settingsAmount or previousTrafficAmount
         local pooledAmount = settings.getValue('trafficExtraAmount') or 0
         gameplay_traffic.setActiveAmount(trafficAmount + pooledAmount, trafficAmount)
@@ -266,10 +267,10 @@ local function printTable(t, indent)
 
     for k, v in pairs(t) do
         if type(v) == "table" then
-            --print(indentStr .. tostring(k) .. ":")
+            -- print(indentStr .. tostring(k) .. ":")
             printTable(v, indent + 1)
         else
-            --print(indentStr .. tostring(k) .. ": " .. tostring(v))
+            -- print(indentStr .. tostring(k) .. ": " .. tostring(v))
         end
     end
 end
@@ -451,11 +452,11 @@ local function payoutRace(data)
     end
     local raceName = getActivityName(data)
     if data.event == "enter" and raceName == mActiveRace then
-    local msg = invalidLap and "Lap Invalidated\n" or ""
-    mActiveRace = nil
+        local msg = invalidLap and "Lap Invalidated\n" or ""
+        mActiveRace = nil
 
         local time = races[raceName].bestTime
-        local reward = races[raceName].reward 
+        local reward = races[raceName].reward
         if mHotlap == raceName then
             time = races[raceName].hotlap
         end
@@ -469,62 +470,57 @@ local function payoutRace(data)
 
         local driftScore = 0
         if races[raceName].driftGoal then
-        driftScore = getDriftScore()
+            driftScore = getDriftScore()
             reward = driftReward(raceName, time, driftScore)
         else
             reward = raceReward(time, reward)
-    end
+        end
 
         local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
-    if mAltRoute then
-        leaderboardEntry = leaderboardEntry.altRoute
-    end
+        if mAltRoute and leaderboardEntry then
+            leaderboardEntry = leaderboardEntry.altRoute
+        end
 
-    local oldTime = leaderboardEntry and leaderboardEntry.time or 0
-    local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
+        local oldTime = leaderboardEntry and leaderboardEntry.time or 0
+        local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
 
-    local newEntry = {
+        local newEntry = {
             raceName = raceName,
-        isAltRoute = mAltRoute,
+            isAltRoute = mAltRoute,
             isHotlap = mHotlap == raceName,
-        time = in_race_time,
-        splitTimes = mSplitTimes,
-        driftScore = driftScore
-    }
+            time = in_race_time,
+            splitTimes = mSplitTimes,
+            driftScore = driftScore
+        }
 
-    local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
+        local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
 
         if not newBest or invalidLap then
             reward = reward / 2
         end
 
-    if not isCareerModeActive() then
-        mActiveRace = nil
-        local message = invalidLap and "Lap Invalidated\n" or ""
-        if newBest and not invalidLap then
-            message = message .. "New Best Time!\n"
-        end
-        
+        if not isCareerModeActive() then
+            mActiveRace = nil
+            local message = invalidLap and "Lap Invalidated\n" or ""
+            if newBest and not invalidLap then
+                message = message .. "New Best Time!\n"
+            end
+
             if races[raceName].hotlap then
-            message = message .. string.format("%s\nTime: %s\nLap: %d", 
-                    races[raceName].label, 
-                formatTime(in_race_time),
-                lapCount
-            )
-        else
-            message = message .. string.format("%s\nTime: %s", 
-                    races[raceName].label, 
-                formatTime(in_race_time)
-            )
+                message = message ..
+                              string.format("%s\nTime: %s\nLap: %d", races[raceName].label, formatTime(in_race_time),
+                        lapCount)
+            else
+                message = message .. string.format("%s\nTime: %s", races[raceName].label, formatTime(in_race_time))
+            end
+
+            if newBest and not invalidLap and oldTime ~= math.huge then
+                message = message .. string.format("\nPrevious Best: %s", formatTime(oldTime))
+            end
+
+            displayMessage(message, 10)
+            return 0
         end
-        
-        if newBest and not invalidLap and oldTime ~= math.huge then
-            message = message .. string.format("\nPrevious Best: %s", formatTime(oldTime))
-        end
-        
-        displayMessage(message, 10)
-        return 0
-    end
         if reward <= 0 then
             return 0
         end
@@ -557,18 +553,18 @@ local function payoutRace(data)
             label = rewardLabel(raceName, newBest),
             tags = {"gameplay", "reward", "mission"}
         }
-        --print("totalReward:")
+        -- print("totalReward:")
         printTable(totalReward)
         career_modules_payment.reward(totalReward, reason)
-    local message = invalidLap and "Lap Invalidated\n" or ""
+        local message = invalidLap and "Lap Invalidated\n" or ""
         if races[raceName].driftGoal then
             message = message .. driftCompletionMessage(oldScore, oldTime, driftScore, in_race_time, reward, xp, data)
-    else
+        else
             message = message .. raceCompletionMessage(newBest, oldTime, reward, xp, data)
-    end
-    ui_message(message, 20, "Reward")
-    
-    career_saveSystem.saveCurrent()
+        end
+        ui_message(message, 20, "Reward")
+
+        career_saveSystem.saveCurrent()
         return reward
     end
 end
@@ -593,7 +589,7 @@ local function payoutDragRace(raceName, finishTime, finishSpeed)
         displayMessage(message, 10)
         return 0
     end
-    
+
     -- Get race data
     local raceData = races[raceName]
     local targetTime = raceData.bestTime
@@ -654,6 +650,9 @@ local function getDifference(raceName, currentCheckpointIndex)
 
     local splitTimes = {}
     if mAltRoute then
+        if not leaderboardEntry.altRoute then
+            return nil
+        end
         if mHotlap == raceName then
             splitTimes = leaderboardEntry.altRoute.hotlapSplitTimes
         else
@@ -685,7 +684,7 @@ local function getDifference(raceName, currentCheckpointIndex)
         if not mSplitTimes[currentCheckpointIndex - 1] or not splitTimes[currentCheckpointIndex - 1] then
             return nil
         end
-        
+
         -- For subsequent checkpoints, compare the differences between splits
         local previousBestSplit = splitTimes[currentCheckpointIndex] - splitTimes[currentCheckpointIndex - 1]
         local currentSplit = mSplitTimes[currentCheckpointIndex] - mSplitTimes[currentCheckpointIndex - 1]
@@ -740,24 +739,25 @@ local function displayStagedMessage(raceName)
     local function addTimeInfo(bestTime, targetTime, reward, label)
         if not bestTime then
             if careerMode then
-                return string.format("%sTarget Time: %s\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)", 
+                return string.format("%sTarget Time: %s\n(Achieve this to earn a reward of $%.2f and 1 Bonus Star)",
                     label, formatTime(targetTime), reward)
             else
                 return string.format("%sTarget Time: %s", label, formatTime(targetTime))
             end
         elseif bestTime > targetTime then
             if careerMode then
-                return string.format("%sYour Best Time: %s | Target Time: %s\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)",
+                return string.format(
+                    "%sYour Best Time: %s | Target Time: %s\n(Achieve target to earn a reward of $%.2f and 1 Bonus Star)",
                     label, formatTime(bestTime), formatTime(targetTime), reward)
             else
-                return string.format("%sYour Best Time: %s | Target Time: %s",
-                    label, formatTime(bestTime), formatTime(targetTime))
+                return string.format("%sYour Best Time: %s | Target Time: %s", label, formatTime(bestTime),
+                    formatTime(targetTime))
             end
         else
             if careerMode then
                 local potentialReward = raceReward(targetTime, reward, bestTime)
-                return string.format("%sYour Best Time: %s\n(Improve to earn at least $%.2f)", 
-                    label, formatTime(bestTime), potentialReward)
+                return string.format("%sYour Best Time: %s\n(Improve to earn at least $%.2f)", label,
+                    formatTime(bestTime), potentialReward)
             else
                 return string.format("%sYour Best Time: %s", label, formatTime(bestTime))
             end
@@ -778,20 +778,22 @@ local function displayStagedMessage(raceName)
                     "Your Best Drift Score: %d | Target Drift Score: %d\nYour Best Time: %s | Target Time: %s\n(Achieve targets to earn a reward of $%.2f and 1 Bonus Star)",
                     bestScore, targetScore, formatTime(bestTime), formatTime(targetTime), race.reward)
             else
-                message = message .. string.format(
-                    "Your Best Drift Score: %d | Target Drift Score: %d\nYour Best Time: %s | Target Time: %s",
-                    bestScore, targetScore, formatTime(bestTime), formatTime(targetTime))
+                message = message ..
+                              string.format(
+                        "Your Best Drift Score: %d | Target Drift Score: %d\nYour Best Time: %s | Target Time: %s",
+                        bestScore, targetScore, formatTime(bestTime), formatTime(targetTime))
             end
         else
             -- No previous best score/time
             if careerMode then
-                message = message .. string.format(
-                    "Target Drift Score: %d\nTarget Time: %s\n(Achieve these to earn a reward of $%.2f and 1 Bonus Star)",
-                    targetScore, formatTime(targetTime), race.reward)
+                message = message ..
+                              string.format(
+                        "Target Drift Score: %d\nTarget Time: %s\n(Achieve these to earn a reward of $%.2f and 1 Bonus Star)",
+                        targetScore, formatTime(targetTime), race.reward)
             else
-                message = message .. string.format(
-                    "Target Drift Score: %d\nTarget Time: %s",
-                    targetScore, formatTime(targetTime))
+                message = message ..
+                              string.format("Target Drift Score: %d\nTarget Time: %s", targetScore,
+                        formatTime(targetTime))
             end
         end
     else
@@ -807,7 +809,8 @@ local function displayStagedMessage(raceName)
         if not times.hotlapTime then
             times.hotlapTime = nil
         end
-        message = message .. "\n\n" .. addTimeInfo(times and times.hotlapTime or nil, race.hotlap, race.reward, "Hotlap: ")
+        message = message .. "\n\n" ..
+                      addTimeInfo(times and times.hotlapTime or nil, race.hotlap, race.reward, "Hotlap: ")
     end
 
     -- Handle alternative route if it exists
@@ -816,12 +819,14 @@ local function displayStagedMessage(raceName)
             times.altRoute = {}
         end
         message = message .. "\n\nAlternative Route:\n"
-        message = message .. addTimeInfo(times and times.altRoute.bestTime or nil, race.altRoute.bestTime, race.altRoute.reward, "")
+        message = message ..
+                      addTimeInfo(times and times.altRoute.bestTime or nil, race.altRoute.bestTime,
+                race.altRoute.reward, "")
 
         if race.altRoute.hotlap then
             message = message .. "\n\n" ..
-                          addTimeInfo(times and times.altRoute.hotlapTime or nil, race.altRoute.hotlap, race.altRoute.reward,
-                    "Alt Route Hotlap: ")
+                          addTimeInfo(times and times.altRoute.hotlapTime or nil, race.altRoute.hotlap,
+                    race.altRoute.reward, "Alt Route Hotlap: ")
         end
     end
 
@@ -877,7 +882,7 @@ local function onBeamNGTrigger(data)
     local triggerType, raceName, rest = triggerName:match("^([^_]+)_([^_]+)(.*)$")
 
     if not triggerType or not raceName then
-        --print("Trigger name doesn't match expected pattern.")
+        -- print("Trigger name doesn't match expected pattern.")
         return
     end
 
@@ -935,7 +940,6 @@ local function onBeamNGTrigger(data)
             Assets:hideAllAssets()
             lapCount = 0
 
-
             -- Initialize displays if drag race
             if raceName == "drag" then
                 initDisplays()
@@ -944,7 +948,7 @@ local function onBeamNGTrigger(data)
 
             -- Set staged race
             staged = raceName
-            --print("Staged race: " .. raceName)
+            -- print("Staged race: " .. raceName)
             displayStagedMessage(raceName)
             setActiveLight(raceName, "yellow")
         elseif event == "exit" then
@@ -952,7 +956,7 @@ local function onBeamNGTrigger(data)
             if not mActiveRace then
                 displayMessage("You exited the staging zone", 4)
                 setActiveLight(raceName, "red")
-        end
+            end
         end
     elseif triggerType == "start" then
         if event == "enter" and mActiveRace == raceName and not hasFinishTrigger(raceName) then
@@ -961,7 +965,7 @@ local function onBeamNGTrigger(data)
                 if not invalidLap then
                     displayMessage("You have not completed all checkpoints!", 5)
                     return
-        end
+                end
             end
             checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
@@ -981,28 +985,29 @@ local function onBeamNGTrigger(data)
             currentExpectedCheckpoint = 0
             if races[raceName].hotlap then
                 mHotlap = raceName
+                currentExpectedCheckpoint = checkpointManager.enableCheckpoint(0)
             end
             invalidLap = false
         elseif event == "enter" and staged == raceName then
             -- Start the race
-                saveAndSetTrafficAmount(0)
+            saveAndSetTrafficAmount(0)
             checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
             timerActive = true
             in_race_time = 0
             mActiveRace = raceName
             lapCount = 0
-            
-                displayMessage(getStartMessage(raceName), 5)
-                setActiveLight(raceName, "green")
-            
+
+            displayMessage(getStartMessage(raceName), 5)
+            setActiveLight(raceName, "green")
+
             -- Handle drift races
             if tableContains(races[raceName].type, "drift") then
                 gameplay_drift_general.setContext("inChallenge")
                 if gameplay_drift_drift then
                     gameplay_drift_drift.setVehId(data.subjectID)
+                end
             end
-        end
 
             -- Initialize checkpoints if applicable
             if races[raceName].checkpointRoad then
@@ -1011,7 +1016,7 @@ local function onBeamNGTrigger(data)
                 local checkpoints, altCheckpoints = processRoad.getCheckpoints(races[raceName])
 
                 checkpointManager.createCheckpoints(checkpoints, altCheckpoints)
-                
+
                 isLoop = processRoad.isLoop()
                 currCheckpoint = 0
                 checkpointsHit = 0
@@ -1019,8 +1024,8 @@ local function onBeamNGTrigger(data)
                 currentExpectedCheckpoint = 1
                 mAltRoute = false -- Initialize alt route flag
                 checkpointManager.setAltRoute(mAltRoute)
-                
-                checkpointManager.enableCheckpoint(0)
+
+                currentExpectedCheckpoint = checkpointManager.enableCheckpoint(0)
             end
         else
             -- Player is not staged or race is not active
@@ -1029,7 +1034,8 @@ local function onBeamNGTrigger(data)
     elseif triggerType == "checkpoint" and checkpointIndex then
         if event == "enter" and mActiveRace == raceName then
             -- Ensure that the checkpoint is the expected one
-            if (checkpointIndex == currentExpectedCheckpoint) or (checkpointIndex == 1 and isAlt) or (currentExpectedCheckpoint == races[raceName].altRoute.mergeCheckpoints[1] and isAlt) then
+            if (checkpointIndex == currentExpectedCheckpoint) or (checkpointIndex == 1 and isAlt) or
+                (currentExpectedCheckpoint == races[raceName].altRoute.mergeCheckpoints[1] and isAlt) then
                 checkpointsHit = checkpointsHit + 1
                 currCheckpoint = checkpointIndex
                 mSplitTimes[checkpointsHit] = in_race_time
@@ -1040,7 +1046,7 @@ local function onBeamNGTrigger(data)
                     currentExpectedCheckpoint = checkpointIndex
                 end
 
-                checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
+                currentExpectedCheckpoint = checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
                 if isAlt and not mAltRoute then
                     mAltRoute = true
                     checkpointManager.setAltRoute(true)
@@ -1054,21 +1060,28 @@ local function onBeamNGTrigger(data)
                     local totalDiff = nil
                     local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
                     if mAltRoute then
-                        totalDiff = in_race_time - (leaderboardEntry.altRoute and leaderboardEntry.altRoute.splitTimes[checkpointsHit] or 0)
-            else
-                        totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
+                        if mHotlap == raceName then
+                            totalDiff = in_race_time -
+                                (leaderboardEntry.altRoute and
+                                    leaderboardEntry.altRoute.hotlapSplitTimes[checkpointsHit] or 0)
+                        else
+                            totalDiff = in_race_time -
+                                (leaderboardEntry.altRoute and
+                                    leaderboardEntry.altRoute.splitTimes[checkpointsHit] or 0)
+                        end
+                    else
+                        if mHotlap == raceName then
+                            totalDiff = in_race_time - (leaderboardEntry.hotlapSplitTimes[checkpointsHit] or 0)
+                        else
+                            totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
+                        end
                     end
-                    
-                    checkpointMessage = string.format("Checkpoint %d/%d - Time: %s\nSplit: %s | Total: %s", 
-                        checkpointsHit,
-                        totalCheckpoints, 
-                        formatTime(in_race_time),
-                        formatSplitDifference(splitDiff),
+
+                    checkpointMessage = string.format("Checkpoint %d/%d - Time: %s\nSplit: %s | Total: %s",
+                        checkpointsHit, totalCheckpoints, formatTime(in_race_time), formatSplitDifference(splitDiff),
                         formatSplitDifference(totalDiff))
                 else
-                    checkpointMessage = string.format("Checkpoint %d/%d - Time: %s", 
-                        checkpointsHit,
-                        totalCheckpoints, 
+                    checkpointMessage = string.format("Checkpoint %d/%d - Time: %s", checkpointsHit, totalCheckpoints,
                         formatTime(in_race_time))
                 end
                 displayMessage(checkpointMessage, 7)
@@ -1083,16 +1096,14 @@ local function onBeamNGTrigger(data)
                     currCheckpoint = checkpointIndex
                     currentExpectedCheckpoint = currentExpectedCheckpoint + missedCheckpoints
                     checkpointsHit = math.min(checkpointsHit + missedCheckpoints + 1, totalCheckpoints)
-                    
+
                     -- Enable next checkpoint
-                    checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
-                    
+                    currentExpectedCheckpoint = checkpointManager.enableCheckpoint(checkpointIndex, isAlt)
+
                     -- Display message about invalid lap but continuing
                     local message = string.format("Missed a checkpoint\nLap Invalidated.", checkpointIndex)
-                    local checkpointMessage = string.format("Checkpoint %d/%d - Time: %s", 
-                    checkpointsHit,
-                    totalCheckpoints, 
-                    formatTime(in_race_time))
+                    local checkpointMessage = string.format("Checkpoint %d/%d - Time: %s", checkpointsHit,
+                        totalCheckpoints, formatTime(in_race_time))
                     message = message .. "\n" .. checkpointMessage
                     displayMessage(message, 10)
                 end
@@ -1116,7 +1127,7 @@ local function onBeamNGTrigger(data)
                 local finalScore = getDriftScore()
                 if gameplay_drift_general.getContext() == "inChallenge" then
                     gameplay_drift_general.setContext("inFreeRoam")
-                    --print("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
+                    -- print("Final Drift Score: " .. tostring(math.floor(finalScore)), 1, "info")
                 end
             end
 
@@ -1124,10 +1135,10 @@ local function onBeamNGTrigger(data)
             mActiveRace = nil
             setActiveLight(raceName, "red")
             restoreTrafficAmount()
-            --displayMessage("Race Finished!", 5)
+            -- displayMessage("Race Finished!", 5)
         end
     else
-        --print("Unknown trigger type: " .. triggerType)
+        -- print("Unknown trigger type: " .. triggerType)
     end
 end
 

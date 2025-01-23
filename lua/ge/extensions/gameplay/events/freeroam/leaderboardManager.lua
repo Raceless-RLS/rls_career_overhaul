@@ -37,7 +37,22 @@ local function isBestTime(entry)
     if not leaderboardEntry then
         return true
     end
-    return entry.time < leaderboardEntry.time
+    local time
+    if entry.isAltRoute then
+        if entry.isHotlap then
+            time = leaderboardEntry.altRoute.hotlapTime
+        else
+            time = leaderboardEntry.altRoute.time
+        end
+    else
+        if entry.isHotlap then
+            time = leaderboardEntry.hotlapTime
+        else
+            time = leaderboardEntry.time
+        end
+    end
+    if time == nil then return true end
+    return entry.time < time
 end
 
 local function addLeaderboardEntry(entry)

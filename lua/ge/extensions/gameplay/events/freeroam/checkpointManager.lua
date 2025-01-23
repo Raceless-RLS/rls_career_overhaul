@@ -254,6 +254,7 @@ local function removeCheckpoints()
     checkpoints = {}
     altCheckpoints = {}
     race = nil
+    mAltRoute = nil
 end
 
 local function calculateTotalCheckpoints()
