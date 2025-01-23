@@ -7,6 +7,9 @@ M.dependencies = {}
 
 local processRoad = require('gameplay/events/freeroam/processRoad')
 local leaderboardManager = require('gameplay/events/freeroam/leaderboardManager')
+local activeAssets = require('gameplay/events/freeroam/activeAssets')
+
+local Assets = activeAssets.ActiveAssets.new()
 
 local checkpointSoundPath = 'art/sound/ui_checkpoint.ogg'
 
@@ -52,12 +55,6 @@ local leftTimeDigits = {}
 local rightTimeDigits = {}
 local leftSpeedDigits = {}
 local rightSpeedDigits = {}
-local maxAssets = 6
-local maxActiveAssets = 2
-local ActiveAssets = {}
-ActiveAssets.__index = ActiveAssets
-
-local maxActiveAssets = 2
 
 local checkpoints = {}
 local altCheckpoints = {}
@@ -67,112 +64,6 @@ local altCheckpoints = {}
 -- The reward is the potential reward for the race.
 -- The label is the name of the race.
 local races = nil
-
-function ActiveAssets.new()
-    local self = setmetatable({}, ActiveAssets)
-    self.assets = {} -- Ensure this is always initialized as an empty table
-    return self
-end
-
-function ActiveAssets:addAssetList(triggerName, newAssets)
-    if not self.assets then
-        self.assets = {} -- Reinitialize if it's somehow nil
-    end
-    -- Create a new asset list for this trigger
-    local assetList = {
-        triggerName = triggerName,
-        assets = newAssets
-    }
-
-    -- Add the new asset list
-    table.insert(self.assets, assetList)
-
-    -- If we exceed maxActiveAssets, remove and hide the oldest asset list
-    if #self.assets > maxActiveAssets then
-        local oldestAssetList = table.remove(self.assets, 1)
-        self:hideAssetList(oldestAssetList)
-    end
-end
-
-function ActiveAssets:hideAssetList(assetList)
-    if assetList and assetList.assets then
-        for _, asset in ipairs(assetList.assets) do
-            if asset then
-                asset:setHidden(true)
-            end
-        end
-    end
-end
-
-function ActiveAssets:hideAllAssets()
-    if not self.assets then
-        --print("Warning: self.assets is nil in hideAllAssets")
-        self.assets = {} -- Reinitialize if it's nil
-        return
-    end
-    for _, assetList in ipairs(self.assets) do
-        self:hideAssetList(assetList)
-    end
-    self.assets = {}
-end
-
-function ActiveAssets:getOldestAssetList()
-    if not self.assets or #self.assets == 0 then
-        return nil
-    end
-    return self.assets[1]
-end
-
--- Create an instance of ActiveAssets
-local activeAssets = ActiveAssets.new()
-
--- Function to display assets
-local function displayAssets(data)
-    --print("displayAssets function called with triggerName: " .. tostring(data.triggerName))
-    local triggerName = data.triggerName
-    local newAssets = {}
-
-    -- Unhide assets and add them to newAssets table
-    for i = 0, maxAssets - 1 do
-        local assetName = triggerName .. "asset" .. i
-        --print("Searching for asset: " .. assetName)
-        local asset = scenetree.findObject(assetName)
-        if asset then
-            --print("Asset found: " .. assetName)
-            asset:setHidden(false)
-            table.insert(newAssets, asset)
-        else
-            --print("Asset not found: " .. assetName)
-            break -- Stop if an asset is not found
-        end
-    end
-
-    -- If no assets were found, return early
-    if #newAssets == 0 then
-        --print("No assets found for triggerName: " .. triggerName)
-        return
-    end
-
-    --print("Number of new assets found: " .. #newAssets)
-
-    -- Add the new asset list to activeAssets
-    --print("Attempting to add new asset list to activeAssets")
-    activeAssets:addAssetList(triggerName, newAssets)
-
-    -- If we have reached the maximum number of active asset lists,
-    -- we might want to do something with the oldest one
-    --print("Number of active asset lists: " .. #activeAssets.assets)
-    if #activeAssets.assets == maxActiveAssets then
-        --print("Maximum number of active asset lists reached")
-        local oldestAssetList = activeAssets:getOldestAssetList()
-        --print("Oldest asset list triggerName: " .. oldestAssetList.triggerName)
-        -- Here you can add code to clear or update the display of the oldest asset list
-        -- For example:
-        -- clearAssetListDisplay(oldestAssetList)
-    end
-
-    --print("displayAssets function completed")
-end
 
 -- Function to check if career mode is active
 local function isCareerModeActive()
@@ -562,8 +453,8 @@ local function payoutRace(data)
     end
     local raceName = getActivityName(data)
     if data.event == "enter" and raceName == mActiveRace then
-        local msg = invalidLap and "Lap Invalidated\n" or ""
-        mActiveRace = nil
+    local msg = invalidLap and "Lap Invalidated\n" or ""
+    mActiveRace = nil
 
         local time = races[raceName].bestTime
         local reward = races[raceName].reward 
@@ -580,62 +471,62 @@ local function payoutRace(data)
 
         local driftScore = 0
         if races[raceName].driftGoal then
-            driftScore = getDriftScore()
+        driftScore = getDriftScore()
             reward = driftReward(raceName, time, driftScore)
         else
             reward = raceReward(time, reward)
-        end
+    end
 
         local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
-        if mAltRoute then
-            leaderboardEntry = leaderboardEntry.altRoute
-        end
+    if mAltRoute then
+        leaderboardEntry = leaderboardEntry.altRoute
+    end
 
-        local oldTime = leaderboardEntry and leaderboardEntry.time or 0
-        local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
+    local oldTime = leaderboardEntry and leaderboardEntry.time or 0
+    local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
 
-        local newEntry = {
+    local newEntry = {
             raceName = raceName,
-            isAltRoute = mAltRoute,
+        isAltRoute = mAltRoute,
             isHotlap = mHotlap == raceName,
-            time = in_race_time,
-            splitTimes = mSplitTimes,
-            driftScore = driftScore
-        }
+        time = in_race_time,
+        splitTimes = mSplitTimes,
+        driftScore = driftScore
+    }
 
-        local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
+    local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
 
         if not newBest or invalidLap then
             reward = reward / 2
         end
 
-        if not isCareerModeActive() then
-            mActiveRace = nil
-            local message = invalidLap and "Lap Invalidated\n" or ""
-            if newBest and not invalidLap then
-                message = message .. "New Best Time!\n"
-            end
-            
-            if races[raceName].hotlap then
-                message = message .. string.format("%s\nTime: %s\nLap: %d", 
-                    races[raceName].label, 
-                    formatTime(in_race_time),
-                    lapCount
-                )
-            else
-                message = message .. string.format("%s\nTime: %s", 
-                    races[raceName].label, 
-                    formatTime(in_race_time)
-                )
-            end
-            
-            if newBest and not invalidLap and oldTime ~= math.huge then
-                message = message .. string.format("\nPrevious Best: %s", formatTime(oldTime))
-            end
-            
-            displayMessage(message, 10)
-            return 0
+    if not isCareerModeActive() then
+        mActiveRace = nil
+        local message = invalidLap and "Lap Invalidated\n" or ""
+        if newBest and not invalidLap then
+            message = message .. "New Best Time!\n"
         end
+        
+            if races[raceName].hotlap then
+            message = message .. string.format("%s\nTime: %s\nLap: %d", 
+                    races[raceName].label, 
+                formatTime(in_race_time),
+                lapCount
+            )
+        else
+            message = message .. string.format("%s\nTime: %s", 
+                    races[raceName].label, 
+                formatTime(in_race_time)
+            )
+        end
+        
+        if newBest and not invalidLap and oldTime ~= math.huge then
+            message = message .. string.format("\nPrevious Best: %s", formatTime(oldTime))
+        end
+        
+        displayMessage(message, 10)
+        return 0
+    end
         if reward <= 0 then
             return 0
         end
@@ -671,15 +562,15 @@ local function payoutRace(data)
         --print("totalReward:")
         printTable(totalReward)
         career_modules_payment.reward(totalReward, reason)
-        local message = invalidLap and "Lap Invalidated\n" or ""
+    local message = invalidLap and "Lap Invalidated\n" or ""
         if races[raceName].driftGoal then
             message = message .. driftCompletionMessage(oldScore, oldTime, driftScore, in_race_time, reward, xp, data)
-        else
+    else
             message = message .. raceCompletionMessage(newBest, oldTime, reward, xp, data)
-        end
-        ui_message(message, 20, "Reward")
-        
-        career_saveSystem.saveCurrent()
+    end
+    ui_message(message, 20, "Reward")
+    
+    career_saveSystem.saveCurrent()
         return reward
     end
 end
@@ -1180,7 +1071,7 @@ local function exitRace()
         mHotlap = nil
         currCheckpoint = nil
         mSplitTimes = {}
-        activeAssets:hideAllAssets()
+        Assets:hideAllAssets()
         removeCheckpoints()
         checkpoints = {}
         displayMessage("You exited the race zone, Race cancelled", 3)
@@ -1296,7 +1187,7 @@ local function onBeamNGTrigger(data)
                     return
                 end
             end
-            activeAssets:hideAllAssets()
+            Assets:hideAllAssets()
             lapCount = 0
 
 
@@ -1327,7 +1218,7 @@ local function onBeamNGTrigger(data)
                     return
                 end
             end
-            displayAssets(data)
+            activeAssets.displayAssets(data, Assets)
             playCheckpointSound()
             timerActive = false
             lapCount = lapCount + 1
@@ -1348,7 +1239,7 @@ local function onBeamNGTrigger(data)
         elseif event == "enter" and staged == raceName then
             -- Start the race
             saveAndSetTrafficAmount(0)
-            displayAssets(data)
+            activeAssets.displayAssets(data, Assets)
             timerActive = true
             in_race_time = 0
             mActiveRace = raceName
@@ -1431,7 +1322,7 @@ local function onBeamNGTrigger(data)
                         formatTime(in_race_time))
                 end
                 displayMessage(checkpointMessage, 7)
-                displayAssets(data)
+                activeAssets.displayAssets(data)
 
                 -- Remove the marker for this checkpoint
                 removeCheckpointMarker(checkpointIndex, isAlt)
@@ -1476,8 +1367,8 @@ local function onBeamNGTrigger(data)
             -- Finish the race
             timerActive = false
             currCheckpoint = nil
-            local reward = payoutRace(data)
-            activeAssets:hideAllAssets()
+            payoutRace(data)
+            Assets:hideAllAssets()
 
             if raceName == "drag" then
                 -- For drag races, update the display

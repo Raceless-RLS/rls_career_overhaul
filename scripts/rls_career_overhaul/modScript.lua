@@ -1,4 +1,10 @@
 local function loadFRE() -- Loads all associated extensions for freeroam events
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_activeAssets") then
+        extensions.unload("gameplay_events_freeroam_activeAssets")
+    end
+    load("gameplay_events_freeroam_activeAssets")
+    setExtensionUnloadMode("gameplay_events_freeroam_activeAssets", "manual")
+
     if extensions.isExtensionLoaded("gameplay_events_freeroam_leaderboardManager") then
         extensions.unload("gameplay_events_freeroam_leaderboardManager")
     end
