@@ -97,7 +97,7 @@ local function payoutRace()
         driftScore = getDriftScore()
         reward = utils.driftReward(mActiveRace, time, driftScore)
     else
-        reward = utils.raceReward(time, reward)
+        reward = utils.raceReward(time, reward, in_race_time)
     end
 
     -- Handle leaderboard
@@ -171,7 +171,7 @@ local function payoutRace()
                 tags = {"gameplay", "reward", "mission"}
             })
             
-            message = message .. string.format("\n\nXP: %d | Reward: $%.2f", xp, reward)
+            message = message .. string.format("\nXP: %d | Reward: $%.2f", xp, reward)
             career_saveSystem.saveCurrent()
         end
     end

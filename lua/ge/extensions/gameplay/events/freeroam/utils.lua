@@ -183,7 +183,7 @@ local function raceReward(goal, reward, time)
     local x = goal
     local y = reward
     local z = time
-    z = z or in_race_time
+    z = z
     if z == 0 then
         return 0
     end
@@ -236,7 +236,7 @@ local function displayStartMessage(raceName)
         message = motivationalMessages[math.random(#motivationalMessages)]
     end
 
-    message = string.format("**%s Event Started!\n%s**", activity.label, message)
+    message = string.format("**%s Event Started!\n%s**", race.label, message)
     displayMessage(message, 5)
 end
 
