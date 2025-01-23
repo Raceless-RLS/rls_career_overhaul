@@ -952,7 +952,7 @@ local function onBeamNGTrigger(data)
             if not mActiveRace then
                 displayMessage("You exited the staging zone", 4)
                 setActiveLight(raceName, "red")
-            end
+        end
         end
     elseif triggerType == "start" then
         if event == "enter" and mActiveRace == raceName and not hasFinishTrigger(raceName) then
@@ -961,7 +961,7 @@ local function onBeamNGTrigger(data)
                 if not invalidLap then
                     displayMessage("You have not completed all checkpoints!", 5)
                     return
-                end
+        end
             end
             checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
@@ -985,7 +985,7 @@ local function onBeamNGTrigger(data)
             invalidLap = false
         elseif event == "enter" and staged == raceName then
             -- Start the race
-            saveAndSetTrafficAmount(0)
+                saveAndSetTrafficAmount(0)
             checkpointManager.setRace(races[raceName], raceName)
             activeAssets.displayAssets(data, Assets)
             timerActive = true
@@ -993,16 +993,16 @@ local function onBeamNGTrigger(data)
             mActiveRace = raceName
             lapCount = 0
             
-            displayMessage(getStartMessage(raceName), 5)
-            setActiveLight(raceName, "green")
+                displayMessage(getStartMessage(raceName), 5)
+                setActiveLight(raceName, "green")
             
             -- Handle drift races
             if tableContains(races[raceName].type, "drift") then
                 gameplay_drift_general.setContext("inChallenge")
                 if gameplay_drift_drift then
                     gameplay_drift_drift.setVehId(data.subjectID)
-                end
             end
+        end
 
             -- Initialize checkpoints if applicable
             if races[raceName].checkpointRoad then
@@ -1055,7 +1055,7 @@ local function onBeamNGTrigger(data)
                     local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
                     if mAltRoute then
                         totalDiff = in_race_time - (leaderboardEntry.altRoute and leaderboardEntry.altRoute.splitTimes[checkpointsHit] or 0)
-                    else
+            else
                         totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
                     end
                     
@@ -1098,7 +1098,7 @@ local function onBeamNGTrigger(data)
                 end
             end
         end
-    
+
     elseif triggerType == "finish" then
         if event == "enter" and mActiveRace == raceName then
             -- Finish the race
@@ -1149,6 +1149,36 @@ local function onWorldReadyState(state)
 end
 
 local function onInit()
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_checkpointManager") then
+        extensions.unload("gameplay_events_freeroam_checkpointManager")
+    end
+    load("gameplay_events_freeroam_checkpointManager")
+    setExtensionUnloadMode("gameplay_events_freeroam_checkpointManager", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_activeAssets") then
+        extensions.unload("gameplay_events_freeroam_activeAssets")
+    end
+    load("gameplay_events_freeroam_activeAssets")
+    setExtensionUnloadMode("gameplay_events_freeroam_activeAssets", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_leaderboardManager") then
+        extensions.unload("gameplay_events_freeroam_leaderboardManager")
+    end
+    load("gameplay_events_freeroam_leaderboardManager")
+    setExtensionUnloadMode("gameplay_events_freeroam_leaderboardManager", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_processRoad") then
+        extensions.unload("gameplay_events_freeroam_processRoad")
+    end
+    load("gameplay_events_freeroam_processRoad")
+    setExtensionUnloadMode("gameplay_events_freeroam_processRoad", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_events_freeroam_triggerManager") then
+        extensions.unload("gameplay_events_freeroam_triggerManager")
+    end
+    load("gameplay_events_freeroam_triggerManager")
+    setExtensionUnloadMode("gameplay_events_freeroam_triggerManager", "manual")
+
     print("freeroamEvents onInit")
     if getCurrentLevelIdentifier() then
         loadRaceData()
