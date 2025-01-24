@@ -135,9 +135,15 @@ local function onExtensionLoaded()
         -- change pos and rot to closest parking spot
         local psList = parking.findParkingSpots(vec3(transform.pos))
         if psList and #psList > 0 then
-          local spot = psList[1].ps
-          transform.pos = spot.pos
-          transform.rot = quat(spot.rot)
+          for _, psData in ipairs(psList) do
+            local spot = psData.ps
+            if not spot.vehicle and not spot:hasAnyVehicles() then
+              transform.pos = spot.pos
+              transform.rot = quat(spot.rot)
+              spot.vehicle = true -- Mark spot as used
+              break
+            end
+          end
         end
         loadedVehiclesLocations[inventoryId] = transform
       end
@@ -499,6 +505,10 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     end
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
+
+    -- Set parking brake
+    vehObj:queueLuaCommand("electrics.set_warn_signal(0) electrics.set_parking_brake(1)")
+
     return vehObj
   end
 end
