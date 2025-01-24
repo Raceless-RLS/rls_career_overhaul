@@ -383,7 +383,7 @@ local function onBeamNGTrigger(data)
     local isAlt = altFlag == "alt" -- TEMP must change to acount for alt routes that intersect with the main route multiple times
 
     if triggerType == "staging" then
-        if event == "enter" then
+        if event == "enter" and mActiveRace == nil then
             if utils.isPlayerInPursuit() then
                 utils.displayMessage("You cannot stage for an event while in a pursuit.", 2)
                 return
