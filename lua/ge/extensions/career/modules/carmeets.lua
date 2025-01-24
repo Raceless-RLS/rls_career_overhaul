@@ -396,6 +396,11 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 if #vehiclesToLeave == 0 and not vehicleDispersed then
                     ui_message("Car meet is over, vehicles starting to leave!", 10, "info", "info")
                     vehiclesToLeave = spawnedMeetVehicles
+                    for _, vehID in ipairs(vehiclesToLeave) do
+                        local veh = be:getObjectByID(vehID)
+                        veh:queueLuaCommand('for k, v in pairs(controller.getControllersByType("advancedCouplerControl")) do v.tryAttachGroupImpulse() end')
+                    end
+                    lastVehicleLeaveTime = currentTime
                 end
                 
                 -- Check if it's time for next vehicle to leave
@@ -403,6 +408,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                     local vehID = table.remove(vehiclesToLeave, 1)
                     local veh = be:getObjectByID(vehID)
                     if veh then
+                        -- Close all latches before leaving
                         veh:queueLuaCommand('ai.setMode("traffic")')
                     end
                     lastVehicleLeaveTime = currentTime
@@ -423,15 +429,16 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 local veh = be:getObjectByID(vehID)
                 if veh then
                     local distance = (playerVeh:getPosition() - veh:getPosition()):length()
+                    print("Vehicle ID: " .. vehID .. " Distance: " .. distance)
                     if distance > MEET_CLEANUP_DISTANCE then
                         table.remove(spawnedMeetVehicles, vehID)
                         gameplay_traffic.removeTraffic(vehID)
-                        local veh = be:getObjectByID(vehID)
                         if veh then
                             veh:delete()
                         end
                     end
                 else
+                    print("Vehicle ID: " .. vehID .. " not found")
                     table.remove(spawnedMeetVehicles, vehID)
                 end
             end
