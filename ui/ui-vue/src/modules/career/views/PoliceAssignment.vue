@@ -34,7 +34,7 @@
 
           <div class="modal-content">
             <p>Are you sure you want to certify your vehicle?</p>
-            <p>This process will take your vehicle for 12 hours and will cost $5,000</p>
+            <p>This process will take your vehicle for 4 hours and will cost $10,000</p>
           </div>
 
           <!-- Two buttons centered -->
