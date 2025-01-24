@@ -25,7 +25,7 @@ local playerHasArrived = false
 local playerSpot = nil
 local MEET_CLEANUP_DISTANCE = 100
 local MEET_LEAVE_TIMER = 60
-local MEET_LEAVE_INTERVAL = 5
+local MEET_LEAVE_INTERVAL = 10
 local meetArrivalTime = nil
 local vehicleDispersed = false
 local lastVehicleLeaveTime = 0
@@ -65,6 +65,8 @@ local function cleanupPreviousMeet()
     activeMeet = nil  -- Clear active meet
     playerHasArrived = false  -- Reset arrival flag
     playerSpot = nil
+    meetArrivalTime = nil
+    lastVehicleLeaveTime = 0
 end
 
 -- Function to get all carmeet configurations
@@ -389,7 +391,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 meetArrivalTime = os.time()
             end
             
-            if os.time() - meetArrivalTime > MEET_LEAVE_TIMER then
+            if os.time() - meetArrivalTime > MEET_LEAVE_TIMER and not gameplay_walk.isWalking() then
                 -- Initialize vehicle departure if not started
                 if #vehiclesToLeave == 0 and not vehicleDispersed then
                     ui_message("Car meet is over, vehicles starting to leave!", 10, "info", "info")

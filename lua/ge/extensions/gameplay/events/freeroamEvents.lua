@@ -335,6 +335,7 @@ local function onBeamNGTrigger(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID then
         return
     end
+    if gameplay_walk.isWalking() then return end
 
     local triggerName = data.triggerName
     local event = data.event
