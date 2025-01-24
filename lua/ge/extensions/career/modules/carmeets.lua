@@ -25,7 +25,7 @@ local playerHasArrived = false
 local playerSpot = nil
 local MEET_CLEANUP_DISTANCE = 100
 local MEET_LEAVE_TIMER = 60
-local MEET_LEAVE_INTERVAL = 10
+local MEET_LEAVE_INTERVAL = 7
 local meetArrivalTime = nil
 local vehicleDispersed = false
 local lastVehicleLeaveTime = 0
@@ -395,7 +395,10 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 -- Initialize vehicle departure if not started
                 if #vehiclesToLeave == 0 and not vehicleDispersed then
                     ui_message("Car meet is over, vehicles starting to leave!", 10, "info", "info")
-                    vehiclesToLeave = spawnedMeetVehicles
+                    vehiclesToLeave = {}
+                    for _, vehID in ipairs(spawnedMeetVehicles) do
+                        table.insert(vehiclesToLeave, vehID)
+                    end
                     for _, vehID in ipairs(vehiclesToLeave) do
                         local veh = be:getObjectByID(vehID)
                         veh:queueLuaCommand('for k, v in pairs(controller.getControllersByType("advancedCouplerControl")) do v.tryAttachGroupImpulse() end')
@@ -425,21 +428,17 @@ local function onUpdate(dtReal, dtSim, dtRaw)
             end
         elseif vehicleDispersed then
             local playerVeh = be:getPlayerVehicle(0)
-            for _, vehID in ipairs(spawnedMeetVehicles) do
+            for i, vehID in ipairs(spawnedMeetVehicles) do
                 local veh = be:getObjectByID(vehID)
                 if veh then
                     local distance = (playerVeh:getPosition() - veh:getPosition()):length()
-                    print("Vehicle ID: " .. vehID .. " Distance: " .. distance)
                     if distance > MEET_CLEANUP_DISTANCE then
-                        table.remove(spawnedMeetVehicles, vehID)
+                        table.remove(spawnedMeetVehicles, i)
                         gameplay_traffic.removeTraffic(vehID)
-                        if veh then
-                            veh:delete()
-                        end
+                        veh:delete()
                     end
                 else
-                    print("Vehicle ID: " .. vehID .. " not found")
-                    table.remove(spawnedMeetVehicles, vehID)
+                    table.remove(spawnedMeetVehicles, i)
                 end
             end
             if #spawnedMeetVehicles == 0 then
