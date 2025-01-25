@@ -424,7 +424,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     if self.jobStartTime then
         local distanceFromDestination = (vehiclePos - self.deliveryLocation.pos):length()
         local velocity = vehicle:getVelocity():length()
-        if distanceFromDestination <= 0.5 and velocity <= 1 then
+        if distanceFromDestination <= 1 and velocity <= 1 then
             local reward = self:calculateReward()
             ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")
             
