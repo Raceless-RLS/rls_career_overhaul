@@ -620,7 +620,9 @@ local function buyFromPurchaseMenu(purchaseType, options)
     end
   end
 
-  career_modules_playerAttributes.addAttributes({money=-purchaseData.prices.customLicensePlate}, {tags={"buying"}, label=string.format("Bought custom license plate for new vehicle")})
+  if options.licensePlateText then
+    career_modules_playerAttributes.addAttributes({money=-purchaseData.prices.customLicensePlate}, {tags={"buying"}, label=string.format("Bought custom license plate for new vehicle")})
+  end
 
   -- remove the vehicle from the shop and update the other vehicles shopIds
   table.remove(vehiclesInShop, purchaseData.vehicleInfo.shopId)

@@ -22,7 +22,7 @@ local max = math.max
 local random = math.random
 
 -- traffic visibility settings --
-local TRAFFIC_VISIBLE_DISTANCE = 145  -- Visible range in meters
+local TRAFFIC_VISIBLE_DISTANCE = 250  -- Visible range in meters
 local TRAFFIC_COLLISION_DISTANCE = 10  -- Collision range in meters
 local lastVisibilityUpdate = 0
 
@@ -201,51 +201,44 @@ local function getNextSpawnPoint(id, spawnData, placeData) -- sets the new spawn
 end
 
 local function updateTrafficVisibility(dt, playerVeh, playerPos)
-  lastVisibilityUpdate = lastVisibilityUpdate + dt
-  if lastVisibilityUpdate < 0.1 then return end
-  
-  lastVisibilityUpdate = 0
-  
-  if not playerVeh then 
-    playerVeh = be:getPlayerVehicle(0)
-    if not playerVeh then return end
-  end
-  
-  local playerPos = playerVeh:getPosition()
-  
-  for id, veh in pairs(traffic) do
+    lastVisibilityUpdate = lastVisibilityUpdate + dt
+    if lastVisibilityUpdate < 0.1 then
+        return
+    end
+
+    lastVisibilityUpdate = 0
+
+    if not playerVeh then
+        playerVeh = be:getPlayerVehicle(0)
+        if not playerVeh then
+            return
+        end
+    end
+
+    local playerPos = playerVeh:getPosition()
+
+    for _, veh in pairs(traffic) do
+      local id = veh.id
       local obj = scenetree.findObjectById(id)
       if obj then
-          local dist = veh.pos:distance(playerPos)
-          
-          -- Manage visibility
-          if dist > TRAFFIC_VISIBLE_DISTANCE then
-              if not veh._wasHidden then
-                  obj:setHidden(true)
-                  veh._wasHidden = true
-              end
-          else
-              if veh._wasHidden then
-                  obj:setHidden(false)
-                  veh._wasHidden = false
-              end
-              
-              -- Manage collision ghosting
-              if dist < TRAFFIC_COLLISION_DISTANCE then
-                  if veh._wasGhosted then
-                      obj:queueLuaCommand("obj:setGhostEnabled(false)")
-                      veh._wasGhosted = false
-                  end
-              else
-                  if not veh._wasGhosted then
-                      obj:queueLuaCommand("obj:setGhostEnabled(true)")
-                      veh._wasGhosted = true
-                  end
-              end
-          end
-      end
-  end
+            local dist = veh.pos:distance(playerPos)
+
+            -- Manage visibility
+            if dist < TRAFFIC_COLLISION_DISTANCE then
+                if veh._wasGhosted then
+                    obj:queueLuaCommand("obj:setGhostEnabled(false)")
+                    veh._wasGhosted = false
+                end
+            else
+                if not veh._wasGhosted then
+                    obj:queueLuaCommand("obj:setGhostEnabled(true)")
+                    veh._wasGhosted = true
+                end
+            end
+        end
+    end
 end
+
 
 local function respawnVehicle(id, pos, rot, strict)
   local obj = id and be:getObjectByID(id)
@@ -259,6 +252,7 @@ local function respawnVehicle(id, pos, rot, strict)
     obj:autoplace(false)
     obj:resetBrokenFlexMesh()
   end
+  obj.renderDistance = TRAFFIC_VISIBLE_DISTANCE
 
   if traffic[id] then
     traffic[id].pos = vec3(pos)

@@ -8,7 +8,7 @@
                   <div class="meet-info">
                       <div class="info-row">
                           <span class="label">Location:</span>
-                          <span class="value">"{{ meetLocation }}"</span>
+                          <span class="value">{{ meetLocation }}</span>
                       </div>
                       <div class="info-row">
                           <span class="label">Meet Type:</span>

@@ -25,7 +25,7 @@ local playerHasArrived = false
 local playerSpot = nil
 local MEET_CLEANUP_DISTANCE = 100
 local MEET_LEAVE_TIMER = 60
-local MEET_LEAVE_INTERVAL = 5
+local MEET_LEAVE_INTERVAL = 7
 local meetArrivalTime = nil
 local vehicleDispersed = false
 local lastVehicleLeaveTime = 0
@@ -65,6 +65,8 @@ local function cleanupPreviousMeet()
     activeMeet = nil  -- Clear active meet
     playerHasArrived = false  -- Reset arrival flag
     playerSpot = nil
+    meetArrivalTime = nil
+    lastVehicleLeaveTime = 0
 end
 
 -- Function to get all carmeet configurations
@@ -72,31 +74,49 @@ local function getCarMeetVehicles()
     local vehicles = {}
     local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
     
-    -- Create a filter for carmeet vehicles
+    -- First get CarmeetRLS configs
     local carmeetFilter = {
         whiteList = {
             ["Config Type"] = {"CarmeetRLS"}
         }
     }
     
-    -- Get random vehicle infos using the carmeet filter
-    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+    local carmeetVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
         {filter = carmeetFilter},
         100,
         eligibleVehicles,
         "Population"
     )
+
+    -- Then get additional custom configs
+    local customFilter = {
+        whiteList = {
+            ["Config Type"] = {"Custom"},
+            ["Body Style"] = {"Sedan", "Hatchback", "SUV", "Coupe"}
+        }
+    }
     
-    -- Store the vehicle infos directly
-    for _, vehicleInfo in ipairs(randomVehicleInfos) do
-        local pcPath = '/vehicles/' .. vehicleInfo.model_key .. '/configurations/' .. vehicleInfo.key .. '.pc'
-        table.insert(vehicles, {
-            model = vehicleInfo.model_key,
-            config = pcPath
-        })
+    local customVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = customFilter},
+        100,
+        eligibleVehicles,
+        "Population"
+    )
+
+    -- Combine both sets of vehicle infos
+    local function addVehicleInfos(vehicleInfos)
+        for _, vehicleInfo in ipairs(vehicleInfos) do
+            local pcPath = '/vehicles/' .. vehicleInfo.model_key .. '/configurations/' .. vehicleInfo.key .. '.pc'
+            table.insert(vehicles, {
+                model = vehicleInfo.model_key,
+                config = pcPath
+            })
+        end
     end
+
+    addVehicleInfos(carmeetVehicleInfos)
+    addVehicleInfos(customVehicleInfos)
     
-    print("Total carmeet configs found: " .. #vehicles)
     return vehicles
 end
 
@@ -389,11 +409,19 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 meetArrivalTime = os.time()
             end
             
-            if os.time() - meetArrivalTime > MEET_LEAVE_TIMER then
+            if os.time() - meetArrivalTime > MEET_LEAVE_TIMER and not gameplay_walk.isWalking() then
                 -- Initialize vehicle departure if not started
                 if #vehiclesToLeave == 0 and not vehicleDispersed then
                     ui_message("Car meet is over, vehicles starting to leave!", 10, "info", "info")
-                    vehiclesToLeave = spawnedMeetVehicles
+                    vehiclesToLeave = {}
+                    for _, vehID in ipairs(spawnedMeetVehicles) do
+                        table.insert(vehiclesToLeave, vehID)
+                    end
+                    for _, vehID in ipairs(vehiclesToLeave) do
+                        local veh = be:getObjectByID(vehID)
+                        veh:queueLuaCommand('for k, v in pairs(controller.getControllersByType("advancedCouplerControl")) do v.tryAttachGroupImpulse() end')
+                    end
+                    lastVehicleLeaveTime = currentTime
                 end
                 
                 -- Check if it's time for next vehicle to leave
@@ -401,6 +429,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                     local vehID = table.remove(vehiclesToLeave, 1)
                     local veh = be:getObjectByID(vehID)
                     if veh then
+                        -- Close all latches before leaving
                         veh:queueLuaCommand('ai.setMode("traffic")')
                     end
                     lastVehicleLeaveTime = currentTime
@@ -417,20 +446,17 @@ local function onUpdate(dtReal, dtSim, dtRaw)
             end
         elseif vehicleDispersed then
             local playerVeh = be:getPlayerVehicle(0)
-            for _, vehID in ipairs(spawnedMeetVehicles) do
+            for i, vehID in ipairs(spawnedMeetVehicles) do
                 local veh = be:getObjectByID(vehID)
                 if veh then
                     local distance = (playerVeh:getPosition() - veh:getPosition()):length()
                     if distance > MEET_CLEANUP_DISTANCE then
-                        table.remove(spawnedMeetVehicles, vehID)
+                        table.remove(spawnedMeetVehicles, i)
                         gameplay_traffic.removeTraffic(vehID)
-                        local veh = be:getObjectByID(vehID)
-                        if veh then
-                            veh:delete()
-                        end
+                        veh:delete()
                     end
                 else
-                    table.remove(spawnedMeetVehicles, vehID)
+                    table.remove(spawnedMeetVehicles, i)
                 end
             end
             if #spawnedMeetVehicles == 0 then

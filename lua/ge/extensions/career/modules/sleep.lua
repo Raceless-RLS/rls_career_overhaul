@@ -47,9 +47,9 @@ end
 
 local function getDayNightCycle()
     if scenetree.tod then
-        return scenetree.tod.play
+        return {play = scenetree.tod.play, time = scenetree.tod.time}
     end
-    return false
+    return {play = false, time = 0}
 end
 
 local function onCareerActive(active)

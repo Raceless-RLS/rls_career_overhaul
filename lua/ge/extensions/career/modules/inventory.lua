@@ -6,12 +6,15 @@ local M = {}
 
 M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
 
+local parking = require('gameplay/parking')
+local freeroam_facilities = require('freeroam/facilities')
+
 local minimumVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
 
 local xVec, yVec, zVec = vec3(1,0,0), vec3(0,1,0), vec3(0,0,1)
 
-local saveAnyVehiclePosDEBUG = false
+local saveAnyVehiclePosDEBUG = true
 
 local slotAmount = 5
 
@@ -33,8 +36,9 @@ local vehicleToEnterId
 local vehiclesMovedToStorage
 local loanedVehicleReturned
 
-local function getClosestGarage(pos)
-  local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
+local function getClosestGarage(pos, levelName)
+  if not levelName then levelName = getCurrentLevelIdentifier() end
+  local facilities = freeroam_facilities.getFacilities(levelName)
   local playerPos = pos or getPlayerVehicle(0):getPosition()
   local closestGarage
   local minDist = math.huge
@@ -47,6 +51,30 @@ local function getClosestGarage(pos)
     end
   end
   return closestGarage
+end
+
+local function getClosestGarageAndSpot(pos, levelName)
+  if not levelName then levelName = getCurrentLevelIdentifier() end
+  local facilities = freeroam_facilities.getFacilities(levelName)
+  local closestGarage
+  local closestSpot
+  local minDist = math.huge
+
+  -- Check each garage
+  for _, garage in ipairs(facilities.garages) do
+    local parkingSpots = freeroam_facilities.getParkingSpotsForFacility(garage)
+    for _, spot in ipairs(parkingSpots) do
+      if not spot.vehicle and not spot:hasAnyVehicles() then
+        local dist = spot.pos:distance(pos)
+        if dist < minDist then
+          minDist = dist
+          closestGarage = garage
+          closestSpot = spot
+        end
+      end
+    end
+  end
+  return closestGarage, closestSpot, minDist
 end
 
 -- Function to parse ISO 8601 date-time string
@@ -107,6 +135,15 @@ local function onExtensionLoaded()
 
   local inventoryData = jsonReadFile(savePath .. "/career/inventory.json")
 
+  local levelName = getCurrentLevelIdentifier()
+
+  if not levelName then
+    local generalSaveInfo = jsonReadFile(savePath .. "/career/general.json")
+    if generalSaveInfo and generalSaveInfo.level then
+      levelName = tostring(generalSaveInfo.level)
+    end
+  end
+
   -- Sell all vehicles when the save version is not the newest one
   if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
     sellAllVehicles = true
@@ -130,6 +167,41 @@ local function onExtensionLoaded()
         if not saveAnyVehiclePosDEBUG then
           transform.option = "garage"
         end
+        -- change pos and rot to closest parking spot
+        local psList = parking.findParkingSpots(vec3(transform.pos))
+        local closestGarage, closestGarageSpot, garageDistance = getClosestGarageAndSpot(transform.pos, levelName)
+        
+        local closestParkingSpot
+        local closestParkingDist = math.huge
+
+        -- Find closest regular parking spot
+        if psList and #psList > 0 then
+          for _, psData in ipairs(psList) do
+            local spot = psData.ps
+            if not spot.vehicle and not spot:hasAnyVehicles() then
+              local dist = spot.pos:distance(transform.pos)
+              if dist < closestParkingDist then
+                closestParkingDist = dist
+                closestParkingSpot = spot
+              end
+            end
+          end
+        end
+
+        -- Compare distances and place vehicle accordingly
+        if closestGarageSpot and garageDistance < closestParkingDist then
+          transform.pos = closestGarageSpot.pos
+          transform.rot = quat(closestGarageSpot.rot)
+          closestGarageSpot.vehicle = true
+          transform.inGarage = true
+          transform.garageId = closestGarage.id
+        elseif closestParkingSpot then
+          transform.pos = closestParkingSpot.pos
+          transform.rot = quat(closestParkingSpot.rot)
+          closestParkingSpot.vehicle = true
+          transform.inGarage = false
+        end
+
         loadedVehiclesLocations[inventoryId] = transform
       end
     else
@@ -490,6 +562,10 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     end
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
+
+    -- Set parking brake
+    vehObj:queueLuaCommand("electrics.set_warn_signal(0) electrics.set_parking_brake(1)")
+
     return vehObj
   end
 end

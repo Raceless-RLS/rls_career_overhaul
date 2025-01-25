@@ -38,23 +38,40 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { BngButton, BngCard } from "@/common/components/base"
+import { ref, watch, onMounted } from 'vue'
+import { BngButton } from "@/common/components/base"
 import ComputerWrapper from "./ComputerWrapper.vue"
 import { useComputerStore } from "../stores/computerStore"
 import { lua } from "@/bridge"
 
 const computerStore = useComputerStore()
 const selectedTime = ref(0)
-const dayNightCycle = ref(true)
+const dayNightCycle = ref(false)
 
-dayNightCycle.value = getDayNightCycle()
-
-function getDayNightCycle() {
-  return lua.career_modules_sleep.getDayNightCycle()
+const getDayNightCycle = async () => {
+  try {
+    const result = await lua.career_modules_sleep.getDayNightCycle()
+    console.log('getDayNightCycle raw result:', result)
+    // Set both the day/night cycle and time
+    dayNightCycle.value = result?.play ?? false
+    selectedTime.value = result?.time ?? 0
+    return result
+  } catch (error) {
+    console.error('Error in getDayNightCycle:', error)
+    return { play: false, time: 0 }
+  }
 }
 
-watch(dayNightCycle, (newValue) => {
+onMounted(async () => {
+  console.log('Component mounted')
+  try {
+    await getDayNightCycle()
+  } catch (error) {
+    console.error('Error in onMounted:', error)
+  }
+})
+
+watch(dayNightCycle, (newValue, oldValue) => {
   lua.career_modules_sleep.toggleDayNightCycle(newValue)
 })
 
