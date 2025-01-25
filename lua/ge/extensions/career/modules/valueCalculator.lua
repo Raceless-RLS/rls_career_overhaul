@@ -121,6 +121,8 @@ local function getPartDifference(originalParts, newParts, changedSlots)
 end
 
 local function getDepreciatedPartValue(value, mileage)
+
+  mileage = mileage and mileage / 1609.344 or 0
   if mileage < 50 then
     return value
   end
@@ -140,7 +142,7 @@ local function getDepreciatedPartValue(value, mileage)
 end
 
 local function getPartValue(part)
-  local mileage   = part.partCondition and part.partCondition.odometer / 1609.344 or 0 -- convert to miles
+  local mileage   = part.partCondition and part.partCondition.odometer or 0 -- convert to miles
   local baseValue = part.value or 0
   
   return getDepreciatedPartValue(baseValue, mileage)
