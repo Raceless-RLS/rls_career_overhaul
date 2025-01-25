@@ -135,7 +135,14 @@ local function onExtensionLoaded()
 
   local inventoryData = jsonReadFile(savePath .. "/career/inventory.json")
 
-  local generalSaveInfo = jsonReadFile(savePath .. "/career/general.json")
+  local levelName = getCurrentLevelIdentifier()
+
+  if not levelName then
+    local generalSaveInfo = jsonReadFile(savePath .. "/career/general.json")
+    if generalSaveInfo and generalSaveInfo.level then
+      levelName = tostring(generalSaveInfo.level)
+    end
+  end
 
   -- Sell all vehicles when the save version is not the newest one
   if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
@@ -162,7 +169,6 @@ local function onExtensionLoaded()
         end
         -- change pos and rot to closest parking spot
         local psList = parking.findParkingSpots(vec3(transform.pos))
-        local levelName = tostring(generalSaveInfo.level)
         local closestGarage, closestGarageSpot, garageDistance = getClosestGarageAndSpot(transform.pos, levelName)
         
         local closestParkingSpot
