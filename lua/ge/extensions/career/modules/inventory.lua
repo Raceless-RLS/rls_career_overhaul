@@ -35,20 +35,27 @@ local vehicleToEnterId
 local vehiclesMovedToStorage
 local loanedVehicleReturned
 
-local function getClosestGarage(pos)
+local function getClosestGarageAndSpot(pos)
   local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
-  local playerPos = pos or getPlayerVehicle(0):getPosition()
   local closestGarage
+  local closestSpot
   local minDist = math.huge
+
+  -- Check each garage
   for _, garage in ipairs(facilities.garages) do
-    local zones = freeroam_facilities.getZonesForFacility(garage)
-    local dist = zones[1].center:distance(playerPos)
-    if dist < minDist then
-      closestGarage = garage
-      minDist = dist
+    local parkingSpots = freeroam_facilities.getParkingSpotsForFacility(garage)
+    for _, spot in ipairs(parkingSpots) do
+      if not spot.vehicle and not spot:hasAnyVehicles() then
+        local dist = spot.pos:distance(pos)
+        if dist < minDist then
+          minDist = dist
+          closestGarage = garage
+          closestSpot = spot
+        end
+      end
     end
   end
-  return closestGarage
+  return closestGarage, closestSpot, minDist
 end
 
 -- Function to parse ISO 8601 date-time string
@@ -134,17 +141,39 @@ local function onExtensionLoaded()
         end
         -- change pos and rot to closest parking spot
         local psList = parking.findParkingSpots(vec3(transform.pos))
+        local closestGarage, closestGarageSpot, garageDistance = getClosestGarageAndSpot(transform.pos)
+        
+        local closestParkingSpot
+        local closestParkingDist = math.huge
+
+        -- Find closest regular parking spot
         if psList and #psList > 0 then
           for _, psData in ipairs(psList) do
             local spot = psData.ps
             if not spot.vehicle and not spot:hasAnyVehicles() then
-              transform.pos = spot.pos
-              transform.rot = quat(spot.rot)
-              spot.vehicle = true -- Mark spot as used
-              break
+              local dist = spot.pos:distance(transform.pos)
+              if dist < closestParkingDist then
+                closestParkingDist = dist
+                closestParkingSpot = spot
+              end
             end
           end
         end
+
+        -- Compare distances and place vehicle accordingly
+        if closestGarageSpot and garageDistance < closestParkingDist then
+          transform.pos = closestGarageSpot.pos
+          transform.rot = quat(closestGarageSpot.rot)
+          closestGarageSpot.vehicle = true
+          transform.inGarage = true
+          transform.garageId = closestGarage.id
+        elseif closestParkingSpot then
+          transform.pos = closestParkingSpot.pos
+          transform.rot = quat(closestParkingSpot.rot)
+          closestParkingSpot.vehicle = true
+          transform.inGarage = false
+        end
+
         loadedVehiclesLocations[inventoryId] = transform
       end
     else
