@@ -7,6 +7,7 @@ local M = {}
 M.dependencies = {'career_career', "career_modules_log", "render_renderViews", "util_screenshotCreator"}
 
 local parking = require('gameplay/parking')
+local freeroam_facilities = require('freeroam/facilities')
 
 local minimumVersion = 42
 local defaultVehicle = {model = "covet", config = "DXi_M"}
@@ -35,8 +36,26 @@ local vehicleToEnterId
 local vehiclesMovedToStorage
 local loanedVehicleReturned
 
-local function getClosestGarageAndSpot(pos)
-  local facilities = freeroam_facilities.getFacilities(getCurrentLevelIdentifier())
+local function getClosestGarage(pos, levelName)
+  if not levelName then levelName = getCurrentLevelIdentifier() end
+  local facilities = freeroam_facilities.getFacilities(levelName)
+  local playerPos = pos or getPlayerVehicle(0):getPosition()
+  local closestGarage
+  local minDist = math.huge
+  for _, garage in ipairs(facilities.garages) do
+    local zones = freeroam_facilities.getZonesForFacility(garage)
+    local dist = zones[1].center:distance(playerPos)
+    if dist < minDist then
+      closestGarage = garage
+      minDist = dist
+    end
+  end
+  return closestGarage
+end
+
+local function getClosestGarageAndSpot(pos, levelName)
+  if not levelName then levelName = getCurrentLevelIdentifier() end
+  local facilities = freeroam_facilities.getFacilities(levelName)
   local closestGarage
   local closestSpot
   local minDist = math.huge
@@ -116,6 +135,8 @@ local function onExtensionLoaded()
 
   local inventoryData = jsonReadFile(savePath .. "/career/inventory.json")
 
+  local generalSaveInfo = jsonReadFile(savePath .. "/career/general.json")
+
   -- Sell all vehicles when the save version is not the newest one
   if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
     sellAllVehicles = true
@@ -141,7 +162,8 @@ local function onExtensionLoaded()
         end
         -- change pos and rot to closest parking spot
         local psList = parking.findParkingSpots(vec3(transform.pos))
-        local closestGarage, closestGarageSpot, garageDistance = getClosestGarageAndSpot(transform.pos)
+        local levelName = tostring(generalSaveInfo.level)
+        local closestGarage, closestGarageSpot, garageDistance = getClosestGarageAndSpot(transform.pos, levelName)
         
         local closestParkingSpot
         local closestParkingDist = math.huge
