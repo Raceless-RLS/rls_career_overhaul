@@ -384,7 +384,9 @@ end
 local function loadRaceData()
     local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
     local raceData = jsonReadFile(level)
-    races = raceData.races or {}
+    if raceData then
+        races = raceData.races or {}
+    end
     return races
 end
 

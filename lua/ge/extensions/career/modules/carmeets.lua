@@ -74,31 +74,49 @@ local function getCarMeetVehicles()
     local vehicles = {}
     local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
     
-    -- Create a filter for carmeet vehicles
+    -- First get CarmeetRLS configs
     local carmeetFilter = {
         whiteList = {
             ["Config Type"] = {"CarmeetRLS"}
         }
     }
     
-    -- Get random vehicle infos using the carmeet filter
-    local randomVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+    local carmeetVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
         {filter = carmeetFilter},
         100,
         eligibleVehicles,
         "Population"
     )
+
+    -- Then get additional custom configs
+    local customFilter = {
+        whiteList = {
+            ["Config Type"] = {"Custom"},
+            ["Body Style"] = {"Sedan", "Hatchback", "SUV", "Coupe"}
+        }
+    }
     
-    -- Store the vehicle infos directly
-    for _, vehicleInfo in ipairs(randomVehicleInfos) do
-        local pcPath = '/vehicles/' .. vehicleInfo.model_key .. '/configurations/' .. vehicleInfo.key .. '.pc'
-        table.insert(vehicles, {
-            model = vehicleInfo.model_key,
-            config = pcPath
-        })
+    local customVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = customFilter},
+        100,
+        eligibleVehicles,
+        "Population"
+    )
+
+    -- Combine both sets of vehicle infos
+    local function addVehicleInfos(vehicleInfos)
+        for _, vehicleInfo in ipairs(vehicleInfos) do
+            local pcPath = '/vehicles/' .. vehicleInfo.model_key .. '/configurations/' .. vehicleInfo.key .. '.pc'
+            table.insert(vehicles, {
+                model = vehicleInfo.model_key,
+                config = pcPath
+            })
+        end
     end
+
+    addVehicleInfos(carmeetVehicleInfos)
+    addVehicleInfos(customVehicleInfos)
     
-    print("Total carmeet configs found: " .. #vehicles)
     return vehicles
 end
 
