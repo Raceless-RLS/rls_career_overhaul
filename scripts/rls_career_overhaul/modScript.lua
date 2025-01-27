@@ -13,6 +13,12 @@ local function loadExtensions()
     load("gameplay_events_freeroam_init")
     setExtensionUnloadMode("gameplay_events_freeroam_init", "manual")
 
+    if extensions.isExtensionLoaded("career_saveSystem") then
+        extensions.unload("career_saveSystem")
+    end
+    load("career_saveSystem")
+    setExtensionUnloadMode("career_saveSystem", "manual")
+
     if extensions.isExtensionLoaded("career_career") then
         extensions.unload("career_career")
     end

@@ -37,7 +37,7 @@ local vehiclesMovedToStorage
 local loanedVehicleReturned
 
 local function getClosestGarage(pos, levelName)
-  if not levelName then levelName = getCurrentLevelIdentifier() end
+  levelName = levelName or getCurrentLevelIdentifier()
   local facilities = freeroam_facilities.getFacilities(levelName)
   local playerPos = pos or getPlayerVehicle(0):getPosition()
   local closestGarage
@@ -54,7 +54,7 @@ local function getClosestGarage(pos, levelName)
 end
 
 local function getClosestGarageAndSpot(pos, levelName)
-  if not levelName then levelName = getCurrentLevelIdentifier() end
+  levelName = levelName or getCurrentLevelIdentifier()
   local facilities = freeroam_facilities.getFacilities(levelName)
   local closestGarage
   local closestSpot
@@ -615,7 +615,13 @@ local function enterVehicle(newInventoryId, loadOption, callback)
 end
 
 local saveCareer
-local function setupInventory()
+local function setupInventory(levelPath)
+  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+  local data = jsonReadFile(savePath .. "/info.json")
+  local generalData = jsonReadFile(savePath .. "/career/general.json")
+  local levelName = generalData and generalData.level or getCurrentLevelIdentifier()
+  local justSwitched = generalData and generalData.justSwitched or false
+
   if career_modules_linearTutorial.getLinearStep() == -1 then
     if loadedVehiclesLocations then
       local vehiclesToTeleportToGarage = {}
@@ -630,7 +636,15 @@ local function setupInventory()
           else
             local veh = spawnVehicle(inventoryId)
             if veh then
-              if location.option == "garage" then
+              local levelGate
+              if justSwitched then
+                levelGate = scenetree.findObject("Level Gate")
+                if levelGate then
+                  location.pos = levelGate:getPosition()
+                  location.rot = levelGate:getRotation()
+                end
+              end
+              if not levelGate and location.option == "garage" then
                 location.vehId = veh:getID()
                 vehiclesToTeleportToGarage[inventoryId] = location
               end
@@ -661,8 +675,6 @@ local function setupInventory()
     end
   end
 
-  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-  local data = jsonReadFile(savePath .. "/info.json")
   if not data then
     -- this means this is a new career save
     saveCareer = 0
@@ -671,8 +683,13 @@ local function setupInventory()
       -- default placement is in front of the dealership, facing it
       --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
       --gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
-      freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
-      career_modules_extraSaveData.addPurchasedGarage("chinatownGarage")
+      if levelName == "west_coast_usa" then
+        freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+        career_modules_extraSaveData.addPurchasedGarage("chinatownGarage")
+      elseif levelName == "italy" then
+        freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+        career_modules_extraSaveData.addPurchasedGarage("carlinoGarage")
+      end
     else
       -- spawn the tutorial vehicle
       local model, config = "covet","vehicles/covet/covet_tutorial.pc"
@@ -690,10 +707,14 @@ local function setupInventory()
     end
   else
     if gameplay_walk.isWalking() then
-      if unicycleSavedPosition then
+      if unicycleSavedPosition and not justSwitched then
         spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
       else
-        freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+        if levelName == "west_coast_usa" then
+          freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+        elseif levelName == "italy" then
+          freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+        end
       end
     end
   end
@@ -721,7 +742,8 @@ local function onCareerModulesActivated(alreadyInLevel)
 end
 
 local function onClientStartMission(levelPath)
-  setupInventory()
+  --setupInventory(levelPath)
+  return
 end
 
 local function setPartConditionResetSnapshot(veh, callback)
@@ -1362,6 +1384,14 @@ end
 local function getDirtiedVehicles()
   return dirtiedVehicles
 end
+
+local function onWorldReadyState(state)
+  if state == 2 and career_career.isActive() then
+    setupInventory()
+  end
+end
+
+M.onWorldReadyState = onWorldReadyState
 
 M.addVehicle = addVehicle
 M.removeVehicle = removeVehicle
