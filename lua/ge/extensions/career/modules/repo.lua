@@ -148,8 +148,21 @@ end
 
 -- Find available parking spots
 function VehicleRepoJob:findParkingSpots()
-    self.parkingSpots = parking.getParkingSpots()
+    -- Get fresh sites data for current level
+    local sitePath = gameplay_sites_sitesManager.getCurrentLevelSitesFileByName('city')
+    if sitePath then
+        local siteData = gameplay_sites_sitesManager.loadSites(sitePath, true, true) -- force reload
+        self.parkingSpots = siteData and siteData.parkingSpots
+    end
+    
+    -- Fallback to parking module if no sites data
+    if not self.parkingSpots then
+        self.parkingSpots = parking.getParkingSpots()
+        log("W", "repo", "Using parking module fallback for spots")
+    end
+
     if not self.parkingSpots or not self.parkingSpots.objects then
+        log("E", "repo", "No parking spots found!")
         return
     end
 end

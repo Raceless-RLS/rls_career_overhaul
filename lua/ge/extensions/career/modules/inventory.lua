@@ -1391,6 +1391,32 @@ local function onWorldReadyState(state)
   end
 end
 
+local function calculateSeatingCapacity(inventoryId)
+  if not inventoryId then inventoryId = currentVehicle end
+  local veh = vehicles[inventoryId]
+  if not veh then return 0 end
+  local partData = veh.config.parts
+  local seatingCapacity = 0
+  for partName, part in pairs(partData) do
+    -- Check if the part is a seat
+    if partName:find("seat") and not partName:find("cargo") then
+      if part:find("seat") and not part:find("cargo") and not part:find("captains") then
+        local seatSize = partName:find("seats") and 3 or (partName:find("ext") or partName:find("1R")) and 2 or 1
+        seatSize = partName:find("ext") and part:find("alt") and 3 or seatSize
+        if part:find("citybus_seats") then
+          seatSize = 44
+        end
+        print("Part Name: " .. partName)
+        print("Part: " .. part)
+        print("Seat Size: " .. seatSize)
+        seatingCapacity = seatingCapacity + seatSize
+      end
+    end
+  end
+  return seatingCapacity
+end
+
+M.calculateSeatingCapacity = calculateSeatingCapacity
 M.onWorldReadyState = onWorldReadyState
 
 M.addVehicle = addVehicle
