@@ -242,7 +242,20 @@ export default [
         path: "carMeets",
         name: "carMeets",
         component: views.CarMeets
-      }
+      },
+
+      {
+        path: "phone-minimap",
+        name: "phone-minimap",
+        component: views.PhoneMinimap
+      },
+
+      {
+        path: "phone-main",
+        name: "phone-main",
+        component: views.PhoneMain
+      },
+
     ],
   },
 ]
