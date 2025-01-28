@@ -7,6 +7,18 @@ local function loadExtensions()
     load("core_recoveryPrompt")
     setExtensionUnloadMode("core_recoveryPrompt", "manual")
 
+    if extensions.isExtensionLoaded("gameplay_traffic") then
+        extensions.unload("gameplay_traffic")
+    end
+    load("gameplay_traffic")
+    setExtensionUnloadMode("gameplay_traffic", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_traffic_vehicle") then
+        extensions.unload("gameplay_traffic_vehicle")
+    end
+    load("gameplay_traffic_vehicle")
+    setExtensionUnloadMode("gameplay_traffic_vehicle", "manual")
+
     if extensions.isExtensionLoaded("gameplay_events_freeroam_init") then
         extensions.unload("gameplay_events_freeroam_init")
     end
