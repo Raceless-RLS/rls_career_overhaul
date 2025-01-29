@@ -241,6 +241,14 @@ function TaxiJob:update(dt)
     end
 end
 
+function M.showPhone()
+    guihooks.trigger('ChangeState', {state = 'phone-main'})
+end
+
+function M.showPhoneMinimap()
+    guihooks.trigger('ChangeState', {state = 'phone-minimap'})
+end
+
 local Job = nil
 
 local function getTaxiJob()
