@@ -3,6 +3,7 @@ M.dependencies = { 'career_career', 'career_saveSystem', 'freeroam_facilities' }
 
 local purchasedGarages = {}
 local discoveredGarages = {}
+local garageToPurchase = nil
 local saveFile = "purchasedGarages.json"
 
 local function savePurchasedGarages(currentSavePath)
@@ -113,12 +114,68 @@ local function onCareerModulesActivated()
   loadPurchasedGarages()
 end
 
+local function showPurchaseGaragePrompt(garageId)
+  if not career_career.isActive() then return end
+  garageToPurchase = freeroam_facilities.getFacility("garage", garageId)
+  guihooks.trigger('ChangeState', {state = 'purchase-garage'})
+end
+
+local function requestGarageData()
+  local garage = garageToPurchase
+  if garage then
+    if translateLanguage(garage.name, garage.name, true) then
+      garage.name = translateLanguage(garage.name, garage.name, true)
+    end
+    local garageData = {
+      name = garage.name,
+      price = garage.defaultPrice,
+      capacity = garage.capacity
+    }
+    return garageData
+  end
+  return nil
+end
+
+local function canPay()
+  if not garageToPurchase then return false end
+  price = { money = { amount = garageToPurchase.defaultPrice, canBeNegative = false } }
+  for currency, info in pairs(price) do
+    if not info.canBeNegative and career_modules_playerAttributes.getAttributeValue(currency) < info.amount then
+      return false
+    end
+  end
+  return true
+end
+
+local function buyGarage()
+  if garageToPurchase then
+    local price = garageToPurchase.defaultPrice
+    price = { money = { amount = price, canBeNegative = false } }
+    local success = career_modules_payment.pay(price, { label = "Purchased " .. garageToPurchase.name })
+    if success then
+      addPurchasedGarage(garageToPurchase.id)
+    end
+    garageToPurchase = nil
+  end
+end
+
+local function cancelGaragePurchase()
+  guihooks.trigger('ChangeState', {state = 'play'})
+  garageToPurchase = nil
+end
+
 local function onUpdate()
   if not career_career.isActive() then return end
   if purchasedGarages == {} or purchasedGarages == nil then
     purchaseDefaultGarage()
   end
 end
+
+M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
+M.requestGarageData = requestGarageData
+M.canPay = canPay
+M.buyGarage = buyGarage
+M.cancelGaragePurchase = cancelGaragePurchase
 
 M.getTotalGarageCapacity = getTotalGarageCapacity
 M.onCareerModulesActivated = onCareerModulesActivated
