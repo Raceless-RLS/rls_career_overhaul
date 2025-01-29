@@ -842,12 +842,13 @@ export default {
     closeAllMenus: () => {},
     toggleDayNightCycle: toggle => Boolean,
     sleep: time => Number,
-    getDayNightCycle: () => {},
+    getDayNightCycle: () => {}
   },
 
-  career_modules_assignPolice: {
+  career_modules_assignRole: {
     canPay: () => {},
     startCertification: () => {},
+    requestAssignmentData: () => {}
   },
 
   career_modules_carmeets: {
@@ -856,6 +857,12 @@ export default {
     closeMenu: () => {},
     openMenu: () => {},
     checkAvailableMeets: () => {}
-  }
+  },
 
+  career_modules_extraSaveData: {
+    requestGarageData: () => {},
+    canPay: () => {},
+    buyGarage: () => {},
+    cancelGaragePurchase: () => {}
+  }
 }

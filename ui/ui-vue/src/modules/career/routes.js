@@ -233,9 +233,9 @@ export default [
 
       // Police Assignment
       {
-        path: "policeAssignment",
-        name: "policeAssignment",
-        component: views.PoliceAssignment
+        path: "roleAssignment",
+        name: "roleAssignment",
+        component: views.RoleAssignment
       },
 
       {
@@ -255,6 +255,12 @@ export default [
         name: "phone-main",
         component: views.PhoneMain
       },
+
+      {
+        path: "purchase-garage",
+        name: "purchase-garage",
+        component: views.PurchaseGarage
+      }
 
     ],
   },

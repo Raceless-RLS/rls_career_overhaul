@@ -1,14 +1,14 @@
 <template>
-  <LayoutSingle class="police-layout">
+  <LayoutSingle class="assignment-layout">
     <!-- CERTIFICATION CARD -->
     <BngCard
       v-if="!showConfirmModal"
       class="certification-card"
     >
-      <BngCardHeading>Certify Your Vehicle For Police Work</BngCardHeading>
+      <BngCardHeading>Certify Your Vehicle For {{ type }} Work</BngCardHeading>
 
       <div class="certification-info">
-        <p>The certification process takes 4 hours and will cost $10,000</p>
+        <p>The certification process takes {{ convertTime(time) }} and will cost ${{ cost }}</p>
       </div>
 
       <!-- Button in the bottom-right, no separate footer slot -->
@@ -34,7 +34,7 @@
 
           <div class="modal-content">
             <p>Are you sure you want to certify your vehicle?</p>
-            <p>This process will take your vehicle for 4 hours and will cost $10,000</p>
+            <p>This process will take your vehicle for {{ convertTime(time) }} and will cost ${{ cost }}</p>
           </div>
 
           <!-- Two buttons centered -->
@@ -61,7 +61,7 @@
 
 <script setup>
 import { lua } from '@/bridge'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import {
   BngButton,
   ACCENTS,
@@ -74,8 +74,34 @@ import { LayoutSingle } from '@/common/layouts'
 const showConfirmModal = ref(false)
 const yesButton = ref(null)
 
+const time = ref(0)
+const cost = ref(0)
+const type = ref('')
+
+onMounted(async () => {
+  const assignmentData = await lua.career_modules_assignRole.requestAssignmentData()
+  if (assignmentData) {
+    time.value = assignmentData.time
+    cost.value = assignmentData.cost
+    type.value = assignmentData.type
+  }
+})
+
+function convertTime(time) {
+  const hours = ~~(time / 3600)
+  const minutes = ~~((time % 3600) / 60)
+  const seconds = ~~(time % 60)
+  
+  const parts = []
+  if (hours > 0) parts.push(`${hours}hrs`)
+  if (minutes > 0) parts.push(`${minutes}min`)
+  if (seconds > 0 || parts.length === 0) parts.push(`${seconds}sec`) // Always show at least seconds
+
+  return parts.join(' ')
+}
+
 function canPay() {
-  return lua.career_modules_assignPolice.canPay()
+  return lua.career_modules_assignRole.canPay()
 }
 
 function goToPlayState() {
@@ -92,7 +118,7 @@ function showConfirmation() {
 
 function confirmCertification() {
   showConfirmModal.value = false
-  lua.career_modules_assignPolice.startCertification()
+  lua.career_modules_assignRole.startCertification()
 }
 
 function cancelConfirmation() {
@@ -102,7 +128,7 @@ function cancelConfirmation() {
 </script>
 
 <style scoped lang="scss">
-.police-layout {
+.assignment-layout {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +171,7 @@ function cancelConfirmation() {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 100; /* ensure it’s above everything else */
+  z-index: 100; /* ensure it's above everything else */
 }
 
 .confirmation-card {
