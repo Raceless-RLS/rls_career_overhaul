@@ -26,9 +26,11 @@
 </template>
 
 <script setup>
+import { useEvents } from '@/services/events'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { BngCard } from "@/common/components/base"
 import { vBngBlur } from "@/common/directives"
+import { lua } from "@/bridge"
 
 const props = defineProps({
   scale: {
@@ -49,37 +51,36 @@ const props = defineProps({
   }
 })
 
+const events = useEvents()
 const timeString = ref('')
-let timeInterval
 
-const updateTime = () => {
-  timeString.value = new Date().toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+const updateTime = (data) => {
+  if (data) {
+    timeString.value = data
+  }
 }
 
 onMounted(() => {
-  updateTime()
-  timeInterval = setInterval(updateTime, 1000)
+  lua.extensions.load("ui_phone_time")
+  events.on("phone_time_update", data => updateTime(data))
+  events.on("closePhone", close)
+  lua.extensions.ui_phone_time.requestTimeUpdate()
 })
 
 onUnmounted(() => {
-  clearInterval(timeInterval)
 })
 
-// Expose toggle methods if needed
-defineExpose({
-  toggleVisibility: () => {
-    // Implementation would depend on your state management
-  }
-})
+const close = () => {
+  lua.extensions.unload("ui_phone_time")
+  lua.career_career.closeAllMenus()
+}
+
 </script>
 
 <style scoped lang="scss">
 .phone-wrapper {
   position: fixed;
-  bottom: -2em;
+  bottom: -1.25em;
   right: 2em;
   z-index: 1000;
   transform: scale(var(--scale));

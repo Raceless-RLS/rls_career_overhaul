@@ -31,6 +31,12 @@ local function loadExtensions()
     extensions.load("career_career")
     setExtensionUnloadMode("career_career", "manual")
 
+    if extensions.isExtensionLoaded("gameplay_phone") then
+        extensions.unload("gameplay_phone")
+    end
+    extensions.load("gameplay_phone")
+    setExtensionUnloadMode("gameplay_phone", "manual")
+
     if extensions.isExtensionLoaded("UIloader") then
         extensions.unload("UIloader")
     end

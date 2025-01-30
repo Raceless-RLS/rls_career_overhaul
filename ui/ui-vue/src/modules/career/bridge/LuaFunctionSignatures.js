@@ -864,5 +864,9 @@ export default {
     canPay: () => {},
     buyGarage: () => {},
     cancelGaragePurchase: () => {}
+  },
+
+  ui_phone_time: {
+    requestTimeUpdate: () => {},
   }
 }

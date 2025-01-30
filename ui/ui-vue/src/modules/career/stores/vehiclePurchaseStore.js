@@ -87,8 +87,8 @@ export const useVehiclePurchaseStore = defineStore("vehiclePurchase", () => {
     lua.career_modules_vehicleShopping.buyFromPurchaseMenu(purchaseType.value, options)
   }
 
-  function getInventory() {
-    return lua.career_modules_inventory.getVehicles()
+  async function getInventory() {
+    return await lua.career_modules_inventory.getVehicles()
   }
 
   function chooseTradeInVehicle() {
