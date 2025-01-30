@@ -146,7 +146,10 @@ function TaxiJob:generateJob()
     self:calculateCapacity(be:getPlayerVehicle(0):getID())
     local passengerCount = self:calculatePassengerCount()
 
-    local baseFare = self:generateFareMultiplier() * 100 * passengerCount
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicle(0):getID())
+    local valueMultiplier = (career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) / 30000) ^ 0.5
+
+    local baseFare = self:generateFareMultiplier() * 100 * (passengerCount ^ 0.75) * valueMultiplier
     
     -- Create fare details
     local fare = {
@@ -156,7 +159,7 @@ function TaxiJob:generateJob()
         passengers = passengerCount
     }
 
-    local basePayment = baseFare * passengerCount * distanceMultiplier * 1000
+    local basePayment = baseFare * distanceMultiplier * 1000
 
     ui_message(string.format("New job: %d passengers waiting! Base fare per km: $%.2f", passengerCount, basePayment), 5, "info")
 
