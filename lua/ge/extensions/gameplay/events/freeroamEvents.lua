@@ -651,6 +651,46 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     end
 end
 
+local function formatEventPoi(raceName, race)
+    local startObj = scenetree.findObject("fre_start_" .. raceName)
+    local pos = startObj and startObj:getPosition() or nil
+    
+    if not pos then return nil end
+
+    local levelIdentifier = getCurrentLevelIdentifier()
+    local preview = "/levels/" .. levelIdentifier .. "/facilities/freeroamEvents/" .. raceName .. ".jpg"
+
+    return {
+        id = raceName,
+        data = {
+            type = "events",
+            facility = {}
+        },
+        markerInfo = {
+            bigmapMarker = {
+                pos = pos,
+                icon = "mission_cup_triangle",
+                name = race.label,
+                description = utils.displayStagedMessage(raceName, true),
+                previews = {preview},
+                thumbnail = preview
+            }
+        }
+    }
+end
+
+function M.onGetRawPoiListForLevel(levelIdentifier, elements)
+    if not races then
+        return
+    end
+    for raceName, race in pairs(races) do
+        local poi = formatEventPoi(raceName, race)
+        if poi then
+            table.insert(elements, poi)
+        end
+    end
+end
+
 M.onBeamNGTrigger = onBeamNGTrigger
 M.onUpdate = onUpdate
 
