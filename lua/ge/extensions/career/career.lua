@@ -13,7 +13,7 @@ M.tutorialEnabled = false
 local careerModuleDirectory = '/lua/ge/extensions/career/modules/'
 local saveFile = "general.json"
 local levelName = "west_coast_usa"
-local defaultLevel = path.getPathLevelMain("west_coast_usa")
+local defaultLevel = path.getPathLevelMain(levelName)
 local autosaveEnabled = true
 
 local careerActive = false
@@ -21,6 +21,7 @@ local careerModules = {}
 local debugActive = true
 local boughtStarterVehicle
 local organizationInteraction = {}
+local switchLevel = nil
 
 local devActions = {"dropPlayerAtCameraNoReset"}
 local nodegrabberActions = {"nodegrabberGrab", "nodegrabberRender", "nodegrabberStrength", "nodegrabberAction"}
@@ -308,6 +309,10 @@ local function onSaveCurrentSaveSlot(currentSavePath)
   local data = {}
 
   data.level = getCurrentLevelIdentifier()
+  if switchLevel then
+    data.level = switchLevel
+    data.justSwitched = true
+  end
   data.boughtStarterVehicle = boughtStarterVehicle
   data.debugModuleOpenStates = {}
   data.organizationInteraction = organizationInteraction or {}
@@ -361,9 +366,21 @@ end
 local function formatSaveSlotForUi(saveSlot)
   local data = {}
   data.id = saveSlot
+  
+  -- Add preview image based on level
+  local levelPreviewMap = {
+    west_coast_usa = "/ui/modules/career/profilePreview_WCUSA.jpg",
+    italy = "/ui/modules/career/profilePreview_Italy.jpg",
+  }
 
+  -- Get level from save data
   local autosavePath = career_saveSystem.getAutosave(career_saveSystem.getSaveRootDirectory() .. saveSlot)
   local infoData = jsonReadFile(autosavePath .. "/info.json")
+  local careerData = jsonReadFile(autosavePath .. "/career/" .. saveFile)
+  
+  if careerData and careerData.level then
+    data.preview = levelPreviewMap[careerData.level] or levelPreviewMap.west_coast_usa
+  end
 
   local currentSaveSlot, _ = career_saveSystem.getCurrentSaveSlot()
   if career_career.isActive() and currentSaveSlot == saveSlot then
@@ -466,6 +483,13 @@ local function getAutosavesForSaveSlot(saveSlot)
   return res
 end
 
+local function switchCareerLevel(nextLevel)
+  if not nextLevel or nextLevel == getCurrentLevelIdentifier() then return end
+
+  switchLevel = nextLevel
+  career_saveSystem.saveCurrent()
+end
+
 local function onClientEndMission(levelPath)
   if not careerActive then return end
   local levelNameToLoad = path.levelFromPath(levelPath)
@@ -566,6 +590,27 @@ local function getAdditionalMenuButtons()
   end
   return ret
 end
+
+local function onWorldReadyState(state)
+  if state == 2 and switchLevel then
+    if not careerActive then
+      activateCareer()
+    end
+    switchLevel = nil
+  end
+end
+
+local function onSaveFinished()
+  if switchLevel then
+    deactivateCareer()
+    spawn.preventPlayerSpawning = true
+    activateCareer()
+  end
+end
+
+M.onSaveFinished = onSaveFinished
+M.switchCareerLevel = switchCareerLevel
+M.onWorldReadyState = onWorldReadyState
 
 M.getAdditionalMenuButtons = getAdditionalMenuButtons
 

@@ -438,7 +438,7 @@ local function onBeamNGTrigger(data)
                 end
             end
             checkpointManager.setRace(races[raceName], raceName)
-            activeAssets.displayAssets(data, Assets)
+            Assets:displayAssets(data)
             utils.playCheckpointSound()
             timerActive = false
             lapCount = lapCount + 1
@@ -462,7 +462,7 @@ local function onBeamNGTrigger(data)
             -- Start the race
             utils.saveAndSetTrafficAmount(0)
             checkpointManager.setRace(races[raceName], raceName)
-            activeAssets.displayAssets(data, Assets)
+            Assets:displayAssets(data)
             timerActive = true
             in_race_time = 0
             mActiveRace = raceName
@@ -474,6 +474,7 @@ local function onBeamNGTrigger(data)
             -- Handle drift races
             if utils.tableContains(races[raceName].type, "drift") then
                 gameplay_drift_general.setContext("inChallenge")
+                gameplay_drift_general.reset()
                 if gameplay_drift_drift then
                     gameplay_drift_drift.setVehId(data.subjectID)
                 end
@@ -555,7 +556,7 @@ local function onBeamNGTrigger(data)
                         utils.formatTime(in_race_time))
                 end
                 utils.displayMessage(checkpointMessage, 7)
-                activeAssets.displayAssets(data)
+                Assets:displayAssets(data)
             else
                 local missedCheckpoints = checkpointIndex - currentExpectedCheckpoint
                 if missedCheckpoints > 0 then
@@ -647,6 +648,46 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         in_race_time = in_race_time + dtSim
     else
         in_race_time = 0
+    end
+end
+
+local function formatEventPoi(raceName, race)
+    local startObj = scenetree.findObject("fre_start_" .. raceName)
+    local pos = startObj and startObj:getPosition() or nil
+    
+    if not pos then return nil end
+
+    local levelIdentifier = getCurrentLevelIdentifier()
+    local preview = "/levels/" .. levelIdentifier .. "/facilities/freeroamEvents/" .. raceName .. ".jpg"
+
+    return {
+        id = raceName,
+        data = {
+            type = "events",
+            facility = {}
+        },
+        markerInfo = {
+            bigmapMarker = {
+                pos = pos,
+                icon = "mission_cup_triangle",
+                name = race.label,
+                description = utils.displayStagedMessage(raceName, true),
+                previews = {preview},
+                thumbnail = preview
+            }
+        }
+    }
+end
+
+function M.onGetRawPoiListForLevel(levelIdentifier, elements)
+    if not races then
+        return
+    end
+    for raceName, race in pairs(races) do
+        local poi = formatEventPoi(raceName, race)
+        if poi then
+            table.insert(elements, poi)
+        end
     end
 end
 

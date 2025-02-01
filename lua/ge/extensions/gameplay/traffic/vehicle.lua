@@ -787,7 +787,7 @@ function C:onUpdate(dt, dtSim)
       if self.state == 'fadeOut' or self.state == 'fadeIn' then
         if self.state == 'fadeIn' then
           if self.respawnSpeed then
-            -- obj:queueLuaCommand('thrusters.applyVelocity(obj:getDirectionVector() * '..(self.respawnSpeed * self.alpha)..')') -- makes vehicle start at speed
+            be:getObjectByID(self.id):queueLuaCommand('thrusters.applyVelocity(obj:getDirectionVector() * '..(self.respawnSpeed * self.alpha)..')') -- makes vehicle start at speed
           end
           if self.damage >= 1000 and self.respawnActive and self.alpha > 0 then
             log('W', logTag, string.format('Traffic vehicle with id [%d] respawned with big damage! (%.1f, %.1f, %.1f)', self.id, self.pos.x, self.pos.y, self.pos.z))

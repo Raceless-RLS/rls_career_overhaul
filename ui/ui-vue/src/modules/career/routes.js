@@ -233,16 +233,47 @@ export default [
 
       // Police Assignment
       {
-        path: "policeAssignment",
-        name: "policeAssignment",
-        component: views.PoliceAssignment
+        path: "roleAssignment",
+        name: "roleAssignment",
+        component: views.RoleAssignment
       },
 
       {
         path: "carMeets",
         name: "carMeets",
         component: views.CarMeets
-      }
+      },
+
+      {
+        path: "purchase-garage",
+        name: "purchase-garage",
+        component: views.PurchaseGarage
+      },
+
+      {
+        path: "phone-minimap",
+        name: "phone-minimap",
+        component: views.PhoneMinimap
+      },
+
+      {
+        path: "phone-main",
+        name: "phone-main",
+        component: views.PhoneMain
+      },
+
+      {
+        path: "car-meets-phone",
+        name: "car-meets-phone",
+        component: views.CarMeetsPhone
+      },
+
+      {
+        path: "phone-taxi",
+        name: "phone-taxi",
+        component: views.PhoneTaxi
+      },
+
     ],
   },
 ]

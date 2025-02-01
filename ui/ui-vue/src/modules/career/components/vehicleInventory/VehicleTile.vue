@@ -135,7 +135,7 @@ const locked = computed(() => {
       res = { reason: "Being repaired", eta, location: "Repair Shop" }
     } else if (props.data.delayReason === "rented") {
       res = { reason: "Rented Out", eta, location: "Movie Studio" }
-    } else if (props.data.delayReason === "certification") {
+    } else if (props.data.delayReason === "Police_certification") {
       res = { reason: "Certifying", eta, location: "Police Station" }
     } else {
       res = { reason: "Available in", eta }

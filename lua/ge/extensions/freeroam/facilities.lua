@@ -463,10 +463,14 @@ local function onActivityAcceptGatherData(elemData, activityData)
             valueLabel = prop.valueLabel,
           })
         end
-        data.buttonLabel = "Use Computer"
+        data.buttonLabel = career_modules_extraSaveData.isPurchasedGarage(elem.facility.garageId) and "Use Computer" or "Purchase Garage"
         data.buttonFun = function()
           if career_career.isActive() then
-            career_modules_computer.openMenu(elem.facility, true)
+            if not career_modules_extraSaveData.isPurchasedGarage(elem.facility.garageId) then
+              career_modules_extraSaveData.showPurchaseGaragePrompt(elem.facility.garageId)
+            else
+              career_modules_computer.openMenu(elem.facility, false)
+            end
           end
         end
         table.insert(activityData, data)

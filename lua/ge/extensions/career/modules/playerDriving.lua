@@ -6,7 +6,7 @@ local M = {}
 
 M.dependencies = {'career_career', 'career_modules_repo'}
 
-local repo = require('career.modules.repo')
+local repo = require('career/modules/repo')
 
 local playerData = {trafficActive = 0} -- traffic data, parking data, etc.
 local testTrafficAmounts = {traffic = 1, police = 0, parkedCars = 1, active = 1} -- amounts to use if restrict mode is true

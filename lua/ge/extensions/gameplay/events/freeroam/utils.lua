@@ -240,12 +240,15 @@ local function displayStartMessage(raceName)
     displayMessage(message, 5)
 end
 
-local function displayStagedMessage(raceName)
+local function displayStagedMessage(raceName, getMessage)
     local race = races[raceName]
     local times = leaderboardManager.getLeaderboardEntry(raceName) or {}
     local careerMode = career_career.isActive()
 
-    local message = string.format("Staged for %s.\n", race.label)
+    local message = ""
+    if not getMessage then
+        message = string.format("Staged for %s.\n", race.label)
+    end
 
     local function addTimeInfo(bestTime, targetTime, reward, label)
         if not bestTime then
@@ -346,7 +349,11 @@ local function displayStagedMessage(raceName)
         message = message .. "\n\n**Note: All rewards are cut by 50% if they are below your best time.**"
     end
 
-    displayMessage(message, 15)
+    if not getMessage then
+        displayMessage(message, 15)
+        return
+    end
+    return message
 end
 
 local function setActiveLight(event, color)

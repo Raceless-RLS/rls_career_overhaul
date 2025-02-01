@@ -61,12 +61,10 @@ function ActiveAssets:getOldestAssetList()
     return self.assets[1]
 end
 
--- Function to display assets
-local function displayAssets(data, activeAssets)
+function ActiveAssets:displayAssets(data)
     local triggerName = data.triggerName
     local newAssets = {}
 
-    -- Unhide assets and add them to newAssets table
     for i = 0, maxAssets - 1 do
         local assetName = triggerName .. "asset" .. i
         local asset = scenetree.findObject(assetName)
@@ -82,22 +80,19 @@ local function displayAssets(data, activeAssets)
         return
     end
 
-    activeAssets:addAssetList(triggerName, newAssets)
+    self:addAssetList(triggerName, newAssets)
 
-    if #activeAssets.assets == maxActiveAssets then
-        local oldestAssetList = activeAssets:getOldestAssetList()
+    if #self.assets == maxActiveAssets then
+        local oldestAssetList = self:getOldestAssetList()
     end
-
 end
 
 local function onInit()
     print("Initializing Active Assets")
-    activeAssets = ActiveAssets.new()
 end
 
 
 M.onInit = onInit
-M.displayAssets = displayAssets
 M.ActiveAssets = ActiveAssets
 
 return M

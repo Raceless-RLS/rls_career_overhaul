@@ -204,16 +204,7 @@ function C:clearObjects()
 end
 
 function C:interactInPlayMode(interactData, interactableElements)
-  if interactData.canInteract and self.anyOverlap then
-      local garageId = self.cluster.garageId
-      if garageId then
-        if career_career.isActive() then
-          if not career_modules_extraSaveData.isPurchasedGarage(garageId) then
-          -- Don't add interaction elements if garage isn't purchased
-          return
-          end
-        end
-      end
+  if interactData.canInteract and self.anyOverlap then      
     for _, elem in ipairs(self.cluster.elemData) do
       table.insert(interactableElements, elem)
     end
