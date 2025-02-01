@@ -283,17 +283,11 @@ local function completeRide()
     })
 end
 
-local function setAvailable()
-    state = "ready"
-    jobOfferTimer = 0
-    jobOfferInterval = math.random(5, 45)
-    dataToSend = {}
-end
-
 local function rejectJob()
     state = "ready"
     currentFare = nil
     core_groundMarkers.resetAll()
+    fareStreak = 0
     jobOfferTimer = 0
     jobOfferInterval = math.random(5, 45)
     dataToSend = {}
@@ -306,6 +300,7 @@ local function stopTaxiJob()
     jobOfferTimer = 0
     jobOfferInterval = math.random(5, 45)
     cumulativeReward = 0
+    fareStreak = 0
     dataToSend = {}
 end
 
@@ -389,17 +384,6 @@ local function prepareTaxiJob()
     }
 end
 
-M.acceptJob = startRide
-M.rejectJob = rejectJob
-
-function M.setAvailable()
-    setAvailable()
-end
-
-function M.stopTaxiJob()
-    stopTaxiJob()
-end
-
 local function getTaxiJob()
     prepareTaxiJob()
     if not currentFare then
@@ -420,8 +404,12 @@ local function requestTaxiState()
     guihooks.trigger('updateTaxiState', dataToSend)
 end
 
-M.onUpdate = function(dt)
-    update(dt)
+local function setAvailable()
+    state = "ready"
+    jobOfferTimer = 0
+    jobOfferInterval = math.random(5, 45)
+    dataToSend = {}
+    requestTaxiState()
 end
 
 function M.onVehicleSwitched()
@@ -444,6 +432,13 @@ function M.onVehicleSwitched()
         guihooks.trigger('updateTaxiState', dataToSend)
     end
 end
+
+M.onUpdate = update
+
+M.acceptJob = startRide
+M.rejectJob = rejectJob
+M.setAvailable = setAvailable
+M.stopTaxiJob = stopTaxiJob
 
 M.requestTaxiState = requestTaxiState
 M.generateJob = generateJob
