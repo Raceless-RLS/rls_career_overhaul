@@ -1397,18 +1397,29 @@ local function calculateSeatingCapacity(inventoryId)
   if not veh then return 0 end
   local partData = veh.config.parts
   local seatingCapacity = 0
+
+  local rearSeats = {}
+
   for partName, part in pairs(partData) do
     -- Check if the part is a seat
     if partName:find("seat") and not partName:find("cargo") then
       if part:find("seat") and not part:find("cargo") and not part:find("captains") then
-        local seatSize = partName:find("seats") and 3 or (partName:find("ext") or partName:find("1R")) and 2 or 1
-        seatSize = partName:find("ext") and part:find("alt") and 3 or seatSize
+        local seatSize = nil
+        if partName:find("seats") then
+          seatSize = 3
+        elseif partName:find("ext") then
+          seatSize = 2
+        else
+          local found = partName:match("(%d+)R")
+          if found then
+            seatSize = 2
+          else
+            seatSize = 1
+          end
+        end
         if part:find("citybus_seats") then
           seatSize = 44
         end
-        print("Part Name: " .. partName)
-        print("Part: " .. part)
-        print("Seat Size: " .. seatSize)
         seatingCapacity = seatingCapacity + seatSize
       end
     end
