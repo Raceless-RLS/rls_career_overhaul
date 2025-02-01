@@ -8,7 +8,11 @@ local function togglePhone()
         guihooks.trigger('closePhone')
     else
         isPhoneOpen = true
-        guihooks.trigger('ChangeState', {state = 'phone-main'})
+        if career_modules_taxi.isTaxiJobActive() then
+            guihooks.trigger('ChangeState', {state = 'phone-taxi'})
+        else
+            guihooks.trigger('ChangeState', {state = 'phone-main'})
+        end
     end
 end
 
@@ -19,5 +23,8 @@ end
 
 M.onExtensionLoaded = onExtensionLoaded
 M.togglePhone = togglePhone
+M.isPhoneOpen = function()
+    return isPhoneOpen
+end
 
 return M

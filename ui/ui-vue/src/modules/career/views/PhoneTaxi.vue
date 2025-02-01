@@ -8,7 +8,7 @@
             </div>
 
             <!-- Reward Bubble -->
-            <div class="reward-bubble" v-if="currentState === 'ready' || currentState === 'complete'">
+            <div class="reward-bubble" v-if="currentState !== 'start'">
                 ${{ formatCurrency(totalReward) }}
             </div>
 
@@ -24,7 +24,7 @@
                         {{ vehicleMultiplier }}
                     </span>
                 </div>
-                <button class="state-button" @click.stop="setState('start')">
+                <button class="state-button" @click.stop="setState('ready')">
                     Drive Now
                 </button>
             </div>
@@ -40,10 +40,39 @@
                         <BngIcon class="app-icon" :type="icons.carUp" />
                         {{ vehicleMultiplier }}
                     </span>
+                    <span class="rider-info">
+                        <BngIcon class="app-icon" :type="icons.sync" />
+                        {{ fareStreak }}
+                    </span>
                 </div>
-                <button class="state-button stop" @click.stop="setState('start')">
+                <button class="state-button stop" @click.stop="setState('reject')">
                     Stop Driving
                 </button>
+            </div>
+
+            <!-- Pickup/Dropoff State -->
+            <div class="bottom-panel" v-if="currentState === 'pickup' || currentState === 'dropoff'">
+                <div class="rider-details">
+                    <span class="rider-type">Standard</span> <span class="rider-info">★ {{ riderRating }}</span>
+                </div>
+                <div class="ride-status">
+                    {{ currentState === 'pickup' ? 'Picking up' : 'Dropping off' }} {{ riderCount }} passengers
+                </div>
+                <div class="fare-display small">${{ formatCurrency(farePerKm) }}/km</div>
+                <div class="rider-details center">
+                    <span class="rider-info">
+                        <BngIcon class="app-icon" :type="icons.person" />
+                        {{ riderCount }}/{{ currentCapacity }}
+                    </span>
+                    <span class="rider-info">
+                        <BngIcon class="app-icon" :type="icons.carUp" />
+                        {{ vehicleMultiplier }}
+                    </span>
+                    <span class="rider-info">
+                        <BngIcon class="app-icon" :type="icons.sync" />
+                        {{ fareStreak }}
+                    </span>
+                </div>
             </div>
 
             <!-- Accept Rider State -->
@@ -61,6 +90,10 @@
                         {{ riderCount }}
                     </span>
                     <span class="rider-info">★ {{ riderRating }}</span>
+                    <span class="rider-info">
+                        <BngIcon class="app-icon" :type="icons.sync" />
+                        {{ fareStreak }}
+                    </span>
                 </div>
                 <button class="state-button" @click.stop="setState('working')">
                     Accept
@@ -78,6 +111,10 @@
                             {{ riderCount }}
                         </span>
                         <span class="rider-info">★ {{ riderRating }}</span>
+                        <span class="rider-info">
+                            <BngIcon class="app-icon" :type="icons.sync" />
+                            {{ fareStreak }}
+                        </span>
                     </div>
                     <div class="rider-details center">
                         <span class="rider-info">
@@ -114,23 +151,25 @@ const store = useMinimapStore()
 const container = ref(null)
 
 // State management
-const currentState = ref('start')
+const currentState = ref('ready')
 const totalReward = ref(0)
-const currentCapacity = ref(2)
-const farePerKm = ref(4.5)
-const totalFare = ref(425)
+const fareStreak = ref(0)
 
+// Fare
+const currentFare = ref({})
+const farePerKm = ref(0)
+const distanceTraveled = ref(0)
+const totalFare = ref(0)
+const timeMultiplier = ref(0)
 
-const distanceTraveled = ref(2.25)
-// Multipliers
-const vehicleMultiplier = ref(1.5)
-const timeMultiplier = ref(1.15)
+// Vehicle Specific
+const vehicleMultiplier = ref(0)
+const currentCapacity = ref(0)
+
 // Rider Details
 const riderType = ref('Standard')
-const riderCount = ref(3)
-const riderRating = ref(4.8)
-
-const currentFare = ref({})
+const riderCount = ref(0)
+const riderRating = ref(0)
 
 const formatCurrency = (value) => {
     if (value >= 1e6) {
@@ -147,7 +186,7 @@ const formatCurrency = (value) => {
 const setState = (newState) => {
     currentState.value = newState
     if (newState === 'start') {
-        lua.career_modules_taxi.getTaxiJob()
+        lua.career_modules_taxi.prepareTaxiJob()
         totalReward.value = 0
     }
     if (newState === 'reject') {
@@ -156,12 +195,11 @@ const setState = (newState) => {
     }
     if (newState === 'ready') {
         lua.career_modules_taxi.setAvailable()
-
+        //lua.career_modules_taxi.getTaxiJob()
     }
     if (newState === 'working') {
-        lua.career_modules_taxi.acceptJob(currentFare.value)
-        lua.core_groundMarkers.setPath(currentFare.value.pickup.pos)
-        currentState.value = 'ready'
+        lua.career_modules_taxi.acceptJob()
+        currentState.value = 'pickup'
 
     }
 }
@@ -172,6 +210,17 @@ const handleBackgroundClick = () => {
     }
 }
 
+const handleFare = () => {
+    if (!currentFare.value) return
+    
+    farePerKm.value = Number(currentFare.value.baseFare ?? 0)
+    riderCount.value = Number(currentFare.value.passengers ?? 0)
+    riderRating.value = Number(currentFare.value.passengerRating ?? 0)
+    totalFare.value = Number(currentFare.value.totalFare ?? 0)
+    distanceTraveled.value = Number(currentFare.value.totalDistance ?? 0)
+    timeMultiplier.value = Number(currentFare.value.timeMultiplier ?? 1)
+}
+
 onMounted(async () => {
     store.init()
     const terrainLayer = container.value.querySelector('.terrain-layer')
@@ -179,25 +228,22 @@ onMounted(async () => {
     terrainLayer.appendChild(store.svgLayers.terrain)
     vehicleLayer.appendChild(store.svgLayers.vehicles)
 
-    const data = await lua.career_modules_taxi.prepareTaxiJob()
+    const data = await lua.career_modules_taxi.requestTaxiState()
     if (data) {
-        currentCapacity.value = data.seats
-        vehicleMultiplier.value = data.multiplier
+        currentCapacity.value = data.availableSeats
+        vehicleMultiplier.value = data.vehicleMultiplier
+        currentState.value = data.state
+        currentFare.value = data.currentFare
+        handleFare()
     }
-    events.on('sendTaxiOffer', (fare) => {
-        currentFare.value = fare
-        farePerKm.value = fare.baseFare
-        riderRating.value = fare.passengerRating
-        riderCount.value = fare.passengers
-        setState('accept')
-        console.log('sendTaxiOffer')
-    })
-    events.on('completeTaxiJob', (fare) => {
-        totalFare.value = fare.totalFare
-        distanceTraveled.value = fare.totalDistance
-        timeMultiplier.value = fare.timeMultiplier
-        setState('complete')
-        console.log('completeTaxiJob')
+    events.on('updateTaxiState', (state) => {
+        currentState.value = state.state
+        currentFare.value = state.currentFare
+        currentCapacity.value = state.availableSeats
+        vehicleMultiplier.value = state.vehicleMultiplier
+        totalReward.value = state.cumulativeReward,
+        fareStreak.value = state.fareStreak
+        handleFare()
     })
 })
 
@@ -218,7 +264,6 @@ onMounted(async () => {
     height: 100%;
     background: rgba(40, 40, 40, 0.9);
 }
-
 
 .minimap-layer {
     position: absolute;
@@ -281,19 +326,32 @@ onMounted(async () => {
     justify-content: space-between;
     align-items: center;
     font-family: 'Overpass', sans-serif;
-
-    .rider-type {
-        font-size: 1em;
-        background: rgb(196, 205, 230);
-        color: rgb(0, 0, 0);
-        padding: 0.25rem 0.5rem 0.15rem 0.5rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        align-items: center;
-        justify-content: center;
-    }
-
 }
+
+.rider-type {
+    font-size: 1em;
+    background: rgb(196, 205, 230);
+    color: rgb(0, 0, 0);
+    padding: 0.25rem 0.5rem 0.15rem 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+}
+
+.ride-status {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #010101;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-family: 'Overpass', sans-serif;
+
+    &.center {
+        text-align: center;
+    }
+}
+
 
 .fare-display {
     font-size: 1.8em;
@@ -304,6 +362,10 @@ onMounted(async () => {
 
     &.center {
         text-align: center;
+    }
+
+    &.small {
+        font-size: 1.2em;
     }
 }
 
@@ -320,7 +382,7 @@ onMounted(async () => {
         color: rgb(0, 0, 0);
         padding: 0.1rem 0.5rem 0.05rem 0.5rem;
         border-radius: 0.5rem;
-        gap: 0rem;
+        gap: 0.5rem;
     }
 
     &.center {
