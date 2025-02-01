@@ -281,19 +281,17 @@ local function completeRide()
         label = label,
         tags = {"transport", "taxi"}
     })
-
-    currentFare = nil
 end
 
 local function setAvailable()
     state = "ready"
     jobOfferTimer = 0
     jobOfferInterval = math.random(5, 45)
+    currentFare = nil
     dataToSend = {}
 end
 
 local function rejectJob()
-    print("Rejecting job")
     state = "ready"
     currentFare = nil
     core_groundMarkers.resetAll()
@@ -303,7 +301,6 @@ local function rejectJob()
 end
 
 local function stopTaxiJob()
-    print("Stopping taxi job")
     state = "start"
     currentFare = nil
     core_groundMarkers.resetAll()
@@ -360,7 +357,6 @@ local function update(dt)
     if state == "ready" then
         jobOfferTimer = jobOfferTimer + 1
         if jobOfferTimer >= jobOfferInterval then
-            print("Generating new job")
             state = "accept"
             local newFare = generateJob()
             if not gameplay_phone.isPhoneOpen() then

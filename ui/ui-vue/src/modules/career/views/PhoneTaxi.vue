@@ -45,7 +45,7 @@
                         {{ fareStreak }}
                     </span>
                 </div>
-                <button class="state-button stop" @click.stop="setState('reject')">
+                <button class="state-button stop" @click.stop="setState('stop')">
                     Stop Driving
                 </button>
             </div>
@@ -188,21 +188,21 @@ const setState = (newState) => {
     if (newState === 'start') {
         lua.career_modules_taxi.prepareTaxiJob()
         totalReward.value = 0
-    }
-    if (newState === 'reject') {
+    } else if (newState === 'reject') {
         lua.career_modules_taxi.rejectJob()
         currentState.value = 'ready'
-    }
-    if (newState === 'ready') {
+    } else if (newState === 'ready') {
         lua.career_modules_taxi.setAvailable()
-        //lua.career_modules_taxi.getTaxiJob()
-    }
-    if (newState === 'working') {
+    } else if (newState === 'working') {
         lua.career_modules_taxi.acceptJob()
         currentState.value = 'pickup'
 
+    } else if (newState === 'stop') {
+        lua.career_modules_taxi.stopTaxiJob()
+        currentState.value = 'start'
     }
 }
+
 
 const handleBackgroundClick = () => {
     if (currentState.value === 'complete') {
@@ -212,7 +212,7 @@ const handleBackgroundClick = () => {
 
 const handleFare = () => {
     if (!currentFare.value) return
-    
+
     farePerKm.value = Number(currentFare.value.baseFare ?? 0)
     riderCount.value = Number(currentFare.value.passengers ?? 0)
     riderRating.value = Number(currentFare.value.passengerRating ?? 0)
@@ -242,7 +242,7 @@ onMounted(async () => {
         currentCapacity.value = state.availableSeats
         vehicleMultiplier.value = state.vehicleMultiplier
         totalReward.value = state.cumulativeReward,
-        fareStreak.value = state.fareStreak
+            fareStreak.value = state.fareStreak
         handleFare()
     })
 })
