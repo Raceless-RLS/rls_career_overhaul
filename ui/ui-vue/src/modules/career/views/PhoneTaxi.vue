@@ -221,21 +221,7 @@ const handleFare = () => {
     timeMultiplier.value = Number(currentFare.value.timeMultiplier ?? 1)
 }
 
-onMounted(async () => {
-    store.init()
-    const terrainLayer = container.value.querySelector('.terrain-layer')
-    const vehicleLayer = container.value.querySelector('.vehicle-layer')
-    terrainLayer.appendChild(store.svgLayers.terrain)
-    vehicleLayer.appendChild(store.svgLayers.vehicles)
-
-    const data = await lua.career_modules_taxi.requestTaxiState()
-    if (data) {
-        currentCapacity.value = data.availableSeats
-        vehicleMultiplier.value = data.vehicleMultiplier
-        currentState.value = data.state
-        currentFare.value = data.currentFare
-        handleFare()
-    }
+onMounted(() => {
     events.on('updateTaxiState', (state) => {
         currentState.value = state.state
         currentFare.value = state.currentFare
@@ -245,6 +231,12 @@ onMounted(async () => {
             fareStreak.value = state.fareStreak
         handleFare()
     })
+    store.init()
+    const terrainLayer = container.value.querySelector('.terrain-layer')
+    const vehicleLayer = container.value.querySelector('.vehicle-layer')
+    terrainLayer.appendChild(store.svgLayers.terrain)
+    vehicleLayer.appendChild(store.svgLayers.vehicles)
+    lua.career_modules_taxi.requestTaxiState()
 })
 
 </script>

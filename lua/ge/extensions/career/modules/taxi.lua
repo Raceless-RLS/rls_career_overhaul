@@ -287,7 +287,6 @@ local function setAvailable()
     state = "ready"
     jobOfferTimer = 0
     jobOfferInterval = math.random(5, 45)
-    currentFare = nil
     dataToSend = {}
 end
 
@@ -418,7 +417,7 @@ local function requestTaxiState()
         cumulativeReward = cumulativeReward,
         fareStreak = fareStreak
     }
-    return dataToSend
+    guihooks.trigger('updateTaxiState', dataToSend)
 end
 
 M.onUpdate = function(dt)
