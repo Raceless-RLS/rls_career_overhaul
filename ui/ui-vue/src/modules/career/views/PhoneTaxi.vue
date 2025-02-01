@@ -372,7 +372,6 @@ onMounted(async () => {
 .rider-details {
     display: flex;
     margin-bottom: 0.5rem;
-    gap: 0.5rem;
     font-family: 'Overpass', sans-serif;
 
     .rider-info {
@@ -381,8 +380,9 @@ onMounted(async () => {
         background: rgb(196, 205, 230);
         color: rgb(0, 0, 0);
         padding: 0.1rem 0.5rem 0.05rem 0.5rem;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
         border-radius: 0.5rem;
-        gap: 0.5rem;
     }
 
     &.center {
