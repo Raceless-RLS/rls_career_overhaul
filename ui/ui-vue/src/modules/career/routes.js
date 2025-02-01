@@ -245,6 +245,12 @@ export default [
       },
 
       {
+        path: "purchase-garage",
+        name: "purchase-garage",
+        component: views.PurchaseGarage
+      },
+
+      {
         path: "phone-minimap",
         name: "phone-minimap",
         component: views.PhoneMinimap
@@ -257,10 +263,16 @@ export default [
       },
 
       {
-        path: "purchase-garage",
-        name: "purchase-garage",
-        component: views.PurchaseGarage
-      }
+        path: "car-meets-phone",
+        name: "car-meets-phone",
+        component: views.CarMeetsPhone
+      },
+
+      {
+        path: "phone-taxi",
+        name: "phone-taxi",
+        component: views.PhoneTaxi
+      },
 
     ],
   },

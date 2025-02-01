@@ -1,78 +1,79 @@
 local M = {}
 M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'freeroam_facilities'}
 
+local core_groundMarkers = require('core/groundMarkers')
+
 local distanceMultiplier = 0.0009
 local suggestedSpeed = 18
 
-local TaxiJob = {}
-TaxiJob.__index = TaxiJob
+local parkingSpots = nil
+local validPickupSpots = nil
 
-function TaxiJob:new()
-    local instance = setmetatable({}, TaxiJob)
-    instance.passengers = {}
-    instance.currentFare = nil
-    instance.availableSeats = 0
-    instance.updateTimer = 1
-    instance.timer = 0
-    return instance
-end
+local passengers = {}
+local currentPassengerRating = 0
+local currentPassengerType = "Standard"
+local vehicleMultiplier = 0
+local currentFare = nil
+local availableSeats = nil
+local updateTimer = 1
+local timer = 0
+local jobOfferTimer = 0
+local state = "prepared"
+local jobOfferInterval = math.random(30, 120)
 
-function TaxiJob:findParkingSpots()
+local function findParkingSpots()
     local sitePath = gameplay_sites_sitesManager.getCurrentLevelSitesFileByName('city')
     if sitePath then
         local siteData = gameplay_sites_sitesManager.loadSites(sitePath, true, true)
-        self.parkingSpots = siteData and siteData.parkingSpots
+        parkingSpots = siteData and siteData.parkingSpots
     end
 end
 
 -- New function to calculate seating capacity
-function TaxiJob:calculateCapacity(vehicleId)
+local function calculateCapacity(vehicleId)
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehicleId)
     if not inventoryId then return 0 end
     local seatingCapacity = career_modules_inventory.calculateSeatingCapacity(inventoryId)
-    self.availableSeats = seatingCapacity - 1 -- Subtract the driver seat
+    availableSeats = seatingCapacity - 1 -- Subtract the driver seat
+    return availableSeats
 end
 
-function TaxiJob:findValidPickupSpots()
-    self.validPickupSpots = {}
+local function findValidPickupSpots()
+    local validPickupSpots = {}
     local playerPos = be:getPlayerVehicle(0):getPosition()
 
-    if not self.parkingSpots then self:findParkingSpots() end
-    for _, spot in pairs(self.parkingSpots.objects) do
+    if not parkingSpots then findParkingSpots() end
+    for _, spot in pairs(parkingSpots.objects) do
         if spot.pos and (spot.pos - playerPos):length() < 500 then
-            table.insert(self.validPickupSpots, spot)
+            table.insert(validPickupSpots, spot)
         end
     end
+    return validPickupSpots
 end
 
-function TaxiJob:startRide(fare)
-    -- Calculate pickup path distance
-    core_groundMarkers.setPath(fare.pickup.pos)
-    local pickupDistance = core_groundMarkers.getPathLength()
-    
-    self.currentFare = fare
+local function startRide(fare)
+    -- Calculate pickup path distance    
+    currentFare = fare
 
-    self.currentFare.startTime = os.time()
-    self.currentFare.totalDistance = pickupDistance
-
-    self.state = "enroute_to_pickup"
+    currentFare.startTime = os.time()
+    state = "enroute_to_pickup"
 end
 
-function TaxiJob:calculatePassengerCount()
-    if self.availableSeats <= 0 then return 0 end
+local function calculatePassengerCount()
+    if availableSeats <= 0 then return 0 end
     local weights = {}
     local total = 0
     
     -- Create weighted distribution (inverse relationship)
-    for i=1, self.availableSeats do
-        weights[i] = (self.availableSeats - i + 1)
+    for i=1, availableSeats do
+        weights[i] = (availableSeats - i + 1)
         total = total + weights[i]
     end
 
     local random = math.random(total)
     local cumulative = 0
     
-    for i=1, self.availableSeats do
+    for i=1, availableSeats do
         cumulative = cumulative + weights[i]
         if random <= cumulative then
             return i
@@ -81,7 +82,7 @@ function TaxiJob:calculatePassengerCount()
     return 1 -- fallback
 end
 
-function TaxiJob:generateFareMultiplier()
+local function generateFareMultiplier()
     -- Create weighted fare tiers
     local fareWeights = {
         {min = 0.5, max = 0.8, weight = 3},  -- 30% chance
@@ -112,21 +113,27 @@ function TaxiJob:generateFareMultiplier()
     return math.random(selectedTier.min * 100, selectedTier.max * 100) / 100
 end
 
-function TaxiJob:generateJob()
+local function generateValueMultiplier()
+    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicle(0):getID())
+    if not inventoryId then return 0 end
+    return (career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) / 30000) ^ 0.5
+end
+
+local function generateJob()
     -- Find nearby pickup spots (within 300m)
-    self:findValidPickupSpots()
-    if not self.validPickupSpots or #self.validPickupSpots == 0 then
+    validPickupSpots = findValidPickupSpots()
+    if not validPickupSpots or #validPickupSpots == 0 then
         ui_message("No nearby pickup locations found!", 5, "warning")
         return false
     end
 
     -- Select random pickup spot
-    local pickupSpot = self.validPickupSpots[math.random(#self.validPickupSpots)]
+    local pickupSpot = validPickupSpots[math.random(#validPickupSpots)]
     
     -- Find valid dropoff spots (min 600m from pickup)
     local dropoffSpots = {}
     local minDistance = 600
-    for _, spot in pairs(self.parkingSpots.objects) do
+    for _, spot in pairs(parkingSpots.objects) do
         if spot ~= pickupSpot and pickupSpot.pos:distance(spot.pos) >= minDistance then
             table.insert(dropoffSpots, spot)
         end
@@ -143,56 +150,64 @@ function TaxiJob:generateJob()
     local dropoffSpot = dropoffSpots[math.random(#dropoffSpots)]
     
     -- Calculate passenger count
-    self:calculateCapacity(be:getPlayerVehicle(0):getID())
-    local passengerCount = self:calculatePassengerCount()
+    if not availableSeats or availableSeats == 0 then
+        calculateCapacity(be:getPlayerVehicle(0):getID())
+    end
 
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicle(0):getID())
-    local valueMultiplier = (career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) / 30000) ^ 0.5
+    local valueMultiplier = generateValueMultiplier()
+    
+    local passengerCount = calculatePassengerCount()
 
-    local baseFare = self:generateFareMultiplier() * 100 * (passengerCount ^ 0.75) * valueMultiplier
+    local fareMultiplier = generateFareMultiplier()
+
+    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.75) * valueMultiplier
     
     -- Create fare details
     local fare = {
-        pickup = pickupSpot,
-        destination = dropoffSpot,
+        pickup = {pos = pickupSpot.pos},
+        destination = {pos = dropoffSpot.pos},
         baseFare = baseFare,
-        passengers = passengerCount
+        passengers = passengerCount,
+        passengerRating = string.format("%.1f", (fareMultiplier/1.5) * 5)
     }
 
     local basePayment = baseFare * distanceMultiplier * 1000
 
-    ui_message(string.format("New job: %d passengers waiting! Base fare per km: $%.2f", passengerCount, basePayment), 5, "info")
+    ui_message(string.format("New  %d passengers waiting! Base fare per km: $%.2f", passengerCount, basePayment), 5, "info")
 
     return fare
 end
 
-function TaxiJob:calculateSpeedFactor()
-    if not self.currentFare then return 0 end
-    local elapsedTime = os.difftime(os.time(), self.currentFare.startTime)
-    local actualSpeed = self.currentFare.totalDistance / elapsedTime
+local function calculateSpeedFactor()
+    if not currentFare then return 0 end
+    local elapsedTime = os.difftime(os.time(), currentFare.startTime)
+    local actualSpeed = currentFare.totalDistance / elapsedTime
     
     return (actualSpeed - suggestedSpeed) / suggestedSpeed
 end
 
-function TaxiJob:completeRide()
-    if not self.currentFare then return end
+local function completeRide()
+    if not currentFare then return end
     
-    local elapsedTime = os.difftime(os.time(), self.currentFare.startTime)
-    local speedFactor = self:calculateSpeedFactor()
+    local elapsedTime = os.difftime(os.time(), currentFare.startTime)
+    local speedFactor = calculateSpeedFactor()
     
     -- Base payment calculation using actual path distance
-    local basePayment = self.currentFare.baseFare * self.currentFare.passengers *
-                       (self.currentFare.totalDistance * distanceMultiplier)
+    local basePayment = currentFare.baseFare * currentFare.passengers *
+                       (currentFare.totalDistance * distanceMultiplier)
     
-    -- Apply speed bonus or time penalty (mutually exclusive)
     local finalPayment = basePayment * (1 + speedFactor)
+
+    currentFare.totalFare = string.format("%.2f", finalPayment)
+    currentFare.timeMultiplier = string.format("%.1f", 1 + speedFactor)
+    currentFare.distance = string.format("%.2f", currentFare.totalDistance)
     
     local label = string.format("Taxi fare (%d passengers): $%d\nDistance: %.2fkm | %s: x %.2f",
-        self.currentFare.passengers,
-        math.floor(finalPayment),
-        math.floor(self.currentFare.totalDistance),
+        currentFare.passengers,
+        currentFare.totalFare,
+        currentFare.distance,
         speedFactor > 0 and "Speed Bonus" or "Time Penalty",
-        (1 + speedFactor)
+        currentFare.timeMultiplier
     )
     
     career_modules_payment.reward({
@@ -205,41 +220,82 @@ function TaxiJob:completeRide()
 
     ui_message(label, 5, "Taxi", "info")
     
-    self.currentFare = nil
-    self.state = "available"
+    currentFare = nil
 end
 
-function TaxiJob:update(dt)
-    self.timer = self.timer + dt
-    if self.timer < self.updateTimer then return end
-    self.timer = 0
+local function setAvailable()
+    print("Setting available")
+    state = "available"
+    jobOfferTimer = 0
+    jobOfferInterval = 5
+end
 
-    if self.currentFare and self.state == "enroute_to_pickup" then
+local function rejectJob()
+    print("Rejecting job")
+    state = "available"
+    currentFare = nil
+    jobOfferTimer = 0
+    jobOfferInterval = math.random(30, 120)
+end
+
+local function stopTaxiJob()
+    print("Stopping taxi job")
+    state = "prepared"
+    currentFare = nil
+    jobOfferTimer = 0
+    jobOfferInterval = math.random(30, 120)
+end
+
+local function update(dt)
+    timer = timer + dt
+    if timer < updateTimer then return end
+    timer = 0
+
+    if currentFare and state == "enroute_to_pickup" then
+        if core_groundMarkers.getPathLength() == 0 then
+            core_groundMarkers.setPath(currentFare.pickup.pos)
+            local pickupDistance = core_groundMarkers.getPathLength()
+            currentFare.totalDistance = pickupDistance
+        end
+
+
         local vehicle = be:getPlayerVehicle(0)
-        local distToPickup = (vehicle:getPosition() - self.currentFare.pickup.pos):length()
+        local distToPickup = (vehicle:getPosition() - currentFare.pickup.pos):length()
         
         if distToPickup < 5 then
-            self.state = "passenger_loaded"
-            core_groundMarkers.setPath(self.currentFare.destination.pos)
+            state = "passenger_loaded"
+            core_groundMarkers.setPath(currentFare.destination.pos)
             local dropoffDistance = core_groundMarkers.getPathLength()
-            self.currentFare.startTime = os.time() -- Reset timer for trip
-            self.currentFare.totalDistance = self.currentFare.totalDistance + dropoffDistance
+            currentFare.startTime = os.time() -- Reset timer for trip
+            currentFare.totalDistance = currentFare.totalDistance + dropoffDistance
             ui_message("Passengers loaded! Drive to destination.", 5, "info")
         end
     end
     
-    if self.currentFare and self.state == "passenger_loaded" then
+    if currentFare and state == "passenger_loaded" then
         local vehicle = be:getPlayerVehicle(0)
         local destDist = core_groundMarkers.getPathLength()
         
         if destDist < 5 then
-            self:completeRide()
+            completeRide()
             self = nil
         else
             ui_message(string.format(
                 "Destination: %.2fkm remaining",
                 math.floor(destDist * 100) / 100000
             ), 1, "info")
+        end
+    end
+
+    if state == "available" then
+        jobOfferTimer = jobOfferTimer + 1
+        if jobOfferTimer >= jobOfferInterval then
+            print("Generating new job")
+            state = "offered"
+            local newFare = generateJob()
+            guihooks.trigger('sendTaxiOffer', newFare)
+            jobOfferTimer = 0
+            jobOfferInterval = math.random(30, 120)
         end
     end
 end
@@ -252,16 +308,54 @@ function M.showPhoneMinimap()
     guihooks.trigger('ChangeState', {state = 'phone-minimap'})
 end
 
-local Job = nil
+local function prepareTaxiJob()
+    calculateCapacity(be:getPlayerVehicle(0):getID())
+    local multiplier = generateValueMultiplier()
+    return {
+        seats = availableSeats,
+        multiplier = string.format("%.1f", multiplier)
+    }
+end
+
+function M.acceptJob(fare)
+    local newFare = {
+        pickup = fare.pickup,
+        destination = fare.destination,
+        baseFare = fare.baseFare,
+        passengers = fare.passengers,
+        passengerRating = fare.passengerRating
+    }
+    startRide(newFare)
+end
+
+function M.rejectJob()
+    rejectJob()
+end
+
+function M.setAvailable()
+    setAvailable()
+end
+
+function M.stopTaxiJob()
+    stopTaxiJob()
+end
 
 local function getTaxiJob()
-    Job = TaxiJob:new()
-    Job:startRide(Job:generateJob())
+    prepareTaxiJob()
+    if not currentFare then
+        startRide(generateJob())
+    end
 end
 
 M.onUpdate = function(dt)
-    if Job then Job:update(dt) end
+    update(dt)
 end
+
+M.onGuiUpdate = function(dt)
+    update(dt)
+end
+
 M.getTaxiJob = getTaxiJob
-M.TaxiJob = TaxiJob
+M.prepareTaxiJob = prepareTaxiJob
+
 return M 
