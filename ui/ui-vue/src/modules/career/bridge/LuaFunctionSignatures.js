@@ -127,7 +127,6 @@ export default {
     installPartByPartShopId: id => Number,
     removePartBySlot: slot => String,
     sendShoppingDataToUI: () => {},
-    keepUsedPartBySlot: slot => String
   },
 
   career_modules_vehicleShopping: {
@@ -168,7 +167,6 @@ export default {
   career_modules_inventory: {
     sellVehicle: id => Number,
     sellVehicleFromInventory: id => Number,
-    instantSellVehicle: id => Number,
     returnLoanedVehicleFromInventory: id => Number,
     expediteRepairFromInventory: (inventoryId, price) => [Number, Number],
     enterVehicle: id => Number,
@@ -180,7 +178,7 @@ export default {
     removeVehicleObject: id => Number,
     getVehicles: () => {},
     setLicensePlateText: (inventoryId, text) => [Number, String],
-    purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number]
+    purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number],
   },
 
   career_modules_partInventory: {
@@ -880,10 +878,5 @@ export default {
     stopTaxiJob: () => {},
     getTaxiJob: () => {},
     requestTaxiState: () => {}
-  },
-
-  career_modules_vehicleMarketplace: {
-    listVehicleForSale: id => Number,
-    openMenu: () => {}
   }
 }
