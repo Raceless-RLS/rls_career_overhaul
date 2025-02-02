@@ -563,7 +563,7 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
 
-    vehicle:queueLuaCommand('electrics.setIgnitionLevel(0)')
+    vehObj:queueLuaCommand('electrics.setIgnitionLevel(0)')
 
     return vehObj
   end
