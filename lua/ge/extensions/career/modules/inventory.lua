@@ -1186,11 +1186,14 @@ local function getVehicleTimeToAccess(inventoryId)
   return vehicles[inventoryId].timeToAccess
 end
 
-local function sellVehicle(inventoryId)
+local function sellVehicle(inventoryId, instant)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
 
   local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+  if instant then
+    value = value * 0.75
+  end
   career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")})
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
@@ -1201,6 +1204,13 @@ end
 
 local function sellVehicleFromInventory(inventoryId)
   if sellVehicle(inventoryId) then
+    career_saveSystem.saveCurrent()
+    sendDataToUi()
+  end
+end
+
+local function instantSellVehicle(inventoryId)
+  if sellVehicle(inventoryId, true) then
     career_saveSystem.saveCurrent()
     sendDataToUi()
   end
