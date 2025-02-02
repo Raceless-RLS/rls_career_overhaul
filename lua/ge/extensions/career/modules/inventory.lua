@@ -1411,7 +1411,7 @@ local function calculateSeatingCapacity(inventoryId)
 
   for partName, part in pairs(partData) do
     -- Check if the part is a seat
-    if partName:find("seat") and not partName:find("cargo") then
+    if (partName:find("seat") or partName:find("bench")) and not partName:find("cargo") then
       if part:find("seat") and not part:find("cargo") and not part:find("captains") then
         local seatSize = nil
         if partName:find("seats") then
