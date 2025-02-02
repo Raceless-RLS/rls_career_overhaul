@@ -563,8 +563,7 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
 
-    -- Set parking brake
-    vehObj:queueLuaCommand("electrics.set_warn_signal(0) electrics.set_parking_brake(1)")
+    vehicle:queueLuaCommand('electrics.setIgnitionLevel(0)')
 
     return vehObj
   end
