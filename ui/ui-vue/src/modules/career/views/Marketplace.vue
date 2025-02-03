@@ -6,7 +6,7 @@
                 <button class="list-button">List Vehicle For Sale</button>
             </div>
             <hr class="custom-hr">
-            <div class="vehicle-card">
+            <div class="vehicle-card" :class="{ active: showOffers }">
                 <img src="/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png" alt=""
                     class="vehicle-image">
                 <div class="vehicle-info">
@@ -16,10 +16,10 @@
                             <div class="model">Civetta Scintilla</div>
                             <div class="mileage">44 Miles</div>
                         </div>
-                        <div class="messages-badge">
+                        <button class="messages-badge" @click="toggleOffers">
                             <BngIcon :type="icons.dialogOutline" />
                             <span class="badge">2</span>
-                        </div>
+                        </button>
                     </div>
                     <div class="vehicle-specs">
                         <div class="specs">
@@ -56,7 +56,27 @@
                     </div>
                 </div>
             </div>
+            <div v-if="showOffers" class="offers-container">
+                <div class="offer-row">
+                    <span class="dealer-name">Luxury Motorsports</span>
+                    <div class="offer-actions">
+                        <span class="offer-amount">Offered: $250,000</span>
+                        <button class="accept-btn">Accept</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+                <div class="offer-row">
+                    <span class="dealer-name">Fast Automotive</span>
+                    <div class="offer-actions">
+                        <span class="offer-amount">Offered: $285,000</span>
+                        <button class="accept-btn">Accept</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </ComputerWrapper>
 </template>
 
@@ -69,6 +89,7 @@ import { lua } from '@/bridge'
 
 const computerStore = useComputerStore();
 const showEventTimes = ref(false)
+const showOffers = ref(false)
 
 onMounted(async () => {
 
@@ -80,6 +101,10 @@ const close = () => {
 
 const toggleEventTimes = () => {
     showEventTimes.value = !showEventTimes.value
+}
+
+const toggleOffers = () => {
+    showOffers.value = !showOffers.value
 }
 
 </script>
@@ -133,6 +158,11 @@ const toggleEventTimes = () => {
     overflow: hidden;
     display: flex;
     border: none;
+
+    &.active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 }
 
 .vehicle-image {
@@ -140,7 +170,7 @@ const toggleEventTimes = () => {
     width: 300px;
     height: 174px;
     border-radius: 15px;
-    background-color: #ffffff;
+    background-color: #3b3b3b;
 }
 
 .vehicle-info {
@@ -185,6 +215,11 @@ const toggleEventTimes = () => {
     align-items: center;
     justify-content: flex-start;
     margin-top: -32px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: "Overpass", sans-serif;
+    cursor: pointer;
 
     .badge {
         background-color: #ff4444;
@@ -222,7 +257,7 @@ const toggleEventTimes = () => {
     gap: 12px;
     border-radius: 10px;
     width: 230px;
-    
+
     &.active {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -266,13 +301,68 @@ const toggleEventTimes = () => {
     display: flex;
     justify-content: space-between;
     padding: 5px 0;
-    
+
     span:first-child {
         color: #888;
     }
-    
+
     span:last-child {
         font-weight: 600;
     }
+}
+
+.offers-container {
+    background-color: #1A1818;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow: hidden;
+}
+
+.offer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background-color: #2B2C28;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.dealer-name {
+    font-weight: 500;
+    color: white;
+}
+
+.offer-amount {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 25px;
+}
+
+.offer-actions {
+    display: flex;
+    gap: 10px;
+    color: black;
+}
+
+.accept-btn,
+.decline-btn {
+    color: black;
+    padding: 4px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.accept-btn {
+    background-color: #4CAF50;
+}
+
+.decline-btn {
+    background-color: #f44336;
 }
 </style>
