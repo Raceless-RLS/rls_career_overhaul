@@ -9,7 +9,7 @@
       <!-- Status Bar -->
       <div class="phone-status-bar">
         <span>{{ timeString }}</span>
-        <button class="status-back" @click="back"> <- Back</button>
+        <span class="status-back" @click="back"> <- Back</span>
         <span>{{ appName }}</span>
       </div>
       
@@ -160,13 +160,8 @@ const close = () => {
 }
 
 .status-back{
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin-top: 1.4em;
-  margin-left: -0.2em;
+  margin-top: 25px;
+  margin-left: -250px;
   background-color: transparent;
   outline: none;
   border: none;
