@@ -8,8 +8,9 @@
     <BngCard class="phone-screen" v-bng-blur="1">
       <!-- Status Bar -->
       <div class="phone-status-bar">
-        <span class="status-time">{{ timeString }}</span>
-        <span class="status-app">{{ appName }}</span>
+        <span>{{ timeString }}</span>
+        <button class="status-back" @click="back"> <- Back</button>
+        <span>{{ appName }}</span>
       </div>
       
       <!-- Optional Header Slot -->
@@ -30,6 +31,7 @@ import { useEvents } from '@/services/events'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { BngCard } from "@/common/components/base"
 import { vBngBlur } from "@/common/directives"
+import { useRouter } from 'vue-router'
 import { lua } from "@/bridge"
 
 const props = defineProps({
@@ -52,7 +54,8 @@ const props = defineProps({
 })
 
 const events = useEvents()
-const timeString = ref('')
+const timeString = ref('9:10')
+const router = useRouter()
 
 const updateTime = (data) => {
   if (data) {
@@ -69,6 +72,10 @@ onMounted(() => {
 
 onUnmounted(() => {
 })
+
+const back = () => {
+  router.back()
+}
 
 const close = () => {
   lua.extensions.unload("ui_phone_time")
@@ -154,7 +161,22 @@ const close = () => {
   }
 }
 
-.status-time, .status-app {
+.status-back{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 1.4em;
+  margin-left: -0.2em;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  z-index: -1;
+  cursor: pointer;
   pointer-events: auto;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--status-font-color);
 }
 </style> 

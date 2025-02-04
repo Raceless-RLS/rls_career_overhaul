@@ -7,7 +7,7 @@
             </div>
             <hr class="custom-hr">
             <div class="vehicle-card" :class="{ active: showOffers }">
-                <img src="/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png" alt=""
+                <img :src="image" alt=""
                     class="vehicle-image">
                 <div class="vehicle-info">
                     <div class="vehicle-header">
@@ -94,6 +94,7 @@ import { lua } from '@/bridge'
 
 const showEventTimes = ref(false)
 const showOffers = ref(false)
+const image = ref("/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png")
 
 onMounted(async () => {
 
@@ -133,7 +134,7 @@ const toggleOffers = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 40px;
 
     h2 {
         font-size: 20px;
@@ -153,7 +154,7 @@ const toggleOffers = () => {
     border: none;
     cursor: pointer;
     margin-top: -6px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .vehicle-card {
@@ -199,8 +200,9 @@ const toggleOffers = () => {
 }
 
 .year {
-    font-size: 12px;
+    font-size: 14px;
     color: #888;
+    font-weight: 600;
 }
 
 .model {
@@ -210,7 +212,8 @@ const toggleOffers = () => {
 
 .mileage {
     color: #888;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .messages-badge {
@@ -378,6 +381,7 @@ const toggleOffers = () => {
 .accept-btn {
     background-color: #4CAF50;
     color: black;
+    margin-right: 10px;
 }
 
 .decline-btn {

@@ -274,6 +274,18 @@ export default [
         component: views.PhoneTaxi
       },
 
+      {
+        path: "marketplace",
+        name: "marketplace",
+        component: views.Marketplace
+      },
+
+      { 
+        path: "phone-marketplace",
+        name: "phone-marketplace",
+        component: views.PhoneMarketplace
+      }
+
     ],
   },
 ]

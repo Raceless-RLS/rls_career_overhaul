@@ -7,7 +7,7 @@
             </div>
             <hr class="custom-hr">
             <div class="vehicle-card" :class="{ active: showOffers }">
-                <img src="/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png" alt=""
+                <img :src="image" alt=""
                     class="vehicle-image">
                 <div class="vehicle-info">
                     <div class="vehicle-header">
@@ -86,17 +86,20 @@ import ComputerWrapper from "./ComputerWrapper.vue";
 import { useComputerStore } from "../stores/computerStore";
 import { BngIcon, icons } from "@/common/components/base"
 import { lua } from '@/bridge'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const computerStore = useComputerStore();
 const showEventTimes = ref(false)
 const showOffers = ref(false)
+const image = ref("/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png")
 
 onMounted(async () => {
 
 });
 
 const close = () => {
-    lua.career_career.closeAllMenus
+    router.back()
 }
 
 const toggleEventTimes = () => {
@@ -254,7 +257,7 @@ const toggleOffers = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    margin-right: 12px;
     border-radius: 10px;
     width: 230px;
 
@@ -360,6 +363,7 @@ const toggleOffers = () => {
 
 .accept-btn {
     background-color: #4CAF50;
+    margin-right: 10px;
 }
 
 .decline-btn {
