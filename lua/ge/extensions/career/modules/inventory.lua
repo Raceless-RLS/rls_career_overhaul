@@ -1396,7 +1396,7 @@ local function specificCapcityCases(partName)
     elseif partName:find("sd18m") then return 44
     elseif partName:find("sd105") then return 25
     elseif partName:find("sd_seats") then return 33
-    elseif partName:find("dd105m") then return 58
+    elseif partName:find("dd105") then return 58
     elseif partName:find("sd195") then return 42
     elseif partName:find("lh_seats") then return 70
     elseif partName:find("artic") then return 107 end

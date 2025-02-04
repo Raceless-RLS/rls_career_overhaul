@@ -250,9 +250,7 @@ local function completeRide()
     state = "complete"
     if not gameplay_phone.isPhoneOpen() then
         print("Phone is not open, opening phone")
-        guihooks.trigger('ChangeState', {
-            state = 'phone-taxi'
-        })
+        gameplay_phone.togglePhone("You completed a taxi fare! Open the phone to view your earnings.")
     end
 
     dataToSend = {
@@ -355,9 +353,7 @@ local function update(dt)
             local newFare = generateJob()
             if not gameplay_phone.isPhoneOpen() then
                 print("Phone is not open, opening phone")
-                guihooks.trigger('ChangeState', {
-                    state = 'phone-taxi'
-                })
+                gameplay_phone.togglePhone("You have a new taxi fare! Open the phone to view the details.")
             end
             dataToSend = {
                 state = state,
