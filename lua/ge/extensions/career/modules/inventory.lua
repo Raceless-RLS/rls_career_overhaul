@@ -1390,6 +1390,20 @@ local function onWorldReadyState(state)
   end
 end
 
+local function specificCapcityCases(partName)
+  if partName:find("capsule") and partName:find("seats") then
+    if partName:find("sd12m") then return 58
+    elseif partName:find("sd18m") then return 44
+    elseif partName:find("sd105") then return 25
+    elseif partName:find("sd_seats") then return 33
+    elseif partName:find("dd105m") then return 58
+    elseif partName:find("sd195") then return 42
+    elseif partName:find("lh_seats") then return 70
+    elseif partName:find("artic") then return 107 end
+  end
+  return nil
+end
+
 local function calculateSeatingCapacity(inventoryId)
   if not inventoryId then inventoryId = currentVehicle end
   local veh = vehicles[inventoryId]
@@ -1409,16 +1423,15 @@ local function calculateSeatingCapacity(inventoryId)
         elseif partName:find("ext") then
           seatSize = 2
         else
-          local found = partName:match("(%d+)R")
-          if found then
+          if partName:match("(%d+)R") then
             seatSize = 2
           else
             seatSize = 1
           end
         end
-        if part:find("citybus_seats") then
-          seatSize = 44
-        end
+        if part:find("citybus_seats") then seatSize = 44
+        elseif part:find("skin") then seatSize = 0 end
+        if specificCapcityCases(partName) then seatSize = specificCapcityCases(partName) end
         seatingCapacity = seatingCapacity + seatSize
       end
     end

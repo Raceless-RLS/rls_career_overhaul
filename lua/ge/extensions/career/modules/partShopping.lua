@@ -190,7 +190,7 @@ local function updateShoppingCart()
   end
 
   for index, part in ipairs(shoppingCart.partsOutList) do
-    shoppingCart.partsOutList[index].finalValue = career_modules_valueCalculator.getPartValue(part) - 0.01
+    shoppingCart.partsOutList[index].finalValue = math.max(career_modules_valueCalculator.getPartValue(part) - 0.01, 0)
   end
 
   -- Calculate the total price of the whole shopping cart
