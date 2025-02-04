@@ -86,6 +86,9 @@ local conditions = {
       return true
     end
     return false
+  end,
+  taxiNotActive = function(type, vehId)
+    return not career_modules_taxi.isTaxiJobActive()
   end
 }
 
@@ -159,7 +162,7 @@ local buttonOptions = {
       return "Tow to garage"
     end,
     includeConditions = {},
-    enableConditions = {conditions.outOfPursuit, conditions.vehicleSlow, conditions.vehicleInInventory, conditions.notTestdriving, conditions.towToRoadAllowedByPermission},
+    enableConditions = {conditions.outOfPursuit, conditions.vehicleSlow, conditions.vehicleInInventory, conditions.notTestdriving, conditions.towToRoadAllowedByPermission, conditions.taxiNotActive},
     atFadeFunction = function(target)
       currentMenuTag = "towing"
       openRecoveryPrompt("Select location", true)

@@ -58,7 +58,7 @@ local function onBeamNGTrigger(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID or data.event == "exit" then
         return
     end
-    if gameplay_walk.isWalking() then
+    if gameplay_walk.isWalking() or career_modules_taxi.isTaxiJobActive() then
         return
     end
 

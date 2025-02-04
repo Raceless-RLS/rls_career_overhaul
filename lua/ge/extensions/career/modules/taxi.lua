@@ -8,7 +8,7 @@ local core_groundMarkers = require('core/groundMarkers')
 local cumulativeReward = 0
 local fareStreak = 0
 
-local distanceMultiplier = 0.0045
+local distanceMultiplier = 4.5
 local suggestedSpeed = 18
 
 local parkingSpots = nil
@@ -195,7 +195,7 @@ local function generateJob()
 
     local fareMultiplier = generateFareMultiplier()
 
-    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier
+    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier * distanceMultiplier
 
     -- Create fare details
     local fare = {
@@ -209,9 +209,6 @@ local function generateJob()
         passengers = passengerCount,
         passengerRating = string.format("%.1f", (fareMultiplier / 1.5) * 5)
     }
-
-    local basePayment = baseFare * distanceMultiplier * 1000
-
     currentFare = fare
     return fare
 end
@@ -237,7 +234,7 @@ local function completeRide()
     fareStreak = fareStreak + 1
 
     -- Base payment calculation using actual path distance
-    local basePayment = currentFare.baseFare * (currentFare.totalDistance * distanceMultiplier) * (fareStreak ^ 0.75)
+    local basePayment = currentFare.baseFare * (currentFare.totalDistance / 1000) * (fareStreak ^ 0.75)
 
     local finalPayment = basePayment * (1 + speedFactor)
 
