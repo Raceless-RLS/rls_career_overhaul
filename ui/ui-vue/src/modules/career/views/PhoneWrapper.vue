@@ -5,7 +5,7 @@
     '--status-blend-mode': statusBlendMode
   }">
     <div class="phone-bevel"></div>
-    <BngCard class="phone-screen" v-bng-blur="1">
+    <div class="phone-screen">
       <!-- Status Bar -->
       <div class="phone-status-bar">
         <span>{{ timeString }}</span>
@@ -14,7 +14,7 @@
       </div>
       
       <!-- Optional Header Slot -->
-      <template v-if="$slots.header" #header>
+      <template v-if="$slots.header">
         <slot name="header"></slot>
       </template>
       
@@ -22,15 +22,13 @@
       <div class="phone-content">
         <slot></slot>
       </div>
-    </BngCard>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useEvents } from '@/services/events'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { BngCard } from "@/common/components/base"
-import { vBngBlur } from "@/common/directives"
 import { useRouter } from 'vue-router'
 import { lua } from "@/bridge"
 
