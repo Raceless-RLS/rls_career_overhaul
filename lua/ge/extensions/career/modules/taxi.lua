@@ -259,7 +259,7 @@ local function completeRide()
         fareStreak = fareStreak
     }
     guihooks.trigger('updateTaxiState', dataToSend)
-    dump(dataToSend)
+    --dump(dataToSend)
 
     local label = string.format("Taxi fare (%d passengers): $%d\nDistance: %.2fkm | %s: x %.2f", currentFare.passengers,
         currentFare.totalFare, currentFare.totalDistance, speedFactor > 0 and "Speed Bonus" or "Time Penalty",

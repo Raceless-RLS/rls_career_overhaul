@@ -783,7 +783,6 @@ end
 local function getPart(inventoryId, slot)
   for partId, part in pairs(partInventory) do
     if part.location == inventoryId and part.containingSlot == slot then
-      dump(part)
       return part
     end
   end

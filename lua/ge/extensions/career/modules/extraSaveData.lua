@@ -75,7 +75,7 @@ local function purchaseDefaultGarage()
   local garages = freeroam_facilities.getFacilitiesByType("garage")
   if not garages or #garages == 0 then return end  -- Return if no garages
   for _, garage in ipairs(garages) do
-    if garage.defaultPrice == 0 or garage.defaultPrice == nil then
+    if garage.starterGarage then
       addPurchasedGarage(garage.id)
       return
     end
@@ -164,13 +164,6 @@ local function cancelGaragePurchase()
   garageToPurchase = nil
 end
 
-local function onUpdate()
-  if not career_career.isActive() then return end
-  if purchasedGarages == {} or purchasedGarages == nil then
-    purchaseDefaultGarage()
-  end
-end
-
 M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
 M.requestGarageData = requestGarageData
 M.canPay = canPay
@@ -186,6 +179,5 @@ M.isDiscoveredGarage = isDiscoveredGarage
 M.loadPurchasedGarages = loadPurchasedGarages
 M.savePurchasedGarages = savePurchasedGarages
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
-M.onUpdate = onUpdate
 
 return M
