@@ -67,6 +67,7 @@ export default {
     sendAllCareerSaveSlotsData: () => {},
     sendCurrentSaveSlotData: () => {},
     enableTutorial: enable => Boolean,
+    enableHardcoreMode: enable => Boolean,
     createOrLoadCareerAndStart: id => String,
   },
 

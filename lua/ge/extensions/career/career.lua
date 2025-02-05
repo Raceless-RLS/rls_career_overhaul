@@ -290,6 +290,13 @@ local function enableTutorial(enabled)
   M.tutorialEnabled = enabled or false
 end
 
+local function enableHardcoreMode(enabled)
+  if enabled then
+    log("I","","Hardcore mode enabled.")
+  end
+  M.hardcoreMode = enabled
+end
+
 local function createOrLoadCareerAndStart(name, specificAutosave)
   --M.tutorialEnabled = string.find(string.lower(name), "tutorial") and true or false
   --M.vehSelectEnabled = string.find(string.lower(name), "vehselect") and true or false
@@ -614,6 +621,7 @@ M.onWorldReadyState = onWorldReadyState
 
 M.getAdditionalMenuButtons = getAdditionalMenuButtons
 
+M.enableHardcoreMode = enableHardcoreMode
 M.enableTutorial = enableTutorial
 M.createOrLoadCareerAndStart = createOrLoadCareerAndStart
 M.activateCareer = activateCareer
