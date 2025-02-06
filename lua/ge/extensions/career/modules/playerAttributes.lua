@@ -22,8 +22,8 @@ local function init()
     attributes[branch.attributeKey].value = branch.defaultValue or baseAttribute.value
   end
   local startingCapital = 10000
-  if not career_career.tutorialEnabled then
-    startingCapital = startingCapital
+  if career_career.hardcoreMode then
+    startingCapital = 0
   end
   M.setAttributes({money=startingCapital}, {label="Starting Capital"})
 end

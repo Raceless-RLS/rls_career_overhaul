@@ -17,7 +17,7 @@ local function savePurchasedGarages(currentSavePath)
   if not FS:directoryExists(dirPath) then
     FS:directoryCreate(dirPath)
   end
-
+  
   local data = {
     garages    = purchasedGarages,
     discovered = discoveredGarages
@@ -52,6 +52,7 @@ local function addPurchasedGarage(garageId)
     print("Showing non-tutorial welcome splashscreen")
     career_modules_linearTutorial.showNonTutorialWelcomeSplashscreen()
   end
+  print("Adding purchased garage: " .. garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   savePurchasedGarages()
@@ -72,6 +73,7 @@ local function addDiscoveredGarage(garageId)
 end
 
 local function purchaseDefaultGarage()
+  if career_career.hardcoreMode or career_modules_hardcore.isHardcoreMode() then return end
   local garages = freeroam_facilities.getFacilitiesByType("garage")
   if not garages or #garages == 0 then return end  -- Return if no garages
   for _, garage in ipairs(garages) do
@@ -91,7 +93,12 @@ local function loadPurchasedGarages()
   local data = jsonReadFile(filePath) or {}
   purchasedGarages = data.garages or {}
   discoveredGarages = data.discovered or {}
-  purchaseDefaultGarage()
+  if career_career.hardcoreMode then
+    purchasedGarages = {}
+    discoveredGarages = {}
+  else
+    purchaseDefaultGarage()
+  end
   reloadRecoveryPrompt()
 end
 

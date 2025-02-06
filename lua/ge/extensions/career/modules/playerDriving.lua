@@ -85,6 +85,7 @@ local function setTrafficVars()
 end
 
 local function isNoPoliceModActive()
+  if career_career.hardcoreMode or career_modules_hardcore.isHardcoreMode() then return false end
     local mods = core_modmanager.getMods()
     for modName, modData in pairs(mods) do
         if modName:lower():find("rls_no_police") and modData.active then

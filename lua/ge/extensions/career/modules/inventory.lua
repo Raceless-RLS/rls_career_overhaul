@@ -386,6 +386,7 @@ local function getNumberOfFreeSlots()
 end
 
 local function hasFreeSlot()
+  if career_career.hardcoreMode then return true end
   return getNumberOfFreeSlots() > 0
 end
 
@@ -677,17 +678,30 @@ local function setupInventory(levelPath)
   if not data then
     -- this means this is a new career save
     saveCareer = 0
+    if career_career.hardcoreMode then
+      local model, config = "autobello","vehicles/autobello/Broken_Bello.pc"
+      local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
+      local options = {config = config, licenseText = "Hardcore", vehicleName = "First Car", pos = pos, rot = rot}
+      local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
+      spawningOptions.autoEnterVehicle = false
+      local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
+      core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
 
-    if career_modules_linearTutorial.getLinearStep() == -1 then
+      gameplay_walk.setWalkingMode(true)
+      -- move walking character into position
+      spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
+      gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
+      local mileage = 400000 * 1609.344
+      veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, 0.5))
+      M.addVehicle(veh:getID())
+    elseif career_modules_linearTutorial.getLinearStep() == -1 then
       -- default placement is in front of the dealership, facing it
       --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
       --gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
       if levelName == "west_coast_usa" then
         freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
-        career_modules_extraSaveData.addPurchasedGarage("chinatownGarage")
       elseif levelName == "italy" then
         freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
-        career_modules_extraSaveData.addPurchasedGarage("carlinoGarage")
       end
     else
       -- spawn the tutorial vehicle
