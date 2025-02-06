@@ -265,7 +265,7 @@ local function onPursuitAction(vehId, data)
         resetPursuit()
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
-            local bonus = math.floor(120 * data.score) / 100
+            local bonus = math.floor(240 * data.score) / 100
 
             career_modules_payment.reward({
                 money = {

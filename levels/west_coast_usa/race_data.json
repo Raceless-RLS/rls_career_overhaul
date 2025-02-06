@@ -9,25 +9,25 @@
       "type": ["motorsport"]
     },
     "roadOval": {
-      "bestTime": 25,
-      "reward": 500,
-      "hotlap": 22,
+      "bestTime": 30,
+      "reward": 350,
+      "hotlap": 25,
       "checkpointRoad": "roadOval",
       "label": "Paved Oval",
       "type": ["motorsport"]
     },
     "dirtOval": {
-      "bestTime": 25,
-      "reward": 500,
-      "hotlap": 22,
+      "bestTime": 30,
+      "reward": 350,
+      "hotlap": 25,
       "checkpointRoad": "dirtOval",
       "label": "Dirt Oval",
       "type": ["motorsport"]
     },
     "quarryCircuit": {
-      "bestTime": 30,
-      "reward": 1250,
-      "hotlap": 25,
+      "bestTime": 27,
+      "reward": 1000,
+      "hotlap": 23,
       "checkpointRoad": "quarryCircuit",
       "label": "Quarry Circuit",
       "type": ["motorsport"]
@@ -190,18 +190,18 @@
     },
     "track": {
       "bestTime": 140,
-      "reward": 2500,
+      "reward": 2250,
       "label": "Track",
       "checkpointRoad": "trackloop",
       "hotlap": 125,
       "runningStart": true,
       "altRoute": {
-        "bestTime": 110,
-        "reward": 2000,
+        "bestTime": 100,
+        "reward": 1750,
         "label": "Short Track",
         "checkpointRoad": "trackalt",
         "mergeCheckpoints": [1, 10],
-        "hotlap": 95,
+        "hotlap": 85,
         "altInfo": "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
       },
       "type": ["motorsport", "apexRacing"]
