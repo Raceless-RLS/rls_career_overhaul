@@ -49,9 +49,12 @@ local function addAttributes(change, reason)
     if attributeName == "vouchers" then
       value = 0
     end
+    if value > 0 then
+      value = value / (career_modules_hardcore.isHardcoreMode and 2 or 1)
+    end
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)
     local attribute = attributes[attributeName]
-    attribute.value = clamp(attribute.value + value / career_career.hardcoreMode and 2 or 1, attribute.min or -math.huge, attribute.max or math.huge)
+    attribute.value = clamp(attribute.value + value, attribute.min or -math.huge, attribute.max or math.huge)
     for tag, en in pairs(reason.tags) do
       if en and value > 0 then
         attribute.gains[tag] = (attribute.gains[tag] or 0) + value
@@ -73,10 +76,12 @@ local function addAttributes(change, reason)
     end
   end
 
+  reason.label = reason.label .. (career_modules_hardcore.isHardcoreMode and " (Hardcore) 50% cut" or "")
+
   -- log change for logbook etc
   table.insert(attributeLog, {
     attributeChange = change,
-    reason = reason .. (career_career.hardcoreMode and " hardcore cut 50%" or ""),
+    reason = reason,
     time = os.time()
   })
 
