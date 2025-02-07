@@ -56,6 +56,8 @@ local function isBestTime(entry)
 end
 
 local function addLeaderboardEntry(entry)
+    print("Adding leaderboard entry" .. entry.raceLabel .. " " .. entry.inventoryId .. " " .. entry.time)
+    career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time)
     if isBestTime(entry) then
         local raceName = entry.raceName
         leaderboard[level] = leaderboard[level] or {}
@@ -68,7 +70,7 @@ local function addLeaderboardEntry(entry)
             else
                 leaderboard[level][raceName].altRoute.splitTimes = entry.splitTimes
                 leaderboard[level][raceName].altRoute.time = entry.time
-            end
+            end   
         else
             if entry.isHotlap then
                 leaderboard[level][raceName].hotlapSplitTimes = entry.splitTimes
