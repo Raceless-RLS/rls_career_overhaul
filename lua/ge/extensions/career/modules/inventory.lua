@@ -683,9 +683,24 @@ local function setupInventory(levelPath)
 
   if not data then
     -- this means this is a new career save
+    
     saveCareer = 0
     if career_career.hardcoreMode then
-      local model, config = "autobello","vehicles/autobello/Broken_Bello.pc"
+      local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
+      local hardcoreFilter = {
+        whiteList = {
+            ["Config Type"] = {"Hardcore"}
+        }
+    }
+    local hardcoreVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = hardcoreFilter},
+        6,
+        eligibleVehicles,
+        "Population"
+    )
+      local randomVehicleInfo = hardcoreVehicleInfos[math.random(#hardcoreVehicleInfos)]
+      local model = randomVehicleInfo.model_key
+      local config = '/vehicles/' .. model .. '/configurations/' .. randomVehicleInfo.key .. '.pc'
       local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
       local options = {config = config, licenseText = "Hardcore", vehicleName = "First Car", pos = pos, rot = rot}
       local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
