@@ -109,7 +109,7 @@ local function getTotalGarageCapacity()
   if garages then
     for _, garage in pairs(garages) do
       if purchasedGarages[garage.id] then
-        totalCapacity = totalCapacity + (garage.capacity or 0)
+        totalCapacity = totalCapacity + (math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1)) or 0)
       end
     end
   end
@@ -136,7 +136,7 @@ local function requestGarageData()
     local garageData = {
       name = garage.name,
       price = garage.defaultPrice,
-      capacity = garage.capacity
+      capacity = math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1))
     }
     return garageData
   end

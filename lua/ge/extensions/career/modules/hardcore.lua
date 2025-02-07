@@ -32,6 +32,12 @@ M.isHardcoreMode = function()
     return isHardcoreMode
 end
 
+M.onPlayerAttributesChanged = function()
+    if isHardcoreMode then
+        ui_message("Hardcore mode is enabled, all rewards are halved.", 10, "info", "info")
+    end
+end
+
 M.onCareerActive = onCareerActive
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
 

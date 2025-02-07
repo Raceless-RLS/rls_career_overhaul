@@ -564,7 +564,13 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
 
-    vehObj:queueLuaCommand('electrics.setIgnitionLevel(0)')
+    if inventoryId then
+      vehObj:queueLuaCommand('electrics.setIgnitionLevel(0)')
+
+      vehObj:queueLuaCommand(string.format(
+        'local cert = extensions.vehicleCertifications.getCertifications() obj:queueGameEngineLua("career_modules_inventory.setCertifications(%s, " .. serialize(cert) .. ")")',
+        vehObj:getID()))
+    end
 
     return vehObj
   end
@@ -677,9 +683,24 @@ local function setupInventory(levelPath)
 
   if not data then
     -- this means this is a new career save
+    
     saveCareer = 0
     if career_career.hardcoreMode then
-      local model, config = "autobello","vehicles/autobello/Broken_Bello.pc"
+      local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
+      local hardcoreFilter = {
+        whiteList = {
+            ["Config Type"] = {"Hardcore"}
+        }
+    }
+    local hardcoreVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = hardcoreFilter},
+        6,
+        eligibleVehicles,
+        "Population"
+    )
+      local randomVehicleInfo = hardcoreVehicleInfos[math.random(#hardcoreVehicleInfos)]
+      local model = randomVehicleInfo.model_key
+      local config = '/vehicles/' .. model .. '/configurations/' .. randomVehicleInfo.key .. '.pc'
       local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
       local options = {config = config, licenseText = "Hardcore", vehicleName = "First Car", pos = pos, rot = rot}
       local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
@@ -1452,6 +1473,46 @@ local function calculateSeatingCapacity(inventoryId)
   end
   return seatingCapacity
 end
+
+local function saveFRETimeToVehicle(raceName, inventoryId, time)
+  local veh = vehicles[inventoryId]
+  if not veh then return end
+  print("Saving FRE time to vehicle" .. raceName .. " " .. inventoryId .. " " .. time)
+  veh.FRETimes = veh.FRETimes or {}
+  if veh.FRETimes[raceName] then
+    veh.FRETimes[raceName] = math.min(veh.FRETimes[raceName], time)
+  else
+    veh.FRETimes[raceName] = time
+  end
+end
+
+local function getFRETimeToVehicle(raceName, inventoryId)
+  local veh = vehicles[inventoryId]
+  if not veh then return nil end
+  return veh.FRETimes and veh.FRETimes[raceName] or nil
+end
+
+M.getAllFRETimes = function()
+  local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  if not invId then return {} end
+  return vehicles[invId].FRETimes
+end
+
+function M.setCertifications(vehId, certifications)
+  local invId = getInventoryIdFromVehicleId(vehId)
+  if not invId then return end
+  vehicles[invId].certifications = certifications
+end
+
+M.getCertifications = function()
+  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  local veh = vehicles[invId]
+  if not veh then return {} end
+  return veh.certifications
+end
+
+M.saveFRETimeToVehicle = saveFRETimeToVehicle
+M.getFRETimeToVehicle = getFRETimeToVehicle
 
 M.calculateSeatingCapacity = calculateSeatingCapacity
 M.onWorldReadyState = onWorldReadyState

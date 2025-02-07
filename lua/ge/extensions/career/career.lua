@@ -384,6 +384,11 @@ local function formatSaveSlotForUi(saveSlot)
   local autosavePath = career_saveSystem.getAutosave(career_saveSystem.getSaveRootDirectory() .. saveSlot)
   local infoData = jsonReadFile(autosavePath .. "/info.json")
   local careerData = jsonReadFile(autosavePath .. "/career/" .. saveFile)
+  local hardcoreData = jsonReadFile(autosavePath .. "/career/rls_career/hardcore.json")
+
+  if hardcoreData then
+    data.hardcoreMode = hardcoreData.hardcoreMode
+  end
   
   if careerData and careerData.level then
     data.preview = levelPreviewMap[careerData.level] or levelPreviewMap.west_coast_usa

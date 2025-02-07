@@ -30,6 +30,8 @@ local totalCheckpoints = 0
 local currentExpectedCheckpoint = 1
 local invalidLap = false
 
+local mInventoryId = nil
+
 local races = nil
 
 local function rewardLabel(raceName, newBestTime)
@@ -111,11 +113,13 @@ local function payoutRace()
 
     local newEntry = {
         raceName = mActiveRace,
+        raceLabel = raceLabel,
         isAltRoute = mAltRoute,
         isHotlap = mHotlap == mActiveRace,
         time = in_race_time,
         splitTimes = mSplitTimes,
-        driftScore = driftScore
+        driftScore = driftScore,
+        inventoryId = mInventoryId
     }
 
     local newBest = leaderboardManager.addLeaderboardEntry(newEntry)
@@ -182,20 +186,22 @@ local function payoutRace()
 end
 
 -- Simplified payoutRace function for drag races
-local function payoutDragRace(raceName, finishTime, finishSpeed)
+local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
     -- Load the leaderboard
     local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
     local oldTime = leaderboardEntry and leaderboardEntry.time or 0
 
     local newEntry = {
+        raceLabel = "Drag",
         raceName = raceName,
         time = finishTime,
-        splitTimes = mSplitTimes
+        splitTimes = mSplitTimes,
+        inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
     }
 
     local newBestTime = leaderboardManager.addLeaderboardEntry(newEntry)
 
-    if not career_career.isActive() then
+    if not career_career.isActive() or not career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
         local message = string.format("%s\nTime: %s\nSpeed: %.2f mph", races[raceName].label, utils.formatTime(finishTime),
             finishSpeed)
         utils.displayMessage(message, 10)
@@ -320,6 +326,9 @@ local function exitRace()
         mHotlap = nil
         currCheckpoint = nil
         mSplitTimes = {}
+        mAltRoute = false
+        invalidLap = false
+        mInventoryId = nil
         Assets:hideAllAssets()
         checkpointManager.removeCheckpoints()
         utils.displayMessage("You exited the race zone, Race cancelled", 3)
@@ -336,6 +345,7 @@ local function onBeamNGTrigger(data)
         return
     end
     if gameplay_walk.isWalking() then return end
+    if career_career.isActive() and not career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) then return end
 
     local triggerName = data.triggerName
     local event = data.event
@@ -467,6 +477,8 @@ local function onBeamNGTrigger(data)
             in_race_time = 0
             mActiveRace = raceName
             lapCount = 0
+            mInventoryId = career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID)
+            invalidLap = false
 
             utils.displayStartMessage(raceName)
             utils.setActiveLight(raceName, "green")

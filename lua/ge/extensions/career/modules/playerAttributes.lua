@@ -46,6 +46,12 @@ local function addAttributes(change, reason)
 
   -- make statistic
   for attributeName, value in pairs(change) do
+    if attributeName == "vouchers" then
+      value = 0
+    end
+    if value > 0 then
+      value = value / (career_modules_hardcore.isHardcoreMode and 2 or 1)
+    end
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)
     local attribute = attributes[attributeName]
     attribute.value = clamp(attribute.value + value, attribute.min or -math.huge, attribute.max or math.huge)
@@ -69,6 +75,8 @@ local function addAttributes(change, reason)
       career_career.interactWithOrganization(orgId)
     end
   end
+
+  reason.label = reason.label .. (career_modules_hardcore.isHardcoreMode and " (Hardcore) 50% cut" or "")
 
   -- log change for logbook etc
   table.insert(attributeLog, {
