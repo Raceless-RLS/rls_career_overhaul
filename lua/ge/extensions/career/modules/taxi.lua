@@ -60,6 +60,18 @@ local function findValidPickupSpots()
     return validPickupSpots
 end
 
+local function onExtensionLoaded()
+    if getCurrentLevelIdentifier() then
+        validPickupSpots = findValidPickupSpots()
+    end
+end
+
+local function onWorldReadyState(state)
+    if state == 2 then
+        validPickupSpots = findValidPickupSpots()
+    end
+end
+
 local function startRide(fare)
     -- Calculate pickup path distance
     if not fare and not currentFare then
@@ -433,6 +445,9 @@ function M.onVehicleSwitched()
         guihooks.trigger('updateTaxiState', dataToSend)
     end
 end
+
+M.onExtensionLoaded = onExtensionLoaded
+M.onWorldReadyState = onWorldReadyState
 
 M.onUpdate = update
 
