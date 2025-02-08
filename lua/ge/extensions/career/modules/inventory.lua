@@ -1487,6 +1487,9 @@ local function calculateSeatingCapacity(inventoryId)
       end
     end
   end
+  if veh.config.mainPartName == "pickup" then
+    seatingCapacity = math.max(seatingCapacity, 7)
+  end
   return seatingCapacity
 end
 
