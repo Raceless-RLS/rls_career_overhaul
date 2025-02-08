@@ -139,7 +139,8 @@ const iconById = {
   partInventory: icons.engine,
   vehicleShop: icons.carCoins,
   sleep: icons.night,
-  carMeets: icons.cars
+  carMeets: icons.cars,
+  marketplace: icons.shoppingCart
 }
 
 const infoById = computed(() => [

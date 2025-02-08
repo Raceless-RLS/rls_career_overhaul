@@ -567,6 +567,8 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     if inventoryId then
       vehObj:queueLuaCommand('electrics.setIgnitionLevel(0)')
 
+      M.setMileage(inventoryId)
+
       vehObj:queueLuaCommand(string.format(
         'local cert = extensions.vehicleCertifications.getCertifications() obj:queueGameEngineLua("career_modules_inventory.setCertifications(%s, " .. serialize(cert) .. ")")',
         vehObj:getID()))
@@ -924,6 +926,20 @@ local function sendDataToUi()
     vehicle.quickRepairExtraPrice = career_modules_insurance.getQuickRepairExtraPrice()
     vehicle.initialRepairTime = career_modules_insurance.getRepairTime(inventoryId)
 
+    if vehicle.certifications then
+      vehicle.power = string.format("%d", vehicle.certifications.power)
+      vehicle.weight = string.format("%d", vehicle.certifications.weight)
+      vehicle.torque = string.format("%d", vehicle.certifications.torque)
+      vehicle.powerPerWeight = string.format("%0.3f", vehicle.certifications.power / vehicle.certifications.weight)
+    else
+      vehicle.power = "N/A"
+      vehicle.weight = "N/A"
+      vehicle.torque = "N/A"
+      vehicle.powerPerWeight = "N/A"
+    end
+
+    vehicle.mileage = M.setMileage(inventoryId)
+
     if inventoryIdToVehId[inventoryId] then
       local vehObj = be:getObjectByID(inventoryIdToVehId[inventoryId])
       if vehObj then
@@ -1220,12 +1236,12 @@ local function getVehicleTimeToAccess(inventoryId)
   return vehicles[inventoryId].timeToAccess
 end
 
-local function sellVehicle(inventoryId)
+local function sellVehicle(inventoryId, instant)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
 
-  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-  career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")})
+  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * 0.75
+  career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
 
@@ -1234,7 +1250,7 @@ local function sellVehicle(inventoryId)
 end
 
 local function sellVehicleFromInventory(inventoryId)
-  if sellVehicle(inventoryId) then
+  if sellVehicle(inventoryId, true) then
     career_saveSystem.saveCurrent()
     sendDataToUi()
   end
@@ -1472,6 +1488,60 @@ local function calculateSeatingCapacity(inventoryId)
     end
   end
   return seatingCapacity
+end
+
+function M.loadMarketplaceData(savePath)
+  local marketplaceData = jsonReadFile(savePath .. "/career/rls_career/marketplace.json")
+  if marketplaceData then
+    for inventoryId, vehicle in pairs(vehicles) do
+      if marketplaceData[inventoryId] ~= nil then
+        vehicle.forSale = true
+      end
+    end
+    return marketplaceData
+  end
+  return nil
+end
+
+function M.removeVehicleFromSale(inventoryId, price)
+  inventoryId = tonumber(inventoryId)
+  local vehicle = vehicles[inventoryId]
+  if vehicle and vehicle.forSale then
+    vehicle.forSale = nil
+    extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = false})
+  end
+  if price then
+    career_modules_playerAttributes.addAttributes({money=price}, {tags={"vehicleSold","selling"},label="Sold a "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
+    career_modules_log.addLog(string.format("Sold vehicle %d for %f", inventoryId, price), "inventory")
+    removeVehicle(inventoryId)
+  end
+end
+
+function M.listVehicleForSale(inventoryId)
+  local vehicle = vehicles[tonumber(inventoryId)]
+  if not vehicle then return end
+  vehicle.forSale = true
+  extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = true})
+end
+
+function M.setMileage(inventoryId)
+  if not inventoryId then inventoryId = currentVehicle end
+  local vehicle = vehicles[inventoryId]
+  if not vehicle or not vehicle.partConditions then
+    return 0 -- Or nil, or handle the case where there are no part conditions
+  end
+
+  local maxOdometer = 0
+  local partConditions = vehicle.partConditions
+
+  for partName, conditionData in pairs(partConditions) do
+    if conditionData.odometer then
+      maxOdometer = math.max(maxOdometer, conditionData.odometer)
+    end
+  end
+  vehicle.mileage = maxOdometer
+  return maxOdometer
 end
 
 local function saveFRETimeToVehicle(raceName, inventoryId, time)

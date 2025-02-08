@@ -50,7 +50,6 @@ export const useComputerStore = defineStore("computer", () => {
           lua.career_modules_carmeets.openMenu()
         }
       }
-      /*
       ,
       {
         id: 'marketplace',
@@ -61,7 +60,6 @@ export const useComputerStore = defineStore("computer", () => {
           lua.career_modules_vehicleMarketplace.openMenu()
         }
       }
-      */
       // Future activities will be added here
     ]
   })

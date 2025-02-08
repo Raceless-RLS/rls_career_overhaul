@@ -399,7 +399,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by 3.5%", 10, "info", "info")
                 local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
                 if inventoryId then
-                    career_modules_inventory.addMeetReputation(inventoryId, 1)
+                    career_modules_inventory.addMeetReputation(inventoryId, 3.5)
                 end
                 core_groundMarkers.resetAll()
                 playerHasArrived = true
