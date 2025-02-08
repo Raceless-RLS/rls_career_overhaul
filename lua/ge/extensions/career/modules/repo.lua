@@ -287,7 +287,11 @@ function VehicleRepoJob:calculateReward()
     local distanceMultiplier = self.totalDistanceTraveled * 2
     local timeMultiplier = (self.totalDistanceTraveled / ((os.time() - self.jobStartTime) * 10))
     local reward = math.floor((((5 * math.sqrt(self.vehicleValue)) + distanceMultiplier) * timeMultiplier)/ 4)
-    return reward * 1.25 + 1000
+    reward = reward * 1.25 + 1000
+    if career_modules_hardcore.isHardcoreMode() then
+        reward = reward * 0.66
+    end
+    return reward
 end
 
 -- Update function called every frame
@@ -454,7 +458,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             }, {
                 label = "You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. reward,
                 tags = {"gameplay", "reward", "laborer"}
-            })
+            }, true)
             career_saveSystem.saveCurrent()
             self.isJobStarted = false
             self.isCompleted = true

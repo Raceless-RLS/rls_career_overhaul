@@ -283,7 +283,7 @@ local function onPursuitAction(vehId, data)
             }, {
                 label = "Arrest Bonus",
                 tags = {"gameplay", "reward", "police"}
-            })
+            }, true)
             ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
         end
         career_saveSystem.saveCurrent()

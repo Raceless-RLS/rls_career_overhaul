@@ -138,7 +138,11 @@ local function getDepreciatedPartValue(value, mileage)
   local minFraction = 0.10
   local minValue    = value * minFraction
 
-  return math.max(rawValue, minValue)
+  local result = math.max(rawValue, minValue)
+  if career_modules_hardcore.isHardcoreMode() then
+    result = result * 0.66
+  end
+  return result
 end
 
 local function getPartValue(part)

@@ -1132,6 +1132,9 @@ local function onPursuitAction(vehId, data)
             if not hasLicensePlate(vehId) then
                 fine = fine * 2.5
             end
+            if career_modules_hardcore.isHardcoreMode() then
+                fine = fine * 3
+            end
 
             local effectText = {{
                 label = "Money",
@@ -1150,6 +1153,10 @@ local function onPursuitAction(vehId, data)
             local eventDescription = "Ticketed for " .. table.concat(offenseNames, ", ")
             if not hasLicensePlate(vehId) then
                 eventDescription = eventDescription .. " (no license plate)"
+            end
+
+            if career_modules_hardcore.isHardcoreMode() then
+                eventDescription = eventDescription .. "\nHardcore mode is enabled, all fines are tripled."
             end
 
             table.insert(plHistory.generalHistory.ticketEvents, {

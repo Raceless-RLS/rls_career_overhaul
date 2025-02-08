@@ -128,16 +128,21 @@ local function payoutRace()
     local message = invalidLap and "Lap Invalidated\n" or ""
 
     if race.driftGoal then
-        message = message .. string.format("%s\nDrift Score: %d\nTime: %s", raceLabel, driftScore, utils.formatTime(in_race_time))
+        message = message ..
+                      string.format("%s\nDrift Score: %d\nTime: %s", raceLabel, driftScore,
+                utils.formatTime(in_race_time))
         if oldScore and oldTime then
-            message = message .. string.format("\nPrevious Best Score: %d\nPrevious Best Time: %s", oldScore, utils.formatTime(oldTime))
+            message = message ..
+                          string.format("\nPrevious Best Score: %d\nPrevious Best Time: %s", oldScore,
+                    utils.formatTime(oldTime))
         end
     else
         if newBest and not invalidLap then
             message = message .. "New Best Time!\n"
         end
         if race.hotlap then
-            message = message .. string.format("%s\nTime: %s\nLap: %d", raceLabel, utils.formatTime(in_race_time), lapCount)
+            message = message ..
+                          string.format("%s\nTime: %s\nLap: %d", raceLabel, utils.formatTime(in_race_time), lapCount)
         else
             message = message .. string.format("%s\nTime: %s", raceLabel, utils.formatTime(in_race_time))
         end
@@ -157,25 +162,36 @@ local function payoutRace()
             reward = reward * (1 + (lapCount - 1) / 10)
         end
 
+        reward = reward / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+
         if reward > 0 then
             local xp = math.floor(reward / 20)
             local totalReward = {
-                money = { amount = reward },
-                beamXP = { amount = math.floor(xp / 10) },
+                money = {
+                    amount = reward
+                },
+                beamXP = {
+                    amount = math.floor(xp / 10)
+                },
                 vouchers = {
                     amount = (oldTime == 0 or oldTime > time) and in_race_time < time and 1 or 0
                 }
             }
             for _, type in ipairs(race.type) do
-                totalReward[type] = { amount = xp }
+                totalReward[type] = {
+                    amount = xp
+                }
             end
-            
+
             career_modules_payment.reward(totalReward, {
                 label = rewardLabel(mActiveRace, newBest),
                 tags = {"gameplay", "reward", "mission"}
-            })
-            
+            }, true)
+
             message = message .. string.format("\nXP: %d | Reward: $%.2f", xp, reward)
+            if career_modules_hardcore.isHardcoreMode() then
+                message = message .. "\nHardcore mode is enabled, all rewards are halved."
+            end
             career_saveSystem.saveCurrent()
         end
     end
@@ -219,6 +235,8 @@ local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
         reward = baseReward / 2 -- Minimum reward for completion
     end
 
+    reward = reward / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+
     reward = newBestTime and reward or reward / 2
 
     -- Calculate experience points
@@ -244,12 +262,16 @@ local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
     }
 
     -- Process the reward
-    career_modules_payment.reward(totalReward, reason)
+    career_modules_payment.reward(totalReward, reason, true)
 
     -- Prepare the completion message
     local message = string.format("%s\n%s\nTime: %s\nSpeed: %.2f mph\nXP: %d | Reward: $%.2f",
         newBestTime and "Congratulations! New Best Time!" or "", raceData.label, utils.formatTime(finishTime), finishSpeed,
         xp, reward)
+
+    if career_modules_hardcore.isHardcoreMode() then
+        message = message .. "\nHardcore mode is enabled, all rewards are halved."
+    end
 
     -- Display the message
     ui_message(message, 20, "Reward")

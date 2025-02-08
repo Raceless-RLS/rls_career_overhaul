@@ -650,7 +650,7 @@ local function openInventoryMenuForTradeIn()
       callback = function(inventoryId)
         local vehicle = career_modules_inventory.getVehicles()[inventoryId]
         if vehicle then
-          purchaseData.tradeInVehicleInfo = {id = inventoryId, niceName = vehicle.niceName, Value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * 0.75}
+          purchaseData.tradeInVehicleInfo = {id = inventoryId, niceName = vehicle.niceName, Value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * (career_modules_hardcore.isHardcoreMode() and 0.33 or 0.66)}
           guihooks.trigger('ChangeState', {state = 'vehiclePurchase', params = {}})
         end
       end,

@@ -1240,7 +1240,7 @@ local function sellVehicle(inventoryId, instant)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
 
-  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * 0.75
+  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * (career_modules_hardcore.isHardcoreMode() and 0.33 or 0.66)
   career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')

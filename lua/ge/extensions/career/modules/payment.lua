@@ -26,12 +26,12 @@ local function pay(price, reason)
 end
 
 
-local function reward(price, reason)
+local function reward(price, reason, fullReward)
   local change = {}
   for currency, info in pairs(price) do
     change[currency] = info.amount
   end
-  career_modules_playerAttributes.addAttributes(change, reason)
+  career_modules_playerAttributes.addAttributes(change, reason, fullReward)
   return true
 end
 

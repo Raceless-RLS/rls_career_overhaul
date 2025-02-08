@@ -197,6 +197,10 @@ local function generateJob()
 
     local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier * distanceMultiplier
 
+    if career_modules_hardcore.isHardcoreMode() then
+        baseFare = baseFare * 0.66
+    end
+
     -- Create fare details
     local fare = {
         pickup = {
@@ -265,6 +269,10 @@ local function completeRide()
         currentFare.totalFare, currentFare.totalDistance, speedFactor > 0 and "Speed Bonus" or "Time Penalty",
         currentFare.timeMultiplier)
 
+    if career_modules_hardcore.isHardcoreMode() then
+        label = label .. "\nHardcore mode is enabled, all rewards lowered."
+    end
+
     career_modules_payment.reward({
         money = {
             amount = math.floor(finalPayment)
@@ -275,7 +283,7 @@ local function completeRide()
     }, {
         label = label,
         tags = {"transport", "taxi"}
-    })
+    }, true)
 end
 
 local function rejectJob()

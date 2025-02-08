@@ -43,6 +43,9 @@ local function startRental()
     career_modules_inventory.delayVehicleAccess(inventoryId, rentalTime, "rented")
     --  extensions.core_vehicles.spawnNewVehicle("unicycle", {removeTraffic = false})
     local reward = rentalReward()
+    if career_modules_hardcore.isHardcoreMode() then
+        reward = reward / 2
+    end
     career_modules_payment.reward({
         money = {
             amount = reward

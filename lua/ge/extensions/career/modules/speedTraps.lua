@@ -17,7 +17,7 @@ local playerPursuiting = false
 local function getFineFromSpeed(overSpeed)
   for _, fineInfo in ipairs(fines) do
     if overSpeed <= fineInfo.overSpeed then
-      return fineInfo.fine
+      return fineInfo.fine * (career_modules_hardcore.isHardcoreMode() and 10 or 1)
     end
   end
   return maxFine
