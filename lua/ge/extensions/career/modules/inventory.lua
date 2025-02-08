@@ -753,6 +753,7 @@ local function setupInventory(levelPath)
         end
       end
     end
+    extensions.hook("onEnterVehicleFinished", currentVehicle)
   end
 
   commands.setGameCamera()

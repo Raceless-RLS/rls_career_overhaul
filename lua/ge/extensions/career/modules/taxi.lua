@@ -60,16 +60,8 @@ local function findValidPickupSpots()
     return validPickupSpots
 end
 
-local function onExtensionLoaded()
-    if getCurrentLevelIdentifier() then
-        validPickupSpots = findValidPickupSpots()
-    end
-end
-
-local function onWorldReadyState(state)
-    if state == 2 then
-        validPickupSpots = findValidPickupSpots()
-    end
+local function onEnterVehicleFinished()
+    validPickupSpots = findValidPickupSpots()
 end
 
 local function startRide(fare)
@@ -446,9 +438,7 @@ function M.onVehicleSwitched()
     end
 end
 
-M.onExtensionLoaded = onExtensionLoaded
-M.onWorldReadyState = onWorldReadyState
-
+M.onEnterVehicleFinished = onEnterVehicleFinished
 M.onUpdate = update
 
 M.acceptJob = startRide
