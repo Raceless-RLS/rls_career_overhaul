@@ -62,7 +62,7 @@ local function findValidPickupSpots()
 end
 
 local function onEnterVehicleFinished()
-    validPickupSpots = findValidPickupSpots()
+    validPickupSpots = findParkingSpots()
 end
 
 local function startRide(fare)
