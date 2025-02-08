@@ -47,6 +47,7 @@ end
 
 local function findValidPickupSpots()
     local validPickupSpots = {}
+    if not be:getPlayerVehicle(0) then return end
     local playerPos = be:getPlayerVehicle(0):getPosition()
 
     if not parkingSpots then
