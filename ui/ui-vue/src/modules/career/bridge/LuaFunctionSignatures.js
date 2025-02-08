@@ -181,7 +181,10 @@ export default {
     removeVehicleObject: id => Number,
     getVehicles: () => {},
     setLicensePlateText: (inventoryId, text) => [Number, String],
-    purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number]
+    purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number],
+    listVehicleForSale: id => Number,
+    getVehiclesForSale: () => {},
+    removeVehicleFromSale: id => Number
   },
 
   career_modules_partInventory: {
@@ -884,7 +887,9 @@ export default {
   },
 
   career_modules_vehicleMarketplace: {
-    listVehicleForSale: id => Number,
-    openMenu: () => {}
+    openMenu: () => {},
+    requestInitialData: () => {},
+    acceptOffer: (vehicleId, customer) => [String, String],
+    declineOffer: (vehicleId, customer) => [String, String]
   }
 }

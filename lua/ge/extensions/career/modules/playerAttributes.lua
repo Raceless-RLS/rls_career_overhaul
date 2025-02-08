@@ -29,7 +29,7 @@ local function init()
 end
 
 -- reason should be table with label, list of tags
-local function addAttributes(change, reason)
+local function addAttributes(change, reason, fullprice)
 
   -- make sure a reason exists!
   if not reason then
@@ -49,7 +49,7 @@ local function addAttributes(change, reason)
     if attributeName == "vouchers" then
       value = 0
     end
-    if value > 0 then
+    if value > 0  and not fullprice then
       value = value / (career_modules_hardcore.isHardcoreMode and 2 or 1)
     end
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)

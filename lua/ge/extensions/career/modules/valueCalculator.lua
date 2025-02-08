@@ -241,7 +241,7 @@ local function getInventoryVehicleValue(inventoryId, ignoreDamage)
   if not vehicle then return end
   local value = math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
   local meetReputation = career_modules_inventory.getMeetReputation(inventoryId)
-  return value * (1 + meetReputation * 0.035)
+  return value * (1 + meetReputation * 0.01)
 end
 
 local function getNumberOfBrokenParts(partConditions)
