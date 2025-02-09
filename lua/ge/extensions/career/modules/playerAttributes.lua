@@ -46,11 +46,11 @@ local function addAttributes(change, reason, fullprice)
 
   -- make statistic
   for attributeName, value in pairs(change) do
-    if attributeName == "vouchers" then
+    if (attributeName == "vouchers" and value > 0) and career_modules_hardcore.isHardcoreMode() then
       value = 0
     end
     if value > 0  and not fullprice then
-      value = value / (career_modules_hardcore.isHardcoreMode and 2 or 1)
+      value = value / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
     end
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)
     local attribute = attributes[attributeName]
@@ -76,7 +76,7 @@ local function addAttributes(change, reason, fullprice)
     end
   end
 
-  reason.label = reason.label .. (career_modules_hardcore.isHardcoreMode and " (Hardcore) 50% cut" or "")
+  reason.label = reason.label .. (career_modules_hardcore.isHardcoreMode() and " (Hardcore) 50% cut" or "")
 
   -- log change for logbook etc
   table.insert(attributeLog, {

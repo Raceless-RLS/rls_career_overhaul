@@ -32,10 +32,19 @@ M.isHardcoreMode = function()
     return isHardcoreMode
 end
 
-M.onPlayerAttributesChanged = function()
+M.onPlayerAttributesChanged = function(change, reason)
     if isHardcoreMode then
-        ui_message("Hardcore mode is enabled, all rewards are halved.", 10, "info", "info")
+        local isReward = false
+        for attributeName, value in pairs(change) do
+            if value > 0 then
+                isReward = true
+            end
+        end
+        if isReward then
+            ui_message("Hardcore mode is enabled, all rewards are halved.", 10, "info", "info")
+        end
     end
+
 end
 
 M.onCareerActive = onCareerActive

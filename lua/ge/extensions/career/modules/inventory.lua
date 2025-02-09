@@ -386,7 +386,6 @@ local function getNumberOfFreeSlots()
 end
 
 local function hasFreeSlot()
-  if career_career.hardcoreMode then return true end
   return getNumberOfFreeSlots() > 0
 end
 
@@ -394,7 +393,7 @@ local inventoryIdAfterUpdatingPartConditions
 local function addVehicle(vehId, inventoryId, options)
   options = options or {}
   if options.owned == nil then options.owned = true end
-  if options.owned and not hasFreeSlot() then return end
+  if options.owned and (not hasFreeSlot() and not options.starter) then return end
 
   local vehicle = scenetree.findObjectById(vehId)
   local vehicleData = core_vehicle_manager.getVehicleData(vehId)
@@ -709,14 +708,15 @@ local function setupInventory(levelPath)
       spawningOptions.autoEnterVehicle = false
       local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
       core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
+      core_vehicles.setPlateText("Uncle's", veh:getID())
 
       gameplay_walk.setWalkingMode(true)
       -- move walking character into position
       spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
       gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
-      local mileage = 400000 * 1609.344
+      local mileage = 900000 * 1609.344
       veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, 0.5))
-      M.addVehicle(veh:getID())
+      M.addVehicle(veh:getID(), nil, {starter = true})
     elseif career_modules_linearTutorial.getLinearStep() == -1 then
       -- default placement is in front of the dealership, facing it
       --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
@@ -1496,15 +1496,17 @@ end
 
 function M.loadMarketplaceData(savePath)
   local marketplaceData = jsonReadFile(savePath .. "/career/rls_career/marketplace.json")
+
   if marketplaceData then
     for inventoryId, vehicle in pairs(vehicles) do
       if marketplaceData[inventoryId] ~= nil then
+
         vehicle.forSale = true
       end
     end
     return marketplaceData
   end
-  return nil
+  return {}
 end
 
 function M.removeVehicleFromSale(inventoryId, price)
@@ -1512,8 +1514,8 @@ function M.removeVehicleFromSale(inventoryId, price)
   local vehicle = vehicles[inventoryId]
   if vehicle and vehicle.forSale then
     vehicle.forSale = nil
-    extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = false})
   end
+  extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = false})
   if price then
     career_modules_playerAttributes.addAttributes({money=price}, {tags={"vehicleSold","selling"},label="Sold a "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
     Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
@@ -1548,15 +1550,22 @@ function M.setMileage(inventoryId)
   return maxOdometer
 end
 
-local function saveFRETimeToVehicle(raceName, inventoryId, time)
+local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
   local veh = vehicles[inventoryId]
   if not veh then return end
-  print("Saving FRE time to vehicle" .. raceName .. " " .. inventoryId .. " " .. time)
   veh.FRETimes = veh.FRETimes or {}
   if veh.FRETimes[raceName] then
-    veh.FRETimes[raceName] = math.min(veh.FRETimes[raceName], time)
+    if driftScore and driftScore ~= 0 then
+      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
+    else
+      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
+    end
   else
-    veh.FRETimes[raceName] = time
+    if driftScore and driftScore ~= 0 then
+      veh.FRETimes[raceName] = driftScore
+    else
+      veh.FRETimes[raceName] = time
+    end
   end
 end
 

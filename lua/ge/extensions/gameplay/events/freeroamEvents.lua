@@ -208,7 +208,7 @@ local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
     local oldTime = leaderboardEntry and leaderboardEntry.time or 0
 
     local newEntry = {
-        raceLabel = "Drag",
+        raceLabel = races["drag"].label,
         raceName = raceName,
         time = finishTime,
         splitTimes = mSplitTimes,
