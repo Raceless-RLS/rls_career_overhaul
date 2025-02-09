@@ -741,9 +741,11 @@ local function setupInventory(levelPath)
       spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
       gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
     end
+    career_modules_extraSaveData.purchaseDefaultGarage()
   else
     if gameplay_walk.isWalking() then
       if unicycleSavedPosition and not justSwitched then
+
         spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
       else
         if levelName == "west_coast_usa" then
@@ -1556,9 +1558,9 @@ local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
   veh.FRETimes = veh.FRETimes or {}
   if veh.FRETimes[raceName] then
     if driftScore and driftScore ~= 0 then
-      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
-    else
       veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
+    else
+      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
     end
   else
     if driftScore and driftScore ~= 0 then

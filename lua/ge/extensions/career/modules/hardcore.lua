@@ -32,6 +32,7 @@ M.isHardcoreMode = function()
     return isHardcoreMode
 end
 
+--[[
 M.onPlayerAttributesChanged = function(change, reason)
     if isHardcoreMode then
         local isReward = false
@@ -46,6 +47,7 @@ M.onPlayerAttributesChanged = function(change, reason)
     end
 
 end
+]]
 
 M.onCareerActive = onCareerActive
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot

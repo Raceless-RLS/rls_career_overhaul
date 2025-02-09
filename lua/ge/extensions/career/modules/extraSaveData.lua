@@ -93,12 +93,6 @@ local function loadPurchasedGarages()
   local data = jsonReadFile(filePath) or {}
   purchasedGarages = data.garages or {}
   discoveredGarages = data.discovered or {}
-  if career_career.hardcoreMode then
-    purchasedGarages = {}
-    discoveredGarages = {}
-  else
-    purchaseDefaultGarage()
-  end
   reloadRecoveryPrompt()
 end
 
@@ -170,6 +164,8 @@ local function cancelGaragePurchase()
   guihooks.trigger('ChangeState', {state = 'play'})
   garageToPurchase = nil
 end
+
+M.purchaseDefaultGarage = purchaseDefaultGarage
 
 M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
 M.requestGarageData = requestGarageData
