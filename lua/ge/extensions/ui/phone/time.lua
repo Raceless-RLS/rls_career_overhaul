@@ -3,7 +3,7 @@ local M = {}
 local time = 0
 
 local function formatTime(time)
-    local total_minutes = time * 2400
+    local total_minutes = time * 1440
     local hours = math.floor(total_minutes / 60)
     local minutes = math.floor(total_minutes % 60)
     

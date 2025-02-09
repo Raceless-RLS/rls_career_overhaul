@@ -17,7 +17,7 @@ local function savePurchasedGarages(currentSavePath)
   if not FS:directoryExists(dirPath) then
     FS:directoryCreate(dirPath)
   end
-
+  
   local data = {
     garages    = purchasedGarages,
     discovered = discoveredGarages
@@ -52,6 +52,7 @@ local function addPurchasedGarage(garageId)
     print("Showing non-tutorial welcome splashscreen")
     career_modules_linearTutorial.showNonTutorialWelcomeSplashscreen()
   end
+  print("Adding purchased garage: " .. garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   savePurchasedGarages()
@@ -72,10 +73,11 @@ local function addDiscoveredGarage(garageId)
 end
 
 local function purchaseDefaultGarage()
+  if career_career.hardcoreMode or career_modules_hardcore.isHardcoreMode() then return end
   local garages = freeroam_facilities.getFacilitiesByType("garage")
   if not garages or #garages == 0 then return end  -- Return if no garages
   for _, garage in ipairs(garages) do
-    if garage.defaultPrice == 0 or garage.defaultPrice == nil then
+    if garage.starterGarage then
       addPurchasedGarage(garage.id)
       return
     end
@@ -91,7 +93,12 @@ local function loadPurchasedGarages()
   local data = jsonReadFile(filePath) or {}
   purchasedGarages = data.garages or {}
   discoveredGarages = data.discovered or {}
-  purchaseDefaultGarage()
+  if career_career.hardcoreMode then
+    purchasedGarages = {}
+    discoveredGarages = {}
+  else
+    purchaseDefaultGarage()
+  end
   reloadRecoveryPrompt()
 end
 
@@ -102,7 +109,7 @@ local function getTotalGarageCapacity()
   if garages then
     for _, garage in pairs(garages) do
       if purchasedGarages[garage.id] then
-        totalCapacity = totalCapacity + (garage.capacity or 0)
+        totalCapacity = totalCapacity + (math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1)) or 0)
       end
     end
   end
@@ -129,7 +136,7 @@ local function requestGarageData()
     local garageData = {
       name = garage.name,
       price = garage.defaultPrice,
-      capacity = garage.capacity
+      capacity = math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1))
     }
     return garageData
   end
@@ -164,13 +171,6 @@ local function cancelGaragePurchase()
   garageToPurchase = nil
 end
 
-local function onUpdate()
-  if not career_career.isActive() then return end
-  if purchasedGarages == {} or purchasedGarages == nil then
-    purchaseDefaultGarage()
-  end
-end
-
 M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
 M.requestGarageData = requestGarageData
 M.canPay = canPay
@@ -186,6 +186,5 @@ M.isDiscoveredGarage = isDiscoveredGarage
 M.loadPurchasedGarages = loadPurchasedGarages
 M.savePurchasedGarages = savePurchasedGarages
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
-M.onUpdate = onUpdate
 
 return M

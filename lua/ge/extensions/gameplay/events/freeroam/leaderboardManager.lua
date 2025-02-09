@@ -29,35 +29,48 @@ local function saveLeaderboard(currentSavePath)
 end
 
 local function isBestTime(entry)
+    level = getCurrentLevelIdentifier()
     if not leaderboard[level] then
         leaderboard[level] = {}
         return true
+
     end
     local leaderboardEntry = leaderboard[level][entry.raceName]
     if not leaderboardEntry then
         return true
     end
-    local time
+    local time, driftScore
     if entry.isAltRoute then
         if entry.isHotlap then
             time = leaderboardEntry.altRoute.hotlapTime
+            driftScore = leaderboardEntry.altRoute.driftScore or 0
         else
             time = leaderboardEntry.altRoute.time
+            driftScore = leaderboardEntry.altRoute.driftScore or 0
+
         end
     else
         if entry.isHotlap then
             time = leaderboardEntry.hotlapTime
+            driftScore = leaderboardEntry.driftScore or 0
         else
             time = leaderboardEntry.time
+            driftScore = leaderboardEntry.driftScore or 0
         end
+    end
+    if entry.driftScore then
+        return entry.driftScore > driftScore
     end
     if time == nil then return true end
     return entry.time < time
 end
 
+
 local function addLeaderboardEntry(entry)
+    career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
     if isBestTime(entry) then
         local raceName = entry.raceName
+
         leaderboard[level] = leaderboard[level] or {}
         leaderboard[level][raceName] = leaderboard[level][raceName] or {}
         if entry.isAltRoute then
@@ -65,17 +78,22 @@ local function addLeaderboardEntry(entry)
             if entry.isHotlap then
                 leaderboard[level][raceName].altRoute.hotlapSplitTimes = entry.splitTimes
                 leaderboard[level][raceName].altRoute.hotlapTime = entry.time
+                leaderboard[level][raceName].altRoute.driftScore = entry.driftScore
             else
                 leaderboard[level][raceName].altRoute.splitTimes = entry.splitTimes
                 leaderboard[level][raceName].altRoute.time = entry.time
-            end
+                leaderboard[level][raceName].altRoute.driftScore = entry.driftScore
+
+            end   
         else
             if entry.isHotlap then
                 leaderboard[level][raceName].hotlapSplitTimes = entry.splitTimes
                 leaderboard[level][raceName].hotlapTime = entry.time
+                leaderboard[level][raceName].driftScore = entry.driftScore
             else
                 leaderboard[level][raceName].splitTimes = entry.splitTimes
                 leaderboard[level][raceName].time = entry.time
+                leaderboard[level][raceName].driftScore = entry.driftScore
             end
         end
         return true

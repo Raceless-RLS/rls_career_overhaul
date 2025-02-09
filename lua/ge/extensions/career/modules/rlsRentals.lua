@@ -43,6 +43,9 @@ local function startRental()
     career_modules_inventory.delayVehicleAccess(inventoryId, rentalTime, "rented")
     --  extensions.core_vehicles.spawnNewVehicle("unicycle", {removeTraffic = false})
     local reward = rentalReward()
+    if career_modules_hardcore.isHardcoreMode() then
+        reward = reward / 2
+    end
     career_modules_payment.reward({
         money = {
             amount = reward
@@ -58,7 +61,7 @@ local function onBeamNGTrigger(data)
     if be:getPlayerVehicleID(0) ~= data.subjectID or data.event == "exit" then
         return
     end
-    if gameplay_walk.isWalking() then
+    if gameplay_walk.isWalking() or career_modules_taxi.isTaxiJobActive() then
         return
     end
 

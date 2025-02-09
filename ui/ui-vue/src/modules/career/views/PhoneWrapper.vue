@@ -5,15 +5,16 @@
     '--status-blend-mode': statusBlendMode
   }">
     <div class="phone-bevel"></div>
-    <BngCard class="phone-screen" v-bng-blur="1">
+    <div class="phone-screen">
       <!-- Status Bar -->
       <div class="phone-status-bar">
-        <span class="status-time">{{ timeString }}</span>
-        <span class="status-app">{{ appName }}</span>
+        <span>{{ timeString }}</span>
+        <span class="status-back" @click="back"> <- Back</span>
+        <span>{{ appName }}</span>
       </div>
       
       <!-- Optional Header Slot -->
-      <template v-if="$slots.header" #header>
+      <template v-if="$slots.header">
         <slot name="header"></slot>
       </template>
       
@@ -21,15 +22,14 @@
       <div class="phone-content">
         <slot></slot>
       </div>
-    </BngCard>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useEvents } from '@/services/events'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { BngCard } from "@/common/components/base"
-import { vBngBlur } from "@/common/directives"
+import { useRouter } from 'vue-router'
 import { lua } from "@/bridge"
 
 const props = defineProps({
@@ -52,7 +52,8 @@ const props = defineProps({
 })
 
 const events = useEvents()
-const timeString = ref('')
+const timeString = ref('9:10')
+const router = useRouter()
 
 const updateTime = (data) => {
   if (data) {
@@ -69,6 +70,10 @@ onMounted(() => {
 
 onUnmounted(() => {
 })
+
+const back = () => {
+  router.back()
+}
 
 const close = () => {
   lua.extensions.unload("ui_phone_time")
@@ -154,7 +159,17 @@ const close = () => {
   }
 }
 
-.status-time, .status-app {
+.status-back{
+  margin-top: 25px;
+  margin-left: -250px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  z-index: -1;
+  cursor: pointer;
   pointer-events: auto;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--status-font-color);
 }
 </style> 

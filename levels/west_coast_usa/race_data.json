@@ -6,31 +6,31 @@
       "checkpoints": 2,
       "label": "Drag Strip",
       "displaySpeed": true,
-      "type": ["motorsport"]
+      "type": ["motorsport", "drag"]
     },
     "roadOval": {
-      "bestTime": 25,
-      "reward": 500,
-      "hotlap": 22,
+      "bestTime": 30,
+      "reward": 350,
+      "hotlap": 25,
       "checkpointRoad": "roadOval",
       "label": "Paved Oval",
       "type": ["motorsport"]
     },
     "dirtOval": {
-      "bestTime": 25,
-      "reward": 500,
-      "hotlap": 22,
+      "bestTime": 30,
+      "reward": 350,
+      "hotlap": 25,
       "checkpointRoad": "dirtOval",
       "label": "Dirt Oval",
-      "type": ["motorsport"]
+      "type": ["motorsport", "offroad"]
     },
     "quarryCircuit": {
-      "bestTime": 30,
-      "reward": 1250,
-      "hotlap": 25,
+      "bestTime": 27,
+      "reward": 1000,
+      "hotlap": 23,
       "checkpointRoad": "quarryCircuit",
       "label": "Quarry Circuit",
-      "type": ["motorsport"]
+      "type": ["motorsport", "offroad", "rally"]
     },
     "beachCircuit": {
       "bestTime": 30,
@@ -39,7 +39,7 @@
       "checkpointRoad": "beachCircuit",
       "label": "Beach Circuit",
       "displaySpeed": true,
-      "type": ["motorsport"],
+      "type": ["motorsport", "offroad", "rally"],
       "minCheckpointDistance": 45
     },
     "hotrolledDrift": {
@@ -133,28 +133,28 @@
       "reward": 2000,
       "checkpointRoad": "koh1",
       "label": "King of the Hammer 1",
-      "type": ["motorsport"]
+      "type": ["motorsport", "rally", "offroad", "crawl"]
     },
     "koh2": {
       "bestTime": 180,
       "reward": 3000,
       "checkpointRoad": "koh2",
       "label": "King of the Hammer 2",
-      "type": ["motorsport"]
+      "type": ["motorsport", "rally", "offroad", "crawl"]
     },
     "rally1": {
       "bestTime": 70,
       "reward": 2000,
       "checkpointRoad": "rally1",
       "label": "Rally Stage 1",
-      "type": ["motorsport"]
+      "type": ["motorsport", "rally"]
     },
     "rally2": {
       "bestTime": 120,
       "reward": 2500,
       "checkpointRoad": "rally2",
       "label": "Rally Stage 2",
-      "type": ["motorsport"]
+      "type": ["motorsport", "rally"]
     },
     "rally3": {
       "bestTime": 185,
@@ -162,14 +162,15 @@
       "checkpointRoad": "rally3",
       "label": "Rally Stage 3",
       "apexOffset": 1,
-      "type": ["motorsport"]
+
+      "type": ["motorsport", "rally"]
     },
     "rally4": {
       "bestTime": 90,
       "reward": 2000,
       "checkpointRoad": "rally4",
       "label": "Rally Stage 4 - Final",
-      "type": ["motorsport"]
+      "type": ["motorsport", "rally"]
     },
     "rubberBand": {
       "bestTime": 60,
@@ -186,22 +187,22 @@
         "hotlap": 50,
         "altInfo": "**Continue Right at the fork for the joker lap."
       },
-      "type": ["motorsport"]
+      "type": ["motorsport", "offroad", "rally"]
     },
     "track": {
       "bestTime": 140,
-      "reward": 2500,
+      "reward": 2250,
       "label": "Track",
       "checkpointRoad": "trackloop",
       "hotlap": 125,
       "runningStart": true,
       "altRoute": {
-        "bestTime": 110,
-        "reward": 2000,
+        "bestTime": 100,
+        "reward": 1750,
         "label": "Short Track",
         "checkpointRoad": "trackalt",
         "mergeCheckpoints": [1, 10],
-        "hotlap": 95,
+        "hotlap": 85,
         "altInfo": "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
       },
       "type": ["motorsport", "apexRacing"]
@@ -212,7 +213,7 @@
       "checkpointRoad": "dirtloop",
       "hotlap": 55,
       "label": "Dirt Circuit",
-      "type": ["motorsport", "apexRacing"]
+      "type": ["motorsport", "apexRacing", "offroad", "rally"]
     },
     "testTrack": {
       "bestTime": 5.5,

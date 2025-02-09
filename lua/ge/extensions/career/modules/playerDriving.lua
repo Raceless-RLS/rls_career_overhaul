@@ -85,6 +85,7 @@ local function setTrafficVars()
 end
 
 local function isNoPoliceModActive()
+  if career_career.hardcoreMode or career_modules_hardcore.isHardcoreMode() then return false end
     local mods = core_modmanager.getMods()
     for modName, modData in pairs(mods) do
         if modName:lower():find("rls_no_police") and modData.active then
@@ -264,7 +265,7 @@ local function onPursuitAction(vehId, data)
         resetPursuit()
     elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
-            local bonus = math.floor(120 * data.score) / 100
+            local bonus = math.floor(240 * data.score) / 100
 
             career_modules_payment.reward({
                 money = {
@@ -282,7 +283,7 @@ local function onPursuitAction(vehId, data)
             }, {
                 label = "Arrest Bonus",
                 tags = {"gameplay", "reward", "police"}
-            })
+            }, true)
             ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
         end
         career_saveSystem.saveCurrent()

@@ -22,14 +22,14 @@ local function init()
     attributes[branch.attributeKey].value = branch.defaultValue or baseAttribute.value
   end
   local startingCapital = 10000
-  if not career_career.tutorialEnabled then
-    startingCapital = startingCapital
+  if career_career.hardcoreMode then
+    startingCapital = 0
   end
   M.setAttributes({money=startingCapital}, {label="Starting Capital"})
 end
 
 -- reason should be table with label, list of tags
-local function addAttributes(change, reason)
+local function addAttributes(change, reason, fullprice)
 
   -- make sure a reason exists!
   if not reason then
@@ -46,6 +46,12 @@ local function addAttributes(change, reason)
 
   -- make statistic
   for attributeName, value in pairs(change) do
+    if (attributeName == "vouchers" and value > 0) and career_modules_hardcore.isHardcoreMode() then
+      value = 0
+    end
+    if value > 0  and not fullprice then
+      value = value / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    end
     attributes[attributeName] = attributes[attributeName] or deepcopy(baseAttribute)
     local attribute = attributes[attributeName]
     attribute.value = clamp(attribute.value + value, attribute.min or -math.huge, attribute.max or math.huge)
@@ -69,6 +75,8 @@ local function addAttributes(change, reason)
       career_career.interactWithOrganization(orgId)
     end
   end
+
+  reason.label = reason.label .. (career_modules_hardcore.isHardcoreMode() and " (Hardcore) 50% cut" or "")
 
   -- log change for logbook etc
   table.insert(attributeLog, {

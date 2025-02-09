@@ -67,6 +67,7 @@ export default {
     sendAllCareerSaveSlotsData: () => {},
     sendCurrentSaveSlotData: () => {},
     enableTutorial: enable => Boolean,
+    enableHardcoreMode: enable => Boolean,
     createOrLoadCareerAndStart: id => String,
   },
 
@@ -127,6 +128,7 @@ export default {
     installPartByPartShopId: id => Number,
     removePartBySlot: slot => String,
     sendShoppingDataToUI: () => {},
+    keepUsedPartBySlot: slot => String
   },
 
   career_modules_vehicleShopping: {
@@ -167,6 +169,7 @@ export default {
   career_modules_inventory: {
     sellVehicle: id => Number,
     sellVehicleFromInventory: id => Number,
+    instantSellVehicle: id => Number,
     returnLoanedVehicleFromInventory: id => Number,
     expediteRepairFromInventory: (inventoryId, price) => [Number, Number],
     enterVehicle: id => Number,
@@ -179,6 +182,9 @@ export default {
     getVehicles: () => {},
     setLicensePlateText: (inventoryId, text) => [Number, String],
     purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number],
+    listVehicleForSale: id => Number,
+    getVehiclesForSale: () => {},
+    removeVehicleFromSale: id => Number
   },
 
   career_modules_partInventory: {
@@ -878,5 +884,12 @@ export default {
     stopTaxiJob: () => {},
     getTaxiJob: () => {},
     requestTaxiState: () => {}
+  },
+
+  career_modules_vehicleMarketplace: {
+    openMenu: () => {},
+    requestInitialData: () => {},
+    acceptOffer: (vehicleId, customer) => [String, String],
+    declineOffer: (vehicleId, customer) => [String, String]
   }
 }

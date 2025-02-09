@@ -290,6 +290,13 @@ local function enableTutorial(enabled)
   M.tutorialEnabled = enabled or false
 end
 
+local function enableHardcoreMode(enabled)
+  if enabled then
+    log("I","","Hardcore mode enabled.")
+  end
+  M.hardcoreMode = enabled
+end
+
 local function createOrLoadCareerAndStart(name, specificAutosave)
   --M.tutorialEnabled = string.find(string.lower(name), "tutorial") and true or false
   --M.vehSelectEnabled = string.find(string.lower(name), "vehselect") and true or false
@@ -377,6 +384,11 @@ local function formatSaveSlotForUi(saveSlot)
   local autosavePath = career_saveSystem.getAutosave(career_saveSystem.getSaveRootDirectory() .. saveSlot)
   local infoData = jsonReadFile(autosavePath .. "/info.json")
   local careerData = jsonReadFile(autosavePath .. "/career/" .. saveFile)
+  local hardcoreData = jsonReadFile(autosavePath .. "/career/rls_career/hardcore.json")
+
+  if hardcoreData then
+    data.hardcoreMode = hardcoreData.hardcoreMode
+  end
   
   if careerData and careerData.level then
     data.preview = levelPreviewMap[careerData.level] or levelPreviewMap.west_coast_usa
@@ -614,6 +626,7 @@ M.onWorldReadyState = onWorldReadyState
 
 M.getAdditionalMenuButtons = getAdditionalMenuButtons
 
+M.enableHardcoreMode = enableHardcoreMode
 M.enableTutorial = enableTutorial
 M.createOrLoadCareerAndStart = createOrLoadCareerAndStart
 M.activateCareer = activateCareer

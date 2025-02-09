@@ -17,6 +17,7 @@ local playerPursuiting = false
 local function getFineFromSpeed(overSpeed)
   for _, fineInfo in ipairs(fines) do
     if overSpeed <= fineInfo.overSpeed then
+      fineInfo.fine.money.amount = fineInfo.fine.money.amount * (career_modules_hardcore.isHardcoreMode() and 10 or 1)
       return fineInfo.fine
     end
   end
@@ -126,7 +127,7 @@ local function onRedLightCamTriggered(speedTrapData, playerSpeed)
 
   local veh = getPlayerVehicle(0)
   if not inventoryId or hasLicensePlate(inventoryId) then
-    local fine = {money = {amount = 500, canBeNegative = true}}
+    local fine = {money = {amount = 500 * (career_modules_hardcore.isHardcoreMode() and 2 or 1), canBeNegative = true}}
     local message = ""
     
     if playerRole == "police" then

@@ -396,10 +396,15 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         if activeMeet and not playerHasArrived then
             local playerVeh = be:getPlayerVehicle(0)
             if playerVeh and (playerVeh:getPosition() - playerSpot.pos):length() < 10 then
-                ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by 3.5%", 10, "info", "info")
+                local reputation = math.floor(math.random() * 100) / 10
+                if career_modules_hardcore.isHardcoreMode() then
+                    reputation = reputation / 2
+                end
+
+                ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by " .. reputation .. "%", 10, "info", "info")
                 local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
                 if inventoryId then
-                    career_modules_inventory.addMeetReputation(inventoryId, 1)
+                    career_modules_inventory.addMeetReputation(inventoryId, reputation)
                 end
                 core_groundMarkers.resetAll()
                 playerHasArrived = true

@@ -393,7 +393,7 @@ local inventoryIdAfterUpdatingPartConditions
 local function addVehicle(vehId, inventoryId, options)
   options = options or {}
   if options.owned == nil then options.owned = true end
-  if options.owned and not hasFreeSlot() then return end
+  if options.owned and (not hasFreeSlot() and not options.starter) then return end
 
   local vehicle = scenetree.findObjectById(vehId)
   local vehicleData = core_vehicle_manager.getVehicleData(vehId)
@@ -563,8 +563,15 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
 
     gameplay_walk.removeVehicleFromBlacklist(vehObj:getId())
 
-    -- Set parking brake
-    vehObj:queueLuaCommand("electrics.set_warn_signal(0) electrics.set_parking_brake(1)")
+    if inventoryId then
+      vehObj:queueLuaCommand('electrics.setIgnitionLevel(0)')
+
+      M.setMileage(inventoryId)
+
+      vehObj:queueLuaCommand(string.format(
+        'local cert = extensions.vehicleCertifications.getCertifications() obj:queueGameEngineLua("career_modules_inventory.setCertifications(%s, " .. serialize(cert) .. ")")',
+        vehObj:getID()))
+    end
 
     return vehObj
   end
@@ -677,18 +684,47 @@ local function setupInventory(levelPath)
 
   if not data then
     -- this means this is a new career save
+    
     saveCareer = 0
+    if career_career.hardcoreMode then
+      local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
+      local hardcoreFilter = {
+        whiteList = {
+            ["Config Type"] = {"Hardcore"}
+        }
+    }
+    local hardcoreVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
+        {filter = hardcoreFilter},
+        6,
+        eligibleVehicles,
+        "Population"
+    )
+      local randomVehicleInfo = hardcoreVehicleInfos[math.random(#hardcoreVehicleInfos)]
+      local model = randomVehicleInfo.model_key
+      local config = '/vehicles/' .. model .. '/configurations/' .. randomVehicleInfo.key .. '.pc'
+      local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
+      local options = {config = config, licenseText = "Hardcore", vehicleName = "First Car", pos = pos, rot = rot}
+      local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
+      spawningOptions.autoEnterVehicle = false
+      local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
+      core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
+      core_vehicles.setPlateText("Uncle's", veh:getID())
 
-    if career_modules_linearTutorial.getLinearStep() == -1 then
+      gameplay_walk.setWalkingMode(true)
+      -- move walking character into position
+      spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
+      gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
+      local mileage = 900000 * 1609.344
+      veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, 0.5))
+      M.addVehicle(veh:getID(), nil, {starter = true})
+    elseif career_modules_linearTutorial.getLinearStep() == -1 then
       -- default placement is in front of the dealership, facing it
       --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
       --gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
       if levelName == "west_coast_usa" then
         freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
-        career_modules_extraSaveData.addPurchasedGarage("chinatownGarage")
       elseif levelName == "italy" then
         freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
-        career_modules_extraSaveData.addPurchasedGarage("carlinoGarage")
       end
     else
       -- spawn the tutorial vehicle
@@ -717,6 +753,7 @@ local function setupInventory(levelPath)
         end
       end
     end
+    extensions.hook("onEnterVehicleFinished", currentVehicle)
   end
 
   commands.setGameCamera()
@@ -889,6 +926,20 @@ local function sendDataToUi()
     vehicle.valueRepaired = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId, true)
     vehicle.quickRepairExtraPrice = career_modules_insurance.getQuickRepairExtraPrice()
     vehicle.initialRepairTime = career_modules_insurance.getRepairTime(inventoryId)
+
+    if vehicle.certifications then
+      vehicle.power = string.format("%d", vehicle.certifications.power)
+      vehicle.weight = string.format("%d", vehicle.certifications.weight)
+      vehicle.torque = string.format("%d", vehicle.certifications.torque)
+      vehicle.powerPerWeight = string.format("%0.3f", vehicle.certifications.power / vehicle.certifications.weight)
+    else
+      vehicle.power = "N/A"
+      vehicle.weight = "N/A"
+      vehicle.torque = "N/A"
+      vehicle.powerPerWeight = "N/A"
+    end
+
+    vehicle.mileage = M.setMileage(inventoryId)
 
     if inventoryIdToVehId[inventoryId] then
       local vehObj = be:getObjectByID(inventoryIdToVehId[inventoryId])
@@ -1186,12 +1237,12 @@ local function getVehicleTimeToAccess(inventoryId)
   return vehicles[inventoryId].timeToAccess
 end
 
-local function sellVehicle(inventoryId)
+local function sellVehicle(inventoryId, instant)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
 
-  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-  career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")})
+  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId) * (career_modules_hardcore.isHardcoreMode() and 0.33 or 0.66)
+  career_modules_playerAttributes.addAttributes({money=value}, {tags={"vehicleSold","selling"},label="Sold a vehicle: "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
   removeVehicle(inventoryId)
   Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
 
@@ -1200,7 +1251,7 @@ local function sellVehicle(inventoryId)
 end
 
 local function sellVehicleFromInventory(inventoryId)
-  if sellVehicle(inventoryId) then
+  if sellVehicle(inventoryId, true) then
     career_saveSystem.saveCurrent()
     sendDataToUi()
   end
@@ -1391,6 +1442,20 @@ local function onWorldReadyState(state)
   end
 end
 
+local function specificCapcityCases(partName)
+  if partName:find("capsule") and partName:find("seats") then
+    if partName:find("sd12m") then return 58
+    elseif partName:find("sd18m") then return 44
+    elseif partName:find("sd105") then return 25
+    elseif partName:find("sd_seats") then return 33
+    elseif partName:find("dd105") then return 58
+    elseif partName:find("sd195") then return 42
+    elseif partName:find("lh_seats") then return 70
+    elseif partName:find("artic") then return 107 end
+  end
+  return nil
+end
+
 local function calculateSeatingCapacity(inventoryId)
   if not inventoryId then inventoryId = currentVehicle end
   local veh = vehicles[inventoryId]
@@ -1402,7 +1467,7 @@ local function calculateSeatingCapacity(inventoryId)
 
   for partName, part in pairs(partData) do
     -- Check if the part is a seat
-    if partName:find("seat") and not partName:find("cargo") then
+    if (partName:find("seat") or partName:find("bench")) and not partName:find("cargo") then
       if part:find("seat") and not part:find("cargo") and not part:find("captains") then
         local seatSize = nil
         if partName:find("seats") then
@@ -1410,22 +1475,127 @@ local function calculateSeatingCapacity(inventoryId)
         elseif partName:find("ext") then
           seatSize = 2
         else
-          local found = partName:match("(%d+)R")
-          if found then
+          if partName:match("(%d+)R") then
             seatSize = 2
           else
             seatSize = 1
           end
         end
-        if part:find("citybus_seats") then
-          seatSize = 44
-        end
+        if part:find("citybus_seats") then seatSize = 44
+        elseif part:find("skin") then seatSize = 0 end
+        if specificCapcityCases(partName) then seatSize = specificCapcityCases(partName) end
         seatingCapacity = seatingCapacity + seatSize
       end
     end
   end
+  if veh.config.mainPartName == "pickup" then
+    seatingCapacity = math.max(seatingCapacity, 7)
+  end
   return seatingCapacity
 end
+
+function M.loadMarketplaceData(savePath)
+  local marketplaceData = jsonReadFile(savePath .. "/career/rls_career/marketplace.json")
+
+  if marketplaceData then
+    for inventoryId, vehicle in pairs(vehicles) do
+      if marketplaceData[inventoryId] ~= nil then
+
+        vehicle.forSale = true
+      end
+    end
+    return marketplaceData
+  end
+  return {}
+end
+
+function M.removeVehicleFromSale(inventoryId, price)
+  inventoryId = tonumber(inventoryId)
+  local vehicle = vehicles[inventoryId]
+  if vehicle and vehicle.forSale then
+    vehicle.forSale = nil
+  end
+  extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = false})
+  if price then
+    career_modules_playerAttributes.addAttributes({money=price}, {tags={"vehicleSold","selling"},label="Sold a "..(vehicle.niceName or "(Unnamed Vehicle)")}, true)
+    Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
+    career_modules_log.addLog(string.format("Sold vehicle %d for %f", inventoryId, price), "inventory")
+    removeVehicle(inventoryId)
+  end
+end
+
+function M.listVehicleForSale(inventoryId)
+  local vehicle = vehicles[tonumber(inventoryId)]
+  if not vehicle then return end
+  vehicle.forSale = true
+  extensions.hook("onVehicleListingUpdate", {inventoryId = inventoryId, forSale = true})
+end
+
+function M.setMileage(inventoryId)
+  if not inventoryId then inventoryId = currentVehicle end
+  local vehicle = vehicles[inventoryId]
+  if not vehicle or not vehicle.partConditions then
+    return 0 -- Or nil, or handle the case where there are no part conditions
+  end
+
+  local maxOdometer = 0
+  local partConditions = vehicle.partConditions
+
+  for partName, conditionData in pairs(partConditions) do
+    if conditionData.odometer then
+      maxOdometer = math.max(maxOdometer, conditionData.odometer)
+    end
+  end
+  vehicle.mileage = maxOdometer
+  return maxOdometer
+end
+
+local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
+  local veh = vehicles[inventoryId]
+  if not veh then return end
+  veh.FRETimes = veh.FRETimes or {}
+  if veh.FRETimes[raceName] then
+    if driftScore and driftScore ~= 0 then
+      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
+    else
+      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
+    end
+  else
+    if driftScore and driftScore ~= 0 then
+      veh.FRETimes[raceName] = driftScore
+    else
+      veh.FRETimes[raceName] = time
+    end
+  end
+end
+
+local function getFRETimeToVehicle(raceName, inventoryId)
+  local veh = vehicles[inventoryId]
+  if not veh then return nil end
+  return veh.FRETimes and veh.FRETimes[raceName] or nil
+end
+
+M.getAllFRETimes = function()
+  local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  if not invId then return {} end
+  return vehicles[invId].FRETimes
+end
+
+function M.setCertifications(vehId, certifications)
+  local invId = getInventoryIdFromVehicleId(vehId)
+  if not invId then return end
+  vehicles[invId].certifications = certifications
+end
+
+M.getCertifications = function()
+  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  local veh = vehicles[invId]
+  if not veh then return {} end
+  return veh.certifications
+end
+
+M.saveFRETimeToVehicle = saveFRETimeToVehicle
+M.getFRETimeToVehicle = getFRETimeToVehicle
 
 M.calculateSeatingCapacity = calculateSeatingCapacity
 M.onWorldReadyState = onWorldReadyState

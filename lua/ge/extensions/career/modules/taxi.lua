@@ -8,7 +8,7 @@ local core_groundMarkers = require('core/groundMarkers')
 local cumulativeReward = 0
 local fareStreak = 0
 
-local distanceMultiplier = 0.0009
+local distanceMultiplier = 4.5
 local suggestedSpeed = 18
 
 local parkingSpots = nil
@@ -47,6 +47,7 @@ end
 
 local function findValidPickupSpots()
     local validPickupSpots = {}
+    if not be:getPlayerVehicle(0) then return end
     local playerPos = be:getPlayerVehicle(0):getPosition()
 
     if not parkingSpots then
@@ -58,6 +59,10 @@ local function findValidPickupSpots()
         end
     end
     return validPickupSpots
+end
+
+local function onEnterVehicleFinished()
+    validPickupSpots = findParkingSpots()
 end
 
 local function startRide(fare)
@@ -195,7 +200,11 @@ local function generateJob()
 
     local fareMultiplier = generateFareMultiplier()
 
-    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.75) * valueMultiplier
+    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier * distanceMultiplier
+
+    if career_modules_hardcore.isHardcoreMode() then
+        baseFare = baseFare * 0.66
+    end
 
     -- Create fare details
     local fare = {
@@ -209,9 +218,6 @@ local function generateJob()
         passengers = passengerCount,
         passengerRating = string.format("%.1f", (fareMultiplier / 1.5) * 5)
     }
-
-    local basePayment = baseFare * distanceMultiplier * 1000
-
     currentFare = fare
     return fare
 end
@@ -237,7 +243,7 @@ local function completeRide()
     fareStreak = fareStreak + 1
 
     -- Base payment calculation using actual path distance
-    local basePayment = currentFare.baseFare * currentFare.passengers * (currentFare.totalDistance * distanceMultiplier) * (fareStreak ^ 0.5)
+    local basePayment = currentFare.baseFare * (currentFare.totalDistance / 1000) * (fareStreak ^ 0.75)
 
     local finalPayment = basePayment * (1 + speedFactor)
 
@@ -250,9 +256,7 @@ local function completeRide()
     state = "complete"
     if not gameplay_phone.isPhoneOpen() then
         print("Phone is not open, opening phone")
-        guihooks.trigger('ChangeState', {
-            state = 'phone-taxi'
-        })
+        gameplay_phone.togglePhone("You completed a taxi fare! Open the phone to view your earnings.")
     end
 
     dataToSend = {
@@ -264,11 +268,15 @@ local function completeRide()
         fareStreak = fareStreak
     }
     guihooks.trigger('updateTaxiState', dataToSend)
-    dump(dataToSend)
+    --dump(dataToSend)
 
     local label = string.format("Taxi fare (%d passengers): $%d\nDistance: %.2fkm | %s: x %.2f", currentFare.passengers,
         currentFare.totalFare, currentFare.totalDistance, speedFactor > 0 and "Speed Bonus" or "Time Penalty",
         currentFare.timeMultiplier)
+
+    if career_modules_hardcore.isHardcoreMode() then
+        label = label .. "\nHardcore mode is enabled, all rewards lowered."
+    end
 
     career_modules_payment.reward({
         money = {
@@ -280,7 +288,7 @@ local function completeRide()
     }, {
         label = label,
         tags = {"transport", "taxi"}
-    })
+    }, true)
 end
 
 local function rejectJob()
@@ -355,9 +363,7 @@ local function update(dt)
             local newFare = generateJob()
             if not gameplay_phone.isPhoneOpen() then
                 print("Phone is not open, opening phone")
-                guihooks.trigger('ChangeState', {
-                    state = 'phone-taxi'
-                })
+                gameplay_phone.togglePhone("You have a new taxi fare! Open the phone to view the details.")
             end
             dataToSend = {
                 state = state,
@@ -433,6 +439,7 @@ function M.onVehicleSwitched()
     end
 end
 
+M.onEnterVehicleFinished = onEnterVehicleFinished
 M.onUpdate = update
 
 M.acceptJob = startRide
