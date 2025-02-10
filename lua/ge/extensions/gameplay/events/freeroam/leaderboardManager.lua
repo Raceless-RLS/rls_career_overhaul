@@ -67,7 +67,9 @@ end
 
 
 local function addLeaderboardEntry(entry)
-    career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
+    if career_career and career_career.isActive() then
+        career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
+    end
     if isBestTime(entry) then
         local raceName = entry.raceName
 

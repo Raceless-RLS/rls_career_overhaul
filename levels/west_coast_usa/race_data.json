@@ -39,6 +39,7 @@
       "checkpointRoad": "beachCircuit",
       "label": "Beach Circuit",
       "displaySpeed": true,
+      "apexOffset": 2,
       "type": ["motorsport", "offroad", "rally"],
       "minCheckpointDistance": 45
     },
@@ -131,13 +132,16 @@
     "koh1": {
       "bestTime": 120,
       "reward": 2000,
+      "hotlap": 110,
       "checkpointRoad": "koh1",
       "label": "King of the Hammer 1",
       "type": ["motorsport", "rally", "offroad", "crawl"]
+
     },
     "koh2": {
       "bestTime": 180,
       "reward": 3000,
+      "hotlap": 170,
       "checkpointRoad": "koh2",
       "label": "King of the Hammer 2",
       "type": ["motorsport", "rally", "offroad", "crawl"]
@@ -147,14 +151,18 @@
       "reward": 2000,
       "checkpointRoad": "rally1",
       "label": "Rally Stage 1",
+      "apexOffset": 2,
       "type": ["motorsport", "rally"]
+
     },
     "rally2": {
       "bestTime": 120,
       "reward": 2500,
       "checkpointRoad": "rally2",
       "label": "Rally Stage 2",
+      "apexOffset": 2,
       "type": ["motorsport", "rally"]
+
     },
     "rally3": {
       "bestTime": 185,
@@ -174,17 +182,17 @@
     },
     "rubberBand": {
       "bestTime": 60,
-      "reward": 2500,
+      "reward": 1250,
       "label": "Rubberband Ridge",
       "checkpointRoad": "rubberBandMain",
-      "hotlap": 45,
+      "hotlap": 50,
       "altRoute": {
-        "bestTime": 70,
-        "reward": 2500,
+        "bestTime": 65,
+        "reward": 1250,
         "label": "Rubberband Ridge Joker",
         "checkpointRoad": "rubberBandJoker",
         "mergeCheckpoints": [6, 7],
-        "hotlap": 50,
+        "hotlap": 55,
         "altInfo": "**Continue Right at the fork for the joker lap."
       },
       "type": ["motorsport", "offroad", "rally"]
