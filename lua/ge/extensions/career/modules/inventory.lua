@@ -726,6 +726,7 @@ local function setupInventory(levelPath)
       elseif levelName == "italy" then
         freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
       end
+      career_modules_extraSaveData.purchaseDefaultGarage()
     else
       -- spawn the tutorial vehicle
       local model, config = "covet","vehicles/covet/covet_tutorial.pc"
@@ -740,8 +741,8 @@ local function setupInventory(levelPath)
       -- move walking character into position
       spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
       gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
+      career_modules_extraSaveData.purchaseDefaultGarage()
     end
-    career_modules_extraSaveData.purchaseDefaultGarage()
   else
     if gameplay_walk.isWalking() then
       if unicycleSavedPosition and not justSwitched then

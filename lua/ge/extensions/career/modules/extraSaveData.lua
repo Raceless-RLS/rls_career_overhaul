@@ -93,8 +93,13 @@ local function loadPurchasedGarages()
   local data = jsonReadFile(filePath) or {}
   purchasedGarages = data.garages or {}
   discoveredGarages = data.discovered or {}
+  if career_career.hardcoreMode then
+    purchasedGarages = {}
+    discoveredGarages = {}
+  end
   reloadRecoveryPrompt()
 end
+
 
 local function getTotalGarageCapacity()
   local totalCapacity = 0
