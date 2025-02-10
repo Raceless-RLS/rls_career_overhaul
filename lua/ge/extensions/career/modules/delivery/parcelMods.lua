@@ -96,7 +96,7 @@ local modifiers = {
     makeTemplate = function(g,p,distance)
       return {
         type = "large",
-        moneyMultipler = 1,
+        moneyMultipler = 1.2,
       }
     end,
     unlockLabel = "Large & Heavy Cargo",
