@@ -992,11 +992,15 @@ local customers = {{
             },
             drift = {
                 min = 0.65
+            },
+            apexRacing = {
+                min = 0.75
             }
         },        
         rep = {
             min = 5
         },
+
         numAddedParts = {
             min = 2
         },
@@ -1007,8 +1011,36 @@ local customers = {{
             min = 500
         }
     },
-    offerRange = { min = 0.85, max = 1.5 }
-    }
+    offerRange = { min = 0.45, max = 1.5 }
+    },
+    {
+        id = "CUST052",
+        name = "Tuned Tony Thompson",
+        specialties = {},
+        criteria = {
+            performance = {
+                motorsport = {
+                    min = 0.75
+                }
+            }, 
+            mileage = {
+                min = 100000
+            },
+            powerPerWeight = {
+                min = 0.15
+            },
+            numAddedParts = {
+                min = 12
+            },
+            rep = {
+                min = 3
+            }
+        },
+        offerRange = {
+            min = 0.65,
+            max = 1.35
+        }
+      }
 }
 
 local function getInterestedCustomers(vehicleData)
