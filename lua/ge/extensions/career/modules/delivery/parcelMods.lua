@@ -25,7 +25,7 @@ local modifiers = {
         --paddingTime = time * 0.2 + 10,
         --timeMessageFlag = false,
         --paddingTimeMessageFlag = false,
-        moneyMultipler = 1.5,
+        moneyMultipler = 1.2,
       }
     end,
     unlockLabel = "Time Sensitive Deliveries",
@@ -42,7 +42,7 @@ local modifiers = {
     makeTemplate = function(g,p,distance)
       return {
         type = "post",
-        moneyMultipler = 1.2,
+        moneyMultipler = 1,
       }
     end,
     unlockLabel = "General Post Parcels",
@@ -60,8 +60,8 @@ local modifiers = {
     makeTemplate = function(g,p,distance)
       return {
         type = "precious",
-        moneyMultipler = 2.5,
-        abandonMultiplier = 1.0,
+        moneyMultipler = 1.4,
+        abandonMultiplier = 1.1,
       }
     end,
     unlockLabel = "Precious Cargo",
@@ -96,7 +96,7 @@ local modifiers = {
     makeTemplate = function(g,p,distance)
       return {
         type = "large",
-        moneyMultipler = 1.2,
+        moneyMultipler = 1,
       }
     end,
     unlockLabel = "Large & Heavy Cargo",
