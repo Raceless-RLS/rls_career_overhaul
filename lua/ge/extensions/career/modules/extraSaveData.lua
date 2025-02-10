@@ -96,11 +96,10 @@ local function loadPurchasedGarages()
   if career_career.hardcoreMode then
     purchasedGarages = {}
     discoveredGarages = {}
-  else
-    purchaseDefaultGarage()
   end
   reloadRecoveryPrompt()
 end
+
 
 local function getTotalGarageCapacity()
   local totalCapacity = 0
@@ -170,6 +169,8 @@ local function cancelGaragePurchase()
   guihooks.trigger('ChangeState', {state = 'play'})
   garageToPurchase = nil
 end
+
+M.purchaseDefaultGarage = purchaseDefaultGarage
 
 M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
 M.requestGarageData = requestGarageData

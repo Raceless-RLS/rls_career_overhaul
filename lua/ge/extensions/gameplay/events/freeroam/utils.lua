@@ -394,7 +394,7 @@ local function loadRaceData()
     if raceData then
         races = raceData.races or {}
     end
-    return races
+    return deepcopy(races)
 end
 
 local function onInit()
