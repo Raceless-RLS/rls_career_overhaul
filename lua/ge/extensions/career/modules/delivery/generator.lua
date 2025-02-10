@@ -29,11 +29,8 @@ local groupId = 0
 -- (Unused, TODO)
 local minDeliveryDistance, maxDeliveryDistance = 150, math.huge
 
-<<<<<<< HEAD
-=======
 local hardcoreMultiplier = 1
 
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
 -----------------------
 -- Utility Functions --
 -----------------------
@@ -130,68 +127,42 @@ end
 local parcelItemMoneyMultiplier = 1
 local function getMoneyRewardForParcelItem(item, distance)
   local basePrice = math.sqrt(item.slots) / 4
-<<<<<<< HEAD
+
   local distanceExp = 1.25 + math.sqrt(item.slots)/100
   local pricePerM = 2 + math.pow(item.weight, 0.53)
-=======
-  local distanceExp = 1 + math.sqrt(item.slots)/100
-  local pricePerM = 5 + math.pow(item.weight, 0.9)
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   --local modMultiplier = 1---0.9 + 0.1 * #item.modifiers
   --for _, mod in ipairs(item.modifiers) do
   --  modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
   --end
 
   -- cleanup
-<<<<<<< HEAD
-  return ((basePrice) + math.pow(distance/1000, distanceExp) * pricePerM) * parcelItemMoneyMultiplier --[[* modMultiplier]], basePrice, pricePerM
-=======
   return ((basePrice) + math.pow(distance/1000, distanceExp) * pricePerM) * hardcoreMultiplier * parcelItemMoneyMultiplier --[[* modMultiplier]], basePrice, pricePerM
 
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
 end
 
 local function finalizeParcelItemDistanceAndRewards(item)
   if item.rewards then return end
   local distance = getDistanceBetweenFacilities(item.origin, item.destination)
 
-<<<<<<< HEAD
   local baseXP = 1
   if item.slots >= 32 then baseXP = baseXP + 1 end
   if item.slots >= 64 then baseXP = baseXP + 2 end
   if item.slots >= 128 then baseXP = baseXP + 3 end
-=======
-  local baseXP = 2
-  if item.slots >= 16 then baseXP = baseXP + 1 end
-  if item.slots >= 32 then baseXP = baseXP + 1 end
-  if item.slots >= 64 then baseXP = baseXP + 1 end
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
 
   item.data.originalDistance = distance
   local template = deepcopy(M.getParcelTemplateById(item.templateId))
   item.modifiers = dParcelMods.generateModifiers(item, template, distance)
   item.rewards = {
     money = getMoneyRewardForParcelItem(item, distance) * dProgress.getMoneyMultiplerForSkill('delivery'),
-<<<<<<< HEAD
-    beamXP = baseXP + round(distance/800),
-    labourer = baseXP + round(distance/800),
-    delivery = baseXP + round(distance/800)
-  }
-  if item.organization then
-    local organizationData = freeroam_organizations.getOrganization(item.organization)
-    if organizationData then
-      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1400)
-=======
-    beamXP = (baseXP + round(distance/1000)) * hardcoreMultiplier,
-    labourer = (baseXP + round(distance/1000)) * hardcoreMultiplier,
-    delivery = (baseXP + round(distance/1000)) * hardcoreMultiplier
+    beamXP = (baseXP + round(distance/800)) * hardcoreMultiplier,
+    labourer = (baseXP + round(distance/800)) * hardcoreMultiplier,
+    delivery = (baseXP + round(distance/800)) * hardcoreMultiplier
   }
 
   if item.organization then
     local organizationData = freeroam_organizations.getOrganization(item.organization)
     if organizationData then
-      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1000)
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
+      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1400)
       item.rewards.money = item.rewards.money * organizationData.reputationLevels[organizationData.reputation.level+2].deliveryBonus.value
     end
   end
@@ -495,21 +466,6 @@ local function finalizeVehicleOffer(offer)
     local filter = vehicleFilterTemplatesById[offer.vehicle.filterId]
 
     offer.rewards = {
-<<<<<<< HEAD
-      money = filter.baseReward + round(filter.rewardPerKm * distance/1000),
-      beamXP = 5 + round(distance/400),
-      labourer = 5 + round(distance/400)
-    }
-    if offer.data.type == "vehicle" then
-      offer.rewards.money = offer.rewards.money * dProgress.getMoneyMultiplerForSkill('vehicleDelivery')
-      offer.rewards.vehicleDelivery = 5 + round(distance/400)
-    elseif offer.data.type == "trailer" then
-      offer.rewards.money = offer.rewards.money * dProgress.getMoneyMultiplerForSkill('delivery')
-      offer.rewards.delivery = 5 + round(distance/400)
-    end
-    if offer.organization then
-      offer.rewards[offer.organization .. "Reputation"] = 5 + round(distance/4000)
-=======
       money = (filter.baseReward + round(filter.rewardPerKm * distance/1000)) * hardcoreMultiplier,
       beamXP = (5 + round(distance/400)) * hardcoreMultiplier,
       labourer = (5 + round(distance/400)) * hardcoreMultiplier
@@ -524,7 +480,6 @@ local function finalizeVehicleOffer(offer)
     end
     if offer.organization then
       offer.rewards[offer.organization .. "Reputation"] = 5 + round(distance/4000) * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
     end
   end
 end
@@ -533,10 +488,7 @@ M.finalizeVehicleOffer = finalizeVehicleOffer
 
 local testVehicleList
 local function triggerVehicleOfferGenerator(fac, generator, timeOffset)
-<<<<<<< HEAD
-=======
 
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   local count = math.random(generator.min, generator.max)
 
   for  i = 1, count do
@@ -870,20 +822,12 @@ local function splitOffPartsFromMaterialCargo(cargo, otherPartSizes)
     -- copy slots/weight get set to what goes into storage
     copy.slots = size
     copy.weight = materialData.density * copy.slots
-<<<<<<< HEAD
-    copy.rewards.money = copy.slots * materialData.money
-=======
     copy.rewards.money = copy.slots * materialData.money * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
     table.insert(ret, copy)
 
     cargo.slots = cargo.slots - size
     cargo.weight = materialData.density * cargo.slots
-<<<<<<< HEAD
-    cargo.rewards.money = cargo.slots * materialData.money
-=======
     cargo.rewards.money = cargo.slots * materialData.money * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   end
   return ret
 end
@@ -912,20 +856,12 @@ local function moveMaterialToDestination(cargo, destination)
     -- cargo slots/weight get reduced
     cargo.slots = cargo.slots - amountForTank
     cargo.weight = materialData.density * cargo.slots
-<<<<<<< HEAD
-    cargo.rewards.money = cargo.slots * materialData.money
-=======
     cargo.rewards.money = cargo.slots * materialData.money * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
 
     -- copy slots/weight get set to what goes into storage
     copy.slots = amountForTank
     copy.weight = materialData.density * copy.slots
-<<<<<<< HEAD
-    copy.rewards.money = copy.slots * materialData.money
-=======
     copy.rewards.money = copy.slots * materialData.money * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
 
     -- move copy to the destination
     dParcelManager.changeCargoLocation(cargo.id, destination)
@@ -963,28 +899,17 @@ M.finalizeMaterialDistances = finalizeMaterialDistances
 local function finalizeMaterialDistanceRewards(item, destination)
   --(3+(max(0,($D24/2000)-1))) * (E$23/400)
   local distance = getDistanceBetweenFacilities(item.origin, destination)
-<<<<<<< HEAD
-  local xpAmount = round((3+math.max(0,(distance/2000)-1)) * (item.slots / 400))
-=======
   local xpAmount = round((3+math.max(0,(distance/2000)-1)) * (item.slots / 400)) * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   item.rewards.beamXP = xpAmount
   item.rewards.labourer = xpAmount
   item.rewards.delivery = xpAmount
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   if item.organization then
     local organizationData = freeroam_organizations.getOrganization(item.organization)
     if organizationData then
       item.rewards[item.organization .. "Reputation"] = xpAmount
-<<<<<<< HEAD
-      item.rewards.money = item.rewards.money * organizationData.reputationLevels[organizationData.reputation.level+2].deliveryBonus.value
-=======
       item.rewards.money = item.rewards.money * organizationData.reputationLevels[organizationData.reputation.level+2].deliveryBonus.value * hardcoreMultiplier
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
     end
   end
 end
@@ -1011,13 +936,10 @@ M.triggerGenerator = triggerGenerator
 
 local hasGeneratedThisFrame = false
 local function triggerAllGenerators()
-<<<<<<< HEAD
-=======
   if career_modules_hardcore.isHardcoreMode() then
     hardcoreMultiplier = 0.5
   end
 
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
   if hasGeneratedThisFrame then return end
   for _, fac in ipairs(facilities or {}) do
     for _, generator in ipairs(fac.logisticGenerators) do
@@ -1129,11 +1051,7 @@ local function addLoanerSpotsToFacility(resTable, priorityKey, fac, sites, acces
         end
       end
       if not psFound then
-<<<<<<< HEAD
         log("E","missing parking spot loaner: " .. tostring(accessPointsByName))
-=======
-        log("E","missing parking spot loaner: " .. name)
->>>>>>> 86d400d3c14c8848c73e481e3608e90d7716d4c1
       end
     end
   end
