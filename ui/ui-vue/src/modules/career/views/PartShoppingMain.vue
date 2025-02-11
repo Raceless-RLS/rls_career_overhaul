@@ -58,21 +58,24 @@ const cartData = computed(() => {
       price: item.finalValue,
       removeShow: !!item.sourcePart,
       removeDisabled: !!partShoppingStore.partShoppingData.tutorialPartNames,
-      remove: () => lua.career_modules_partShopping.removePartBySlot(item.containingSlot),
+      remove: () => lua.career_modules_partShopping.removePartBySlot(item.containingSlot ? item.containingSlot : null),
     }))
     
     // Map partsOut with negative values
+    /*
     const mappedPartsOut = partsOut
-      .filter(item => item.containingSlot && !cart.keepUsedParts[item.containingSlot]) // Only show parts not in keepUsedParts
+      .filter(item => !cart.keepUsedParts[item.containingSlot ? item.containingSlot : null]) // Only show parts not in keepUsedParts
       .map(item => ({
         name: "Used " + item.description.description,
         price: -item.finalValue,
         removeShow: true,
         removeDisabled: false,
-        remove: () => lua.career_modules_partShopping.keepUsedPartBySlot(item.containingSlot),
+        remove: () => lua.career_modules_partShopping.keepUsedPartBySlot(item.containingSlot ? item.containingSlot : null),
       }))
 
-    res.items = [...mappedPartsIn, ...mappedPartsOut]
+      res.items = [...mappedPartsIn, ...mappedPartsOut]
+      */
+      res.items = [...mappedPartsIn]
   }
   return res
 })

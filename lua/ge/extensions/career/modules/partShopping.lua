@@ -199,11 +199,13 @@ local function updateShoppingCart()
     total = total + part.finalValue
   end
 
+  --[[
   for index, part in ipairs(shoppingCart.partsOutList) do
     if part.containingSlot and not shoppingCart.keepUsedParts[part.containingSlot] then
       total = total - part.finalValue
     end
   end
+  ]]
 
   shoppingCart.taxes = math.max(total * salesTax, 0)
   shoppingCart.total = total + shoppingCart.taxes
@@ -583,11 +585,14 @@ local function updateInventory()
   local vehicle = career_modules_inventory.getVehicles()[currentVehicle]
   local partsToRemove = {}
   for slot, part in pairs(shoppingCart.partsOut) do
+    --[[
     if not shoppingCart.keepUsedParts[slot] then
       career_modules_partInventory.removePartWithSlot(currentVehicle, slot)
     else
       part.location = 0
     end
+    ]]
+    part.location = 0
     vehicle.changedSlots[slot] = true
   end
 
