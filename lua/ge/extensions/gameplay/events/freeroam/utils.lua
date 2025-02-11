@@ -389,12 +389,15 @@ local function onPursuitAction(id, pursuitData)
 end
 
 local function loadRaceData()
-    local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
-    local raceData = jsonReadFile(level)
-    if raceData then
-        races = raceData.races or {}
+    if getCurrentLevelIdentifier() then
+        local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
+        local raceData = jsonReadFile(level)
+        if raceData then
+            races = raceData.races or {}
+        end
+        return deepcopy(races)  
     end
-    return deepcopy(races)
+    return {}
 end
 
 local function onInit()
