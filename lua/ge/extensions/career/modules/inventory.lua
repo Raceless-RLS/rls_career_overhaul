@@ -1633,6 +1633,7 @@ end
 -- RLS FRE Functions
 
 local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
+  print("saveFRETimeToVehicle" .. tostring(raceName) .. " " .. tostring(inventoryId) .. " " .. tostring(time) .. " " .. tostring(driftScore))
   local veh = vehicles[inventoryId]
   if not veh then return end
   veh.FRETimes = veh.FRETimes or {}
@@ -1640,7 +1641,7 @@ local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
     if driftScore and driftScore ~= 0 then
       veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
     else
-      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
+      veh.FRETimes[raceName] = math.min(veh.FRETimes[raceName], time)
     end
   else
     if driftScore and driftScore ~= 0 then

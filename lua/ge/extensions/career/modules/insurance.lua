@@ -1161,11 +1161,10 @@ local function onPursuitAction(vehId, data)
                 arrested = true
             end
 
-            local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
             if arrested then
-                career_modules_inventory.addArrest(inventoryId)
+                career_modules_inventory.addArrest(vehId)
             else
-                career_modules_inventory.addTicket(inventoryId)
+                career_modules_inventory.addTicket(vehId)
                 fine = fine * 0.5
             end
 

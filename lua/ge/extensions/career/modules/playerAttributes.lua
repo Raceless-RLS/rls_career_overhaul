@@ -78,6 +78,7 @@ local function addAttributes(change, reason, fullprice)
       local orgId = attributeName:sub(1, -11)
       career_career.interactWithOrganization(orgId)
     end
+    attributes[attributeName] = attribute
   end
 
   -- log change for logbook etc

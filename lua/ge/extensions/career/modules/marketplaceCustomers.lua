@@ -378,7 +378,7 @@ local customers = {{
             min = 3
         },
         weight = {
-            max = 2000
+            max = 2200
         }
     },
     offerRange = {
@@ -394,7 +394,7 @@ local customers = {{
             max = 75000
         },
         weight = {
-            max = 2000
+            max = 2200
         },
         numAddedParts = {
             min = 1,

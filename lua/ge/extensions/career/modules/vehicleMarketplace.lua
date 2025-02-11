@@ -37,9 +37,8 @@ local function initializeMarketplaceData()
     lastOfferTime[inventoryId] = 0
     interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
     local numInterestedCustomers = #interestedCustomers[inventoryId]
-    local minInterval = 120       -- 2 minutes in seconds (2*60)
-
-    local maxInterval = 600        -- 10 minutes in seconds (10*60)
+    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
     local customerCountForMinInterval = 25
 
     local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
@@ -51,7 +50,7 @@ local function initializeMarketplaceData()
 
     local intervalRandomness = 0.3
     local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[inventoryId] = math.max(120, calculatedInterval + randomOffset)  -- Minimum 3 minutes
+    offerInterval[inventoryId] = math.max(60, calculatedInterval + randomOffset)  -- Minimum 3 minutes
   end
 end
 
@@ -100,7 +99,8 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
   local performanceValues = {}
   if not FRETimes then return {} end
   for label, time in pairs(FRETimes) do
-    local raceDetails = raceLabels[label]
+    local raceDetails = raceLabels and raceLabels[label] or {}
+    if not raceDetails then goto continue end
     for _, type in ipairs(raceDetails.types) do
       if not performanceValues[type] then
         performanceValues[type] = {}
@@ -111,6 +111,7 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
         table.insert(performanceValues[type], {label = label, performance = raceDetails.time / time})
       end
     end
+    ::continue::
   end
   return performanceValues
 end
@@ -118,6 +119,7 @@ end
 local function pullVehicleData(inventoryId)
   if not globalVehicleData[inventoryId] then
     local veh = career_modules_inventory.getVehicles()[inventoryId]
+    if not veh then return end
     
     local FRETimes = veh.FRETimes
     local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
@@ -140,7 +142,8 @@ local function pullVehicleData(inventoryId)
 
     local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
     
-    local races = utils.loadRaceData()
+    local races = utils.loadRaceData() or {}
+    if races == {} then return end
     local raceLabels = racesToLabels(races)
 
     local vehicleData = {
@@ -192,8 +195,8 @@ function M.onVehicleListingUpdate(data)
     lastOfferTime[tonumber(data.inventoryId)] = 0
     interestedCustomers[tonumber(data.inventoryId)] = getInterestedCustomers(tonumber(data.inventoryId))
     local numInterestedCustomers = #interestedCustomers[tonumber(data.inventoryId)]
-    local minInterval = 120       -- 2 minutes in seconds (2*60)
-    local maxInterval = 600        -- 10 minutes in seconds (10*60)
+    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
     local customerCountForMinInterval = 25
 
     local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
@@ -205,7 +208,7 @@ function M.onVehicleListingUpdate(data)
 
     local intervalRandomness = 0.3
     local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[tonumber(data.inventoryId)] = math.max(120, calculatedInterval + randomOffset)  -- Minimum 3 minutes
+    offerInterval[tonumber(data.inventoryId)] = math.max(60, calculatedInterval + randomOffset)  -- Minimum 3 minutes
     print(offerInterval[tonumber(data.inventoryId)])
   else
     marketplaceData[tostring(data.inventoryId)] = nil
@@ -268,7 +271,7 @@ local function generateOffer(inventoryId)
   -- Calculate offer price based on offer range and interest
   local range = offerRange.max - offerRange.min
   local interestFactor = interest -- Use interest directly as a factor
-  local randomValue = math.random() / (career_modules_hardcore.isHardcoreMode() and 1.5 or 1) -- Random value between 0 and 1
+  local randomValue = math.random() -- Random value between 0 and 1
   local offerValue = offerRange.min + range * (randomValue * (1 - interestFactor) + interestFactor)
 
   -- Ensure offer is within range (though it should be already)
@@ -307,8 +310,8 @@ local function onUpdate(dt)
 
       -- Recalculate offer interval for the next offer
       local numInterestedCustomers = #interestedCustomers[inventoryId]
-      local minInterval = 120       -- 3 minutes in seconds (3*60)
-      local maxInterval = 600        -- 10 minutes in seconds (10*60)
+      local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+      local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
       local customerCountForMinInterval = 25
 
 
@@ -319,7 +322,7 @@ local function onUpdate(dt)
       local intervalRandomness = 0.3
 
       local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-      offerInterval[inventoryId] = math.max(120, calculatedInterval + randomOffset)
+      offerInterval[inventoryId] = math.max(60, calculatedInterval + randomOffset)
     end
   end
 

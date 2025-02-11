@@ -200,7 +200,7 @@ local function updateShoppingCart()
   end
 
   for index, part in ipairs(shoppingCart.partsOutList) do
-    if not shoppingCart.keepUsedParts[part.containingSlot] then
+    if part.containingSlot and not shoppingCart.keepUsedParts[part.containingSlot] then
       total = total - part.finalValue
     end
   end

@@ -58,7 +58,7 @@ local function isBestTime(entry)
             driftScore = leaderboardEntry.driftScore or 0
         end
     end
-    if entry.driftScore then
+    if entry.driftScore and entry.driftScore > 0 then
         return entry.driftScore > driftScore
     end
     if time == nil then return true end
