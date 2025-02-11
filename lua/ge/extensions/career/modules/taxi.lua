@@ -289,6 +289,8 @@ local function completeRide()
         label = label,
         tags = {"transport", "taxi"}
     }, true)
+
+    career_modules_inventory.addTaxiDropoff(career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0)))
 end
 
 local function rejectJob()
@@ -352,6 +354,7 @@ local function update(dt)
         local destDist = core_groundMarkers.getPathLength()
 
         if destDist < 5 then
+
             completeRide()
         end
     end

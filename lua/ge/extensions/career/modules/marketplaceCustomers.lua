@@ -18,17 +18,13 @@ local customers = {{
             min = 400,
             max = 500
         },
-        mileage = {
-            max = 100
-        },
         numAddedParts = {
-            min = 1,
-            max = 10
+            min = 5
         }
     },
     offerRange = {
         min = 0.5,
-        max = 1.25
+        max = 1.35
     }
 }, {
     id = "CUST002",
@@ -47,8 +43,7 @@ local customers = {{
             max = 2000
         },
         numAddedParts = {
-            min = 1,
-            max = 12
+            min = 4
         }
     },
     offerRange = {
@@ -62,7 +57,7 @@ local customers = {{
     criteria = {
         performance = {
             motorsport = {
-                min = 0.65
+                min = 0.75
             }
         },
         power = {
@@ -71,9 +66,6 @@ local customers = {{
         torque = {
             min = 400
         },
-        mileage = {
-            max = 120
-        }
     },
     offerRange = {
         min = 0.4,
@@ -161,9 +153,6 @@ local customers = {{
         },
         torque = {
             min = 400
-        },
-        mileage = {
-            max = 150
         }
     },
     offerRange = {
@@ -207,9 +196,6 @@ local customers = {{
         power = {
             min = 320
         },
-        mileage = {
-            max = 100
-        },
         value = {
             max = 70000
         }
@@ -250,12 +236,6 @@ local customers = {{
             crawl = {
                 min = 0.6
             }
-        },
-        mileage = {
-            max = 150
-        },
-        numRemovedParts = {
-            max = 10
         }
     },
     offerRange = {
@@ -348,9 +328,6 @@ local customers = {{
         },
         torque = {
             min = 400
-        },
-        mileage = {
-            max = 120
         }
     },
     offerRange = {
@@ -400,9 +377,6 @@ local customers = {{
         numAddedParts = {
             min = 3
         },
-        numRemovedParts = {
-            max = 8
-        },
         weight = {
             max = 2000
         }
@@ -424,9 +398,6 @@ local customers = {{
         },
         numAddedParts = {
             min = 1,
-            max = 12
-        },
-        numRemovedParts = {
             max = 12
         }
     },
@@ -480,11 +451,8 @@ local customers = {{
         powerPerWeight = {
             min = 0.18
         },
-        mileage = {
-            max = 100
-        },
         value = {
-            max = 75000
+            max = 100000
         }
     },
     offerRange = {
@@ -765,9 +733,10 @@ local customers = {{
     specialties = {},  -- a base for builds; not focused on performance
     criteria = {
       value   = { max = 50000 },
-      mileage = { min = 100000 },
+      mileage = { min = 200000 },
       power   = { max = 400 },
-      torque  = { max = 500 }
+      torque  = { max = 500 },
+      numRemovedParts = { min = 7 }
     },
     offerRange = { min = 0.2, max = 0.75 }
   },
@@ -779,8 +748,7 @@ local customers = {{
     criteria = {
       performance = { rally = { min = 0.6 } },
       power       = { min = 320 },
-      torque      = { min = 400 },
-      mileage     = { max = 150000 }
+      torque      = { min = 400 }
     },
     offerRange = { min = 0.7, max = 1.3 }
   },
@@ -902,9 +870,6 @@ local customers = {{
   name = "Phil 'Builds' Evans",
   specialties = {},
   criteria = {
-      mileage = {
-          max = 400000
-      },
       powerPerWeight = {
           min = 0.15
       },
@@ -1108,180 +1073,42 @@ local function getInterestedCustomers(vehicleData)
                         end
                     end
                 end
-            elseif criterionName == "power" then
+            elseif criterionName == "power" or criterionName == "torque" or criterionName == "powerPerWeight" or criterionName == "rep" or criterionName == "numAddedParts" or criterionName == "evades" or criterionName == "movieRentals" or criterionName == "repos" or criterionName == "taxiDropoffs" then
+                -- Logic for "higher is better" criteria
                 criterionMaxInterest = 1
-                local power = tonumber(vehicleData.power)
-                if criterionValue.min ~= nil and power < criterionValue.min then
+                local criterionData = tonumber(vehicleData[criterionName] or 0)
+
+                if criterionValue.min ~= nil and criterionData < criterionValue.min then
                     customerInterested = false
-                    break -- Power below minimum
+                    break
                 end
-                if criterionValue.max ~= nil and power > criterionValue.max then
-                    customerInterested = false
-                    break -- Power above maximum
-                end
-                -- Calculate interest for power (higher is better, closer to max)
-                if customerInterested then
-                    if criterionValue.max ~= nil and criterionValue.min ~= nil then
-                        local range = criterionValue.max - criterionValue.min
-                        if range > 0 then
-                            interestValue = interestValue + (power - criterionValue.min) / range
-                        elseif power >= criterionValue.min and power <= criterionValue.max then
-                            interestValue = interestValue + 1
-                        end
-                    elseif criterionValue.max ~= nil then -- only max specified, lower is better
-                        interestValue = interestValue + math.max(0, 1 - (power / criterionValue.max))
-                    elseif criterionValue.min ~= nil then -- only min specified, higher is better
-                        interestValue = interestValue + math.min(1, power / (criterionValue.min * 3)) -- Cap at 1 when 3x min
-                    else
-                        interestValue = interestValue + 0.5 -- No min/max, neutral interest
-                    end
-                end
-            elseif criterionName == "torque" then
-                criterionMaxInterest = 1
-                local torque = tonumber(vehicleData.torque)
-                if criterionValue.min ~= nil and torque < criterionValue.min then
-                    customerInterested = false
-                    break -- Torque below minimum
-                end
-                if criterionValue.max ~= nil and torque > criterionValue.max then
-                    customerInterested = false
-                    break -- Torque above maximum
-                end
-                -- Calculate interest for torque (higher is better, closer to max)
-                if customerInterested then
-                    if criterionValue.max ~= nil and criterionValue.min ~= nil then
-                        local range = criterionValue.max - criterionValue.min
-                        if range > 0 then
-                            interestValue = interestValue + (torque - criterionValue.min) / range
-                        elseif torque >= criterionValue.min and torque <= criterionValue.max then
-                            interestValue = interestValue + 1
-                        end
-                    elseif criterionValue.max ~= nil then -- only max specified, lower is better
-                        interestValue = interestValue + math.max(0, 1 - (torque / criterionValue.max))
-                    elseif criterionValue.min ~= nil then -- only min specified, higher is better
-                        interestValue = interestValue + math.min(1, torque / (criterionValue.min * 3)) -- Cap at 1 when 3x min
-                    else
-                        interestValue = interestValue + 0.5 -- No min/max, neutral interest
-                    end
-                end
-            elseif criterionName == "mileage" then
-                criterionMaxInterest = 1
-                local mileage = tonumber(vehicleData.mileage)
-                if criterionValue.max ~= nil and mileage > criterionValue.max then
-                    customerInterested = false
-                    break -- Mileage above maximum
-                end
-                -- Calculate interest for mileage (lower is better, closer to min which is 0 implicitly)
-                if customerInterested then
-                    if criterionValue.max ~= nil then
-                        interestValue = interestValue + math.max(0, 1 - (mileage / criterionValue.max))
-                    else -- No max specified, assume they like low mileage, but no upper bound
-                        interestValue = interestValue + 0.5 -- neutral if no max mileage specified
-                    end
-                end
-            elseif criterionName == "numAddedParts" then
-                criterionMaxInterest = 1
-                local numAddedParts = tonumber(vehicleData.numAddedParts)
-                if criterionValue.min ~= nil and numAddedParts < criterionValue.min then
-                    customerInterested = false
-                    break -- numAddedParts below minimum
-                end
-                if criterionValue.max ~= nil and numAddedParts > criterionValue.max then
-                    customerInterested = false
-                    break -- numAddedParts above maximum
-                end
-                 -- Calculate interest for numAddedParts (higher is better, closer to max)
-                if customerInterested then
-                    if criterionValue.max ~= nil and criterionValue.min ~= nil then
-                        local range = criterionValue.max - criterionValue.min
-                        if range > 0 then
-                            interestValue = interestValue + (numAddedParts - criterionValue.min) / range
-                        elseif numAddedParts >= criterionValue.min and numAddedParts <= criterionValue.max then
-                            interestValue = interestValue + 1
-                        end
-                    elseif criterionValue.max ~= nil then -- only max specified, lower is better
-                        interestValue = interestValue + math.max(0, 1 - (numAddedParts / criterionValue.max))
-                    elseif criterionValue.min ~= nil then -- only min specified, higher is better
-                        interestValue = interestValue + math.min(1, numAddedParts / (criterionValue.min * 3)) -- Cap at 1 when 3x min
-                    else
-                        interestValue = interestValue + 0.5 -- No min/max, neutral interest
-                    end
-                end
-            elseif criterionName == "numRemovedParts" then
-                criterionMaxInterest = 1
-                local numRemovedParts = tonumber(vehicleData.numRemovedParts)
-                if criterionValue.max ~= nil and numRemovedParts > criterionValue.max then
-                    customerInterested = false
-                    break -- numRemovedParts above maximum
-                end
-                -- Calculate interest for numRemovedParts (lower is better, closer to min which is 0 implicitly)
-                if customerInterested then
-                    if criterionValue.max ~= nil then
-                        interestValue = interestValue + math.max(0, 1 - (numRemovedParts / criterionValue.max))
-                    else -- No max specified, assume they like low removed parts, but no upper bound
-                        interestValue = interestValue + 0.5 -- neutral if no max numRemovedParts specified
-                    end
-                end
-            elseif criterionName == "value" then
-                criterionMaxInterest = 1
-                local value = tonumber(vehicleData.value)
-                if criterionValue.max ~= nil and value > criterionValue.max then
-                    customerInterested = false
-                    break -- value above maximum
-                end
-                -- Calculate interest for value (lower is better, closer to min which is 0 implicitly)
-                if customerInterested then
-                    if criterionValue.max ~= nil then
-                        interestValue = interestValue + math.max(0, 1 - (value / criterionValue.max))
-                    else -- No max specified, assume they like low value, but no upper bound
-                        interestValue = interestValue + 0.5 -- neutral if no max value specified
-                    end
-                end
-            elseif criterionName == "weight" then
-                criterionMaxInterest = 1
-                local weight = tonumber(vehicleData.weight)
-                if criterionValue.max ~= nil and weight > criterionValue.max then
-                    customerInterested = false
-                    break -- weight above maximum
-                end
-                -- Calculate interest for weight (lower is better, closer to min which is 0 implicitly)
-                if customerInterested then
-                    if criterionValue.max ~= nil then
-                        interestValue = interestValue + math.max(0, 1 - (weight / criterionValue.max))
-                    else -- No max specified, assume they like low weight, but no upper bound
-                        interestValue = interestValue + 0.5 -- neutral if no max weight specified
-                    end
-                end
-            elseif criterionName == "powerPerWeight" then
-                criterionMaxInterest = 1
-                local powerPerWeight = tonumber(vehicleData.powerPerWeight)
-                if criterionValue.min ~= nil and powerPerWeight < criterionValue.min then
-                    customerInterested = false
-                    break -- powerPerWeight below minimum
-                end
-                -- Calculate interest for powerPerWeight (higher is better, closer to max - assuming no max, so just scale by value)
-                if customerInterested then
-                    if criterionValue.min ~= nil then -- only min specified, higher is better
-                        interestValue = interestValue + math.min(1, powerPerWeight / (criterionValue.min * 3)) -- Cap at 1 when 3x min
-                    else
-                        interestValue = interestValue + 0.5 -- No min, neutral interest
-                    end
-                end
-            elseif criterionName == "rep" then  -- New Rep Criterion
-                criterionMaxInterest = 1
-                local rep = tonumber(vehicleData.rep) or 0  -- Default to 0 if nil
-                if criterionValue.min ~= nil and rep < criterionValue.min then
-                    customerInterested = false
-                    break -- Rep below minimum
-                end
-                -- Calculate interest:  Scale rep to a 0-1 range based on min.  If rep == min, interest is 1.
+                -- Calculate interest for "higher is better" (similar logic for all in this group)
                 if customerInterested then
                     if criterionValue.min ~= nil then
-                        interestValue = interestValue + math.min(1, rep / criterionValue.min) -- interest capped at 1
+                        interestValue = interestValue + math.min(1, criterionData / (criterionValue.min * 3))
                     else
-                        interestValue = interestValue + 0.5 -- Neutral interest if no min specified
+                        interestValue = interestValue + 0.5
                     end
                 end
+
+            elseif criterionName == "mileage" or criterionName == "numRemovedParts" or criterionName == "value" or criterionName == "weight" or criterionName == "arrests" or criterionName == "tickets" or criterionName == "accidents"  then
+                -- Logic for "lower is better" criteria 
+                criterionMaxInterest = 1
+                local criterionData = tonumber(vehicleData[criterionName] or 0)
+
+                if criterionValue.max ~= nil and criterionData > criterionValue.max then
+                    customerInterested = false
+                    break
+                end
+                -- Calculate interest for "lower is better" (similar logic for all in this group)
+                if customerInterested then
+                    if criterionValue.max ~= nil then
+                        interestValue = interestValue + math.max(0, 1 - (criterionData / criterionValue.max))
+                    else
+                        interestValue = interestValue + 0.5
+                    end
+                end
+
             elseif criterionName == "year" then
                 criterionMaxInterest = 1
                 local year = tonumber(vehicleData.year) or 0  -- Default to 0 if nil
@@ -1317,6 +1144,12 @@ local function getInterestedCustomers(vehicleData)
                         interestValue = interestValue + 0.5
                     end
                 end
+            else
+                -- Handle unrecognized criteria (optional - for robustness)
+                -- print("Warning: Unrecognized customer criterion:", criterionName)
+                -- You could choose to set customerInterested = false or assign neutral interest here
+                interestValue = interestValue + 0.5 -- Neutral interest for unknown criteria
+                criterionMaxInterest = 1 -- Assign some max interest so it doesn't break normalization
             end
 
             if customerInterested then

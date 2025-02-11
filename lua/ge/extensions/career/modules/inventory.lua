@@ -1743,4 +1743,12 @@ M.addArrest = addArrest
 M.addTicket = addTicket
 M.getArrests = getArrests
 M.getTickets = getTickets
+M.addEvade = addEvade
+M.getEvades = getEvades
+M.addTaxiDropoff = addTaxiDropoff
+M.getTaxiDropoffs = getTaxiDropoffs
+M.addRepossession = addRepossession
+M.getRepossessions = getRepossessions
+M.addMovieRental = addMovieRental
+M.getMovieRentals = getMovieRentals
 return M

@@ -17,11 +17,11 @@ local playerPursuiting = false
 local function getFineFromSpeed(overSpeed)
   for _, fineInfo in ipairs(fines) do
     if overSpeed <= fineInfo.overSpeed then
-      fineInfo.fine.money.amount = fineInfo.fine.money.amount * (career_modules_hardcore.isHardcoreMode() and 10 or 1)
-      return fineInfo.fine
+      fineInfo.fine.money.amount = fineInfo.fine.money.amount
+      return deepcopy(fineInfo.fine)
     end
   end
-  return maxFine
+  return deepcopy(maxFine)
 end
 
 local function hasLicensePlate(inventoryId)
@@ -69,6 +69,7 @@ local function onSpeedTrapTriggered(speedTrapData, playerSpeed, overSpeed)
 
   if penaltyType == "default" then
     local fine = getFineFromSpeed(overSpeed)
+    fine.money.amount = fine.money.amount * (career_modules_hardcore.isHardcoreMode() and 10 or 1)
     local message = ""
     
     if playerRole == "police" then
@@ -80,7 +81,7 @@ local function onSpeedTrapTriggered(speedTrapData, playerSpeed, overSpeed)
     career_modules_payment.pay(fine, {label="Fine for speeding", tags={"fine"}})
     ui_message(message, 10, "speedTrap")
     Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')
-
+    career_modules_inventory.addTicket(inventoryId)
   elseif penaltyType == "noLicensePlate" then
     ui_message(string.format("Traffic Violation: \n - No license plate detected | Fine could not be issued\n - {{%f | unit: \"speed\":0}} | ({{%f | unit: \"speed\":0}})", playerSpeed, speedTrapData.speedLimit), 10, "speedTrap")
     Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')

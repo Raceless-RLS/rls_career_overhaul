@@ -139,8 +139,8 @@ local function pullVehicleData(inventoryId)
     local changedSlots = veh.changedSlots
 
     local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
-
-    local races = deepcopy(utils.loadRaceData())
+    
+    local races = utils.loadRaceData()
     local raceLabels = racesToLabels(races)
 
     local vehicleData = {
@@ -153,6 +153,13 @@ local function pullVehicleData(inventoryId)
       mileage = mileage or 0,
       rep = veh.meetReputation or 0,
       year = veh.year or 0,
+      arrests = veh.arrests or 0,
+      tickets = veh.tickets or 0,
+      evades = veh.evades or 0,
+      accidents = veh.accidents or 0,
+      movieRentals = veh.movieRentals or 0,
+      repos = veh.repos or 0,
+      taxiDropoffs = veh.taxiDropoffs or 0,
 
       numAddedParts = getTableSize(addedParts),
       numRemovedParts = getTableSize(removedParts)

@@ -232,7 +232,7 @@ local function onPursuitAction(vehId, data)
                 }, {
                     label = "The suspect got away, Here is " .. pity .. " for repairs",
                     tags = {"gameplay", "reward", "police"}
-                })
+                }, true)
                 career_saveSystem.saveCurrent()
                 ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
@@ -254,9 +254,10 @@ local function onPursuitAction(vehId, data)
                     }, {
                         label = "You sold your dashcam footage for $" .. reward,
                         tags = {"gameplay", "reward", "criminal"}
-                    })
+                    }, true)
                     career_saveSystem.saveCurrent()
                     ui_message("You sold your dashcam footage for $" .. reward, 5, "Criminal", "info")
+                    career_modules_inventory.addEvade(inventoryId)
                 end
             end
             -- core_recoveryPrompt.setDefaultsForCareer()

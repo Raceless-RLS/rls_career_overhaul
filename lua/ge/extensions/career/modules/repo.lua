@@ -469,6 +469,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             if vehicle then
                 core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
             end
+            career_modules_inventory.addRepossession(career_modules_inventory.getInventoryIdFromVehicleId(self.repoVehicleID))
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
         end
