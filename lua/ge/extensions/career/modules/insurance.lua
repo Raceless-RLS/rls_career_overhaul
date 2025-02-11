@@ -37,7 +37,7 @@ local currApplicablePolicyId = -1
 
 local repairOptions = {
     repairNoInsurance = function(invVehInfo)
-        local repairDetails = M.getRepairDetailsWithoutPolicy(invVehInfo)
+        local repairDetails = career_modules_valueCalculator.getRepairDetails(invVehInfo)
         return {
             repairTime = repairDetails.repairTime,
             isPolicyRepair = false,
@@ -58,7 +58,7 @@ local repairOptions = {
     normalRepair = function(invVehInfo)
         return {
             repairTime = math.min(M.getPlPerkValue(insuredInvVehs[tostring(invVehInfo.id)], "repairTime"),
-                M.getRepairDetailsWithoutPolicy(invVehInfo).repairTime),
+            career_modules_valueCalculator.getRepairDetails(invVehInfo).repairTime),
             isPolicyRepair = true,
             repairName = translateLanguage("insurance.repairOptions.normalRepair.name",
                 "insurance.repairOptions.normalRepair.name", true),
@@ -340,37 +340,6 @@ local function getDamagedParts(partConditions)
         end
     end
     return damagedParts
-end
-
-local function getRepairDetailsWithoutPolicy(invVehInfo)
-    local repairTimePerPart = 60
-    local details = {
-        price = 0,
-        repairTime = 0
-    }
-
-    local damagedParts = getDamagedParts(invVehInfo.partConditions)
-    for _, partName in pairs(damagedParts.partsToBeReplaced) do
-        local slotName
-        for sslotName, ppartName in pairs(invVehInfo.config.parts) do
-            if ppartName == partName then
-                slotName = sslotName
-            end
-        end
-        local part = career_modules_partInventory.getPart(invVehInfo.id, slotName)
-        local price = 700
-        if part then
-            price = part.value
-        end
-        if career_modules_hardcore.isHardcoreMode() then
-            details.price = math.floor((details.price + price * 1.25) * 100) / 100
-        else
-            details.price = math.floor((details.price + price * 0.9) * 100) / 100
-        end
-        details.repairTime = details.repairTime + repairTimePerPart
-    end
-
-    return details
 end
 
 local function getNumberOfBrokenParts(partConditions)
@@ -874,9 +843,9 @@ end
 local function getActualRepairPrice(vehInvInfo)
     -- This function returns the actual price of the repair, taking into account the deductible and the price of the repair without the policy  
     -- You will pay the lower value as a deductible is the max you will pay not the lowest
-    local price = career_modules_valueCalculator.getInventoryVehicleValue(vehInvInfo.id) *
+    local price = career_modules_valueCalculator.getInventoryVehicleValue(vehInvInfo.id, true) *
                       (getPlPerkValue(insuredInvVehs[tostring(vehInvInfo.id)], "deductible") / 100)
-    return math.floor(math.min(price * 100, M.getRepairDetailsWithoutPolicy(vehInvInfo).price * 80)) / 100
+    return math.floor(math.min(price * 100, career_modules_valueCalculator.getRepairDetails(vehInvInfo).price * 80)) / 100
 end
 
 local originComputerId
@@ -1695,7 +1664,6 @@ M.onPursuitAction = onPursuitAction
 -- from vehicle inventory
 M.onVehicleAddedToInventory = onVehicleAddedToInventory
 M.onVehicleRemoved = onVehicleRemovedFromInventory
-M.getRepairDetailsWithoutPolicy = getRepairDetailsWithoutPolicy
 
 -- internal use only
 M.getActualRepairPrice = getActualRepairPrice

@@ -891,5 +891,9 @@ export default {
     requestInitialData: () => {},
     acceptOffer: (vehicleId, customer) => [String, String],
     declineOffer: (vehicleId, customer) => [String, String]
+  },
+
+  career_modules_hardcore: {
+    isHardcoreMode: () => {}
   }
 }

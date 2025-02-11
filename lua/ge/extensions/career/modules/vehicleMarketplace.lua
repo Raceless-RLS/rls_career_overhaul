@@ -127,7 +127,7 @@ local function pullVehicleData(inventoryId)
     local weight = 0
     local torque = 0
     local powerPerWeight = 0
-    local mileage = veh.mileage / 1609.34 or 0
+    local mileage = (veh.mileage and veh.mileage or 0) / 1609.34
 
     if veh.certifications then
       power = string.format("%d", veh.certifications.power)

@@ -724,7 +724,7 @@ local function setupInventory(levelPath)
       if levelName == "west_coast_usa" then
         freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
       elseif levelName == "italy" then
-        freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+        freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
       end
       career_modules_extraSaveData.purchaseDefaultGarage()
     else
@@ -752,7 +752,7 @@ local function setupInventory(levelPath)
         if levelName == "west_coast_usa" then
           freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
         elseif levelName == "italy" then
-          freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+          freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
         end
       end
     end
@@ -1628,6 +1628,19 @@ function M.setMileage(inventoryId)
   end
   vehicle.mileage = maxOdometer
   return maxOdometer
+end
+
+function M.requestListedVehicles()
+  local listedVehicles = {}
+  for _, vehicle in pairs(vehicles) do
+    listedVehicles[tostring(vehicle.id)] = false
+    if vehicle.forSale then
+      listedVehicles[tostring(vehicle.id)] = true
+    end
+  end
+  print("requestListedVehicles LUA")
+  dump(listedVehicles)
+  guihooks.trigger("listedVehiclesUpdate", listedVehicles)
 end
 
 -- RLS FRE Functions

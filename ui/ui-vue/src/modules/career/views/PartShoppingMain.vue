@@ -63,7 +63,7 @@ const cartData = computed(() => {
     
     // Map partsOut with negative values
     const mappedPartsOut = partsOut
-      .filter(item => !cart.keepUsedParts[item.containingSlot]) // Only show parts not in keepUsedParts
+      .filter(item => item.containingSlot && !cart.keepUsedParts[item.containingSlot]) // Only show parts not in keepUsedParts
       .map(item => ({
         name: "Used " + item.description.description,
         price: -item.finalValue,
