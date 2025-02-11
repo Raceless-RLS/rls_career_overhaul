@@ -343,7 +343,7 @@ local function getDamagedParts(partConditions)
 end
 
 local function getRepairDetailsWithoutPolicy(invVehInfo)
-    local repairTimePerPart = 20
+    local repairTimePerPart = 60
     local details = {
         price = 0,
         repairTime = 0
@@ -362,7 +362,11 @@ local function getRepairDetailsWithoutPolicy(invVehInfo)
         if part then
             price = part.value
         end
-        details.price = math.floor((details.price + price * 0.6) * 100) / 100 -- lower the price a bit..
+        if career_modules_hardcore.isHardcoreMode() then
+            details.price = math.floor((details.price + price * 1.25) * 100) / 100
+        else
+            details.price = math.floor((details.price + price * 0.9) * 100) / 100
+        end
         details.repairTime = details.repairTime + repairTimePerPart
     end
 
@@ -466,6 +470,7 @@ local function repairPartConditions(data)
                         info.visualState = nil
                         info.visualValue = 1
                     end
+                    info.odometer = 0
                 end
                 info.integrityState = nil
                 info.integrityValue = 1
@@ -568,6 +573,8 @@ local function makeRepairClaim(invVehId, price, rateIncrease)
         happenedAt = plPoliciesData[policyId].totalMetersDriven, -- to know when the claim happened, so can later on know how long the player hasn't made a claim for, and give him a bonus
         time = os.time()
     }
+
+    career_modules_inventory.addAccident(invVehId)
 
     table.insert(plHistory.policyHistory[policyId].claims, claim)
     extensions.hook("onInsuranceRepairClaim")
@@ -1149,8 +1156,20 @@ local function onPursuitAction(vehId, data)
                 local offenseName = offenseNames[offenseKey] or offenseKey
                 table.insert(offenseNames, offenseName)
             end
+            local arrested = false
+            if data.mode ~= 1 then
+                arrested = true
+            end
 
-            local eventDescription = "Ticketed for " .. table.concat(offenseNames, ", ")
+            local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+            if arrested then
+                career_modules_inventory.addArrest(inventoryId)
+            else
+                career_modules_inventory.addTicket(inventoryId)
+                fine = fine * 0.5
+            end
+
+            local eventDescription = arrested and "Arrested for " or "Ticketed for " .. table.concat(offenseNames, ", ")
             if not hasLicensePlate(vehId) then
                 eventDescription = eventDescription .. " (no license plate)"
             end

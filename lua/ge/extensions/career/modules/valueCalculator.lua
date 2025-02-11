@@ -245,7 +245,9 @@ local function getInventoryVehicleValue(inventoryId, ignoreDamage)
   if not vehicle then return end
   local value = math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
   local meetReputation = career_modules_inventory.getMeetReputation(inventoryId)
-  return value * (1 + meetReputation * 0.01)
+  local accidents = career_modules_inventory.getAccidents(inventoryId) or 0
+  local accidentMultiplier = career_modules_hardcore.isHardcoreMode() and 0.9 or 0.95
+  return value * (1 + meetReputation * 0.01) * (accidentMultiplier ^ accidents)
 end
 
 local function getNumberOfBrokenParts(partConditions)

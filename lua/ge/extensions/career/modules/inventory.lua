@@ -1322,22 +1322,6 @@ local function setLicensePlateText(inventoryId, text)
   vehicles[inventoryId].config.licenseName = text
 end
 
-local function setVehicleRole(inventoryId, role)
-  vehicles[inventoryId].role = role
-end
-
-local function getVehicleRole(inventoryId)
-  return vehicles[inventoryId] and vehicles[inventoryId].role or nil
-end
-
-local function addMeetReputation(inventoryId, amount)
-  vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
-end
-
-local function getMeetReputation(inventoryId)
-  return vehicles[inventoryId].meetReputation or 0
-end
-
 local function getLicensePlateText(vehId)
   local inventoryId = getInventoryIdFromVehicleId(vehId)
   return inventoryId and vehicles[inventoryId] and vehicles[inventoryId].config.licenseName or nil
@@ -1439,11 +1423,102 @@ local function getDirtiedVehicles()
   return dirtiedVehicles
 end
 
+-- RLS Extra Vehicle Stats
+
+local function setVehicleRole(inventoryId, role)
+  vehicles[inventoryId].role = role
+end
+
+local function getVehicleRole(inventoryId)
+  return vehicles[inventoryId] and vehicles[inventoryId].role or nil
+end
+
+local function addMeetReputation(inventoryId, amount)
+  vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
+end
+
+local function getMeetReputation(inventoryId)
+  return vehicles[inventoryId].meetReputation or 0
+end
+
+local function addAccident(inventoryId)
+  vehicles[inventoryId].accidents = (vehicles[inventoryId].accidents or 0) + 1
+end
+
+local function getAccidents(inventoryId)
+  return vehicles[inventoryId].accidents or 0
+end
+
+local function addArrest(inventoryId)
+  vehicles[inventoryId].arrests = (vehicles[inventoryId].arrests or 0) + 1
+end
+
+local function getArrests(inventoryId)
+  return vehicles[inventoryId].arrests or 0
+end
+
+local function addTicket(inventoryId)
+  vehicles[inventoryId].tickets = (vehicles[inventoryId].tickets or 0) + 1
+end
+
+local function getTickets(inventoryId)
+  return vehicles[inventoryId].tickets or 0
+end
+
+local function addEvade(inventoryId)
+  vehicles[inventoryId].evades = (vehicles[inventoryId].evades or 0) + 1
+end
+
+local function getEvades(inventoryId)
+  return vehicles[inventoryId].evades or 0
+end
+
+local function addTaxiDropoff(inventoryId)
+  vehicles[inventoryId].taxiDropoffs = (vehicles[inventoryId].taxiDropoffs or 0) + 1
+end
+
+local function getTaxiDropoffs(inventoryId)
+  return vehicles[inventoryId].taxiDropoffs or 0
+end
+
+local function addRepossession(inventoryId)
+  vehicles[inventoryId].repos = (vehicles[inventoryId].repos or 0) + 1
+end
+
+local function getRepossessions(inventoryId)
+  return vehicles[inventoryId].repos or 0
+end
+
+local function addMovieRental(inventoryId)
+  vehicles[inventoryId].movieRentals = (vehicles[inventoryId].movieRentals or 0) + 1
+end
+
+local function getMovieRentals(inventoryId)
+  return vehicles[inventoryId].movieRentals or 0
+end
+
+function M.setCertifications(vehId, certifications)
+  local invId = getInventoryIdFromVehicleId(vehId)
+  if not invId then return end
+  vehicles[invId].certifications = certifications
+end
+
+M.getCertifications = function()
+  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  local veh = vehicles[invId]
+  if not veh then return {} end
+  return veh.certifications
+end
+
+-- RLS Reload function
+
 local function onWorldReadyState(state)
   if state == 2 and career_career.isActive() then
     setupInventory()
   end
 end
+
+-- RLS Taxi Functions
 
 local function specificCapcityCases(partName)
   if partName:find("capsule") and partName:find("seats") then
@@ -1496,6 +1571,8 @@ local function calculateSeatingCapacity(inventoryId)
   end
   return seatingCapacity
 end
+
+-- RLS Marketplace Functions
 
 function M.loadMarketplaceData(savePath)
   local marketplaceData = jsonReadFile(savePath .. "/career/rls_career/marketplace.json")
@@ -1553,6 +1630,8 @@ function M.setMileage(inventoryId)
   return maxOdometer
 end
 
+-- RLS FRE Functions
+
 local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
   local veh = vehicles[inventoryId]
   if not veh then return end
@@ -1584,19 +1663,6 @@ M.getAllFRETimes = function()
   return vehicles[invId].FRETimes
 end
 
-function M.setCertifications(vehId, certifications)
-  local invId = getInventoryIdFromVehicleId(vehId)
-  if not invId then return end
-  vehicles[invId].certifications = certifications
-end
-
-M.getCertifications = function()
-  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
-  local veh = vehicles[invId]
-  if not veh then return {} end
-  return veh.certifications
-end
-
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
 M.getFRETimeToVehicle = getFRETimeToVehicle
 
@@ -1626,8 +1692,6 @@ M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
 M.setVehicleRole = setVehicleRole
 M.getVehicleRole = getVehicleRole
-M.addMeetReputation = addMeetReputation
-M.getMeetReputation = getMeetReputation
 M.setLicensePlateText = setLicensePlateText
 M.getLicensePlateText = getLicensePlateText
 M.purchaseLicensePlateText = purchaseLicensePlateText
@@ -1671,4 +1735,12 @@ M.getMapInventoryIdToVehId = getMapInventoryIdToVehId
 
 -- RLS
 M.getVehicleTimeToAccess = getVehicleTimeToAccess
+M.addMeetReputation = addMeetReputation
+M.getMeetReputation = getMeetReputation
+M.addAccident = addAccident
+M.getAccidents = getAccidents
+M.addArrest = addArrest
+M.addTicket = addTicket
+M.getArrests = getArrests
+M.getTickets = getTickets
 return M

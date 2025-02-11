@@ -29,7 +29,7 @@ M.enableHardcoreMode = function(enabled)
 end
 
 M.isHardcoreMode = function()
-    return isHardcoreMode
+    return isHardcoreMode or false
 end
 
 --[[
