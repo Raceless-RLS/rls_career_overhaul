@@ -1426,6 +1426,7 @@ end
 -- RLS Extra Vehicle Stats
 
 local function setVehicleRole(inventoryId, role)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].role = role
 end
 
@@ -1434,66 +1435,82 @@ local function getVehicleRole(inventoryId)
 end
 
 local function addMeetReputation(inventoryId, amount)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
 end
 
 local function getMeetReputation(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].meetReputation or 0
 end
 
 local function addAccident(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].accidents = (vehicles[inventoryId].accidents or 0) + 1
 end
 
 local function getAccidents(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].accidents or 0
 end
 
 local function addArrest(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].arrests = (vehicles[inventoryId].arrests or 0) + 1
 end
 
 local function getArrests(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].arrests or 0
 end
 
 local function addTicket(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].tickets = (vehicles[inventoryId].tickets or 0) + 1
 end
 
 local function getTickets(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].tickets or 0
 end
 
 local function addEvade(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].evades = (vehicles[inventoryId].evades or 0) + 1
 end
 
 local function getEvades(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].evades or 0
 end
 
 local function addTaxiDropoff(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].taxiDropoffs = (vehicles[inventoryId].taxiDropoffs or 0) + 1
 end
 
 local function getTaxiDropoffs(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].taxiDropoffs or 0
 end
 
 local function addRepossession(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].repos = (vehicles[inventoryId].repos or 0) + 1
 end
 
 local function getRepossessions(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].repos or 0
 end
 
 local function addMovieRental(inventoryId)
+  if not vehicles[inventoryId] then return end
   vehicles[inventoryId].movieRentals = (vehicles[inventoryId].movieRentals or 0) + 1
 end
 
 local function getMovieRentals(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
   return vehicles[inventoryId].movieRentals or 0
 end
 
