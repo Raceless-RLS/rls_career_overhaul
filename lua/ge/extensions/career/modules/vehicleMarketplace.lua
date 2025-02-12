@@ -31,26 +31,39 @@ local function racesToLabels(races)
   return raceLabels
 end
 
+local function sumInterest(interestedCustomers)
+  local sum = 0
+  for _, interest in ipairs(interestedCustomers) do
+    sum = sum + interest.interest
+  end
+  return sum
+end
+
+local function setOfferInterval(inventoryId)
+  inventoryId = tonumber(inventoryId)
+  lastOfferTime[inventoryId] = 0
+  interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
+  local interestSum = sumInterest(interestedCustomers[inventoryId])
+  local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+  local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+  local maxInterestSum = 75
+
+  local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
+
+  print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
+
+  -- Inverse relationship: fewer customers = longer intervals
+  local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
+
+  local intervalRandomness = 0.3
+  local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
+  offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
+  print("offerInterval: " .. offerInterval[inventoryId])
+end
+
 local function initializeMarketplaceData()
   for inventoryId, offers in pairs(marketplaceData) do
-    inventoryId = tonumber(inventoryId)
-    lastOfferTime[inventoryId] = 0
-    interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
-    local numInterestedCustomers = #interestedCustomers[inventoryId]
-    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-    local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-    local customerCountForMinInterval = 25
-
-    local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-    normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
-
-    -- Inverse relationship: fewer customers = longer intervals
-    local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-    calculatedInterval = calculatedInterval * (1 + (1 - normalizedCustomerCount))  -- Add exponential scaling
-
-    local intervalRandomness = 0.3
-    local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[inventoryId] = math.max(60, calculatedInterval + randomOffset)  -- Minimum 3 minutes
+    setOfferInterval(inventoryId)
   end
 end
 
@@ -191,25 +204,7 @@ function M.onVehicleListingUpdate(data)
     marketplaceData = {}
   end
   if data.forSale then
-    marketplaceData[tostring(data.inventoryId)] = {}
-    lastOfferTime[tonumber(data.inventoryId)] = 0
-    interestedCustomers[tonumber(data.inventoryId)] = getInterestedCustomers(tonumber(data.inventoryId))
-    local numInterestedCustomers = #interestedCustomers[tonumber(data.inventoryId)]
-    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-    local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-    local customerCountForMinInterval = 25
-
-    local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-    normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
-
-    -- Inverse relationship: fewer customers = longer intervals
-    local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-    calculatedInterval = calculatedInterval * (1 + (1 - normalizedCustomerCount))  -- Add exponential scaling
-
-    local intervalRandomness = 0.3
-    local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[tonumber(data.inventoryId)] = math.max(60, calculatedInterval + randomOffset)  -- Minimum 3 minutes
-    print(offerInterval[tonumber(data.inventoryId)])
+    setOfferInterval(data.inventoryId)
   else
     marketplaceData[tostring(data.inventoryId)] = nil
     lastOfferTime[tonumber(data.inventoryId)] = nil
@@ -306,23 +301,7 @@ local function onUpdate(dt)
       if offer then
         sendOffer(inventoryId, offer.customer, offer.price)
       end
-      lastOfferTime[inventoryId] = 0
-
-      -- Recalculate offer interval for the next offer
-      local numInterestedCustomers = #interestedCustomers[inventoryId]
-      local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-      local maxInterval = 300 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-      local customerCountForMinInterval = 25
-
-
-      local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-      normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
-
-      local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-      local intervalRandomness = 0.3
-
-      local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-      offerInterval[inventoryId] = math.max(60, calculatedInterval + randomOffset)
+      setOfferInterval(inventoryId)
     end
   end
 

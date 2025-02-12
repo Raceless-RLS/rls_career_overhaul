@@ -41,7 +41,13 @@ local function isBestTime(entry)
     end
     local time, driftScore
     if entry.isAltRoute then
+        if not leaderboardEntry.altRoute then
+            return true
+        end
         if entry.isHotlap then
+            if not leaderboardEntry.altRoute.hotlapTime then
+                return true
+            end
             time = leaderboardEntry.altRoute.hotlapTime
             driftScore = leaderboardEntry.altRoute.driftScore or 0
         else
@@ -51,6 +57,9 @@ local function isBestTime(entry)
         end
     else
         if entry.isHotlap then
+            if not leaderboardEntry.hotlapTime then
+                return true
+            end
             time = leaderboardEntry.hotlapTime
             driftScore = leaderboardEntry.driftScore or 0
         else

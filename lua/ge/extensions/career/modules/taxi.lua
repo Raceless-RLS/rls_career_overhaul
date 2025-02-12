@@ -290,7 +290,7 @@ local function completeRide()
         tags = {"transport", "taxi"}
     }, true)
 
-    career_modules_inventory.addTaxiDropoff(career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0)))
+    career_modules_inventory.addTaxiDropoff(career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0)), currentFare.passengers)
 end
 
 local function rejectJob()

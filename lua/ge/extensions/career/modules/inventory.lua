@@ -1484,9 +1484,9 @@ local function getEvades(inventoryId)
   return vehicles[inventoryId].evades or 0
 end
 
-local function addTaxiDropoff(inventoryId)
+local function addTaxiDropoff(inventoryId, passengers)
   if not vehicles[inventoryId] then return end
-  vehicles[inventoryId].taxiDropoffs = (vehicles[inventoryId].taxiDropoffs or 0) + 1
+  vehicles[inventoryId].taxiDropoffs = (vehicles[inventoryId].taxiDropoffs or 0) + passengers
 end
 
 local function getTaxiDropoffs(inventoryId)
