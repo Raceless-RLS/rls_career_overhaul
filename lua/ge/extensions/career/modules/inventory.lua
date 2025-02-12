@@ -381,7 +381,7 @@ local function getNumberOfFreeSlots()
   for inventoryId, vehicle in pairs(vehicles) do
     if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
   end
-  slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
+  slotAmount = career_modules_garageManager.getTotalGarageCapacity()
   return slotAmount - ownedVehiclesAmount
 end
 
@@ -726,7 +726,7 @@ local function setupInventory(levelPath)
       elseif levelName == "italy" then
         freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
       end
-      career_modules_extraSaveData.purchaseDefaultGarage()
+      career_modules_garageManager.purchaseDefaultGarage()
     else
       -- spawn the tutorial vehicle
       local model, config = "covet","vehicles/covet/covet_tutorial.pc"
@@ -741,7 +741,7 @@ local function setupInventory(levelPath)
       -- move walking character into position
       spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
       gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
-      career_modules_extraSaveData.purchaseDefaultGarage()
+      career_modules_garageManager.purchaseDefaultGarage()
     end
   else
     if gameplay_walk.isWalking() then

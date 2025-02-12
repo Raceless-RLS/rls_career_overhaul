@@ -113,7 +113,7 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
   if not FRETimes then return {} end
   for label, time in pairs(FRETimes) do
     local raceDetails = raceLabels and raceLabels[label] or {}
-    if not raceDetails then goto continue end
+    if not raceDetails or not raceDetails.types then goto continue end
     for _, type in ipairs(raceDetails.types) do
       if not performanceValues[type] then
         performanceValues[type] = {}
