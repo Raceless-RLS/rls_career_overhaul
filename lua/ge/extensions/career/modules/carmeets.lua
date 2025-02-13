@@ -25,7 +25,7 @@ local playerHasArrived = false
 local playerSpot = nil
 local MEET_CLEANUP_DISTANCE = 100
 local MEET_LEAVE_TIMER = 60
-local MEET_LEAVE_INTERVAL = 7
+local MEET_LEAVE_INTERVAL = 3.5
 local meetArrivalTime = nil
 local vehicleDispersed = false
 local lastVehicleLeaveTime = 0
@@ -436,6 +436,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                     if veh then
                         -- Close all latches before leaving
                         veh:queueLuaCommand('ai.setMode("traffic")')
+                        veh:queueLuaCommand('ai.setSpeedMode("off")')
                     end
                     lastVehicleLeaveTime = currentTime
                 end

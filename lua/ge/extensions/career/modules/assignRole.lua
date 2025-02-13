@@ -48,7 +48,7 @@ local function onBeamNGTrigger(data)
         return
     end
 
-    if data.triggerName ~= "policeAssignment" then
+    if not data.triggerName:find("policeAssignment") then
         return
     end
     assignmentData = {
