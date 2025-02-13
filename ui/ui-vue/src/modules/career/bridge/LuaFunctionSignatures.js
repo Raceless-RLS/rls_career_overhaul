@@ -865,7 +865,7 @@ export default {
     checkAvailableMeets: () => {}
   },
 
-  career_modules_extraSaveData: {
+  career_modules_garageManager: {
     requestGarageData: () => {},
     canPay: () => {},
     buyGarage: () => {},

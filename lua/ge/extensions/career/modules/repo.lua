@@ -289,7 +289,7 @@ function VehicleRepoJob:calculateReward()
     local reward = math.floor((((5 * math.sqrt(self.vehicleValue)) + distanceMultiplier) * timeMultiplier)/ 4)
     reward = reward * 1.25 + 1000
     if career_modules_hardcore.isHardcoreMode() then
-        reward = reward * 0.66
+        reward = reward * 0.4
     end
     return reward
 end
@@ -372,7 +372,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if distance <= 20 then
             self.isJobStarted = true
             ui_message("Pick up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease drive it to " .. self.selectedDealership.name .. ".", 10, "info", "info")
-            vehicle:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
+            vehicle:queueLuaCommand('input.event("parkingbrake", 1, "FILTER_DI", nil, nil, nil, nil)')
             
             -- First insert the vehicle into traffic system
             gameplay_traffic.insertTraffic(self.vehicleId, true) -- true means ignore AI control
@@ -380,8 +380,8 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             -- Now we can get and modify the traffic vehicle
             local trafficVehicle = gameplay_traffic.getTrafficData()[self.vehicleId]
             if trafficVehicle then
-                trafficVehicle:setRole("standard")
-                print("Set vehicle role to standard")
+                trafficVehicle:setRole("empty")
+                print("Set vehicle role to empty")
             else
                 print("No traffic vehicle found")
             end            
@@ -441,6 +441,9 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     if self.jobStartTime then
         local distanceFromDestination = (vehiclePos - self.deliveryLocation.pos):length()
         local velocity = vehicle:getVelocity():length()
+        if core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
+            core_groundMarkers.setPath(self.deliveryLocation.pos)
+        end
         if distanceFromDestination <= 1 and velocity <= 1 then
             local reward = self:calculateReward()
             ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")

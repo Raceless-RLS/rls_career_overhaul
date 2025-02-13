@@ -529,6 +529,8 @@ local function showPosition(pos)
   end
 end
 
+M.setupTraffic = setupTraffic
+
 M.getPlayerData = getPlayerData
 M.retrieveFavoriteVehicle = retrieveFavoriteVehicle
 M.playerPursuitActive = playerPursuitActive

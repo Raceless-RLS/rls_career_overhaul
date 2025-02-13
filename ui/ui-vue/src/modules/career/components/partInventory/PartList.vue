@@ -66,7 +66,7 @@
               Uninstall
             </BngButton>
             <BngButton
-              v-if="(group.ready || index < immediateLimit) && part.functions.sell && !listedVehicleIds.value.includes(part.location.toString())"
+              v-if="(group.ready || index < immediateLimit) && part.functions.sell"
               :accent="ACCENTS.outlined"
               class="part-button"
               @click="confirmSellPart(part.data)">

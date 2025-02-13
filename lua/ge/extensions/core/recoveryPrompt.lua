@@ -360,11 +360,11 @@ local function addTowingButtons()
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
 
-    if career_career and career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
+    if career_career and career_career.isActive() and not career_modules_garageManager.isDiscoveredGarage(garage.id) then goto continue end
 
     local function getPrice(target)
       if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
-        if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
+        if career_modules_garageManager.isPurchasedGarage(garage.id) then
         return nil
         else
           return {money = {amount = garage.defaultPrice, canBeNegative = false}}
@@ -372,7 +372,7 @@ local function addTowingButtons()
       end
       local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)
       if price > 0 then price = price + baseTowToGarageCost end
-      if not career_modules_extraSaveData.isPurchasedGarage(garage.id) then
+      if not career_modules_garageManager.isPurchasedGarage(garage.id) then
         price = price + garage.defaultPrice
       end
       return {money = {amount = price, canBeNegative = false}}
@@ -392,7 +392,7 @@ local function addTowingButtons()
         local price = getPrice(target)
         if price and career_modules_payment.canPay(price) then
           career_modules_payment.pay(price, {label = string.format("Towed your vehicle to your garage")})
-          career_modules_extraSaveData.addPurchasedGarage(garage.id)
+          career_modules_garageManager.addPurchasedGarage(garage.id)
           career_saveSystem.saveCurrent()
         end
       end,
@@ -400,7 +400,7 @@ local function addTowingButtons()
       order = 25,
       active = true,
       enabled = function()
-        if career_modules_extraSaveData.isPurchasedGarage(garage.id) then
+        if career_modules_garageManager.isPurchasedGarage(garage.id) then
           return true
         end
         local price = {money = {amount = garage.defaultPrice, canBeNegative = false}}
@@ -424,7 +424,7 @@ local function addTaxiButtons()
   -- add garage tow buttons
   for _, garage in ipairs(garages) do
     
-    if career_career and career_career.isActive() and not career_modules_extraSaveData.isDiscoveredGarage(garage.id) then goto continue end
+    if career_career and career_career.isActive() and not career_modules_garageManager.isDiscoveredGarage(garage.id) then goto continue end
     buttonOptions[string.format("taxiTo%s", garage.id)] =
     {
       type = "walk",

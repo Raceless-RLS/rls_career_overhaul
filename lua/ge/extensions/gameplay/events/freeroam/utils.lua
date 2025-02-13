@@ -139,7 +139,7 @@ end
 
 local function restoreTrafficAmount()
     if gameplay_traffic then
-        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount(10) or
+        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount() or
                                    settings.getValue('trafficAmount')
         local trafficAmount = settingsAmount or previousTrafficAmount
         local pooledAmount = settings.getValue('trafficExtraAmount') or 0

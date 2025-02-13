@@ -48,23 +48,23 @@ const garageCapacity = ref(0)
 const cantPay = ref(true)
 
 onMounted(async () => {
-  const garageData = await lua.career_modules_extraSaveData.requestGarageData()
+  const garageData = await lua.career_modules_garageManager.requestGarageData()
   if (garageData) {
     price.value = garageData.price
     garageName.value = garageData.name
     garageCapacity.value = garageData.capacity
-    cantPay.value = !(await lua.career_modules_extraSaveData.canPay())
+    cantPay.value = !(await lua.career_modules_garageManager.canPay())
   }
 })
 
 function confirmPurchase() {
-  lua.career_modules_extraSaveData.buyGarage()
+  lua.career_modules_garageManager.buyGarage()
   lua.career_career.closeAllMenus()
 
 }
 
 function cancelPurchase() {
-  lua.career_modules_extraSaveData.cancelGaragePurchase()
+  lua.career_modules_garageManager.cancelGaragePurchase()
   lua.career_career.closeAllMenus()
 }
 
