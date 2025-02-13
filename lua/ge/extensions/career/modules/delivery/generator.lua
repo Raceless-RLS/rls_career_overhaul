@@ -144,10 +144,10 @@ local function finalizeParcelItemDistanceAndRewards(item)
   if item.rewards then return end
   local distance = getDistanceBetweenFacilities(item.origin, item.destination)
 
-  local baseXP = 1
-  if item.slots >= 32 then baseXP = baseXP + 1 end
-  if item.slots >= 64 then baseXP = baseXP + 2 end
-  if item.slots >= 128 then baseXP = baseXP + 3 end
+  local baseXP = 0.25
+  if item.slots >= 32 then baseXP = baseXP + 0.5 end
+  if item.slots >= 64 then baseXP = baseXP + 0.5 end
+  if item.slots >= 128 then baseXP = baseXP + 0.5 end
 
   item.data.originalDistance = distance
   local template = deepcopy(M.getParcelTemplateById(item.templateId))
