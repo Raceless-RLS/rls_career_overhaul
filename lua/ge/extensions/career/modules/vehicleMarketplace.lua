@@ -40,11 +40,11 @@ local function sumInterest(interestedCustomers)
 end
 
 local function setOfferInterval(inventoryId)
-  inventoryId = tonumber(inventoryId)
-  lastOfferTime[inventoryId] = 0
-  interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
+    inventoryId = tonumber(inventoryId)
+    lastOfferTime[inventoryId] = 0
+    interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
   local interestSum = sumInterest(interestedCustomers[inventoryId])
-  local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
   local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
   local maxInterestSum = 75
 
@@ -52,11 +52,11 @@ local function setOfferInterval(inventoryId)
 
   print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
 
-  -- Inverse relationship: fewer customers = longer intervals
+    -- Inverse relationship: fewer customers = longer intervals
   local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
 
-  local intervalRandomness = 0.3
-  local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
+    local intervalRandomness = 0.3
+    local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
   offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
   print("offerInterval: " .. offerInterval[inventoryId])
 end
@@ -204,6 +204,7 @@ function M.onVehicleListingUpdate(data)
     marketplaceData = {}
   end
   if data.forSale then
+    marketplaceData[tostring(data.inventoryId)] = {}
     setOfferInterval(data.inventoryId)
   else
     marketplaceData[tostring(data.inventoryId)] = nil
