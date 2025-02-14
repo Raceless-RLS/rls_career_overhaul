@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed, onBeforeMount } from "vue"
 import PhoneWrapper from "./PhoneWrapper.vue"
 import { openConfirmation } from "@/services/popup"
 import { useVehicleInventoryStore } from "../stores/vehicleInventoryStore";
@@ -119,6 +119,10 @@ const marketplaceData = ref({})
 onMounted(() => {
     lua.career_modules_vehicleMarketplace.requestInitialData()
 });
+
+onBeforeMount(() => {
+  vehicleInventoryStore.requestInitialData()
+})
 
 events.on("marketplaceUpdate", (data) => {
     console.log("marketplaceUpdate", data)
