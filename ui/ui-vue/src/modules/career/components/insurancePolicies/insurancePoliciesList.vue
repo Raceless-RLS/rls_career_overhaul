@@ -91,6 +91,7 @@
                               (perk.unit === "distance" && choice / 1000 + " kms") ||
                               (perk.unit === "time" && choice / 60 + " mins") ||
                               (perk.unit === "percentage" && choice + "%") ||
+                              (perk.unit === "tows" && choice + " Tows") ||
                               (choice === true && "Yes") ||
                               "No"
                             }}
