@@ -409,6 +409,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 end
                 core_groundMarkers.resetAll()
                 playerHasArrived = true
+                career_saveSystem.saveCurrent()
             end
         elseif activeMeet and playerHasArrived then
             if not meetArrivalTime then

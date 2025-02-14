@@ -629,6 +629,10 @@ local function setupInventory(levelPath)
   local levelName = generalData and generalData.level or getCurrentLevelIdentifier()
   local justSwitched = generalData and generalData.justSwitched or false
 
+  if justSwitched and not career_modules_hardcore.isHardcoreMode() then
+    career_modules_garageManager.purchaseDefaultGarage()
+  end
+
   if career_modules_linearTutorial.getLinearStep() == -1 then
     if loadedVehiclesLocations then
       local vehiclesToTeleportToGarage = {}
@@ -641,7 +645,10 @@ local function setupInventory(levelPath)
           if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
             vehiclesMovedToStorage = true
           else
-            local veh = spawnVehicle(inventoryId)
+            local veh = nil
+            if not justSwitched or vehicleToEnterId == inventoryId then
+              veh = spawnVehicle(inventoryId)
+            end
             if veh then
               local levelGate
               if justSwitched then
@@ -680,6 +687,7 @@ local function setupInventory(levelPath)
     else
       gameplay_walk.setWalkingMode(true)
     end
+    extensions.hook("onSetupInventoryFinished")
   end
 
   if not data then

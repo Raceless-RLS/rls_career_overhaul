@@ -130,59 +130,57 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
 end
 
 local function pullVehicleData(inventoryId)
-  if not globalVehicleData[inventoryId] then
-    local veh = career_modules_inventory.getVehicles()[inventoryId]
-    if not veh then return end
-    
-    local FRETimes = veh.FRETimes
-    local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-    local power = 0
-    local weight = 0
-    local torque = 0
-    local powerPerWeight = 0
-    local mileage = (veh.mileage and veh.mileage or 0) / 1609.34
+  local veh = career_modules_inventory.getVehicles()[inventoryId]
+  if not veh then return end
+  
+  local FRETimes = veh.FRETimes
+  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+  local power = 0
+  local weight = 0
+  local torque = 0
+  local powerPerWeight = 0
+  local mileage = (veh.mileage and veh.mileage or 0) / 1609.34
 
-    if veh.certifications then
-      power = string.format("%d", veh.certifications.power)
-      weight = string.format("%d", veh.certifications.weight)
-      torque = string.format("%d", veh.certifications.torque)
-      powerPerWeight = string.format("%0.3f", power / weight)
-    end
-
-    local newParts = veh.config.parts
-    local originalParts = veh.originalParts
-    local changedSlots = veh.changedSlots
-
-    local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
-    
-    local races = utils.loadRaceData() or {}
-    if races == {} then return end
-    local raceLabels = racesToLabels(races)
-
-    local vehicleData = {
-      performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
-      value = value or 0,
-      power = power or 0,
-      weight = weight or 0,
-      torque = torque or 0,
-      powerPerWeight = powerPerWeight or 0,
-      mileage = mileage or 0,
-      rep = veh.meetReputation or 0,
-      year = veh.year or 0,
-      arrests = veh.arrests or 0,
-      tickets = veh.tickets or 0,
-      evades = veh.evades or 0,
-      accidents = veh.accidents or 0,
-      movieRentals = veh.movieRentals or 0,
-      repos = veh.repos or 0,
-      taxiDropoffs = veh.taxiDropoffs or 0,
-
-      numAddedParts = getTableSize(addedParts),
-      numRemovedParts = getTableSize(removedParts)
-    }
-
-    globalVehicleData[inventoryId] = vehicleData
+  if veh.certifications then
+    power = string.format("%d", veh.certifications.power)
+    weight = string.format("%d", veh.certifications.weight)
+    torque = string.format("%d", veh.certifications.torque)
+    powerPerWeight = string.format("%0.3f", power / weight)
   end
+
+  local newParts = veh.config.parts
+  local originalParts = veh.originalParts
+  local changedSlots = veh.changedSlots
+
+  local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
+  
+  local races = utils.loadRaceData() or {}
+  if races == {} then return end
+  local raceLabels = racesToLabels(races)
+
+  local vehicleData = {
+    performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
+    value = value or 0,
+    power = power or 0,
+    weight = weight or 0,
+    torque = torque or 0,
+    powerPerWeight = powerPerWeight or 0,
+    mileage = mileage or 0,
+    rep = veh.meetReputation or 0,
+    year = veh.year or 0,
+    arrests = veh.arrests or 0,
+    tickets = veh.tickets or 0,
+    evades = veh.evades or 0,
+    accidents = veh.accidents or 0,
+    movieRentals = veh.movieRentals or 0,
+    repos = veh.repos or 0,
+    taxiDropoffs = veh.taxiDropoffs or 0,
+
+    numAddedParts = getTableSize(addedParts),
+    numRemovedParts = getTableSize(removedParts)
+  }
+
+  globalVehicleData[inventoryId] = vehicleData
 
   return globalVehicleData[inventoryId]
 end
@@ -230,6 +228,7 @@ local function acceptOffer(inventoryId, customer)
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       career_modules_inventory.removeVehicleFromSale(tonumber(inventoryId), offer.price)
+      career_saveSystem.saveCurrent()
       return
     end
   end
