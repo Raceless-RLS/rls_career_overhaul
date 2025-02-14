@@ -33,7 +33,9 @@ local function setLevelGate(levelName)
             local block = scenetree.findObject("gateBlock" .. levelName .. index)
             if block then
                 block:setHidden(isOverhaulAddonActive)
-                block:setField("collisionType", 0, "None")
+                if isOverhaulAddonActive then
+                    block:setField('collisionType', 0, "None")
+                end
             end
             index = index + 1
         end
