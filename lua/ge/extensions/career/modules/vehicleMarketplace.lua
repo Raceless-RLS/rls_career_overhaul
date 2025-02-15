@@ -234,7 +234,7 @@ function M.dumpMarketplaceData()
 end
 
 local function acceptOffer(inventoryId, customer)
-  local offers = marketplaceData[tostring(inventoryId)]
+  local offers = marketplaceData[tostring(inventoryId)].offers
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       career_modules_inventory.removeVehicleFromSale(tonumber(inventoryId), offer.price)
@@ -245,7 +245,7 @@ local function acceptOffer(inventoryId, customer)
 end
 
 local function declineOffer(inventoryId, customer)
-  local offers = marketplaceData[tostring(inventoryId)]
+  local offers = marketplaceData[tostring(inventoryId)].offers
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       table.remove(offers, _)
