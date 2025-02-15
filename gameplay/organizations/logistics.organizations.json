@@ -1,138 +1,152 @@
 {
   "shuffleboardLogistics": {
-    "name":"Shuffleboard Logistics",
-    "description":"Owns warehouses in the central industrial area, and a refinery on spearleaf island. You can loan vehicles here.",
-    "icon":"cardboardBox",
-    "loanableVehicles":[
-      {"model":"us_semi", "config": "tc82_base_shuffleboard", "reputationLvl": 1, "deliveryLvl": 3, "mileage": 100000000},
-      {"model":"us_semi", "config": "t83_base_shuffleboard",  "reputationLvl": 2, "deliveryLvl": 3, "mileage": 50000000},
+    "name": "Shuffleboard Logistics",
+    "description": "Owns warehouses in the central industrial area, and a refinery on spearleaf island. You can loan vehicles here.",
+    "icon": "cardboardBox",
+    "loanableVehicles": [
       {
-        "model":"md_series",
+        "model": "us_semi",
+        "config": "tc82_base_shuffleboard",
+        "reputationLvl": 2,
+        "deliveryLvl": 3,
+        "mileage": 100000000
+      },
+      {
+        "model": "us_semi",
+        "config": "t83_base_shuffleboard",
+        "reputationLvl": 2,
+        "deliveryLvl": 4,
+        "mileage": 5000000
+      },
+      {
+        "model": "md_series",
         "config": "md_career_shuffleboard_fifthwheel",
-        "reputationLvl": -1,
+        "reputationLvl": 1,
         "deliveryLvl": 2,
-        "mileages":{ "-1":800000000, "0":300000000, "1":100000000, "2":1000000, "3":10000 }
+        "mileages": {
+          "-1": 800000000,
+          "0": 300000000,
+          "1": 100000000,
+          "2": 1000000,
+          "3": 10000
+        }
       },
-
       {
-        "model":"md_series",
+        "model": "md_series",
         "config": "md_career_shuffleboard_tanker",
-        "reputationLvl": -1,
-        "deliveryLvl": 1,
-        "mileages":{ "-1":800000000, "0":300000000, "1":100000000, "2":1000000, "3":10000 }
-      },
-
-      {
-        "model":"md_series",
-        "config": "md_career_shuffleboard_cargobox",
-        "reputationLvl":  1,
+        "reputationLvl": 1,
         "deliveryLvl": 2,
-        "mileages":{ "1":100000000, "2":1000000, "3":10000 }
+        "mileages": {
+          "-1": 800000000,
+          "0": 300000000,
+          "1": 100000000,
+          "2": 1000000,
+          "3": 10000
+        }
       },
-
       {
-        "model":"tanker",
+        "model": "md_series",
+        "config": "md_career_shuffleboard_cargobox",
+        "reputationLvl": 1,
+        "deliveryLvl": 1,
+        "mileages": {
+          "1": 100000000,
+          "2": 1000000,
+          "3": 10000
+        }
+      },
+      {
+        "model": "tanker",
         "config": "career_shuffleboard_empty_short",
         "reputationLvl": -1,
-        "deliveryLvl": 2,
+        "deliveryLvl": 1,
         "mileage": 0
       },
-
       {
-        "model":"us_semi",
+        "model": "us_semi",
         "config": "tc83s_tanker_shuffleboard",
-        "reputationLvl": 1,
+        "reputationLvl": 2,
         "deliveryLvl": 3,
         "mileage": 100000000,
       },
     ],
-    "reputationLevels":[
+    "reputationLevels": [
       {
         // Level -1
-        "unlocks":[
+        "unlocks": [
           {
-            "icon":"boxPickUp03",
-            "label":"Jank"
+            "icon": "boxPickUp03",
+            "label": "Jank"
           },
         ],
       },
       {
         // Level 0
-        "unlocks":[
+        "unlocks": [
           {
-            "icon":"smallTrailer",
-            "label":"Old",
+            "icon": "smallTrailer",
+            "label": "Old",
           }
         ],
       },
       {
         // Level 1
-        "unlocks":[
+        "unlocks": [
           {
-            "icon":"smallTrailer",
-            "label":"Good",
+            "icon": "smallTrailer",
+            "label": "Good",
           }
         ],
       },
       {
         // Level 2
-        "unlocks":[
+        "unlocks": [
           {
-            "icon":"smallTrailer",
-            "label":"Better",
+            "icon": "smallTrailer",
+            "label": "Better",
           }
         ],
       },
       {
         // Level 3
-        "unlocks":[
+        "unlocks": [
           {
-            "icon":"smallTrailer",
-            "label":"Best",
+            "icon": "smallTrailer",
+            "label": "Best",
           }
         ],
       }
     ]
   },
   "jerryRiggs": {
-    "name":"Jerry Riggs",
-    "description":"A small garage and mechanic in the industrial area.",
-    "icon":"garage02",
-    "reputationLevels":[
-      {
-      },
-      {
-      },
-      {
-      },
-      {
-      },
-      {
-      }
+    "name": "Jerry Riggs",
+    "description": "A small garage and mechanic in the industrial area.",
+    "icon": "garage02",
+    "reputationLevels": [
+      {},
+      {},
+      {},
+      {},
+      {}
     ]
   },
   "belascoAuto": {
-    "name":"Belasco Auto",
-    "description":"A dealership in belasco city.",
-    "icon":"carDealer",
-    "reputationLevels":[
-      {
-      },
-      {
-      },
-      {
-      },
-      {
-      },
-      {
-      }
+    "name": "Belasco Auto",
+    "description": "A dealership in belasco city.",
+    "icon": "carDealer",
+    "reputationLevels": [
+      {},
+      {},
+      {},
+      {},
+      {}
     ]
   },
   "richsMotorCompany": {
-    "name":"Rich's Motor Company",
-    "description":"A high-end dealership in belasco city.",
-    "icon":"carDealer",
-    "reputationLevels":[
+    "name": "Rich's Motor Company",
+    "description": "A high-end dealership in belasco city.",
+    "icon": "carDealer",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -141,10 +155,10 @@
     ]
   },
   "jeffersonMotors": {
-    "name":"Jefferson Motors",
-    "description":"A high-end dealership in belasco city.",
-    "icon":"carDealer",
-    "reputationLevels":[
+    "name": "Jefferson Motors",
+    "description": "A high-end dealership in belasco city.",
+    "icon": "carDealer",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -153,10 +167,10 @@
     ]
   },
   "quarrysideAutoSales": {
-    "name":"Quarryside Auto Sales",
-    "description":"A dealership outside of the city.",
-    "icon":"carDealer",
-    "reputationLevels":[
+    "name": "Quarryside Auto Sales",
+    "description": "A dealership outside of the city.",
+    "icon": "carDealer",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -165,10 +179,10 @@
     ]
   },
   "commercialVehicleSales": {
-    "name":"Commercial Vehicle Sales",
-    "description":"A dealership that offers trucks and trailers.",
-    "icon":"carDealer",
-    "reputationLevels":[
+    "name": "Commercial Vehicle Sales",
+    "description": "A dealership that offers trucks and trailers.",
+    "icon": "carDealer",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -177,10 +191,10 @@
     ]
   },
   "belascoCityConstruction": {
-    "name":"Belasco City Construction",
-    "description":"Manages various construction sites inside and outside of belasco city.",
-    "icon":"semiTruckUS",
-    "reputationLevels":[
+    "name": "Belasco City Construction",
+    "description": "Manages various construction sites inside and outside of belasco city.",
+    "icon": "semiTruckUS",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -189,10 +203,10 @@
     ]
   },
   "hotRolled": {
-    "name":"Hot Rolled Inc.",
-    "description":"Produces various steel-related products.",
-    "icon":"rocks",
-    "reputationLevels":[
+    "name": "Hot Rolled Inc.",
+    "description": "Produces various steel-related products.",
+    "icon": "rocks",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -201,10 +215,10 @@
     ]
   },
   "lensflareStudios": {
-    "name":"Lens Flare Studios",
-    "description":"A famous movie studio in the belasco suburbs.",
-    "icon":"peopleOutline",
-    "reputationLevels":[
+    "name": "Lens Flare Studios",
+    "description": "A famous movie studio in the belasco suburbs.",
+    "icon": "peopleOutline",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -213,10 +227,10 @@
     ]
   },
   "spearleafRefinery": {
-    "name":"Spearleaf Refinery",
-    "description":"",
-    "icon":"droplet",
-    "reputationLevels":[
+    "name": "Spearleaf Refinery",
+    "description": "",
+    "icon": "droplet",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -225,10 +239,10 @@
     ]
   },
   "spearleafLogistics": {
-    "name":"Spearleaf Marine Logistics",
-    "description":"Owns a large logistics facility on spearleaf island.",
-    "icon":"semiTruckUS",
-    "reputationLevels":[
+    "name": "Spearleaf Marine Logistics",
+    "description": "Owns a large logistics facility on spearleaf island.",
+    "icon": "semiTruckUS",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -237,10 +251,10 @@
     ]
   },
   "industrialWarehouse": {
-    "name":"Belasco City Warehouse",
-    "description":"A large warehouse near the harbour area of belasco city.",
-    "icon":"semiTruckUS",
-    "reputationLevels":[
+    "name": "Belasco City Warehouse",
+    "description": "A large warehouse near the harbour area of belasco city.",
+    "icon": "semiTruckUS",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -249,10 +263,10 @@
     ]
   },
   "rentabox": {
-    "name":"Rent-A-Box",
-    "description":"A small warehouse in the industrial area outside of belasco city.",
-    "icon":"semiTruckUS",
-    "reputationLevels":[
+    "name": "Rent-A-Box",
+    "description": "A small warehouse in the industrial area outside of belasco city.",
+    "icon": "semiTruckUS",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -261,10 +275,10 @@
     ]
   },
   "belascoCityGarage": {
-    "name":"Belasco City Garage",
-    "description":"Owns garage in the belasco area.",
-    "icon":"garage02",
-    "reputationLevels":[
+    "name": "Belasco City Garage",
+    "description": "Owns garage in the belasco area.",
+    "icon": "garage02",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -273,10 +287,10 @@
     ]
   },
   "fastAutomotive": {
-    "name":"Fast Automotive",
-    "description":"A high-end mechanic and garage near the racetrack.",
-    "icon":"garage02",
-    "reputationLevels":[
+    "name": "Fast Automotive",
+    "description": "A high-end mechanic and garage near the racetrack.",
+    "icon": "garage02",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -285,10 +299,10 @@
     ]
   },
   "belascoCityExhaust": {
-    "name":"Exhaust Shop",
-    "description":"A small mechanic shop near the city edge.",
-    "icon":"garage02",
-    "reputationLevels":[
+    "name": "Exhaust Shop",
+    "description": "A small mechanic shop near the city edge.",
+    "icon": "garage02",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -297,10 +311,10 @@
     ]
   },
   "torresTires": {
-    "name":"Torres Tires",
-    "description":"A small mechanic shop near the city edge.",
-    "icon":"garage02",
-    "reputationLevels":[
+    "name": "Torres Tires",
+    "description": "A small mechanic shop near the city edge.",
+    "icon": "garage02",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -309,10 +323,10 @@
     ]
   },
   "smashAutoRepairs": {
-    "name":"Smash Auto Repairs",
-    "description":"A small mechanic shop near the city edge.",
-    "icon":"garage02",
-    "reputationLevels":[
+    "name": "Smash Auto Repairs",
+    "description": "A small mechanic shop near the city edge.",
+    "icon": "garage02",
+    "reputationLevels": [
       {},
       {},
       {},
@@ -321,10 +335,10 @@
     ]
   },
   "sealbrik": {
-    "name":"Sealbrik",
-    "description":"Produces various concrete and dry bulk related products, and owns the quarry outside of belasco city.",
-    "icon":"rocks",
-    "reputationLevels":[
+    "name": "Sealbrik",
+    "description": "Produces various concrete and dry bulk related products, and owns the quarry outside of belasco city.",
+    "icon": "rocks",
+    "reputationLevels": [
       {},
       {},
       {},
