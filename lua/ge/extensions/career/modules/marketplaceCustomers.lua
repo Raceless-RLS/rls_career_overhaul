@@ -3925,6 +3925,9 @@ local customers = {{
 }
 
 local function getInterestedCustomers(vehicleData)
+    if not vehicleData then
+        return {}
+    end
     local interestedCustomers = {}
     for _, customer in ipairs(customers) do
         local customerInterested = true

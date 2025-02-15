@@ -238,6 +238,7 @@ local function acceptOffer(inventoryId, customer)
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       career_modules_inventory.removeVehicleFromSale(tonumber(inventoryId), offer.price)
+      Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
       career_saveSystem.saveCurrent()
       return
     end
