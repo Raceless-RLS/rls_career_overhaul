@@ -387,7 +387,10 @@ local function addTowingButtons()
           return {money = {amount = garage.defaultPrice, canBeNegative = false}}
         end
       end
-      local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage) * 8
+      local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage) * 10
+      if career_modules_hardcore.isHardcoreMode() then
+        price = price * 2
+      end
       if price > 0 then price = price + baseTowToGarageCost end
       if not career_modules_garageManager.isPurchasedGarage(garage.id) then
         price = price + garage.defaultPrice

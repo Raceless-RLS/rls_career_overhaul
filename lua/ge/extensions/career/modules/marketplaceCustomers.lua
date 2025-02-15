@@ -3636,9 +3636,291 @@ local customers = {{
         }
     },
     offerRange = {
-        min = 0.3,
-        max = 1.2
+        min = 1.0,
+        max = 1.4
     }
+}, {
+    id = "CUST176",
+    name = "Oval Ace Owen",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.9 }
+        },
+        rep = { min = 2 },
+        tickets = { max = 2 }
+    },
+    offerRange = { min = 1.1, max = 1.25 }
+}, {
+    id = "CUST177",
+    name = "Mud Queen Maggie",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.85 }
+        },
+        evades = { min = 1 }
+    },
+    offerRange = { min = 1.0, max = 1.3 }
+}, {
+    id = "CUST178",
+    name = "Extreme Mudder Eddie",
+    specialties = {"mud", "extremeMud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.8 },
+            extremeMud = { min = 0.8 }
+        },
+        taxiDropoffs = { min = 5 }
+    },
+    offerRange = { min = 1.15, max = 1.35 }
+}, {
+    id = "CUST179",
+    name = "Banked Turn Betty",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.95 }
+        },
+        rep = { min = 3 },
+        movieRentals = { min = 1 }
+    },
+    offerRange = { min = 1.2, max = 1.4 }
+}, {
+    id = "CUST180",
+    name = "Swamp Specialist Sam",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.9 }
+        },
+        repos = { min = 2 }
+    },
+    offerRange = { min = 1.05, max = 1.3 }
+}, {
+    id = "CUST181",
+    name = "Dirt Track Dave",
+    specialties = {"oval", "mud"},
+    criteria = {
+        performance = {
+            oval = { min = 0.7 },
+            mud = { min = 0.75 }
+        },
+        taxiDropoffs = { min = 3 }
+    },
+    offerRange = { min = 0.6, max = 1.2 }
+}, {
+    id = "CUST182",
+    name = "Mud Marathon Mia",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.95 }
+        },
+        mileage = { max = 50000 }
+    },
+    offerRange = { min = 0.95, max = 1.45 }
+}, {
+    id = "CUST183",
+    name = "Oval Outlaw Oscar",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 1.0 }
+        },
+        tickets = { min = 2 }
+    },
+    offerRange = { min = 0.85, max = 1.35 }
+}, {
+    id = "CUST184",
+    name = "Bog Beast Brenda",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.85 }
+        },
+        mileage = { max = 200000 }
+    },
+    offerRange = { min = 1.1, max = 1.35 }
+}, {
+    id = "CUST185",
+    name = "Clay Track Carl",
+    specialties = {"oval", "mud"},
+    criteria = {
+        performance = {
+            oval = { min = 0.8 },
+            mud = { min = 0.8 },
+            offroad = { min = 0.8 }
+        },
+        rep = { min = 1 }
+    },
+    offerRange = { min = 1.0, max = 1.3 }
+}, {
+    id = "CUST186",
+    name = "Mud Slinger Max",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.9 }
+        },
+        accidents = { min = 1 }
+    },
+    offerRange = { min = 1.15, max = 1.4 }
+}, {
+    id = "CUST187",
+    name = "Extreme Endurance Eva",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.75 }
+        },
+        mileage = { max = 100000 }
+    },
+    offerRange = { min = 0.95, max = 1.2 }
+}, {
+    id = "CUST188",
+    name = "High Bank Hank",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.85 }
+        },
+        powerPerWeight = { min = 0.2 }
+    },
+    offerRange = { min = 0.85, max = 1.3 }
+}, {
+    id = "CUST189",
+    name = "Mud & Movies Marty",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.7 }
+        },
+        movieRentals = { min = 2 }
+    },
+    offerRange = { min = 0.8, max = 1.35 }
+}, {
+    id = "CUST190",
+    name = "Oval Purist Pete",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.95 }
+        },
+        numAddedParts = { max = 5 }
+    },
+    offerRange = { min = 0.85, max = 1.65 }
+}, {
+    id = "CUST191",
+    name = "Bog Navigator Nate",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.9 }
+        },
+        taxiDropoffs = { min = 5 }
+    },
+    offerRange = { min = 1.05, max = 1.9 }
+}, {
+    id = "CUST192",
+    name = "Dual Surface Dana",
+    specialties = {"oval", "mud"},
+    criteria = {
+        performance = {
+            oval = { min = 0.75 },
+            mud = { min = 0.8 }
+        },
+        rep = { min = 2 }
+    },
+    offerRange = { min = 1.0, max = 1.3 }
+}, {
+    id = "CUST193",
+    name = "Mud Modder Mike",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.85 }
+        },
+        numAddedParts = { min = 8 }
+    },
+    offerRange = { min = 1.1, max = 1.35 }
+}, {
+    id = "CUST194",
+    name = "Extreme Enthusiast Erin",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 1.0 }
+        },
+        rep = { min = 4 }
+    },
+    offerRange = { min = 1.0, max = 1.55 }
+}, {
+    id = "CUST195",
+    name = "Oval Rookie Rachel",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.6 }
+        },
+        mileage = { max = 80000 }
+    },
+    offerRange = { min = 0.9, max = 1.1 }
+}, {
+    id = "CUST196",
+    name = "Mud Taxi Terry",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.7 }
+        },
+        taxiDropoffs = { min = 10 }
+    },
+    offerRange = { min = 0.95, max = 1.2 }
+}, {
+    id = "CUST197",
+    name = "Bog Champion Charlie",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.95 }
+        },
+        evades = { min = 2 }
+    },
+    offerRange = { min = 1.05, max = 1.45 }
+}, {
+    id = "CUST198",
+    name = "Oval & Road Ollie",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.8 }
+        },
+        power = { min = 300 }
+    },
+    offerRange = { min = 1.15, max = 1.35 }
+}, {
+    id = "CUST199",
+    name = "Muddy Mechanic Mo",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 0.75 }
+        },
+        numRemovedParts = { min = 3 }
+    },
+    offerRange = { min = 0.85, max = 1.15 }
+}, {
+    id = "CUST200",
+    name = "Extreme Collector Xander",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.85 }
+        },
+        value = { max = 75000 }
+    },
+    offerRange = { min = 1.0, max = 1.3 }
 }
 }
 

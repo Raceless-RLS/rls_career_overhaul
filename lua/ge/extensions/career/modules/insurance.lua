@@ -327,10 +327,8 @@ local function loadPoliciesData(resetSomeData)
                 renewedPolicy = {}
             }
         end
-        local policyTowsValue = getPlPerkValue(policyInfo.id, "roadsideAssistance")
         plPoliciesData[policyInfo.id].perks = updatedPerksData
-        policyTows[policyInfo.id] = policyTows[policyInfo.id] - policyTowsValue + getPlPerkValue(policyInfo.id, "roadsideAssistance")
-    end
+        policyTows[policyInfo.id] = availablePolicies[policyInfo.id].perks["roadsideAssistance"].changeability.changeParams.choices[plPoliciesData[policyInfo.id].perks.roadsideAssistance]    end
 
     if isFirstLoadEver then
         M.purchasePolicy(1, true) -- give the player the basic insurance

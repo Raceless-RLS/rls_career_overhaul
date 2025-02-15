@@ -146,6 +146,16 @@ local function getLeaderboardEntry(raceName)
     return leaderboard[level][raceName]
 end
 
+local function onCareerActive(active)
+    if active then
+        loadLeaderboard()
+    else
+        leaderboard = {}
+    end
+end
+
+M.onCareerActive = onCareerActive
+
 M.onInit = onInit
 M.onWorldReadyState = onWorldReadyState
 
