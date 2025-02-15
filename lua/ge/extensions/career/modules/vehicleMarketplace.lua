@@ -13,6 +13,8 @@ local lastOfferTime = {}
 
 local offerInterval = {}
 
+local notifications = true
+
 local function racesToLabels(races)
 
   local raceLabels = {}
@@ -73,6 +75,12 @@ local function onExtensionLoaded()
   if not saveSlot or not savePath then return end
   
   marketplaceData = career_modules_inventory.loadMarketplaceData(savePath)
+  for _, data in pairs(marketplaceData) do
+    if not data.offers then
+      data.offers = {}
+      data.lastOfferTime = os.time()
+    end
+  end
   initializeMarketplaceData()
 end
 
@@ -82,7 +90,7 @@ end
 
 local function sendOffer(inventoryId, customer, price)
   -- Check for existing offer from this customer
-  for _, offer in ipairs(marketplaceData[tostring(inventoryId)]) do
+  for _, offer in ipairs(marketplaceData[tostring(inventoryId)].offers) do
     if offer.customer == customer then
       -- Update existing offer price
       offer.price = price
@@ -306,6 +314,10 @@ local function onUpdate(dt)
       local offer = generateOffer(inventoryId)
       if offer then
         sendOffer(inventoryId, offer.customer, offer.price)
+        if notifications then
+          local vehicle = career_modules_inventory.getVehicles()[inventoryId]
+          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price))
+        end
       end
       setOfferInterval(inventoryId)
     end
@@ -313,6 +325,9 @@ local function onUpdate(dt)
 
 end
 
+function M.toggleNotifications(newValue)
+  notifications = newValue
+end
 
 M.racesToLabels = racesToLabels
 M.openMenu = openMenu
