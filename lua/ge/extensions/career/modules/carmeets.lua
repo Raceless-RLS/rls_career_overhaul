@@ -401,6 +401,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 if career_modules_hardcore.isHardcoreMode() then
                     reputation = reputation / 2
                 end
+                reputation = math.max(reputation, 1)
 
                 ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by " .. reputation .. "%", 10, "info", "info")
                 local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))

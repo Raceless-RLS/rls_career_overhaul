@@ -2747,18 +2747,21 @@ local customers = {{
             min = 250000
         },
         mileage = {
-            max = 10000
+            max = 50
         },
         power = {
             min = 440
         },
         torque = {
             min = 480
+        },
+        taxiDropoffs = {
+            min = 10
         }
     },
     offerRange = {
-        min = 1.3,
-        max = 1.8
+        min = 1.25,
+        max = 1.55
     }
 }, -- Classic Collectors (5)
 {
@@ -3387,6 +3390,9 @@ local customers = {{
     criteria = {
         tickets = {
             max = 2
+        },
+        taxiDropoffs = {
+            min = 3
         }
     },
     offerRange = {
@@ -3399,7 +3405,10 @@ local customers = {{
     specialties = {},
     criteria = {
         accidents = {
-            max = 1
+            max = 0
+        },
+        rep = {
+            min = 4
         }
     },
     offerRange = {
@@ -3416,6 +3425,9 @@ local customers = {{
         },
         tickets = {
             max = 0
+        },
+        mileage = {
+            max = 100000
         }
     },
     offerRange = {
@@ -3568,6 +3580,9 @@ local customers = {{
     criteria = {
         tickets = {
             max = 1
+        },
+        mileage = {
+            max = 10000
         }
     },
     offerRange = {
@@ -3599,7 +3614,33 @@ local customers = {{
         min = 0.3,
         max = 1.2
     }
-}}
+}, {
+    id = "CUST175",
+    name = "Balanced Bob",
+    specialties = {},
+    criteria = {
+        rep = {
+            min = 3
+        },
+        taxiDropoffs = {
+            min = 10
+        },
+        evades = {
+            min = 1
+        },
+        movieRentals = {
+            min = 1
+        },
+        repos = {
+            min = 1
+        }
+    },
+    offerRange = {
+        min = 0.3,
+        max = 1.2
+    }
+}
+}
 
 local function getInterestedCustomers(vehicleData)
     local interestedCustomers = {}

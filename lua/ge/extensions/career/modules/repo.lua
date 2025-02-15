@@ -441,9 +441,6 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     if self.jobStartTime then
         local distanceFromDestination = (vehiclePos - self.deliveryLocation.pos):length()
         local velocity = vehicle:getVelocity():length()
-        if core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
-            core_groundMarkers.setPath(self.deliveryLocation.pos)
-        end
         if distanceFromDestination <= 1 and velocity <= 1 then
             local reward = self:calculateReward()
             ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")
@@ -475,6 +472,10 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             career_modules_inventory.addRepossession(career_modules_inventory.getInventoryIdFromVehicleId(self.repoVehicleID))
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
+        else
+            if core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
+                core_groundMarkers.setPath(self.deliveryLocation.pos)
+            end
         end
     end
 

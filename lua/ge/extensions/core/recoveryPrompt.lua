@@ -95,6 +95,7 @@ local conditions = {
 local flipUpRightCost = 50
 local towToRoadCost = 75
 local baseTowToGarageCost = 250
+local favoriteVehicleCost = 1250
 
 local currentMenuTag
 local openRecoveryPrompt
@@ -102,6 +103,15 @@ local openRecoveryPrompt
 local function getPriceFunction(basePrice)
   return function(target)
     if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId)) then
+      return {money = {amount = 0, canBeNegative = true}}
+    end
+    return {money = {amount = basePrice, canBeNegative = true}}
+  end
+end
+
+local function getFavoriteVehiclePriceFunction(basePrice)
+  return function()
+    if career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getFavoriteVehicle()) then
       return {money = {amount = 0, canBeNegative = true}}
     end
     return {money = {amount = basePrice, canBeNegative = true}}
@@ -200,14 +210,21 @@ local buttonOptions = {
     label = "Retrieve favorite vehicle",
     includeConditions = {},
     enableConditions = {conditions.outOfPursuit, conditions.favouriteSet, conditions.notTestdriving},
-    atFadeFunction = function() career_modules_playerDriving.retrieveFavoriteVehicle() end,
+    atFadeFunction = function() 
+      career_modules_playerDriving.retrieveFavoriteVehicle()
+      if not career_modules_insurance.isRoadSideAssistanceFree(career_modules_inventory.getFavoriteVehicle()) then
+        career_modules_payment.pay({money = {amount = favoriteVehicleCost, canBeNegative = true}}, {label = string.format("Retrieved your favorite vehicle")})
+      end
+      extensions.hook("useTow", career_modules_inventory.getFavoriteVehicle())
+    end,
 
     order = 11,
     active = false,
     enabled = true,
     fadeActive = true,
     icon = "carStarred",
-    confirmationText = "Do you want to retrieve your favorite vehicle?"
+    confirmationText = "Do you want to retrieve your favorite vehicle?",
+    price = getFavoriteVehiclePriceFunction(favoriteVehicleCost)
   },
   -- only during mission
   flipMission = {
@@ -370,7 +387,7 @@ local function addTowingButtons()
           return {money = {amount = garage.defaultPrice, canBeNegative = false}}
         end
       end
-      local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)
+      local price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage) * 8
       if price > 0 then price = price + baseTowToGarageCost end
       if not career_modules_garageManager.isPurchasedGarage(garage.id) then
         price = price + garage.defaultPrice
@@ -394,6 +411,10 @@ local function addTowingButtons()
           career_modules_payment.pay(price, {label = string.format("Towed your vehicle to your garage")})
           career_modules_garageManager.addPurchasedGarage(garage.id)
           career_saveSystem.saveCurrent()
+        end
+        price = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)
+        if price == nil or price ~= 0 then
+          extensions.hook("useTow", career_modules_inventory.getInventoryIdFromVehicleId(target.vehId))
         end
       end,
       message = "ui.career.towed",

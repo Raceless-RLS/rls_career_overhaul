@@ -17,7 +17,8 @@
     },
     "roadsideAssistance": {
       "niceName": "insurance.perks.roadsideAssistance.name",
-      "desc": "insurance.perks.roadsideAssistance.description"
+      "desc": "insurance.perks.roadsideAssistance.description",
+      "unit": "tows"
     },
     "paintRepair": {
       "niceName": "insurance.perks.paintRepair.name",
@@ -134,14 +135,18 @@
           "changeability": {
             "changeable": true,
             "changeParams": {
-              "changeType": "toggle",
+              "changeType": "choices",
               "choices": [
-                true,
-                false
+                0,
+                2,
+                5,
+                10
               ],
               "premiumInfluence": [
-                50,
-                0
+                0,
+                150,
+                450,
+                1500
               ]
             }
           }
@@ -266,14 +271,18 @@
           "changeability": {
             "changeable": true,
             "changeParams": {
-              "changeType": "toggle",
+              "changeType": "choices",
               "choices": [
-                true,
-                false
+                0,
+                2,
+                5,
+                10
               ],
               "premiumInfluence": [
-                75,
-                0
+                0,
+                150,
+                450,
+                1500
               ]
             }
           }
@@ -399,14 +408,18 @@
           "changeability": {
             "changeable": true,
             "changeParams": {
-              "changeType": "toggle",
+              "changeType": "choices",
               "choices": [
-                true,
-                false
+                0,
+                2,
+                5,
+                10
               ],
               "premiumInfluence": [
-                110,
-                0
+                0,
+                150,
+                450,
+                1500
               ]
             }
           }

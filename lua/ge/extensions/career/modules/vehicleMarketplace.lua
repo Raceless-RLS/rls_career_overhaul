@@ -46,7 +46,7 @@ local function setOfferInterval(inventoryId)
   local interestSum = sumInterest(interestedCustomers[inventoryId])
     local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
   local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-  local maxInterestSum = 75
+  local maxInterestSum = 55
 
   local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
 
@@ -271,6 +271,10 @@ local function generateOffer(inventoryId)
 
   -- Ensure offer is within range (though it should be already)
   offerValue = math.max(offerRange.min, math.min(offerRange.max, offerValue))
+
+  if offerValue > 1 and career_modules_hardcore.isHardcoreMode() then
+    offerValue = 1 + ((offerValue - 1) * 0.75)
+  end
 
   -- Format the price to 2 decimal places (optional)
   offerValue = math.floor(offerValue * 100) / 100
