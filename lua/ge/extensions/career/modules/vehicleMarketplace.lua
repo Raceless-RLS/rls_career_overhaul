@@ -86,6 +86,7 @@ local function sendOffer(inventoryId, customer, price)
     if offer.customer == customer then
       -- Update existing offer price
       offer.price = price
+      marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
       guihooks.trigger("marketplaceUpdate", marketplaceData)
       return
     end
@@ -94,9 +95,10 @@ local function sendOffer(inventoryId, customer, price)
   -- No existing offer found, add new one
   local offer = {
     customer = customer,
-    price = price
+    price = price,
   }
-  table.insert(marketplaceData[tostring(inventoryId)], offer)
+  table.insert(marketplaceData[tostring(inventoryId)].offers, offer)
+  marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
   guihooks.trigger("marketplaceUpdate", marketplaceData)
 end
 
@@ -202,7 +204,7 @@ function M.onVehicleListingUpdate(data)
     marketplaceData = {}
   end
   if data.forSale then
-    marketplaceData[tostring(data.inventoryId)] = {}
+    marketplaceData[tostring(data.inventoryId)] = {offers = {}, lastOfferTime = os.time()}
     setOfferInterval(data.inventoryId)
   else
     marketplaceData[tostring(data.inventoryId)] = nil
@@ -269,12 +271,12 @@ local function generateOffer(inventoryId)
   local randomValue = math.random() -- Random value between 0 and 1
   local offerValue = offerRange.min + range * (randomValue * (1 - interestFactor) + interestFactor)
 
-  -- Ensure offer is within range (though it should be already)
-  offerValue = math.max(offerRange.min, math.min(offerRange.max, offerValue))
-
   if offerValue > 1 and career_modules_hardcore.isHardcoreMode() then
     offerValue = 1 + ((offerValue - 1) * 0.75)
   end
+
+  -- Ensure offer is within range (though it should be already)
+  offerValue = math.max(offerRange.min, math.min(offerRange.max, offerValue))
 
   -- Format the price to 2 decimal places (optional)
   offerValue = math.floor(offerValue * 100) / 100
