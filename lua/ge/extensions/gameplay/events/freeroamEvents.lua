@@ -499,7 +499,7 @@ local function onBeamNGTrigger(data)
             in_race_time = 0
             mActiveRace = raceName
             lapCount = 0
-            mInventoryId = career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID)
+            mInventoryId = career_modules_inventory and career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) or nil
             invalidLap = false
 
             utils.displayStartMessage(raceName)

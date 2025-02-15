@@ -381,7 +381,7 @@ local function getNumberOfFreeSlots()
   for inventoryId, vehicle in pairs(vehicles) do
     if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
   end
-  slotAmount = career_modules_extraSaveData.getTotalGarageCapacity()
+  slotAmount = career_modules_garageManager.getTotalGarageCapacity()
   return slotAmount - ownedVehiclesAmount
 end
 
@@ -629,6 +629,10 @@ local function setupInventory(levelPath)
   local levelName = generalData and generalData.level or getCurrentLevelIdentifier()
   local justSwitched = generalData and generalData.justSwitched or false
 
+  if justSwitched and not career_modules_hardcore.isHardcoreMode() then
+    career_modules_garageManager.purchaseDefaultGarage()
+  end
+
   if career_modules_linearTutorial.getLinearStep() == -1 then
     if loadedVehiclesLocations then
       local vehiclesToTeleportToGarage = {}
@@ -641,7 +645,10 @@ local function setupInventory(levelPath)
           if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
             vehiclesMovedToStorage = true
           else
-            local veh = spawnVehicle(inventoryId)
+            local veh = nil
+            if not justSwitched or vehicleToEnterId == inventoryId then
+              veh = spawnVehicle(inventoryId)
+            end
             if veh then
               local levelGate
               if justSwitched then
@@ -680,6 +687,7 @@ local function setupInventory(levelPath)
     else
       gameplay_walk.setWalkingMode(true)
     end
+    extensions.hook("onSetupInventoryFinished")
   end
 
   if not data then
@@ -724,8 +732,9 @@ local function setupInventory(levelPath)
       if levelName == "west_coast_usa" then
         freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
       elseif levelName == "italy" then
-        freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+        freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
       end
+      career_modules_garageManager.purchaseDefaultGarage()
     else
       -- spawn the tutorial vehicle
       local model, config = "covet","vehicles/covet/covet_tutorial.pc"
@@ -740,8 +749,8 @@ local function setupInventory(levelPath)
       -- move walking character into position
       spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
       gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
+      career_modules_garageManager.purchaseDefaultGarage()
     end
-    career_modules_extraSaveData.purchaseDefaultGarage()
   else
     if gameplay_walk.isWalking() then
       if unicycleSavedPosition and not justSwitched then
@@ -751,7 +760,7 @@ local function setupInventory(levelPath)
         if levelName == "west_coast_usa" then
           freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
         elseif levelName == "italy" then
-          freeroam_facilities.teleportToGarage("carlinoGarage", getPlayerVehicle(0))
+          freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
         end
       end
     end
@@ -1321,22 +1330,6 @@ local function setLicensePlateText(inventoryId, text)
   vehicles[inventoryId].config.licenseName = text
 end
 
-local function setVehicleRole(inventoryId, role)
-  vehicles[inventoryId].role = role
-end
-
-local function getVehicleRole(inventoryId)
-  return vehicles[inventoryId] and vehicles[inventoryId].role or nil
-end
-
-local function addMeetReputation(inventoryId, amount)
-  vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
-end
-
-local function getMeetReputation(inventoryId)
-  return vehicles[inventoryId].meetReputation or 0
-end
-
 local function getLicensePlateText(vehId)
   local inventoryId = getInventoryIdFromVehicleId(vehId)
   return inventoryId and vehicles[inventoryId] and vehicles[inventoryId].config.licenseName or nil
@@ -1438,11 +1431,119 @@ local function getDirtiedVehicles()
   return dirtiedVehicles
 end
 
+-- RLS Extra Vehicle Stats
+
+local function setVehicleRole(inventoryId, role)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].role = role
+end
+
+local function getVehicleRole(inventoryId)
+  return vehicles[inventoryId] and vehicles[inventoryId].role or nil
+end
+
+local function addMeetReputation(inventoryId, amount)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].meetReputation = (vehicles[inventoryId].meetReputation or 0) + amount
+end
+
+local function getMeetReputation(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].meetReputation or 0
+end
+
+local function addAccident(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].accidents = (vehicles[inventoryId].accidents or 0) + 1
+end
+
+local function getAccidents(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].accidents or 0
+end
+
+local function addArrest(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].arrests = (vehicles[inventoryId].arrests or 0) + 1
+end
+
+local function getArrests(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].arrests or 0
+end
+
+local function addTicket(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].tickets = (vehicles[inventoryId].tickets or 0) + 1
+end
+
+local function getTickets(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].tickets or 0
+end
+
+local function addEvade(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].evades = (vehicles[inventoryId].evades or 0) + 1
+end
+
+local function getEvades(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].evades or 0
+end
+
+local function addTaxiDropoff(inventoryId, passengers)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].taxiDropoffs = (vehicles[inventoryId].taxiDropoffs or 0) + passengers
+end
+
+local function getTaxiDropoffs(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].taxiDropoffs or 0
+end
+
+local function addRepossession(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].repos = (vehicles[inventoryId].repos or 0) + 1
+end
+
+local function getRepossessions(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].repos or 0
+end
+
+local function addMovieRental(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].movieRentals = (vehicles[inventoryId].movieRentals or 0) + 1
+end
+
+local function getMovieRentals(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].movieRentals or 0
+end
+
+function M.setCertifications(vehId, certifications)
+  local invId = getInventoryIdFromVehicleId(vehId)
+  if not invId then return end
+  vehicles[invId].certifications = certifications
+end
+
+M.getCertifications = function()
+  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  local veh = vehicles[invId]
+  if not veh then return {} end
+  return veh.certifications
+end
+
+-- RLS Reload function
+
 local function onWorldReadyState(state)
   if state == 2 and career_career.isActive() then
     setupInventory()
   end
 end
+
+-- RLS Taxi Functions
 
 local function specificCapcityCases(partName)
   if partName:find("capsule") and partName:find("seats") then
@@ -1495,6 +1596,8 @@ local function calculateSeatingCapacity(inventoryId)
   end
   return seatingCapacity
 end
+
+-- RLS Marketplace Functions
 
 function M.loadMarketplaceData(savePath)
   local marketplaceData = jsonReadFile(savePath .. "/career/rls_career/marketplace.json")
@@ -1552,7 +1655,23 @@ function M.setMileage(inventoryId)
   return maxOdometer
 end
 
+function M.requestListedVehicles()
+  local listedVehicles = {}
+  for _, vehicle in pairs(vehicles) do
+    listedVehicles[tostring(vehicle.id)] = false
+    if vehicle.forSale then
+      listedVehicles[tostring(vehicle.id)] = true
+    end
+  end
+  print("requestListedVehicles LUA")
+  dump(listedVehicles)
+  guihooks.trigger("listedVehiclesUpdate", listedVehicles)
+end
+
+-- RLS FRE Functions
+
 local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
+  print("saveFRETimeToVehicle" .. tostring(raceName) .. " " .. tostring(inventoryId) .. " " .. tostring(time) .. " " .. tostring(driftScore))
   local veh = vehicles[inventoryId]
   if not veh then return end
   veh.FRETimes = veh.FRETimes or {}
@@ -1560,7 +1679,7 @@ local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
     if driftScore and driftScore ~= 0 then
       veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
     else
-      veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], time)
+      veh.FRETimes[raceName] = math.min(veh.FRETimes[raceName], time)
     end
   else
     if driftScore and driftScore ~= 0 then
@@ -1581,19 +1700,6 @@ M.getAllFRETimes = function()
   local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
   if not invId then return {} end
   return vehicles[invId].FRETimes
-end
-
-function M.setCertifications(vehId, certifications)
-  local invId = getInventoryIdFromVehicleId(vehId)
-  if not invId then return end
-  vehicles[invId].certifications = certifications
-end
-
-M.getCertifications = function()
-  local invId = getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
-  local veh = vehicles[invId]
-  if not veh then return {} end
-  return veh.certifications
 end
 
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
@@ -1625,8 +1731,6 @@ M.getFavoriteVehicle = getFavoriteVehicle
 M.sendDataToUi = sendDataToUi
 M.setVehicleRole = setVehicleRole
 M.getVehicleRole = getVehicleRole
-M.addMeetReputation = addMeetReputation
-M.getMeetReputation = getMeetReputation
 M.setLicensePlateText = setLicensePlateText
 M.getLicensePlateText = getLicensePlateText
 M.purchaseLicensePlateText = purchaseLicensePlateText
@@ -1670,4 +1774,20 @@ M.getMapInventoryIdToVehId = getMapInventoryIdToVehId
 
 -- RLS
 M.getVehicleTimeToAccess = getVehicleTimeToAccess
+M.addMeetReputation = addMeetReputation
+M.getMeetReputation = getMeetReputation
+M.addAccident = addAccident
+M.getAccidents = getAccidents
+M.addArrest = addArrest
+M.addTicket = addTicket
+M.getArrests = getArrests
+M.getTickets = getTickets
+M.addEvade = addEvade
+M.getEvades = getEvades
+M.addTaxiDropoff = addTaxiDropoff
+M.getTaxiDropoffs = getTaxiDropoffs
+M.addRepossession = addRepossession
+M.getRepossessions = getRepossessions
+M.addMovieRental = addMovieRental
+M.getMovieRentals = getMovieRentals
 return M

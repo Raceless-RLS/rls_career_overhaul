@@ -865,7 +865,7 @@ export default {
     checkAvailableMeets: () => {}
   },
 
-  career_modules_extraSaveData: {
+  career_modules_garageManager: {
     requestGarageData: () => {},
     canPay: () => {},
     buyGarage: () => {},
@@ -891,5 +891,9 @@ export default {
     requestInitialData: () => {},
     acceptOffer: (vehicleId, customer) => [String, String],
     declineOffer: (vehicleId, customer) => [String, String]
+  },
+
+  career_modules_hardcore: {
+    isHardcoreMode: () => {}
   }
 }

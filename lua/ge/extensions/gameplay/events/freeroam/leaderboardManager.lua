@@ -41,7 +41,13 @@ local function isBestTime(entry)
     end
     local time, driftScore
     if entry.isAltRoute then
+        if not leaderboardEntry.altRoute then
+            return true
+        end
         if entry.isHotlap then
+            if not leaderboardEntry.altRoute.hotlapTime then
+                return true
+            end
             time = leaderboardEntry.altRoute.hotlapTime
             driftScore = leaderboardEntry.altRoute.driftScore or 0
         else
@@ -51,6 +57,9 @@ local function isBestTime(entry)
         end
     else
         if entry.isHotlap then
+            if not leaderboardEntry.hotlapTime then
+                return true
+            end
             time = leaderboardEntry.hotlapTime
             driftScore = leaderboardEntry.driftScore or 0
         else
@@ -58,7 +67,7 @@ local function isBestTime(entry)
             driftScore = leaderboardEntry.driftScore or 0
         end
     end
-    if entry.driftScore then
+    if entry.driftScore and entry.driftScore > 0 then
         return entry.driftScore > driftScore
     end
     if time == nil then return true end
@@ -67,7 +76,9 @@ end
 
 
 local function addLeaderboardEntry(entry)
-    career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
+    if career_career and career_career.isActive() then
+        career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
+    end
     if isBestTime(entry) then
         local raceName = entry.raceName
 
@@ -134,6 +145,16 @@ local function getLeaderboardEntry(raceName)
     end
     return leaderboard[level][raceName]
 end
+
+local function onCareerActive(active)
+    if active then
+        loadLeaderboard()
+    else
+        leaderboard = {}
+    end
+end
+
+M.onCareerActive = onCareerActive
 
 M.onInit = onInit
 M.onWorldReadyState = onWorldReadyState

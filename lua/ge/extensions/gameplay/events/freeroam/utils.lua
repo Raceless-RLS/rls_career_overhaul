@@ -139,7 +139,7 @@ end
 
 local function restoreTrafficAmount()
     if gameplay_traffic then
-        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount(10) or
+        local settingsAmount = settings.getValue('trafficAmount') == 0 and getMaxVehicleAmount() or
                                    settings.getValue('trafficAmount')
         local trafficAmount = settingsAmount or previousTrafficAmount
         local pooledAmount = settings.getValue('trafficExtraAmount') or 0
@@ -389,12 +389,15 @@ local function onPursuitAction(id, pursuitData)
 end
 
 local function loadRaceData()
-    local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
-    local raceData = jsonReadFile(level)
-    if raceData then
-        races = raceData.races or {}
+    if getCurrentLevelIdentifier() then
+        local level = "levels/" .. getCurrentLevelIdentifier() .. "/race_data.json"
+        local raceData = jsonReadFile(level)
+        if raceData then
+            races = raceData.races or {}
+        end
+        return deepcopy(races)  
     end
-    return deepcopy(races)
+    return {}
 end
 
 local function onInit()

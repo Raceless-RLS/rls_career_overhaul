@@ -93,7 +93,7 @@ function C:update(data)
       if screenObjTemp then
         Engine.Audio.playOnce('AudioGui','event:>UI>Career>Computer', {position = vec3(self.pos.x, self.pos.y, self.pos.z)})
         if self.cluster.garageId and career_career.isActive() then
-          career_modules_extraSaveData.addDiscoveredGarage(self.cluster.garageId)
+          career_modules_garageManager.addDiscoveredGarage(self.cluster.garageId)
         end
       end
       area.overlap = true

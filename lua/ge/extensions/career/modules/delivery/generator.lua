@@ -127,8 +127,8 @@ end
 local parcelItemMoneyMultiplier = 1
 local function getMoneyRewardForParcelItem(item, distance)
   local basePrice = math.sqrt(item.slots) / 4
-  local distanceExp = 1 + math.sqrt(item.slots)/100
-  local pricePerM = 5 + math.pow(item.weight, 0.9)
+  local distanceExp = 1.3 + math.sqrt(item.slots)/100
+  local pricePerM = 2 + math.pow(item.weight, 0.6)
   --local modMultiplier = 1---0.9 + 0.1 * #item.modifiers
   --for _, mod in ipairs(item.modifiers) do
   --  modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
@@ -143,25 +143,25 @@ local function finalizeParcelItemDistanceAndRewards(item)
   if item.rewards then return end
   local distance = getDistanceBetweenFacilities(item.origin, item.destination)
 
-  local baseXP = 2
-  if item.slots >= 16 then baseXP = baseXP + 1 end
-  if item.slots >= 32 then baseXP = baseXP + 1 end
-  if item.slots >= 64 then baseXP = baseXP + 1 end
+  local baseXP = 0.25
+  if item.slots >= 32 then baseXP = baseXP + 0.5 end
+  if item.slots >= 64 then baseXP = baseXP + 0.5 end
+  if item.slots >= 128 then baseXP = baseXP + 0.5 end
 
   item.data.originalDistance = distance
   local template = deepcopy(M.getParcelTemplateById(item.templateId))
   item.modifiers = dParcelMods.generateModifiers(item, template, distance)
   item.rewards = {
     money = getMoneyRewardForParcelItem(item, distance) * dProgress.getMoneyMultiplerForSkill('delivery'),
-    beamXP = (baseXP + round(distance/1000)) * hardcoreMultiplier,
-    labourer = (baseXP + round(distance/1000)) * hardcoreMultiplier,
-    delivery = (baseXP + round(distance/1000)) * hardcoreMultiplier
+    beamXP = (baseXP + round(distance/800)) * hardcoreMultiplier,
+    labourer = (baseXP + round(distance/800)) * hardcoreMultiplier,
+    delivery = (baseXP + round(distance/800)) * hardcoreMultiplier
   }
 
   if item.organization then
     local organizationData = freeroam_organizations.getOrganization(item.organization)
     if organizationData then
-      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1000)
+      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1400)
       item.rewards.money = item.rewards.money * organizationData.reputationLevels[organizationData.reputation.level+2].deliveryBonus.value
     end
   end
@@ -1050,7 +1050,7 @@ local function addLoanerSpotsToFacility(resTable, priorityKey, fac, sites, acces
         end
       end
       if not psFound then
-        log("E","missing parking spot loaner: " .. name)
+        log("E","missing parking spot loaner: " .. tostring(accessPointsByName))
       end
     end
   end

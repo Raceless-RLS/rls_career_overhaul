@@ -7,6 +7,12 @@ local function loadExtensions()
     extensions.load("core_recoveryPrompt")
     setExtensionUnloadMode("core_recoveryPrompt", "manual")
 
+    if extensions.isExtensionLoaded("core_gameContext") then
+        extensions.unload("core_gameContext")
+    end
+    extensions.load("core_gameContext")
+    setExtensionUnloadMode("core_gameContext", "manual")
+
     if extensions.isExtensionLoaded("gameplay_traffic_vehicle") then
         extensions.unload("gameplay_traffic_vehicle")
     end

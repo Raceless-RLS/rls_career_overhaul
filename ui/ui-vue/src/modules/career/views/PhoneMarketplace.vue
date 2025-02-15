@@ -3,8 +3,9 @@
         <div class="marketplace-container">
             <div class="header">
                 <h2>Vehicles Listed</h2>
-                <button class="list-button" @click="router.push('/career/vehicle-inventory')">List Vehicle For
-                    Sale</button>
+                <!-- <button class="list-button" @click="router.push('/career/vehicle-inventory')">List Vehicle For
+                    Sale</button> -->
+                <BngSwitch v-model="notifications"> Notifications </BngSwitch>
             </div>
             <hr class="custom-hr">
             <template v-if="listedVehicles.length">
@@ -95,11 +96,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed, onBeforeMount, watch } from "vue"
 import PhoneWrapper from "./PhoneWrapper.vue"
 import { openConfirmation } from "@/services/popup"
 import { useVehicleInventoryStore } from "../stores/vehicleInventoryStore";
-import { BngIcon, icons, ACCENTS } from "@/common/components/base"
+import { BngIcon, icons, ACCENTS, BngSwitch } from "@/common/components/base"
 import { lua, useBridge } from '@/bridge'
 import { useRouter } from 'vue-router'
 import { $translate } from "@/services/translation"
@@ -113,12 +114,20 @@ const vehicleInventoryStore = useVehicleInventoryStore();
 const showEventTimes = ref(null)
 const showOffers = ref(null)
 const image = ref("/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.png")
-
+const notifications = ref(true)
 const marketplaceData = ref({})
+
+watch(notifications, (newValue, oldValue) => {
+  lua.career_modules_vehicleMarketplace.toggleNotifications(newValue)
+})
 
 onMounted(() => {
     lua.career_modules_vehicleMarketplace.requestInitialData()
 });
+
+onBeforeMount(() => {
+  vehicleInventoryStore.requestInitialData()
+})
 
 events.on("marketplaceUpdate", (data) => {
     console.log("marketplaceUpdate", data)
@@ -159,7 +168,7 @@ const formatTime = (seconds) => {
 }
 
 const vehicleOffers = (vehicleId) => {
-    return marketplaceData.value[vehicleId] || []
+    return marketplaceData.value[vehicleId].offers || []
 }
 
 const acceptOffer = async (vehicleId, customer) => {

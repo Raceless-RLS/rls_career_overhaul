@@ -289,7 +289,7 @@ function VehicleRepoJob:calculateReward()
     local reward = math.floor((((5 * math.sqrt(self.vehicleValue)) + distanceMultiplier) * timeMultiplier)/ 4)
     reward = reward * 1.25 + 1000
     if career_modules_hardcore.isHardcoreMode() then
-        reward = reward * 0.66
+        reward = reward * 0.4
     end
     return reward
 end
@@ -372,7 +372,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if distance <= 20 then
             self.isJobStarted = true
             ui_message("Pick up the " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nPlease drive it to " .. self.selectedDealership.name .. ".", 10, "info", "info")
-            vehicle:queueLuaCommand('input.event("parkingbrake", 0, "FILTER_DI", nil, nil, nil, nil)')
+            vehicle:queueLuaCommand('input.event("parkingbrake", 1, "FILTER_DI", nil, nil, nil, nil)')
             
             -- First insert the vehicle into traffic system
             gameplay_traffic.insertTraffic(self.vehicleId, true) -- true means ignore AI control
@@ -380,8 +380,8 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             -- Now we can get and modify the traffic vehicle
             local trafficVehicle = gameplay_traffic.getTrafficData()[self.vehicleId]
             if trafficVehicle then
-                trafficVehicle:setRole("standard")
-                print("Set vehicle role to standard")
+                trafficVehicle:setRole("empty")
+                print("Set vehicle role to empty")
             else
                 print("No traffic vehicle found")
             end            
@@ -469,8 +469,13 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             if vehicle then
                 core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
             end
+            career_modules_inventory.addRepossession(career_modules_inventory.getInventoryIdFromVehicleId(self.repoVehicleID))
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
+        else
+            if core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
+                core_groundMarkers.setPath(self.deliveryLocation.pos)
+            end
         end
     end
 

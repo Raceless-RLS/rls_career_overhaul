@@ -15,6 +15,7 @@ local lastGenerationTime = 0
 local generationInterval = 1800 -- 30 minutes in seconds
 local rsvpData = nil
 local meetStartTime = 0.417 -- 10 PM
+local meetTimes = {0.417, 0.771, 0.188, 0.243}
 local meetTimeWindow = 0.01 -- Time window to trigger meet
 local lastUpdateCheck = 0
 local updateInterval = 5 -- Check every 5 seconds
@@ -25,7 +26,7 @@ local playerHasArrived = false
 local playerSpot = nil
 local MEET_CLEANUP_DISTANCE = 100
 local MEET_LEAVE_TIMER = 60
-local MEET_LEAVE_INTERVAL = 7
+local MEET_LEAVE_INTERVAL = 5
 local meetArrivalTime = nil
 local vehicleDispersed = false
 local lastVehicleLeaveTime = 0
@@ -340,7 +341,7 @@ local function checkAvailableMeets()
 
     -- Return meet data
     meetData = {
-        time = meetStartTime,
+        time = meetTimes[math.random(#meetTimes)],
         location = selectedMeet.name,
         type = "Showcase"
     }
@@ -368,7 +369,7 @@ local function checkMeetStart()
     if not rsvpData then return end
 
     local currentTime = scenetree.tod and scenetree.tod.time or 0
-    local timeUntilMeet = math.abs(currentTime - meetStartTime)
+    local timeUntilMeet = math.abs(currentTime - rsvpData.time)
 
     if timeUntilMeet <= meetTimeWindow then
         -- Get the meet location data
@@ -400,6 +401,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 if career_modules_hardcore.isHardcoreMode() then
                     reputation = reputation / 2
                 end
+                reputation = math.max(reputation, 1)
 
                 ui_message("Welcome to the car meet!\nCommunity liked your car!\nVehicle value increased by " .. reputation .. "%", 10, "info", "info")
                 local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
@@ -408,6 +410,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 end
                 core_groundMarkers.resetAll()
                 playerHasArrived = true
+                career_saveSystem.saveCurrent()
             end
         elseif activeMeet and playerHasArrived then
             if not meetArrivalTime then
@@ -436,6 +439,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                     if veh then
                         -- Close all latches before leaving
                         veh:queueLuaCommand('ai.setMode("traffic")')
+                        veh:queueLuaCommand('ai.setSpeedMode("off")')
                     end
                     lastVehicleLeaveTime = currentTime
                 end

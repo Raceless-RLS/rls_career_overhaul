@@ -13,6 +13,8 @@ local lastOfferTime = {}
 
 local offerInterval = {}
 
+local notifications = true
+
 local function racesToLabels(races)
 
   local raceLabels = {}
@@ -31,27 +33,39 @@ local function racesToLabels(races)
   return raceLabels
 end
 
-local function initializeMarketplaceData()
-  for inventoryId, offers in pairs(marketplaceData) do
+local function sumInterest(interestedCustomers)
+  local sum = 0
+  for _, interest in ipairs(interestedCustomers) do
+    sum = sum + interest.interest
+  end
+  return sum
+end
+
+local function setOfferInterval(inventoryId)
     inventoryId = tonumber(inventoryId)
     lastOfferTime[inventoryId] = 0
     interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
-    local numInterestedCustomers = #interestedCustomers[inventoryId]
-    local minInterval = 120       -- 2 minutes in seconds (2*60)
+  local interestSum = sumInterest(interestedCustomers[inventoryId])
+    local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+  local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+  local maxInterestSum = 55
 
-    local maxInterval = 600        -- 10 minutes in seconds (10*60)
-    local customerCountForMinInterval = 25
+  local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
 
-    local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-    normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
+  print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
 
     -- Inverse relationship: fewer customers = longer intervals
-    local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-    calculatedInterval = calculatedInterval * (1 + (1 - normalizedCustomerCount))  -- Add exponential scaling
+  local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
 
     local intervalRandomness = 0.3
     local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[inventoryId] = math.max(120, calculatedInterval + randomOffset)  -- Minimum 3 minutes
+  offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
+  print("offerInterval: " .. offerInterval[inventoryId])
+end
+
+local function initializeMarketplaceData()
+  for inventoryId, offers in pairs(marketplaceData) do
+    setOfferInterval(inventoryId)
   end
 end
 
@@ -61,6 +75,12 @@ local function onExtensionLoaded()
   if not saveSlot or not savePath then return end
   
   marketplaceData = career_modules_inventory.loadMarketplaceData(savePath)
+  for _, data in pairs(marketplaceData) do
+    if not data.offers then
+      data.offers = {}
+      data.lastOfferTime = os.time()
+    end
+  end
   initializeMarketplaceData()
 end
 
@@ -70,10 +90,11 @@ end
 
 local function sendOffer(inventoryId, customer, price)
   -- Check for existing offer from this customer
-  for _, offer in ipairs(marketplaceData[tostring(inventoryId)]) do
+  for _, offer in ipairs(marketplaceData[tostring(inventoryId)].offers) do
     if offer.customer == customer then
       -- Update existing offer price
       offer.price = price
+      marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
       guihooks.trigger("marketplaceUpdate", marketplaceData)
       return
     end
@@ -82,9 +103,10 @@ local function sendOffer(inventoryId, customer, price)
   -- No existing offer found, add new one
   local offer = {
     customer = customer,
-    price = price
+    price = price,
   }
-  table.insert(marketplaceData[tostring(inventoryId)], offer)
+  table.insert(marketplaceData[tostring(inventoryId)].offers, offer)
+  marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
   guihooks.trigger("marketplaceUpdate", marketplaceData)
 end
 
@@ -100,7 +122,8 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
   local performanceValues = {}
   if not FRETimes then return {} end
   for label, time in pairs(FRETimes) do
-    local raceDetails = raceLabels[label]
+    local raceDetails = raceLabels and raceLabels[label] or {}
+    if not raceDetails or not raceDetails.types then goto continue end
     for _, type in ipairs(raceDetails.types) do
       if not performanceValues[type] then
         performanceValues[type] = {}
@@ -111,55 +134,63 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
         table.insert(performanceValues[type], {label = label, performance = raceDetails.time / time})
       end
     end
+    ::continue::
   end
   return performanceValues
 end
 
 local function pullVehicleData(inventoryId)
-  if not globalVehicleData[inventoryId] then
-    local veh = career_modules_inventory.getVehicles()[inventoryId]
-    
-    local FRETimes = veh.FRETimes
-    local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
-    local power = 0
-    local weight = 0
-    local torque = 0
-    local powerPerWeight = 0
-    local mileage = veh.mileage / 1609.34 or 0
+  local veh = career_modules_inventory.getVehicles()[inventoryId]
+  if not veh then return end
+  
+  local FRETimes = veh.FRETimes
+  local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+  local power = 0
+  local weight = 0
+  local torque = 0
+  local powerPerWeight = 0
+  local mileage = (veh.mileage and veh.mileage or 0) / 1609.34
 
-    if veh.certifications then
-      power = string.format("%d", veh.certifications.power)
-      weight = string.format("%d", veh.certifications.weight)
-      torque = string.format("%d", veh.certifications.torque)
-      powerPerWeight = string.format("%0.3f", power / weight)
-    end
-
-    local newParts = veh.config.parts
-    local originalParts = veh.originalParts
-    local changedSlots = veh.changedSlots
-
-    local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
-
-    local races = deepcopy(utils.loadRaceData())
-    local raceLabels = racesToLabels(races)
-
-    local vehicleData = {
-      performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
-      value = value or 0,
-      power = power or 0,
-      weight = weight or 0,
-      torque = torque or 0,
-      powerPerWeight = powerPerWeight or 0,
-      mileage = mileage or 0,
-      rep = veh.meetReputation or 0,
-      year = veh.year or 0,
-
-      numAddedParts = getTableSize(addedParts),
-      numRemovedParts = getTableSize(removedParts)
-    }
-
-    globalVehicleData[inventoryId] = vehicleData
+  if veh.certifications then
+    power = string.format("%d", veh.certifications.power)
+    weight = string.format("%d", veh.certifications.weight)
+    torque = string.format("%d", veh.certifications.torque)
+    powerPerWeight = string.format("%0.3f", power / weight)
   end
+
+  local newParts = veh.config.parts
+  local originalParts = veh.originalParts
+  local changedSlots = veh.changedSlots
+
+  local addedParts, removedParts = career_modules_valueCalculator.getPartDifference(originalParts, newParts, changedSlots)
+  
+  local races = utils.loadRaceData() or {}
+  if races == {} then return end
+  local raceLabels = racesToLabels(races)
+
+  local vehicleData = {
+    performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
+    value = value or 0,
+    power = power or 0,
+    weight = weight or 0,
+    torque = torque or 0,
+    powerPerWeight = powerPerWeight or 0,
+    mileage = mileage or 0,
+    rep = veh.meetReputation or 0,
+    year = veh.year or 0,
+    arrests = veh.arrests or 0,
+    tickets = veh.tickets or 0,
+    evades = veh.evades or 0,
+    accidents = veh.accidents or 0,
+    movieRentals = veh.movieRentals or 0,
+    repos = veh.repos or 0,
+    taxiDropoffs = veh.taxiDropoffs or 0,
+
+    numAddedParts = getTableSize(addedParts),
+    numRemovedParts = getTableSize(removedParts)
+  }
+
+  globalVehicleData[inventoryId] = vehicleData
 
   return globalVehicleData[inventoryId]
 end
@@ -181,25 +212,8 @@ function M.onVehicleListingUpdate(data)
     marketplaceData = {}
   end
   if data.forSale then
-    marketplaceData[tostring(data.inventoryId)] = {}
-    lastOfferTime[tonumber(data.inventoryId)] = 0
-    interestedCustomers[tonumber(data.inventoryId)] = getInterestedCustomers(tonumber(data.inventoryId))
-    local numInterestedCustomers = #interestedCustomers[tonumber(data.inventoryId)]
-    local minInterval = 120       -- 2 minutes in seconds (2*60)
-    local maxInterval = 600        -- 10 minutes in seconds (10*60)
-    local customerCountForMinInterval = 25
-
-    local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-    normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
-
-    -- Inverse relationship: fewer customers = longer intervals
-    local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-    calculatedInterval = calculatedInterval * (1 + (1 - normalizedCustomerCount))  -- Add exponential scaling
-
-    local intervalRandomness = 0.3
-    local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-    offerInterval[tonumber(data.inventoryId)] = math.max(120, calculatedInterval + randomOffset)  -- Minimum 3 minutes
-    print(offerInterval[tonumber(data.inventoryId)])
+    marketplaceData[tostring(data.inventoryId)] = {offers = {}, lastOfferTime = os.time()}
+    setOfferInterval(data.inventoryId)
   else
     marketplaceData[tostring(data.inventoryId)] = nil
     lastOfferTime[tonumber(data.inventoryId)] = nil
@@ -220,17 +234,19 @@ function M.dumpMarketplaceData()
 end
 
 local function acceptOffer(inventoryId, customer)
-  local offers = marketplaceData[tostring(inventoryId)]
+  local offers = marketplaceData[tostring(inventoryId)].offers
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       career_modules_inventory.removeVehicleFromSale(tonumber(inventoryId), offer.price)
+      Engine.Audio.playOnce('AudioGui','event:>UI>Career>Buy_01')
+      career_saveSystem.saveCurrent()
       return
     end
   end
 end
 
 local function declineOffer(inventoryId, customer)
-  local offers = marketplaceData[tostring(inventoryId)]
+  local offers = marketplaceData[tostring(inventoryId)].offers
   for _, offer in ipairs(offers) do
     if offer.customer == customer then
       table.remove(offers, _)
@@ -261,8 +277,12 @@ local function generateOffer(inventoryId)
   -- Calculate offer price based on offer range and interest
   local range = offerRange.max - offerRange.min
   local interestFactor = interest -- Use interest directly as a factor
-  local randomValue = math.random() / (career_modules_hardcore.isHardcoreMode() and 1.5 or 1) -- Random value between 0 and 1
+  local randomValue = math.random() -- Random value between 0 and 1
   local offerValue = offerRange.min + range * (randomValue * (1 - interestFactor) + interestFactor)
+
+  if offerValue > 1 and career_modules_hardcore.isHardcoreMode() then
+    offerValue = 1 + ((offerValue - 1) * 0.75)
+  end
 
   -- Ensure offer is within range (though it should be already)
   offerValue = math.max(offerRange.min, math.min(offerRange.max, offerValue))
@@ -295,29 +315,20 @@ local function onUpdate(dt)
       local offer = generateOffer(inventoryId)
       if offer then
         sendOffer(inventoryId, offer.customer, offer.price)
+        if notifications then
+          local vehicle = career_modules_inventory.getVehicles()[inventoryId]
+          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price))
+        end
       end
-      lastOfferTime[inventoryId] = 0
-
-      -- Recalculate offer interval for the next offer
-      local numInterestedCustomers = #interestedCustomers[inventoryId]
-      local minInterval = 120       -- 3 minutes in seconds (3*60)
-      local maxInterval = 600        -- 10 minutes in seconds (10*60)
-      local customerCountForMinInterval = 25
-
-
-      local normalizedCustomerCount = numInterestedCustomers / customerCountForMinInterval
-      normalizedCustomerCount = math.min(normalizedCustomerCount, 1)
-
-      local calculatedInterval = maxInterval - (maxInterval - minInterval) * normalizedCustomerCount
-      local intervalRandomness = 0.3
-
-      local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-      offerInterval[inventoryId] = math.max(120, calculatedInterval + randomOffset)
+      setOfferInterval(inventoryId)
     end
   end
 
 end
 
+function M.toggleNotifications(newValue)
+  notifications = newValue
+end
 
 M.racesToLabels = racesToLabels
 M.openMenu = openMenu

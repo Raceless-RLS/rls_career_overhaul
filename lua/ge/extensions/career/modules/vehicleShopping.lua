@@ -321,6 +321,7 @@ local function buyVehicleAndSendToGarage(options)
   spawnFollowUpActions = {delayAccess = delay, licensePlateText = options.licensePlateText, dealershipId = options.dealershipId}
   spawnVehicle(purchaseData.vehicleInfo)
   deleteAddedVehicle = true
+  extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
 end
 
 local function buyVehicleAndSpawnInParkingSpot(options)
@@ -334,6 +335,7 @@ local function buyVehicleAndSpawnInParkingSpot(options)
   if gameplay_walk.isWalking() then
     gameplay_walk.setRot(newVehObj:getPosition() - getPlayerVehicle(0):getPosition())
   end
+  extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
 end
 
 local function navigateToPos(pos)
@@ -443,6 +445,7 @@ local function buySpawnedVehicle(buyVehicleOptions)
     if be:getPlayerVehicleID(0) == vehObj:getID() then
       career_modules_inventory.enterVehicle(newInventoryId)
     end
+    extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
   end
 end
 

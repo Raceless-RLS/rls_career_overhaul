@@ -41,7 +41,8 @@ local function startRental()
     local inventoryId = career_modules_inventory.getCurrentVehicle()
     print("inventory id" .. inventoryId or "none")
     career_modules_inventory.delayVehicleAccess(inventoryId, rentalTime, "rented")
-    --  extensions.core_vehicles.spawnNewVehicle("unicycle", {removeTraffic = false})
+    career_modules_inventory.addMovieRental(inventoryId)
+
     local reward = rentalReward()
     if career_modules_hardcore.isHardcoreMode() then
         reward = reward / 2

@@ -23,7 +23,7 @@ local random = math.random
 
 -- traffic visibility settings --
 local TRAFFIC_VISIBLE_DISTANCE = 250  -- Visible range in meters
-local TRAFFIC_COLLISION_DISTANCE = 10  -- Collision range in meters
+local TRAFFIC_COLLISION_DISTANCE = 15  -- Collision range in meters
 local lastVisibilityUpdate = 0
 
 local TRAFFIC_SPEED_MULTIPLIER = 3.5  -- Increased multiplier for high speeds
@@ -207,23 +207,30 @@ local function updateTrafficVisibility(dt, playerVeh, playerPos)
 
     lastVisibilityUpdate = 0
 
-    if not playerVeh then
-        playerVeh = be:getPlayerVehicle(0)
-        if not playerVeh then
-            return
-        end
-    end
-
-    local playerPos = playerVeh:getPosition()
-
     for _, veh in pairs(traffic) do
-      local id = veh.id
-      local obj = scenetree.findObjectById(id)
-      if obj then
-            local dist = veh.pos:distance(playerPos)
+        local id = veh.id
+        if career_career and career_modules_inventory.getInventoryIdFromVehicleId(id) then
+            goto continue
+        end
+        local obj = scenetree.findObjectById(id)
+        if obj then
+            -- Check distance to other traffic vehicles
+            local minDist = math.huge
+            for _, otherVehEntry in pairs(traffic) do
+                local otherId = otherVehEntry.id
+                if otherId ~= id then  -- Exclude self
+                    local otherObj = be:getObjectByID(otherId)
+                    if otherObj then
+                        local dist = veh.pos:distance(otherObj:getPosition())
+                        if dist < minDist then
+                            minDist = dist
+                        end
+                    end
+                end
+            end
 
-            -- Manage visibility
-            if dist < TRAFFIC_COLLISION_DISTANCE then
+            -- Manage visibility based on closest vehicle
+            if minDist < TRAFFIC_COLLISION_DISTANCE then
                 if veh._wasGhosted then
                     obj:queueLuaCommand("obj:setGhostEnabled(false)")
                     veh._wasGhosted = false
@@ -235,6 +242,7 @@ local function updateTrafficVisibility(dt, playerVeh, playerPos)
                 end
             end
         end
+        ::continue::
     end
 end
 

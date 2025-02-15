@@ -10,7 +10,7 @@ local lossPerKmRelative = 0.0000025
 local scrapValueRelative = 0.5
 
 -- vehicle damage related variables
-local repairTimePerPart = 20 -- amount of seconds needed to repair one part
+local repairTimePerPart = 60 -- amount of seconds needed to repair one part
 local brokenPartsThreshold = 3 -- a vehicle is considered to need repair after x broken parts
 local minimumCarValue = 500
 local minimumCarValueRelativeToNew = 0.05
@@ -181,7 +181,11 @@ local function getRepairDetails(invVehInfo)
   local damagedParts = getDamagedParts(invVehInfo)
   for _, part in pairs(damagedParts.partsToBeReplaced) do
     local price = part.value or 700
-    details.price = details.price + price * 0.6-- lower the price a bit..
+    if career_modules_hardcore.isHardcoreMode() then
+      details.price = math.floor((details.price + price * 1.25) * 100) / 100
+    else
+      details.price = math.floor((details.price + price * 0.9) * 100) / 100
+    end
     details.repairTime = details.repairTime + repairTimePerPart
   end
 
@@ -237,7 +241,7 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   if (getTableSize(originalParts) / 2) < (getTableSize(removedParts)) then
     value = math.max(sumPartValues, 0)
   end
-  return value
+  return value - repairDetails.price
 end
 
 local function getInventoryVehicleValue(inventoryId, ignoreDamage)
@@ -245,7 +249,9 @@ local function getInventoryVehicleValue(inventoryId, ignoreDamage)
   if not vehicle then return end
   local value = math.max(getVehicleValue(vehicle.configBaseValue, vehicle, ignoreDamage), 0)
   local meetReputation = career_modules_inventory.getMeetReputation(inventoryId)
-  return value * (1 + meetReputation * 0.01)
+  local accidents = career_modules_inventory.getAccidents(inventoryId) or 0
+  local accidentMultiplier = career_modules_hardcore.isHardcoreMode() and 0.9 or 0.95
+  return value * (1 + meetReputation * 0.01) * (accidentMultiplier ^ accidents)
 end
 
 local function getNumberOfBrokenParts(partConditions)
