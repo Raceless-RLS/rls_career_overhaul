@@ -36,6 +36,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+        drift = { minTotal = 3 }
+        },
         powerPerWeight = {
             min = 0.18
         },
@@ -60,6 +63,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            motorsport = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -81,6 +87,9 @@ local customers = {{
                 min = 0.85
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 320,
             max = 500
@@ -94,7 +103,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.3,
-        max = 1.15
+        max = 1.25
     }
 }, {
     id = "CUST005",
@@ -105,6 +114,9 @@ local customers = {{
             drag = {
                 min = 0.95
             }
+        },
+        completions = {
+            drag = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -126,6 +138,9 @@ local customers = {{
             drag = {
                 min = 1
             }
+        },
+        completions = {
+            drag = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -151,6 +166,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            offroad = { minTotal = 3 }
+        },
         torque = {
             min = 400
         }
@@ -168,6 +186,9 @@ local customers = {{
             offroad = {
                 min = 0.4
             }
+        },
+        completions = {
+            offroad = { minTotal = 4 }
         },
         power = {
             min = 300
@@ -193,6 +214,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            rally = { minTotal = 3 }
+        },
         power = {
             min = 320
         },
@@ -213,6 +237,9 @@ local customers = {{
             rally = {
                 min = 0.8
             }
+        },
+        completions = {
+            rally = { minTotal = 5 }
         },
         torque = {
             min = 400,
@@ -235,7 +262,10 @@ local customers = {{
             crawl = {
                 min = 0.85
             }
-        }
+        },
+        completions = {
+            crawl = { minTotal = 5 }
+        },
     },
     offerRange = {
         min = 0.45,
@@ -251,6 +281,9 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            crawl = { minTotal = 7 }
+        },
         powerPerWeight = {
             min = 0.18
         },
@@ -260,7 +293,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.25,
-        max = 1.25
+        max = 1.4
     }
 }, {
     id = "CUST013",
@@ -271,6 +304,9 @@ local customers = {{
             apexRacing = {
                 min = 1.0
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
         },
         power = {
             min = 320
@@ -293,9 +329,11 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
+        },
         power = {
-            min = 330,
-            max = 500
+            min = 330
         },
         weight = {
             max = 1700
@@ -303,7 +341,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.25,
-        max = 1.25
+        max = 1.35
     }
 }, {
     id = "CUST015",
@@ -320,6 +358,11 @@ local customers = {{
             rally = {
                 min = 0.65
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            rally = { minTotal = 5 }
         },
         power = {
             min = 320
@@ -347,6 +390,11 @@ local customers = {{
             motorsport = {
                 min = 0.6
             }
+        },
+        completions = {
+            drag = { minTotal = 3 },
+            offroad = { minTotal = 3 },
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         powerPerWeight = {
             min = 0.18
@@ -381,7 +429,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.3,
-        max = 1.25
+        max = 1.15
     }
 }, {
     id = "CUST018",
@@ -401,7 +449,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.35,
-        max = 1.25
+        max = 1.2
     }
 }, {
     id = "CUST019",
@@ -417,7 +465,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.15,
-        max = 1.05
+        max = 1.1
     }
 }, {
     id = "CUST020",
@@ -437,6 +485,12 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 3 },
+            rally = { minTotal = 5 }
         },
         power = {
             min = 320,
@@ -468,6 +522,9 @@ local customers = {{
                 min = 0.85
             } -- no max specified
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 600
         },
@@ -490,6 +547,9 @@ local customers = {{
                 min = 0.95
             } -- no max specified
         },
+        completions = {
+            motorsport = { minTotal = 15, minConsecutive = 7 }
+        },
         power = {
             min = 600
         },
@@ -510,6 +570,9 @@ local customers = {{
             drag = {
                 min = 1.1
             } -- no max specified
+        },
+        completions = {
+            drag = { minTotal = 6 }
         },
         power = {
             min = 800
@@ -532,6 +595,9 @@ local customers = {{
                 min = 1.0
             } -- no max specified
         },
+        completions = {
+            offroad = { minTotal = 3 }
+        },
         torque = {
             min = 400
         }
@@ -550,6 +616,9 @@ local customers = {{
             rally = {
                 min = 1.1
             } -- no max specified
+        },
+        completions = {
+            rally = { minTotal = 5 }
         },
         power = {
             min = 500
@@ -581,12 +650,15 @@ local customers = {{
             rally = {
                 min = 1
             },
-            crawl = {
-                min = 0.85
-            },
             apexRacing = {
                 min = 1.05
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 15, minConsecutive = 7 },
+            drag = { minTotal = 6 },
+            offroad = { minTotal = 3 },
         },
         power = {
             min = 600
@@ -743,11 +815,11 @@ local customers = {{
 {
     id = "CUST034",
     name = "Quarryside Auto Sales",
-    specialties = {"crawl"},
+    specialties = {"offroad"},
     criteria = {
         performance = {
-            crawl = {
-                min = 0.5
+            offroad = {
+                min = 0.75
             }
         },
         power = {
@@ -807,6 +879,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            rally = { minTotal = 7}
+        },
         power = {
             min = 320
         },
@@ -828,6 +903,9 @@ local customers = {{
             drag = {
                 min = 1.2
             }
+        },
+        completions = {
+            drag = { minTotal = 7 }
         },
         power = {
             min = 600
@@ -855,6 +933,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 300
         },
@@ -880,6 +961,9 @@ local customers = {{
                 min = 1
             }
         },
+        completions = {
+            drag = { minTotal = 7 }
+        },
         power = {
             min = 600
         },
@@ -904,6 +988,9 @@ local customers = {{
             offroad = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -1146,11 +1233,16 @@ local customers = {{
                 min = 0.75
             },
             drift = {
-                min = 0.65
+                min = 0.45
             },
             apexRacing = {
                 min = 0.75
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drift = { minTotal = 5 },
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
         },
         rep = {
             min = 5
@@ -1178,6 +1270,9 @@ local customers = {{
             motorsport = {
                 min = 0.75
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         mileage = {
             min = 100000
@@ -1230,6 +1325,9 @@ local customers = {{
                 min = 1
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         powerPerWeight = {
             min = 0.25
         }
@@ -1247,6 +1345,9 @@ local customers = {{
             motorsport = {
                 min = 1
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         powerPerWeight = {
             min = 0.25
@@ -1268,6 +1369,9 @@ local customers = {{
             drift = {
                 min = 0.5
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 280
@@ -1293,6 +1397,9 @@ local customers = {{
                 min = 0.55
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 300
         },
@@ -1313,6 +1420,9 @@ local customers = {{
             drift = {
                 min = 0.6
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 310
@@ -1338,6 +1448,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -1358,6 +1471,9 @@ local customers = {{
             drift = {
                 min = 0.7
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 330
@@ -1383,6 +1499,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 340
         },
@@ -1403,6 +1522,9 @@ local customers = {{
             drift = {
                 min = 0.8
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 350
@@ -1428,6 +1550,9 @@ local customers = {{
                 min = 0.85
             }
         },
+        completions = {
+            drift = { minTotal = 7}
+        },
         power = {
             min = 360
         },
@@ -1448,6 +1573,9 @@ local customers = {{
             drift = {
                 min = 0.9
             }
+        },
+        completions = {
+            drift = { minTotal = 7}
         },
         power = {
             min = 370
@@ -1473,6 +1601,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            drift = { minTotal = 9}
+        },
         power = {
             min = 380
         },
@@ -1495,6 +1626,9 @@ local customers = {{
                 min = 0.55
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 300
         },
@@ -1516,6 +1650,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 310
         },
@@ -1536,6 +1673,9 @@ local customers = {{
             motorsport = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 320
@@ -1561,6 +1701,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 330
         },
@@ -1582,6 +1725,9 @@ local customers = {{
                 min = 0.8
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 340
         },
@@ -1602,6 +1748,9 @@ local customers = {{
             motorsport = {
                 min = 0.9
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 350
@@ -1627,6 +1776,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 360
         },
@@ -1647,6 +1799,9 @@ local customers = {{
             motorsport = {
                 min = 1.1
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 370
@@ -1672,6 +1827,9 @@ local customers = {{
                 min = 1.25
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 380
         },
@@ -1692,6 +1850,9 @@ local customers = {{
             motorsport = {
                 min = 1.3
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 390
@@ -1718,6 +1879,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -1739,6 +1903,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 330
         },
@@ -1759,6 +1926,9 @@ local customers = {{
             drag = {
                 min = 1
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 340
@@ -1784,6 +1954,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 350
         },
@@ -1805,6 +1978,9 @@ local customers = {{
                 min = 1.3
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 360
         },
@@ -1825,6 +2001,9 @@ local customers = {{
             drag = {
                 min = 1.45
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 370
@@ -1850,6 +2029,9 @@ local customers = {{
                 min = 1.55
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 380
         },
@@ -1871,6 +2053,9 @@ local customers = {{
                 min = 1.6
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 390
         },
@@ -1891,6 +2076,9 @@ local customers = {{
             drag = {
                 min = 1.65
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 400
@@ -1916,6 +2104,9 @@ local customers = {{
                 min = 1.7
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 410
         },
@@ -1938,6 +2129,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 380
         },
@@ -1959,6 +2153,9 @@ local customers = {{
                 min = 0.8
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 390
         },
@@ -1979,6 +2176,9 @@ local customers = {{
             offroad = {
                 min = 0.85
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 400
@@ -2004,6 +2204,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 410
         },
@@ -2025,6 +2228,9 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 420
         },
@@ -2045,6 +2251,9 @@ local customers = {{
             offroad = {
                 min = 1.1
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 430
@@ -2070,6 +2279,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            offroad = { minTotal = 10 }
+        },
         torque = {
             min = 440
         },
@@ -2090,6 +2302,9 @@ local customers = {{
             offroad = {
                 min = 1.2
             }
+        },
+        completions = {
+            offroad = { minTotal = 10 }
         },
         torque = {
             min = 450
@@ -2112,6 +2327,9 @@ local customers = {{
                 min = 1.35
             }
         },
+        completions = {
+            offroad = { minTotal = 10 }
+        },
         torque = {
             min = 460
         },
@@ -2132,6 +2350,9 @@ local customers = {{
             offroad = {
                 min = 1.4
             }
+        },
+        completions = {
+            offroad = { minTotal = 12 }
         },
         torque = {
             min = 470
@@ -2155,6 +2376,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            rally = { minTotal = 4 }
+        },
         power = {
             min = 300
         }
@@ -2172,6 +2396,9 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            rally = { minTotal = 4 }
         },
         power = {
             min = 310
@@ -2193,6 +2420,9 @@ local customers = {{
             rally = {
                 min = 0.85
             }
+        },
+        completions = {
+            rally = { minTotal = 6 }
         },
         power = {
             min = 320
@@ -2218,6 +2448,9 @@ local customers = {{
                 min = 0.9
             }
         },
+        completions = {
+            rally = { minTotal = 7 }
+        },
         power = {
             min = 330
         },
@@ -2239,6 +2472,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            rally = { minTotal = 7 }
+        },
         power = {
             min = 340
         },
@@ -2259,6 +2495,9 @@ local customers = {{
             rally = {
                 min = 1
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 350
@@ -2284,6 +2523,9 @@ local customers = {{
                 min = 1.1
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 360
         },
@@ -2305,6 +2547,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 370
         },
@@ -2325,6 +2570,9 @@ local customers = {{
             rally = {
                 min = 1.2
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 380
@@ -2350,6 +2598,9 @@ local customers = {{
                 min = 1.3
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 390
         },
@@ -2371,6 +2622,9 @@ local customers = {{
             crawl = {
                 min = 0.65
             }
+        },
+        completions = {
+            crawl = { minTotal = 2 }
         }
     },
     offerRange = {
@@ -2386,6 +2640,9 @@ local customers = {{
             crawl = {
                 min = 0.75
             }
+        },
+        completions = {
+            crawl = { minTotal = 2 }
         },
         powerPerWeight = {
             min = 0.15
@@ -2405,6 +2662,9 @@ local customers = {{
                 min = 0.8
             }
         },
+        completions = {
+            crawl = { minTotal = 3 }
+        },
         powerPerWeight = {
             min = 0.16
         }
@@ -2423,6 +2683,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            crawl = { minTotal = 4 }
+        },
         powerPerWeight = {
             min = 0.17
         }
@@ -2440,6 +2703,9 @@ local customers = {{
             crawl = {
                 min = 1
             }
+        },
+        completions = {
+            crawl = { minTotal = 4 }
         },
         powerPerWeight = {
             min = 0.18
@@ -2460,6 +2726,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            apexRacing = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 320
         }
@@ -2477,6 +2746,9 @@ local customers = {{
             apexRacing = {
                 min = 0.85
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 330
@@ -2499,6 +2771,9 @@ local customers = {{
                 min = 0.9
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 340
         },
@@ -2520,6 +2795,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 350
         },
@@ -2540,6 +2818,9 @@ local customers = {{
             apexRacing = {
                 min = 1
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
         },
         power = {
             min = 360
@@ -2954,6 +3235,10 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drift = { minTotal = 5 }
+        },
         mileage = {
             max = 50000
         }
@@ -2971,7 +3256,7 @@ local customers = {{
             max = 30000
         },
         value = {
-            max = 35000
+            max = 85000
         },
         rep = {
             min = 2
@@ -3013,6 +3298,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 2 }
+        },
         power = {
             min = 300
         }
@@ -3031,6 +3319,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 420
         }
@@ -3048,6 +3339,9 @@ local customers = {{
             rally = {
                 min = 0.7
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 320
@@ -3083,6 +3377,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 330
         }
@@ -3103,7 +3400,11 @@ local customers = {{
             drag = {
                 min = 0.8
             }
-        }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 5 }
+        },
     },
     offerRange = {
         min = 0.4,
@@ -3118,6 +3419,9 @@ local customers = {{
             drift = {
                 min = 0.7
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 320
@@ -3136,6 +3440,9 @@ local customers = {{
             offroad = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 430
@@ -3157,6 +3464,10 @@ local customers = {{
             apexRacing = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 3 },
+            apexRacing = { minTotal = 7, minConsecutive = 3 }
         }
     },
     offerRange = {
@@ -3172,6 +3483,9 @@ local customers = {{
             drag = {
                 min = 0.85
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 340
@@ -3190,6 +3504,9 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            rally = { minTotal = 6 }
         },
         power = {
             min = 330
@@ -3229,6 +3546,10 @@ local customers = {{
             motorsport = {
                 min = 0.7
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 5 }
         }
     },
     offerRange = {
@@ -3279,6 +3600,10 @@ local customers = {{
             drift = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 3 },
+            drift = { minTotal = 5 }
         }
     },
     offerRange = {
@@ -3297,6 +3622,10 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 },
+            rally = { minTotal = 6 }
         }
     },
     offerRange = {
@@ -3647,6 +3976,9 @@ local customers = {{
         performance = {
             oval = { min = 0.9 }
         },
+        completions = {
+            oval = { minTotal = 15 }
+        },
         rep = { min = 2 },
         tickets = { max = 2 }
     },
@@ -3658,6 +3990,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.85 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         evades = { min = 1 }
     },
@@ -3671,6 +4006,10 @@ local customers = {{
             mud = { min = 0.8 },
             extremeMud = { min = 0.8 }
         },
+        completions = {
+            mud = { minTotal = 3 },
+            extremeMud = { minTotal = 1 }
+        },
         taxiDropoffs = { min = 5 }
     },
     offerRange = { min = 1.15, max = 1.35 }
@@ -3681,6 +4020,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.95 }
+        },
+        completions = {
+            oval = { minTotal = 15 }
         },
         rep = { min = 3 },
         movieRentals = { min = 1 }
@@ -3694,6 +4036,9 @@ local customers = {{
         performance = {
             extremeMud = { min = 0.9 }
         },
+        completions = {
+            extremeMud = { minTotal = 1 }
+        },
         repos = { min = 2 }
     },
     offerRange = { min = 1.05, max = 1.3 }
@@ -3706,6 +4051,10 @@ local customers = {{
             oval = { min = 0.7 },
             mud = { min = 0.75 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 }
+        },
         taxiDropoffs = { min = 3 }
     },
     offerRange = { min = 0.6, max = 1.2 }
@@ -3716,6 +4065,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.95 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         mileage = { max = 50000 }
     },
@@ -3728,6 +4080,9 @@ local customers = {{
         performance = {
             oval = { min = 1.0 }
         },
+        completions = {
+            oval = { minTotal = 25 }
+        },
         tickets = { min = 2 }
     },
     offerRange = { min = 0.85, max = 1.35 }
@@ -3738,6 +4093,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.85 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         mileage = { max = 200000 }
     },
@@ -3752,6 +4110,11 @@ local customers = {{
             mud = { min = 0.8 },
             offroad = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 },
+            offroad = { minTotal = 10 }
+        },
         rep = { min = 1 }
     },
     offerRange = { min = 1.0, max = 1.3 }
@@ -3762,6 +4125,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.9 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         accidents = { min = 1 }
     },
@@ -3774,9 +4140,12 @@ local customers = {{
         performance = {
             extremeMud = { min = 0.75 }
         },
+        completions = {
+            extremeMud = { minTotal = 2 }
+        },
         mileage = { max = 100000 }
     },
-    offerRange = { min = 0.95, max = 1.2 }
+    offerRange = { min = 0.95, max = 1.45 }
 }, {
     id = "CUST188",
     name = "High Bank Hank",
@@ -3784,6 +4153,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.85 }
+        },
+        completions = {
+            oval = { minTotal = 20 }
         },
         powerPerWeight = { min = 0.2 }
     },
@@ -3796,6 +4168,9 @@ local customers = {{
         performance = {
             mud = { min = 0.7 }
         },
+        completions = {
+            mud = { minTotal = 3 }
+        },
         movieRentals = { min = 2 }
     },
     offerRange = { min = 0.8, max = 1.35 }
@@ -3807,6 +4182,9 @@ local customers = {{
         performance = {
             oval = { min = 0.95 }
         },
+        completions = {
+            oval = { minTotal = 40 }
+        },
         numAddedParts = { max = 5 }
     },
     offerRange = { min = 0.85, max = 1.65 }
@@ -3817,6 +4195,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.9 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         taxiDropoffs = { min = 5 }
     },
@@ -3830,6 +4211,10 @@ local customers = {{
             oval = { min = 0.75 },
             mud = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 }
+        },
         rep = { min = 2 }
     },
     offerRange = { min = 1.0, max = 1.3 }
@@ -3840,6 +4225,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.85 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         numAddedParts = { min = 8 }
     },
@@ -3852,6 +4240,9 @@ local customers = {{
         performance = {
             extremeMud = { min = 1.0 }
         },
+        completions = {
+            extremeMud = { minTotal = 1 }
+        },
         rep = { min = 4 }
     },
     offerRange = { min = 1.0, max = 1.55 }
@@ -3862,6 +4253,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.6 }
+        },
+        completions = {
+            oval = { minTotal = 15 }
         },
         mileage = { max = 80000 }
     },
@@ -3874,6 +4268,9 @@ local customers = {{
         performance = {
             mud = { min = 0.7 }
         },
+        completions = {
+            mud = { minTotal = 3 }
+        },
         taxiDropoffs = { min = 10 }
     },
     offerRange = { min = 0.95, max = 1.2 }
@@ -3884,6 +4281,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.95 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         evades = { min = 2 }
     },
@@ -3896,9 +4296,12 @@ local customers = {{
         performance = {
             oval = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 50 }
+        },
         power = { min = 300 }
     },
-    offerRange = { min = 1.15, max = 1.35 }
+    offerRange = { min = 1.15, max = 1.45 }
 }, {
     id = "CUST199",
     name = "Muddy Mechanic Mo",
@@ -3906,6 +4309,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.75 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         numRemovedParts = { min = 3 }
     },
@@ -3917,6 +4323,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.85 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         value = { max = 75000 }
     },
@@ -4073,6 +4482,43 @@ local function getInterestedCustomers(vehicleData)
                         -- Neither min nor max: neutral interest
                         interestValue = interestValue + 0.5
                     end
+                end
+            elseif criterionName == "completions" then
+                criterionMaxInterest = table.getn(criterionValue)
+                for completionType, completionCriteria in pairs(criterionValue) do
+                    local totalCompletions = 0
+                    local maxConsecutive = 0
+                    
+                    -- Aggregate all entries of this type
+                    if vehicleData.completions and vehicleData.completions[completionType] then
+                        for _, compEntry in ipairs(vehicleData.completions[completionType]) do
+                            totalCompletions = totalCompletions + compEntry.completions
+                            maxConsecutive = math.max(maxConsecutive, compEntry.consecutive)
+                        end
+                    end
+
+                    -- Check requirements using aggregated values
+                    if completionCriteria.minTotal and totalCompletions < completionCriteria.minTotal then
+                        customerInterested = false
+                        break
+                    end
+                    if completionCriteria.minConsecutive and maxConsecutive < completionCriteria.minConsecutive then
+                        customerInterested = false
+                        break
+                    end
+
+                    -- Calculate interest using aggregated values
+                    local totalInterest = 0
+                    if completionCriteria.minTotal then
+                        totalInterest = math.min(1, (totalCompletions - completionCriteria.minTotal) / (completionCriteria.minTotal * 2))
+                    end
+                    
+                    local consecutiveInterest = 0
+                    if completionCriteria.minConsecutive then
+                        consecutiveInterest = math.min(1, (maxConsecutive - completionCriteria.minConsecutive) / (completionCriteria.minConsecutive * 2))
+                    end
+                    
+                    interestValue = interestValue + (totalInterest * 0.4 + consecutiveInterest * 0.6)
                 end
             else
                 -- Handle unrecognized criteria (optional - for robustness)
