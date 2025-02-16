@@ -291,7 +291,7 @@ local function onVehicleSpawnFinished(vehId)
     if spawnFollowUpActions.licensePlateText then
       career_modules_inventory.setLicensePlateText(inventoryId, spawnFollowUpActions.licensePlateText)
     end
-    if spawnFollowUpActions.dealershipId and spawnFollowUpActions.dealershipId == "policeDealership" then
+    if spawnFollowUpActions.dealershipId and (spawnFollowUpActions.dealershipId == "policeDealership" or spawnFollowUpActions.dealershipId == "poliziaAuto") then
       career_modules_inventory.setVehicleRole(inventoryId, "police")
     end
     spawnFollowUpActions = nil
