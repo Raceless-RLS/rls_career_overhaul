@@ -118,7 +118,7 @@ local function getTableSize(t)
   return count
 end
 
-local function FREtoPerformanceValue(races, raceLabels, FRETimes)
+local function FREtoPerformanceValue(raceLabels, FRETimes)
   local performanceValues = {}
   if not FRETimes then return {} end
   for label, time in pairs(FRETimes) do
@@ -139,11 +139,29 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
   return performanceValues
 end
 
+local function getCompletions(raceLabels, FRECompletions)
+  local completions = {}
+  if not FRECompletions then return {} end
+  for label, amount in pairs(FRECompletions) do
+    local raceDetails = raceLabels and raceLabels[label] or {}
+    if not raceDetails or not raceDetails.types then goto continue end
+    for _, type in ipairs(raceDetails.types) do
+      if not completions[type] then
+        completions[type] = {}
+      end
+      table.insert(completions[type], {label = label, completions = amount.total, consecutive = amount.consecutive})
+    end
+    ::continue::
+  end
+  return completions
+end
+
 local function pullVehicleData(inventoryId)
   local veh = career_modules_inventory.getVehicles()[inventoryId]
   if not veh then return end
   
-  local FRETimes = veh.FRETimes
+  local FRETimes = veh.FRETimes or {}
+  local FRECompletions = veh.FRECompletions or {}
   local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
   local power = 0
   local weight = 0
@@ -169,7 +187,8 @@ local function pullVehicleData(inventoryId)
   local raceLabels = racesToLabels(races)
 
   local vehicleData = {
-    performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
+    performanceValues = FREtoPerformanceValue(raceLabels, FRETimes),
+    completions = getCompletions(raceLabels, FRECompletions),
     value = value or 0,
     power = power or 0,
     weight = weight or 0,

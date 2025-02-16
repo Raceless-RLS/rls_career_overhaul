@@ -1670,11 +1670,16 @@ end
 
 -- RLS FRE Functions
 
+local lastRaceName = nil
+local lastRaceTime = nil
+local currentSession = 0
+
 local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
   print("saveFRETimeToVehicle" .. tostring(raceName) .. " " .. tostring(inventoryId) .. " " .. tostring(time) .. " " .. tostring(driftScore))
   local veh = vehicles[inventoryId]
   if not veh then return end
   veh.FRETimes = veh.FRETimes or {}
+  veh.FRECompletions = veh.FRECompletions or {}
   if veh.FRETimes[raceName] then
     if driftScore and driftScore ~= 0 then
       veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
@@ -1688,6 +1693,28 @@ local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
       veh.FRETimes[raceName] = time
     end
   end
+  veh.FRECompletions[raceName] = veh.FRECompletions[raceName] or {}
+  veh.FRECompletions[raceName].total = (veh.FRECompletions[raceName].total or 0) + 1
+  if lastRaceName == raceName then
+    local pausedTime = career_modules_pauseTime.getTotalPauseTime()
+    local totalTime = time + pausedTime
+    if lastRaceTime and os.time() - lastRaceTime < totalTime + 10 then
+      print("Adding session to " .. raceName)
+      currentSession = currentSession + 1
+      if not veh.FRECompletions[raceName].consecutive or veh.FRECompletions[raceName].consecutive < currentSession then
+        veh.FRECompletions[raceName].consecutive = currentSession
+      end
+    end
+    lastRaceTime = os.time()
+  else
+    lastRaceName = raceName
+    lastRaceTime = os.time()
+    currentSession = 1
+    if not veh.FRECompletions[raceName].consecutive then
+      veh.FRECompletions[raceName].consecutive = 1
+    end
+  end
+  career_modules_pauseTime.resetPauseTime()
 end
 
 local function getFRETimeToVehicle(raceName, inventoryId)
@@ -1696,15 +1723,27 @@ local function getFRETimeToVehicle(raceName, inventoryId)
   return veh.FRETimes and veh.FRETimes[raceName] or nil
 end
 
+local function getFRECompletions(raceName, inventoryId)
+  local veh = vehicles[inventoryId]
+  if not veh then return nil end
+  return veh.FRECompletions and veh.FRECompletions[raceName] or nil
+end
+
 M.getAllFRETimes = function()
   local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
   if not invId then return {} end
   return vehicles[invId].FRETimes
 end
 
+M.getAllFRECompletions = function()
+  local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  if not invId then return {} end
+  return vehicles[invId].FRECompletions
+end
+
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
 M.getFRETimeToVehicle = getFRETimeToVehicle
-
+M.getFRECompletions = getFRECompletions
 M.calculateSeatingCapacity = calculateSeatingCapacity
 M.onWorldReadyState = onWorldReadyState
 
