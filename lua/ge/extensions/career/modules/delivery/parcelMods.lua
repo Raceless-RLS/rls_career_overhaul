@@ -17,15 +17,15 @@ local modifiers = {
       delivery = 1
     },
     makeTemplate = function(g,p,distance)
-      local time = (distance / 13) + 30 * math.random() + 30
+      local time = (distance / 10) + 30 * math.random() + 30
       return {
         type = "timed",
         timeUntilDelayed = time,
-        timeUntilLate = time * 1.25 + 15,
+        timeUntilLate = time * 1.3 + 15,
         --paddingTime = time * 0.2 + 10,
         --timeMessageFlag = false,
         --paddingTimeMessageFlag = false,
-        moneyMultipler = 1.2,
+        moneyMultipler = 1.25,
       }
     end,
     unlockLabel = "Time Sensitive Deliveries",
