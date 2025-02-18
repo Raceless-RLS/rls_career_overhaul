@@ -1,51 +1,46 @@
 <template>
   <PhoneWrapper app-name="Car Meets">
-    <div class="phone-meets-container">
-      <div v-if="meetLocation || isRSVP" class="phone-meet-content">
-        <h2 class="phone-meet-title"> {{ meetType }} Meet</h2>
-        
-        <div class="phone-meet-info">
-          <img :src="meetImage" alt="" class="meet-image">
-          <div class="info-row">
-            <span class="label">Location:</span>
-            <span class="value">{{ meetLocation }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Time:</span>
-            <span class="value">{{ formatTime(meetTime) }}</span>
-          </div>
-        </div>
+    <div v-if="meetLocation || isRSVP" class="phone-meet-content">
+      <h2 class="phone-meet-title"> {{ meetType }} Meet</h2>
 
-        <div class="phone-attendance">
-          <h3>Attendance Level</h3>
-          <div class="attendance-grid">
-            <BngButton v-for="level in attendanceLevels" 
-                      :key="level"
-                      :class="{ active: selectedAttendance === level }"
-                      @click="selectAttendance(level)"
-                      :accent="selectedAttendance === level ? ACCENTS.primary : ACCENTS.secondary"
-                      class="attendance-btn">
-              {{ level }}
-            </BngButton>
-          </div>
+      <div class="phone-meet-info">
+        <img :src="meetImage" alt="" class="meet-image">
+        <div class="info-row">
+          <span class="label">Location:</span>
+          <span class="value">{{ meetLocation }}</span>
         </div>
-
-        <div class="phone-action-buttons">
-          <BngButton class="decline-btn" @click="decline" v-show="!isRSVP" accent="secondary">
-            Decline
-          </BngButton>
-          <BngButton class="rsvp-btn" @click="rsvp" v-show="!isRSVP" accent="primary">
-            RSVP
-          </BngButton>
-          <BngButton class="rsvp-btn" v-show="isRSVP" @click="cancelRSVP" accent="secondary">Cancel RSVP</BngButton>
-          <BngButton class="rsvp-btn" v-show="isRSVP" @click="setRoute" accent="primary">Set Route</BngButton>
+        <div class="info-row">
+          <span class="label">Time:</span>
+          <span class="value">{{ formatTime(meetTime) }}</span>
         </div>
       </div>
 
-      <div v-else class="phone-no-meets">
-        <h2>No Scheduled Meets</h2>
-        <p>Check back later</p>
+      <div class="phone-attendance">
+        <h3>Attendance Level</h3>
+        <div class="attendance-grid">
+          <BngButton v-for="level in attendanceLevels" :key="level" :class="{ active: selectedAttendance === level }"
+            @click="selectAttendance(level)"
+            :accent="selectedAttendance === level ? ACCENTS.primary : ACCENTS.secondary" class="attendance-btn">
+            {{ level }}
+          </BngButton>
+        </div>
       </div>
+
+      <div class="phone-action-buttons">
+        <BngButton class="decline-btn" @click="decline" v-show="!isRSVP" accent="secondary">
+          Decline
+        </BngButton>
+        <BngButton class="rsvp-btn" @click="rsvp" v-show="!isRSVP" accent="primary">
+          RSVP
+        </BngButton>
+        <BngButton class="rsvp-btn" v-show="isRSVP" @click="cancelRSVP" accent="secondary">Cancel RSVP</BngButton>
+        <BngButton class="rsvp-btn" v-show="isRSVP" @click="setRoute" accent="primary">Set Route</BngButton>
+      </div>
+    </div>
+
+    <div v-else class="phone-no-meets">
+      <h2>No Scheduled Meets</h2>
+      <p>Check back later</p>
     </div>
   </PhoneWrapper>
 </template>
@@ -141,21 +136,18 @@ const close = () => {
 </script>
 
 <style scoped lang="scss">
-.phone-meets-container {
-  height: 100%;
-  padding: 15px;
-  color: white;
-}
-
 .phone-meet-content {
+  height: 95%;
+  color: white;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: space-between;
+  padding: 5px;
+  padding-top: 20px;
 }
 
 .phone-meet-title {
   font-size: 1.4em;
-  margin: 55px 0 10px 0;
   text-align: center;
 }
 
@@ -163,7 +155,6 @@ const close = () => {
   .info-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
     font-size: 1.5em;
     
     .label {
@@ -173,7 +164,6 @@ const close = () => {
 }
 
 .meet-image {
-    margin-bottom: 5px;
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: 15px;
@@ -182,10 +172,8 @@ const close = () => {
 }
 
 .phone-attendance {
-    padding-top: 170px;
   h3 {
     font-size: 1.5em;
-    margin: 15px 0 10px 0;
   }
 }
 
@@ -201,11 +189,9 @@ const close = () => {
 }
 
 .phone-action-buttons {
-  margin-top: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  padding-top: 50px;
 
   .decline-btn, .rsvp-btn {
     padding: 12px;

@@ -144,8 +144,7 @@ const close = () => {
 
 <style scoped lang="scss">
 .car-meets-menu {
-  width: fit-content;
-  min-width: 500px;
+  width: 30%;
   padding: 10px 10px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
