@@ -2624,12 +2624,12 @@ local customers = {{
             }
         },
         completions = {
-            crawl = { minTotal = 2 }
+            crawl = { minTotal = 1 }
         }
     },
     offerRange = {
-        min = 0.2,
-        max = 0.9
+        min = 0.3,
+        max = 1.0
     }
 }, {
     id = "CUST107",
@@ -2649,8 +2649,8 @@ local customers = {{
         }
     },
     offerRange = {
-        min = 0.25,
-        max = 0.95
+        min = 0.35,
+        max = 1.05
     }
 }, {
     id = "CUST108",
@@ -5051,7 +5051,7 @@ local customers = {{
     specialties = {"apexRacing"},
     criteria = {
         performance = {
-            apexRacing = { min = 1.8 }
+            apexRacing = { min = 1.2 }
         },
         completions = {
             apexRacing = { minTotal = 90, minConsecutive = 30 }
@@ -5066,7 +5066,7 @@ local customers = {{
     specialties = {"motorsport"},
     criteria = {
         performance = {
-            motorsport = { min = 2.0 }
+            motorsport = { min = 1.0 }
         },
         completions = {
             motorsport = { minTotal = 100, minConsecutive = 50 }
@@ -5081,7 +5081,7 @@ local customers = {{
     specialties = {"apexRacing"},
     criteria = {
         performance = {
-            apexRacing = { min = 2.2 }
+            apexRacing = { min = 1.2 }
         },
         completions = {
             apexRacing = { minTotal = 150, minConsecutive = 100 }
@@ -5089,7 +5089,7 @@ local customers = {{
         rep = { min = 8.0 }
     },
     offerRange = { min = 2.5, max = 3.2 }
-},{
+}, {
     id = "CUST279",
     name = "Salmon The Negotiator",
     specialties = {},
@@ -5097,6 +5097,20 @@ local customers = {{
         value = { min = 80000 }
     },
     offerRange = { min = 0, max = 0.15 }
+}, {
+    id = "CUST280",
+    name = "Devin The Ballbreaker",
+    specialties = {},
+    criteria = {
+        performance = {
+            apexRacing = { min = 1.2 }
+        },
+        completions = {
+            apexRacing = { minTotal = 100, minConsecutive = 20 }
+        },
+        powerPerWeight = { max = 0.251 }
+    },
+    offerRange = { min = 1.3, max = 2 }
 }
 }
 
