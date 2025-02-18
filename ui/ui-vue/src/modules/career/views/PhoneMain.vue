@@ -6,7 +6,7 @@
         :key="app.name" 
         class="app-item"
       >
-        <div 
+        <button 
           class="app-container"
           @click="navigateTo(app.route)"
           :style="{ backgroundColor: app.color }"
@@ -16,7 +16,7 @@
             :type="app.icon" 
             :style="{ color: app.iconColor }"
           />
-        </div>
+        </button>
         <span class="app-name">{{ app.name }}</span>
       </div>
     </div>
@@ -31,10 +31,10 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const apps = [
-  { name: 'Taxi', icon: icons.taxiCar3, route: '/career/phone-main', color: '#ffd700', iconColor: '#000000' },
+  { name: 'Taxi', icon: icons.taxiCar3, route: '/career/phone-taxi', color: '#ffd700', iconColor: '#000000' },
   { name: 'Repo', icon: icons.tow, route: '/career/phone-main', color: '#1E90FF', iconColor: '#ffffff' },
   { name: 'Car Meet', icon: icons.cars, route: '/career/car-meets-phone', color: '#696969', iconColor: '#ffffff' },
-  { name: 'Map', icon: icons.mapPoint, route: '/career/phone-minimap', color: '#228B22', iconColor: '#ffffff' },
+  { name: 'Marketplace', icon: icons.shoppingCart, route: '/career/phone-marketplace', color: '#228B22', iconColor: '#ffffff' }
   // Add more apps using icons from the existing icon system
 ]
 
@@ -75,6 +75,7 @@ const navigateTo = (route) => {
   aspect-ratio: 1/1;
   justify-content: space-between;
   position: relative;
+  border: 0px solid transparent;
 
   &::before {
     content: '';

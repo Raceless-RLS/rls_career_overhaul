@@ -115,9 +115,11 @@ const vehicleInventoryStore = useVehicleInventoryStore()
 const selectedVehId = ref()
 
 const vehiclesForSale = ref([])
+const hardcoreMode = ref(false)
 
-onMounted(() => {
-   lua.career_modules_vehicleMarketplace.requestInitialData()
+onMounted(async () => {
+   await lua.career_modules_vehicleMarketplace.requestInitialData()
+   hardcoreMode.value = await lua.career_modules_hardcore.isHardcoreMode()
 });
 
 events.on("marketplaceUpdate", (data) => {
@@ -229,7 +231,7 @@ const isFunctionAvailable = (vehicle, buttonData) => !(
 const confirmSellVehicle = async () => {
   const vehicle = vehSelected.value
   popHide()
-  const hardcoreMultiplier = lua.career_modules_hardcore.isHardcoreMode() ? 0.33 : 0.66
+  const hardcoreMultiplier = hardcoreMode.value ? 0.33 : 0.66
   const res = await openConfirmation("", `Do you want to sell this vehicle for ${units.beamBucks(vehicle.value * hardcoreMultiplier)}?`, [
     { label: $translate.instant("ui.common.yes"), value: true, extras: { default: true } },
     { label: $translate.instant("ui.common.no"), value: false, extras: { accent: ACCENTS.secondary } },
