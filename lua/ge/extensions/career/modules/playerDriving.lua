@@ -286,6 +286,7 @@ local function onPursuitAction(vehId, data)
                 tags = {"gameplay", "reward", "police"}
             }, true)
             ui_message("Arrest Bonus: $" .. bonus, 5, "Police", "info")
+            career_modules_inventory.addSuspectCaught(inventoryId)
         end
         career_saveSystem.saveCurrent()
         --       end

@@ -4326,10 +4326,777 @@ local customers = {{
         },
         completions = {
             extremeMud = { minTotal = 1 }
-        },
-        value = { max = 75000 }
+        }
     },
     offerRange = { min = 1.0, max = 1.3 }
+}, {
+    id = "CUST201",
+    name = "Rallycross Racer Rick",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            rally = { min = 0.9 }
+        },
+        completions = {
+            rally = { minTotal = 30, minConsecutive = 10 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.6 }
+}, {
+    id = "CUST202",
+    name = "Rallycross Champion Carl",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.9 }
+        },
+        completions = {
+            rally = { minTotal = 60, minConsecutive = 20 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.75 }
+}, {
+    id = "CUST203",
+    name = "Oval Obsessor Ormond",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.9 }
+        },
+        completions = {
+            oval = { minTotal = 100, minConsecutive = 25 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.75 }
+}, {
+    id = "CUST204",
+    name = "Oval Mastermind Omar",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 1.1 }
+        },
+        completions = {
+            oval = { minTotal = 115, minConsecutive = 30 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.85 }
+}, { -- T-Series (Heavy Transport) 5 levels
+    id = "CUST205",
+    name = "Titan Haulers Inc",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 5120 }, -- 2x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST206",
+    name = "Mega Freight Logistics",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 10240 }, -- 4x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST207", 
+    name = "Continental Cargo Co",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 17920 }, -- 7x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST208",
+    name = "Global Heavy Movers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 30720 }, -- 12x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST209",
+    name = "Planetary Transport Ltd",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 38400 }, -- 15x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- MD Series (Box Trucks) 5 levels
+    id = "CUST210",
+    name = "Mid-Range Freight Masters",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 3072 },
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST211",
+    name = "Regional Distribution Co",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 6144 },
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST212",
+    name = "National Freight Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 10752 }, -- 7x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST213",
+    name = "Interstate Commerce Corp",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 18432 }, -- 12x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST214",
+    name = "Continental Bulk Transport",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 23040 }, -- 15x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- H-Series (Vans) 5 levels
+    id = "CUST215",
+    name = "Urban Delivery Experts",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 384 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.0, max = 1.15 }
+}, {
+    id = "CUST216",
+    name = "Metro Rapid Logistics",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 768 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.1, max = 1.3 }
+}, {
+    id = "CUST217",
+    name = "City Courier Network",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 1536 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.3, max = 1.5 }
+}, {
+    id = "CUST218",
+    name = "Regional Van Operators",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 2304 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.5, max = 1.7 }
+}, {
+    id = "CUST219",
+    name = "National Van Alliance",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 3072 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.7, max = 1.9 }
+}, { -- Trailers 5 levels
+    id = "CUST220",
+    name = "Long Haul Partners",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 1024 }, -- 2x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST221",
+    name = "Interstate Tow & Haul",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 2048 }, -- 4x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST222",
+    name = "National Trailer Fleet",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 3584 }, -- 7x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST223",
+    name = "Heavy Duty Trailer Co",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 6144 }, -- 12x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST224",
+    name = "Mega Trailer Consortium",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 7680 }, -- 15x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- 48 FT Trailer 5 levels
+    id = "CUST225",
+    name = "Mega Trailer Fleet Co",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 8192 }, -- 2x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST226",
+    name = "Continental Oversized Transport",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 16384 }, -- 4x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST227",
+    name = "National Heavy Haulers",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 28672 }, -- 7x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST228",
+    name = "Interstate Super Load",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 49152 }, -- 12x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST229",
+    name = "Global Mega Transport",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 61440 }, -- 15x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- Small Trailer (0-1000Kg) 5 levels
+    id = "CUST230",
+    name = "Local Cartage Co",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 512 }, -- 2x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST231",
+    name = "Neighborhood Delivery Network",
+    criteria = {
+        deliveredItems = { min = 1024 }, -- 4x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST232",
+    name = "Regional Mini Haulers",
+    criteria = {
+        deliveredItems = { min = 1792 }, -- 7x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST233",
+    name = "National Light Transport",
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 12x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST234",
+    name = "Continental Micro Logistics",
+    criteria = {
+        deliveredItems = { min = 3840 }, -- 15x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- H-Series Box (3200-4000Kg) 5 levels
+    id = "CUST235",
+    name = "Medium Duty Logistics",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 1536 }, -- 2x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST236",
+    name = "Heavy Urban Couriers",
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 4x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST237",
+    name = "Metro Box Truck Alliance",
+    criteria = {
+        deliveredItems = { min = 5376 }, -- 7x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST238",
+    name = "Interstate Cargo Carriers",
+    criteria = {
+        deliveredItems = { min = 9216 }, -- 12x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST239",
+    name = "National Heavy Box Network",
+    criteria = {
+        deliveredItems = { min = 11520 }, -- 15x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- T-Series + Performance
+    id = "CUST240",
+    name = "Heavy Haul Racers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 5120 }, -- 2x T-Series
+        weight = { min = 10000 },
+        power = { min = 600 }, -- 600hp minimum
+        powerPerWeight = { min = 0.15 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- MD Series + Economy
+    id = "CUST241",
+    name = "Eco Freight Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 2x MD Series
+        weight = { min = 4000, max = 7900 },
+        mileage = { max = 200000 },
+        value = { max = 30000 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- H-Series Box + Modifications
+    id = "CUST242",
+    name = "Custom Box Van Enthusiasts",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 1536 }, -- 2x H-Series Box
+        weight = { min = 3200, max = 4000 },
+        numAddedParts = { min = 10 },
+        numRemovedParts = { max = 2 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Small Trailer + Vintage
+    id = "CUST243",
+    name = "Vintage Delivery Collective",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 512 }, -- 2x Small Trailer
+        weight = { min = 0, max = 1000 },
+        year = { min = 1980, max = 2000 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, { -- 48 FT Trailer + Reputation
+    id = "CUST244",
+    name = "Celebrity Transport Group",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 8192 }, -- 2x 48 FT
+        weight = { min = 6900, max = 7800 },
+        rep = { min = 7.5 },
+        movieRentals = { min = 2 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, { -- T-Series + Long Distance
+    id = "CUST246",
+    name = "Cross-Continental Haulers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 15360 }, -- 12x T-Series
+        weight = { min = 10000 },
+        mileage = { max = 500000 }, -- Well-maintained trucks
+        taxiDropoffs = { min = 50 } -- Long distance experience
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, { -- MD Series + Urgent Delivery
+    id = "CUST247",
+    name = "Express Cargo Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 9216 }, -- 12x MD Series
+        weight = { min = 4000, max = 7900 },
+        evades = { min = 10 }, -- Quick evasive driving
+        tickets = { max = 3 } -- Clean driving record
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, { -- H-Series Box + Security
+    id = "CUST248",
+    name = "Armored Transport Co",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 5376 }, -- 7x H-Series
+        weight = { min = 3200, max = 4000 },
+        suspectsCaught = { min = 5 }, -- Security experience
+        accidents = { max = 1 } -- Safe drivers
+    },
+    offerRange = { min = 1.5, max = 2.2 }
+}, { -- Trailer + Agricultural
+    id = "CUST249",
+    name = "Farm Equipment Movers",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 12x Trailer
+        weight = { min = 1000, max = 2000 },
+        repos = { min = 10 }, -- Repo experience (farm equipment)
+        value = { max = 15000 } -- Budget equipment
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- Small Trailer + Food Service
+    id = "CUST250",
+    name = "Mobile Catering Supply",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 1792 }, -- 7x Small Trailer
+        weight = { min = 0, max = 1000 },
+        movieRentals = { min = 2 }, -- Frequent rentals (events)
+        numAddedParts = { min = 5 } -- Custom refrigeration units
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- Police Interceptors
+    id = "CUST251",
+    name = "City Patrol Fleet",
+    specialties = {"policeVehicles"},
+    criteria = {
+        suspectsCaught = { min = 2 },
+        accidents = { max = 1 },
+        power = { min = 300 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, {
+    id = "CUST252",
+    name = "County K-9 Unit",
+    criteria = {
+        suspectsCaught = { min = 4 },
+        numAddedParts = { min = 2 },
+        tickets = { max = 1 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, {
+    id = "CUST253",
+    name = "State Investigators",
+    criteria = {
+        suspectsCaught = { min = 8 },
+        rep = { min = 4.0 },
+        year = { min = 2015 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- SWAT Vehicles
+    id = "CUST254",
+    name = "Metro Tactical Unit",
+    criteria = {
+        suspectsCaught = { min = 6 },
+        powerPerWeight = { min = 0.2 },
+        numAddedParts = { min = 3 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, {
+    id = "CUST255",
+    name = "Rural Patrol Division",
+    criteria = {
+        suspectsCaught = { min = 12 },
+        mileage = { max = 80000 },
+        value = { max = 35000 }
+    },
+    offerRange = { min = 1.2, max = 1.9 }
+}, { -- Specialized Units
+    id = "CUST256",
+    name = "Narcotics Task Force",
+    criteria = {
+        suspectsCaught = { min = 16 },
+        movieRentals = { min = 5 }, -- Surveillance ops
+        tickets = { max = 1 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, {
+    id = "CUST257",
+    name = "Cybercrime Division",
+    criteria = {
+        suspectsCaught = { min = 8 },
+        numRemovedParts = { max = 0 },
+        year = { min = 2015 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Highway Patrol
+    id = "CUST258",
+    name = "State Trooper Fleet",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        power = { min = 350 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, {
+    id = "CUST259",
+    name = "Motorcycle Patrol",
+    criteria = {
+        suspectsCaught = { min = 7 },
+        weight = { max = 800 },
+        powerPerWeight = { min = 0.35 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Special Operations
+    id = "CUST260",
+    name = "Public Safety Command",
+    criteria = {
+        suspectsCaught = { min = 10 },
+        numAddedParts = { min = 5 },
+        rep = { min = 5.0 }
+    },
+    offerRange = { min = 1.2, max = 1.9 }
+}, {
+    id = "CUST261",
+    name = "Prison Transport",
+    criteria = {
+        suspectsCaught = { min = 5 },
+        mileage = { max = 120000 },
+        value = { max = 25000 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- Aviation Support
+    id = "CUST262",
+    name = "Air Support Unit",
+    criteria = {
+        suspectsCaught = { min = 15 },
+        taxiDropoffs = { min = 5 },
+        power = { min = 400 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, {
+    id = "CUST263",
+    name = "Marine Patrol",
+    criteria = {
+        suspectsCaught = { min = 3 },
+        numAddedParts = { min = 4 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, { -- Training & Support
+    id = "CUST264",
+    name = "K-9 Training Academy",
+    criteria = {
+        suspectsCaught = { min = 2 },
+        numAddedParts = { min = 3 },
+        tickets = { max = 0 }
+    },
+    offerRange = { min = 0.7, max = 1.4 }
+}, {
+    id = "CUST265",
+    name = "Federal Protection",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        rep = { min = 7.5 },
+        year = { min = 2020 }
+    },
+    offerRange = { min = 1.6, max = 2.3 }
+}, { -- High-Risk Operations
+    id = "CUST266",
+    name = "Tactical Response Unit",
+    specialties = {"policeVehicles"},
+    criteria = {
+        suspectsCaught = { min = 18 },
+        accidents = { min = 5 },
+        power = { min = 450 }
+    },
+    offerRange = { min = 1.8, max = 2.5 }
+}, {
+    id = "CUST267",
+    name = "Gang Task Force",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        accidents = { min = 6 },
+        evades = { min = 4 }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST268",
+    name = "Riot Control Division",
+    criteria = {
+        suspectsCaught = { min = 12 },
+        accidents = { min = 6 },
+        numAddedParts = { min = 6 }
+    },
+    offerRange = { min = 1.6, max = 2.3 }
+}, {
+    id = "CUST269",
+    name = "Undercover Operations",
+    criteria = {
+        suspectsCaught = { min = 30 },
+        accidents = { min = 10 },
+        value = { max = 15000 }
+    },
+    offerRange = { min = 2.2, max = 2.9 }
+}, {
+    id = "CUST270",
+    name = "Highway Pursuit Squadron",
+    criteria = {
+        suspectsCaught = { min = 22 },
+        accidents = { min = 9 },
+        powerPerWeight = { min = 0.4 }
+    },
+    offerRange = { min = 1.9, max = 2.6 }
+}, { -- Ultra Marathon Series
+    id = "CUST271",
+    name = "Rally Endurance King",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            rally = { min = 1.2 }
+        },
+        completions = {
+            rally = { minTotal = 70, minConsecutive = 30 }
+        }
+    },
+    offerRange = { min = 1.8, max = 2.5 }
+}, {
+    id = "CUST272",
+    name = "Bog Marathoner",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.8 }
+        },
+        completions = {
+            extremeMud = { minTotal = 10 }
+        }
+    },
+    offerRange = { min = 1.7, max = 2.4 }
+}, {
+    id = "CUST273",
+    name = "Mud Century Club",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 1.0 }
+        },
+        completions = {
+            mud = { minTotal = 25 }
+        }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST274",
+    name = "Oval Ironman",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 1.1 }
+        },
+        completions = {
+            oval = { minTotal = 300, minConsecutive = 100 }
+        }
+    },
+    offerRange = { min = 2.2, max = 2.9 }
+}, {
+    id = "CUST275",
+    name = "Offroad Ultramarathoner",
+    specialties = {"offroad"},
+    criteria = {
+        performance = {
+            offroad = { min = 1.1 }
+        },
+        completions = {
+            offroad = { minTotal = 200, minConsecutive = 70 }
+        }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+}, { -- Apex Racing Elite
+    id = "CUST276",
+    name = "Apex Predator Collective",
+    specialties = {"apexRacing"},
+    criteria = {
+        performance = {
+            apexRacing = { min = 1.8 }
+        },
+        completions = {
+            apexRacing = { minTotal = 90, minConsecutive = 30 }
+        },
+        power = { min = 600 },
+        weight = { max = 1500 }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+}, {
+    id = "CUST277",
+    name = "Circuit Conquerors",
+    specialties = {"motorsport"},
+    criteria = {
+        performance = {
+            motorsport = { min = 2.0 }
+        },
+        completions = {
+            motorsport = { minTotal = 100, minConsecutive = 50 }
+        },
+        powerPerWeight = { min = 0.35 },
+        accidents = { max = 5 }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST278",
+    name = "Endurance Racing Syndicate",
+    specialties = {"apexRacing"},
+    criteria = {
+        performance = {
+            apexRacing = { min = 2.2 }
+        },
+        completions = {
+            apexRacing = { minTotal = 150, minConsecutive = 100 }
+        },
+        rep = { min = 8.0 }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+},{
+    id = "CUST279",
+    name = "Salmon The Negotiator",
+    specialties = {},
+    criteria = {
+        value = { min = 80000 }
+    },
+    offerRange = { min = 0, max = 0.15 }
 }
 }
 
@@ -4406,7 +5173,7 @@ local function getInterestedCustomers(vehicleData)
                 end
             elseif criterionName == "power" or criterionName == "torque" or criterionName == "powerPerWeight" or
                 criterionName == "rep" or criterionName == "numAddedParts" or criterionName == "evades" or criterionName ==
-                "movieRentals" or criterionName == "repos" or criterionName == "taxiDropoffs" then
+                "movieRentals" or criterionName == "repos" or criterionName == "taxiDropoffs" or criterionName == "deliveredItems" or criterionName == "suspectsCaught" then
                 -- Logic for "higher is better" criteria
                 criterionMaxInterest = 1
                 local criterionData = tonumber(vehicleData[criterionName] or 0)

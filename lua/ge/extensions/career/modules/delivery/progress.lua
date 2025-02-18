@@ -300,6 +300,12 @@ M.confirmDropOffData = function(confirmedDropOffs, facId, psPath)
   --dump(confirmedDropOffs)
   for _, elem in ipairs(confirmedDropOffData.parcelIdElems) do
     local cargo = dParcelManager.getCargoById(elem.id)
+    local invId = career_modules_inventory.getInventoryIdFromVehicleId(cargo.location.vehId)
+    if invId then
+      print("Adding delivered items to inventory " .. invId .. " with amount " .. cargo.slots)
+      local amount = cargo.slots and cargo.type == "parcel" and cargo.slots or cargo.slots / 6.25
+      career_modules_inventory.addDeliveredItems(invId, cargo.slots)
+    end
     -- check if we need to split materials
     if elem.amount and elem.amount < cargo.slots then
       local parts = dGenerator.splitOffPartsFromMaterialCargo(cargo, {elem.amount})
@@ -347,6 +353,11 @@ M.confirmDropOffData = function(confirmedDropOffs, facId, psPath)
       confirmedDropOffData.maxDelayForWeightUpdate = 0
       -- 1s delay, no freeze
       for vehId, data in pairs(data) do
+        if career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
+          print("found inventory id " .. career_modules_inventory.getInventoryIdFromVehicleId(vehId))
+        else
+          print("no inventory id")
+        end
         local veh = scenetree.findObjectById(vehId)
         core_vehicleBridge.executeAction(veh, 'setFreeze', false)
       end

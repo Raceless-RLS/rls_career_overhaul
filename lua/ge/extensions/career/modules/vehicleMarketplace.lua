@@ -204,6 +204,8 @@ local function pullVehicleData(inventoryId)
     movieRentals = veh.movieRentals or 0,
     repos = veh.repos or 0,
     taxiDropoffs = veh.taxiDropoffs or 0,
+    deliveredItems = veh.deliveredItems or 0,
+    suspectsCaught = veh.suspectsCaught or 0,
 
     numAddedParts = getTableSize(addedParts),
     numRemovedParts = getTableSize(removedParts)
