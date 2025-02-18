@@ -1106,13 +1106,12 @@ local customers = {{
             min = 0.15
         },
         numAddedParts = {
-            min = 7
+            min = 10
         }
-        -- No performance criteria
     },
     offerRange = {
         min = 0.65,
-        max = 1.25
+        max = 1.075
     }
 }, {
     id = "CUST046",
