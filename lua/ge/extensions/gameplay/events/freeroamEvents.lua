@@ -359,7 +359,9 @@ local function exitRace()
             gameplay_drift_general.setContext("inFreeRoam")
             gameplay_drift_general.reset()
         end
-        career_modules_pauseTime.enablePauseCounter()
+        if career_career.isActive() then
+            career_modules_pauseTime.enablePauseCounter()
+        end
     end
 end
 
@@ -493,7 +495,9 @@ local function onBeamNGTrigger(data)
             invalidLap = false
         elseif event == "enter" and staged == raceName then
             -- Start the race
-            career_modules_pauseTime.enablePauseCounter(true)
+            if career_career.isActive() then
+                career_modules_pauseTime.enablePauseCounter(true)
+            end
             utils.saveAndSetTrafficAmount(0)
             checkpointManager.setRace(races[raceName], raceName)
             Assets:displayAssets(data)
@@ -642,7 +646,9 @@ local function onBeamNGTrigger(data)
             mActiveRace = nil
             utils.setActiveLight(raceName, "red")
             utils.restoreTrafficAmount()
-            career_modules_pauseTime.enablePauseCounter()
+            if career_career.isActive() then
+                career_modules_pauseTime.enablePauseCounter()
+            end
         end
     else
         -- print("Unknown trigger type: " .. triggerType)

@@ -22,13 +22,14 @@ local function createCheckpoint(index, isAlt)
     end
 
     if not checkpoint.width then
+        print("No width for checkpoint " .. index)
         checkpoint.width = 30
     end
 
     local position = vec3(checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z)
-    local radius = checkpoint.width / 2 -- Assuming width is diameter
+    local radius = checkpoint.width
 
-    local triggerRadius = radius * 0.9 -- 90% of the marker radius for the trigger
+    local triggerRadius = radius
 
     checkpoint.object = createObject('BeamNGTrigger')
     checkpoint.object:setPosition(position)
@@ -65,7 +66,7 @@ local function createCheckpointMarker(index, alt)
 
     marker:setPosRot(checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z, 0, 0, 0, 0)
 
-    marker.scale = vec3(checkpoint.width / 2, checkpoint.width / 2, checkpoint.width)
+    marker.scale = vec3(checkpoint.width, checkpoint.width, checkpoint.width)
     marker.useInstanceRenderData = true
     marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F() -- Default to red
 
