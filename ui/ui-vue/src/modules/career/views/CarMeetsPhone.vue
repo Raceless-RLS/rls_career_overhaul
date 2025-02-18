@@ -1,10 +1,11 @@
 <template>
   <PhoneWrapper app-name="Car Meets">
     <div class="phone-meets-container">
-      <div v-if="meetLocation" class="phone-meet-content">
+      <div v-if="meetLocation || isRSVP" class="phone-meet-content">
         <h2 class="phone-meet-title"> {{ meetType }} Meet</h2>
         
         <div class="phone-meet-info">
+          <img :src="meetImage" alt="" class="meet-image">
           <div class="info-row">
             <span class="label">Location:</span>
             <span class="value">{{ meetLocation }}</span>
@@ -30,12 +31,14 @@
         </div>
 
         <div class="phone-action-buttons">
-          <BngButton class="decline-btn" @click="decline" accent="secondary">
+          <BngButton class="decline-btn" @click="decline" v-show="!isRSVP" accent="secondary">
             Decline
           </BngButton>
-          <BngButton class="rsvp-btn" @click="rsvp" accent="primary">
+          <BngButton class="rsvp-btn" @click="rsvp" v-show="!isRSVP" accent="primary">
             RSVP
           </BngButton>
+          <BngButton class="rsvp-btn" v-show="isRSVP" @click="cancelRSVP" accent="secondary">Cancel RSVP</BngButton>
+          <BngButton class="rsvp-btn" v-show="isRSVP" @click="setRoute" accent="primary">Set Route</BngButton>
         </div>
       </div>
 
@@ -52,22 +55,46 @@
 import { ref, onMounted } from 'vue'
 import { BngButton, ACCENTS } from "@/common/components/base"
 import PhoneWrapper from "./PhoneWrapper.vue"
-import { lua } from "@/bridge"
+import { lua, useBridge } from "@/bridge"
+
+const { events } = useBridge()
 
 // Existing state and logic from CarMeetsMenu.vue
 const meetTime = ref(0.417)
 const meetLocation = ref(null)
 const meetType = ref("Showcase")
+const meetImage = ref(null)
 const attendanceLevels = ['LOW', 'MEDIUM', 'HIGH']
 const selectedAttendance = ref('MEDIUM')
+const isRSVP = ref(false)
 
 onMounted(async () => {
   const meetData = await lua.career_modules_carmeets.checkAvailableMeets()
   if (meetData) {
+    isRSVP.value = false
     meetTime.value = meetData.time
     meetLocation.value = meetData.location
     meetType.value = meetData.type
+    meetImage.value = meetData.preview
   }
+  lua.career_modules_carmeets.requestRSVPData()
+  events.on('onRSVPData', (data) => {
+    if (data) {
+      isRSVP.value = true
+      let attendanceLevelString;
+      const attendanceIndex = data.attendance - 1;
+      if (attendanceLevels[attendanceIndex]) {
+        attendanceLevelString = attendanceLevels[attendanceIndex];
+      } else {
+        attendanceLevelString = 'MEDIUM';
+      }
+      selectedAttendance.value = attendanceLevelString;
+      meetTime.value = data.time
+      meetLocation.value = data.location
+      meetType.value = data.type
+      meetImage.value = data.preview
+    }
+  })
 })
 
 const formatTime = (time) => {
@@ -83,6 +110,9 @@ const formatTime = (time) => {
 
 const selectAttendance = (level) => {
   selectedAttendance.value = level
+  if (isRSVP.value) {
+    lua.career_modules_carmeets.updateAttendance(level)
+  }
 }
 
 const rsvp = () => {
@@ -92,6 +122,16 @@ const rsvp = () => {
 
 const decline = () => {
   lua.career_modules_carmeets.decline()
+  close()
+}
+
+const cancelRSVP = () => {
+  lua.career_modules_carmeets.cancelRSVP()
+  close()
+}
+
+const setRoute = () => {
+  lua.career_modules_carmeets.setRoute()
   close()
 }
 
@@ -130,6 +170,15 @@ const close = () => {
       color: #cccccc;
     }
   }
+}
+
+.meet-image {
+    margin-bottom: 5px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+    background-color: #3b3b3b;
+    object-fit: cover;
 }
 
 .phone-attendance {

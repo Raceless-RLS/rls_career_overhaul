@@ -100,14 +100,12 @@ import { openConfirmation } from "@/services/popup"
 import { useVehicleInventoryStore } from "../stores/vehicleInventoryStore";
 import { BngIcon, icons, ACCENTS, BngSwitch } from "@/common/components/base"
 import { lua, useBridge } from '@/bridge'
-import { useRouter } from 'vue-router'
 import { $translate } from "@/services/translation"
 
 const vehiclesForSale = ref([])
 
 const { units, events } = useBridge()
 
-const router = useRouter()
 const computerStore = useComputerStore();
 const vehicleInventoryStore = useVehicleInventoryStore();
 const showEventTimes = ref(null)
@@ -135,7 +133,7 @@ watch(notifications, (newValue, oldValue) => {
 })
 
 const close = () => {
-    router.back()
+    lua.career_career.closeAllMenus()
 }
 
 const toggleEventTimes = (vehicleId) => {
