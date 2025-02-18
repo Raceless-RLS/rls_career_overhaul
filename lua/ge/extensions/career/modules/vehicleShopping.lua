@@ -31,6 +31,8 @@ local paySoundId
 local tether
 local tetherRange = 4 --meter
 
+local isReallyRandom = true
+
 local function getVehiclesPerDealership() return vehiclesPerDealership end
 local function setVehiclesPerDealership(amount)
   vehiclesPerDealership = amount
@@ -81,6 +83,14 @@ local function getRandomizedPrice(price, range)
   -- H is the highest price (These are extreme cases)
   range = range or {0.5, 0.90, 1.15, 1.5}
   local L, NL, NH, H = range[1], range[2], range[3], range[4]
+
+  if isReallyRandom then
+    math.randomseed(os.time() + os.clock() * 10000)
+
+    for _ = 1, 3 do
+      math.random()
+    end
+  end
 
   local rand = math.random(0, 1000) / 1000
   if rand < 0 then rand = 0 end

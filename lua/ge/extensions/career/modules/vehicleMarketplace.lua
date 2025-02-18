@@ -378,7 +378,7 @@ local function onUpdate(dt)
         sendOffer(inventoryId, offer.customer, offer.price)
         if notifications then
           local vehicle = career_modules_inventory.getVehicles()[inventoryId]
-          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price))
+          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price), 5, "marketplace", "info")
         end
       end
       setOfferInterval(inventoryId)
