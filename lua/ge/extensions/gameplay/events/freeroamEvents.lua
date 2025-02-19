@@ -110,7 +110,7 @@ local function payoutRace()
         leaderboardEntry = leaderboardEntry.altRoute
     end
 
-    local oldTime = leaderboardEntry and leaderboardEntry.time or 0
+    local oldTime = leaderboardEntry and (leaderboardEntry.time or leaderboardEntry.hotlapTime) or 0
     local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
 
     local newEntry = {
@@ -179,7 +179,11 @@ local function payoutRace()
             hotlapMessage = hotlapMessage .. "\nNew Best Session Bonus: 20%"
         end
 
-        if oldTime and (newEntry.time - 1.5 < oldTime) then
+        print(oldTime)
+        print(newEntry.time)
+        print(newEntry.time - (oldTime * 0.025))
+
+        if oldTime and (newEntry.time - (oldTime * 0.025) < oldTime) then
             -- In Range Bonus
             reward = reward * 1.05
             hotlapMessage = hotlapMessage .. "\nIn Range Bonus: 5%"
