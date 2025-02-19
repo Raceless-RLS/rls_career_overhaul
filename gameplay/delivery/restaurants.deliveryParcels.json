@@ -1,0 +1,90 @@
+{
+  "smallFoodOrder": {
+    "names":["Food Order","Group Food Order","Food Menu"],
+    "logisticTypes":["food"],
+    "slots":[1,2,3],
+    "cargoType":"parcel",
+    "rarity":1,
+    "worth":0.3,
+    "generationChance":2,
+    "duplicationChance":[1,0.5],
+    "offerDuration":120,
+    "weight":[1,2,3],
+    "modChance":{"aid":1}
+  },
+  "bigFoodOrder": {
+    "names":["Food Banquet", "Party Platter", "Company Food Order"],
+    "logisticTypes":["food"],
+    "slots":[3,4,5,6],
+    "cargoType":"parcel",
+    "rarity":1,
+    "worth":0.3,
+    "generationChance":0.2,
+    "duplicationChance":[1],
+    "offerDuration":120,
+    "weight":[15],
+    "modChance":{"aid":1}
+  },
+  "smallFoodIngredients": {
+    "names":["Frozen Food Ingredients","Fresh Vegetables","Spices and Herbs"],
+    "logisticTypes":["foodSupplies"],
+    "slots":[6,8],
+    "cargoType":"parcel",
+    "rarity":2,
+    "worth":0.7,
+    "generationChance":0.4,
+    "duplicationChance":[1,0.5],
+    "offerDuration":300,
+    "weight":[5],
+    "modChance":{"aid":1}
+  },
+  "bigFoodIngredients": {
+    "names":["Food Ingredients Box","Fresh Vegetables Box","Kitchen Utensils"],
+    "logisticTypes":["foodSupplies"],
+    "slots":[9,12],
+    "cargoType":"parcel",
+    "rarity":2,
+    "worth":0.7,
+    "generationChance":0.4,
+    "duplicationChance":[1,0.5],
+    "offerDuration":300,
+    "weight":[30],
+    "modChance":{"supplies":1}
+  },
+  "bigRestaurantMachine": {
+    "names":["Kitchen Appliance","Soda Machine"],
+    "logisticTypes":["foodSupplies"],
+    "slots":[32,36,40],
+    "cargoType":"parcel",
+    "rarity":4,
+    "worth":1.2,
+    "generationChance":0.2,
+    "offerDuration":300,
+    "weight":[80],
+    "modChance":{"large":1}
+  },
+  "restaurantFurniture": {
+    "names":["Industrial Frier","Furniture Set"],
+    "logisticTypes":["foodSupplies"],
+    "slots":128,
+    "cargoType":"parcel",
+    "rarity":4,
+    "worth":1.2,
+    "generationChance":0.2,
+    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "offerDuration":300,
+    "weight":[500],
+    "modChance":{"large":1}
+  },
+  "superSpecialIngredients": {
+    "names":["SuperSpecialIngredients"],
+    "logisticTypes":["foodSupplies"],
+    "slots":4,
+    "cargoType":"parcel",
+    "rarity":4,
+    "worth":1.2,
+    "generationChance":0.05,
+    "offerDuration":300,
+    "weight":[5]
+  }
+}
