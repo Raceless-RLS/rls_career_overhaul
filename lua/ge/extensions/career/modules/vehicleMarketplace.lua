@@ -45,28 +45,67 @@ local function setOfferInterval(inventoryId)
     inventoryId = tonumber(inventoryId)
     lastOfferTime[inventoryId] = 0
     interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
-  local interestSum = sumInterest(interestedCustomers[inventoryId])
+    local interestSum = sumInterest(interestedCustomers[inventoryId])
     local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-  local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-  local maxInterestSum = 55
+    local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    local maxInterestSum = 55
 
-  local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
+    local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
 
-  print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
+    print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
 
     -- Inverse relationship: fewer customers = longer intervals
-  local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
+    local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
 
     local intervalRandomness = 0.3
     local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-  offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
-  print("offerInterval: " .. offerInterval[inventoryId])
+    offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
+    print("offerInterval: " .. offerInterval[inventoryId])
 end
+
 
 local function initializeMarketplaceData()
   for inventoryId, offers in pairs(marketplaceData) do
     setOfferInterval(inventoryId)
   end
+end
+
+local function generateBacklog()
+  local currentTime = os.time()
+  for inventoryIdStr, data in pairs(marketplaceData) do
+    local inventoryId = tonumber(inventoryIdStr)
+    local interval = offerInterval[inventoryId] * 5 or 1500  -- Default to 25 minutes if not set
+    
+    -- Calculate how many intervals have passed
+    local elapsed = currentTime - data.lastOfferTime
+    local offersToGenerate = math.floor(elapsed / interval)
+    
+    for i = 1, offersToGenerate do
+      local offer = M.generateOffer(inventoryId)
+      if offer then
+        if not data.offers then data.offers = {} end
+
+        for _, oldOffer in ipairs(data.offers) do
+          if offer.customer == oldOffer.customer then
+            -- Update existing offer price
+            oldOffer.price = offer.price
+            goto continue
+          end
+        end
+
+        table.insert(data.offers, {
+          customer = offer.customer,
+          price = offer.price
+        })
+      end
+      ::continue::
+    end
+    
+    -- Update the stored last offer time
+    data.lastOfferTime = os.time()
+    setOfferInterval(inventoryId)
+  end
+  guihooks.trigger("marketplaceUpdate", marketplaceData)
 end
 
 local function onExtensionLoaded()
@@ -82,6 +121,7 @@ local function onExtensionLoaded()
     end
   end
   initializeMarketplaceData()
+  generateBacklog()
 end
 
 local function openMenu()
@@ -204,6 +244,8 @@ local function pullVehicleData(inventoryId)
     movieRentals = veh.movieRentals or 0,
     repos = veh.repos or 0,
     taxiDropoffs = veh.taxiDropoffs or 0,
+    deliveredItems = veh.deliveredItems or 0,
+    suspectsCaught = veh.suspectsCaught or 0,
 
     numAddedParts = getTableSize(addedParts),
     numRemovedParts = getTableSize(removedParts)
@@ -336,7 +378,7 @@ local function onUpdate(dt)
         sendOffer(inventoryId, offer.customer, offer.price)
         if notifications then
           local vehicle = career_modules_inventory.getVehicles()[inventoryId]
-          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price))
+          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price), 5, "marketplace", "info")
         end
       end
       setOfferInterval(inventoryId)

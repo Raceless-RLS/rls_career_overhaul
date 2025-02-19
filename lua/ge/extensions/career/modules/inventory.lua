@@ -1535,6 +1535,27 @@ M.getCertifications = function()
   return veh.certifications
 end
 
+function M.addDeliveredItems(inventoryId, amount)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].deliveredItems = vehicles[inventoryId].deliveredItems or 0
+  vehicles[inventoryId].deliveredItems = vehicles[inventoryId].deliveredItems + amount
+end
+
+function M.getDeliveredItems(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].deliveredItems or 0
+end
+
+function M.addSuspectCaught(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].suspectsCaught = (vehicles[inventoryId].suspectsCaught or 0) + 1
+end
+
+function M.getSuspectsCaught(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].suspectsCaught or 0
+end
+
 -- RLS Reload function
 
 local function onWorldReadyState(state)

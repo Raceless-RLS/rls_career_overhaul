@@ -8,9 +8,13 @@
     <div class="phone-screen">
       <!-- Status Bar -->
       <div class="phone-status-bar">
-        <span>{{ timeString }}</span>
-        <span class="status-back" @click="back"> <- Back</span>
-        <span>{{ appName }}</span>
+        <div class="phone-status-bar-left">
+          <span>{{ timeString }}</span>
+          <button class="status-back" v-bng-on-ui-nav:back,menu.asMouse @click="back"> <- Back</button>
+        </div>
+        <div class="phone-status-bar-right">
+          <span>{{ appName }}</span>
+        </div>
       </div>
       
       <!-- Optional Header Slot -->
@@ -29,6 +33,7 @@
 <script setup>
 import { useEvents } from '@/services/events'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { vBngOnUiNav } from "@/common/directives"
 import { useRouter } from 'vue-router'
 import { lua } from "@/bridge"
 
@@ -159,9 +164,20 @@ const close = () => {
   }
 }
 
+.phone-status-bar-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.phone-status-bar-right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
 .status-back{
-  margin-top: 25px;
-  margin-left: -250px;
   background-color: transparent;
   outline: none;
   border: none;
