@@ -1,6 +1,6 @@
 local M = {}
 
-local leaderboardFile = "career/races_leaderboard.json"
+local leaderboardFile = "career/rls_career/races_leaderboard.json"
 local leaderboard = {}
 
 local level
@@ -22,10 +22,7 @@ local function loadLeaderboard()
 end
 
 local function saveLeaderboard(currentSavePath)
-    local file = currentSavePath .. '/' .. leaderboardFile
-    local file = io.open(file, "w")
-    file:write(jsonEncode(leaderboard))
-    file:close()
+    career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/" .. leaderboardFile, leaderboard, true)
 end
 
 local function isBestTime(entry)

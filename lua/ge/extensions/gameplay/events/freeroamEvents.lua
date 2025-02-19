@@ -31,6 +31,7 @@ local currentExpectedCheckpoint = 1
 local invalidLap = false
 
 local mInventoryId = nil
+local newBestSession = false
 
 local races = nil
 
@@ -104,6 +105,7 @@ local function payoutRace()
 
     -- Handle leaderboard
     local leaderboardEntry = leaderboardManager.getLeaderboardEntry(mActiveRace)
+    dump(leaderboardEntry)
     if mAltRoute and leaderboardEntry then
         leaderboardEntry = leaderboardEntry.altRoute
     end
@@ -151,15 +153,36 @@ local function payoutRace()
         end
     end
 
+    local hotlapMessage = ""
     -- Handle career mode specific rewards
     if career_career.isActive() then
-        if not newBest or invalidLap then
+        if not newBest or mHotlap then
             reward = reward / 2
         end
         reward = invalidLap and 0 or reward
         lapCount = invalidLap and 1 or lapCount
         if race.hotlap then
-            reward = reward * (1 + (lapCount - 1) / 10)
+            -- Hotlap Multiplier
+            local hotlapMultiplier = (10 / (1 + math.exp(-0.07*(lapCount - 17)))) - 1.35
+            reward = reward * hotlapMultiplier
+            hotlapMessage = string.format("\nHotlap Multiplier: %.2f", hotlapMultiplier)
+        end
+
+        if newBest and not newBestSession then
+            -- New Best Bonus
+            newBestSession = true
+        end
+
+        if newBestSession then
+            -- New Best Bonus
+            reward = reward * 1.2
+            hotlapMessage = hotlapMessage .. "\nNew Best Session Bonus: 20%"
+        end
+
+        if oldTime and (newEntry.time - 1.5 < oldTime) then
+            -- In Range Bonus
+            reward = reward * 1.05
+            hotlapMessage = hotlapMessage .. "\nIn Range Bonus: 5%"
         end
 
         reward = reward / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
@@ -198,6 +221,9 @@ local function payoutRace()
 
     mActiveRace = nil
     utils.displayMessage(message, 20, "Reward")
+    if hotlapMessage ~= "" then
+        ui_message(hotlapMessage, 5, "Hotlap Multiplier")
+    end
     return reward
 end
 
@@ -355,6 +381,7 @@ local function exitRace()
         checkpointManager.removeCheckpoints()
         utils.displayMessage("You exited the race zone, Race cancelled", 3)
         utils.restoreTrafficAmount()
+        newBestSession = false
         if gameplay_drift_general.getContext() == "inChallenge" then
             gameplay_drift_general.setContext("inFreeRoam")
             gameplay_drift_general.reset()

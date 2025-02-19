@@ -365,7 +365,6 @@ local function getRoadNodes(roadName)
             width = nodeTable[i+1][2]
         })
     end
-    dump(roadNodes)
     return roadNodes
 end
 
