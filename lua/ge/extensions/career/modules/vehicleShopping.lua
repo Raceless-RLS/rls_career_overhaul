@@ -31,7 +31,7 @@ local paySoundId
 local tether
 local tetherRange = 4 --meter
 
-local isReallyRandom = true
+local isReallyRandom = false
 
 local function getVehiclesPerDealership() return vehiclesPerDealership end
 local function setVehiclesPerDealership(amount)

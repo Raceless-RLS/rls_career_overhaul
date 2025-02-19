@@ -372,6 +372,7 @@ local function decline()
     activeMeet = nil
     playerHasArrived = false
     generationInterval = 120
+    lastGenerationTime = os.time()
 end
 
 local function cancelRSVP()
@@ -380,6 +381,8 @@ local function cancelRSVP()
     core_groundMarkers.resetAll()
     activeMeet = nil
     playerHasArrived = false
+    generationInterval = 120
+    lastGenerationTime = os.time()
 end
 
 local function setRoute()
