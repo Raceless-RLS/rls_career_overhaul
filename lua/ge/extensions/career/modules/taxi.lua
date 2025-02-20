@@ -351,10 +351,10 @@ local function update(dt)
 
     if currentFare and state == "dropoff" then
         local vehicle = be:getPlayerVehicle(0)
-        local destDist = core_groundMarkers.getPathLength()
+        local vehiclePos = vehicle:getPosition()
+        local destDist = (vehiclePos - currentFare.destination.pos):length()
 
         if destDist < 5 then
-
             completeRide()
         end
     end
