@@ -1163,8 +1163,8 @@ local customers = {{
     specialties = {}, -- No specific performance focus
     criteria = {
         rep = {
-            min = 0.3
-        }, -- Very high rep requirement
+            min = 2
+        },
         power = {
             min = 250
         },
@@ -1174,7 +1174,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.15,
-        max = 1.25
+        max = 1.1
     }
 }, {
     id = "CUST049",
