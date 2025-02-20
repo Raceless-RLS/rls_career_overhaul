@@ -79,18 +79,18 @@ local levelDefaults = {
 
 local function getloanerCutValue(level)
   local loanerCutValues = {
-    isHardcore and 0.95 or 0.5,
-    isHardcore and 0.8 or 0.35,
-    isHardcore and 0.7 or 0.25,
-    isHardcore and 0.6 or 0.15,
-    isHardcore and 0.5 or 0,
+    [-1] = isHardcore and 0.95 or 0.5,
+    [0] = isHardcore and 0.8 or 0.35,
+    [1] = isHardcore and 0.7 or 0.25,
+    [2] = isHardcore and 0.6 or 0.15,
+    [3] = isHardcore and 0.5 or 0,
   }
   return loanerCutValues[level]
 end
 
 local function updateLevelDefaults()
-  for i, lvl in ipairs(levelDefaults) do
-    levelDefaults[i].loanerCut.value = getloanerCutValue(i)
+  for i, lvl in pairs(levelDefaults) do
+    lvl.loanerCut.value = getloanerCutValue(i)
   end
 end
 
