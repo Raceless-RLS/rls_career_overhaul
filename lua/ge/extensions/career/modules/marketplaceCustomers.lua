@@ -5272,8 +5272,8 @@ local function getInterestedCustomers(vehicleData)
                     -- Aggregate all entries of this type
                     if vehicleData.completions and vehicleData.completions[completionType] then
                         for _, compEntry in ipairs(vehicleData.completions[completionType]) do
-                            totalCompletions = totalCompletions + compEntry.completions
-                            maxConsecutive = math.max(maxConsecutive, compEntry.consecutive)
+                            totalCompletions = totalCompletions + (compEntry.completions or 0)
+                            maxConsecutive = math.max(maxConsecutive, (compEntry.consecutive or 0))
                         end
                     end
 

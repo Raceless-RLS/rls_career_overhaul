@@ -7,6 +7,8 @@ local M = {}
 local minimumValue = -50
 local maximumValue = 700
 
+local isHardcore = false
+
 local reputationValues = {
   returnLoanerDamaged = -20,
   discardDeliveryVehicle = -10
@@ -18,7 +20,7 @@ local levelDefaults = {
     levelLabel = "Reputation: Level -1",
     requiredValue = minimumValue,
     loanerCut = {
-      value = career_modules_hardcore.isHardcoreMode() and 0.95 or 0.5,
+      value = isHardcore and 0.95 or 0.5,
       icon = "boxPickUp03"
     },
     deliveryBonus = {
@@ -30,7 +32,7 @@ local levelDefaults = {
     levelLabel = "Reputation: Level 0",
     requiredValue = -25, -- needs to lose 50 (from 0) to go to -1
     loanerCut = {
-      value = career_modules_hardcore.isHardcoreMode() and 0.8 or 0.35,
+      value = isHardcore and 0.8 or 0.35,
       icon = "boxPickUp03"
     },
     deliveryBonus = {
@@ -42,7 +44,7 @@ local levelDefaults = {
     levelLabel = "Reputation: Level 1",
     requiredValue = 40, -- needs 50 (from 0) to lvlup to 1
     loanerCut = {
-      value = career_modules_hardcore.isHardcoreMode() and 0.7 or 0.25,
+      value = isHardcore and 0.7 or 0.25,
       icon = "boxPickUp03"
     },
     deliveryBonus = {
@@ -54,7 +56,7 @@ local levelDefaults = {
     levelLabel = "Reputation: Level 2",
     requiredValue = 175, --  needs 150 to lvlup to 2
     loanerCut = {
-      value = career_modules_hardcore.isHardcoreMode() and 0.6 or 0.15,
+      value = isHardcore and 0.6 or 0.15,
       icon = "boxPickUp03"
     },
     deliveryBonus = {
@@ -66,7 +68,7 @@ local levelDefaults = {
     levelLabel = "Reputation: Level 3",
     requiredValue = 400, -- need 250 to lvlup to 3
     loanerCut = {
-      value = career_modules_hardcore.isHardcoreMode() and 0.5 or 0,
+      value = isHardcore and 0.5 or 0,
       icon = "boxPickUp03"
     },
     deliveryBonus = {
@@ -74,6 +76,23 @@ local levelDefaults = {
     }
   },
 }
+
+local function getloanerCutValue(level)
+  local loanerCutValues = {
+    isHardcore and 0.95 or 0.5,
+    isHardcore and 0.8 or 0.35,
+    isHardcore and 0.7 or 0.25,
+    isHardcore and 0.6 or 0.15,
+    isHardcore and 0.5 or 0,
+  }
+  return loanerCutValues[level]
+end
+
+local function updateLevelDefaults()
+  for i, lvl in ipairs(levelDefaults) do
+    levelDefaults[i].loanerCut.value = getloanerCutValue(i)
+  end
+end
 
 local function getValueForEvent(eventId)
   return reputationValues[eventId]
@@ -114,6 +133,8 @@ local function addReputationToOrg(organization)
     nextThreshold = nextThreshold
   }
 
+  updateLevelDefaults()
+
   for i, levelInfo in ipairs(organization.reputationLevels) do
     for attributeKey, attributeValue in pairs(levelDefaults[i-2]) do
       if levelInfo[attributeKey] then
@@ -131,6 +152,7 @@ local function addReputationToOrg(organization)
 end
 
 local function getLabel(lvl)
+  updateLevelDefaults()
   return levelDefaults[lvl].label
 end
 
@@ -140,6 +162,11 @@ end
 
 local function getMaximumValue()
   return maximumValue
+end
+
+M.onHardcoreModeChanged = function(hardcoreMode)
+  isHardcore = hardcoreMode
+  updateLevelDefaults()
 end
 
 M.addReputationToOrg = addReputationToOrg

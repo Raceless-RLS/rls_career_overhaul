@@ -18,6 +18,7 @@ local function onCareerActive(active)
         }
     end
     isHardcoreMode = saveData.hardcoreMode
+    extensions.hook("onHardcoreModeChanged", isHardcoreMode)
 end
 
 local function onSaveCurrentSaveSlot(currentSavePath)
