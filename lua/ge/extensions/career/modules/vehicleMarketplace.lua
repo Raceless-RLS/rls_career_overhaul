@@ -391,6 +391,14 @@ function M.toggleNotifications(newValue)
   notifications = newValue
 end
 
+local function onVehicleRemoved(inventoryId)
+  lastOfferTime[tonumber(inventoryId)] = nil
+  offerInterval[tonumber(inventoryId)] = nil
+  interestedCustomers[tonumber(inventoryId)] = nil
+  globalVehicleData[tonumber(inventoryId)] = nil
+  marketplaceData[tostring(inventoryId)] = nil
+end
+
 M.racesToLabels = racesToLabels
 M.openMenu = openMenu
 M.onExtensionLoaded = onExtensionLoaded
@@ -404,5 +412,6 @@ M.declineOffer = declineOffer
 M.pullVehicleData = pullVehicleData
 M.getInterestedCustomers = getInterestedCustomers
 M.generateOffer = generateOffer
+M.onVehicleRemoved = onVehicleRemoved
 
 return M

@@ -151,7 +151,6 @@ local function resetActiveCheckpoints()
 end
 
 local function enableCheckpoint(checkpointIndex, alt)
-    print("Enabling checkpoint " .. checkpointIndex)
     resetActiveCheckpoints()
     local ALT = {alt, alt}
     local index = {checkpointIndex, checkpointIndex + 1}
@@ -168,7 +167,6 @@ local function enableCheckpoint(checkpointIndex, alt)
             end
         end
     end
-    dump(index)
     local currentExpectedCheckpoint = index[1]
     local checkpoint = {}
     if ALT[1] then
@@ -210,7 +208,6 @@ local function enableCheckpoint(checkpointIndex, alt)
             nextCheckpoint.marker.instanceColor = ColorF(1, 0, 0, 0.5):asLinear4F() -- Red
         end
     end
-    print("Current expected checkpoint: " .. currentExpectedCheckpoint)
     return currentExpectedCheckpoint
 end
 

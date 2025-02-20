@@ -240,9 +240,22 @@ local function displayStartMessage(raceName)
     displayMessage(message, 5)
 end
 
-local function displayStagedMessage(raceName, getMessage)
+local function getRaceLabel(raceName, altRoute, hotlap)
     local race = races[raceName]
-    local times = leaderboardManager.getLeaderboardEntry(raceName) or {}
+    local raceLabel = race.label
+
+    if altRoute then
+        raceLabel = race.altRoute.label
+    end
+    if hotlap then
+        raceLabel = raceLabel .. " (Hotlap)"
+    end
+    return raceLabel
+end
+
+local function displayStagedMessage(vehId, raceName, getMessage)
+    local race = races[raceName]
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, getRaceLabel(raceName)) or {}
     local careerMode = career_career.isActive()
 
     local message = ""
@@ -280,8 +293,8 @@ local function displayStagedMessage(raceName, getMessage)
 
     if race.driftGoal then
         -- Handle drift event staging message
-        local bestScore = times.driftScore
-        local bestTime = times.driftTime
+        local bestScore = leaderboardEntry.driftScore
+        local bestTime = leaderboardEntry.time
         local targetScore = race.driftGoal
         local targetTime = race.driftTargetTime or race.bestTime
 
@@ -311,35 +324,28 @@ local function displayStagedMessage(raceName, getMessage)
             end
         end
     else
-        -- Handle normal time-based events
-        if not times.bestTime then
-            times.bestTime = nil
-        end
-        message = message .. addTimeInfo(times and times.bestTime or nil, race.bestTime, race.reward, "")
+        message = message .. addTimeInfo(leaderboardEntry and leaderboardEntry.time or nil, race.bestTime, race.reward, "")
     end
 
     -- Handle hotlap if it exists
     if race.hotlap then
-        if not times.hotlapTime then
-            times.hotlapTime = nil
-        end
+        leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, getRaceLabel(raceName, nil, true))
         message = message .. "\n\n" ..
-                      addTimeInfo(times and times.hotlapTime or nil, race.hotlap, race.reward, "Hotlap: ")
+                      addTimeInfo(leaderboardEntry and leaderboardEntry.time or nil, race.hotlap, race.reward, "Hotlap: ")
     end
 
     -- Handle alternative route if it exists
     if race.altRoute then
-        if not times.altRoute then
-            times.altRoute = {}
-        end
+        leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, getRaceLabel(raceName, true))
         message = message .. "\n\nAlternative Route:\n"
         message = message ..
-                      addTimeInfo(times and times.altRoute.bestTime or nil, race.altRoute.bestTime,
+                      addTimeInfo(leaderboardEntry and leaderboardEntry.time or nil, race.altRoute.bestTime,
                 race.altRoute.reward, "")
 
         if race.altRoute.hotlap then
+            leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, getRaceLabel(raceName, true, true))
             message = message .. "\n\n" ..
-                          addTimeInfo(times and times.altRoute.hotlapTime or nil, race.altRoute.hotlap,
+                          addTimeInfo(leaderboardEntry and leaderboardEntry.time or nil, race.altRoute.hotlap,
                     race.altRoute.reward, "Alt Route Hotlap: ")
         end
     end
