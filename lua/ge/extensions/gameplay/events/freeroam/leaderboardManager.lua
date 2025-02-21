@@ -15,11 +15,17 @@ local function loadLeaderboard()
 end
 
 local function saveLeaderboard(currentSavePath)
+    if not leaderboard then
+        leaderboard = {}
+    end
     career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/" .. leaderboardFile, leaderboard, true)
 end
 
 local function isBestTime(entry)
     level = getCurrentLevelIdentifier()
+    if not leaderboard then
+        leaderboard = {}
+    end
     local leaderboardEntry = leaderboard[level] or {}
     if not leaderboardEntry then
         return true
@@ -51,12 +57,20 @@ end
 
 local function addLeaderboardEntry(entry)
     level = getCurrentLevelIdentifier()
-    local leaderboardEntry = leaderboard[level] or {}
+
     if career_career and career_career.isActive() then
         career_modules_inventory.saveFRETimeToVehicle(entry.raceLabel, entry.inventoryId, entry.time, entry.driftScore)
     end
-    leaderboard[level][tostring(entry.inventoryId)] = leaderboard[level][tostring(entry.inventoryId)] or {}
-    leaderboardEntry = leaderboard[level][tostring(entry.inventoryId)]
+    if not leaderboard then
+        leaderboard = {}
+    end
+    if not leaderboard[level] then 
+        leaderboard[level] = {}
+    end
+    if not leaderboard[level][tostring(entry.inventoryId)] then
+        leaderboard[level][tostring(entry.inventoryId)] = {}
+    end
+    local leaderboardEntry = leaderboard[level][tostring(entry.inventoryId)]
     if isBestTime(entry) then
         local raceLabel = entry.raceLabel
         leaderboardEntry[raceLabel] = leaderboardEntry[raceLabel] or {}
@@ -69,6 +83,10 @@ local function addLeaderboardEntry(entry)
 end
 
 local function clearLeaderboardForVehicle(inventoryId)
+    level = getCurrentLevelIdentifier()
+    if not leaderboard then
+        leaderboard = {}
+    end
     if not leaderboard[level] or not leaderboard[level][tostring(inventoryId)] then
         return
     end
@@ -96,6 +114,9 @@ end
 
 local function getLeaderboardEntry(inventoryId, raceLabel)
     level = getCurrentLevelIdentifier()
+    if not leaderboard then
+        leaderboard = {}
+    end
     if not leaderboard[level] or not leaderboard[level][tostring(inventoryId)] then
         return {}
     end
