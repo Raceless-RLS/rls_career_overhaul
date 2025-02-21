@@ -80,7 +80,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
       if phase.completed and not racer.isFinished then
         log('I', logTag, 'Racer: '.. racer.vehId ..' completed phase: '.. phase.name)
         if phase.name == "stage" then
-          freeroamUtils.displayStagedMessage("drag")
+          freeroamUtils.displayStagedMessage(racer.vehId, "drag")
         elseif phase.name == "countdown" then
           freeroamUtils.displayStartMessage("drag")
           freeroamUtils.saveAndSetTrafficAmount(0)
