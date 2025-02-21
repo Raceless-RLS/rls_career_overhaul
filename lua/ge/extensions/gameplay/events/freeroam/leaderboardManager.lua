@@ -69,6 +69,9 @@ local function addLeaderboardEntry(entry)
 end
 
 local function clearLeaderboardForVehicle(inventoryId)
+    if not leaderboard[level] or not leaderboard[level][tostring(inventoryId)] then
+        return
+    end
     leaderboard[level][tostring(inventoryId)] = nil
 end
 

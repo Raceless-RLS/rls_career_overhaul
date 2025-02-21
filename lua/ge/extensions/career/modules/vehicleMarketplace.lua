@@ -144,6 +144,7 @@ local function sendOffer(inventoryId, customer, price)
   local offer = {
     customer = customer,
     price = price,
+    vehicleValue = globalVehicleData[inventoryId].value
   }
   table.insert(marketplaceData[tostring(inventoryId)].offers, offer)
   marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
@@ -355,7 +356,8 @@ local function generateOffer(inventoryId)
 
   local offer = {
     customer = selectedCustomer.name,
-    price = offerValue * vehicleValue
+    price = offerValue * vehicleValue,
+    vehicleValue = vehicleValue
   }
 
   return offer

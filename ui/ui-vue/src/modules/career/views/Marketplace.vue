@@ -5,11 +5,14 @@
                 <h2>Vehicles Listed</h2>
                 <!-- <button class="list-button" @click="router.push('/career/vehicle-inventory')">List Vehicle For
                     Sale</button> -->
-                <BngSwitch v-model="notifications"> Notifications </BngSwitch>
+                <div class="header-right">
+                    <BngSwitch v-model="notifications"> Notifications </BngSwitch>
+                    <button class="help-button" @click="help">?</button>
+                </div>
 
             </div>
             <hr class="custom-hr">
-            <template v-if="listedVehicles.length">
+            <template v-if="listedVehicles.length && !helpPopup">
                 <div v-for="vehicle in listedVehicles" :key="vehicle.id" class="vehicle-listing">
                     <div class="vehicle-card" :class="{ active: showOffers === vehicle.id }">
                         <img :src="vehicle.thumbnail ? vehicle.thumbnail : image" alt="" class="vehicle-image">
@@ -73,7 +76,7 @@
                                 <div class="offer-actions">
                                     <span class="offer-amount">Offered: ${{ formatValue(offer.price) }}</span>
                                     <button class="accept-btn"
-                                        @click="acceptOffer(vehicle.id, offer.customer)">Accept</button>
+                                        @click="acceptOffer(vehicle.id, offer.customer)" :disabled="vehicle.needsRepair">Accept</button>
                                     <button class="decline-btn"
                                         @click="declineOffer(vehicle.id, offer.customer)">Decline</button>
                                 </div>
@@ -85,6 +88,121 @@
                     </div>
                 </div>
             </template>
+            <div v-else-if="helpPopup">
+                <div class="help-screen">
+                    <h1>Marketplace Overview</h1>
+                    <p>
+                        Your vehicle’s appeal in the marketplace is determined by a range of criteria.
+                        The more activities and customizations you complete, the higher the interest
+                        from potential customers—and higher offers you'll receive (although offers come
+                        in offline and at a longer interval).
+                    </p>
+                    <p>
+                        To get started, list your vehicle for sale by going into your vehicle inventory and selecting
+                        "List for
+                        Sale".
+                    </p>
+                    <p>
+                        Note: If you make changes to your vehicle after listing, you may lose current offers.
+                    </p>
+
+                    <h2>Vehicle Performance & Event Stats</h2>
+                    <ul>
+                        <li>
+                            <strong>Performance Values:</strong>
+                            These values represent your vehicle’s performance in free roam events.
+                            The better you perform, the higher this score will be.
+                        </li>
+                        <li>
+                            <strong>Completions:</strong>
+                            Tracks how many free roam events you have participated in and your streak of consecutive
+                            completions.
+                            Consistency here boosts your vehicle’s appeal.
+                        </li>
+                        <li>
+                            <strong>Arrests, Tickets, & Evades:</strong>
+                            <ul>
+                                <li><em>Arrests:</em> Number of times you’ve been caught by the police.</li>
+                                <li><em>Tickets:</em> Times you’ve received fines.</li>
+                                <li><em>Evades:</em> How often you’ve successfully evaded the police.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Accidents:</strong>
+                            Counts the number of repairs made via insurance. Fewer accidents might indicate a more
+                            reliable vehicle.
+                        </li>
+                        <li>
+                            <strong>Movie Rentals:</strong>
+                            Reflects the number of times your vehicle has been rented out for theater
+                            events—demonstrating
+                            versatility.
+                        </li>
+                        <li>
+                            <strong>Repos:</strong>
+                            Shows the number of vehicles you’ve successfully repossessed using your vehicle. This can
+                            appeal to
+                            certain high-paying customer types.
+                        </li>
+                        <li>
+                            <strong>Taxi Dropoffs & Delivered Items:</strong>
+                            <ul>
+                                <li><em>Taxi Dropoffs:</em> The number of passengers you’ve transported.</li>
+                                <li><em>Delivered Items:</em> Volume or count of deliveries you’ve made.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Suspects Caught:</strong>
+                            Indicates the number of times you’ve used your vehicle in police chases to catch suspects,
+                            enhancing its
+                            law enforcement credentials.
+                        </li>
+                    </ul>
+
+                    <h2>Customization & Upgrades</h2>
+                    <ul>
+                        <li>
+                            <strong>Number of Added Parts:</strong>
+                            How many upgrades or new parts have been added to your vehicle.
+                            More upgrades often lead to higher performance and appeal.
+                        </li>
+                        <li>
+                            <strong>Number of Removed Parts:</strong>
+                            Indicates modifications or removals from the original setup, which can reflect a vehicle’s
+                            customization
+                            journey.
+                        </li>
+                    </ul>
+
+                    <h2>Increasing Marketplace Interest</h2>
+                    <ul>
+                        <li>
+                            <strong>Multi-Faceted Appeal:</strong>
+                            Each of the criteria (performance, event stats, and customizations) plays a role in
+                            attracting
+                            customers.
+                        </li>
+                        <li>
+                            <strong>Specialization:</strong>
+                            If you focus on excelling in specific areas (like evading the police or delivering items),
+                            you might attract high-paying customers interested in that niche.
+                        </li>
+                        <li>
+                            <strong>Offer Timing:</strong>
+                            Offers are generated while you play the game and the interval depends on your interest.
+                            They are also generated offline, and the interval between offers is five times longer than
+                            normal.
+                            More interest means you’ll receive these offers more quickly once the wait time is up.
+                        </li>
+                    </ul>
+
+                    <p>
+                        By excelling in these areas, your vehicle becomes more attractive on the marketplace.
+                        The system rewards well-rounded performance and specialization, so focus on the stats
+                        that best suit your play style to secure the best deals!
+                    </p>
+                </div>
+            </div>
             <div v-else class="no-vehicles-message">
                 No Vehicles Listed
             </div>
@@ -115,12 +233,22 @@ const image = ref("/settings/cloud/saves/Profile 17/autosave3/career/vehicles/5.
 const marketplaceData = ref({})
 const notifications = ref(true)
 
+const helpPopup = ref(false)
+
+const help = () => {
+    if (helpPopup.value) {
+        helpPopup.value = false
+    } else {
+        helpPopup.value = true
+    }
+}
+
 onMounted(() => {
     lua.career_modules_vehicleMarketplace.requestInitialData()
 });
 
 onBeforeMount(() => {
-  vehicleInventoryStore.requestInitialData()
+    vehicleInventoryStore.requestInitialData()
 })
 
 events.on("marketplaceUpdate", (data) => {
@@ -129,7 +257,7 @@ events.on("marketplaceUpdate", (data) => {
 })
 
 watch(notifications, (newValue, oldValue) => {
-  lua.career_modules_vehicleMarketplace.toggleNotifications(newValue)
+    lua.career_modules_vehicleMarketplace.toggleNotifications(newValue)
 })
 
 const close = () => {
@@ -195,7 +323,7 @@ const listedVehicles = computed(() => {
 <style scoped lang="scss">
 .marketplace-container {
     width: max-content;
-    min-width: 40%;
+    max-width: 40%;
     height: 95%;
     background-color: #282828;
     border-radius: 15px;
@@ -221,6 +349,52 @@ const listedVehicles = computed(() => {
         font-size: 24px;
         margin: 0;
     }
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-button {
+    background-color: #3474eb;
+    width: 30px;
+    height: 30px;
+    color: white;
+    background-color: rgb(67, 70, 80);
+    margin-left: 10px;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: "Overpass", sans-serif;
+}
+
+.help-screen {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.help-screen h1,
+.help-screen h2 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.help-screen ul {
+    margin: 10px 0 20px 20px;
+}
+
+.help-screen li {
+    margin-bottom: 8px;
+}
+
+.help-screen strong {
+    color: #ccc;
 }
 
 .list-button {
@@ -454,6 +628,12 @@ const listedVehicles = computed(() => {
 .accept-btn {
     background-color: #4CAF50;
     margin-right: 10px;
+    
+    &:disabled {
+        background-color: #2d5a2f;
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 }
 
 .decline-btn {
