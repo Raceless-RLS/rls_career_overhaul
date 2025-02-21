@@ -5110,6 +5110,520 @@ local customers = {{
         powerPerWeight = { max = 0.251 }
     },
     offerRange = { min = 1.3, max = 2 }
+}, {
+    id = "CUST281",
+    name = "Bronze Cab Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 25
+        },
+        mileage = {
+            max = 150000
+        }
+    },
+    offerRange = {
+        min = 0.5,
+        max = 1.1
+    }
+}, {
+    id = "CUST282",
+    name = "Silver City Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 15
+        },
+        rep = {
+            min = 2.5
+        },
+        accidents = {
+            max = 3
+        }
+    },
+    offerRange = {
+        min = 0.6,
+        max = 1.25
+    }
+}, {
+    id = "CUST283", 
+    name = "Gold Medal Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 30
+        },
+        rep = {
+            min = 4.0
+        },
+        evades = {
+            min = 5
+        }
+    },
+    offerRange = {
+        min = 0.75,
+        max = 1.4
+    }
+}, {
+    id = "CUST284",
+    name = "Platinum Rides Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 80
+        },
+        rep = {
+            min = 5.5
+        },
+        accidents = {
+            max = 1
+        },
+        movieRentals = {
+            min = 1
+        }
+    },
+    offerRange = {
+        min = 0.9,
+        max = 1.6
+    }
+}, {
+    id = "CUST285",
+    name = "Diamond Premier Transport",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 120
+        },
+        rep = {
+            min = 7.0
+        },
+        mileage = {
+            max = 75000
+        },
+    },
+    offerRange = {
+        min = 1.2,
+        max = 1.8
+    }
+}, {
+    id = "CUST286",
+    name = "City Night Shift Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 15 },
+        numAddedParts = { min = 3 },
+        accidents = { max = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.55, max = 1.15 }
+}, {
+    id = "CUST287",
+    name = "Eco Taxi Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 20 },
+        numAddedParts = { min = 2 },
+        mileage = { max = 120000 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.6, max = 1.2 }
+}, {
+    id = "CUST288",
+    name = "Vintage Cab Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 25 },
+        year = { max = 2005 },
+        numAddedParts = { min = 4 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.65, max = 1.25 }
+}, {
+    id = "CUST289",
+    name = "Airport Express Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 30 },
+        numAddedParts = { min = 5 },
+        evades = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.7, max = 1.3 }
+}, {
+    id = "CUST290",
+    name = "Luxury Ride Partners",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 35 },
+        value = { min = 30000 },
+        movieRentals = { min = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.75, max = 1.35 }
+}, {
+    id = "CUST291",
+    name = "Compact City Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 40 },
+        numAddedParts = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.8, max = 1.4 }
+}, {
+    id = "CUST292",
+    name = "24/7 Taxi Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 45 },
+        numAddedParts = { min = 6 },
+        accidents = { max = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.85, max = 1.45 }
+}, {
+    id = "CUST293",
+    name = "Student Driver Fleet",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        rep = { min = 3.0 },
+        tickets = { max = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.9, max = 1.5 }
+}, {
+    id = "CUST294",
+    name = "Tourist Transport Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 55 },
+        movieRentals = { min = 2 },
+        numAddedParts = { min = 3 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.95, max = 1.55 }
+}, {
+    id = "CUST295",
+    name = "Hybrid Cab Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 60 },
+        numAddedParts = { min = 4 },
+        powerPerWeight = { min = 0.12 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.0, max = 1.6 }
+}, {
+    id = "CUST296",
+    name = "Security Cabs Ltd",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 65 },
+        suspectsCaught = { min = 2 },
+        numAddedParts = { min = 5 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.05, max = 1.65 }
+}, {
+    id = "CUST297",
+    name = "Disability Access Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 70 },
+        numAddedParts = { min = 6 },
+        accidents = { max = 0 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.1, max = 1.7 }
+}, {
+    id = "CUST298",
+    name = "VIP Chauffeur Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 75 },
+        rep = { min = 4.5 },
+        numAddedParts = { min = 7 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.15, max = 1.75 }
+}, {
+    id = "CUST299",
+    name = "Taxi Co-op Union",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 80 },
+        numAddedParts = { min = 4 },
+        numRemovedParts = { max = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.2, max = 1.8 }
+}, {
+    id = "CUST300",
+    name = "Electric Taxi Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 85 },
+        numAddedParts = { min = 5 },
+        mileage = { max = 60000 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.25, max = 1.85 }
+}, {
+    id = "CUST301",
+    name = "Rural Taxi Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 90 },
+        evades = { min = 3 },
+        numAddedParts = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.3, max = 1.9 }
+}, {
+    id = "CUST302",
+    name = "Limo Taxi Hybrids",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 95 },
+        value = { min = 40000 },
+        numAddedParts = { min = 8 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.35, max = 2.0 }
+}, {
+    id = "CUST303",
+    name = "Taxi Trainer Fleet",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 100 },
+        numAddedParts = { min = 9 },
+        rep = { min = 5.0 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, {
+    id = "CUST304",
+    name = "Heritage Cab Preservers",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 40 },
+        year = { max = 1995 },
+        numAddedParts = { min = 10 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.45, max = 2.2 }
+}, {
+    id = "CUST305",
+    name = "Taxi Tech Innovators",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        numAddedParts = { min = 12 },
+        power = { min = 200 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.5, max = 2.3 }
+}, {
+    id = "CUST306",
+    name = "Metro Transit Authority",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 5 }
+    },
+    offerRange = { min = 0.45, max = 1.05 }
+}, {
+    id = "CUST307",
+    name = "School Bus Specialists",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 65 },
+        weight = { min = 10000 },
+        accidents = { max = 1 }
+    },
+    offerRange = { min = 0.48, max = 1.08 }
+}, {
+    id = "CUST308",
+    name = "Intercity Coach Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 80 },
+        weight = { min = 10000 },
+        mileage = { max = 300000 }
+    },
+    offerRange = { min = 0.51, max = 1.11 }
+}, {
+    id = "CUST309",
+    name = "Tour Bus Operators",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 95 },
+        weight = { min = 10000 },
+        movieRentals = { min = 3 }
+    },
+    offerRange = { min = 0.54, max = 1.14 }
+}, {
+    id = "CUST310",
+    name = "Airport Shuttle Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 110 },
+        weight = { min = 10000 },
+        rep = { min = 4.0 }
+    },
+    offerRange = { min = 0.57, max = 1.17 }
+}, {
+    id = "CUST311",
+    name = "Double Decker Tours",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 125 },
+        weight = { min = 10000 },
+        height = { min = 4.0 }
+    },
+    offerRange = { min = 0.60, max = 1.20 }
+}, {
+    id = "CUST312",
+    name = "City Sightseeing Buses",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 140 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 8 }
+    },
+    offerRange = { min = 0.63, max = 1.23 }
+}, {
+    id = "CUST313",
+    name = "Charter Bus Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 155 },
+        weight = { min = 10000 },
+        value = { min = 50000 }
+    },
+    offerRange = { min = 0.66, max = 1.26 }
+}, {
+    id = "CUST314",
+    name = "Mobile Classroom Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 170 },
+        weight = { min = 10000 },
+        suspectsCaught = { min = 5 }
+    },
+    offerRange = { min = 0.69, max = 1.29 }
+}, {
+    id = "CUST315",
+    name = "VIP Party Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 185 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 10 }
+    },
+    offerRange = { min = 0.72, max = 1.32 }
+}, {
+    id = "CUST316",
+    name = "Eco Bus Initiative",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 200 },
+        weight = { min = 10000 },
+        mileage = { max = 200000 }
+    },
+    offerRange = { min = 0.75, max = 1.35 }
+}, {
+    id = "CUST317",
+    name = "Night Bus Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 215 },
+        weight = { min = 10000 },
+        evades = { max = 1 }
+    },
+    offerRange = { min = 0.78, max = 1.38 }
+}, {
+    id = "CUST318",
+    name = "Rural Bus Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 230 },
+        weight = { min = 10000 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.81, max = 1.41 }
+}, {
+    id = "CUST319",
+    name = "Articulated Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 245 },
+        weight = { min = 10000 },
+        length = { min = 12 }
+    },
+    offerRange = { min = 0.84, max = 1.44 }
+}, {
+    id = "CUST320",
+    name = "Vintage Bus Restorers",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 260 },
+        weight = { min = 10000 },
+        year = { max = 1990 }
+    },
+    offerRange = { min = 0.87, max = 1.47 }
+}, {
+    id = "CUST321",
+    name = "Accessible Transit Ltd",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 275 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 12 }
+    },
+    offerRange = { min = 0.90, max = 1.50 }
+}, {
+    id = "CUST322",
+    name = "Cross-Country Coaches",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 290 },
+        weight = { min = 10000 },
+        mileage = { min = 100000 }
+    },
+    offerRange = { min = 0.93, max = 1.53 }
+}, {
+    id = "CUST323",
+    name = "Mobile Hospital Units",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 305 },
+        weight = { min = 10000 },
+        rep = { min = 6.0 }
+    },
+    offerRange = { min = 0.96, max = 1.56 }
+}, {
+    id = "CUST324",
+    name = "Double Articulated Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 320 },
+        weight = { min = 10000 },
+        length = { min = 18 }
+    },
+    offerRange = { min = 0.99, max = 1.59 }
+}, {
+    id = "CUST325",
+    name = "Luxury Coach Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 335 },
+        weight = { min = 10000 },
+        value = { min = 75000 }
+    },
+    offerRange = { min = 1.02, max = 1.62 }
 }
 }
 

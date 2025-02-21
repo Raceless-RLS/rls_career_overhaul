@@ -395,9 +395,10 @@ local function onBeamNGTrigger(data)
         return
     end
     if gameplay_walk.isWalking() then return end
-    if career_career.isActive() and not career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) then 
-        return 
-    else
+    if career_career.isActive() then
+        if not career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) then
+            return
+        end
         local vehicle = career_modules_inventory.getVehicles()[career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID)]
         if vehicle.loanType then
             return
