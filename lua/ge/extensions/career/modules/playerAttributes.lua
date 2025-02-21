@@ -133,14 +133,32 @@ local function onExtensionLoaded()
     jsonData.bonusStars = nil
   end
 
+  attributeLog = (savePath and jsonReadFile(savePath .. "/career/attributeLog.json")) or attributeLog
+  local moneySum = 0
+  for _, change in ipairs(attributeLog) do
+    if change.attributeChange.money then
+      moneySum = moneySum + change.attributeChange.money
+    end
+  end
+  print("moneySum: " .. moneySum)
+
   for name, data in pairs(jsonData) do
     attributes[name] = attributes[name] or deepcopy(baseAttribute)
     for k,v in pairs(data) do
       attributes[name][k] = v
     end
+    if name == "money" then
+      local gains = 0
+      if data.gains.all then
+        gains = data.gains.all
+      end
+      local losses = 0
+      if data.losses.all then
+        losses = -data.losses.all
+      end
+      attributes[name].value = math.min(data.value, gains - losses, moneySum)
+    end
   end
-
-  attributeLog = (savePath and jsonReadFile(savePath .. "/career/attributeLog.json")) or attributeLog
 end
 
 -- this should only be loaded when the career is active
