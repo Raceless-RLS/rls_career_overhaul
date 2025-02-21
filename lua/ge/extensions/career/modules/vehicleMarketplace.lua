@@ -45,28 +45,67 @@ local function setOfferInterval(inventoryId)
     inventoryId = tonumber(inventoryId)
     lastOfferTime[inventoryId] = 0
     interestedCustomers[inventoryId] = M.getInterestedCustomers(inventoryId)
-  local interestSum = sumInterest(interestedCustomers[inventoryId])
+    local interestSum = sumInterest(interestedCustomers[inventoryId])
     local minInterval = 60 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-  local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
-  local maxInterestSum = 55
+    local maxInterval = 450 * (career_modules_hardcore.isHardcoreMode() and 2 or 1)
+    local maxInterestSum = 55
 
-  local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
+    local normalizedInterestSum = math.min(interestSum / maxInterestSum, 1)
 
-  print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
+    print(string.format("Interest Percentage: %0.1f", normalizedInterestSum * 100) .. "%")
 
     -- Inverse relationship: fewer customers = longer intervals
-  local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
+    local calculatedInterval = maxInterval - ((maxInterval - minInterval) * normalizedInterestSum)
 
     local intervalRandomness = 0.3
     local randomOffset = calculatedInterval * intervalRandomness * (2 * math.random() - 1)
-  offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
-  print("offerInterval: " .. offerInterval[inventoryId])
+    offerInterval[inventoryId] = math.min(maxInterval, math.max(minInterval, calculatedInterval + randomOffset))
+    print("offerInterval: " .. offerInterval[inventoryId])
 end
+
 
 local function initializeMarketplaceData()
   for inventoryId, offers in pairs(marketplaceData) do
     setOfferInterval(inventoryId)
   end
+end
+
+local function generateBacklog()
+  local currentTime = os.time()
+  for inventoryIdStr, data in pairs(marketplaceData) do
+    local inventoryId = tonumber(inventoryIdStr)
+    local interval = offerInterval[inventoryId] * 5 or 1500  -- Default to 25 minutes if not set
+    
+    -- Calculate how many intervals have passed
+    local elapsed = currentTime - data.lastOfferTime
+    local offersToGenerate = math.floor(elapsed / interval)
+    
+    for i = 1, offersToGenerate do
+      local offer = M.generateOffer(inventoryId)
+      if offer then
+        if not data.offers then data.offers = {} end
+
+        for _, oldOffer in ipairs(data.offers) do
+          if offer.customer == oldOffer.customer then
+            -- Update existing offer price
+            oldOffer.price = offer.price
+            goto continue
+          end
+        end
+
+        table.insert(data.offers, {
+          customer = offer.customer,
+          price = offer.price
+        })
+      end
+      ::continue::
+    end
+    
+    -- Update the stored last offer time
+    data.lastOfferTime = os.time()
+    setOfferInterval(inventoryId)
+  end
+  guihooks.trigger("marketplaceUpdate", marketplaceData)
 end
 
 local function onExtensionLoaded()
@@ -82,6 +121,7 @@ local function onExtensionLoaded()
     end
   end
   initializeMarketplaceData()
+  generateBacklog()
 end
 
 local function openMenu()
@@ -104,6 +144,7 @@ local function sendOffer(inventoryId, customer, price)
   local offer = {
     customer = customer,
     price = price,
+    vehicleValue = globalVehicleData[inventoryId].value
   }
   table.insert(marketplaceData[tostring(inventoryId)].offers, offer)
   marketplaceData[tostring(inventoryId)].lastOfferTime = os.time()
@@ -118,7 +159,7 @@ local function getTableSize(t)
   return count
 end
 
-local function FREtoPerformanceValue(races, raceLabels, FRETimes)
+local function FREtoPerformanceValue(raceLabels, FRETimes)
   local performanceValues = {}
   if not FRETimes then return {} end
   for label, time in pairs(FRETimes) do
@@ -139,11 +180,29 @@ local function FREtoPerformanceValue(races, raceLabels, FRETimes)
   return performanceValues
 end
 
+local function getCompletions(raceLabels, FRECompletions)
+  local completions = {}
+  if not FRECompletions then return {} end
+  for label, amount in pairs(FRECompletions) do
+    local raceDetails = raceLabels and raceLabels[label] or {}
+    if not raceDetails or not raceDetails.types then goto continue end
+    for _, type in ipairs(raceDetails.types) do
+      if not completions[type] then
+        completions[type] = {}
+      end
+      table.insert(completions[type], {label = label, completions = amount.total, consecutive = amount.consecutive})
+    end
+    ::continue::
+  end
+  return completions
+end
+
 local function pullVehicleData(inventoryId)
   local veh = career_modules_inventory.getVehicles()[inventoryId]
   if not veh then return end
   
-  local FRETimes = veh.FRETimes
+  local FRETimes = veh.FRETimes or {}
+  local FRECompletions = veh.FRECompletions or {}
   local value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
   local power = 0
   local weight = 0
@@ -169,7 +228,8 @@ local function pullVehicleData(inventoryId)
   local raceLabels = racesToLabels(races)
 
   local vehicleData = {
-    performanceValues = FREtoPerformanceValue(races, raceLabels, FRETimes),
+    performanceValues = FREtoPerformanceValue(raceLabels, FRETimes),
+    completions = getCompletions(raceLabels, FRECompletions),
     value = value or 0,
     power = power or 0,
     weight = weight or 0,
@@ -185,6 +245,8 @@ local function pullVehicleData(inventoryId)
     movieRentals = veh.movieRentals or 0,
     repos = veh.repos or 0,
     taxiDropoffs = veh.taxiDropoffs or 0,
+    deliveredItems = veh.deliveredItems or 0,
+    suspectsCaught = veh.suspectsCaught or 0,
 
     numAddedParts = getTableSize(addedParts),
     numRemovedParts = getTableSize(removedParts)
@@ -294,7 +356,8 @@ local function generateOffer(inventoryId)
 
   local offer = {
     customer = selectedCustomer.name,
-    price = offerValue * vehicleValue
+    price = offerValue * vehicleValue,
+    vehicleValue = vehicleValue
   }
 
   return offer
@@ -317,7 +380,7 @@ local function onUpdate(dt)
         sendOffer(inventoryId, offer.customer, offer.price)
         if notifications then
           local vehicle = career_modules_inventory.getVehicles()[inventoryId]
-          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price))
+          ui_message("Received offer on your " .. vehicle.niceName .. " for $" .. string.format("%.2f", offer.price), 5, "marketplace", "info")
         end
       end
       setOfferInterval(inventoryId)
@@ -328,6 +391,14 @@ end
 
 function M.toggleNotifications(newValue)
   notifications = newValue
+end
+
+local function onVehicleRemoved(inventoryId)
+  lastOfferTime[tonumber(inventoryId)] = nil
+  offerInterval[tonumber(inventoryId)] = nil
+  interestedCustomers[tonumber(inventoryId)] = nil
+  globalVehicleData[tonumber(inventoryId)] = nil
+  marketplaceData[tostring(inventoryId)] = nil
 end
 
 M.racesToLabels = racesToLabels
@@ -343,5 +414,6 @@ M.declineOffer = declineOffer
 M.pullVehicleData = pullVehicleData
 M.getInterestedCustomers = getInterestedCustomers
 M.generateOffer = generateOffer
+M.onVehicleRemoved = onVehicleRemoved
 
 return M

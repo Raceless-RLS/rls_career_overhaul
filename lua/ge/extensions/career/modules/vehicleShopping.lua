@@ -31,6 +31,8 @@ local paySoundId
 local tether
 local tetherRange = 4 --meter
 
+local isReallyRandom = false
+
 local function getVehiclesPerDealership() return vehiclesPerDealership end
 local function setVehiclesPerDealership(amount)
   vehiclesPerDealership = amount
@@ -81,6 +83,14 @@ local function getRandomizedPrice(price, range)
   -- H is the highest price (These are extreme cases)
   range = range or {0.5, 0.90, 1.15, 1.5}
   local L, NL, NH, H = range[1], range[2], range[3], range[4]
+
+  if isReallyRandom then
+    math.randomseed(os.time() + os.clock() * 10000)
+
+    for _ = 1, 3 do
+      math.random()
+    end
+  end
 
   local rand = math.random(0, 1000) / 1000
   if rand < 0 then rand = 0 end
@@ -291,7 +301,7 @@ local function onVehicleSpawnFinished(vehId)
     if spawnFollowUpActions.licensePlateText then
       career_modules_inventory.setLicensePlateText(inventoryId, spawnFollowUpActions.licensePlateText)
     end
-    if spawnFollowUpActions.dealershipId and spawnFollowUpActions.dealershipId == "policeDealership" then
+    if spawnFollowUpActions.dealershipId and (spawnFollowUpActions.dealershipId == "policeDealership" or spawnFollowUpActions.dealershipId == "poliziaAuto") then
       career_modules_inventory.setVehicleRole(inventoryId, "police")
     end
     spawnFollowUpActions = nil
@@ -321,7 +331,9 @@ local function buyVehicleAndSendToGarage(options)
   spawnFollowUpActions = {delayAccess = delay, licensePlateText = options.licensePlateText, dealershipId = options.dealershipId}
   spawnVehicle(purchaseData.vehicleInfo)
   deleteAddedVehicle = true
-  extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+  if purchaseData.tradeInVehicleInfo then
+    extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+  end
 end
 
 local function buyVehicleAndSpawnInParkingSpot(options)
@@ -335,7 +347,9 @@ local function buyVehicleAndSpawnInParkingSpot(options)
   if gameplay_walk.isWalking() then
     gameplay_walk.setRot(newVehObj:getPosition() - getPlayerVehicle(0):getPosition())
   end
-  extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+  if purchaseData.tradeInVehicleInfo then
+    extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+  end
 end
 
 local function navigateToPos(pos)
@@ -445,7 +459,9 @@ local function buySpawnedVehicle(buyVehicleOptions)
     if be:getPlayerVehicleID(0) == vehObj:getID() then
       career_modules_inventory.enterVehicle(newInventoryId)
     end
-    extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+    if purchaseData.tradeInVehicleInfo then
+      extensions.hook("onVehicleListingUpdate", {forSale = false, inventoryId = purchaseData.tradeInVehicleInfo.id})
+    end
   end
 end
 

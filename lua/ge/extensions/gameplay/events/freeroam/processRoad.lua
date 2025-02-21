@@ -152,7 +152,8 @@ local function processRoadNodes(mainNodes, altNodes)
                                     pos = nodes[apexIndex],
                                     type = type,
                                     index = apexIndex,
-                                    direction = direction
+                                    direction = direction,
+                                    width = nodes[apexIndex].width and nodes[apexIndex].width * 1.25 or roadWidth
                                 }
                             end
                         end
@@ -168,7 +169,7 @@ local function processRoadNodes(mainNodes, altNodes)
                     type = type,
                     index = apexIndex,
                     direction = direction,
-                    width = roadWidth
+                    width = nodes[apexIndex].width and nodes[apexIndex].width * 1.25 or roadWidth
                 })
                 --print((isAlt and "Alt " or "") .. "Checkpoint added: Type: " .. type .. ", Index: " .. apexIndex ..
                 --          ", Direction: " .. direction .. ", Width: " .. roadWidth)
@@ -195,7 +196,7 @@ local function processRoadNodes(mainNodes, altNodes)
                         type = "straight",
                         index = middleIndex,
                         direction = "straight",
-                        width = 20
+                        width = nodes[middleIndex].width and nodes[middleIndex].width * 1.25 or 20
                     })
                 end
             end
@@ -343,6 +344,7 @@ end
 
 local function getRoadNodes(roadName)
     local road = scenetree.findObject(roadName)
+    local nodeTable = road:getNodesTable()
     if road and road:getClassName() ~= "DecalRoad" then
         return
     end
@@ -359,7 +361,8 @@ local function getRoadNodes(roadName)
         table.insert(roadNodes, {
             x = pos.x,
             y = pos.y,
-            z = pos.z
+            z = pos.z,
+            width = nodeTable[i+1][2]
         })
     end
     return roadNodes

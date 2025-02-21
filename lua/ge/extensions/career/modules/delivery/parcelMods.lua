@@ -17,7 +17,7 @@ local modifiers = {
       delivery = 1
     },
     makeTemplate = function(g,p,distance)
-      local time = (distance / 13) + 30 * math.random() + 30
+      local time = (distance / 12) + 30 * math.random() + 30
       return {
         type = "timed",
         timeUntilDelayed = time,
@@ -25,7 +25,7 @@ local modifiers = {
         --paddingTime = time * 0.2 + 10,
         --timeMessageFlag = false,
         --paddingTimeMessageFlag = false,
-        moneyMultipler = 1.2,
+        moneyMultipler = 1.25,
       }
     end,
     unlockLabel = "Time Sensitive Deliveries",
@@ -72,14 +72,35 @@ local modifiers = {
     important = true,
 
   },
+  aid = {
+    requirements = {
+      delivery = 1
+    },
+    penalty = 3,
+    makeTemplate = function(g,p,distance)
+      return {
+        type = "aid",
+        moneyMultipler = 8,
+        abandonMultiplier = 1.1,
+      }
+    end,
+    unlockLabel = "aid",
+    priority = 3,
+    icon = "fragile",
+    label = "Subsidy Item",
+    shortDescription = "Item Reward Adjusted",
+    important = true,
+
+  },
+
   supplies = {
     requirements = {
-      delivery = 2
+      delivery = 1
     },
     makeTemplate = function(g,p,distance)
       return {
         type = "supplies",
-        moneyMultipler = 1.0,
+        moneyMultipler = 5.0,
       }
     end,
     unlockLabel = "Supply & Logistics Cargo",
@@ -96,7 +117,7 @@ local modifiers = {
     makeTemplate = function(g,p,distance)
       return {
         type = "large",
-        moneyMultipler = 1.2,
+        moneyMultipler = 1.5,
       }
     end,
     unlockLabel = "Large & Heavy Cargo",

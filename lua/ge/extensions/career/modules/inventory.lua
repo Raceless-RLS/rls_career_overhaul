@@ -657,6 +657,7 @@ local function setupInventory(levelPath)
                   location.pos = levelGate:getPosition()
                   location.rot = levelGate:getRotation()
                 end
+                career_modules_garageManager.purchaseDefaultGarage()
               end
               if not levelGate and location.option == "garage" then
                 location.vehId = veh:getID()
@@ -1535,6 +1536,27 @@ M.getCertifications = function()
   return veh.certifications
 end
 
+function M.addDeliveredItems(inventoryId, amount)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].deliveredItems = vehicles[inventoryId].deliveredItems or 0
+  vehicles[inventoryId].deliveredItems = vehicles[inventoryId].deliveredItems + amount
+end
+
+function M.getDeliveredItems(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].deliveredItems or 0
+end
+
+function M.addSuspectCaught(inventoryId)
+  if not vehicles[inventoryId] then return end
+  vehicles[inventoryId].suspectsCaught = (vehicles[inventoryId].suspectsCaught or 0) + 1
+end
+
+function M.getSuspectsCaught(inventoryId)
+  if not vehicles[inventoryId] then return 0 end
+  return vehicles[inventoryId].suspectsCaught or 0
+end
+
 -- RLS Reload function
 
 local function onWorldReadyState(state)
@@ -1670,11 +1692,16 @@ end
 
 -- RLS FRE Functions
 
+local lastRaceName = nil
+local lastRaceTime = nil
+local currentSession = 0
+
 local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
   print("saveFRETimeToVehicle" .. tostring(raceName) .. " " .. tostring(inventoryId) .. " " .. tostring(time) .. " " .. tostring(driftScore))
   local veh = vehicles[inventoryId]
   if not veh then return end
   veh.FRETimes = veh.FRETimes or {}
+  veh.FRECompletions = veh.FRECompletions or {}
   if veh.FRETimes[raceName] then
     if driftScore and driftScore ~= 0 then
       veh.FRETimes[raceName] = math.max(veh.FRETimes[raceName], driftScore)
@@ -1688,6 +1715,28 @@ local function saveFRETimeToVehicle(raceName, inventoryId, time, driftScore)
       veh.FRETimes[raceName] = time
     end
   end
+  veh.FRECompletions[raceName] = veh.FRECompletions[raceName] or {}
+  veh.FRECompletions[raceName].total = (veh.FRECompletions[raceName].total or 0) + 1
+  if lastRaceName == raceName then
+    local pausedTime = career_modules_pauseTime.getTotalPauseTime()
+    local totalTime = time + pausedTime
+    if lastRaceTime and os.time() - lastRaceTime < totalTime + 10 then
+      print("Adding session to " .. raceName)
+      currentSession = currentSession + 1
+      if not veh.FRECompletions[raceName].consecutive or veh.FRECompletions[raceName].consecutive < currentSession then
+        veh.FRECompletions[raceName].consecutive = currentSession
+      end
+    end
+    lastRaceTime = os.time()
+  else
+    lastRaceName = raceName
+    lastRaceTime = os.time()
+    currentSession = 1
+    if not veh.FRECompletions[raceName].consecutive then
+      veh.FRECompletions[raceName].consecutive = 1
+    end
+  end
+  career_modules_pauseTime.resetPauseTime()
 end
 
 local function getFRETimeToVehicle(raceName, inventoryId)
@@ -1696,15 +1745,27 @@ local function getFRETimeToVehicle(raceName, inventoryId)
   return veh.FRETimes and veh.FRETimes[raceName] or nil
 end
 
+local function getFRECompletions(raceName, inventoryId)
+  local veh = vehicles[inventoryId]
+  if not veh then return nil end
+  return veh.FRECompletions and veh.FRECompletions[raceName] or nil
+end
+
 M.getAllFRETimes = function()
   local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
   if not invId then return {} end
   return vehicles[invId].FRETimes
 end
 
+M.getAllFRECompletions = function()
+  local invId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicleID(0))
+  if not invId then return {} end
+  return vehicles[invId].FRECompletions
+end
+
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
 M.getFRETimeToVehicle = getFRETimeToVehicle
-
+M.getFRECompletions = getFRECompletions
 M.calculateSeatingCapacity = calculateSeatingCapacity
 M.onWorldReadyState = onWorldReadyState
 

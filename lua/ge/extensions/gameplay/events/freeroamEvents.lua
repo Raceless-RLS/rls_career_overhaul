@@ -31,6 +31,7 @@ local currentExpectedCheckpoint = 1
 local invalidLap = false
 
 local mInventoryId = nil
+local newBestSession = false
 
 local races = nil
 
@@ -65,6 +66,19 @@ local function getDriftScore()
         end
     end
     return finalScore
+end
+
+local function getRaceLabel()
+    local race = races[mActiveRace]
+    local raceLabel = race.label
+
+    if mAltRoute then
+        raceLabel = race.altRoute.label
+    end
+    if mHotlap == mActiveRace then
+        raceLabel = raceLabel .. " (Hotlap)"
+    end
+    return raceLabel
 end
 
 local function payoutRace()
@@ -103,10 +117,7 @@ local function payoutRace()
     end
 
     -- Handle leaderboard
-    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(mActiveRace)
-    if mAltRoute and leaderboardEntry then
-        leaderboardEntry = leaderboardEntry.altRoute
-    end
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(mInventoryId, raceLabel)
 
     local oldTime = leaderboardEntry and leaderboardEntry.time or 0
     local oldScore = leaderboardEntry and leaderboardEntry.driftScore or 0
@@ -151,15 +162,36 @@ local function payoutRace()
         end
     end
 
+    local hotlapMessage = ""
     -- Handle career mode specific rewards
     if career_career.isActive() then
-        if not newBest or invalidLap then
+        if not newBest or mHotlap then
             reward = reward / 2
         end
         reward = invalidLap and 0 or reward
         lapCount = invalidLap and 1 or lapCount
         if race.hotlap then
-            reward = reward * (1 + (lapCount - 1) / 10)
+            -- Hotlap Multiplier
+            local hotlapMultiplier = (10 / (1 + math.exp(-0.07*(lapCount - 17)))) - 1.35
+            reward = reward * hotlapMultiplier
+            hotlapMessage = string.format("\nHotlap Multiplier: %.2f", hotlapMultiplier)
+        end
+
+        if newBest and not newBestSession then
+            -- New Best Bonus
+            newBestSession = true
+        end
+
+        if newBestSession then
+            -- New Best Bonus
+            reward = reward * 1.2
+            hotlapMessage = hotlapMessage .. "\nNew Best Session Bonus: 20%"
+        end
+
+        if oldTime and (newEntry.time - (oldTime * 0.025) < oldTime) then
+            -- In Range Bonus
+            reward = reward * 1.05
+            hotlapMessage = hotlapMessage .. "\nIn Range Bonus: 5%"
         end
 
         reward = reward / (career_modules_hardcore.isHardcoreMode() and 2 or 1)
@@ -198,13 +230,20 @@ local function payoutRace()
 
     mActiveRace = nil
     utils.displayMessage(message, 20, "Reward")
+    if hotlapMessage ~= "" then
+        ui_message(hotlapMessage, 5, "Hotlap Multiplier")
+    end
     return reward
 end
 
 -- Simplified payoutRace function for drag races
 local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
     -- Load the leaderboard
-    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
+    if career_career.isActive() then
+        vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId) or vehId
+    end
+
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, races["drag"].label)
     local oldTime = leaderboardEntry and leaderboardEntry.time or 0
 
     local newEntry = {
@@ -212,12 +251,12 @@ local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
         raceName = raceName,
         time = finishTime,
         splitTimes = mSplitTimes,
-        inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+        inventoryId = vehId
     }
 
     local newBestTime = leaderboardManager.addLeaderboardEntry(newEntry)
 
-    if not career_career.isActive() or not career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
+    if not career_career.isActive() then
         local message = string.format("%s\nTime: %s\nSpeed: %.2f mph", races[raceName].label, utils.formatTime(finishTime),
             finishSpeed)
         utils.displayMessage(message, 10)
@@ -283,28 +322,13 @@ local function payoutDragRace(raceName, finishTime, finishSpeed, vehId)
 end
 
 local function getDifference(raceName, currentCheckpointIndex)
-    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
+    local raceLabel = getRaceLabel()
+    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(mInventoryId, raceLabel)
     if not leaderboardEntry then
         return nil
     end
 
-    local splitTimes = {}
-    if mAltRoute then
-        if not leaderboardEntry.altRoute then
-            return nil
-        end
-        if mHotlap == raceName then
-            splitTimes = leaderboardEntry.altRoute.hotlapSplitTimes
-        else
-            splitTimes = leaderboardEntry.altRoute.splitTimes
-        end
-    else
-        if mHotlap == raceName then
-            splitTimes = leaderboardEntry.hotlapSplitTimes
-        else
-            splitTimes = leaderboardEntry.splitTimes
-        end
-    end
+    local splitTimes = leaderboardEntry.splitTimes
 
     if not splitTimes or not splitTimes[currentCheckpointIndex] then
         return nil
@@ -355,9 +379,13 @@ local function exitRace()
         checkpointManager.removeCheckpoints()
         utils.displayMessage("You exited the race zone, Race cancelled", 3)
         utils.restoreTrafficAmount()
+        newBestSession = false
         if gameplay_drift_general.getContext() == "inChallenge" then
             gameplay_drift_general.setContext("inFreeRoam")
             gameplay_drift_general.reset()
+        end
+        if career_career.isActive() then
+            career_modules_pauseTime.enablePauseCounter()
         end
     end
 end
@@ -367,7 +395,15 @@ local function onBeamNGTrigger(data)
         return
     end
     if gameplay_walk.isWalking() then return end
-    if career_career.isActive() and not career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) then return end
+    if career_career.isActive() then
+        if not career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) then
+            return
+        end
+        local vehicle = career_modules_inventory.getVehicles()[career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID)]
+        if vehicle.loanType then
+            return
+        end
+    end
 
     local triggerName = data.triggerName
     local event = data.event
@@ -451,7 +487,11 @@ local function onBeamNGTrigger(data)
             -- Set staged race
             staged = raceName
             -- print("Staged race: " .. raceName)
-            utils.displayStagedMessage(raceName)
+            local vehId = data.subjectID
+            if career_career.isActive() then
+                vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId) or vehId
+            end
+            utils.displayStagedMessage(vehId, raceName)
             utils.setActiveLight(raceName, "yellow")
         elseif event == "exit" then
             staged = nil
@@ -492,6 +532,9 @@ local function onBeamNGTrigger(data)
             invalidLap = false
         elseif event == "enter" and staged == raceName then
             -- Start the race
+            if career_career.isActive() then
+                career_modules_pauseTime.enablePauseCounter(true)
+            end
             utils.saveAndSetTrafficAmount(0)
             checkpointManager.setRace(races[raceName], raceName)
             Assets:displayAssets(data)
@@ -499,7 +542,7 @@ local function onBeamNGTrigger(data)
             in_race_time = 0
             mActiveRace = raceName
             lapCount = 0
-            mInventoryId = career_modules_inventory and career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) or nil
+            mInventoryId = career_modules_inventory and career_modules_inventory.getInventoryIdFromVehicleId(data.subjectID) or data.subjectID
             invalidLap = false
 
             utils.displayStartMessage(raceName)
@@ -563,24 +606,9 @@ local function onBeamNGTrigger(data)
                 local splitDiff = getDifference(raceName, checkpointsHit)
                 if splitDiff then
                     local totalDiff = nil
-                    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(raceName)
-                    if mAltRoute then
-                        if mHotlap == raceName then
-                            totalDiff = in_race_time -
-                                (leaderboardEntry.altRoute and
-                                    leaderboardEntry.altRoute.hotlapSplitTimes[checkpointsHit] or 0)
-                        else
-                            totalDiff = in_race_time -
-                                (leaderboardEntry.altRoute and
-                                    leaderboardEntry.altRoute.splitTimes[checkpointsHit] or 0)
-                        end
-                    else
-                        if mHotlap == raceName then
-                            totalDiff = in_race_time - (leaderboardEntry.hotlapSplitTimes[checkpointsHit] or 0)
-                        else
-                            totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
-                        end
-                    end
+                    local raceLabel = getRaceLabel()
+                    local leaderboardEntry = leaderboardManager.getLeaderboardEntry(mInventoryId, raceLabel)
+                    totalDiff = in_race_time - (leaderboardEntry.splitTimes[checkpointsHit] or 0)
 
                     checkpointMessage = string.format("Checkpoint %d/%d - Time: %s\nSplit: %s | Total: %s",
                         checkpointsHit, totalCheckpoints, utils.formatTime(in_race_time), formatSplitDifference(splitDiff),
@@ -640,6 +668,9 @@ local function onBeamNGTrigger(data)
             mActiveRace = nil
             utils.setActiveLight(raceName, "red")
             utils.restoreTrafficAmount()
+            if career_career.isActive() then
+                career_modules_pauseTime.enablePauseCounter()
+            end
         end
     else
         -- print("Unknown trigger type: " .. triggerType)
@@ -694,6 +725,11 @@ local function formatEventPoi(raceName, race)
     local levelIdentifier = getCurrentLevelIdentifier()
     local preview = "/levels/" .. levelIdentifier .. "/facilities/freeroamEvents/" .. raceName .. ".jpg"
 
+    local vehId = be:getPlayerVehicleID(0) or 0
+    if career_career.isActive() then
+        vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId) or vehId
+    end
+
     return {
         id = raceName,
         data = {
@@ -705,7 +741,7 @@ local function formatEventPoi(raceName, race)
                 pos = pos,
                 icon = "mission_cup_triangle",
                 name = race.label,
-                description = utils.displayStagedMessage(raceName, true),
+                description = utils.displayStagedMessage(vehId, raceName, true),
                 previews = {preview},
                 thumbnail = preview
             }

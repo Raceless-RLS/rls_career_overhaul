@@ -36,6 +36,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+        drift = { minTotal = 3 }
+        },
         powerPerWeight = {
             min = 0.18
         },
@@ -60,6 +63,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            motorsport = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -81,6 +87,9 @@ local customers = {{
                 min = 0.85
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 320,
             max = 500
@@ -94,7 +103,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.3,
-        max = 1.15
+        max = 1.25
     }
 }, {
     id = "CUST005",
@@ -105,6 +114,9 @@ local customers = {{
             drag = {
                 min = 0.95
             }
+        },
+        completions = {
+            drag = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -126,6 +138,9 @@ local customers = {{
             drag = {
                 min = 1
             }
+        },
+        completions = {
+            drag = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -151,6 +166,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            offroad = { minTotal = 3 }
+        },
         torque = {
             min = 400
         }
@@ -168,6 +186,9 @@ local customers = {{
             offroad = {
                 min = 0.4
             }
+        },
+        completions = {
+            offroad = { minTotal = 4 }
         },
         power = {
             min = 300
@@ -193,6 +214,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            rally = { minTotal = 3 }
+        },
         power = {
             min = 320
         },
@@ -213,6 +237,9 @@ local customers = {{
             rally = {
                 min = 0.8
             }
+        },
+        completions = {
+            rally = { minTotal = 5 }
         },
         torque = {
             min = 400,
@@ -235,7 +262,10 @@ local customers = {{
             crawl = {
                 min = 0.85
             }
-        }
+        },
+        completions = {
+            crawl = { minTotal = 5 }
+        },
     },
     offerRange = {
         min = 0.45,
@@ -251,6 +281,9 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            crawl = { minTotal = 7 }
+        },
         powerPerWeight = {
             min = 0.18
         },
@@ -260,7 +293,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.25,
-        max = 1.25
+        max = 1.4
     }
 }, {
     id = "CUST013",
@@ -271,6 +304,9 @@ local customers = {{
             apexRacing = {
                 min = 1.0
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
         },
         power = {
             min = 320
@@ -293,9 +329,11 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
+        },
         power = {
-            min = 330,
-            max = 500
+            min = 330
         },
         weight = {
             max = 1700
@@ -303,7 +341,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.25,
-        max = 1.25
+        max = 1.35
     }
 }, {
     id = "CUST015",
@@ -320,6 +358,11 @@ local customers = {{
             rally = {
                 min = 0.65
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            rally = { minTotal = 5 }
         },
         power = {
             min = 320
@@ -347,6 +390,11 @@ local customers = {{
             motorsport = {
                 min = 0.6
             }
+        },
+        completions = {
+            drag = { minTotal = 3 },
+            offroad = { minTotal = 3 },
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         powerPerWeight = {
             min = 0.18
@@ -381,7 +429,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.3,
-        max = 1.25
+        max = 1.15
     }
 }, {
     id = "CUST018",
@@ -401,7 +449,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.35,
-        max = 1.25
+        max = 1.2
     }
 }, {
     id = "CUST019",
@@ -417,7 +465,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.15,
-        max = 1.05
+        max = 1.1
     }
 }, {
     id = "CUST020",
@@ -437,6 +485,12 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 3 },
+            rally = { minTotal = 5 }
         },
         power = {
             min = 320,
@@ -468,6 +522,9 @@ local customers = {{
                 min = 0.85
             } -- no max specified
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 600
         },
@@ -490,6 +547,9 @@ local customers = {{
                 min = 0.95
             } -- no max specified
         },
+        completions = {
+            motorsport = { minTotal = 15, minConsecutive = 7 }
+        },
         power = {
             min = 600
         },
@@ -510,6 +570,9 @@ local customers = {{
             drag = {
                 min = 1.1
             } -- no max specified
+        },
+        completions = {
+            drag = { minTotal = 6 }
         },
         power = {
             min = 800
@@ -532,6 +595,9 @@ local customers = {{
                 min = 1.0
             } -- no max specified
         },
+        completions = {
+            offroad = { minTotal = 3 }
+        },
         torque = {
             min = 400
         }
@@ -550,6 +616,9 @@ local customers = {{
             rally = {
                 min = 1.1
             } -- no max specified
+        },
+        completions = {
+            rally = { minTotal = 5 }
         },
         power = {
             min = 500
@@ -581,12 +650,15 @@ local customers = {{
             rally = {
                 min = 1
             },
-            crawl = {
-                min = 0.85
-            },
             apexRacing = {
                 min = 1.05
             }
+        },
+        completions = {
+            drift = { minTotal = 5 },
+            motorsport = { minTotal = 15, minConsecutive = 7 },
+            drag = { minTotal = 6 },
+            offroad = { minTotal = 3 },
         },
         power = {
             min = 600
@@ -743,11 +815,11 @@ local customers = {{
 {
     id = "CUST034",
     name = "Quarryside Auto Sales",
-    specialties = {"crawl"},
+    specialties = {"offroad"},
     criteria = {
         performance = {
-            crawl = {
-                min = 0.5
+            offroad = {
+                min = 0.75
             }
         },
         power = {
@@ -807,6 +879,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            rally = { minTotal = 7}
+        },
         power = {
             min = 320
         },
@@ -828,6 +903,9 @@ local customers = {{
             drag = {
                 min = 1.2
             }
+        },
+        completions = {
+            drag = { minTotal = 7 }
         },
         power = {
             min = 600
@@ -855,6 +933,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 300
         },
@@ -880,6 +961,9 @@ local customers = {{
                 min = 1
             }
         },
+        completions = {
+            drag = { minTotal = 7 }
+        },
         power = {
             min = 600
         },
@@ -904,6 +988,9 @@ local customers = {{
             offroad = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 3 }
         },
         power = {
             min = 320
@@ -1019,13 +1106,12 @@ local customers = {{
             min = 0.15
         },
         numAddedParts = {
-            min = 7
+            min = 10
         }
-        -- No performance criteria
     },
     offerRange = {
         min = 0.65,
-        max = 1.25
+        max = 1.075
     }
 }, {
     id = "CUST046",
@@ -1077,8 +1163,8 @@ local customers = {{
     specialties = {}, -- No specific performance focus
     criteria = {
         rep = {
-            min = 0.3
-        }, -- Very high rep requirement
+            min = 2
+        },
         power = {
             min = 250
         },
@@ -1088,7 +1174,7 @@ local customers = {{
     },
     offerRange = {
         min = 0.15,
-        max = 1.25
+        max = 1.1
     }
 }, {
     id = "CUST049",
@@ -1146,11 +1232,16 @@ local customers = {{
                 min = 0.75
             },
             drift = {
-                min = 0.65
+                min = 0.45
             },
             apexRacing = {
                 min = 0.75
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drift = { minTotal = 5 },
+            apexRacing = { minTotal = 15, minConsecutive = 7 }
         },
         rep = {
             min = 5
@@ -1178,6 +1269,9 @@ local customers = {{
             motorsport = {
                 min = 0.75
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         mileage = {
             min = 100000
@@ -1230,6 +1324,9 @@ local customers = {{
                 min = 1
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         powerPerWeight = {
             min = 0.25
         }
@@ -1247,6 +1344,9 @@ local customers = {{
             motorsport = {
                 min = 1
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         powerPerWeight = {
             min = 0.25
@@ -1268,6 +1368,9 @@ local customers = {{
             drift = {
                 min = 0.5
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 280
@@ -1293,6 +1396,9 @@ local customers = {{
                 min = 0.55
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 300
         },
@@ -1313,6 +1419,9 @@ local customers = {{
             drift = {
                 min = 0.6
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 310
@@ -1338,6 +1447,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -1358,6 +1470,9 @@ local customers = {{
             drift = {
                 min = 0.7
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 330
@@ -1383,6 +1498,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drift = { minTotal = 5 }
+        },
         power = {
             min = 340
         },
@@ -1403,6 +1521,9 @@ local customers = {{
             drift = {
                 min = 0.8
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 350
@@ -1428,6 +1549,9 @@ local customers = {{
                 min = 0.85
             }
         },
+        completions = {
+            drift = { minTotal = 7}
+        },
         power = {
             min = 360
         },
@@ -1448,6 +1572,9 @@ local customers = {{
             drift = {
                 min = 0.9
             }
+        },
+        completions = {
+            drift = { minTotal = 7}
         },
         power = {
             min = 370
@@ -1473,6 +1600,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            drift = { minTotal = 9}
+        },
         power = {
             min = 380
         },
@@ -1495,6 +1625,9 @@ local customers = {{
                 min = 0.55
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 300
         },
@@ -1516,6 +1649,9 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 310
         },
@@ -1536,6 +1672,9 @@ local customers = {{
             motorsport = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 320
@@ -1561,6 +1700,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 330
         },
@@ -1582,6 +1724,9 @@ local customers = {{
                 min = 0.8
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 340
         },
@@ -1602,6 +1747,9 @@ local customers = {{
             motorsport = {
                 min = 0.9
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 350
@@ -1627,6 +1775,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 360
         },
@@ -1647,6 +1798,9 @@ local customers = {{
             motorsport = {
                 min = 1.1
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 370
@@ -1672,6 +1826,9 @@ local customers = {{
                 min = 1.25
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 380
         },
@@ -1692,6 +1849,9 @@ local customers = {{
             motorsport = {
                 min = 1.3
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 390
@@ -1718,6 +1878,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 320
         },
@@ -1739,6 +1902,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 330
         },
@@ -1759,6 +1925,9 @@ local customers = {{
             drag = {
                 min = 1
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 340
@@ -1784,6 +1953,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 350
         },
@@ -1805,6 +1977,9 @@ local customers = {{
                 min = 1.3
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 360
         },
@@ -1825,6 +2000,9 @@ local customers = {{
             drag = {
                 min = 1.45
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 370
@@ -1850,6 +2028,9 @@ local customers = {{
                 min = 1.55
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 380
         },
@@ -1871,6 +2052,9 @@ local customers = {{
                 min = 1.6
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 390
         },
@@ -1891,6 +2075,9 @@ local customers = {{
             drag = {
                 min = 1.65
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 400
@@ -1916,6 +2103,9 @@ local customers = {{
                 min = 1.7
             }
         },
+        completions = {
+            drag = { minTotal = 5 }
+        },
         power = {
             min = 410
         },
@@ -1938,6 +2128,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 380
         },
@@ -1959,6 +2152,9 @@ local customers = {{
                 min = 0.8
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 390
         },
@@ -1979,6 +2175,9 @@ local customers = {{
             offroad = {
                 min = 0.85
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 400
@@ -2004,6 +2203,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 410
         },
@@ -2025,6 +2227,9 @@ local customers = {{
                 min = 1.0
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 420
         },
@@ -2045,6 +2250,9 @@ local customers = {{
             offroad = {
                 min = 1.1
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 430
@@ -2070,6 +2278,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            offroad = { minTotal = 10 }
+        },
         torque = {
             min = 440
         },
@@ -2090,6 +2301,9 @@ local customers = {{
             offroad = {
                 min = 1.2
             }
+        },
+        completions = {
+            offroad = { minTotal = 10 }
         },
         torque = {
             min = 450
@@ -2112,6 +2326,9 @@ local customers = {{
                 min = 1.35
             }
         },
+        completions = {
+            offroad = { minTotal = 10 }
+        },
         torque = {
             min = 460
         },
@@ -2132,6 +2349,9 @@ local customers = {{
             offroad = {
                 min = 1.4
             }
+        },
+        completions = {
+            offroad = { minTotal = 12 }
         },
         torque = {
             min = 470
@@ -2155,6 +2375,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            rally = { minTotal = 4 }
+        },
         power = {
             min = 300
         }
@@ -2172,6 +2395,9 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            rally = { minTotal = 4 }
         },
         power = {
             min = 310
@@ -2193,6 +2419,9 @@ local customers = {{
             rally = {
                 min = 0.85
             }
+        },
+        completions = {
+            rally = { minTotal = 6 }
         },
         power = {
             min = 320
@@ -2218,6 +2447,9 @@ local customers = {{
                 min = 0.9
             }
         },
+        completions = {
+            rally = { minTotal = 7 }
+        },
         power = {
             min = 330
         },
@@ -2239,6 +2471,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            rally = { minTotal = 7 }
+        },
         power = {
             min = 340
         },
@@ -2259,6 +2494,9 @@ local customers = {{
             rally = {
                 min = 1
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 350
@@ -2284,6 +2522,9 @@ local customers = {{
                 min = 1.1
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 360
         },
@@ -2305,6 +2546,9 @@ local customers = {{
                 min = 1.15
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 370
         },
@@ -2325,6 +2569,9 @@ local customers = {{
             rally = {
                 min = 1.2
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 380
@@ -2350,6 +2597,9 @@ local customers = {{
                 min = 1.3
             }
         },
+        completions = {
+            rally = { minTotal = 8 }
+        },
         power = {
             min = 390
         },
@@ -2371,11 +2621,14 @@ local customers = {{
             crawl = {
                 min = 0.65
             }
+        },
+        completions = {
+            crawl = { minTotal = 1 }
         }
     },
     offerRange = {
-        min = 0.2,
-        max = 0.9
+        min = 0.3,
+        max = 1.0
     }
 }, {
     id = "CUST107",
@@ -2387,13 +2640,16 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            crawl = { minTotal = 2 }
+        },
         powerPerWeight = {
             min = 0.15
         }
     },
     offerRange = {
-        min = 0.25,
-        max = 0.95
+        min = 0.35,
+        max = 1.05
     }
 }, {
     id = "CUST108",
@@ -2404,6 +2660,9 @@ local customers = {{
             crawl = {
                 min = 0.8
             }
+        },
+        completions = {
+            crawl = { minTotal = 3 }
         },
         powerPerWeight = {
             min = 0.16
@@ -2423,6 +2682,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            crawl = { minTotal = 4 }
+        },
         powerPerWeight = {
             min = 0.17
         }
@@ -2440,6 +2702,9 @@ local customers = {{
             crawl = {
                 min = 1
             }
+        },
+        completions = {
+            crawl = { minTotal = 4 }
         },
         powerPerWeight = {
             min = 0.18
@@ -2460,6 +2725,9 @@ local customers = {{
                 min = 0.75
             }
         },
+        completions = {
+            apexRacing = { minTotal = 10, minConsecutive = 5 }
+        },
         power = {
             min = 320
         }
@@ -2477,6 +2745,9 @@ local customers = {{
             apexRacing = {
                 min = 0.85
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 10, minConsecutive = 5 }
         },
         power = {
             min = 330
@@ -2499,6 +2770,9 @@ local customers = {{
                 min = 0.9
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 340
         },
@@ -2520,6 +2794,9 @@ local customers = {{
                 min = 0.95
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 350
         },
@@ -2540,6 +2817,9 @@ local customers = {{
             apexRacing = {
                 min = 1
             }
+        },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
         },
         power = {
             min = 360
@@ -2954,6 +3234,10 @@ local customers = {{
                 min = 0.6
             }
         },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drift = { minTotal = 5 }
+        },
         mileage = {
             max = 50000
         }
@@ -2971,7 +3255,7 @@ local customers = {{
             max = 30000
         },
         value = {
-            max = 35000
+            max = 85000
         },
         rep = {
             min = 2
@@ -3013,6 +3297,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 2 }
+        },
         power = {
             min = 300
         }
@@ -3031,6 +3318,9 @@ local customers = {{
                 min = 0.7
             }
         },
+        completions = {
+            offroad = { minTotal = 5 }
+        },
         torque = {
             min = 420
         }
@@ -3048,6 +3338,9 @@ local customers = {{
             rally = {
                 min = 0.7
             }
+        },
+        completions = {
+            rally = { minTotal = 8 }
         },
         power = {
             min = 320
@@ -3083,6 +3376,9 @@ local customers = {{
                 min = 0.65
             }
         },
+        completions = {
+            apexRacing = { minTotal = 12, minConsecutive = 5 }
+        },
         power = {
             min = 330
         }
@@ -3103,7 +3399,11 @@ local customers = {{
             drag = {
                 min = 0.8
             }
-        }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 5 }
+        },
     },
     offerRange = {
         min = 0.4,
@@ -3118,6 +3418,9 @@ local customers = {{
             drift = {
                 min = 0.7
             }
+        },
+        completions = {
+            drift = { minTotal = 5 }
         },
         power = {
             min = 320
@@ -3136,6 +3439,9 @@ local customers = {{
             offroad = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 }
         },
         torque = {
             min = 430
@@ -3157,6 +3463,10 @@ local customers = {{
             apexRacing = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 3 },
+            apexRacing = { minTotal = 7, minConsecutive = 3 }
         }
     },
     offerRange = {
@@ -3172,6 +3482,9 @@ local customers = {{
             drag = {
                 min = 0.85
             }
+        },
+        completions = {
+            drag = { minTotal = 5 }
         },
         power = {
             min = 340
@@ -3190,6 +3503,9 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            rally = { minTotal = 6 }
         },
         power = {
             min = 330
@@ -3229,6 +3545,10 @@ local customers = {{
             motorsport = {
                 min = 0.7
             }
+        },
+        completions = {
+            motorsport = { minTotal = 10, minConsecutive = 5 },
+            drag = { minTotal = 5 }
         }
     },
     offerRange = {
@@ -3279,6 +3599,10 @@ local customers = {{
             drift = {
                 min = 0.65
             }
+        },
+        completions = {
+            motorsport = { minTotal = 5, minConsecutive = 3 },
+            drift = { minTotal = 5 }
         }
     },
     offerRange = {
@@ -3297,6 +3621,10 @@ local customers = {{
             rally = {
                 min = 0.75
             }
+        },
+        completions = {
+            offroad = { minTotal = 5 },
+            rally = { minTotal = 6 }
         }
     },
     offerRange = {
@@ -3647,6 +3975,9 @@ local customers = {{
         performance = {
             oval = { min = 0.9 }
         },
+        completions = {
+            oval = { minTotal = 15 }
+        },
         rep = { min = 2 },
         tickets = { max = 2 }
     },
@@ -3658,6 +3989,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.85 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         evades = { min = 1 }
     },
@@ -3671,6 +4005,10 @@ local customers = {{
             mud = { min = 0.8 },
             extremeMud = { min = 0.8 }
         },
+        completions = {
+            mud = { minTotal = 3 },
+            extremeMud = { minTotal = 1 }
+        },
         taxiDropoffs = { min = 5 }
     },
     offerRange = { min = 1.15, max = 1.35 }
@@ -3681,6 +4019,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.95 }
+        },
+        completions = {
+            oval = { minTotal = 15 }
         },
         rep = { min = 3 },
         movieRentals = { min = 1 }
@@ -3694,6 +4035,9 @@ local customers = {{
         performance = {
             extremeMud = { min = 0.9 }
         },
+        completions = {
+            extremeMud = { minTotal = 1 }
+        },
         repos = { min = 2 }
     },
     offerRange = { min = 1.05, max = 1.3 }
@@ -3706,6 +4050,10 @@ local customers = {{
             oval = { min = 0.7 },
             mud = { min = 0.75 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 }
+        },
         taxiDropoffs = { min = 3 }
     },
     offerRange = { min = 0.6, max = 1.2 }
@@ -3716,6 +4064,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.95 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         mileage = { max = 50000 }
     },
@@ -3728,6 +4079,9 @@ local customers = {{
         performance = {
             oval = { min = 1.0 }
         },
+        completions = {
+            oval = { minTotal = 25 }
+        },
         tickets = { min = 2 }
     },
     offerRange = { min = 0.85, max = 1.35 }
@@ -3738,6 +4092,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.85 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         mileage = { max = 200000 }
     },
@@ -3752,6 +4109,11 @@ local customers = {{
             mud = { min = 0.8 },
             offroad = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 },
+            offroad = { minTotal = 10 }
+        },
         rep = { min = 1 }
     },
     offerRange = { min = 1.0, max = 1.3 }
@@ -3762,6 +4124,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.9 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         accidents = { min = 1 }
     },
@@ -3774,9 +4139,12 @@ local customers = {{
         performance = {
             extremeMud = { min = 0.75 }
         },
+        completions = {
+            extremeMud = { minTotal = 2 }
+        },
         mileage = { max = 100000 }
     },
-    offerRange = { min = 0.95, max = 1.2 }
+    offerRange = { min = 0.95, max = 1.45 }
 }, {
     id = "CUST188",
     name = "High Bank Hank",
@@ -3784,6 +4152,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.85 }
+        },
+        completions = {
+            oval = { minTotal = 20 }
         },
         powerPerWeight = { min = 0.2 }
     },
@@ -3796,6 +4167,9 @@ local customers = {{
         performance = {
             mud = { min = 0.7 }
         },
+        completions = {
+            mud = { minTotal = 3 }
+        },
         movieRentals = { min = 2 }
     },
     offerRange = { min = 0.8, max = 1.35 }
@@ -3807,6 +4181,9 @@ local customers = {{
         performance = {
             oval = { min = 0.95 }
         },
+        completions = {
+            oval = { minTotal = 40 }
+        },
         numAddedParts = { max = 5 }
     },
     offerRange = { min = 0.85, max = 1.65 }
@@ -3817,6 +4194,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.9 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         taxiDropoffs = { min = 5 }
     },
@@ -3830,6 +4210,10 @@ local customers = {{
             oval = { min = 0.75 },
             mud = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 15 },
+            mud = { minTotal = 3 }
+        },
         rep = { min = 2 }
     },
     offerRange = { min = 1.0, max = 1.3 }
@@ -3840,6 +4224,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.85 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         numAddedParts = { min = 8 }
     },
@@ -3852,6 +4239,9 @@ local customers = {{
         performance = {
             extremeMud = { min = 1.0 }
         },
+        completions = {
+            extremeMud = { minTotal = 1 }
+        },
         rep = { min = 4 }
     },
     offerRange = { min = 1.0, max = 1.55 }
@@ -3862,6 +4252,9 @@ local customers = {{
     criteria = {
         performance = {
             oval = { min = 0.6 }
+        },
+        completions = {
+            oval = { minTotal = 15 }
         },
         mileage = { max = 80000 }
     },
@@ -3874,6 +4267,9 @@ local customers = {{
         performance = {
             mud = { min = 0.7 }
         },
+        completions = {
+            mud = { minTotal = 3 }
+        },
         taxiDropoffs = { min = 10 }
     },
     offerRange = { min = 0.95, max = 1.2 }
@@ -3884,6 +4280,9 @@ local customers = {{
     criteria = {
         performance = {
             extremeMud = { min = 0.95 }
+        },
+        completions = {
+            extremeMud = { minTotal = 1 }
         },
         evades = { min = 2 }
     },
@@ -3896,9 +4295,12 @@ local customers = {{
         performance = {
             oval = { min = 0.8 }
         },
+        completions = {
+            oval = { minTotal = 50 }
+        },
         power = { min = 300 }
     },
-    offerRange = { min = 1.15, max = 1.35 }
+    offerRange = { min = 1.15, max = 1.45 }
 }, {
     id = "CUST199",
     name = "Muddy Mechanic Mo",
@@ -3906,6 +4308,9 @@ local customers = {{
     criteria = {
         performance = {
             mud = { min = 0.75 }
+        },
+        completions = {
+            mud = { minTotal = 3 }
         },
         numRemovedParts = { min = 3 }
     },
@@ -3918,9 +4323,1307 @@ local customers = {{
         performance = {
             extremeMud = { min = 0.85 }
         },
-        value = { max = 75000 }
+        completions = {
+            extremeMud = { minTotal = 1 }
+        }
     },
     offerRange = { min = 1.0, max = 1.3 }
+}, {
+    id = "CUST201",
+    name = "Rallycross Racer Rick",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            rally = { min = 0.9 }
+        },
+        completions = {
+            rally = { minTotal = 30, minConsecutive = 10 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.6 }
+}, {
+    id = "CUST202",
+    name = "Rallycross Champion Carl",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.9 }
+        },
+        completions = {
+            rally = { minTotal = 60, minConsecutive = 20 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.75 }
+}, {
+    id = "CUST203",
+    name = "Oval Obsessor Ormond",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 0.9 }
+        },
+        completions = {
+            oval = { minTotal = 100, minConsecutive = 25 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.75 }
+}, {
+    id = "CUST204",
+    name = "Oval Mastermind Omar",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 1.1 }
+        },
+        completions = {
+            oval = { minTotal = 115, minConsecutive = 30 }
+        }
+    },
+    offerRange = { min = 1.0, max = 1.85 }
+}, { -- T-Series (Heavy Transport) 5 levels
+    id = "CUST205",
+    name = "Titan Haulers Inc",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 5120 }, -- 2x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST206",
+    name = "Mega Freight Logistics",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 10240 }, -- 4x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST207", 
+    name = "Continental Cargo Co",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 17920 }, -- 7x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST208",
+    name = "Global Heavy Movers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 30720 }, -- 12x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST209",
+    name = "Planetary Transport Ltd",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 38400 }, -- 15x
+        weight = { min = 10000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- MD Series (Box Trucks) 5 levels
+    id = "CUST210",
+    name = "Mid-Range Freight Masters",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 3072 },
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST211",
+    name = "Regional Distribution Co",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 6144 },
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST212",
+    name = "National Freight Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 10752 }, -- 7x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST213",
+    name = "Interstate Commerce Corp",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 18432 }, -- 12x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST214",
+    name = "Continental Bulk Transport",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 23040 }, -- 15x
+        weight = { min = 4000, max = 7900 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- H-Series (Vans) 5 levels
+    id = "CUST215",
+    name = "Urban Delivery Experts",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 384 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.0, max = 1.15 }
+}, {
+    id = "CUST216",
+    name = "Metro Rapid Logistics",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 768 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.1, max = 1.3 }
+}, {
+    id = "CUST217",
+    name = "City Courier Network",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 1536 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.3, max = 1.5 }
+}, {
+    id = "CUST218",
+    name = "Regional Van Operators",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 2304 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.5, max = 1.7 }
+}, {
+    id = "CUST219",
+    name = "National Van Alliance",
+    specialties = {"vans"},
+    criteria = {
+        deliveredItems = { min = 3072 },
+        weight = { min = 2000, max = 3200 }
+    },
+    offerRange = { min = 1.7, max = 1.9 }
+}, { -- Trailers 5 levels
+    id = "CUST220",
+    name = "Long Haul Partners",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 1024 }, -- 2x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST221",
+    name = "Interstate Tow & Haul",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 2048 }, -- 4x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST222",
+    name = "National Trailer Fleet",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 3584 }, -- 7x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST223",
+    name = "Heavy Duty Trailer Co",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 6144 }, -- 12x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST224",
+    name = "Mega Trailer Consortium",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 7680 }, -- 15x
+        weight = { min = 1000, max = 2000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- 48 FT Trailer 5 levels
+    id = "CUST225",
+    name = "Mega Trailer Fleet Co",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 8192 }, -- 2x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST226",
+    name = "Continental Oversized Transport",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 16384 }, -- 4x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST227",
+    name = "National Heavy Haulers",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 28672 }, -- 7x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST228",
+    name = "Interstate Super Load",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 49152 }, -- 12x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST229",
+    name = "Global Mega Transport",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 61440 }, -- 15x
+        weight = { min = 6900, max = 7800 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- Small Trailer (0-1000Kg) 5 levels
+    id = "CUST230",
+    name = "Local Cartage Co",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 512 }, -- 2x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST231",
+    name = "Neighborhood Delivery Network",
+    criteria = {
+        deliveredItems = { min = 1024 }, -- 4x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST232",
+    name = "Regional Mini Haulers",
+    criteria = {
+        deliveredItems = { min = 1792 }, -- 7x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST233",
+    name = "National Light Transport",
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 12x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST234",
+    name = "Continental Micro Logistics",
+    criteria = {
+        deliveredItems = { min = 3840 }, -- 15x
+        weight = { min = 0, max = 1000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- H-Series Box (3200-4000Kg) 5 levels
+    id = "CUST235",
+    name = "Medium Duty Logistics",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 1536 }, -- 2x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.35, max = 1.05 }
+}, {
+    id = "CUST236",
+    name = "Heavy Urban Couriers",
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 4x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.45, max = 1.15 }
+}, {
+    id = "CUST237",
+    name = "Metro Box Truck Alliance",
+    criteria = {
+        deliveredItems = { min = 5376 }, -- 7x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.65, max = 1.35 }
+}, {
+    id = "CUST238",
+    name = "Interstate Cargo Carriers",
+    criteria = {
+        deliveredItems = { min = 9216 }, -- 12x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 0.85, max = 1.55 }
+}, {
+    id = "CUST239",
+    name = "National Heavy Box Network",
+    criteria = {
+        deliveredItems = { min = 11520 }, -- 15x
+        weight = { min = 3200, max = 4000 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- T-Series + Performance
+    id = "CUST240",
+    name = "Heavy Haul Racers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 5120 }, -- 2x T-Series
+        weight = { min = 10000 },
+        power = { min = 600 }, -- 600hp minimum
+        powerPerWeight = { min = 0.15 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- MD Series + Economy
+    id = "CUST241",
+    name = "Eco Freight Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 2x MD Series
+        weight = { min = 4000, max = 7900 },
+        mileage = { max = 200000 },
+        value = { max = 30000 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- H-Series Box + Modifications
+    id = "CUST242",
+    name = "Custom Box Van Enthusiasts",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 1536 }, -- 2x H-Series Box
+        weight = { min = 3200, max = 4000 },
+        numAddedParts = { min = 10 },
+        numRemovedParts = { max = 2 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Small Trailer + Vintage
+    id = "CUST243",
+    name = "Vintage Delivery Collective",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 512 }, -- 2x Small Trailer
+        weight = { min = 0, max = 1000 },
+        year = { min = 1980, max = 2000 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, { -- 48 FT Trailer + Reputation
+    id = "CUST244",
+    name = "Celebrity Transport Group",
+    specialties = {"oversizedLoads"},
+    criteria = {
+        deliveredItems = { min = 8192 }, -- 2x 48 FT
+        weight = { min = 6900, max = 7800 },
+        rep = { min = 7.5 },
+        movieRentals = { min = 2 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, { -- T-Series + Long Distance
+    id = "CUST246",
+    name = "Cross-Continental Haulers",
+    specialties = {"heavyTransport"},
+    criteria = {
+        deliveredItems = { min = 15360 }, -- 12x T-Series
+        weight = { min = 10000 },
+        mileage = { max = 500000 }, -- Well-maintained trucks
+        taxiDropoffs = { min = 50 } -- Long distance experience
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, { -- MD Series + Urgent Delivery
+    id = "CUST247",
+    name = "Express Cargo Network",
+    specialties = {"boxTrucks"},
+    criteria = {
+        deliveredItems = { min = 9216 }, -- 12x MD Series
+        weight = { min = 4000, max = 7900 },
+        evades = { min = 10 }, -- Quick evasive driving
+        tickets = { max = 3 } -- Clean driving record
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, { -- H-Series Box + Security
+    id = "CUST248",
+    name = "Armored Transport Co",
+    specialties = {"boxVans"},
+    criteria = {
+        deliveredItems = { min = 5376 }, -- 7x H-Series
+        weight = { min = 3200, max = 4000 },
+        suspectsCaught = { min = 5 }, -- Security experience
+        accidents = { max = 1 } -- Safe drivers
+    },
+    offerRange = { min = 1.5, max = 2.2 }
+}, { -- Trailer + Agricultural
+    id = "CUST249",
+    name = "Farm Equipment Movers",
+    specialties = {"trailers"},
+    criteria = {
+        deliveredItems = { min = 3072 }, -- 12x Trailer
+        weight = { min = 1000, max = 2000 },
+        repos = { min = 10 }, -- Repo experience (farm equipment)
+        value = { max = 15000 } -- Budget equipment
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- Small Trailer + Food Service
+    id = "CUST250",
+    name = "Mobile Catering Supply",
+    specialties = {"smallTrailers"},
+    criteria = {
+        deliveredItems = { min = 1792 }, -- 7x Small Trailer
+        weight = { min = 0, max = 1000 },
+        movieRentals = { min = 2 }, -- Frequent rentals (events)
+        numAddedParts = { min = 5 } -- Custom refrigeration units
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- Police Interceptors
+    id = "CUST251",
+    name = "City Patrol Fleet",
+    specialties = {"policeVehicles"},
+    criteria = {
+        suspectsCaught = { min = 2 },
+        accidents = { max = 1 },
+        power = { min = 300 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, {
+    id = "CUST252",
+    name = "County K-9 Unit",
+    criteria = {
+        suspectsCaught = { min = 4 },
+        numAddedParts = { min = 2 },
+        tickets = { max = 1 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, {
+    id = "CUST253",
+    name = "State Investigators",
+    criteria = {
+        suspectsCaught = { min = 8 },
+        rep = { min = 4.0 },
+        year = { min = 2015 }
+    },
+    offerRange = { min = 1.1, max = 1.8 }
+}, { -- SWAT Vehicles
+    id = "CUST254",
+    name = "Metro Tactical Unit",
+    criteria = {
+        suspectsCaught = { min = 6 },
+        powerPerWeight = { min = 0.2 },
+        numAddedParts = { min = 3 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, {
+    id = "CUST255",
+    name = "Rural Patrol Division",
+    criteria = {
+        suspectsCaught = { min = 12 },
+        mileage = { max = 80000 },
+        value = { max = 35000 }
+    },
+    offerRange = { min = 1.2, max = 1.9 }
+}, { -- Specialized Units
+    id = "CUST256",
+    name = "Narcotics Task Force",
+    criteria = {
+        suspectsCaught = { min = 16 },
+        movieRentals = { min = 5 }, -- Surveillance ops
+        tickets = { max = 1 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, {
+    id = "CUST257",
+    name = "Cybercrime Division",
+    criteria = {
+        suspectsCaught = { min = 8 },
+        numRemovedParts = { max = 0 },
+        year = { min = 2015 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Highway Patrol
+    id = "CUST258",
+    name = "State Trooper Fleet",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        power = { min = 350 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, {
+    id = "CUST259",
+    name = "Motorcycle Patrol",
+    criteria = {
+        suspectsCaught = { min = 7 },
+        weight = { max = 800 },
+        powerPerWeight = { min = 0.35 }
+    },
+    offerRange = { min = 1.0, max = 1.7 }
+}, { -- Special Operations
+    id = "CUST260",
+    name = "Public Safety Command",
+    criteria = {
+        suspectsCaught = { min = 10 },
+        numAddedParts = { min = 5 },
+        rep = { min = 5.0 }
+    },
+    offerRange = { min = 1.2, max = 1.9 }
+}, {
+    id = "CUST261",
+    name = "Prison Transport",
+    criteria = {
+        suspectsCaught = { min = 5 },
+        mileage = { max = 120000 },
+        value = { max = 25000 }
+    },
+    offerRange = { min = 0.9, max = 1.6 }
+}, { -- Aviation Support
+    id = "CUST262",
+    name = "Air Support Unit",
+    criteria = {
+        suspectsCaught = { min = 15 },
+        taxiDropoffs = { min = 5 },
+        power = { min = 400 }
+    },
+    offerRange = { min = 1.3, max = 2.0 }
+}, {
+    id = "CUST263",
+    name = "Marine Patrol",
+    criteria = {
+        suspectsCaught = { min = 3 },
+        numAddedParts = { min = 4 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.8, max = 1.5 }
+}, { -- Training & Support
+    id = "CUST264",
+    name = "K-9 Training Academy",
+    criteria = {
+        suspectsCaught = { min = 2 },
+        numAddedParts = { min = 3 },
+        tickets = { max = 0 }
+    },
+    offerRange = { min = 0.7, max = 1.4 }
+}, {
+    id = "CUST265",
+    name = "Federal Protection",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        rep = { min = 7.5 },
+        year = { min = 2020 }
+    },
+    offerRange = { min = 1.6, max = 2.3 }
+}, { -- High-Risk Operations
+    id = "CUST266",
+    name = "Tactical Response Unit",
+    specialties = {"policeVehicles"},
+    criteria = {
+        suspectsCaught = { min = 18 },
+        accidents = { min = 5 },
+        power = { min = 450 }
+    },
+    offerRange = { min = 1.8, max = 2.5 }
+}, {
+    id = "CUST267",
+    name = "Gang Task Force",
+    criteria = {
+        suspectsCaught = { min = 20 },
+        accidents = { min = 6 },
+        evades = { min = 4 }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST268",
+    name = "Riot Control Division",
+    criteria = {
+        suspectsCaught = { min = 12 },
+        accidents = { min = 6 },
+        numAddedParts = { min = 6 }
+    },
+    offerRange = { min = 1.6, max = 2.3 }
+}, {
+    id = "CUST269",
+    name = "Undercover Operations",
+    criteria = {
+        suspectsCaught = { min = 30 },
+        accidents = { min = 10 },
+        value = { max = 15000 }
+    },
+    offerRange = { min = 2.2, max = 2.9 }
+}, {
+    id = "CUST270",
+    name = "Highway Pursuit Squadron",
+    criteria = {
+        suspectsCaught = { min = 22 },
+        accidents = { min = 9 },
+        powerPerWeight = { min = 0.4 }
+    },
+    offerRange = { min = 1.9, max = 2.6 }
+}, { -- Ultra Marathon Series
+    id = "CUST271",
+    name = "Rally Endurance King",
+    specialties = {"rally"},
+    criteria = {
+        performance = {
+            rally = { min = 1.2 }
+        },
+        completions = {
+            rally = { minTotal = 70, minConsecutive = 30 }
+        }
+    },
+    offerRange = { min = 1.8, max = 2.5 }
+}, {
+    id = "CUST272",
+    name = "Bog Marathoner",
+    specialties = {"extremeMud"},
+    criteria = {
+        performance = {
+            extremeMud = { min = 0.8 }
+        },
+        completions = {
+            extremeMud = { minTotal = 10 }
+        }
+    },
+    offerRange = { min = 1.7, max = 2.4 }
+}, {
+    id = "CUST273",
+    name = "Mud Century Club",
+    specialties = {"mud"},
+    criteria = {
+        performance = {
+            mud = { min = 1.0 }
+        },
+        completions = {
+            mud = { minTotal = 25 }
+        }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST274",
+    name = "Oval Ironman",
+    specialties = {"oval"},
+    criteria = {
+        performance = {
+            oval = { min = 1.1 }
+        },
+        completions = {
+            oval = { minTotal = 300, minConsecutive = 100 }
+        }
+    },
+    offerRange = { min = 2.2, max = 2.9 }
+}, {
+    id = "CUST275",
+    name = "Offroad Ultramarathoner",
+    specialties = {"offroad"},
+    criteria = {
+        performance = {
+            offroad = { min = 1.1 }
+        },
+        completions = {
+            offroad = { minTotal = 200, minConsecutive = 70 }
+        }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+}, { -- Apex Racing Elite
+    id = "CUST276",
+    name = "Apex Predator Collective",
+    specialties = {"apexRacing"},
+    criteria = {
+        performance = {
+            apexRacing = { min = 1.2 }
+        },
+        completions = {
+            apexRacing = { minTotal = 90, minConsecutive = 30 }
+        },
+        power = { min = 600 },
+        weight = { max = 1500 }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+}, {
+    id = "CUST277",
+    name = "Circuit Conquerors",
+    specialties = {"motorsport"},
+    criteria = {
+        performance = {
+            motorsport = { min = 1.0 }
+        },
+        completions = {
+            motorsport = { minTotal = 100, minConsecutive = 50 }
+        },
+        powerPerWeight = { min = 0.35 },
+        accidents = { max = 5 }
+    },
+    offerRange = { min = 2.0, max = 2.7 }
+}, {
+    id = "CUST278",
+    name = "Endurance Racing Syndicate",
+    specialties = {"apexRacing"},
+    criteria = {
+        performance = {
+            apexRacing = { min = 1.2 }
+        },
+        completions = {
+            apexRacing = { minTotal = 150, minConsecutive = 100 }
+        },
+        rep = { min = 8.0 }
+    },
+    offerRange = { min = 2.5, max = 3.2 }
+}, {
+    id = "CUST279",
+    name = "Salmon The Negotiator",
+    specialties = {},
+    criteria = {
+        value = { min = 80000 }
+    },
+    offerRange = { min = 0, max = 0.15 }
+}, {
+    id = "CUST280",
+    name = "Devin The Ballbreaker",
+    specialties = {},
+    criteria = {
+        performance = {
+            apexRacing = { min = 1.2 }
+        },
+        completions = {
+            apexRacing = { minTotal = 100, minConsecutive = 20 }
+        },
+        powerPerWeight = { max = 0.251 }
+    },
+    offerRange = { min = 1.3, max = 2 }
+}, {
+    id = "CUST281",
+    name = "Bronze Cab Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 25
+        },
+        mileage = {
+            max = 150000
+        }
+    },
+    offerRange = {
+        min = 0.5,
+        max = 1.1
+    }
+}, {
+    id = "CUST282",
+    name = "Silver City Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 15
+        },
+        rep = {
+            min = 2.5
+        },
+        accidents = {
+            max = 3
+        }
+    },
+    offerRange = {
+        min = 0.6,
+        max = 1.25
+    }
+}, {
+    id = "CUST283", 
+    name = "Gold Medal Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 30
+        },
+        rep = {
+            min = 4.0
+        },
+        evades = {
+            min = 5
+        }
+    },
+    offerRange = {
+        min = 0.75,
+        max = 1.4
+    }
+}, {
+    id = "CUST284",
+    name = "Platinum Rides Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 80
+        },
+        rep = {
+            min = 5.5
+        },
+        accidents = {
+            max = 1
+        },
+        movieRentals = {
+            min = 1
+        }
+    },
+    offerRange = {
+        min = 0.9,
+        max = 1.6
+    }
+}, {
+    id = "CUST285",
+    name = "Diamond Premier Transport",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = {
+            min = 120
+        },
+        rep = {
+            min = 7.0
+        },
+        mileage = {
+            max = 75000
+        },
+    },
+    offerRange = {
+        min = 1.2,
+        max = 1.8
+    }
+}, {
+    id = "CUST286",
+    name = "City Night Shift Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 15 },
+        numAddedParts = { min = 3 },
+        accidents = { max = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.55, max = 1.15 }
+}, {
+    id = "CUST287",
+    name = "Eco Taxi Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 20 },
+        numAddedParts = { min = 2 },
+        mileage = { max = 120000 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.6, max = 1.2 }
+}, {
+    id = "CUST288",
+    name = "Vintage Cab Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 25 },
+        year = { max = 2005 },
+        numAddedParts = { min = 4 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.65, max = 1.25 }
+}, {
+    id = "CUST289",
+    name = "Airport Express Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 30 },
+        numAddedParts = { min = 5 },
+        evades = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.7, max = 1.3 }
+}, {
+    id = "CUST290",
+    name = "Luxury Ride Partners",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 35 },
+        value = { min = 30000 },
+        movieRentals = { min = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.75, max = 1.35 }
+}, {
+    id = "CUST291",
+    name = "Compact City Cabs",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 40 },
+        numAddedParts = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.8, max = 1.4 }
+}, {
+    id = "CUST292",
+    name = "24/7 Taxi Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 45 },
+        numAddedParts = { min = 6 },
+        accidents = { max = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.85, max = 1.45 }
+}, {
+    id = "CUST293",
+    name = "Student Driver Fleet",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        rep = { min = 3.0 },
+        tickets = { max = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.9, max = 1.5 }
+}, {
+    id = "CUST294",
+    name = "Tourist Transport Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 55 },
+        movieRentals = { min = 2 },
+        numAddedParts = { min = 3 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 0.95, max = 1.55 }
+}, {
+    id = "CUST295",
+    name = "Hybrid Cab Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 60 },
+        numAddedParts = { min = 4 },
+        powerPerWeight = { min = 0.12 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.0, max = 1.6 }
+}, {
+    id = "CUST296",
+    name = "Security Cabs Ltd",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 65 },
+        suspectsCaught = { min = 2 },
+        numAddedParts = { min = 5 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.05, max = 1.65 }
+}, {
+    id = "CUST297",
+    name = "Disability Access Taxis",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 70 },
+        numAddedParts = { min = 6 },
+        accidents = { max = 0 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.1, max = 1.7 }
+}, {
+    id = "CUST298",
+    name = "VIP Chauffeur Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 75 },
+        rep = { min = 4.5 },
+        numAddedParts = { min = 7 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.15, max = 1.75 }
+}, {
+    id = "CUST299",
+    name = "Taxi Co-op Union",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 80 },
+        numAddedParts = { min = 4 },
+        numRemovedParts = { max = 1 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.2, max = 1.8 }
+}, {
+    id = "CUST300",
+    name = "Electric Taxi Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 85 },
+        numAddedParts = { min = 5 },
+        mileage = { max = 60000 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.25, max = 1.85 }
+}, {
+    id = "CUST301",
+    name = "Rural Taxi Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 90 },
+        evades = { min = 3 },
+        numAddedParts = { min = 2 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.3, max = 1.9 }
+}, {
+    id = "CUST302",
+    name = "Limo Taxi Hybrids",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 95 },
+        value = { min = 40000 },
+        numAddedParts = { min = 8 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.35, max = 2.0 }
+}, {
+    id = "CUST303",
+    name = "Taxi Trainer Fleet",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 100 },
+        numAddedParts = { min = 9 },
+        rep = { min = 5.0 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.4, max = 2.1 }
+}, {
+    id = "CUST304",
+    name = "Heritage Cab Preservers",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 40 },
+        year = { max = 1995 },
+        numAddedParts = { min = 10 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.45, max = 2.2 }
+}, {
+    id = "CUST305",
+    name = "Taxi Tech Innovators",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        numAddedParts = { min = 12 },
+        power = { min = 200 },
+        weight = { max = 10000 }
+    },
+    offerRange = { min = 1.5, max = 2.3 }
+}, {
+    id = "CUST306",
+    name = "Metro Transit Authority",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 50 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 5 }
+    },
+    offerRange = { min = 0.45, max = 1.05 }
+}, {
+    id = "CUST307",
+    name = "School Bus Specialists",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 65 },
+        weight = { min = 10000 },
+        accidents = { max = 1 }
+    },
+    offerRange = { min = 0.48, max = 1.08 }
+}, {
+    id = "CUST308",
+    name = "Intercity Coach Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 80 },
+        weight = { min = 10000 },
+        mileage = { max = 300000 }
+    },
+    offerRange = { min = 0.51, max = 1.11 }
+}, {
+    id = "CUST309",
+    name = "Tour Bus Operators",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 95 },
+        weight = { min = 10000 },
+        movieRentals = { min = 3 }
+    },
+    offerRange = { min = 0.54, max = 1.14 }
+}, {
+    id = "CUST310",
+    name = "Airport Shuttle Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 110 },
+        weight = { min = 10000 },
+        rep = { min = 4.0 }
+    },
+    offerRange = { min = 0.57, max = 1.17 }
+}, {
+    id = "CUST311",
+    name = "Double Decker Tours",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 125 },
+        weight = { min = 10000 },
+        height = { min = 4.0 }
+    },
+    offerRange = { min = 0.60, max = 1.20 }
+}, {
+    id = "CUST312",
+    name = "City Sightseeing Buses",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 140 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 8 }
+    },
+    offerRange = { min = 0.63, max = 1.23 }
+}, {
+    id = "CUST313",
+    name = "Charter Bus Alliance",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 155 },
+        weight = { min = 10000 },
+        value = { min = 50000 }
+    },
+    offerRange = { min = 0.66, max = 1.26 }
+}, {
+    id = "CUST314",
+    name = "Mobile Classroom Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 170 },
+        weight = { min = 10000 },
+        suspectsCaught = { min = 5 }
+    },
+    offerRange = { min = 0.69, max = 1.29 }
+}, {
+    id = "CUST315",
+    name = "VIP Party Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 185 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 10 }
+    },
+    offerRange = { min = 0.72, max = 1.32 }
+}, {
+    id = "CUST316",
+    name = "Eco Bus Initiative",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 200 },
+        weight = { min = 10000 },
+        mileage = { max = 200000 }
+    },
+    offerRange = { min = 0.75, max = 1.35 }
+}, {
+    id = "CUST317",
+    name = "Night Bus Network",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 215 },
+        weight = { min = 10000 },
+        evades = { max = 1 }
+    },
+    offerRange = { min = 0.78, max = 1.38 }
+}, {
+    id = "CUST318",
+    name = "Rural Bus Service",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 230 },
+        weight = { min = 10000 },
+        accidents = { max = 0 }
+    },
+    offerRange = { min = 0.81, max = 1.41 }
+}, {
+    id = "CUST319",
+    name = "Articulated Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 245 },
+        weight = { min = 10000 },
+        length = { min = 12 }
+    },
+    offerRange = { min = 0.84, max = 1.44 }
+}, {
+    id = "CUST320",
+    name = "Vintage Bus Restorers",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 260 },
+        weight = { min = 10000 },
+        year = { max = 1990 }
+    },
+    offerRange = { min = 0.87, max = 1.47 }
+}, {
+    id = "CUST321",
+    name = "Accessible Transit Ltd",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 275 },
+        weight = { min = 10000 },
+        numAddedParts = { min = 12 }
+    },
+    offerRange = { min = 0.90, max = 1.50 }
+}, {
+    id = "CUST322",
+    name = "Cross-Country Coaches",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 290 },
+        weight = { min = 10000 },
+        mileage = { min = 100000 }
+    },
+    offerRange = { min = 0.93, max = 1.53 }
+}, {
+    id = "CUST323",
+    name = "Mobile Hospital Units",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 305 },
+        weight = { min = 10000 },
+        rep = { min = 6.0 }
+    },
+    offerRange = { min = 0.96, max = 1.56 }
+}, {
+    id = "CUST324",
+    name = "Double Articulated Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 320 },
+        weight = { min = 10000 },
+        length = { min = 18 }
+    },
+    offerRange = { min = 0.99, max = 1.59 }
+}, {
+    id = "CUST325",
+    name = "Luxury Coach Collective",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 335 },
+        weight = { min = 10000 },
+        value = { min = 75000 }
+    },
+    offerRange = { min = 1.02, max = 1.62 }
 }
 }
 
@@ -3997,7 +5700,7 @@ local function getInterestedCustomers(vehicleData)
                 end
             elseif criterionName == "power" or criterionName == "torque" or criterionName == "powerPerWeight" or
                 criterionName == "rep" or criterionName == "numAddedParts" or criterionName == "evades" or criterionName ==
-                "movieRentals" or criterionName == "repos" or criterionName == "taxiDropoffs" then
+                "movieRentals" or criterionName == "repos" or criterionName == "taxiDropoffs" or criterionName == "deliveredItems" or criterionName == "suspectsCaught" then
                 -- Logic for "higher is better" criteria
                 criterionMaxInterest = 1
                 local criterionData = tonumber(vehicleData[criterionName] or 0)
@@ -4073,6 +5776,43 @@ local function getInterestedCustomers(vehicleData)
                         -- Neither min nor max: neutral interest
                         interestValue = interestValue + 0.5
                     end
+                end
+            elseif criterionName == "completions" then
+                criterionMaxInterest = table.getn(criterionValue)
+                for completionType, completionCriteria in pairs(criterionValue) do
+                    local totalCompletions = 0
+                    local maxConsecutive = 0
+                    
+                    -- Aggregate all entries of this type
+                    if vehicleData.completions and vehicleData.completions[completionType] then
+                        for _, compEntry in ipairs(vehicleData.completions[completionType]) do
+                            totalCompletions = totalCompletions + (compEntry.completions or 0)
+                            maxConsecutive = math.max(maxConsecutive, (compEntry.consecutive or 0))
+                        end
+                    end
+
+                    -- Check requirements using aggregated values
+                    if completionCriteria.minTotal and totalCompletions < completionCriteria.minTotal then
+                        customerInterested = false
+                        break
+                    end
+                    if completionCriteria.minConsecutive and maxConsecutive < completionCriteria.minConsecutive then
+                        customerInterested = false
+                        break
+                    end
+
+                    -- Calculate interest using aggregated values
+                    local totalInterest = 0
+                    if completionCriteria.minTotal then
+                        totalInterest = math.min(1, (totalCompletions - completionCriteria.minTotal) / (completionCriteria.minTotal * 2))
+                    end
+                    
+                    local consecutiveInterest = 0
+                    if completionCriteria.minConsecutive then
+                        consecutiveInterest = math.min(1, (maxConsecutive - completionCriteria.minConsecutive) / (completionCriteria.minConsecutive * 2))
+                    end
+                    
+                    interestValue = interestValue + (totalInterest * 0.4 + consecutiveInterest * 0.6)
                 end
             else
                 -- Handle unrecognized criteria (optional - for robustness)

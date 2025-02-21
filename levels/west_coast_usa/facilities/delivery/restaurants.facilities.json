@@ -5,8 +5,6 @@
       "name":"Turbo Burger",
       "description":"Ships food and receives shop and food supplies.",
       "preview":"previews/turboBurger.jpg",
-      //"pickUpSpotNames":["turboBurger_driveIn"],
-      //"dropOffSpotNames":["turboBurger_parking"],
       "manualAccessPoints": [
         {
           "psName":"turboBurger_driveIn",
@@ -18,7 +16,7 @@
           "psName":"turboBurger_parking",
           "logisticTypesProvided":[],
           "logisticTypesReceived":["parcel","shopSupplies", "foodSupplies"]
-        },
+        }
       ],
       "sitesFile":"restaurants.sites.json",
       "logisticTypesProvided":["food"],
@@ -38,19 +36,17 @@
           "max":2,
           "interval":120
         }
-      ],
+      ]
     },
     {
       "id":"diner",
       "name":"Diner",
       "description":"Ships food and receives shop and food supplies.",
       "preview":"previews/diner.jpg",
-      //"pickUpSpotNames":["diner_parking"],
-      //"dropOffSpotNames":["diner_parking"],
       "manualAccessPoints": [
         {
           "psName":"diner_parking",
-          "isInspectSpot":true,
+          "isInspectSpot":true
         }
       ],
       "sitesFile":"restaurants.sites.json",
@@ -71,7 +67,7 @@
           "max":2,
           "interval":120
         }
-      ],
+      ]
 
     },
     {
@@ -79,12 +75,10 @@
       "name":"Chinatown Restaurant",
       "description":"Ships food and receives shop and food supplies.",
       "preview":"previews/chinatownRestaurant.jpg",
-      //"pickUpSpotNames":["chinatownRestaurant_parking"],
-      //"dropOffSpotNames":["chinatownRestaurant_parking"],
       "manualAccessPoints": [
         {
           "psName":"chinatownRestaurant_parking",
-          "isInspectSpot":true,
+          "isInspectSpot":true
         }
       ],
       "sitesFile":"restaurants.sites.json",
@@ -105,7 +99,7 @@
           "max":2,
           "interval":120
         }
-      ],
+      ]
 
     },
     {
@@ -113,12 +107,10 @@
       "name":"Green Pier Restaurant",
       "description":"Ships food and receives shop and food supplies.",
       "preview":"previews/greenPier.jpg",
-      //"pickUpSpotNames":["greenPier_parking"],
-      //"dropOffSpotNames":["greenPier_parking"],
       "manualAccessPoints": [
         {
           "psName":"greenPier_parking",
-          "isInspectSpot":true,
+          "isInspectSpot":true
         }
       ],
       "sitesFile":"restaurants.sites.json",
@@ -139,8 +131,7 @@
           "max":2,
           "interval":120
         }
-      ],
-
+      ]
     }
 
   ]

@@ -261,11 +261,11 @@ local function startCarMeet(meetName)
     -- Calculate spots based on stored attendance level
     local maxSpots = #meet.parkingSpots - 1  -- Reserve one spot for player
     local spotCount
-    if attendanceLevel == 1 then -- LOW
+    if rsvpData.attendance == 1 then -- LOW
         spotCount = 2
-    elseif attendanceLevel == 2 then -- MEDIUM
-        spotCount = math.floor(maxSpots / 2)
-    elseif attendanceLevel == 3 then -- HIGH (3)
+    elseif rsvpData.attendance == 2 then -- MEDIUM
+        spotCount = math.ceil(maxSpots / 2)
+    elseif rsvpData.attendance == 3 then -- HIGH (3)
         spotCount = maxSpots
     end
     
@@ -339,21 +339,30 @@ local function checkAvailableMeets()
     -- Update generation time
     lastGenerationTime = os.time()
 
+    local levelIdentifier = getCurrentLevelIdentifier()
+    local preview = "/levels/" .. levelIdentifier .. "/facilities/carmeets/" .. selectedMeet.name .. ".jpg"
+
     -- Return meet data
     meetData = {
         time = meetTimes[math.random(#meetTimes)],
         location = selectedMeet.name,
-        type = "Showcase"
+        type = "Showcase",
+        preview = preview
     }
-
+    generationInterval = 1800
     return meetData
 end
 
 local function rsvpToMeet(level)
     -- Convert string level to number
-    attendanceLevel = attendanceLevels[level] or 2  -- default to MEDIUM (2) if invalid
     rsvpData = meetData
+    rsvpData.attendance = attendanceLevels[level] or 2
     meetData = nil
+end
+
+local function updateAttendance(level)
+    -- Convert string level to number
+    rsvpData.attendance = attendanceLevels[level] or 2  -- default to MEDIUM (2) if invalid
 end
 
 local function decline()
@@ -362,6 +371,39 @@ local function decline()
     core_groundMarkers.resetAll()
     activeMeet = nil
     playerHasArrived = false
+    generationInterval = 120
+    lastGenerationTime = os.time()
+end
+
+local function cancelRSVP()
+    rsvpData = nil
+    meetData = nil
+    core_groundMarkers.resetAll()
+    activeMeet = nil
+    playerHasArrived = false
+    generationInterval = 120
+    lastGenerationTime = os.time()
+end
+
+local function setRoute()
+    local meets = (not carmeetLocations or next(carmeetLocations) == nil) and getCarMeetLocations() or carmeetLocations
+    local meet = meets[rsvpData.location]
+    if not meet then
+        print("Car meet location not found: " .. rsvpData.location)
+        return
+    end
+
+    local availableSpots = deepcopy(meet.parkingSpots)
+
+    playerSpot = gameplay_sites_sitesManager.getBestParkingSpotForVehicleFromList(be:getPlayerVehicleID(0), availableSpots)
+
+    -- Set the route to the player's parking spot
+    local options = {
+        color = {1, 0.4, 0}, -- Orange color for car meet markers
+        step = 4,            -- Marker spacing
+        renderDecals = true
+    }
+    core_groundMarkers.setPath(playerSpot.pos, options)
 end
 
 -- Function to check if it's time to start the meet
@@ -476,6 +518,11 @@ local function onUpdate(dtReal, dtSim, dtRaw)
     end
 end
 
+M.requestRSVPData = function()
+    print("requestRSVPData")
+    guihooks.trigger('onRSVPData', rsvpData)
+end
+
 -- Save/Load functions using career save system
 local function onSaveCurrentSaveSlot(currentSavePath)
     if not currentSavePath then return end
@@ -497,7 +544,7 @@ local function openMenu()
 end
 
 local function closeMenu()
-    career_career.closeAllMenus()
+    guihooks.trigger('ChangeState', {state = 'play'})
 end
 
 M.onInit = onInit
@@ -512,5 +559,8 @@ M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
 M.openMenu = openMenu
 M.decline = decline
 M.closeMenu = closeMenu
+M.updateAttendance = updateAttendance
+M.setRoute = setRoute
+M.cancelRSVP = cancelRSVP
 
 return M

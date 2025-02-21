@@ -10,7 +10,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":360,
     "weight":[1,2,3,4,5],
-    "modChance":{"post":1, "precious":0.25}
+    "modChance":{"aid":1}
   },
   "mediumPostParcel": {
     "names":["Medium Post Parcel"],
@@ -23,7 +23,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":360,
     "weight":[8,10,12],
-    "modChance":{"post":1, "precious":0.25}
+    "modChance":{"aid":1}
   },
   "bigPostParcel": {
     "names":["Big Post Parcel"],
@@ -36,7 +36,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":360,
     "weight":[10,15,20],
-    "modChance":{"post":1, "precious":0.25}
+    "modChance":{"supplies":1}
   },
   "specialPostParcel": {
     "names":["Special Post Parcel"],
@@ -49,7 +49,7 @@
     "duplicationChance":[1],
     "offerDuration":360,
     "weight":[4,6,8,10],
-    "modChance":{"post":1, "precious":0.5}
+    "modChance":{"aid":1}
   },
   "smallOfficeWares": {
     "names":["Office Wares","Office Supplies","Box of Documents"],
@@ -62,7 +62,7 @@
     "duplicationChance":[1,0.8,0.4],
     "offerDuration":360,
     "weight":[5,10,15],
-    "modChance":{"supplies":1}
+    "modChance":{"aid":1}
   },
   "medOfficeWares": {
     "names":["Office Computers","Office Furniture"],
@@ -75,7 +75,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":180,
     "weight":[12,15,18],
-    "modChance":{"supplies":1}
+    "modChance":{"aid":1}
   },
   "bigOfficeWares": {
     "names":["Cubicle Set","Industrial Shredder"],
@@ -100,8 +100,8 @@
     "generationChance":0.2,
     "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8],    
     "offerDuration":360,
-    "weight":[150,300],
-    "modChance":{"timed":0.0, "large":1, "precious":1}
+    "weight":[400,600],
+    "modChance":{"large":1, "precious":1}
   },
   "smallShopSupplies": {
     "names":["Shop Supplies","Shop Stock","Commercial Wares"],
@@ -114,7 +114,7 @@
     "duplicationChance":[1,1,1,0.8,0.4],
     "offerDuration":360,
     "weight":[6,9,12],
-    "modChance":{"supplies":1}
+    "modChance":{"aid":1}
   },
   "medShopSupplies": {
     "names":["Shop Decoration","Advertisements","Cash Register"],
@@ -165,7 +165,7 @@
     "generationChance":0.9,
     "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.4],
     "offerDuration":360,
-    "weight":[100,125,150,175,200,225,250,275,300,400,500,600,800,1000,1250,1500,1750,2000],
-    "modChance":{"timed":0.2}
+    "weight":[400,500,600,800,1000],
+    "modChance":{"large":0.1}
   }
 }

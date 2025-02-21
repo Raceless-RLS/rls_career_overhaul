@@ -10,7 +10,7 @@
     "duplicationChance":[0.5,1,0.5,0.25],
     "offerDuration":300,
     "weight":[1],
-    "modChance":{"timed":0.0}
+    "modChance":{"aid":1}
   },
   "smallMechanicalParts": {
     "names":["Mechanical Components","Oil Filters", "Wiper Fluid"],
@@ -23,7 +23,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
     "weight":[2],
-    "modChance":{"timed":0.0}
+    "modChance":{"aid":1}
   },
   "mechanicalToolbox": {
     "names":["Toolbox","Tool Crate", "Brake parts","Windshield Wipers"],
@@ -35,7 +35,8 @@
     "generationChance":0.3,
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
-    "weight":[8,10,12]
+    "weight":[8,10,12],
+    "modChance":{"aid":1}
   },
   "mechanicalToolboxBig": {
     "names":["Tool Shelf","Engine Parts", "Suspension Kit"],
@@ -47,7 +48,8 @@
     "generationChance":0.15,
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
-    "weight":[25,30,35]
+    "weight":[25,30,35],
+    "modChance":{"supplies":1}
   },
   "bigMechanicalParts": {
     "names":["Multi-Set of Brakes","Special Vehicle Parts"],
@@ -60,7 +62,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
     "weight":[30],
-    "modChance":{"timed":0.1}
+    "modChance":{"supplies":1}
   },
   "biggerMechanicalParts": {
     "names":["Replacement Wheel","Big Vehicle Parts"],
@@ -73,7 +75,7 @@
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
     "weight":[25,35],
-    "modChance":{"timed":0.1}
+    "modChance":{"supplies":1}
   },
   "rareMechanicalBigParts": {
     "names":["Body Kit", "Replacement Engine", "Vehicle Frame Parts", "Vehicle Glassware" ],
@@ -86,7 +88,7 @@
     "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8],    
     "offerDuration":300,
     "weight":[200,250,500],
-    "modChance":{"timed":0.1}
+    "modChance":{"large":1, "precious":1}
   },
   "rareMechanicalSmallParts": {
     "names":["Vehicle Electronics Kit", "Engine Management Kit", "Vehicle Authenticator Chip"],
@@ -98,6 +100,7 @@
     "generationChance":0.3,
     "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
     "offerDuration":300,
-    "weight":[1]
+    "weight":[1],
+    "modChance":{"aid":1}
   }
 }

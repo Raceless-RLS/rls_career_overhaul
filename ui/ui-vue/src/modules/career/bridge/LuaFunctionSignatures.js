@@ -184,7 +184,8 @@ export default {
     purchaseLicensePlateText: (inventoryId, text, money) => [Number, String, Number],
     listVehicleForSale: id => Number,
     getVehiclesForSale: () => {},
-    removeVehicleFromSale: id => Number
+    removeVehicleFromSale: id => Number,
+    requestListedVehicles: () => {}
   },
 
   career_modules_partInventory: {
@@ -862,7 +863,11 @@ export default {
     decline: () => {},
     closeMenu: () => {},
     openMenu: () => {},
-    checkAvailableMeets: () => {}
+    checkAvailableMeets: () => {},
+    requestRSVPData: () => {},
+    cancelRSVP: () => {},
+    setRoute: () => {},
+    updateAttendance: attendanceLevel => {}
   },
 
   career_modules_garageManager: {
@@ -890,7 +895,8 @@ export default {
     openMenu: () => {},
     requestInitialData: () => {},
     acceptOffer: (vehicleId, customer) => [String, String],
-    declineOffer: (vehicleId, customer) => [String, String]
+    declineOffer: (vehicleId, customer) => [String, String],
+    toggleNotifications: (newValue) => Boolean
   },
 
   career_modules_hardcore: {

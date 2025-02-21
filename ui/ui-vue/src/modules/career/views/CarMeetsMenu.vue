@@ -2,10 +2,13 @@
   <ComputerWrapper :path="[computerStore.computerData.facilityName]" title="Car Meets" back @back="close">
       <div class="car-meets-menu">
           <div class="meet-details">
-              <div v-if="meetLocation" class="scheduled-meet">
-                  <h2 class="meet-title">Car Meet ({{ formatTime(meetTime) }})</h2>
+              <div v-if="meetLocation || isRSVP" class="scheduled-meet">
+                  <h2 class="meet-title" v-show="!isRSVP">Car Meet at ({{ formatTime(meetTime) }})</h2>
+                  <h2 class="meet-title" v-show="isRSVP">Car Meet RSVP'd for ({{ formatTime(meetTime) }})</h2>
 
+                  
                   <div class="meet-info">
+                      <img :src="meetImage" alt="" class="meet-image">
                       <div class="info-row">
                           <span class="label">Location:</span>
                           <span class="value">{{ meetLocation }}</span>
@@ -28,9 +31,11 @@
                   </div>
 
                   <div class="action-buttons">
-                      <BngButton class="decline-button" @click="decline" :accent="ACCENTS.secondary">DECLINE
+                      <BngButton class="decline-button" @click="decline" v-show="!isRSVP" :accent="ACCENTS.secondary">DECLINE
                       </BngButton>
-                      <BngButton class="rsvp-button" @click="rsvp" :accent="ACCENTS.primary">RSVP</BngButton>
+                      <BngButton class="rsvp-button" @click="rsvp" v-show="!isRSVP" :accent="ACCENTS.primary">RSVP</BngButton>
+                      <BngButton class="rsvp-button" v-show="isRSVP" @click="cancelRSVP" :accent="ACCENTS.secondary">Cancel RSVP</BngButton>
+                      <BngButton class="rsvp-button" v-show="isRSVP" @click="setRoute" :accent="ACCENTS.primary">Set Route</BngButton>
                   </div>
               </div>
               <div v-else class="no-meets">
@@ -47,26 +52,51 @@ import { ref, onMounted } from 'vue'
 import { BngButton, ACCENTS } from "@/common/components/base"
 import ComputerWrapper from "./ComputerWrapper.vue"
 import { useComputerStore } from "../stores/computerStore"
-import { lua } from "@/bridge"
+import { lua, useBridge } from "@/bridge"
 
+const { events } = useBridge()
 const computerStore = useComputerStore()
 const meetTime = ref(0.417) // 10:00 PM (22:00)
 const meetLocation = ref(null)
 const meetType = ref("Showcase")
+const meetImage = ref(null)
 const attendanceLevels = ['LOW', 'MEDIUM', 'HIGH']
 const selectedAttendance = ref('MEDIUM')
+
+const isRSVP = ref(false)
 
 onMounted(async () => {
   const meetData = await lua.career_modules_carmeets.checkAvailableMeets()
   if (meetData) {
+      isRSVP.value = false
       meetTime.value = meetData.time
       meetLocation.value = meetData.location
       meetType.value = meetData.type
-  }else{
+      meetImage.value = meetData.preview
+  } else {
       meetTime.value = 0.417
       meetLocation.value = null
       meetType.value = null
+      meetImage.value = null
   }
+  lua.career_modules_carmeets.requestRSVPData()
+  events.on('onRSVPData', (data) => {
+      if (data) {
+          isRSVP.value = true
+          let attendanceLevelString;
+          const attendanceIndex = data.attendance - 1;
+          if (attendanceLevels[attendanceIndex]) {
+              attendanceLevelString = attendanceLevels[attendanceIndex];
+          } else {
+              attendanceLevelString = 'MEDIUM';
+          }
+          selectedAttendance.value = attendanceLevelString;
+          meetTime.value = data.time
+          meetLocation.value = data.location
+          meetType.value = data.type
+          meetImage.value = data.preview
+      }
+  })
 })
 
 const formatTime = (time) => {
@@ -82,6 +112,9 @@ const formatTime = (time) => {
 
 const selectAttendance = (level) => {
   selectedAttendance.value = level
+  if (isRSVP.value) {
+      lua.career_modules_carmeets.updateAttendance(level)
+  }
 }
 
 const rsvp = () => {
@@ -94,6 +127,16 @@ const decline = () => {
   close()
 }
 
+const cancelRSVP = () => {
+  lua.career_modules_carmeets.cancelRSVP()
+  close()
+}
+
+const setRoute = () => {
+  lua.career_modules_carmeets.setRoute()
+  close()
+}
+
 const close = () => {
   lua.career_modules_carmeets.closeMenu()
 }
@@ -101,8 +144,7 @@ const close = () => {
 
 <style scoped lang="scss">
 .car-meets-menu {
-  width: fit-content;
-  min-width: 500px;
+  width: 30%;
   padding: 10px 10px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
@@ -131,6 +173,15 @@ const close = () => {
           font-weight: bold;
       }
   }
+}
+
+.meet-image {
+  margin-bottom: 5px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 15px;
+  background-color: #3b3b3b;
+  object-fit: cover;
 }
 
 .attendance-section {
