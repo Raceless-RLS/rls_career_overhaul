@@ -237,7 +237,7 @@ local function onPursuitAction(vehId, data)
                 ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
                 if playerIsCop == false then
-                    local reward = math.floor(110 * data.score) / 100
+                    local reward = math.floor(110 * (data.score or 10)) / 100
                     career_modules_payment.reward({
                         money = {
                             amount = reward
