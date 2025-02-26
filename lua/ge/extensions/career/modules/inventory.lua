@@ -657,7 +657,6 @@ local function setupInventory(levelPath)
                   location.pos = levelGate:getPosition()
                   location.rot = levelGate:getRotation()
                 end
-                career_modules_garageManager.purchaseDefaultGarage()
               end
               if not levelGate and location.option == "garage" then
                 location.vehId = veh:getID()

@@ -55,7 +55,6 @@ local function addPurchasedGarage(garageId)
   print("Adding purchased garage: " .. garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
-  savePurchasedGarages()
   reloadRecoveryPrompt()
 end
 
@@ -67,7 +66,6 @@ local function addDiscoveredGarage(garageId)
       purchasedGarages[garageId] = true
     end
     discoveredGarages[garageId] = true
-    savePurchasedGarages()
     reloadRecoveryPrompt()
   end
 end
@@ -93,6 +91,7 @@ local function loadPurchasedGarages()
   local data = jsonReadFile(filePath) or {}
   purchasedGarages = data.garages or {}
   discoveredGarages = data.discovered or {}
+  -- Check general data
   if career_career.hardcoreMode then
     purchasedGarages = {}
     discoveredGarages = {}
