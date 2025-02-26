@@ -819,22 +819,6 @@ Enjoy the new features and improvements, and happy driving!
 
 ---
 
-## Bug Fixes
-
-- Traffic now starts at speed.
-- Fixed active assets for free-roam events.
-- Fixed random issues with trade-ins.
-- Removed extra level files.
-- Moved service dealership.
-- Removed spots behind fences in Industrial.
-- Added a purchase-garage button at unowned garages.
-- Slightly raised terrain in Lens Flare.
-- Repo missions don’t deliver vehicles with no value.
-- AI no longer drives through each other.
-- Vehicles no longer phase through rollbacks or trailers.
-
----
-
 ## Notes
 
 - **Manual Mod Installation Guides**:
