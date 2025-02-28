@@ -5024,7 +5024,7 @@ local customers = {{
     specialties = {"oval"},
     criteria = {
         performance = {
-            oval = { min = 1.1 }
+            oval = { min = 1 }
         },
         completions = {
             oval = { minTotal = 300, minConsecutive = 100 }
@@ -5778,7 +5778,7 @@ local function getInterestedCustomers(vehicleData)
                     end
                 end
             elseif criterionName == "completions" then
-                criterionMaxInterest = table.getn(criterionValue)
+                criterionMaxInterest = 1
                 for completionType, completionCriteria in pairs(criterionValue) do
                     local totalCompletions = 0
                     local maxConsecutive = 0
@@ -5804,12 +5804,12 @@ local function getInterestedCustomers(vehicleData)
                     -- Calculate interest using aggregated values
                     local totalInterest = 0
                     if completionCriteria.minTotal then
-                        totalInterest = math.min(1, (totalCompletions - completionCriteria.minTotal) / (completionCriteria.minTotal * 2))
+                        totalInterest = math.min(1, ((totalCompletions - completionCriteria.minTotal) / (completionCriteria.minTotal)) + 0.25)
                     end
                     
                     local consecutiveInterest = 0
                     if completionCriteria.minConsecutive then
-                        consecutiveInterest = math.min(1, (maxConsecutive - completionCriteria.minConsecutive) / (completionCriteria.minConsecutive * 2))
+                        consecutiveInterest = math.min(1, ((maxConsecutive - completionCriteria.minConsecutive) / (completionCriteria.minConsecutive)) + 0.25)
                     end
                     
                     interestValue = interestValue + (totalInterest * 0.4 + consecutiveInterest * 0.6)
