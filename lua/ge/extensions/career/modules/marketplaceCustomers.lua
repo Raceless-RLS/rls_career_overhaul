@@ -5624,6 +5624,16 @@ local customers = {{
         value = { min = 75000 }
     },
     offerRange = { min = 1.02, max = 1.62 }
+}, {
+    id = "CUST326",
+    name = "Extraordinary Bus Co",
+    specialties = {"taxi"},
+    criteria = {
+        taxiDropoffs = { min = 400 },
+        weight = { min = 10000 },
+        value = { min = 75000 }
+    },
+    offerRange = { min = 1.5, max = 2 }
 }
 }
 
