@@ -5407,7 +5407,7 @@ local customers = {{
     name = "Heritage Cab Preservers",
     specialties = {"taxi"},
     criteria = {
-        taxiDropoffs = { min = 40 },
+        taxiDropoffs = { min = 65 },
         year = { max = 1995 },
         numAddedParts = { min = 10 },
         weight = { max = 10000 }
@@ -5418,8 +5418,8 @@ local customers = {{
     name = "Taxi Tech Innovators",
     specialties = {"taxi"},
     criteria = {
-        taxiDropoffs = { min = 50 },
-        numAddedParts = { min = 12 },
+        taxiDropoffs = { min = 100 },
+        numAddedParts = { min = 15 },
         power = { min = 200 },
         weight = { max = 10000 }
     },
