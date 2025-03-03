@@ -6,6 +6,8 @@ local discoveredGarages = {}
 local garageToPurchase = nil
 local saveFile = "purchasedGarages.json"
 
+local garageSize = {}
+
 local function savePurchasedGarages(currentSavePath)
   if not currentSavePath then
     local slot, path = career_saveSystem.getCurrentSaveSlot()
@@ -47,6 +49,19 @@ local function reloadRecoveryPrompt()
   end
 end
 
+local function buildGarageSizes()
+  local garages = freeroam_facilities.getFacilitiesByType("garage")
+  
+  if garages then
+    for _, garage in pairs(garages) do
+      if purchasedGarages[garage.id] then
+        garageSize[tostring(garage.id)] = (math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1)) or 0)
+      end
+    end
+  end
+  dump(garageSize)
+end
+
 local function addPurchasedGarage(garageId)
   if purchasedGarages == {} then
     print("Showing non-tutorial welcome splashscreen")
@@ -56,6 +71,7 @@ local function addPurchasedGarage(garageId)
   purchasedGarages[garageId] = true
   discoveredGarages[garageId] = true
   reloadRecoveryPrompt()
+  buildGarageSizes()
 end
 
 local function addDiscoveredGarage(garageId)
@@ -99,7 +115,6 @@ local function loadPurchasedGarages()
   reloadRecoveryPrompt()
 end
 
-
 local function getTotalGarageCapacity()
   local totalCapacity = 0
   local garages = freeroam_facilities.getFacilitiesByType("garage")
@@ -113,6 +128,15 @@ local function getTotalGarageCapacity()
   end
   
   return totalCapacity
+end
+
+local function fillGarages()
+  local vehicles = career_modules_inventory.getVehicles()
+  for id, vehicle in pairs(vehicles) do
+    if not vehicle.location then
+      career_modules_inventory.moveVehicleToGarage(id)
+    end
+  end
 end
 
 local function onCareerModulesActivated()
@@ -169,8 +193,58 @@ local function cancelGaragePurchase()
   garageToPurchase = nil
 end
 
--- Add function to get space per garage
--- Add function get space left over by pulling inventory data and subtracting from the space at each garage
+local function isGarageSpace(garage)
+  if not garageSize[garage] then
+      return 0
+  end -- No size for garage
+  local vehicles = career_modules_inventory.getVehicles()
+  local storedLocation = {}
+  for id, vehicle in pairs(vehicles) do -- Builds stored location table
+      if vehicle.location then
+          if not storedLocation[vehicle.location] then
+              storedLocation[vehicle.location] = {}
+          end
+          table.insert(storedLocation[vehicle.location], id) -- Adds vehicle to location
+      end
+  end
+  dump(storedLocation)
+
+  local carsInGarage
+  if not storedLocation[garage] then
+    carsInGarage = 0
+  else
+    carsInGarage = #storedLocation[garage]
+  end
+  print(garageSize[garage] - carsInGarage)
+  return (garageSize[garage] - carsInGarage) > 0
+end
+
+local function getNextAvailableSpace()
+  for garage, owned in pairs(purchasedGarages) do
+    if not owned then goto continue end
+    if isGarageSpace(garage) then 
+      return garage
+    end
+    ::continue::
+  end
+  return nil
+end
+
+local function onWorldReadyState(state)
+  if state == 2 and career_career.isActive() then
+    buildGarageSizes()
+    fillGarages()
+  end
+end
+
+M.onExtensionLoaded = function()
+  if career_career.isActive() then
+    buildGarageSizes()
+    fillGarages()
+  end
+end
+
+M.onWorldReadyState = onWorldReadyState
 
 M.purchaseDefaultGarage = purchaseDefaultGarage
 
@@ -189,5 +263,11 @@ M.isDiscoveredGarage = isDiscoveredGarage
 M.loadPurchasedGarages = loadPurchasedGarages
 M.savePurchasedGarages = savePurchasedGarages
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
+
+-- Localization
+M.isGarageSpace = isGarageSpace
+M.getNextAvailableSpace = getNextAvailableSpace
+M.buildGarageSizes = buildGarageSizes
+M.fillGarages = fillGarages
 
 return M

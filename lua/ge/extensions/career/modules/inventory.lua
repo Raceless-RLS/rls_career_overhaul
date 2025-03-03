@@ -1762,6 +1762,31 @@ M.getAllFRECompletions = function()
   return vehicles[invId].FRECompletions
 end
 
+-- Garage Localization
+
+M.moveVehicleToGarage = function(id, garage)
+  if not garage then
+    garage = career_modules_garageManager.getNextAvailableSpace()
+  end
+  if vehicles[id] then 
+    vehicles[id].location = garage
+  end
+end
+
+M.switchGarageSpots = function(first, second)
+  local spot1 = vehicles[first].location
+  local spot2 = vehicles[second].location
+  if not spot1 or not spot2 then return nil end
+  vehicles[first].location = spot2
+  vehicles[second].location = spot1
+  return true
+end
+
+M.getVehicleLocation = function(id)
+  if not vehicles[id] then return nil end
+  return vehicles[id].location
+end
+
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
 M.getFRETimeToVehicle = getFRETimeToVehicle
 M.getFRECompletions = getFRECompletions
