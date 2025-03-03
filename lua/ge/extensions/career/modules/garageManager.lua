@@ -169,6 +169,9 @@ local function cancelGaragePurchase()
   garageToPurchase = nil
 end
 
+-- Add function to get space per garage
+-- Add function get space left over by pulling inventory data and subtracting from the space at each garage
+
 M.purchaseDefaultGarage = purchaseDefaultGarage
 
 M.showPurchaseGaragePrompt = showPurchaseGaragePrompt
