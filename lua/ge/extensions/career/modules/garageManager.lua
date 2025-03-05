@@ -115,18 +115,16 @@ local function loadPurchasedGarages()
   reloadRecoveryPrompt()
 end
 
-local function getTotalGarageCapacity()
+local function getFreeSlots()
   local totalCapacity = 0
-  local garages = freeroam_facilities.getFacilitiesByType("garage")
-  
-  if garages then
-    for _, garage in pairs(garages) do
-      if purchasedGarages[garage.id] then
-        totalCapacity = totalCapacity + (math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1)) or 0)
-      end
+  for garage, owned in pairs(purchasedGarages) do
+    if not owned then goto continue end
+    local value = 0
+    if M.isGarageSpace(garage, value) then 
+      totalCapacity = totalCapacity + value
     end
-  end
-  
+    ::continue::
+  end  
   return totalCapacity
 end
 
@@ -193,7 +191,7 @@ local function cancelGaragePurchase()
   garageToPurchase = nil
 end
 
-local function isGarageSpace(garage)
+local function isGarageSpace(garage, value)
   if not garageSize[garage] then
       return 0
   end -- No size for garage
@@ -207,7 +205,6 @@ local function isGarageSpace(garage)
           table.insert(storedLocation[vehicle.location], id) -- Adds vehicle to location
       end
   end
-  dump(storedLocation)
 
   local carsInGarage
   if not storedLocation[garage] then
@@ -215,7 +212,7 @@ local function isGarageSpace(garage)
   else
     carsInGarage = #storedLocation[garage]
   end
-  print(garageSize[garage] - carsInGarage)
+  value = garageSize[garage] - carsInGarage
   return (garageSize[garage] - carsInGarage) > 0
 end
 
@@ -254,7 +251,7 @@ M.canPay = canPay
 M.buyGarage = buyGarage
 M.cancelGaragePurchase = cancelGaragePurchase
 
-M.getTotalGarageCapacity = getTotalGarageCapacity
+M.getFreeSlots = getFreeSlots
 M.onCareerModulesActivated = onCareerModulesActivated
 M.isPurchasedGarage = isPurchasedGarage
 M.addPurchasedGarage = addPurchasedGarage

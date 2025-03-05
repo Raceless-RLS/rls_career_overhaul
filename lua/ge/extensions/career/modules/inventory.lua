@@ -376,13 +376,8 @@ local function assignInventoryIdToVehId(inventoryId, vehId)
   inventoryIdToVehId[inventoryId] = vehId
 end
 
-local function getNumberOfFreeSlots()
-  local ownedVehiclesAmount = 0
-  for inventoryId, vehicle in pairs(vehicles) do
-    if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
-  end
-  slotAmount = career_modules_garageManager.getTotalGarageCapacity()
-  return slotAmount - ownedVehiclesAmount
+local getNumberOfFreeSlots = function() 
+  return career_modules_garageManager.getFreeSlots()
 end
 
 local function hasFreeSlot()
