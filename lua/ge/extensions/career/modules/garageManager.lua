@@ -120,8 +120,8 @@ local function getFreeSlots()
   for garage, owned in pairs(purchasedGarages) do
     if not owned then goto continue end
     local value = 0
-    if M.isGarageSpace(garage, value) then 
-      totalCapacity = totalCapacity + value
+    if M.isGarageSpace(garage) then 
+      totalCapacity = totalCapacity + M.isGarageSpace(garage)[2]
     end
     ::continue::
   end  
@@ -212,14 +212,13 @@ local function isGarageSpace(garage, value)
   else
     carsInGarage = #storedLocation[garage]
   end
-  value = garageSize[garage] - carsInGarage
-  return (garageSize[garage] - carsInGarage) > 0
+  return {(garageSize[garage] - carsInGarage) > 0, garageSize[garage] - carsInGarage}
 end
 
 local function getNextAvailableSpace()
   for garage, owned in pairs(purchasedGarages) do
     if not owned then goto continue end
-    if isGarageSpace(garage) then 
+    if isGarageSpace(garage)[1] then 
       return garage
     end
     ::continue::
