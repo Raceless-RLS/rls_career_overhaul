@@ -187,7 +187,9 @@ local function resetPursuit()
 end
 
 local function onPursuitAction(vehId, data)
-    --   if vehId == be:getPlayerVehicleID(0) then
+    if vehId ~= be:getPlayerVehicleID(0) then
+      return
+    end
     local playerIsCop = getPlayerIsCop()
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
     if data.type == "start" then -- pursuit started
