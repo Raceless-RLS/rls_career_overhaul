@@ -29,13 +29,20 @@
           </div>
         </span>
 
-        <span class="compact status" v-if="!locked || locked.location">
+        <span class="compact status" v-if="(!locked || locked.location) && location != 'Storage'">
           {{ location }}
+        </span>
+        <span class="compact status" v-else-if="location == 'Storage'">
+          {{ data.niceLocation }}
         </span>
       </div>
 
       <div class="full row50">
-        <span>
+        <span v-if="location == 'Storage'">
+          Location:
+          {{ data.niceLocation }}
+        </span>
+        <span v-else>
           Location:
           {{ location }}
         </span>
@@ -137,6 +144,8 @@ const locked = computed(() => {
       res = { reason: "Rented Out", eta, location: "Movie Studio" }
     } else if (props.data.delayReason === "Police_certification") {
       res = { reason: "Certifying", eta, location: "Police Station" }
+    } else if (props.data.delayReason === "delivery") {
+      res = { reason: "Delivering", eta, location: "Delivering to " + props.data.niceLocation }
     } else {
       res = { reason: "Available in", eta }
     }
@@ -194,7 +203,7 @@ const locked = computed(() => {
 }
 
 .veh-tile {
-  width: 14em;
+  width: 20em;
   height: 12em;
 }
 

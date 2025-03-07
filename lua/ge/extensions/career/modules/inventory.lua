@@ -53,6 +53,27 @@ local function getClosestGarage(pos, levelName)
   return closestGarage
 end
 
+local function getClosestOwnedGarage(pos, levelName)
+  levelName = levelName or getCurrentLevelIdentifier()
+  local facilities = freeroam_facilities.getFacilities(levelName)
+  local playerPos = pos or getPlayerVehicle(0):getPosition()
+  local closestGarage
+  local minDist = math.huge
+  for _, garage in ipairs(facilities.garages) do
+    if not career_modules_garageManager.isPurchasedGarage(garage.id) then
+      goto continue
+    end
+    local zones = freeroam_facilities.getZonesForFacility(garage)
+    local dist = zones[1].center:distance(playerPos)
+    if dist < minDist then
+      closestGarage = garage
+      minDist = dist
+    end
+    ::continue::
+  end
+  return closestGarage
+end
+
 local function getClosestGarageAndSpot(pos, levelName)
   levelName = levelName or getCurrentLevelIdentifier()
   local facilities = freeroam_facilities.getFacilities(levelName)
@@ -376,13 +397,8 @@ local function assignInventoryIdToVehId(inventoryId, vehId)
   inventoryIdToVehId[inventoryId] = vehId
 end
 
-local function getNumberOfFreeSlots()
-  local ownedVehiclesAmount = 0
-  for inventoryId, vehicle in pairs(vehicles) do
-    if vehicle.owned then ownedVehiclesAmount = ownedVehiclesAmount + 1 end
-  end
-  slotAmount = career_modules_garageManager.getTotalGarageCapacity()
-  return slotAmount - ownedVehiclesAmount
+local getNumberOfFreeSlots = function() 
+  return career_modules_garageManager.getFreeSlots()
 end
 
 local function hasFreeSlot()
@@ -429,6 +445,9 @@ local function addVehicle(vehId, inventoryId, options)
     end
 
     assignInventoryIdToVehId(inventoryId, vehId)
+
+    local garage = getClosestOwnedGarage()
+    M.moveVehicleToGarage(inventoryId, garage.id)
 
     inventoryIdAfterUpdatingPartConditions = inventoryId
     vehicle:queueLuaCommand(string.format("if not partCondition.getConditions() then partCondition.initConditions() end obj:queueGameEngineLua('career_modules_inventory.updatePartConditions(%d, %d)')", vehId, inventoryId))
@@ -657,7 +676,6 @@ local function setupInventory(levelPath)
                   location.pos = levelGate:getPosition()
                   location.rot = levelGate:getRotation()
                 end
-                career_modules_garageManager.purchaseDefaultGarage()
               end
               if not levelGate and location.option == "garage" then
                 location.vehId = veh:getID()
@@ -882,11 +900,14 @@ end
 local function removeVehiclesFromGarageExcept(inventoryId)
   local garage = getClosestGarage()
   local inventoryIdsInGarage = getVehiclesInGarage(garage, true)
+  dump(inventoryIdsInGarage)
   for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
     if otherInventoryId ~= inventoryId then
       local vehInfo = vehicles[otherInventoryId]
       if vehInfo.owned then
+        print("owned")
         M.removeVehicleObject(otherInventoryId)
+        M.switchGarageSpots(otherInventoryId, inventoryId)
       end
     end
   end
@@ -919,6 +940,14 @@ local menuIsOpen
 local buttonsActive = {}
 local chooseButtonsData = {}
 local menuHeader
+
+local function isVehicleOnSite(inventoryId, garage)
+  local vehicle = vehicles[inventoryId]
+  if not vehicle or not vehicle.location then
+    return
+  end
+  return vehicle.location == garage.id
+end
 
 local function sendDataToUi()
   menuIsOpen = true
@@ -969,6 +998,7 @@ local function sendDataToUi()
     end
 
     vehicle.needsRepair = career_modules_insurance.inventoryVehNeedsRepair(vehicle.id)
+    vehicle.onSite = isVehicleOnSite(inventoryId, garage)
     if inventoryId == favoriteVehicle then
       vehicle.favorite = true
     end
@@ -983,6 +1013,8 @@ local function sendDataToUi()
     vehicle.sellPermission = career_modules_permissions.getStatusForTag("vehicleSelling", {inventoryId = inventoryId})
     vehicle.favoritePermission = career_modules_permissions.getStatusForTag("vehicleFavorite", {inventoryId = inventoryId})
     vehicle.storePermission = career_modules_permissions.getStatusForTag("vehicleStoring", {inventoryId = inventoryId})
+    vehicle.storePermission.allow = vehicle.storePermission.allow and (career_modules_garageManager.isGarageSpace(garage.id)[1] or M.getVehicleLocation(inventoryId) == garage.id)
+    vehicle.deliverPermission = { allow = (career_modules_garageManager.isGarageSpace(garage.id)[1] and vehicle.location ~= garage.id)}
     vehicle.licensePlateChangePermission = career_modules_permissions.getStatusForTag({"vehicleLicensePlate", "vehicleModification"}, {inventoryId = inventoryId})
     vehicle.returnLoanerPermission = career_modules_permissions.getStatusForTag("returnLoanedVehicle", {inventoryId = inventoryId})
   end
@@ -1763,6 +1795,49 @@ M.getAllFRECompletions = function()
   return vehicles[invId].FRECompletions
 end
 
+-- Garage Localization
+
+M.moveVehicleToGarage = function(id, garage)
+  if not garage or not career_modules_garageManager.isGarageSpace(garage) then
+    garage = career_modules_garageManager.getNextAvailableSpace()
+  end
+  if vehicles[id] then 
+    vehicles[id].location = garage
+    vehicles[id].niceLocation = career_modules_garageManager.garageIdToName(garage)
+  end
+end
+
+M.deliverVehicle = function(id, money)
+  local price = {money = {amount = money, canBeNegative = true}}
+  career_modules_payment.pay(price, {label = string.format("Delivering vehicle to garage"), tags = {"delivery"}})
+  delayVehicleAccess(id, 120, "delivery")
+  M.storeVehicle(id)
+end
+
+M.storeVehicle = function(id)
+  local garage = getClosestOwnedGarage()
+  if vehicles[id] then
+    vehicles[id].location = garage.id
+    vehicles[id].niceLocation = career_modules_garageManager.garageIdToName(garage.id)
+  end
+end
+
+M.switchGarageSpots = function(first, second)
+  local spot1 = vehicles[first].location
+  local spot2 = vehicles[second].location
+  if not spot1 or not spot2 then return nil end
+  vehicles[first].location = spot2
+  vehicles[first].niceLocation = career_modules_garageManager.garageIdToName(spot2)
+  vehicles[second].location = spot1
+  vehicles[second].niceLocation = career_modules_garageManager.garageIdToName(spot1)
+  return true
+end
+
+M.getVehicleLocation = function(id)
+  if not vehicles[id] then return nil end
+  return vehicles[id].location
+end
+
 M.saveFRETimeToVehicle = saveFRETimeToVehicle
 M.getFRETimeToVehicle = getFRETimeToVehicle
 M.getFRECompletions = getFRECompletions
@@ -1851,4 +1926,5 @@ M.addRepossession = addRepossession
 M.getRepossessions = getRepossessions
 M.addMovieRental = addMovieRental
 M.getMovieRentals = getMovieRentals
+M.getClosestOwnedGarage = getClosestOwnedGarage
 return M

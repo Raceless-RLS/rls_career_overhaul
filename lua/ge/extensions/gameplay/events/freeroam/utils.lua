@@ -254,6 +254,9 @@ local function getRaceLabel(raceName, altRoute, hotlap)
 end
 
 local function displayStagedMessage(vehId, raceName, getMessage)
+    if career_career.isActive() then
+        vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId) or vehId
+    end
     local race = races[raceName]
     local leaderboardEntry = leaderboardManager.getLeaderboardEntry(vehId, getRaceLabel(raceName)) or {}
     local careerMode = career_career.isActive()

@@ -66,6 +66,7 @@ local function onBeamNGTrigger(data)
     
     if triggerName:match("^switchTo_") then
         local levelName = triggerName:sub(10)
+        simTimeAuthority.pause(true)
         switchMap(levelName)
         return
     elseif triggerName:match("^setGate_") then

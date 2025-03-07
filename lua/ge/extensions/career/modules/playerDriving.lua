@@ -187,7 +187,9 @@ local function resetPursuit()
 end
 
 local function onPursuitAction(vehId, data)
-    --   if vehId == be:getPlayerVehicleID(0) then
+    if vehId ~= be:getPlayerVehicleID(0) then
+      return
+    end
     local playerIsCop = getPlayerIsCop()
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
     if data.type == "start" then -- pursuit started
@@ -237,7 +239,7 @@ local function onPursuitAction(vehId, data)
                 ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
                 if playerIsCop == false then
-                    local reward = math.floor(110 * data.score) / 100
+                    local reward = math.floor(110 * (data.score or 10)) / 100
                     career_modules_payment.reward({
                         money = {
                             amount = reward

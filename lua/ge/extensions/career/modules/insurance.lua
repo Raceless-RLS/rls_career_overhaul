@@ -1104,16 +1104,19 @@ local function onPursuitAction(vehId, data)
                 insuranceRate = 1.1 + (0.9 * (1 - math.exp(-(score - 600) / 2000)))
             end
             insuranceRate = math.floor(insuranceRate * 100) / 100
-            local vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-            local policyId = nil
-            if insuredInvVehs[tostring(vehId)] then
-                policyId = insuredInvVehs[tostring(vehId)]
+            local vehId
+            local policyId
+            if career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
+                vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+                if insuredInvVehs[tostring(vehId)] then
+                    policyId = insuredInvVehs[tostring(vehId)]
+                end
             end
-            M.changePolicyScore(policyId, insuranceRate)
             if not policyId then
                 policyId = 1
             end
-            if not hasLicensePlate(vehId) then
+            M.changePolicyScore(policyId, insuranceRate)
+            if not vehId or not hasLicensePlate(vehId) then
                 fine = fine * 2.5
             end
             if career_modules_hardcore.isHardcoreMode() then
@@ -1146,12 +1149,17 @@ local function onPursuitAction(vehId, data)
             end
 
             local eventDescription = arrested and "Arrested for " or "Ticketed for " .. table.concat(offenseNames, ", ")
-            if not hasLicensePlate(vehId) then
-                eventDescription = eventDescription .. " (no license plate)"
-            end
 
-            if career_modules_hardcore.isHardcoreMode() then
-                eventDescription = eventDescription .. "\nHardcore mode is enabled, all fines are tripled."
+            if not vehId then
+                eventDescription = eventDescription .. "(Foreign Vehicle)"
+            else
+                if not hasLicensePlate(vehId) then
+                    eventDescription = eventDescription .. " (No License Plate)"
+                end
+
+                if career_modules_hardcore.isHardcoreMode() then
+                    eventDescription = eventDescription .. "\nHardcore mode is enabled, all fines are tripled."
+                end
             end
 
             table.insert(plHistory.generalHistory.ticketEvents, {
@@ -1171,20 +1179,22 @@ local function onPursuitAction(vehId, data)
                 tags = {"fine", "criminal"}
             })
             local combinedMessage = string.format(
-                "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f",
-                eventDescription, fine, plPoliciesData[policyId].bonus
-            )
+                "%s\nYou have been fined: $%.2f\nYour insurance policy score is now: %.2f", eventDescription, fine,
+                plPoliciesData[policyId].bonus)
             ui_message(combinedMessage, 8, "Insurance", "info")
             career_saveSystem.saveCurrent()
-            local vehId = be:getPlayerVehicleID(0)
+            vehId = be:getPlayerVehicleID(0)
             local playerTrafficData = gameplay_traffic.getTrafficData()[vehId]
             if playerTrafficData and playerTrafficData.pursuit then
                 playerTrafficData.pursuit.mode = 0
                 playerTrafficData.pursuit.score = 0
             end
+
         end
     end
 end
+
+
 
 local function addTicketEvent(description, effectText, invVehId)
     local policyId = 1
