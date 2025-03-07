@@ -227,7 +227,10 @@ end
 
 local function garageIdToName(garageId)
   local garage = freeroam_facilities.getFacility("garage", garageId)
-  return garage.name
+  if garage then
+    return garage.name
+  end
+  return nil
 end
 
 local function getNextAvailableSpace()
