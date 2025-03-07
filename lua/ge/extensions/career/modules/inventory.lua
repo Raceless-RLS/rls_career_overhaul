@@ -53,6 +53,27 @@ local function getClosestGarage(pos, levelName)
   return closestGarage
 end
 
+local function getClosestOwnedGarage(pos, levelName)
+  levelName = levelName or getCurrentLevelIdentifier()
+  local facilities = freeroam_facilities.getFacilities(levelName)
+  local playerPos = pos or getPlayerVehicle(0):getPosition()
+  local closestGarage
+  local minDist = math.huge
+  for _, garage in ipairs(facilities.garages) do
+    if not career_modules_garageManager.isPurchasedGarage(garage.id) then
+      goto continue
+    end
+    local zones = freeroam_facilities.getZonesForFacility(garage)
+    local dist = zones[1].center:distance(playerPos)
+    if dist < minDist then
+      closestGarage = garage
+      minDist = dist
+    end
+    ::continue::
+  end
+  return closestGarage
+end
+
 local function getClosestGarageAndSpot(pos, levelName)
   levelName = levelName or getCurrentLevelIdentifier()
   local facilities = freeroam_facilities.getFacilities(levelName)
@@ -424,6 +445,9 @@ local function addVehicle(vehId, inventoryId, options)
     end
 
     assignInventoryIdToVehId(inventoryId, vehId)
+
+    local garage = getClosestOwnedGarage()
+    M.moveVehicleToGarage(inventoryId, garage.id)
 
     inventoryIdAfterUpdatingPartConditions = inventoryId
     vehicle:queueLuaCommand(string.format("if not partCondition.getConditions() then partCondition.initConditions() end obj:queueGameEngineLua('career_modules_inventory.updatePartConditions(%d, %d)')", vehId, inventoryId))
@@ -1774,7 +1798,7 @@ end
 -- Garage Localization
 
 M.moveVehicleToGarage = function(id, garage)
-  if not garage then
+  if not garage or not career_modules_garageManager.isGarageSpace(garage) then
     garage = career_modules_garageManager.getNextAvailableSpace()
   end
   if vehicles[id] then 
@@ -1791,7 +1815,7 @@ M.deliverVehicle = function(id, money)
 end
 
 M.storeVehicle = function(id)
-  local garage = getClosestGarage()
+  local garage = getClosestOwnedGarage()
   if vehicles[id] then
     vehicles[id].location = garage.id
     vehicles[id].niceLocation = career_modules_garageManager.garageIdToName(garage.id)
@@ -1799,12 +1823,8 @@ M.storeVehicle = function(id)
 end
 
 M.switchGarageSpots = function(first, second)
-  print("First: " .. first)
-  print("Second: " .. second)
   local spot1 = vehicles[first].location
   local spot2 = vehicles[second].location
-  print("First Location: " .. spot1)
-  print("Second Location: " .. spot2)
   if not spot1 or not spot2 then return nil end
   vehicles[first].location = spot2
   vehicles[first].niceLocation = career_modules_garageManager.garageIdToName(spot2)
@@ -1906,4 +1926,5 @@ M.addRepossession = addRepossession
 M.getRepossessions = getRepossessions
 M.addMovieRental = addMovieRental
 M.getMovieRentals = getMovieRentals
+M.getClosestOwnedGarage = getClosestOwnedGarage
 return M
