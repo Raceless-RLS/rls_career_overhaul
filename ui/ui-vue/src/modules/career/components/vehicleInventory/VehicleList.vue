@@ -329,11 +329,18 @@ const storeVehicle = () => {
   lua.career_modules_inventory.sendDataToUi()
 }
 
-const deliverVehicle = () => {
+const deliverVehicle = async () => {
   const vehicle = vehSelected.value
   popHide()
-  lua.career_modules_inventory.deliverVehicle(vehicle.id)
-  lua.career_modules_inventory.sendDataToUi()
+  let price = 5000
+  const res = await openConfirmation("", `Do you want to sell this vehicle for ${units.beamBucks(price)}?`, [
+    { label: $translate.instant("ui.common.yes"), value: true, extras: { default: true } },
+    { label: $translate.instant("ui.common.no"), value: false, extras: { accent: ACCENTS.secondary } },
+  ])
+  if (res) {
+    lua.career_modules_inventory.deliverVehicle(vehicle.id, price)
+    lua.career_modules_inventory.sendDataToUi()
+  }
 }
 
 const buyInsurance = () => {

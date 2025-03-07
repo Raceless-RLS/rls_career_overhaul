@@ -1783,8 +1783,10 @@ M.moveVehicleToGarage = function(id, garage)
   end
 end
 
-M.deliverVehicle = function(id)
-  delayVehicleAccess(id, 60, "delivery")
+M.deliverVehicle = function(id, money)
+  local price = {money = {amount = money, canBeNegative = true}}
+  career_modules_payment.pay(price, {label = string.format("Delivering vehicle to garage"), tags = {"delivery"}})
+  delayVehicleAccess(id, 120, "delivery")
   M.storeVehicle(id)
 end
 
