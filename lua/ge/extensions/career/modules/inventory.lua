@@ -876,11 +876,14 @@ end
 local function removeVehiclesFromGarageExcept(inventoryId)
   local garage = getClosestGarage()
   local inventoryIdsInGarage = getVehiclesInGarage(garage, true)
+  dump(inventoryIdsInGarage)
   for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
     if otherInventoryId ~= inventoryId then
       local vehInfo = vehicles[otherInventoryId]
       if vehInfo.owned then
+        print("owned")
         M.removeVehicleObject(otherInventoryId)
+        M.switchGarageSpots(otherInventoryId, inventoryId)
       end
     end
   end
@@ -913,6 +916,14 @@ local menuIsOpen
 local buttonsActive = {}
 local chooseButtonsData = {}
 local menuHeader
+
+local function isVehicleOnSite(inventoryId, garage)
+  local vehicle = vehicles[inventoryId]
+  if not vehicle or not vehicle.location then
+    return
+  end
+  return vehicle.location == garage.id
+end
 
 local function sendDataToUi()
   menuIsOpen = true
@@ -963,6 +974,7 @@ local function sendDataToUi()
     end
 
     vehicle.needsRepair = career_modules_insurance.inventoryVehNeedsRepair(vehicle.id)
+    vehicle.onSite = isVehicleOnSite(inventoryId, garage)
     if inventoryId == favoriteVehicle then
       vehicle.favorite = true
     end
@@ -977,6 +989,8 @@ local function sendDataToUi()
     vehicle.sellPermission = career_modules_permissions.getStatusForTag("vehicleSelling", {inventoryId = inventoryId})
     vehicle.favoritePermission = career_modules_permissions.getStatusForTag("vehicleFavorite", {inventoryId = inventoryId})
     vehicle.storePermission = career_modules_permissions.getStatusForTag("vehicleStoring", {inventoryId = inventoryId})
+    vehicle.storePermission.allow = vehicle.storePermission.allow and (career_modules_garageManager.isGarageSpace(garage.id)[1] or M.getVehicleLocation(inventoryId) == garage.id)
+    vehicle.deliverPermission = { allow = (career_modules_garageManager.isGarageSpace(garage.id)[1] and vehicle.location ~= garage.id)}
     vehicle.licensePlateChangePermission = career_modules_permissions.getStatusForTag({"vehicleLicensePlate", "vehicleModification"}, {inventoryId = inventoryId})
     vehicle.returnLoanerPermission = career_modules_permissions.getStatusForTag("returnLoanedVehicle", {inventoryId = inventoryId})
   end
@@ -1765,15 +1779,35 @@ M.moveVehicleToGarage = function(id, garage)
   end
   if vehicles[id] then 
     vehicles[id].location = garage
+    vehicles[id].niceLocation = career_modules_garageManager.garageIdToName(garage)
+  end
+end
+
+M.deliverVehicle = function(id)
+  delayVehicleAccess(id, 60, "delivery")
+  M.storeVehicle(id)
+end
+
+M.storeVehicle = function(id)
+  local garage = getClosestGarage()
+  if vehicles[id] then
+    vehicles[id].location = garage.id
+    vehicles[id].niceLocation = career_modules_garageManager.garageIdToName(garage.id)
   end
 end
 
 M.switchGarageSpots = function(first, second)
+  print("First: " .. first)
+  print("Second: " .. second)
   local spot1 = vehicles[first].location
   local spot2 = vehicles[second].location
+  print("First Location: " .. spot1)
+  print("Second Location: " .. spot2)
   if not spot1 or not spot2 then return nil end
   vehicles[first].location = spot2
+  vehicles[first].niceLocation = career_modules_garageManager.garageIdToName(spot2)
   vehicles[second].location = spot1
+  vehicles[second].niceLocation = career_modules_garageManager.garageIdToName(spot1)
   return true
 end
 

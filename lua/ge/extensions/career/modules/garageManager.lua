@@ -99,9 +99,12 @@ end
 
 local function fillGarages()
   local vehicles = career_modules_inventory.getVehicles()
-  for id, vehicle in ipairs(vehicles) do
+  for id, vehicle in pairs(vehicles) do
     if not vehicle.location then
       career_modules_inventory.moveVehicleToGarage(id)
+    end
+    if not vehicle.niceLocation then
+      career_modules_inventory.moveVehicleToGarage(id, vehicle.location)
     end
   end
 end
@@ -222,6 +225,11 @@ local function getFreeSlots()
   return totalCapacity
 end
 
+local function garageIdToName(garageId)
+  local garage = freeroam_facilities.getFacility("garage", garageId)
+  return garage.name
+end
+
 local function getNextAvailableSpace()
   for garage, owned in pairs(purchasedGarages) do
     if not owned then goto continue end
@@ -259,6 +267,7 @@ M.isDiscoveredGarage = isDiscoveredGarage
 M.loadPurchasedGarages = loadPurchasedGarages
 M.savePurchasedGarages = savePurchasedGarages
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
+M.garageIdToName = garageIdToName
 
 -- Localization
 M.isGarageSpace = isGarageSpace

@@ -15,6 +15,10 @@
           :accent="ACCENTS.menu" disabled>
           {{ buttonData.buttonText }} (Needs repair)
         </BngButton>
+        <BngButton v-else-if="!vehSelected.onSite"
+          :accent="ACCENTS.menu" disabled>
+          {{ buttonData.buttonText }} (Offsite)
+        </BngButton>
         <BngButton v-else-if="isFunctionAvailable(vehSelected, buttonData)"
           :accent="ACCENTS.menu"
           @click="vehicleInventoryStore.chooseVehicle(vehSelected.id, index)">
@@ -48,6 +52,12 @@
         :disabled="!vehSelected.storePermission.allow"
         @click="storeVehicle()">
         Put in storage
+      </BngButton>
+      <BngButton
+        v-if="vehSelected.deliverPermission.allow"
+        :accent="ACCENTS.menu"
+        @click="deliverVehicle()">
+        Deliver to garage
       </BngButton>
       <BngButton
         v-if="!vehSelected.ownsRequiredInsurance"
@@ -314,7 +324,15 @@ const setFavoriteVehicle = () => {
 const storeVehicle = () => {
   const vehicle = vehSelected.value
   popHide()
+  lua.career_modules_inventory.storeVehicle(vehicle.id)
   lua.career_modules_inventory.removeVehicleObject(vehicle.id)
+  lua.career_modules_inventory.sendDataToUi()
+}
+
+const deliverVehicle = () => {
+  const vehicle = vehSelected.value
+  popHide()
+  lua.career_modules_inventory.deliverVehicle(vehicle.id)
   lua.career_modules_inventory.sendDataToUi()
 }
 
