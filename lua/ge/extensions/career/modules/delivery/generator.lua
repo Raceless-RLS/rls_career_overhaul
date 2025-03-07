@@ -129,13 +129,13 @@ local function getMoneyRewardForParcelItem(item, distance)
   local basePrice = math.sqrt(item.slots) / 4
   local distanceExp = 1.3 + math.sqrt(item.slots)/100
   local pricePerM = 2 + math.pow(item.weight, 0.6)
-  --local modMultiplier = 1---0.9 + 0.1 * #item.modifiers
-  --for _, mod in ipairs(item.modifiers) do
-  --  modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
-  --end
+  local modMultiplier = 1---0.9 + 0.1 * #item.modifiers
+  for _, mod in ipairs(item.modifiers) do
+    modMultiplier = modMultiplier * (mod.moneyMultipler or 1)
+  end
 
   -- cleanup
-  return ((basePrice) + math.pow(distance/1000, distanceExp) * pricePerM) * hardcoreMultiplier * parcelItemMoneyMultiplier --[[* modMultiplier]], basePrice, pricePerM
+  return ((basePrice) + math.pow(distance/1000, distanceExp) * pricePerM) * hardcoreMultiplier * parcelItemMoneyMultiplier * modMultiplier, basePrice, pricePerM
 
 end
 
