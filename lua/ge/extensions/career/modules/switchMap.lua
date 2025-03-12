@@ -3,6 +3,8 @@ local M = {}
 
 M.dependencies = {'career_career'}
 
+local maps = {}
+
 local function switchMap(levelName)
     local currentLevel = getCurrentLevelIdentifier()
     if currentLevel == levelName then return end
@@ -75,8 +77,65 @@ local function onBeamNGTrigger(data)
     end
 end
 
+local function loadMapData()
+    if getCurrentLevelIdentifier() then
+        local level = "levels/" .. getCurrentLevelIdentifier() .. "/map_data.json"
+        local mapData = jsonReadFile(level)
+        if mapData then
+            maps = mapData.maps or {}
+        end
+        return deepcopy(maps)  
+    end
+    return {}
+end
+
+local function onExtensionLoaded()
+    if getCurrentLevelIdentifier() then
+        maps = loadMapData()
+    end
+    print("Switch Map Extension Loaded")
+end
+
+local function formatLevelGatePoi(level, levelName)
+    local switchToObj = scenetree.findObject("switchTo_" .. level)
+    local pos = switchToObj and switchToObj:getPosition() or nil
+    
+    if not pos then return nil end
+
+    local levelIdentifier = getCurrentLevelIdentifier()
+    local preview = "/levels/" .. levelIdentifier .. "/facilities/switchMap/" .. level .. ".jpg"
+
+    return {
+        id = level,
+        data = {
+            type = "travel",
+            facility = {}
+        },
+        markerInfo = {
+            bigmapMarker = {
+                pos = pos,
+                icon = "poi_fasttravel_round_orange_green",
+                name = levelName,
+                description = "Travel to " .. levelName,
+                previews = {preview},
+                thumbnail = preview
+            }
+        }
+    }
+end
+
+function M.onGetRawPoiListForLevel(levelIdentifier, elements)
+    for level, levelName in pairs(maps) do
+        local poi = formatLevelGatePoi(level, levelName)
+        if poi then
+            table.insert(elements, poi)
+        end
+    end
+end
+
 M.onBeamNGTrigger = onBeamNGTrigger
 M.onSetupInventoryFinished = onSetupInventoryFinished
 M.onWorldReadyState = onWorldReadyState
+M.onExtensionLoaded = onExtensionLoaded
 
 return M
