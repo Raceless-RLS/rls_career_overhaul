@@ -187,7 +187,8 @@ local function resetPursuit()
 end
 
 local function onPursuitAction(vehId, data)
-    if vehId ~= be:getPlayerVehicleID(0) then
+    local playerIsCop = getPlayerIsCop()
+    if vehId ~= be:getPlayerVehicleID(0) and playerIsCop == false then
       return
     end
     local playerIsCop = getPlayerIsCop()
