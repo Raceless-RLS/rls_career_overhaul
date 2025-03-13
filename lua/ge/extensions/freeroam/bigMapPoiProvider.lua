@@ -241,7 +241,7 @@ M.sendCurrentLevelMissionsToBigmap = function()
       elseif poi.data.type == 'spawnPoint' then
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['type_spawnPoint'] = true
-      elseif poi.data.type == 'garage' then
+      elseif poi.data.type == 'computer' then
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['type_garage'] = true
       elseif poi.data.type == 'gasStation' then

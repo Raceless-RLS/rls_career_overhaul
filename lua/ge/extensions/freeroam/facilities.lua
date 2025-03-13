@@ -409,7 +409,6 @@ local function onGetRawPoiListForLevel(levelIdentifier, elements)
       M.walkingMarkerFormatFacility(dealership, elements)
     end
     for i, computer in ipairs(facilities.computers or {}) do
-      computer.type = "garage"
       M.walkingMarkerFormatFacility(computer, elements)
     end
     --for i, garage in ipairs(facilities.garages or {}) do
