@@ -141,6 +141,7 @@ M.sendCurrentLevelMissionsToBigmap = function()
     type_dealership = {label = "Dealerships"},
     type_events = {label = "Free-Roam Events"}, -- Create a type for sections
     type_travel = {label = "Travel Points"},
+    type_assignRole = {label = "Role Assignment"},
     type_other = {label = "Other"},
 
     delivery_facility = {label = "Delivery Facility"},
@@ -259,6 +260,9 @@ M.sendCurrentLevelMissionsToBigmap = function()
       elseif poi.data.type == "logisticsParking" then
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['delivery_dropoff'] = true
+      elseif poi.data.type == "assignRole" then
+        data.poiData[poi.id] = M.formatPoiForBigmap(poi)
+        filterData.groupTags['type_assignRole'] = true
       elseif poi.data.type == 'logisticsOffice' then
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['delivery_facility'] = true
@@ -359,6 +363,7 @@ M.sendCurrentLevelMissionsToBigmap = function()
       groupData['type_other'],
       groupData['type_events'], -- Added types here for sections
       groupData['type_travel'],
+      groupData['type_assignRole'],
     }
   }
   table.insert(filterBranchTag.groups, groupData[noBranch])
