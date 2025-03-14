@@ -43,12 +43,6 @@ local function setLevelGate(levelName)
     end
 end
 
-local function onWorldReadyState(state)
-    if state == 2 and getCurrentLevelIdentifier() == "west_coast_usa" then
-        setLevelGate("italy")
-    end
-end
-
 local function onSetupInventoryFinished()
     if getCurrentLevelIdentifier() == "west_coast_usa" then
         setLevelGate("italy")
@@ -87,6 +81,15 @@ local function loadMapData()
         return deepcopy(maps)  
     end
     return {}
+end
+
+local function onWorldReadyState(state)
+    if state == 2 then
+        maps = loadMapData()
+        if getCurrentLevelIdentifier() == "west_coast_usa" then
+            setLevelGate("italy")
+        end
+    end
 end
 
 local function onExtensionLoaded()
