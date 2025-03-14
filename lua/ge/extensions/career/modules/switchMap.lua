@@ -89,7 +89,7 @@ local function loadMapData()
     return {}
 end
 
-local function onInit()
+local function onExtensionLoaded()
     if getCurrentLevelIdentifier() then
         maps = loadMapData()
     end
@@ -136,6 +136,6 @@ end
 M.onBeamNGTrigger = onBeamNGTrigger
 M.onSetupInventoryFinished = onSetupInventoryFinished
 M.onWorldReadyState = onWorldReadyState
-M.onInit = onInit
+M.onExtensionLoaded = onExtensionLoaded
 
 return M
