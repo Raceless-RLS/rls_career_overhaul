@@ -100,6 +100,9 @@ local function onExtensionLoaded()
 end
 
 local function formatLevelGatePoi(level, levelName)
+    local compatibleMaps = careerMaps.getCompatibleMaps()
+    if not compatibleMaps[level] then return nil end
+
     local switchToObj = scenetree.findObject("switchTo_" .. level)
     local pos = switchToObj and switchToObj:getPosition() or nil
     

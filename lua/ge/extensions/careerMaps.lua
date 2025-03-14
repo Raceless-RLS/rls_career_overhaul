@@ -1,6 +1,8 @@
 local M = {}
 
-local compatibleMaps = {"west_coast_usa"}
+local compatibleMaps = {
+    ["west_coast_usa"] = true
+}
 
 local function retrieveCompatibleMaps()
     extensions.hook("onGetMaps")
@@ -8,7 +10,7 @@ end
 
 local function returnCompatibleMap(map)
     if not compatibleMaps[map] then
-        table.insert(compatibleMaps, map)
+        compatibleMaps[map] = true
     end
 end
 
