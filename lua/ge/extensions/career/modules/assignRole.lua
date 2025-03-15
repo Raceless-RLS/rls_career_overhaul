@@ -15,6 +15,10 @@ local function canPay()
     return career_modules_payment.canPay(certificationPrice)
 end
 
+local roleAssignments = {
+    ["policeAssignment"] = "Police"
+}
+
 local function startCertification()
     guihooks.trigger('ChangeState', {
         state = 'play',
@@ -89,6 +93,43 @@ end
 
 local function requestAssignmentData()
     return assignmentData
+end
+
+local function formatAssignRolePoi(role, roleName)
+    local switchToObj = scenetree.findObject(role)
+    local pos = switchToObj and switchToObj:getPosition() or nil
+    
+    if not pos then return nil end
+
+    local levelIdentifier = getCurrentLevelIdentifier()
+    local preview = "/levels/" .. levelIdentifier .. "/facilities/roleAssignment/" .. role .. ".jpg"
+
+    return {
+        id = role,
+        data = {
+            type = "assignRole",
+            facility = {}
+        },
+        markerInfo = {
+            bigmapMarker = {
+                pos = pos,
+                icon = "poi_fasttravel_round_orange_green",
+                name = roleName .. " Certification",
+                description = "Certify your vehicle as a " .. roleName .. " Vehicle",
+                previews = {preview},
+                thumbnail = preview
+            }
+        }
+    }
+end
+
+function M.onGetRawPoiListForLevel(levelIdentifier, elements)
+    for role, roleName in pairs(roleAssignments) do
+        local poi = formatAssignRolePoi(role, roleName)
+        if poi then
+            table.insert(elements, poi)
+        end
+    end
 end
 
 M.canPay = canPay

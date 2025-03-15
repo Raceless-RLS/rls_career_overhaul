@@ -5,6 +5,8 @@ import { lua } from "@/bridge"
 export const useVehicleShoppingStore = defineStore("vehicleShopping", () => {
   // States
   const vehicleShoppingData = ref({})
+  const searchQuery = ref('')
+  
   const filteredVehicles = computed(() => {
     const d = vehicleShoppingData.value
     if (!d.vehiclesInShop) return []
@@ -20,6 +22,25 @@ export const useVehicleShoppingStore = defineStore("vehicleShopping", () => {
     }, [])
 
     if (filteredList.length) filteredList.sort((a, b) => a.Value - b.Value)
+
+    // Apply search filtering if searchQuery exists
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase().trim()
+      filteredList = filteredList.filter(vehicle => {
+        const searchFields = [
+          vehicle.Name,
+          vehicle.Brand,
+          vehicle.niceName,
+          vehicle.model_key,
+          vehicle.config_name,
+        ]
+        
+        // Check each field that might contain what user is searching for
+        return searchFields.some(field => {
+          return field && field.toString().toLowerCase().includes(query)
+        })
+      })
+    }
 
     return filteredList
   })
@@ -46,14 +67,39 @@ export const useVehicleShoppingStore = defineStore("vehicleShopping", () => {
     // Sort vehicles by price within each dealer
     Object.values(grouped).forEach(dealer => {
       dealer.vehicles.sort((a, b) => a.Value - b.Value)
+      
+      // Apply search filtering if searchQuery exists
+      if (searchQuery.value) {
+        const query = searchQuery.value.toLowerCase().trim()
+        dealer.vehicles = dealer.vehicles.filter(vehicle => {
+          const searchFields = [
+            vehicle.Name,
+            vehicle.Brand,
+            vehicle.niceName,
+            vehicle.model_key,
+            vehicle.config_name,
+          ]
+          
+          // Check each field that might contain what user is searching for
+          return searchFields.some(field => {
+            return field && field.toString().toLowerCase().includes(query)
+          })
+        })
+      }
     })
 
-    return Object.values(grouped)
+    // Only return dealers with vehicles (after filtering)
+    return Object.values(grouped).filter(dealer => dealer.vehicles.length > 0)
   })
 
   // Actions
   const requestVehicleShoppingData = async () => {
     vehicleShoppingData.value = await lua.career_modules_vehicleShopping.getShoppingData()
+  }
+  
+  // Add a method to set the search query
+  const setSearchQuery = (query) => {
+    searchQuery.value = query
   }
 
   return {
@@ -61,5 +107,7 @@ export const useVehicleShoppingStore = defineStore("vehicleShopping", () => {
     filteredVehicles,
     vehiclesByDealer,
     requestVehicleShoppingData,
+    searchQuery,
+    setSearchQuery,
   }
 })

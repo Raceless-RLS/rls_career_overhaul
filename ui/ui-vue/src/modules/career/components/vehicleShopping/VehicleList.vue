@@ -7,7 +7,13 @@
       </BngButton>
       <div class="spacer"></div>
       <div class="field">
-        <span>{{ getHeaderText() }}</span>
+        <BngInput 
+          v-model="localSearchQuery"
+          placeholder="Search for a vehicle"
+          @focus="inputFocused = true"
+          @blur="triggerSearch"
+          @keydown.enter="triggerSearch"
+        />
       </div>
       <div class="spacer" style="width: 8em"></div>
     </div>
@@ -30,11 +36,20 @@
           :vehicle="vehicle" />
       </div>
       
-      <!-- Show dealer sections if browsing all dealers -->
+      <!-- Show all vehicles in a flat list when searching -->
+      <div v-else-if="hasActiveSearch" class="vehicle-list">
+        <VehicleCard
+          v-for="(vehicle, key) in allFilteredVehicles"
+          :key="vehicle.shopId"
+          :vehicleShoppingData="vehicleShoppingStore.vehicleShoppingData"
+          :vehicle="vehicle" />
+      </div>
+      
+      <!-- Show dealer sections if browsing all dealers without search -->
       <div v-else>
         <Accordion class="dealer-groups" singular>
           <AccordionItem
-            v-for="dealer in sortedDealers"
+            v-for="dealer in vehicleShoppingStore.vehiclesByDealer"
             :key="dealer.id"
             :data-dealerid="dealer.id"
             navigable
@@ -74,9 +89,9 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref, computed } from "vue"
+import { reactive, onMounted, ref, computed, watch } from "vue"
 import VehicleCard from "./VehicleCard.vue"
-import { BngCard, BngButton, ACCENTS, BngBinding } from "@/common/components/base"
+import { BngCard, BngButton, ACCENTS, BngBinding, BngInput } from "@/common/components/base"
 import { vBngBlur, vBngOnUiNav } from "@/common/directives"
 import { lua } from "@/bridge"
 import { useVehicleShoppingStore } from "../../stores/vehicleShoppingStore"
@@ -87,6 +102,55 @@ useUINavScope("vehicleList")
 
 const vehicleShoppingStore = useVehicleShoppingStore()
 const dealerMetadata = ref({})
+const inputFocused = ref(false)
+const localSearchQuery = ref('')
+const activeSearchQuery = ref('')
+
+// Trigger search only on explicit action (Enter key or blur)
+const triggerSearch = () => {
+  activeSearchQuery.value = localSearchQuery.value.trim()
+  inputFocused.value = false // Reset focus state
+}
+
+// Use a separate variable to track if we have an active search
+const hasActiveSearch = computed(() => activeSearchQuery.value.length > 0)
+
+// Collect all vehicles across all dealers when searching
+const allFilteredVehicles = computed(() => {
+  if (!hasActiveSearch.value) return []
+  
+  const query = activeSearchQuery.value.toLowerCase()
+  let allVehicles = []
+  
+  // If we're at a specific dealer, use filteredVehicles
+  if (vehicleShoppingStore?.vehicleShoppingData?.currentSeller) {
+    return vehicleShoppingStore.filteredVehicles
+  }
+  
+  // Otherwise collect vehicles from all dealers
+  vehicleShoppingStore.vehiclesByDealer.forEach(dealer => {
+    dealer.vehicles.forEach(vehicle => {
+      const searchFields = [
+        vehicle.Name,
+        vehicle.Brand, 
+        vehicle.niceName,
+        vehicle.model_key,
+        vehicle.config_name,
+      ]
+      
+      const matchesSearch = searchFields.some(field => 
+        field && field.toString().toLowerCase().includes(query)
+      )
+      
+      if (matchesSearch) {
+        allVehicles.push(vehicle)
+      }
+    })
+  })
+  
+  // Sort by price
+  return allVehicles.sort((a, b) => a.Value - b.Value)
+})
 
 // Fetch dealership data on component mount
 onMounted(async () => {
@@ -166,7 +230,6 @@ const sortedDealers = computed(() => {
       border-radius: var(--bng-corners-1);
       background-color: var(--bng-cool-gray-900);
       // border: 0.0625rem solid var(--bng-cool-gray-600);
-      padding: 0.5rem 0.75rem;
       flex: 1 1 auto;
       text-overflow: ellipsis;
       color: white;
@@ -236,7 +299,6 @@ const sortedDealers = computed(() => {
 .dealer-groups {
   min-height: 0;
   max-height: 80vh;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }

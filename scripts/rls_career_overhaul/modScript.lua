@@ -49,6 +49,18 @@ local function loadExtensions()
     extensions.load("careerMaps")
     setExtensionUnloadMode("careerMaps", "manual")
 
+    if extensions.isExtensionLoaded("freeroam_facilities") then
+        extensions.unload("freeroam_facilities")
+    end
+    extensions.load("freeroam_facilities")
+    setExtensionUnloadMode("freeroam_facilities", "manual")
+    
+    if extensions.isExtensionLoaded("freeroam_bigMapPoiProvider") then
+        extensions.unload("freeroam_bigMapPoiProvider")
+    end
+    extensions.load("freeroam_bigMapPoiProvider")
+    setExtensionUnloadMode("freeroam_bigMapPoiProvider", "manual")
+
     if extensions.isExtensionLoaded("UIloader") then
         extensions.unload("UIloader")
     end
