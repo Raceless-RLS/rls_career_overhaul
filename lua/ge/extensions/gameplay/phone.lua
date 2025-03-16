@@ -7,6 +7,7 @@ local updateTimer = 0
 local updateInterval = 2.5
 
 local function togglePhone(reason)
+    ui_phone_time.clearTime()
     if isPhoneOpen then
         isPhoneOpen = false
         guihooks.trigger('closePhone')

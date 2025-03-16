@@ -32,8 +32,13 @@ local function requestTimeUpdate()
     guihooks.trigger("phone_time_update", time)
 end
 
+local function clearTime()
+    time = nil
+end
+
 M.onUpdate = onUpdate
 M.onExtensionLoaded = onExtensionLoaded
 M.requestTimeUpdate = requestTimeUpdate
+M.clearTime = clearTime
 
 return M
