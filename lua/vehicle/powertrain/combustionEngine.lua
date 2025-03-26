@@ -748,7 +748,7 @@ local function updateTorque(device, dt)
   device.engineWorkPerUpdate = device.engineWorkPerUpdate + burnEnergy
   device.frictionLossPerUpdate = device.frictionLossPerUpdate + finalFriction * absEngineAV * dt
   device.pumpingLossPerUpdate = device.pumpingLossPerUpdate + finalDynamicFriction * engineAV * engineAV * dt
-  local invBurnEfficiency = device.invBurnEfficiencyTable[floor(device.instantEngineLoad * 100)] * device.invBurnEfficiencyCoef * 15
+  local invBurnEfficiency = device.invBurnEfficiencyTable[floor(device.instantEngineLoad * 100)] * device.invBurnEfficiencyCoef * 2.5
   device.spentEnergy = device.spentEnergy + burnEnergy * invBurnEfficiency
   device.spentEnergyNitrousOxide = device.spentEnergyNitrousOxide + burnEnergyNitrousOxide * invBurnEfficiency
 
