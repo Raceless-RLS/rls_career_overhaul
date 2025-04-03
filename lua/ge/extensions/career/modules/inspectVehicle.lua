@@ -44,7 +44,7 @@ end
 local function despawnCurrentVehicle()
   if not testDriveVehInfo then return end
 
-  local veh = be:getObjectByID(testDriveVehInfo.vehId)
+  local veh = getObjectByID(testDriveVehInfo.vehId)
   if veh then
     veh:delete()
     testDriveVehInfo = nil
@@ -224,7 +224,7 @@ local function startInspection(vehicleInfo, teleportToVehicle)
 end
 
 local function buySpawnedVehicle(buyVehicleOptions)
-  local vehObj = be:getObjectByID(testDriveVehInfo.vehId)
+  local vehObj = getObjectByID(testDriveVehInfo.vehId)
   core_vehicleBridge.executeAction(vehObj, 'setFreeze', false)
   career_modules_vehicleShopping.buySpawnedVehicle(buyVehicleOptions)
   career_modules_tether.removeTether(leaveSaleTether)
@@ -235,7 +235,7 @@ local function buySpawnedVehicle(buyVehicleOptions)
 end
 
 local function sendUIData()
-  local veh = be:getObjectByID(testDriveVehInfo.vehId)
+  local veh = getObjectByID(testDriveVehInfo.vehId)
   if not veh then return end
 
   core_vehicleBridge.requestValue(veh,
@@ -255,7 +255,7 @@ end
 local function onUpdate(dtReal, dtSim, dtRaw)
   if not testDriveVehInfo then return end
 
-  local vehObj = be:getObjectByID(testDriveVehInfo.vehId)
+  local vehObj = getObjectByID(testDriveVehInfo.vehId)
 
   local playerVehObj = getPlayerVehicle(0)
   local distanceToVeh = vehObj:getPosition():distance(playerVehObj:getPosition())

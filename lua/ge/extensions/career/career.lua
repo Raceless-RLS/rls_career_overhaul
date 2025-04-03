@@ -373,7 +373,7 @@ end
 local function formatSaveSlotForUi(saveSlot)
   local data = {}
   data.id = saveSlot
-  
+
   -- Add preview image based on level
   local levelPreviewMap = {
     west_coast_usa = "/ui/modules/career/profilePreview_WCUSA.jpg",
@@ -406,11 +406,15 @@ local function formatSaveSlotForUi(saveSlot)
     data.branches = {}
 
     for _, br in ipairs(career_branches.getSortedBranches()) do
-      if br.isBranch then
+      if br.isBranch and br.parentDomain == "apm" then
         local attKey = br.attributeKey
         local brData = deepcopy(career_modules_playerAttributes.getAttribute(attKey) or {value=br.defaultValue or 0})
         brData.level, brData.curLvlProgress, brData.neededForNext = career_branches.calcBranchLevelFromValue(brData.value, br.id)
         brData.id = attKey
+        brData.icon = br.icon
+        brData.color = br.color
+        brData.label = br.name
+        brData.levelLabel = {txt='ui.career.lvlLabel', context={lvl=brData.level}}
         table.insert(data.branches, brData)
         -- remove this assigment once UI side works with the new branch list
         data[attKey] = brData
@@ -418,7 +422,6 @@ local function formatSaveSlotForUi(saveSlot)
     end
     data.currentVehicle = career_modules_inventory.getCurrentVehicle() and career_modules_inventory.getVehicles()[career_modules_inventory.getCurrentVehicle()]
   else
-
     -- save slot from file
     local attData = jsonReadFile(autosavePath .. "/career/playerAttributes.json")
     local inventoryData = jsonReadFile(autosavePath .. "/career/inventory.json")
@@ -430,11 +433,17 @@ local function formatSaveSlotForUi(saveSlot)
       data.beamXP.level, data.beamXP.curLvlProgress, data.beamXP.neededForNext = getBeamXPLevel(data.beamXP.value)
       data.branches = {}
       for _, br in ipairs(career_branches.getSortedBranches()) do
-        if br.isBranch then
+        if br.isBranch and br.parentDomain == "apm" then
           local attKey = br.attributeKey
-          local brData = deepcopy(attData[attKey] or {value=br.defaultValue or 0})
+          local newAttKey = career_branches.newAttributeNamesToOldNames[attKey] or attKey
+          local brData = deepcopy(attData[newAttKey] or attData[attKey] or {value=br.defaultValue or 0})
           brData.level, brData.curLvlProgress, brData.neededForNext = career_branches.calcBranchLevelFromValue(brData.value, br.id)
           brData.id = attKey
+          brData.icon = br.icon
+          brData.color = br.color
+          brData.label = br.name
+          brData.levelLabel = {txt='ui.career.lvlLabel', context={lvl=brData.level}}
+
           table.insert(data.branches, brData)
           -- remove this assigment once UI side works with the new branch list
           data[attKey] = brData
@@ -548,9 +557,11 @@ end
 local function requestPause(pause)
   if careerActive then
     if
-      pause == simTimeAuthority.getPause()
+      freeroam_bigMapMode.bigMapActive() -- when switching to bigmap, dont mess with the pause state
+      or pause == simTimeAuthority.getPause()
       or physicsPausedFromOutside
-      then return end
+      then return
+    end
     simTimeAuthority.pause(pause)
     physicsPausedFromOutside = false
   end
@@ -598,7 +609,10 @@ local function getAdditionalMenuButtons()
     table.insert(ret, {label = "Map", luaFun = "freeroam_bigMapMode.enterBigMap({instant=true})"})
   end
   if not career_modules_linearTutorial.isLinearTutorialActive() and M.hasBoughtStarterVehicle() then
-    table.insert(ret, {label = "Progress", luaFun = "guihooks.trigger('ChangeState', {state = 'progressLanding'})", showIndicator = career_modules_milestones_milestones.unclaimedMilestonesCount() > 0})
+    table.insert(ret, {label = "Progress", luaFun = "guihooks.trigger('ChangeState', {state = 'domainSelection'})", showIndicator = career_modules_milestones_milestones.unclaimedMilestonesCount() > 0})
+  end
+  if career_modules_vehiclePerformance.isTestInProgress() then
+    table.insert(ret, {label = "Cancel Certification", luaFun = "career_modules_vehiclePerformance.cancelTest()", showIndicator = true})
   end
   return ret
 end

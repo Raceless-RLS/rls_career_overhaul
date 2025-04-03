@@ -572,6 +572,19 @@ local function updateGFX(device, dt)
     device:lockUp()
   end
 
+  local compressionBrakeCoefAdjusted = device.throttle > 0 and 0 or device.compressionBrakeCoefDesired
+  if compressionBrakeCoefAdjusted ~= device.compressionBrakeCoefActual then
+    device.compressionBrakeCoefActual = compressionBrakeCoefAdjusted
+    device:setEngineSoundParameter(device.engineSoundIDExhaust, "compression_brake_coef", device.compressionBrakeCoefActual, "exhaust")
+  end
+
+  local antiLagCoefAdjusted = device.antiLagCoefDesired
+  if antiLagCoefAdjusted ~= device.antiLagCoefActual then
+    device.antiLagCoefActual = antiLagCoefAdjusted
+    device:setEngineSoundParameter(device.engineSoundIDExhaust, "triggerAntilag", device.antiLagCoefActual, "exhaust")
+    device.turbocharger.setAntilagCoef(device.antiLagCoefActual)
+  end
+
   device.exhaustFlowDelay:push(device.engineLoad)
 
   --push our summed fuels into the delay lines (shift fuel does not have any delay and therefore does not need a line)
@@ -588,12 +601,6 @@ local function updateGFX(device, dt)
     device.sustainedAfterFireTimer = device.sustainedAfterFireTimer - dt
   elseif device.instantEngineLoad > 0 then
     device.sustainedAfterFireTimer = device.sustainedAfterFireTime
-  end
-
-  local compressionBrakeCoefAdjusted = device.throttle > 0 and 0 or device.compressionBrakeCoefDesired
-  if compressionBrakeCoefAdjusted ~= device.compressionBrakeCoefActual then
-    device.compressionBrakeCoefActual = compressionBrakeCoefAdjusted
-    device:setEngineSoundParameter(device.engineSoundIDExhaust, "compression_brake_coef", device.compressionBrakeCoefActual, "exhaust")
   end
 
   device.nitrousOxideTorque = 0 -- reset N2O torque
@@ -691,6 +698,22 @@ local function revLimiterRPMDropMethod(device, engineAV, throttle, dt)
 end
 
 local function updateFixedStep(device, dt)
+  --update idle throttle
+  device.idleTimer = device.idleTimer - dt
+  if device.idleTimer <= 0 then
+    local idleTimeRandomCoef = linearScale(device.idleTimeRandomness, 0, 1, 1, randomGauss3() * 0.6666667)
+    device.idleTimer = device.idleTimer + device.idleTime * idleTimeRandomCoef
+    -- device.idleTime
+    local engineAV = device.outputAV1
+    local idleAV = max(device.idleAV, device.idleAVOverwrite)
+    local maxIdleThrottle = min(max(device.maxIdleThrottle, device.maxIdleThrottleOverwrite), 1)
+    local idleAVError = max(idleAV - engineAV + device.idleAVReadError + device.idleAVStartOffset, 0)
+    device.idleThrottleTarget = min(idleAVError * device.idleControllerP, maxIdleThrottle)
+
+  --print(device.idleThrottle)
+  end
+  device.idleThrottle = device.idleThrottleSmoother:get(device.idleThrottleTarget, dt)
+
   device.forcedInductionCoef = 1
   device.turbocharger.updateFixedStep(dt)
   device.supercharger.updateFixedStep(dt)
@@ -702,16 +725,10 @@ local function updateTorque(device, dt)
   local engineAV = device.outputAV1
 
   local throttle = (electrics.values[device.electricsThrottleName] or 0) * (electrics.values[device.electricsThrottleFactorName] or device.throttleFactor)
-
-  local idleAV = max(device.idleAV, device.idleAVOverwrite)
-  local maxIdleThrottle = min(max(device.maxIdleThrottle, device.maxIdleThrottleOverwrite), 1)
-  local idleAVError = max(idleAV - engineAV + device.idleAVReadError + device.idleAVStartOffset, 0)
-  local idleThrottle = max(throttle, min(idleAVError * 0.01, maxIdleThrottle))
-
   --don't include idle throttle as otherwise idle affects the turbo wastegate, do include it though if we have a raised idle throttle (eg semi truck hidh idle)
-  device.requestedThrottle = max(throttle, device.idleAVOverwrite > 0 and idleThrottle or 0)
+  device.requestedThrottle = max(throttle, device.idleAVOverwrite > 0 and device.idleThrottle or 0)
 
-  throttle = min(max(idleThrottle * device.starterThrottleKillCoef * device.ignitionCoef, 0), 1)
+  throttle = min(max(max(device.idleThrottle, throttle) * device.starterThrottleKillCoef * device.ignitionCoef, 0), 1)
 
   throttle = device:applyRevLimiter(engineAV, throttle, dt)
 
@@ -754,7 +771,8 @@ local function updateTorque(device, dt)
 
   local compressionBrakeTorque = (device.compressionBrakeCurve[tableRPM] or 0) * device.compressionBrakeCoefActual
   --todo check why this is not included in thermals
-  local frictionTorque = finalFriction + finalDynamicFriction * absEngineAV + device.engineBrakeTorque * (1 - instantLoad)
+  local engineBrakeTorque = device.engineBrakeTorque * (1 - min(instantLoad + device.antiLagCoefActual, 1))
+  local frictionTorque = finalFriction + finalDynamicFriction * absEngineAV + engineBrakeTorque
   --friction torque is limited for stability
   frictionTorque = min(frictionTorque, absEngineAV * device.inertia * 2000) * sign(engineAV)
 
@@ -1031,6 +1049,10 @@ local function setCompressionBrakeCoef(device, coef)
   device.compressionBrakeCoefDesired = clamp(coef, 0, 1)
 end
 
+local function setAntilagCoef(device, coef)
+  device.antiLagCoefDesired = clamp(coef, 0, 1)
+end
+
 local function onBreak(device)
   device:lockUp()
 end
@@ -1251,7 +1273,8 @@ local function resetSounds(device, jbeamData)
           gainOffset = 0,
           mufflingOffset = 0,
           mufflingOffsetRevLimiter = 0,
-          gainOffsetRevLimiter = 0
+          gainOffsetRevLimiter = 0,
+          triggerAntilag = 0
         }
         device:setEngineSoundParameterList(device.engineSoundIDExhaust, params, "exhaust")
       end
@@ -1297,8 +1320,11 @@ local function reset(device, jbeamData)
   device.dynamicFriction = jbeamData.dynamicFriction or 0
   device.maxTorqueLimit = math.huge
 
+  device.idleAVOverwrite = 0
   device.idleAVReadError = 0
   device.idleAVStartOffset = 0
+  device.idleThrottle = 0
+  device.idleThrottleTarget = 0
   device.inertia = device.initialInertia
   device.invEngInertia = 1 / device.inertia
   device.halfInvEngInertia = device.invEngInertia * 0.5
@@ -1341,6 +1367,8 @@ local function reset(device, jbeamData)
   device.fastIgnitionErrorCoef = 1
   device.compressionBrakeCoefDesired = 0
   device.compressionBrakeCoefActual = 0
+  device.antiLagCoefDesired = 0
+  device.antiLagCoefActual = 0
 
   device.sustainedAfterFireTimer = 0
   device.instantAfterFireFuel = 0
@@ -1597,6 +1625,7 @@ local function initSounds(device, jbeamData)
           mufflingOffset = 0,
           mufflingOffsetRevLimiter = 0,
           gainOffsetRevLimiter = 0,
+          triggerAntilag = 0,
           fundamentalFrequencyRPMCoef = fundamentalFrequencyCylinderCount / 120
         }
         --dump(params)
@@ -1661,14 +1690,21 @@ local function new(jbeamData)
     idleRPM = jbeamData.idleRPM,
     idleAV = jbeamData.idleRPM * rpmToAV,
     idleAVOverwrite = 0,
-    maxRPM = jbeamData.maxRPM,
-    maxAV = jbeamData.maxRPM * rpmToAV,
+    idleAVStartOffset = 0,
     idleAVReadError = 0,
     idleAVReadErrorRange = (jbeamData.idleRPMRoughness or 50) * rpmToAV,
-    inertia = jbeamData.inertia or 0.1,
-    idleAVStartOffset = 0,
-    maxIdleThrottle = jbeamData.maxIdleThrottle or 0.15,
+    idleThrottle = 0,
+    idleThrottleTarget = 0,
+    maxIdleThrottle = clamp(jbeamData.maxIdleThrottle or 0.15, 0, 1),
     maxIdleThrottleOverwrite = 0,
+    idleTime = 1 / (max(jbeamData.idleUpdateFrequency or 100, 0.1)),
+    idleTimeRandomness = clamp(jbeamData.idleUpdateFrequencyRandomness or 0.01, 0, 1),
+    idleTimer = 0,
+    idleControllerP = jbeamData.idleControllerP or 0.01,
+    idleThrottleSmoother = newTemporalSmoothing(jbeamData.idleSmoothingDown or 100, jbeamData.idleSmoothingUp or 100),
+    maxRPM = jbeamData.maxRPM,
+    maxAV = jbeamData.maxRPM * rpmToAV,
+    inertia = jbeamData.inertia or 0.1,
     starterTorque = jbeamData.starterTorque or (jbeamData.friction * 15),
     starterMaxAV = (jbeamData.starterMaxRPM or jbeamData.idleRPM * 0.7) * rpmToAV,
     shutOffSoundRequested = false,
@@ -1715,6 +1751,8 @@ local function new(jbeamData)
     instantAfterFireFuelDelay = delayLine.new(0.1),
     sustainedAfterFireFuelDelay = delayLine.new(0.3),
     exhaustFlowDelay = delayLine.new(0.1),
+    antiLagCoefDesired = 0,
+    antiLagCoefActual = 0,
     overRevDamage = 0,
     maxOverRevDamage = jbeamData.maxOverRevDamage or 1500,
     maxTorqueRating = jbeamData.maxTorqueRating or -1,
@@ -1762,6 +1800,7 @@ local function new(jbeamData)
     activateStarter = activateStarter,
     deactivateStarter = deactivateStarter,
     setCompressionBrakeCoef = setCompressionBrakeCoef,
+    setAntilagCoef = setAntilagCoef,
     sendTorqueData = sendTorqueData,
     getTorqueData = getTorqueData,
     checkHydroLocking = checkHydroLocking,

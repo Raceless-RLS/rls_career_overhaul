@@ -43,7 +43,7 @@ local function onExtensionLoaded()
         completedTutorialMission = false,
         arrivedAtFuelstation = false,
         arrivedAtGarage = false,
-        purchasedFirstCar = true,
+        purchasedFirstCar = false,
         partShoppingComplete = false,
         tuningComplete = false,
         modifiedFirstCar = false,
@@ -96,8 +96,8 @@ local function beginLinearStep(step)
   if step == -1 then
     if career_career.hasBoughtStarterVehicle() then return end
     if not saveData.buyVehicleFlowgraphStarted then
-      --log("I","","Loading Vehicle buying Intro...")
-      --core_flowgraphManager.loadManager("gameplay/tutorials/buyVehicle.flow.json"):setRunning(true)
+      log("I","","Loading Vehicle buying Intro...")
+      core_flowgraphManager.loadManager("gameplay/tutorials/buyVehicle.flow.json"):setRunning(true)
       saveData.buyVehicleFlowgraphStarted = true
     end
   end
@@ -167,7 +167,7 @@ M.setTrafficForTutorial = function()
 
   for k, v in pairs(gameplay_traffic.getTrafficData()) do
     if v.role.name == "police" then
-      local veh = be:getObjectByID(k)
+      local veh = getObjectByID(k)
       if veh then
         veh:setActive(0)
       end
@@ -266,7 +266,7 @@ local introPopupTable = {
 
   -- shown at the end of the tutorial
   showLogbookSplash = {"logbook"},
-  showTutorialOverSplash = {"finishing", "logbook", "leagues", "driftSpots"},
+  showTutorialOverSplash = {"finishing", "logbook", "leagues", "performanceIndex"},
 
   -- shown when opening the cargo screen for the first time
   onEnterCargoOverviewScreen = {"delivery/cargoScreen"},
@@ -281,7 +281,7 @@ local introPopupTable = {
 M.showNonTutorialWelcomeSplashscreen = function()
   M.introPopup("welcomeNoTutorial", true)
   M.introPopup("leagues", true)
-  M.introPopup("driftSpots", true)
+  M.introPopup("performanceIndex", true)
   M.introPopup("logbook", true)
 
   -- previous "new content"
@@ -324,6 +324,7 @@ local introPopupFiles = {
  {"logbook"                 ,"Tutorial End 3, No-Tutorial Start 3"},
   {},
  {"welcomeNoTutorial"       ,"No-Tutorial Start 1"},
+ {"performanceIndex"        ,"No-Tutorial Start 3"},
 
   {},
 

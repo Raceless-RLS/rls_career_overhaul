@@ -172,10 +172,10 @@ local function formatCargoGroup(group, playerCargoContainers, showFirstSeen)
   local modifierKeys = {}
   for _, mod in ipairs(group[1].modifiers) do
     local modData = dParcelMods.getModData(mod.type)
+    modifierKeys[mod.type] = true
     if not modData.hidden then
       local modProp = {type = mod.type, icon = modData.icon, active = true, label = modData.label, description = modData.shortDescription, important = modData.important}
       table.insert(ret.modifiers, modProp)
-      modifierKeys[mod.type] = true
       if mod.type == "timed" then
         ret.hasTimerMod = true
         ret.remainingTime = {}
@@ -238,16 +238,13 @@ local function formatCargoGroup(group, playerCargoContainers, showFirstSeen)
   end
 
   -- if this item is locked because of progress, disable it.
-  local lockedBecauseOfMods, minTier = dParcelMods.lockedBecauseOfMods(modifierKeys)
-  ret.unlockInfo = {
-    type = "minLevel", icon = "boxPickUp03", longLabel = string.format("Requires Skill 'Cargo Delivery' lvl %d", minTier), shortLabel = string.format("lvl %d", minTier)
-  }
+  local lockedBecauseOfMods, flagDefinition = dParcelMods.lockedBecauseOfMods(modifierKeys)
+  if flagDefinition then
+    ret.unlockInfo = flagDefinition.unlockInfo
+  end
   if lockedBecauseOfMods then
     ret.enabled = false
-    ret.disableReason = {
-      type = "locked", icon = "boxPickUp03", level = minTier,
-      label = string.format("Requires Skill 'Cargo Delivery' lvl %d", minTier)
-    }
+    ret.disableReason = flagDefinition and flagDefinition.lockedReason
     return ret
   end
 
@@ -449,7 +446,7 @@ local function formatVehicleOfferForUi(offers)
       bigMapIds = {}
     }
 
-    local enabled, reason = dVehOfferManager.isVehicleTagUnlocked(offer.vehicle.unlockTag)
+    local enabled, flagDefinition = dVehOfferManager.isVehicleTagUnlocked(offer.vehicle.unlockTag)
     item.bigMapIds[string.format("delivery-parking-%s-%s", offer.task.destination.facId, offer.task.destination.psPath)] = true
 
     -- if this item is expired, return early.
@@ -459,18 +456,18 @@ local function formatVehicleOfferForUi(offers)
       goto continue
     end
 
-    item.unlockInfo = reason
+    item.unlockInfo = flagDefinition and flagDefinition.unlockInfo
     if not enabled then
       item.enabled = false
-      item.disableReason = reason -- this can already include levels
+      item.disableReason = flagDefinition and flagDefinition.lockedReason
       goto continue
     end
 
-   if next(dVehicleTasks.getVehicleTasks()) or hasSpawnWhenCommitingCargoOffer then
-      item.enabled = true
-      item.disableReason = {type="limit", limit=10, label ="You can deliver at most 10 vehicle at a time."}
+    if next(dVehicleTasks.getVehicleTasks()) or hasSpawnWhenCommitingCargoOffer then
+      item.enabled = false
+      item.disableReason = {type="limit", limit=1, label ="You can deliver at most 1 vehicle at a time."}
       goto continue
-   end
+    end
 
     ::continue::
 
@@ -799,7 +796,7 @@ local function formatMaterialStorage(fac, facPsLocation, playerCargoContainers)
   for _, materialType in ipairs(tableKeysSorted(fac.materialStorages)) do
     local storage = fac.materialStorages[materialType]
     local material = dGenerator.getMaterialsTemplatesById(materialType)
-    local locked, minTier = dParcelMods.lockedBecauseOfMods({[material.type]=true})
+    local locked, flagDefinition = dParcelMods.lockedBecauseOfMods({[material.type]=true})
     if storage.isProvider then
       local fluidData = {
         id = storage.id,
@@ -812,9 +809,7 @@ local function formatMaterialStorage(fac, facPsLocation, playerCargoContainers)
         rewardMoneyPerLiter = material.money,
         enabled = true,
         _transientMaterialMoveAmount = 0,
-        unlockInfo  = {
-          type = "minLevel", icon = "boxPickUp03", longLabel = string.format("Requires Skill 'Cargo Delivery' lvl %d", minTier), shortLabel = string.format("lvl %d", minTier)
-        },
+        unlockInfo  = flagDefinition and flagDefinition.unlockInfo,
         bigMapIds = {},
       }
       for _, loc in ipairs(fluidData.locations or {}) do
@@ -832,7 +827,7 @@ local function formatMaterialStorage(fac, facPsLocation, playerCargoContainers)
 
       if locked then
         fluidData.enabled = false
-        fluidData.disableReason = {type = "locked"}
+        fluidData.disableReason = flagDefinition.lockedReason
       end
 
       local label, desc = dParcelMods.getLabelAndShortDescription(material.type)
@@ -913,10 +908,10 @@ end
 
 M.deliveryScreenExternalButtonPressed = function(id)
   if id == "openDeliveryProgress" then
-    guihooks.trigger('ChangeState', {state = 'branchPage', params = {branchKey = 'labourer', skillKey = 'delivery'}})
+    guihooks.trigger('ChangeState', {state = 'branchPage', params = {branchKey = 'labourer', skillKey = 'logistics-delivery'}})
   end
   if id == "openVehicleDeliveryProgress" then
-    guihooks.trigger('ChangeState', {state = 'branchPage', params = {branchKey = 'labourer', skillKey = 'vehicleDelivery'}})
+    guihooks.trigger('ChangeState', {state = 'branchPage', params = {branchKey = 'labourer', skillKey = 'logistics-vehicleDelivery'}})
   end
 end
 
@@ -938,8 +933,8 @@ local function requestCargoDataForUi(facId, psPath, updateMaxTimeTimestamp)
       facilityPanels = {
         {
           type = "skill",
-          skillInfo = career_modules_branches_landing.getBranchSkillCardData("delivery"),
-          branchId = "labourer", skillId="delivery",
+          skillInfo = career_modules_branches_landing.getBranchSkillCardData("logistics-delivery"),
+          branchId = "labourer", skillId="logistics-delivery",
           filterValueButtons = {'parcel','trailer','material'},
           heading = "Cargo Delivery",
           description = 'Deliver parcels, fluids, dry bulk in containers, or haul small and large trailers.',
@@ -950,8 +945,8 @@ local function requestCargoDataForUi(facId, psPath, updateMaxTimeTimestamp)
           } }
         }, {
           type = "skill",
-          skillInfo = career_modules_branches_landing.getBranchSkillCardData("vehicleDelivery"),
-          branchId = "labourer", skillId="vehicleDelivery",
+          skillInfo = career_modules_branches_landing.getBranchSkillCardData("logistics-vehicleDelivery"),
+          branchId = "labourer", skillId="logistics-vehicleDelivery",
           filterValueButtons = {'vehicle'},
           heading = "Car Jockey",
           description = 'Drive a wide variety of vehicles safely to their destination.',

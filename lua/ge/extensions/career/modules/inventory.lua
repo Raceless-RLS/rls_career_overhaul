@@ -44,14 +44,18 @@ local function getClosestGarage(pos, levelName)
   local minDist = math.huge
   for _, garage in ipairs(facilities.garages) do
     local zones = freeroam_facilities.getZonesForFacility(garage)
-    local dist = zones[1].center:distance(playerPos)
-    if dist < minDist then
-      closestGarage = garage
-      minDist = dist
+    if zones and not tableIsEmpty(zones) then
+      local dist = zones[1].center:distance(playerPos)
+      if dist < minDist then
+        closestGarage = garage
+        minDist = dist
+      end
     end
   end
   return closestGarage
 end
+
+
 
 local function getClosestOwnedGarage(pos, levelName)
   levelName = levelName or getCurrentLevelIdentifier()
@@ -241,7 +245,7 @@ end
 local function updateVehicleThumbnail(inventoryId, filename, callback)
   local vehId = M.getVehicleIdFromInventoryId(inventoryId)
   if not vehId then return end
-  local vehObj = be:getObjectByID(vehId)
+  local vehObj = getObjectByID(vehId)
   local bb = vehObj:getSpawnWorldOOBB()
   local bbCenter = bb:getCenter()
 
@@ -366,7 +370,7 @@ local function onSaveCurrentSaveSlot(currentSavePath, oldSaveDate, vehiclesThumb
 
   data.spawnedPlayerVehicles = {}
   for inventoryId, vehId in pairs(inventoryIdToVehId) do
-    local veh = be:getObjectByID(vehId)
+    local veh = getObjectByID(vehId)
     if veh then
       data.spawnedPlayerVehicles[inventoryId] = {pos = veh:getPosition(), rot = quat(0,0,1,0) * quat(veh:getRefNodeRotation())}
     end
@@ -439,15 +443,13 @@ local function addVehicle(vehId, inventoryId, options)
       local dir, configName, ext = path.splitWithoutExt(vehicleData.config.partConfigFilename)
       local baseConfig = core_vehicles.getConfig(vehicle.JBeam, configName)
       vehicles[inventoryId].configBaseValue = baseConfig.Value
+      vehicles[inventoryId].takesNoInventorySpace = baseConfig.takesNoInventorySpace
     else
       log("D", "", "Couldnt find base value for added vehicle, so using default value")
       vehicles[inventoryId].configBaseValue = 1000
     end
 
     assignInventoryIdToVehId(inventoryId, vehId)
-
-    local garage = getClosestOwnedGarage()
-    M.moveVehicleToGarage(inventoryId, garage.id)
 
     inventoryIdAfterUpdatingPartConditions = inventoryId
     vehicle:queueLuaCommand(string.format("if not partCondition.getConditions() then partCondition.initConditions() end obj:queueGameEngineLua('career_modules_inventory.updatePartConditions(%d, %d)')", vehId, inventoryId))
@@ -460,16 +462,16 @@ local function addVehicle(vehId, inventoryId, options)
 end
 
 local skipPartConditionsBeforeWalking
-local function removeVehicleObject(inventoryId)
+local function removeVehicleObject(inventoryId, skipPartConditions)
   if currentVehicle == inventoryId then
     skipPartConditionsBeforeWalking = true
-    gameplay_walk.setWalkingMode(true)
+    gameplay_walk.setWalkingMode(true, nil, nil, true)
   end
   extensions.hook("onInventoryPreRemoveVehicleObject", inventoryId, M.getVehicleIdFromInventoryId(inventoryId))
   -- TODO save part conditions
   local vehId = inventoryIdToVehId[inventoryId]
   if vehId then
-    local obj = be:getObjectByID(vehId)
+    local obj = getObjectByID(vehId)
     if obj then
       obj:delete()
     end
@@ -477,6 +479,7 @@ local function removeVehicleObject(inventoryId)
   end
   inventoryIdToVehId[inventoryId] = nil
 end
+
 
 local function removeVehicle(inventoryId)
   removeVehicleObject(inventoryId)
@@ -504,9 +507,9 @@ end
 local function updatePartConditions(vehId, inventoryId, callback)
   local veh
   if vehId then
-    veh = be:getObjectByID(vehId)
+    veh = getObjectByID(vehId)
   else
-    veh = be:getObjectByID(inventoryIdToVehId[inventoryId])
+    veh = getObjectByID(inventoryIdToVehId[inventoryId])
   end
   if not veh then
     log("E", "", "Couldnt find vehicle object to get part conditions")
@@ -526,7 +529,7 @@ end
 local function applyPartConditions(inventoryId, vehId)
   local veh = scenetree.findObjectById(vehId or inventoryIdToVehId[inventoryId])
   if not veh then return end
-  veh:queueLuaCommand("partCondition.initConditions(" .. serialize(vehicles[inventoryId].partConditions) .. ")")
+  core_vehicleBridge.executeAction(veh, 'initPartConditions', vehicles[inventoryId].partConditions)
 end
 
 -- replaceOption 1: replace the current vehicle object
@@ -556,7 +559,7 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
       local oldVehId = inventoryIdToVehId[inventoryId]
       local oldVehObj
       if oldVehId then
-        oldVehObj = be:getObjectByID(oldVehId)
+        oldVehObj = getObjectByID(oldVehId)
       end
       vehObj = core_vehicles.replaceVehicle(carModelToLoad, vehicleData, oldVehObj)
     else
@@ -604,8 +607,8 @@ local function enterVehicleActual(id, loadOption)
     currentVehicle = id
   elseif inventoryIdToVehId[id] and loadOption ~= 2 then
     -- vehicle is already spawned. enter it
-    gameplay_walk.setWalkingMode(false)
-    be:enterVehicle(0, be:getObjectByID(inventoryIdToVehId[id]))
+    gameplay_walk.setWalkingMode(false, nil, nil, true)
+    be:enterVehicle(0, getObjectByID(inventoryIdToVehId[id]))
     currentVehicle = id
   else
     if spawnVehicle(id, 1, enterCallbackFunction) then
@@ -692,7 +695,7 @@ local function setupInventory(levelPath)
       extensions.core_jobsystem.create(
         function (job)
           for inventoryId, location in pairs(vehiclesToTeleportToGarage) do
-            local veh = be:getObjectByID(location.vehId)
+            local veh = getObjectByID(location.vehId)
             local garage = getClosestGarage(location.pos)
             freeroam_facilities.teleportToGarage(garage.id, veh)
             job.sleep(0.1)
@@ -709,9 +712,10 @@ local function setupInventory(levelPath)
     extensions.hook("onSetupInventoryFinished")
   end
 
+  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+  local data = jsonReadFile(savePath .. "/info.json")
   if not data then
     -- this means this is a new career save
-    
     saveCareer = 0
     if career_career.hardcoreMode then
       local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
@@ -780,8 +784,8 @@ local function setupInventory(levelPath)
           freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
         elseif levelName == "italy" then
           freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
-        end
       end
+    end
     end
     extensions.hook("onEnterVehicleFinished", currentVehicle)
   end
@@ -809,9 +813,9 @@ local function onCareerModulesActivated(alreadyInLevel)
 end
 
 local function onClientStartMission(levelPath)
-  --setupInventory(levelPath)
-  return
+  setupInventory()
 end
+
 
 local function setPartConditionResetSnapshot(veh, callback)
   core_vehicleBridge.executeAction(veh, 'createPartConditionSnapshot', "beforeReset")
@@ -870,7 +874,7 @@ local function getVehiclesInGarage(garage, intersecting)
   local spawnedVehicles = {}
   local res = {}
   for inventoryId, vehId in pairs(inventoryIdToVehId) do
-    spawnedVehicles[inventoryId] = be:getObjectByID(vehId)
+    spawnedVehicles[inventoryId] = getObjectByID(vehId)
   end
   for _, zone in ipairs(zones) do
     for inventoryId, veh in pairs(spawnedVehicles) do
@@ -900,12 +904,10 @@ end
 local function removeVehiclesFromGarageExcept(inventoryId)
   local garage = getClosestGarage()
   local inventoryIdsInGarage = getVehiclesInGarage(garage, true)
-  dump(inventoryIdsInGarage)
   for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
     if otherInventoryId ~= inventoryId then
       local vehInfo = vehicles[otherInventoryId]
       if vehInfo.owned then
-        print("owned")
         M.removeVehicleObject(otherInventoryId)
         M.switchGarageSpots(otherInventoryId, inventoryId)
       end
@@ -947,6 +949,110 @@ local function isVehicleOnSite(inventoryId, garage)
     return
   end
   return vehicle.location == garage.id
+end
+
+local function processPerformanceData(performanceData)
+  if not performanceData then return end
+
+  career_modules_vehiclePerformance.addScoresToPerformanceData(performanceData)
+
+  -- Process drivetrain information
+  if performanceData.powertrainLayout then
+    local frontWheelDrive = performanceData.powertrainLayout.poweredWheelsFront > 0
+    local rearWheelDrive = performanceData.powertrainLayout.poweredWheelsRear > 0
+    performanceData.drivetrain = frontWheelDrive and rearWheelDrive and "AWD" or frontWheelDrive and "FWD" or rearWheelDrive and "RWD" or "Unknown"
+  end
+
+  -- Process fuel type information
+  if performanceData.fuelTypes then
+    if performanceData.fuelTypes["fuelTank:gasoline"] then
+      performanceData.fuelType = "Gasoline"
+    elseif performanceData.fuelTypes["fuelTank:diesel"] then
+      performanceData.fuelType = "Diesel"
+    elseif performanceData.fuelTypes["fuelTank:electric"] then
+      performanceData.fuelType = "Electric"
+    elseif next(performanceData.fuelTypes) then
+      performanceData.fuelType = next(performanceData.fuelTypes)
+    else
+      performanceData.fuelType = "Unknown"
+    end
+  end
+
+  -- Process induction type information
+  if performanceData.inductionTypes then
+    if performanceData.inductionTypes.naturalAspiration then
+      performanceData.inductionType = "NA"
+    elseif performanceData.inductionTypes.turbocharger then
+      performanceData.inductionType = "Turbocharger"
+    elseif next(performanceData.inductionTypes) then
+      performanceData.inductionType = next(performanceData.inductionTypes)
+    else
+      performanceData.inductionType = "Unknown"
+    end
+  end
+
+  if performanceData.power and performanceData.weight then
+    performanceData.powerPerTon = performanceData.power * 1000 / performanceData.weight
+  end
+end
+
+local function getVehicleUiData(inventoryId, inventoryIdsInGarage)
+  local vehicleData = deepcopy(vehicles[inventoryId])
+  if not vehicleData then return end
+  if not inventoryIdsInGarage then
+    inventoryIdsInGarage = getVehiclesInGarage(getClosestGarage())
+  end
+
+  vehicleData.value = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId)
+  vehicleData.valueRepaired = career_modules_valueCalculator.getInventoryVehicleValue(inventoryId, true)
+  vehicleData.quickRepairExtraPrice = career_modules_insurance.getQuickRepairExtraPrice()
+  vehicleData.initialRepairTime = career_modules_insurance.getRepairTime(inventoryId)
+
+  if inventoryIdToVehId[inventoryId] then
+    local vehObj = getObjectByID(inventoryIdToVehId[inventoryId])
+    if vehObj then
+      vehicleData.distance = vehObj:getPosition():distance(getPlayerVehicle(0):getPosition())
+      vehicleData.inGarage = inventoryIdsInGarage[inventoryId]
+    end
+    vehicleData.inStorage = false
+  else
+    vehicleData.inStorage = true
+  end
+
+  for otherInventoryId, _ in pairs(inventoryIdsInGarage) do
+    if otherInventoryId ~= inventoryId then
+      vehicleData.otherVehicleInGarage = true
+      break
+    end
+  end
+
+  vehicleData.needsRepair = career_modules_insurance.inventoryVehNeedsRepair(vehicleData.id)
+  if inventoryId == favoriteVehicle then
+    vehicleData.favorite = true
+  end
+
+  local vehPolicyInfo = career_modules_insurance.getVehPolicyInfo(inventoryId)
+  vehicleData.policyInfo = vehPolicyInfo.policyInfo
+  vehicleData.ownsRequiredInsurance = vehPolicyInfo.policyOwned
+
+  vehicleData.thumbnail = getVehicleThumbnail(inventoryId)
+
+  vehicleData.repairPermission = career_modules_permissions.getStatusForTag("vehicleRepair", {inventoryId = inventoryId})
+  vehicleData.sellPermission = career_modules_permissions.getStatusForTag("vehicleSelling", {inventoryId = inventoryId})
+  vehicleData.favoritePermission = career_modules_permissions.getStatusForTag("vehicleFavorite", {inventoryId = inventoryId})
+  vehicleData.storePermission = career_modules_permissions.getStatusForTag("vehicleStoring", {inventoryId = inventoryId})
+  vehicleData.licensePlateChangePermission = career_modules_permissions.getStatusForTag({"vehicleLicensePlate", "vehicleModification"}, {inventoryId = inventoryId})
+  vehicleData.returnLoanerPermission = career_modules_permissions.getStatusForTag("returnLoanedVehicle", {inventoryId = inventoryId})
+
+  for _, performanceData in ipairs(vehicleData.performanceHistory or {}) do
+    processPerformanceData(performanceData)
+  end
+
+  if vehicleData.certificationData then
+    processPerformanceData(vehicleData.certificationData)
+  end
+
+  return vehicleData
 end
 
 local function sendDataToUi()
@@ -1102,8 +1208,8 @@ local function getInventoryIdsInClosestGarage(onlyFirst)
   if getPlayerVehicle(0) then
     local playerPos = getPlayerVehicle(0):getPosition()
     table.sort(inventoryIdsList, function(id1, id2)
-      local veh1 = be:getObjectByID(inventoryIdToVehId[id1])
-      local veh2 = be:getObjectByID(inventoryIdToVehId[id2])
+      local veh1 = getObjectByID(inventoryIdToVehId[id1])
+      local veh2 = getObjectByID(inventoryIdToVehId[id2])
       return veh1:getPosition():distance(playerPos) < veh2:getPosition():distance(playerPos)
     end)
   end
@@ -1179,7 +1285,7 @@ local function spawnVehicleAndTeleportToGarage(enterAfterSpawn, inventoryId, rep
     if replaceOthers then
       removeVehiclesFromGarageExcept(inventoryId)
     end
-    local vehObj = be:getObjectByID(inventoryIdToVehId[inventoryId])
+    local vehObj = getObjectByID(inventoryIdToVehId[inventoryId])
     setPartConditionResetSnapshot(vehObj,
       function()
         local closestGarage = getClosestGarage()
@@ -1226,6 +1332,13 @@ local function openMenuFromComputer(_originComputerId)
         buttonText = "Replace current vehicle",
         insuranceRequired = true,
         requiredOtherVehicleInGarage = true
+      },
+      {
+        callback = function(inventoryId)
+          career_modules_vehiclePerformance.openMenu({inventoryId = inventoryId, computerId = originComputerId})
+        end,
+        buttonText = "Performance Index",
+        repairRequired = false
       }
     },
     "Spawn Vehicle", nil,
@@ -1239,7 +1352,7 @@ end
 
 local function garageModeStartStep()
   if teleportVehicleForGarage then
-    local vehObj = be:getObjectByID(inventoryIdToVehId[currentVehicle])
+    local vehObj = getObjectByID(inventoryIdToVehId[currentVehicle])
     setPartConditionResetSnapshot(vehObj,
     function()
       freeroam_facilities.teleportToGarage(getClosestGarage().id, vehObj, false)
@@ -1281,7 +1394,7 @@ local function getVehicleTimeToAccess(inventoryId)
   return vehicles[inventoryId].timeToAccess
 end
 
-local function sellVehicle(inventoryId, instant)
+local function sellVehicle(inventoryId)
   local vehicle = vehicles[inventoryId]
   if not vehicle then return end
 
@@ -1295,7 +1408,7 @@ local function sellVehicle(inventoryId, instant)
 end
 
 local function sellVehicleFromInventory(inventoryId)
-  if sellVehicle(inventoryId, true) then
+  if sellVehicle(inventoryId) then
     career_saveSystem.saveCurrent()
     sendDataToUi()
   end
@@ -1434,7 +1547,7 @@ local function onGetRawPoiListForLevel(levelIdentifier, elements)
           end
 
           local id = "plVeh"..vehId
-          local dist, distUnit = translateDistance(map.objects[vehId].pos:distance(be:getPlayerVehicle(0):getPosition()), true)
+          local dist, distUnit = translateDistance(map.objects[vehId].pos:distance(getPlayerVehicle(0):getPosition()), true)
           local plate = vehicles[invId].config.licenseName
           local odometer, odoUnit = translateDistance(career_modules_valueCalculator.getVehicleMileageById(invId), true)
 
@@ -1462,6 +1575,14 @@ end
 
 local function getDirtiedVehicles()
   return dirtiedVehicles
+end
+
+local function isEmpty()
+  return tableIsEmpty(vehicles)
+end
+
+local function getVehicle(inventoryId)
+  return vehicles[inventoryId]
 end
 
 -- RLS Extra Vehicle Stats
@@ -1889,12 +2010,13 @@ M.onCheckPermission = onCheckPermission
 M.onGetRawPoiListForLevel = onGetRawPoiListForLevel
 
 M.getPartConditionsCallback = getPartConditionsCallback
-M.applyTuningCallback = applyTuningCallback
 M.applyPartConditions = applyPartConditions
 M.teleportedFromBigmap = teleportedFromBigmap
 M.setVehicleDirty = setVehicleDirty
 M.getDirtiedVehicles = getDirtiedVehicles
 M.getVehicles = getVehicles
+M.getVehicle = getVehicle
+M.isEmpty = isEmpty
 M.spawnVehicle = spawnVehicle
 M.getInventoryIdsInClosestGarage = getInventoryIdsInClosestGarage
 M.getClosestGarage = getClosestGarage
@@ -1907,6 +2029,8 @@ M.getLastVehicle = getLastVehicle
 M.getVehicleIdFromInventoryId = getVehicleIdFromInventoryId
 M.getInventoryIdFromVehicleId = getInventoryIdFromVehicleId
 M.getMapInventoryIdToVehId = getMapInventoryIdToVehId
+
+M.getVehicleUiData = getVehicleUiData
 
 -- RLS
 M.getVehicleTimeToAccess = getVehicleTimeToAccess

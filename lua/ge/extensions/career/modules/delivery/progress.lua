@@ -383,13 +383,7 @@ M.confirmDropOffCheckComplete = function()
   local branchInfo = {}
   local rewardParcels = {}
 
-  --[[
-  for index, offer in ipairs(confirmedDropOffData.offers) do
-    for type, amount in pairs(offer.adjustedRewards) do
-      offer.adjustedRewards[type] = (career_modules_hardcore.isHardcoreMode() and amount / 2 or amount)
-    end
-  end
-  ]]
+
 
   -- add rewards for parcels, then for vehicles
   -- group cargo
@@ -596,8 +590,7 @@ end
 
 
 M.getMoneyMultiplerForSkill = function(skill, tier)
-  tier = tier or career_branches.getBranchLevel(skill)
-  return math.pow(1.2, tier-1)
+  return career_branches.getLevelRewardMultiplier("logistics")
 end
 
 
@@ -630,7 +623,6 @@ local function activateSound(soundLabel, active)
     end
   end
 end
-
 
 M.onBranchTierReached = onBranchTierReached
 M.activateSound = activateSound

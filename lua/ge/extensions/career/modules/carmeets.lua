@@ -56,7 +56,7 @@ end
 local function cleanupPreviousMeet()
     for _, vehId in ipairs(spawnedMeetVehicles) do
         gameplay_traffic.removeTraffic(vehId)
-        local veh = be:getObjectByID(vehId)
+        local veh = getObjectByID(vehId)
         if veh then
             veh:delete()
         end
@@ -468,7 +468,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                         table.insert(vehiclesToLeave, vehID)
                     end
                     for _, vehID in ipairs(vehiclesToLeave) do
-                        local veh = be:getObjectByID(vehID)
+                        local veh = getObjectByID(vehID)
                         veh:queueLuaCommand('for k, v in pairs(controller.getControllersByType("advancedCouplerControl")) do v.tryAttachGroupImpulse() end')
                     end
                     lastVehicleLeaveTime = currentTime
@@ -477,7 +477,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
                 -- Check if it's time for next vehicle to leave
                 if #vehiclesToLeave > 0 and currentTime - lastVehicleLeaveTime >= MEET_LEAVE_INTERVAL then
                     local vehID = table.remove(vehiclesToLeave, 1)
-                    local veh = be:getObjectByID(vehID)
+                    local veh = getObjectByID(vehID)
                     if veh then
                         -- Close all latches before leaving
                         veh:queueLuaCommand('ai.setMode("traffic")')
@@ -498,7 +498,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         elseif vehicleDispersed then
             local playerVeh = be:getPlayerVehicle(0)
             for i, vehID in ipairs(spawnedMeetVehicles) do
-                local veh = be:getObjectByID(vehID)
+                local veh = getObjectByID(vehID)
                 if veh then
                     local distance = (playerVeh:getPosition() - veh:getPosition()):length()
                     if distance > MEET_CLEANUP_DISTANCE then

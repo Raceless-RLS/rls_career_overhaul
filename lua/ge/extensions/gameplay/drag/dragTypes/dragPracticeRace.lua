@@ -49,6 +49,14 @@ local function startActivity()
   dragData.isStarted = true
 
   hasActivityStarted = dragData.isStarted
+
+  local dials = {}
+  if dragData.racers then
+    for _,racer in pairs(dragData.racers) do
+      table.insert(dials, {vehId = racer.vehId, dial = 0})
+    end
+  end
+  dUtils.setDialsData(dials)
 end
 
 

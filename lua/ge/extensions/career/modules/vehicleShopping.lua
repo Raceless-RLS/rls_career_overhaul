@@ -141,6 +141,7 @@ local function getVehiclePartsValue(modelName, configKey)
   local parts = jbeamIO.getAvailableParts(ioCtx)
   
   -- Iterate through each part in the PC file
+  dumpz(pcData.parts, 1)
   for slotName, partName in pairs(pcData.parts) do
       if partName and partName ~= "" then
           -- Get the part data using jbeamIO
@@ -224,10 +225,19 @@ local function generateVehicleList()
         -- get a random parking spot on the map
         -- TODO needs some error handling when there are no parking spots
         local parkingSpotName, parkingSpot
-        repeat
-          parkingSpotName = parkingSpotNames[math.random(tableSize(parkingSpotNames))]
-          parkingSpot = parkingSpots[parkingSpotName]
-        until not parkingSpot.customFields.tags.notprivatesale
+        if randomVehicleInfo.BoundingBox and randomVehicleInfo.BoundingBox[2] then
+          repeat
+            parkingSpotName = parkingSpotNames[math.random(tableSize(parkingSpotNames))]
+            parkingSpot = parkingSpots[parkingSpotName]
+          until not parkingSpot.customFields.tags.notprivatesale and parkingSpot:boxFits(randomVehicleInfo.BoundingBox[2][1], randomVehicleInfo.BoundingBox[2][2], randomVehicleInfo.BoundingBox[2][3])
+        end
+
+        if not parkingSpotName then
+          repeat
+            parkingSpotName = parkingSpotNames[math.random(tableSize(parkingSpotNames))]
+            parkingSpot = parkingSpots[parkingSpotName]
+          until not parkingSpot.customFields.tags.notprivatesale
+        end
 
         randomVehicleInfo.parkingSpotName = parkingSpotName
         randomVehicleInfo.pos = parkingSpot.pos
@@ -291,7 +301,7 @@ local function spawnVehicle(vehicleInfo, dealershipToMoveTo)
 end
 
 local function onVehicleSpawnFinished(vehId)
-  local veh = be:getObjectByID(vehId)
+  local veh = getObjectByID(vehId)
   local inventoryId = career_modules_inventory.addVehicle(vehId)
 
   if spawnFollowUpActions then
@@ -536,7 +546,7 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
 
   for partName, part in pairs(newParts) do
     part.year = vehicle.year
-    vehicle.config.parts[part.containingSlot] = part.name
+    --vehicle.config.parts[part.containingSlot] = part.name -- TODO removed with parts refactor. check if needed
     vehicle.originalParts[part.containingSlot] = {name = part.name, value = part.value}
 
     if part.description.slotInfoUi then
@@ -547,7 +557,10 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
     -- Also check if we do the same for part shopping or part inventory or vehicle shopping
   end
 
+  -- TODO removed with parts refactor. check if this is needed. depends on if there are slots in the data missing that contain a default part or if there are slots with some weird name like "none"
+
   -- remove old leftover slots that dont exist anymore
+  --[[
   local slotsToRemove = {}
   for slot, partName in pairs(vehicle.config.parts) do
     if not allSlotsInVehicle[slot] then
@@ -565,6 +578,7 @@ local function onAddedVehiclePartsToInventory(inventoryId, newParts)
       vehicle.config.parts[slot] = ""
     end
   end
+  ]]
 
   vehicle.changedSlots = {}
 
@@ -640,7 +654,7 @@ local function buyFromPurchaseMenu(purchaseType, options)
   end
 
   if options.licensePlateText then
-    career_modules_playerAttributes.addAttributes({money=-purchaseData.prices.customLicensePlate}, {tags={"buying"}, label=string.format("Bought custom license plate for new vehicle")})
+  career_modules_playerAttributes.addAttributes({money=-purchaseData.prices.customLicensePlate}, {tags={"buying"}, label=string.format("Bought custom license plate for new vehicle")})
   end
 
   -- remove the vehicle from the shop and update the other vehicles shopIds

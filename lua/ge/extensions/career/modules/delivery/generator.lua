@@ -152,16 +152,14 @@ local function finalizeParcelItemDistanceAndRewards(item)
   local template = deepcopy(M.getParcelTemplateById(item.templateId))
   item.modifiers = dParcelMods.generateModifiers(item, template, distance)
   item.rewards = {
-    money = getMoneyRewardForParcelItem(item, distance) * dProgress.getMoneyMultiplerForSkill('delivery'),
-    beamXP = (baseXP + round(distance/800)) * hardcoreMultiplier,
-    labourer = (baseXP + round(distance/800)) * hardcoreMultiplier,
-    delivery = (baseXP + round(distance/800)) * hardcoreMultiplier
+    money = getMoneyRewardForParcelItem(item, distance) * hardcoreMultiplier,
+    logistics = baseXP + round(distance/800) * hardcoreMultiplier,
+    ["logistics-delivery"] = baseXP + round(distance/800) * hardcoreMultiplier
   }
-
   if item.organization then
     local organizationData = freeroam_organizations.getOrganization(item.organization)
     if organizationData then
-      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1400)
+      item.rewards[item.organization .. "Reputation"] = baseXP + round(distance/1000)
       item.rewards.money = item.rewards.money * organizationData.reputationLevels[organizationData.reputation.level+2].deliveryBonus.value
     end
   end
@@ -469,16 +467,15 @@ local function finalizeVehicleOffer(offer)
       beamXP = (5 + round(distance/400)) * hardcoreMultiplier,
       labourer = (5 + round(distance/400)) * hardcoreMultiplier
     }
-
     if offer.data.type == "vehicle" then
-      offer.rewards.money = offer.rewards.money * dProgress.getMoneyMultiplerForSkill('vehicleDelivery')
-      offer.rewards.vehicleDelivery = (5 + round(distance/400)) * hardcoreMultiplier
+      offer.rewards.money = offer.rewards.money * hardcoreMultiplier
+      offer.rewards["logistics-vehicleDelivery"] = (5 + round(distance/400)) * hardcoreMultiplier
     elseif offer.data.type == "trailer" then
-      offer.rewards.money = offer.rewards.money * dProgress.getMoneyMultiplerForSkill('delivery')
-      offer.rewards.delivery = (5 + round(distance/400)) * hardcoreMultiplier
+      offer.rewards.money = offer.rewards.money * hardcoreMultiplier
+      offer.rewards["logistics-delivery"] = (5 + round(distance/400)) * hardcoreMultiplier
     end
     if offer.organization then
-      offer.rewards[offer.organization .. "Reputation"] = 5 + round(distance/4000) * hardcoreMultiplier
+      offer.rewards[offer.organization .. "Reputation"] = (5 + round(distance/4000)) * hardcoreMultiplier
     end
   end
 end
@@ -487,7 +484,6 @@ M.finalizeVehicleOffer = finalizeVehicleOffer
 
 local testVehicleList
 local function triggerVehicleOfferGenerator(fac, generator, timeOffset)
-
   local count = math.random(generator.min, generator.max)
 
   for  i = 1, count do
@@ -901,8 +897,7 @@ local function finalizeMaterialDistanceRewards(item, destination)
   local xpAmount = round((3+math.max(0,(distance/2000)-1)) * (item.slots / 400)) * hardcoreMultiplier
   item.rewards.beamXP = xpAmount
   item.rewards.labourer = xpAmount
-  item.rewards.delivery = xpAmount
-
+  item.rewards["logistics-delivery"] = xpAmount
 
   if item.organization then
     local organizationData = freeroam_organizations.getOrganization(item.organization)

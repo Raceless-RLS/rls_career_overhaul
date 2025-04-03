@@ -15,8 +15,25 @@ local brokenPartsThreshold = 3 -- a vehicle is considered to need repair after x
 local minimumCarValue = 500
 local minimumCarValueRelativeToNew = 0.05
 
+local function getPartNamesFromTree(Tree)
+  local partNames = {}
+  for _, part in ipairs(Tree) do
+    if part.children then
+      local result = getPartNamesFromTree(part.children)
+      if result then
+        for _, partName in ipairs(result) do
+          table.insert(partNames, partName)
+        end
+      end
+    else
+      table.insert(partNames, part.chosenPartName)
+    end
+  end
+  return partNames
+end
+
 local function getVehicleMileage(vehicle)
-  for slot, partName in pairs(vehicle.config.parts) do
+  for _, partName in ipairs(getPartNamesFromTree(vehicle.config.partsTree)) do
     if partName == vehicle.config.mainPartName then
       if vehicle.partConditions and vehicle.partConditions[partName] then
       return vehicle.partConditions[partName]["odometer"]
@@ -25,8 +42,8 @@ local function getVehicleMileage(vehicle)
           vehicle.partConditions = {}
         end
         vehicle.partConditions[partName] = {odometer = 0}
-        return 0
-      end
+    return 0
+  end
     end
   end
   return 0 -- Return a default value if main part is not found
@@ -88,15 +105,17 @@ local function getPartDifference(originalParts, newParts, changedSlots)
   local addedParts = {}
   local removedParts = {}
   for slotName, oldPart in pairs(originalParts) do
-    local newPart = newParts[slotName]
-    if newPart ~= oldPart.name then
-      if oldPart.name ~= "" then
-        -- part was removed
-        removedParts[slotName] = oldPart.name
-      end
-      if newPart ~= "" then
-        -- part was added
-        addedParts[slotName] = newPart
+    if newParts then
+      local newPart = newParts[slotName]
+      if newPart ~= oldPart.name then
+        if oldPart.name ~= "" then
+          -- part was removed
+          removedParts[slotName] = oldPart.name
+        end
+        if newPart ~= "" then
+          -- part was added
+          addedParts[slotName] = newPart
+        end
       end
     end
   end
@@ -157,16 +176,30 @@ local function getDamagedParts(vehInfo)
   local damagedParts = {
     partsToBeReplaced = {}
   }
-  for partName, info in pairs(vehInfo.partConditions) do
-    if info.integrityValue and info.integrityValue == 0 then
-      for slotName, partName2 in pairs(vehInfo.config.parts) do
-        if partName2 == partName then
-          local part = career_modules_partInventory.getPart(vehInfo.id, slotName)
-          table.insert(damagedParts.partsToBeReplaced, part)
-          break
-        end
+
+  local function traversePartsTree(node)
+    if not node.partPath then return end
+
+    local partCondition = vehInfo.partConditions[node.partPath]
+    if not partCondition then
+      log("E", "valueCalculator", "Couldnt find partCondition for " .. node.partPath .. " in vehicle " .. vehInfo.id)
+      return
+    end
+
+    if partCondition.integrityValue and partCondition.integrityValue == 0 then
+      local part = career_modules_partInventory.getPart(vehInfo.id, node.path)
+      table.insert(damagedParts.partsToBeReplaced, part)
+    end
+
+    if node.children then
+      for childSlotName, childNode in pairs(node.children) do
+        traversePartsTree(childNode)
       end
     end
+  end
+
+  if vehInfo.config.partsTree then
+    traversePartsTree(vehInfo.config.partsTree)
   end
 
   return damagedParts
@@ -206,10 +239,17 @@ end
 local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   local mileage = getVehicleMileage(vehicle)
 
-  local newParts = vehicle.config.parts
+  local partInventory = career_modules_partInventory.getInventory()
+
+  local newParts = {}
+  -- Loop through partInventory to find parts belonging to this vehicle
+  for _, part in pairs(partInventory) do
+    if part.location == vehicle.id then
+      newParts[part.containingSlot] = part.name
+    end
+  end
   local originalParts = vehicle.originalParts
   local changedSlots = vehicle.changedSlots
-
   local addedParts, removedParts = getPartDifference(originalParts, newParts, changedSlots)
   local sumPartValues = 0
   for slot, partName in pairs(originalParts) do
@@ -226,6 +266,7 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
       adjustedBaseValue = adjustedBaseValue + 0.90 * getPartValue(part)
     end
   end
+
   for slot, partName in pairs(removedParts) do
     local part = {value = vehicle.originalParts[slot].value, year = vehicle.year, partCondition = {odometer = mileage}} -- use vehicle mileage to calculate the value of the removed part
     adjustedBaseValue = adjustedBaseValue - getPartValue(part)
@@ -235,7 +276,7 @@ local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
   if ignoreDamage then
     repairDetails.price = 0
   end
-  
+
   local value = math.max(adjustedBaseValue, sumPartValues)
 
   if (getTableSize(originalParts) / 2) < (getTableSize(removedParts)) then
@@ -256,7 +297,7 @@ end
 
 local function getNumberOfBrokenParts(partConditions)
   local counter = 0
-  for partName, info in pairs(partConditions) do
+  for partPath, info in pairs(partConditions) do
     if info.integrityValue and info.integrityValue == 0 then
       counter = counter + 1
     end

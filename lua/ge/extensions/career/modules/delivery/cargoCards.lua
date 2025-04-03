@@ -64,7 +64,7 @@ local filtersByKey = {}
 local function resetFilterCounters()
   for _, filter in ipairs(filterTags) do
     filter.facilityCards = 0
-    filter.playerCards = 0    
+    filter.playerCards = 0
     filtersByKey[filter.value] = filter
   end
 end
@@ -440,6 +440,15 @@ local function getCardSortingSetsByKey(cardsById)
       return false
     end
     if not b.enabled and a.enabled then
+      return true
+    end
+    if not a.disableReason and not b.disableReason then
+      return false
+    end
+    if not a.disableReason then
+      return false
+    end
+    if not b.disableReason then
       return true
     end
     return disableReasonOrder[a.disableReason.type] < disableReasonOrder[b.disableReason.type]

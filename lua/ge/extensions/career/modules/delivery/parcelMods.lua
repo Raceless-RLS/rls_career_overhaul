@@ -13,9 +13,7 @@ end
 
 local modifiers = {
   timed = {
-     requirements = {
-      delivery = 1
-    },
+    unlockFlag = "smallPackagesDelivery",
     makeTemplate = function(g,p,distance)
       local time = (distance / 12) + 30 * math.random() + 30
       return {
@@ -36,9 +34,7 @@ local modifiers = {
     important = true,
   },
   post = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "smallPackagesDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "post",
@@ -53,9 +49,7 @@ local modifiers = {
     hidden=true,
   },
   precious = {
-    requirements = {
-      delivery = 2
-    },
+    unlockFlag = "largePackagesDelivery",
     penalty = 3,
     makeTemplate = function(g,p,distance)
       return {
@@ -73,9 +67,7 @@ local modifiers = {
 
   },
   aid = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "largePackagesDelivery",
     penalty = 3,
     makeTemplate = function(g,p,distance)
       return {
@@ -94,9 +86,7 @@ local modifiers = {
   },
 
   supplies = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "largePackagesDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "supplies",
@@ -111,9 +101,7 @@ local modifiers = {
     hidden=true,
   },
   large = {
-    requirements = {
-      delivery = 2
-    },
+    unlockFlag = "largePackagesDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "large",
@@ -127,39 +115,33 @@ local modifiers = {
     shortDescription = "Drive carefully and beware of momentum!"
   },
   fluid = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "hazardousMaterialsDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "fluid",
       }
     end,
     unlockLabel = "Fluids",
-    priority = 2,
+    priority = 6,
     icon = "droplet",
     label = "Fluid",
     shortDescription = "Requires a fluid-capable container or tank to transport."
   },
   dryBulk = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "hazardousMaterialsDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "dryBulk",
       }
     end,
     unlockLabel = "Dry Bulk",
-    priority = 2,
+    priority = 6,
     icon = "rocks",
     label = "Dry Bulk",
     shortDescription = "Requires a drybulk-capable container to transport."
   },
   parcel = {
-    requirements = {
-      delivery = 1
-    },
+    unlockFlag = "smallPackagesDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "parcel",
@@ -173,16 +155,14 @@ local modifiers = {
     hidden=true,
   },
   hazardous = {
-    requirements = {
-      delivery = 3
-    },
+    unlockFlag = "hazardousMaterialsDelivery",
     makeTemplate = function(g,p,distance)
       return {
         type = "hazardous",
       }
     end,
     unlockLabel = "Hazardous",
-    priority = 4,
+    priority = 6,
     icon = "roadblockL",
     label = "Hazardous",
     shortDescription = "Large penalty if lost or abandoned. Requires special license to handle.",
@@ -264,26 +244,27 @@ M.generateModifiers = generateModifiers
 
 
 local function isParcelModUnlocked(modKey)
-  local unlocked = true
-  for skill, level in pairs(modifiers[modKey].requirements or {}) do
-    if career_branches.getBranchLevel(skill) < level then
-      unlocked = false
-    end
-  end
-  return unlocked
+  if not modifiers[modKey] or not modifiers[modKey].unlockFlag then return false end
+  return career_modules_unlockFlags.getFlag(modifiers[modKey].unlockFlag)
 end
 M.isParcelModUnlocked = isParcelModUnlocked
 
 local function lockedBecauseOfMods(modKeys)
   local minTier = 1
   local locked = false
+  local definitions = {}
   for key, _ in pairs(modKeys) do
-    minTier = math.max(minTier, modifiers[key].requirements.delivery)
-    if not isParcelModUnlocked(key) then
-      locked = true
+    if modifiers[key] and modifiers[key].unlockFlag then
+      local unlockFlag = modifiers[key].unlockFlag
+      local flagDefinition = career_modules_unlockFlags.getFlagDefinition(unlockFlag)
+      table.insert(definitions, flagDefinition)
+      if not career_modules_unlockFlags.getFlag(unlockFlag) then
+        locked = true
+      end
     end
   end
-  return locked, minTier
+  table.sort(definitions, function(a,b) return (a and a.level or 0) > (b and b.level or 0) end)
+  return locked, definitions[1]
 end
 M.lockedBecauseOfMods = lockedBecauseOfMods
 

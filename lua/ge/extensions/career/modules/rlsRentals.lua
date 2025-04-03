@@ -119,7 +119,7 @@ end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
     if isParked then
-        local vehiclePosition = be:getObjectByID(stagedRental):getPosition()
+        local vehiclePosition = getObjectByID(stagedRental):getPosition()
         local playerPosition = be:getPlayerVehicle(0):getPosition()
         if (playerPosition - vehiclePosition):length() >= 15 then
             career_modules_inventory.removeVehicleObject(career_modules_inventory.getInventoryIdFromVehicleId(

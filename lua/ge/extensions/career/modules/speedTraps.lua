@@ -139,7 +139,7 @@ local function onRedLightCamTriggered(speedTrapData, playerSpeed)
     
     career_modules_payment.pay(fine, {label="Fine for driving over a red light", tags={"fine"}})
     Engine.Audio.playOnce('AudioGui','event:>UI>Career>Speedcam_Snapshot')
-    ui_message(message, 10, "speedTrap")
+    ui_message(string.format("Traffic Violation (Failure to stop at Red Light): \n - %q | Fine %d$", core_vehicles.getVehicleLicenseText(veh), fine.money.amount), 10, "speedTrap")
   else
     ui_message(string.format("Traffic Violation (Failure to stop at Red Light): \n - No license plate detected | Fine could not be issued"), 10, "speedTrap")
   end
@@ -175,6 +175,5 @@ M.onSpeedTrapTriggered = onSpeedTrapTriggered
 M.onRedLightCamTriggered = onRedLightCamTriggered
 M.onExtensionLoaded = onExtensionLoaded
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
-M.onPursuitAction = onPursuitAction
 
 return M

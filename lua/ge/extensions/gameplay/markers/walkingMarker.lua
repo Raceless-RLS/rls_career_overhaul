@@ -1,3 +1,6 @@
+-- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
+-- If a copy of the bCDDL was not distributed with this
+-- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local C = {}
 -- icon renderer
 local iconRendererName = "markerIconRenderer"
@@ -204,7 +207,7 @@ function C:clearObjects()
 end
 
 function C:interactInPlayMode(interactData, interactableElements)
-  if interactData.canInteract and self.anyOverlap then      
+  if interactData.canInteract and self.anyOverlap then
     for _, elem in ipairs(self.cluster.elemData) do
       table.insert(interactableElements, elem)
     end

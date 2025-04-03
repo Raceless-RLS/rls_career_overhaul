@@ -16,7 +16,19 @@
               <BngButton :accent="ACCENTS.outlined" @click="switchActiveVehicle(-1)" v-bng-on-ui-nav:tab_l.asMouse :icon="icons.arrowLargeLeft">
                 <BngBinding ui-event="tab_l" deviceMask="xinput" />
               </BngButton>
-              <BngButton :accent="ACCENTS.outlined" @click="switchActiveVehicle(1)" v-bng-on-ui-nav:tab_r.asMouse :icon-right="icons.arrowLargeRight">
+              <BngList v-if="currentVehicleData" style="width: 20em;">
+                <VehicleTile
+                  style="height: 13em"
+                  :data="currentVehicleData"
+                  layout="tile"
+                  :enableHover="false"
+                />
+
+                <BngButton style="height: 2em;" @click="startPerformanceTest()" :disabled="isTutorialActive || !currentVehicleData || currentVehicleData.needsRepair || !currentVehicleData.owned">
+                  {{ startTestTitle }}
+                </BngButton>
+              </BngList>
+              <BngButton style="height: 3em;" v-if="showVehicleSelectorButtons" :accent="ACCENTS.outlined" @click="switchActiveVehicle(1)" v-bng-on-ui-nav:tab_r.asMouse :icon-right="icons.arrowLargeRight">
                 <BngBinding ui-event="tab_r" deviceMask="xinput" />
               </BngButton>
             </div>
@@ -32,7 +44,7 @@
               @focus="setReason(0, infoById[computerFunction.id].reason)"
               @mouseleave="setReason(0)"
               @blur="setReason(0)"
-              v-bng-focus-if="index == 0"
+              v-bng-ui-nav-focus="index == 0 ? 0 : undefined"
               :icon="infoById[computerFunction.id].icon"
               :label="infoById[computerFunction.id].label" />
           </div>
@@ -58,7 +70,7 @@
                 @focus="setReason(1, infoById[computerFunction.id].reason)"
                 @mouseleave="setReason(1)"
                 @blur="setReason(1)"
-                v-bng-focus-if="!hasVehicles && index == 0"
+                v-bng-ui-nav-focus="!hasVehicles && index == 0 ? 0 : undefined"
                 :icon="infoById[computerFunction.id].icon"
                 :label="infoById[computerFunction.id].label" />
             </template>
@@ -98,20 +110,34 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue"
+import { ref, computed, onMounted, onUnmounted, watch } from "vue"
 import { lua } from "@/bridge"
 import { useComputerStore } from "../stores/computerStore"
 import ComputerWrapper from "./ComputerWrapper.vue"
 import { BngButton, ACCENTS, BngCard, BngCardHeading, BngBinding, BngImageTile, BngIcon, icons } from "@/common/components/base"
 import { default as UINavEvents, UI_EVENT_GROUPS } from "@/bridge/libs/UINavEvents"
-import { vBngOnUiNav, vBngBlur,vBngFocusIf } from "@/common/directives"
+import { vBngOnUiNav, vBngBlur, vBngUiNavFocus } from "@/common/directives"
+import VehicleTile from "../components/vehicleInventory/VehicleTile.vue"
+import { LIST_LAYOUTS } from "@/common/components/base"
 
 const computerStore = useComputerStore()
+const currentVehicleData = ref(null)
+
+watch(() => computerStore.activeInventoryId, (newId) => {
+  if (Number(newId)) {
+    lua.career_modules_inventory.getVehicleUiData(newId).then(data => {
+      currentVehicleData.value = data
+    })
+  }
+})
+
 const showVehicleSelectorButtons = computed(() => computerStore.computerData.vehicles && computerStore.computerData.vehicles.length > 1)
 
 const hasVehicles = computed(() => computerStore.computerData.vehicles && computerStore.computerData.vehicles.length)
 const currentVehicleName = computed(() => (hasVehicles.value ? computerStore.computerData.vehicles[computerStore.activeVehicleIndex].vehicleName : ""))
 const currentVehicleThumbnail = computed(() => (hasVehicles.value ? computerStore.computerData.vehicles[computerStore.activeVehicleIndex].thumbnail : ""))
+
+const startTestTitle = computed(() => hasVehicles.value ? (computerStore.computerData.vehicles[computerStore.activeVehicleIndex].needsRepair ? "Assess Performance (Repair Required)" : "Assess Performance") : "")
 
 // list of function IDs that are known to take some time, so we inform the user about loading
 const slowFunctions = ["vehicleShop", "partInventory"]
@@ -138,6 +164,7 @@ const iconById = {
   vehicleInventory: icons.keys1,
   partInventory: icons.engine,
   vehicleShop: icons.carCoins,
+  performanceIndex: icons.raceFlag,
   sleep: icons.night,
   carMeets: icons.cars,
   marketplace: icons.shoppingCart
@@ -166,9 +193,14 @@ const infoById = computed(() => [
   return res
 }, {}))
 
+const isTutorialActive = ref(false)
 const disableReason = ref([null, null, null])
 const setReason = (idx, reason = null) => {
   disableReason.value = disableReason.value.map((_, i) => i === idx ? reason : null)
+}
+
+const startPerformanceTest = function() {
+  lua.career_modules_vehiclePerformance.startDragTestFromOutsideMenu(computerStore.activeInventoryId, computerStore.computerData.computerId)
 }
 
 const close = () => {
@@ -176,9 +208,18 @@ const close = () => {
   lua.career_career.closeAllMenus()
 }
 
-const start = () => {
+const start = async () => {
   UINavEvents.setFilteredEvents(UI_EVENT_GROUPS.focusMoveScalar)
   computerStore.requestComputerData()
+
+  if (Number(computerStore.activeInventoryId)) {
+    lua.career_modules_inventory.getVehicleUiData(computerStore.activeInventoryId).then(data => {
+      currentVehicleData.value = data
+    })
+  }
+  lua.career_modules_linearTutorial.isLinearTutorialActive().then(data => {
+    isTutorialActive.value = data
+  })
 }
 
 const kill = () => {
@@ -186,6 +227,7 @@ const kill = () => {
   UINavEvents.clearFilteredEvents()
   computerStore.$dispose()
 }
+
 onMounted(start)
 onUnmounted(kill)
 </script>
@@ -194,7 +236,7 @@ onUnmounted(kill)
 .card-content {
   width: max-content;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   color: white;
   background-color: rgba(0, 0, 0, 0.75);
   & :deep(.card-cnt) {
@@ -205,11 +247,10 @@ onUnmounted(kill)
 .vehicle-actions {
   display: flex;
   flex-direction: column;
-  overflow: hidden auto;
+  overflow: auto;
   padding: {
-    left: 1em;
-    right: 1em;
-    bottom: 1em;
+    left: 2em;
+    right: 2em;
   }
   > :deep(.tile) {
     display: inline-flex;
@@ -221,7 +262,7 @@ onUnmounted(kill)
   font-size: 1rem;
   > * {
     flex: 0 0 auto;
-    min-width: 2em !important;
+    min-width: 3em !important;
     // width: 3em;
   }
 }
@@ -229,9 +270,9 @@ onUnmounted(kill)
 .veh-preview {
   position: absolute;
   top: 1em;
-  right: 1em;
+  right: 2em;
   width: 11em;
-  height: auto;
+  height: 6em;
   background-color: #0008;
   background-image: var(--veh-preview);
   background-size: cover;
@@ -265,10 +306,10 @@ onUnmounted(kill)
   flex-flow: row nowrap;
   justify-content: space-between;
   > * {
-    flex: 0 0 7em;
-    margin-bottom: 0.5em !important;
+    flex: 0 0 auto;
+    margin-bottom: 1em !important;
     &:not(:last-child) {
-      margin-right: 0.5em !important;
+      margin-right: 2em !important;
     }
   }
   & [bng-nav-item] {
@@ -284,12 +325,75 @@ onUnmounted(kill)
 .disable-reason {
   display: flex;
   align-items: baseline;
-  height: 0.6em;
+  height: 1.2em;
   .disable-icon {
     margin-right: 0.1em;
   }
-  .disable-text {
-    //
+}
+
+.class-info-wrapper {
+  display: inline-block;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+.class-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: 0.9em;
+
+  .separator {
+    color: #888;
+    margin: 0 0.25em;
+  }
+
+  .class-details {
+    display: flex;
+    gap: 0.35em;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+
+  .class-name {
+    color: #ccc;
+  }
+
+  .performance-index {
+    display: inline-flex;
+    font-weight: 600;
+    border-radius: 0.25em;
+    overflow: hidden;
+    align-items: center;
+
+    .class-segment {
+      background: #666;
+      color: #fff;
+      padding: 0.15em 0.4em;
+      display: flex;
+      align-items: center;
+    }
+
+    .number-segment {
+      background: #444;
+      color: #fff;
+      padding: 0.15em 0.4em;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .class-na {
+    color: #888;
+  }
+
+  .class-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(90, 78, 20, 0.541);
+    padding: 6px 8px 2px 8px;
+    border-radius: 999px;
+    color: #f0a500;
   }
 }
 </style>

@@ -1,18 +1,67 @@
 // Career routes --------------------------------------
 
-import { CROSSFIRE_HINTS_ALL, CROSSFIRE_HINTS } from "@/services/infoBar.js"
+import ProgressLanding from "./views/ProgressLanding.vue"
+import BranchPage from "./views/BranchPage.vue"
+import CargoDeliveryReward from "./views/CargoDeliveryReward.vue"
+import CargoOverview from "./views/CargoOverviewMain.vue"
+import CargoDropOff from "./views/CargoDropOff.vue"
+import Computer from "./views/ComputerMain.vue"
+import InspectVehicle from "./views/InspectVehicleMain.vue"
+import InsurancePolicies from "./views/InsurancePoliciesMain.vue"
+import Logbook from "./views/Logbook.vue"
+import Milestones from "./views/Milestones.vue"
+import MyCargo from "./views/MyCargo.vue"
+import Painting from "./views/PaintingMain.vue"
+import PartInventory from "./views/PartInventoryMain.vue"
+import PartShopping from "./views/PartShoppingMain.vue"
+import Pause from "./views/Pause.vue"
+import PauseBigMiddlePanel from "./views/PauseBigMiddlePanel.vue"
+import Profiles from "./views/Profiles.vue"
+import Repair from "./views/RepairMain.vue"
+import Tuning from "./views/TuningMain.vue"
+import VehicleInventory from "./views/VehicleInventoryMain.vue"
+import VehiclePurchase from "./views/VehiclePurchaseMain.vue"
+import VehicleShopping from "./views/VehicleShoppingMain.vue"
+import VehiclePerformance from "./views/VehiclePerformanceMain.vue"
+import Sleep from "./views/SleepMenu.vue"
+import RoleAssignment from "./views/RoleAssignment.vue"
+import CarMeets from "./views/CarMeetsMenu.vue"
+import PurchaseGarage from "./views/PurchaseGarage.vue"
+import PhoneMain from "./views/PhoneMain.vue"
+import PhoneMinimap from "./views/PhoneMinimap.vue"
+import PhoneMarketplace from "./views/PhoneMarketplace.vue"
+import Marketplace from "./views/Marketplace.vue"
+import PhoneTaxi from "./views/PhoneTaxi.vue"
+import CarMeetsPhone from "./views/CarMeetsPhone.vue"
 
-import * as views from "./views"
 
 export default [
+  // Career Pause
+  {
+    path: "/menu.careerPause",
+    name: "menu.careerPause",
+    component: Pause,
+    props: true,
+    meta: {
+      clickThrough: true,
+      infoBar: {
+        withAngular: true,
+        visible: true,
+        showSysInfo: true,
+      },
+      uiApps: {
+        shown: false,
+      },
+    },
+  },
   {
     path: "/career",
     children: [
       // Career Pause
       {
-        path: "pause",
-        name: "pause",
-        component: views.Pause,
+        path: "pauseBigMiddlePanel",
+        name: "pauseBigMiddlePanel",
+        component: PauseBigMiddlePanel,
         props: true,
       },
 
@@ -20,14 +69,14 @@ export default [
       {
         path: "logbook/:id(\\*?.*?)?",
         name: "logbook",
-        component: views.Logbook,
+        component: Logbook,
         props: true,
       },
 
       {
         path: "milestones/:id(\\*?.*?)?",
         name: "milestones",
-        component: views.Milestones,
+        component: Milestones,
         props: true,
         meta: {
           uiApps: {
@@ -40,12 +89,12 @@ export default [
       {
         path: "computer",
         name: "computer",
-        component: views.Computer,
+        component: Computer,
         props: true,
         meta: {
           uiApps: {
-            shown: true,
-            layout: "tasklist",
+            shown: false,
+            //layout: "tasklist",
           },
         },
       },
@@ -54,36 +103,36 @@ export default [
       {
         path: "vehicleInventory",
         name: "vehicleInventory",
-        component: views.VehicleInventory,
+        component: VehicleInventory,
+      },
+
+      // Vehicle Certification
+      {
+        path: "vehiclePerformance/:inventoryId?/:computerId?/:backUIState?/:testInProgress?",
+        name: "vehiclePerformance",
+        component: VehiclePerformance,
+        props: true,
       },
 
       // Tuning
       {
         path: "tuning",
         name: "tuning",
-        component: views.Tuning,
+        component: Tuning,
       },
 
       // Painting
       {
         path: "painting",
         name: "painting",
-        component: views.Painting,
+        component: Painting,
       },
 
       // Repair
       {
         path: "repair/:header?",
         name: "repair",
-        component: views.Repair,
-        props: true,
-      },
-
-      // Organizations
-      {
-        path: "organizations/:orgId?",
-        name: "organizations",
-        component: views.Organizations,
+        component: Repair,
         props: true,
       },
 
@@ -91,11 +140,11 @@ export default [
       {
         path: "partShopping",
         name: "partShopping",
-        component: views.PartShopping,
+        component: PartShopping,
         meta: {
           uiApps: {
-            shown: true,
-            layout: "tasklist",
+            shown: false,
+            //layout: "tasklist",
           },
         },
       },
@@ -104,14 +153,14 @@ export default [
       {
         path: "partInventory",
         name: "partInventory",
-        component: views.PartInventory,
+        component: PartInventory,
       },
 
       // Vehicle Purchase
       {
         path: "vehiclePurchase/:vehicleInfo?/:playerMoney?/:inventoryHasFreeSlot?/:lastVehicleInfo?",
         name: "vehiclePurchase",
-        component: views.VehiclePurchase,
+        component: VehiclePurchase,
         props: true,
       },
 
@@ -119,11 +168,11 @@ export default [
       {
         path: "vehicleShopping",
         name: "vehicleShopping",
-        component: views.VehicleShopping,
+        component: VehicleShopping,
         meta: {
           uiApps: {
-            shown: true,
-            layout: "tasklist",
+            shown: false,
+            //layout: "tasklist",
           },
         },
       },
@@ -132,21 +181,21 @@ export default [
       {
         path: "insurancePolicies",
         name: "insurancePolicies",
-        component: views.InsurancePolicies,
+        component: InsurancePolicies,
       },
 
       // Inspect Vehicle
       {
         path: "inspectVehicle",
         name: "inspectVehicle",
-        component: views.InspectVehicle,
+        component: InspectVehicle,
       },
 
       // Delivery Reward
       {
         path: "cargoDeliveryReward",
         name: "cargoDeliveryReward",
-        component: views.CargoDeliveryReward,
+        component: CargoDeliveryReward,
         props: true,
       },
 
@@ -154,7 +203,7 @@ export default [
       {
         path: "cargoDropOff/:facilityId?/:parkingSpotPath(\\*?.*?)?",
         name: "cargoDropOff",
-        component: views.CargoDropOff,
+        component: CargoDropOff,
         props: true,
       },
 
@@ -162,7 +211,7 @@ export default [
       {
         path: "cargoOverview/:facilityId?/:parkingSpotPath(\\*?.*?)?",
         name: "cargoOverview",
-        component: views.CargoOverview,
+        component: CargoOverview,
         props: true,
         meta: {
           uiApps: {
@@ -173,7 +222,7 @@ export default [
       {
         path: "myCargo",
         name: "myCargo",
-        component: views.MyCargo,
+        component: MyCargo,
         props: true,
         meta: {
           uiApps: {
@@ -182,14 +231,37 @@ export default [
         },
       },
 
-      //Branch Landing Page
+      // Branch Landing Page
       {
-        path: "progressLanding/",
+        path: "progressLanding/:pathId?/:comesFromBigMap?",
         name: "progressLanding",
-        component: views.ProgressLanding,
+        component: ProgressLanding,
+        props: route => ({
+          pathId: route.params.pathId,
+          comesFromBigMap: route.params.comesFromBigMap === "true" || route.params.comesFromBigMap === true
+        }),
         meta: {
           uiApps: {
             shown: false,
+          },
+          infoBar: {
+            visible: true,
+          },
+        },
+      },
+
+      // Domain Landing Page
+      {
+        path: "domainSelection",
+        name: "domainSelection",
+        component: ProgressLanding,
+        props: true,
+        meta: {
+          uiApps: {
+            shown: false,
+          },
+          infoBar: {
+            visible: true,
           },
         },
       },
@@ -198,11 +270,14 @@ export default [
       {
         path: "branchPage/:branchKey?/:skillKey?/",
         name: "branchPage",
-        component: views.BranchPage,
+        component: BranchPage,
         props: true,
         meta: {
           uiApps: {
             shown: false,
+          },
+          infoBar: {
+            visible: true,
           },
         },
       },
@@ -211,7 +286,7 @@ export default [
       {
         path: "profiles",
         name: "profiles",
-        component: views.Profiles,
+        component: Profiles,
         meta: {
           uiApps: {
             shown: false,
@@ -219,7 +294,6 @@ export default [
           infoBar: {
             visible: true,
             showSysInfo: true,
-            hints: CROSSFIRE_HINTS_ALL,
           },
         }
       },
@@ -228,62 +302,62 @@ export default [
       {
         path: "sleep-menu",
         name: "sleep-menu",
-        component: views.Sleep
+        component: Sleep
       },
 
       // Police Assignment
       {
         path: "roleAssignment",
         name: "roleAssignment",
-        component: views.RoleAssignment
+        component: RoleAssignment
       },
 
       {
         path: "carMeets",
         name: "carMeets",
-        component: views.CarMeets
+        component: CarMeets
       },
 
       {
         path: "purchase-garage",
         name: "purchase-garage",
-        component: views.PurchaseGarage
+        component: PurchaseGarage
       },
 
       {
         path: "phone-minimap",
         name: "phone-minimap",
-        component: views.PhoneMinimap
+        component: PhoneMinimap
       },
 
       {
         path: "phone-main",
         name: "phone-main",
-        component: views.PhoneMain
+        component: PhoneMain
       },
 
       {
         path: "car-meets-phone",
         name: "car-meets-phone",
-        component: views.CarMeetsPhone
+        component: CarMeetsPhone
       },
 
       {
         path: "phone-taxi",
         name: "phone-taxi",
-        component: views.PhoneTaxi
+        component: PhoneTaxi
       },
 
       {
         path: "marketplace",
         name: "marketplace",
-        component: views.Marketplace
+        component: Marketplace
       },
 
       { 
         path: "phone-marketplace",
         name: "phone-marketplace",
-        component: views.PhoneMarketplace
+        component: PhoneMarketplace
       }
 
     ],

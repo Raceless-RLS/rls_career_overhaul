@@ -80,7 +80,7 @@ end
 local function setTrafficVars()
   -- temporary police adjustment
   gameplay_traffic.setTrafficVars({enableRandomEvents = false})
-  gameplay_police.setPursuitVars({arrestRadius = 15, evadeLimit = 30})
+  gameplay_police.setPursuitVars({arrestRadius = 15, evadeTime = 30})
   gameplay_parking.setParkingVars({precision = 0.2}) -- allows for relaxed parking detection
 end
 
@@ -132,11 +132,11 @@ local function setupTraffic(forceSetup)
     if isNoParkedModActive() then
       parkedAmount = 0
     else
-      if parkedAmount == 0 then -- auto amount
-        parkedAmount = clamp(gameplay_traffic.getIdealSpawnAmount(nil, true), 4, 20)
-      end
-      if not M.debugMode then
-        parkedAmount = clamp(parkedAmount, 2, 50) -- at least 2 vehicles should get spawned
+    if parkedAmount == 0 then -- auto amount
+      parkedAmount = clamp(gameplay_traffic.getIdealSpawnAmount(nil, true), 4, 20)
+    end
+    if not M.debugMode then
+      parkedAmount = clamp(parkedAmount, 2, 50) -- at least 2 vehicles should get spawned
       end
     end
 
@@ -151,7 +151,6 @@ local function setupTraffic(forceSetup)
 
     -- this will spawn vehicles near the center of the map (player vehicle not ready yet)
     -- if this would wait until player vehicle active, then the loading screen would fade out early...
-    --gameplay_pedestrian.setAutoSpawning(true)
     gameplay_parking.setupVehicles(restrict and testTrafficAmounts.parkedCars or parkedAmount)
     gameplay_traffic.setupTraffic(restrict and testTrafficAmounts.traffic + extraAmount or amount + extraAmount, 0, {policeAmount = policeAmount, simpleVehs = true, autoLoadFromFile = true})
     setTrafficVars()
@@ -323,132 +322,140 @@ local function onVehicleSwitched(oldId, newId)
         local playerIsCop = getPlayerIsCop()
         if playerIsCop then
             ui_message("You are now a cop", 5, "Police", "info")
-        end
     end
+  end
 end
 
 local function playerPursuitActive()
-    return playerData.traffic and playerData.traffic.pursuit and playerData.traffic.pursuit.mode ~= 0
+  return playerData.traffic and playerData.traffic.pursuit and playerData.traffic.pursuit.mode ~= 0
 end
 
-
 local function resetPlayerState()
-    setPlayerData(be:getPlayerVehicleID(0))
-    if playerData.traffic then playerData.traffic:resetAll() end
-  
-    setTrafficVars()
+  setPlayerData(be:getPlayerVehicleID(0))
+  if playerData.traffic then playerData.traffic:resetAll() end
+
+  setTrafficVars()
 end
 
 local function retrieveFavoriteVehicle()
-    local inventory = career_modules_inventory
-    local favoriteVehicleInventoryId = inventory.getFavoriteVehicle()
-    if not favoriteVehicleInventoryId then return end
-    local vehInfo = inventory.getVehicles()[favoriteVehicleInventoryId]
-    if not vehInfo then return end
-  
-    local vehId = inventory.getVehicleIdFromInventoryId(favoriteVehicleInventoryId)
-    if vehId then
+  local inventory = career_modules_inventory
+  local favoriteVehicleInventoryId = inventory.getFavoriteVehicle()
+  if not favoriteVehicleInventoryId then return end
+  local vehInfo = inventory.getVehicles()[favoriteVehicleInventoryId]
+  if not vehInfo then return end
+
+  local vehId = inventory.getVehicleIdFromInventoryId(favoriteVehicleInventoryId)
+  if vehId then
+    local playerVehObj = getPlayerVehicle(0)
+    spawn.safeTeleport(getObjectByID(vehId), playerVehObj:getPosition(), quatFromDir(playerVehObj:getDirectionVector()), nil, nil, nil, nil, false)
+    core_vehicleBridge.executeAction(getObjectByID(vehId),'setIgnitionLevel', 0)
+  elseif not vehInfo.timeToAccess and not career_modules_insurance.inventoryVehNeedsRepair(favoriteVehicleInventoryId) then
+    inventory.spawnVehicle(favoriteVehicleInventoryId, nil,
+    function()
       local playerVehObj = getPlayerVehicle(0)
-      spawn.safeTeleport(be:getObjectByID(vehId), playerVehObj:getPosition(), quatFromDir(playerVehObj:getDirectionVector()), nil, nil, nil, nil, false)
-      core_vehicleBridge.executeAction(be:getObjectByID(vehId),'setIgnitionLevel', 0)
-    elseif not vehInfo.timeToAccess and not career_modules_insurance.inventoryVehNeedsRepair(favoriteVehicleInventoryId) then
-      inventory.spawnVehicle(favoriteVehicleInventoryId, nil,
-      function()
-        local playerVehObj = getPlayerVehicle(0)
-        local vehId = inventory.getVehicleIdFromInventoryId(favoriteVehicleInventoryId)
-        spawn.safeTeleport(be:getObjectByID(vehId), playerVehObj:getPosition(), quatFromDir(playerVehObj:getDirectionVector()), nil, nil, nil, nil, false)
-        end)
-    end
+      local vehId = inventory.getVehicleIdFromInventoryId(favoriteVehicleInventoryId)
+      spawn.safeTeleport(getObjectByID(vehId), playerVehObj:getPosition(), quatFromDir(playerVehObj:getDirectionVector()), nil, nil, nil, nil, false)
+    end)
+  end
 end
 
 local function deleteTrailers(veh)
-    local trailerData = core_trailerRespawn.getTrailerData()
-    local trailerDataThisVeh = trailerData[veh:getId()]
+  local trailerData = core_trailerRespawn.getTrailerData()
+  local trailerDataThisVeh = trailerData[veh:getId()]
 
-    if trailerDataThisVeh then
-        local trailer = be:getObjectByID(trailerDataThisVeh.trailerId)
-        deleteTrailers(trailer)
-        career_modules_inventory.removeVehicleObject(career_modules_inventory.getInventoryIdFromVehicleId(
-            trailerDataThisVeh.trailerId))
-    end
+  if trailerDataThisVeh then
+    local trailer = getObjectByID(trailerDataThisVeh.trailerId)
+    deleteTrailers(trailer)
+    career_modules_inventory.removeVehicleObject(career_modules_inventory.getInventoryIdFromVehicleId(trailerDataThisVeh.trailerId))
+  end
 end
 
 local teleportTrailerJob = function(job)
-    local args = job.args[1]
-    local vehicle = be:getObjectByID(args.vehicleId)
-    local trailer = be:getObjectByID(args.trailerId)
-    local vehRot = quat(0,0,1,0) * quat(vehicle:getRefNodeRotation())
-    local vehBB = vehicle:getSpawnWorldOOBB()
-    local vehBBCenter = vehBB:getCenter()
-  
-    local trailerBB = vehicle:getSpawnWorldOOBB()
-  
-    spawn.safeTeleport(trailer, vehBBCenter - vehicle:getDirectionVector() * (vehBB:getHalfExtents().y + trailerBB:getHalfExtents().y), vehRot, nil, nil, nil, true, args.resetVeh)
-  
-    core_trailerRespawn.getTrailerData()[args.vehicleId] = nil
+  local args = job.args[1]
+  local vehicle = getObjectByID(args.vehicleId)
+  local trailer = getObjectByID(args.trailerId)
+  local vehRot = quat(0,0,1,0) * quat(vehicle:getRefNodeRotation())
+  local vehBB = vehicle:getSpawnWorldOOBB()
+  local vehBBCenter = vehBB:getCenter()
+
+  local trailerBB = vehicle:getSpawnWorldOOBB()
+
+  spawn.safeTeleport(trailer, vehBBCenter - vehicle:getDirectionVector() * (vehBB:getHalfExtents().y + trailerBB:getHalfExtents().y), vehRot, nil, nil, nil, true, args.resetVeh)
+
+  core_trailerRespawn.getTrailerData()[args.vehicleId] = nil
+end
+
+local function teleportToGarage(garageId, veh, resetVeh)
+  freeroam_facilities.teleportToGarage(garageId, veh, resetVeh)
+  freeroam_bigMapMode.navigateToMission(nil)
+  core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
+
+  local trailerData = core_trailerRespawn.getTrailerData()
+  local primaryTrailerData = trailerData[veh:getId()]
+  if primaryTrailerData then
+    local teleportArgs = {
+      trailerId = primaryTrailerData.trailerId,
+      vehicleId = veh:getId(),
+      resetVeh = resetVeh
+    }
+    -- need to do this with one frame delay, otherwise the safeTeleport gets confused with two vehicles
+    core_jobsystem.create(teleportTrailerJob, 0.1, teleportArgs)
+
+    career_modules_inventory.updatePartConditionsOfSpawnedVehicles(
+      function()
+        local trailer = getObjectByID(primaryTrailerData.trailerId)
+        deleteTrailers(trailer)
+        career_modules_fuel.minimumRefuelingCheck(veh:getId())
+      end
+    )
+  else
+    career_modules_fuel.minimumRefuelingCheck(veh:getId())
   end
-  
-  local function teleportToGarage(garageId, veh, resetVeh)
-    freeroam_facilities.teleportToGarage(garageId, veh, resetVeh)
-    freeroam_bigMapMode.navigateToMission(nil)
-    core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
-  
-    local trailerData = core_trailerRespawn.getTrailerData()
-    local primaryTrailerData = trailerData[veh:getId()]
-    if primaryTrailerData then
-      local teleportArgs = {
-        trailerId = primaryTrailerData.trailerId,
-        vehicleId = veh:getId(),
-        resetVeh = resetVeh
-      }
-      -- need to do this with one frame delay, otherwise the safeTeleport gets confused with two vehicles
-      core_jobsystem.create(teleportTrailerJob, 0.1, teleportArgs)
-  
-      career_modules_inventory.updatePartConditionsOfSpawnedVehicles(
-        function()
-          local trailer = be:getObjectByID(primaryTrailerData.trailerId)
-          deleteTrailers(trailer)
-          career_modules_fuel.minimumRefuelingCheck(veh:getId())
-        end
-      )
-    else
-      career_modules_fuel.minimumRefuelingCheck(veh:getId())
+end
+
+local function onVehicleParkingStatus(vehId, data)
+  if not gameplay_missions_missionManager.getForegroundMissionId() and not career_modules_linearTutorial.isLinearTutorialActive() and vehId == be:getPlayerVehicleID(0) then
+    if data.event == "valid" then -- this refers to fully stopping while aligned in a parking spot
+      if not playerData.isParked then
+        playerData.isParked = true
+      end
+    elseif data.event == "exit" then
+      playerData.isParked = false
     end
   end
-  
-  local function onVehicleParkingStatus(vehId, data)
-    if not gameplay_missions_missionManager.getForegroundMissionId() and not career_modules_linearTutorial.isLinearTutorialActive() and vehId == be:getPlayerVehicleID(0) then
-      if data.event == "valid" then -- this refers to fully stopping while aligned in a parking spot
-        if not playerData.isParked then
-          playerData.isParked = true
-        end
-      elseif data.event == "exit" then
-        playerData.isParked = false
+end
+
+local function onTrafficStarted()
+  if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
+    gameplay_traffic.insertTraffic(be:getPlayerVehicleID(0), true) -- assumes that player vehicle is ready
+    setPlayerData(be:getPlayerVehicleID(0))
+    gameplay_traffic.setActiveAmount(playerData.trafficActive)
+
+    for k, v in pairs(gameplay_traffic.getTrafficData()) do
+      if v.role.name == "police" then
+        v.activeProbability = 0.15 -- this should be based on career progression as well as zones
       end
     end
   end
-  
-  local function onTrafficStarted()
-    if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
-      gameplay_traffic.insertTraffic(be:getPlayerVehicleID(0), true) -- assumes that player vehicle is ready
-      setPlayerData(be:getPlayerVehicleID(0))
-      gameplay_traffic.setActiveAmount(playerData.trafficActive)
-  
-      for k, v in pairs(gameplay_traffic.getTrafficData()) do
-        if v.role.name == "police" then
-          v.activeProbability = 0.15 -- this should be based on career progression as well as zones
-        end
-      end
-    end
+end
+
+local function onTrafficStopped()
+  if playerData.traffic then table.clear(playerData.traffic) end
+
+  if M.ensureTraffic then -- temp solution to reset traffic
+    setupTraffic(true)
   end
-  
-  local function onTrafficStopped()
-    if playerData.traffic then table.clear(playerData.traffic) end
-  
-    if M.ensureTraffic then -- temp solution to reset traffic
-      setupTraffic(true)
-    end
+end
+
+local function onPlayerCameraReady()
+  setupTraffic() -- spawns traffic while the loading screen did not fade out yet
+end
+
+local function onVehicleSwitched(oldId, newId)
+  if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
+    setPlayerData(newId, oldId)
   end
+end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
   if M.preStart and freeroam_specialTriggers and playerData.traffic then -- this cycles all lights triggers, to eliminate lag spikes (move this code later)
@@ -532,8 +539,6 @@ local function showPosition(pos)
     core_paths.playPath(camPath, 0, initData)
   end
 end
-
-M.setupTraffic = setupTraffic
 
 M.getPlayerData = getPlayerData
 M.retrieveFavoriteVehicle = retrieveFavoriteVehicle

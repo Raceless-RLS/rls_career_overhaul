@@ -1,66 +1,67 @@
 {
-// gameplay
-"reset_physics"           :{"cat":"gameplay", "order":  1, "ctx": "tlua", "onDown"  :"extensions.hook('trackVehReset') resetGameplay(PLAYER)", "title": "ui.inputActions.gameplay.reset_physics.title", "desc": "ui.inputActions.gameplay.reset_physics.description" },
-"reset_all_physics"       :{"cat":"gameplay", "order":  1, "ctx": "tlua", "onDown"  :"extensions.hook('trackVehReset') resetGameplay(-1)", "title": "ui.inputActions.gameplay.reset_all_physics.title", "desc": "ui.inputActions.gameplay.reset_all_physics.description" },
-"recover_vehicle"         :{"cat":"gameplay", "order":  2, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.startRecovering()", "onUp": "recovery.stopRecovering()", "title": "ui.inputActions.gameplay.recover_vehicle.title", "desc": "ui.inputActions.gameplay.recover_vehicle.description" },
-"recover_vehicle_alt"     :{"cat":"gameplay", "order":  3, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.startRecovering(true)", "onUp": "recovery.stopRecovering()", "title": "ui.inputActions.gameplay.recover_vehicle_alt.title", "desc": "ui.inputActions.gameplay.recover_vehicle_alt.description" },
-"recover_to_last_road"    :{"cat":"gameplay", "order":  4, "ctx": "tlua", "onDown"  :"spawn.teleportToLastRoad()", "title": "ui.inputActions.gameplay.recover_vehicle_to_last_road.title", "desc": "ui.inputActions.gameplay.recover_vehicle_to_last_road.description" },
-
-"switch_previous_vehicle" :{"cat":"gameplay", "order": 10, "ctx": "tlua", "onDown"  :"extensions.core_input_vehicleSwitching.switchCycleVehicle(PLAYER, -1)", "title": "ui.inputActions.gameplay.switch_previous_vehicle.title", "desc": "ui.inputActions.gameplay.switch_previous_vehicle.description" },
-"switch_next_vehicle"     :{"cat":"gameplay", "order": 11, "ctx": "tlua", "onDown"  :"extensions.core_input_vehicleSwitching.switchCycleVehicle(PLAYER, 1)","title": "ui.inputActions.gameplay.switch_next_vehicle.title", "desc": "ui.inputActions.gameplay.switch_next_vehicle.description" },
-"switch_next_vehicle_multiseat":{"cat":"gameplay", "order": 11.1, "ctx": "tlua", "onDown"  :"extensions.core_multiseat.enterNextVehicle(PLAYER, 1) extensions.hook('trackNewVeh')","title": "ui.inputActions.gameplay.switch_next_vehicle_multiseat.title", "desc": "ui.inputActions.gameplay.switch_next_vehicle_multiseat.description", "actionMap":"Multiseat" },
-
-//For dynamic use with Mission UI
-"accept"  :{"cat":"gameplay", "order": 12, "ctx": "tlua", "onDown" :"ui_missionInfo.performAction('accept')",  "actionMap": "MissionUI", "title": "ui.inputActions.gameplay.accept.title", "desc": "ui.inputActions.gameplay.accept.description" },
-"decline" :{"cat":"gameplay", "order": 13, "ctx": "tlua", "onDown" :"ui_missionInfo.performAction('decline')", "actionMap": "MissionUI", "title": "ui.inputActions.gameplay.decline.title", "desc": "ui.inputActions.gameplay.decline.description" },
-
-"toggle_minimap"          :{"cat":"gameplay", "order": 16, "ctx": "tlua", "onDown"  :"campaign_exploration:toggleMinimap()",    "actionMap": "ExplorationGeneral",      "title": "ui.inputActions.gameplay.toggle_minimap.title",         "desc": "ui.inputActions.gameplay.toggle_minimap.description" },
-//"toggle_timeTrialsScreen" :{"cat":"gameplay", "order": 17, "ctx": "tlua", "onDown"  :"scenario_quickRace.changeTimeTrialConfig()",   "title": "ui.inputActions.gameplay.toggle_timeTrialsScreen.title",         "desc": "ui.inputActions.gameplay.toggle_timeTrialsScreen.description" },
-
-// node grabing
-"nodegrabberRender"       :{"cat":"gameplay", "order": 20, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:renderNodes(VALUE ~= 0) end", "title": "ui.inputActions.gameplay.nodegrabberRender.title", "desc": "ui.inputActions.gameplay.nodegrabberRender.description" },
-"nodegrabberGrab"         :{"cat":"gameplay", "order": 21, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:onMouseButton(VALUE ~= 0) end", "title": "ui.inputActions.gameplay.nodegrabberGrab.title", "desc": "ui.inputActions.gameplay.nodegrabberGrab.description" },
-"nodegrabberStrength"     :{"cat":"gameplay", "order": 22, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:addStrength(VALUE*50) end", "isCentered":true, "title": "ui.inputActions.gameplay.nodegrabberStrength.title", "desc": "ui.inputActions.gameplay.nodegrabberStrength.description" },
-"nodegrabberAction"       :{"cat":"gameplay", "order": 23, "ctx": "tlua", "onDown"  :"if be then be.nodeGrabber:fixCurrentNode() end", "title": "ui.inputActions.gameplay.nodegrabberAction.title", "desc": "ui.inputActions.gameplay.nodegrabberAction.description" },
-
-// couplers
-"couplersToggle"          :{"cat":"gameplay", "order": 30, "ctx": "vlua", "onDown":"beamstate.toggleCouplers()", "title": "ui.inputActions.gameplay.couplersToggle.title", "desc": "ui.inputActions.gameplay.couplersToggle.description" },
-"couplersLock"            :{"cat":"gameplay", "order": 31, "ctx": "vlua", "onDown":"beamstate.attachCouplers()", "title": "ui.inputActions.gameplay.couplersLock.title", "desc": "ui.inputActions.gameplay.couplersLock.description" },
-"couplersUnlock"          :{"cat":"gameplay", "order": 32, "ctx": "vlua", "onDown":"beamstate.detachCouplers()", "title": "ui.inputActions.gameplay.couplersUnlock.title", "desc": "ui.inputActions.gameplay.couplersUnlock.description" },
-
-// funstuff radial menu
-"funBreak"                :{"cat":"gameplay", "order": 40, "ctx": "vlua", "onDown":"beamstate.breakAllBreakgroups()", "title": "ui.inputActions.gameplay.funBreak.title","desc": "ui.inputActions.gameplay.funBreak.description" },
-"funHinges"               :{"cat":"gameplay", "order": 41, "ctx": "vlua", "onDown":"beamstate.breakHinges()",         "title": "ui.inputActions.gameplay.funHinges.title",     "desc": "ui.inputActions.gameplay.funHinges.description"         },
-"funTires"                :{"cat":"gameplay", "order": 42, "ctx": "vlua", "onDown":"beamstate.deflateTires()",        "title": "ui.inputActions.gameplay.funTires.title",     "desc": "ui.inputActions.gameplay.funTires.description"         },
-"funRandomTire"           :{"cat":"gameplay", "order": 42.1,"ctx":"vlua", "onDown":"beamstate.deflateRandomTire()",   "title": "ui.inputActions.gameplay.funRandomTire.title",     "desc": "ui.inputActions.gameplay.funRandomTire.description"         },
-"funFire"                 :{"cat":"gameplay", "order": 43, "ctx": "vlua", "onDown":"fire.igniteVehicle()",            "title": "ui.inputActions.gameplay.funFire.title",    "desc": "ui.inputActions.gameplay.funFire.description"             },
-"funExtinguish"           :{"cat":"gameplay", "order": 44, "ctx": "vlua", "onDown":"fire.extinguishVehicle()",        "title": "ui.inputActions.gameplay.funExtinguish.title",   "desc": "ui.inputActions.gameplay.funExtinguish.description" },
-"funBoom"                 :{"cat":"gameplay", "order": 45, "ctx": "vlua", "onDown":"fire.explodeVehicle()",           "title": "ui.inputActions.gameplay.funBoom.title",           "desc": "ui.inputActions.gameplay.funBoom.description"                 },
-"forceField"              :{"cat":"gameplay", "order": 46, "ctx": "tlua", "onDown":"extensions.gameplay_forceField.toggleActive()", "title": "ui.inputActions.gameplay.forceField.title",  "desc": "ui.radialmenu2.funstuff.ForceField.desc"                 },
-"latchesOpen"             :{"cat":"gameplay", "order": 47, "ctx": "vlua", "onDown":"for k, v in pairs(controller.getControllersByType('advancedCouplerControl')) do v.detachGroup() end", "title": "ui.radialmenu2.funstuff.LatchesOpen","desc": "ui.radialmenu2.funstuff.LatchesOpen.desc" },
-"latchesClose"             :{"cat":"gameplay", "order": 48, "ctx": "vlua", "onDown":"for k, v in pairs(controller.getControllersByType('advancedCouplerControl')) do v.tryAttachGroupImpulse() end", "title": "ui.radialmenu2.funstuff.LatchesClose","desc": "ui.radialmenu2.funstuff.LatchesClose.desc" },
-
-// other functions
-"saveHome"                :{"cat":"gameplay", "order": 90, "ctx": "vlua", "onDown"  :"recovery.saveHome()", "title": "ui.inputActions.gameplay.saveHome.title", "desc": "ui.inputActions.gameplay.saveHome.description" },
-"loadHome"                :{"cat":"gameplay", "order": 91, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.loadHome()", "title": "ui.inputActions.gameplay.loadHome.title", "desc": "ui.inputActions.gameplay.loadHome.description" },
-"dropCameraAtPlayer"      :{"cat":"gameplay", "order": 92, "ctx": "tlua", "onDown"  :"commands.dropCameraAtPlayer()", "title": "ui.inputActions.gameplay.dropCameraAtPlayer.title", "desc": "ui.inputActions.gameplay.dropCameraAtPlayer.description" },
-"dropPlayerAtCamera"      :{"cat":"gameplay", "order": 93, "ctx": "tlua", "onDown"  :"commands.dropPlayerAtCamera()", "title": "ui.inputActions.gameplay.dropPlayerAtCamera.title", "desc": "ui.inputActions.gameplay.dropPlayerAtCamera.description" },
-"dropPlayerAtCameraNoReset"      :{"cat":"gameplay", "order": 94, "ctx": "tlua", "onDown"  :"commands.dropPlayerAtCameraNoReset()", "title": "ui.inputActions.gameplay.dropPlayerAtCameraNoReset.title", "desc": "ui.inputActions.gameplay.dropPlayerAtCameraNoReset.description" },
-"toggleTraffic"           :{"cat":"gameplay", "order": 96, "ctx": "tlua", "onDown"  :"if gameplay_traffic then gameplay_traffic.toggle(true) end", "title": "ui.inputActions.gameplay.toggleTraffic.title", "desc": "ui.inputActions.gameplay.toggleTraffic.description" },
-"toggleAITraffic"         :{"cat":"gameplay", "order": 96.1,"ctx":"vlua", "onDown"  :"ai.toggleTrafficMode()", "title": "ui.inputActions.gameplay.toggleAITraffic.title", "desc": "ui.inputActions.gameplay.toggleAITraffic.description" },
-"toggleWalkingMode"       :{"cat":"gameplay", "order": 97, "ctx": "tlua", "onDown"  :"if gameplay_walk then gameplay_walk.toggleWalkingMode() end", "title": "ui.inputActions.gameplay.toggleWalkingMode.title", "desc": "ui.inputActions.gameplay.toggleWalkingMode.description", "tags": ["tags.walkingMode", "tags.walk"] },
-"cycleTimeOfDay"          :{"cat":"gameplay", "order":97.5,"ctx": "tlua", "onDown":"core_environment.cycleTimeOfDay(true)", "title": "ui.inputActions.gameplay.cycleTimeOfDay.title", "desc": "ui.inputActions.gameplay.cycleTimeOfDay.title" },
-"openPhone"               :{"cat":"gameplay", "order":97.6,"ctx": "tlua", "onDown":"if not gameplay_phone then extensions.load('gameplay_phone') end if gameplay_phone then gameplay_phone.togglePhone() end", "title": "Toggle Phone", "desc": "Toggle Phone" },
-
-// big map
-"toggleBigMap"            :{"cat":"gameplay",  "order": 98, "ctx": "tlua", "onDown":"if freeroam_bigMapMode then freeroam_bigMapMode.toggleBigMap() end", "title": "bigMap.action.toggle.title", "desc": "bigMap.action.toggle.description" },
-"bigMapMouseClick"        :{"cat":"gameplay",  "order": 99, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onMouseButton(VALUE ~= 0) end", "actionMap": "BigMap", "title": "bigMap.action.mouseClick.title",  "desc": "bigMap.action.mouseClick.description" },
-"bigMapControllerSelect"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onDown":"if freeroam_bigMapMode then freeroam_bigMapMode.onControllerSelect() end", "actionMap": "BigMap", "title": "bigMap.action.controllerSelect.title",  "desc": "bigMap.action.controllerSelect.description" },
-"bigMapNextFilter"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onChangeUiFilter(VALUE, 1) end", "actionMap": "BigMap", "title": "bigMap.action.nextFilter.title",  "desc": "bigMap.action.nextFilter.description" },
-"bigMapPreviousFilter"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onChangeUiFilter(VALUE, -1) end", "actionMap": "BigMap", "title": "bigMap.action.previousFilter.title",  "desc": "bigMap.action.previousFilter.description" },
-
-// fueling
-"fuelVehicle"  :{"cat":"gameplay",  "order": 101, "ctx": "tlua", "onChange":"extensions.hook('onChangeFlowRate', VALUE) ", "actionMap": "Refueling", "title": "ui.career.refueling.action.title",  "desc": "ui.career.refueling.action.description" },
-}
-
-
+    // gameplay
+    "reset_physics"           :{"cat":"gameplay", "order":  1, "ctx": "tlua", "onDown"  :"extensions.hook('trackVehReset') resetGameplay(PLAYER)", "title": "ui.inputActions.gameplay.reset_physics.title", "desc": "ui.inputActions.gameplay.reset_physics.description" },
+    "reset_all_physics"       :{"cat":"gameplay", "order":  1, "ctx": "tlua", "onDown"  :"extensions.hook('trackVehReset') resetGameplay(-1)", "title": "ui.inputActions.gameplay.reset_all_physics.title", "desc": "ui.inputActions.gameplay.reset_all_physics.description" },
+    "recover_vehicle"         :{"cat":"gameplay", "order":  2, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.startRecovering()", "onUp": "recovery.stopRecovering()", "title": "ui.inputActions.gameplay.recover_vehicle.title", "desc": "ui.inputActions.gameplay.recover_vehicle.description" },
+    "recover_vehicle_alt"     :{"cat":"gameplay", "order":  3, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.startRecovering(true)", "onUp": "recovery.stopRecovering()", "title": "ui.inputActions.gameplay.recover_vehicle_alt.title", "desc": "ui.inputActions.gameplay.recover_vehicle_alt.description" },
+    "recover_to_last_road"    :{"cat":"gameplay", "order":  4, "ctx": "tlua", "onDown"  :"spawn.teleportToLastRoad()", "title": "ui.inputActions.gameplay.recover_vehicle_to_last_road.title", "desc": "ui.inputActions.gameplay.recover_vehicle_to_last_road.description" },
+    
+    "switch_previous_vehicle" :{"cat":"gameplay", "order": 10, "ctx": "tlua", "onDown"  :"extensions.core_input_vehicleSwitching.switchCycleVehicle(PLAYER, -1)", "title": "ui.inputActions.gameplay.switch_previous_vehicle.title", "desc": "ui.inputActions.gameplay.switch_previous_vehicle.description" },
+    "switch_next_vehicle"     :{"cat":"gameplay", "order": 11, "ctx": "tlua", "onDown"  :"extensions.core_input_vehicleSwitching.switchCycleVehicle(PLAYER, 1)","title": "ui.inputActions.gameplay.switch_next_vehicle.title", "desc": "ui.inputActions.gameplay.switch_next_vehicle.description" },
+    "switch_next_vehicle_multiseat":{"cat":"gameplay", "order": 11.1, "ctx": "tlua", "onDown"  :"extensions.core_multiseat.enterNextVehicle(PLAYER, 1) extensions.hook('trackNewVeh')","title": "ui.inputActions.gameplay.switch_next_vehicle_multiseat.title", "desc": "ui.inputActions.gameplay.switch_next_vehicle_multiseat.description", "actionMap":"Multiseat" },
+    
+    //For dynamic use with Mission UI
+    "accept"  :{"cat":"gameplay", "order": 12, "ctx": "tlua", "onDown" :"ui_missionInfo.performAction('accept')",  "actionMap": "MissionUI", "title": "ui.inputActions.gameplay.accept.title", "desc": "ui.inputActions.gameplay.accept.description" },
+    "decline" :{"cat":"gameplay", "order": 13, "ctx": "tlua", "onDown" :"ui_missionInfo.performAction('decline')", "actionMap": "MissionUI", "title": "ui.inputActions.gameplay.decline.title", "desc": "ui.inputActions.gameplay.decline.description" },
+    
+    "toggle_minimap"          :{"cat":"gameplay", "order": 16, "ctx": "tlua", "onDown"  :"campaign_exploration:toggleMinimap()",    "actionMap": "ExplorationGeneral",      "title": "ui.inputActions.gameplay.toggle_minimap.title",         "desc": "ui.inputActions.gameplay.toggle_minimap.description" },
+    //"toggle_timeTrialsScreen" :{"cat":"gameplay", "order": 17, "ctx": "tlua", "onDown"  :"scenario_quickRace.changeTimeTrialConfig()",   "title": "ui.inputActions.gameplay.toggle_timeTrialsScreen.title",         "desc": "ui.inputActions.gameplay.toggle_timeTrialsScreen.description" },
+    
+    // node grabing
+    "nodegrabberRender"       :{"cat":"gameplay", "order": 20, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:renderNodes(VALUE ~= 0) end", "title": "ui.inputActions.gameplay.nodegrabberRender.title", "desc": "ui.inputActions.gameplay.nodegrabberRender.description" },
+    "nodegrabberGrab"         :{"cat":"gameplay", "order": 21, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:onMouseButton(VALUE ~= 0) end", "title": "ui.inputActions.gameplay.nodegrabberGrab.title", "desc": "ui.inputActions.gameplay.nodegrabberGrab.description" },
+    "nodegrabberStrength"     :{"cat":"gameplay", "order": 22, "ctx": "tlua", "onChange":"if be then be.nodeGrabber:addStrength(VALUE*5) end", "isCentered":true, "title": "ui.inputActions.gameplay.nodegrabberStrength.title", "desc": "ui.inputActions.gameplay.nodegrabberStrength.description" },
+    "nodegrabberAction"       :{"cat":"gameplay", "order": 23, "ctx": "tlua", "onDown"  :"if be then be.nodeGrabber:fixCurrentNode() end", "title": "ui.inputActions.gameplay.nodegrabberAction.title", "desc": "ui.inputActions.gameplay.nodegrabberAction.description" },
+    
+    // couplers
+    "couplersToggle"          :{"cat":"gameplay", "order": 30, "ctx": "vlua", "onDown":"beamstate.toggleCouplers()", "title": "ui.inputActions.gameplay.couplersToggle.title", "desc": "ui.inputActions.gameplay.couplersToggle.description" },
+    "couplersLock"            :{"cat":"gameplay", "order": 31, "ctx": "vlua", "onDown":"beamstate.attachCouplers()", "title": "ui.inputActions.gameplay.couplersLock.title", "desc": "ui.inputActions.gameplay.couplersLock.description" },
+    "couplersUnlock"          :{"cat":"gameplay", "order": 32, "ctx": "vlua", "onDown":"beamstate.detachCouplers()", "title": "ui.inputActions.gameplay.couplersUnlock.title", "desc": "ui.inputActions.gameplay.couplersUnlock.description" },
+    
+    // funstuff radial menu
+    "funBreak"                :{"cat":"gameplay", "order": 40, "ctx": "vlua", "onDown":"beamstate.breakAllBreakgroups()", "title": "ui.inputActions.gameplay.funBreak.title","desc": "ui.inputActions.gameplay.funBreak.description" },
+    "funHinges"               :{"cat":"gameplay", "order": 41, "ctx": "vlua", "onDown":"beamstate.breakHinges()",         "title": "ui.inputActions.gameplay.funHinges.title",     "desc": "ui.inputActions.gameplay.funHinges.description"         },
+    "funTires"                :{"cat":"gameplay", "order": 42, "ctx": "vlua", "onDown":"beamstate.deflateTires()",        "title": "ui.inputActions.gameplay.funTires.title",     "desc": "ui.inputActions.gameplay.funTires.description"         },
+    "funRandomTire"           :{"cat":"gameplay", "order": 42.1,"ctx":"vlua", "onDown":"beamstate.deflateRandomTire()",   "title": "ui.inputActions.gameplay.funRandomTire.title",     "desc": "ui.inputActions.gameplay.funRandomTire.description"         },
+    "funFire"                 :{"cat":"gameplay", "order": 43, "ctx": "vlua", "onDown":"fire.igniteVehicle()",            "title": "ui.inputActions.gameplay.funFire.title",    "desc": "ui.inputActions.gameplay.funFire.description"             },
+    "funExtinguish"           :{"cat":"gameplay", "order": 44, "ctx": "vlua", "onDown":"fire.extinguishVehicle()",        "title": "ui.inputActions.gameplay.funExtinguish.title",   "desc": "ui.inputActions.gameplay.funExtinguish.description" },
+    "funBoom"                 :{"cat":"gameplay", "order": 45, "ctx": "vlua", "onDown":"fire.explodeVehicle()",           "title": "ui.inputActions.gameplay.funBoom.title",           "desc": "ui.inputActions.gameplay.funBoom.description"                 },
+    "forceField"              :{"cat":"gameplay", "order": 46, "ctx": "tlua", "onDown":"extensions.gameplay_forceField.toggleActive()", "title": "ui.inputActions.gameplay.forceField.title",  "desc": "ui.radialmenu2.funstuff.ForceField.desc"                 },
+    "latchesOpen"             :{"cat":"gameplay", "order": 47, "ctx": "vlua", "onDown":"for k, v in pairs(controller.getControllersByType('advancedCouplerControl')) do v.detachGroup() end", "title": "ui.radialmenu2.funstuff.LatchesOpen","desc": "ui.radialmenu2.funstuff.LatchesOpen.desc" },
+    "latchesClose"             :{"cat":"gameplay", "order": 48, "ctx": "vlua", "onDown":"for k, v in pairs(controller.getControllersByType('advancedCouplerControl')) do v.tryAttachGroupImpulse() end", "title": "ui.radialmenu2.funstuff.LatchesClose","desc": "ui.radialmenu2.funstuff.LatchesClose.desc" },
+    
+    // other functions
+    "saveHome"                :{"cat":"gameplay", "order": 90, "ctx": "vlua", "onDown"  :"recovery.saveHome()", "title": "ui.inputActions.gameplay.saveHome.title", "desc": "ui.inputActions.gameplay.saveHome.description" },
+    "loadHome"                :{"cat":"gameplay", "order": 91, "ctx": "vlua", "onDown"  :"obj:queueGameEngineLua('extensions.hook(\"trackVehReset\")') recovery.loadHome()", "title": "ui.inputActions.gameplay.loadHome.title", "desc": "ui.inputActions.gameplay.loadHome.description" },
+    "dropCameraAtPlayer"      :{"cat":"gameplay", "order": 92, "ctx": "tlua", "onDown"  :"commands.dropCameraAtPlayer()", "title": "ui.inputActions.gameplay.dropCameraAtPlayer.title", "desc": "ui.inputActions.gameplay.dropCameraAtPlayer.description" },
+    "dropPlayerAtCamera"      :{"cat":"gameplay", "order": 93, "ctx": "tlua", "onDown"  :"commands.dropPlayerAtCamera()", "title": "ui.inputActions.gameplay.dropPlayerAtCamera.title", "desc": "ui.inputActions.gameplay.dropPlayerAtCamera.description" },
+    "dropPlayerAtCameraNoReset"      :{"cat":"gameplay", "order": 94, "ctx": "tlua", "onDown"  :"commands.dropPlayerAtCameraNoReset()", "title": "ui.inputActions.gameplay.dropPlayerAtCameraNoReset.title", "desc": "ui.inputActions.gameplay.dropPlayerAtCameraNoReset.description" },
+    "toggleTraffic"           :{"cat":"gameplay", "order": 96, "ctx": "tlua", "onDown"  :"if gameplay_traffic then gameplay_traffic.toggle(true) end", "title": "ui.inputActions.gameplay.toggleTraffic.title", "desc": "ui.inputActions.gameplay.toggleTraffic.description" },
+    "toggleAITraffic"         :{"cat":"gameplay", "order": 96.1,"ctx":"vlua", "onDown"  :"ai.toggleTrafficMode()", "title": "ui.inputActions.gameplay.toggleAITraffic.title", "desc": "ui.inputActions.gameplay.toggleAITraffic.description" },
+    "toggleWalkingMode"       :{"cat":"gameplay", "order": 97, "ctx": "tlua", "onDown"  :"if gameplay_walk then gameplay_walk.toggleWalkingMode() end", "title": "ui.inputActions.gameplay.toggleWalkingMode.title", "desc": "ui.inputActions.gameplay.toggleWalkingMode.description", "tags": ["tags.walkingMode", "tags.walk"] },
+    "cycleTimeOfDay"          :{"cat":"gameplay", "order":97.5,"ctx": "tlua", "onDown":"core_environment.cycleTimeOfDay(true)", "title": "ui.inputActions.gameplay.cycleTimeOfDay.title", "desc": "ui.inputActions.gameplay.cycleTimeOfDay.title" },
+    "openPhone"               :{"cat":"gameplay", "order":97.6,"ctx": "tlua", "onDown":"if not gameplay_phone then extensions.load('gameplay_phone') end if gameplay_phone then gameplay_phone.togglePhone() end", "title": "Toggle Phone", "desc": "Toggle Phone" },
+    
+    // big map
+    "toggleBigMap"            :{"cat":"gameplay",  "order": 98, "ctx": "tlua", "onDown":"if freeroam_bigMapMode then freeroam_bigMapMode.toggleBigMap() end", "title": "bigMap.action.toggle.title", "desc": "bigMap.action.toggle.description" },
+    "bigMapMouseClick"        :{"cat":"gameplay",  "order": 99, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onMouseButton(VALUE ~= 0) end", "actionMap": "BigMap", "title": "bigMap.action.mouseClick.title",  "desc": "bigMap.action.mouseClick.description" },
+    "bigMapControllerSelect"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onDown":"if freeroam_bigMapMode then freeroam_bigMapMode.onControllerSelect() end", "actionMap": "BigMap", "title": "bigMap.action.controllerSelect.title",  "desc": "bigMap.action.controllerSelect.description" },
+    "bigMapNextFilter"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onChangeUiFilter(VALUE, 1) end", "actionMap": "BigMap", "title": "bigMap.action.nextFilter.title",  "desc": "bigMap.action.nextFilter.description" },
+    "bigMapPreviousFilter"  :{"cat":"gameplay",  "order": 100, "ctx": "tlua", "onChange":"if freeroam_bigMapMode then freeroam_bigMapMode.onChangeUiFilter(VALUE, -1) end", "actionMap": "BigMap", "title": "bigMap.action.previousFilter.title",  "desc": "bigMap.action.previousFilter.description" },
+    
+    // fueling
+    "fuelVehicle"  :{"cat":"gameplay",  "order": 101, "ctx": "tlua", "onChange":"extensions.hook('onChangeFlowRate', VALUE) ", "actionMap": "Refueling", "title": "ui.career.refueling.action.title",  "desc": "ui.career.refueling.action.description" },
+    }
+    
+    
+    

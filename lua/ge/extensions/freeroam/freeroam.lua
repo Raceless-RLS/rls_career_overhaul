@@ -25,6 +25,16 @@ local function startFreeroamHelper (level, startPointName, spawnVehicle)
 
   inputActionFilter.clear(0)
 
+  if spawnVehicle == false then
+    -- clear the previous vehicle data so we don't spawn a vehicle
+    TorqueScriptLua.setVar('$beamngVehicle', '')
+    TorqueScriptLua.setVar('$beamngVehicleConfig', '')
+    TorqueScriptLua.setVar('$beamngVehicleColor', '')
+    TorqueScriptLua.setVar('$beamngVehicleMetallicPaintData', '')
+    TorqueScriptLua.setVar('$beamngVehicleLicenseName', '')
+    TorqueScriptLua.setVar('$beamngVehicleArgs', '')
+  end
+
   core_levels.startLevel(levelPath, nil, nil, spawnVehicle)
   core_gamestate.requestExitLoadingScreen(logTag .. '.startFreeroamHelper')
 end
@@ -79,10 +89,10 @@ local function startFreeroam(level, startPointName, wasDelayed, spawnVehicle)
   end
 end
 
-local function startFreeroamByName(levelName, startPointName)
+local function startFreeroamByName(levelName, startPointName, wasDelayed, spawnVehicle)
   local level = core_levels.getLevelByName(levelName)
   if level then
-    startFreeroam(level, startPointName)
+    startFreeroam(level, startPointName, wasDelayed, spawnVehicle)
     return true
   end
   return false
@@ -152,6 +162,7 @@ local function onResetGameplay(playerID)
   for _, mgr in ipairs(core_flowgraphManager.getAllManagers()) do
     if mgr:blocksOnResetGameplay() then return end
   end
+
   be:resetVehicle(playerID)
 end
 

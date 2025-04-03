@@ -337,25 +337,6 @@ local function loadPoliciesData(resetSomeData)
     initCurrInsurance()
 end
 
--- for now every part needs to be replaced
-local function getDamagedParts(partConditions)
-    local damagedParts = {
-        partsToBeReplaced = {},
-        partsToBeRepaired = {}
-    }
-    for partName, info in pairs(partConditions) do
-        if info.integrityValue and info.integrityValue == 0 then
-            table.insert(damagedParts.partsToBeReplaced, partName)
-        end
-    end
-    return damagedParts
-end
-
-local function getNumberOfBrokenParts(partConditions)
-    local damagedParts = getDamagedParts(partConditions)
-    return #damagedParts.partsToBeRepaired + #damagedParts.partsToBeReplaced
-end
-
 local function purchasePolicy(policyId, forFree)
     if forFree == nil then
         forFree = false
@@ -413,46 +394,50 @@ local function repairPartConditions(data)
     end
     for name, info in pairs(data.partConditions) do
         if info.integrityValue then
+
+            -- reset the paint
+            if info.integrityValue == 0 and info.visualState then
+                if info.visualState.paint and info.visualState.paint.originalPaints then
+                    if data.paintRepair then
+                        info.visualState = {
+                            paint = {
+                                originalPaints = info.visualState.paint.originalPaints
+                            }
+                        }
+                    else
+                        local numberOfPaints = tableSize(info.visualState.paint.originalPaints)
+                        info.visualState = {
+                            paint = {
+                                originalPaints = {}
+                            }
+                        }
+                        for index = 1, numberOfPaints do
+                            info.visualState.paint.originalPaints[index] = career_modules_painting.getPrimerColor()
+                        end
+                    end
+                    info.visualState.paint.odometer = 0
+                else
+                    -- if we dont have a replacement paint, just set visualState to nil
+                    info.visualState = nil
+                    info.visualValue = 1
+                end
+                info.odometer = 0
+            end
+            
+
             if info.integrityState and info.integrityState.energyStorage then
                 -- keep the fuel level
                 for _, tankData in pairs(info.integrityState.energyStorage) do
-                    for attributeName, value in pairs(info.integrityState.energyStorage) do
+                    for attributeName, value in pairs(tankData) do
                         if attributeName ~= "storedEnergy" then
                             tankData[attributeName] = nil
                         end
                     end
                 end
             else
-                if info.integrityValue == 0 and info.visualState then
-                    if info.visualState.paint and info.visualState.paint.originalPaints then
-                        if data.paintRepair then
-                            info.visualState = {
-                                paint = {
-                                    originalPaints = info.visualState.paint.originalPaints
-                                }
-                            }
-                        else
-                            local numberOfPaints = tableSize(info.visualState.paint.originalPaints)
-                            info.visualState = {
-                                paint = {
-                                    originalPaints = {}
-                                }
-                            }
-                            for index = 1, numberOfPaints do
-                                info.visualState.paint.originalPaints[index] = career_modules_painting.getPrimerColor()
-                            end
-                        end
-                        info.visualState.paint.odometer = 0
-                    else
-                        -- if we dont have a replacement paint, just set visualState to nil
-                        info.visualState = nil
-                        info.visualValue = 1
-                    end
-                    info.odometer = 0
-                end
                 info.integrityState = nil
-                info.integrityValue = 1
             end
+            info.integrityValue = 1
         end
     end
 end
@@ -564,7 +549,7 @@ local function onAfterVehicleRepaired(vehInfo)
     if vehId then
         career_modules_fuel.minimumRefuelingCheck(vehId)
         if gameplay_walk.isWalking() then
-            local veh = be:getObjectByID(vehId)
+            local veh = getObjectByID(vehId)
             gameplay_walk.setRot(veh:getPosition() - getPlayerVehicle(0):getPosition())
         end
     end
@@ -695,7 +680,7 @@ local function startRepairInGarage(vehInvInfo, repairOptionData)
     local vehId = career_modules_inventory.getVehicleIdFromInventoryId(vehInvInfo.id)
     extensions.hook("onRepairInGarage", vehInvInfo, repairOptionData)
     return startRepair(vehInvInfo.id, repairOptionData, (vehId and repairOption.repairTime <= 0) and function(vehInfo)
-        local vehObj = be:getObjectByID(vehId)
+        local vehObj = getObjectByID(vehId)
         if not vehObj then
             return
         end
@@ -704,7 +689,7 @@ local function startRepairInGarage(vehInvInfo, repairOptionData)
 end
 
 local function genericVehNeedsRepair(vehId, callback)
-    local veh = be:getObjectByID(vehId)
+    local veh = getObjectByID(vehId)
     if not veh then
         return
     end
@@ -842,7 +827,7 @@ local function checkRenewPolicy()
             label = logBookLabel
         })
         ui_message(label, 5, "Insurance", "info")
-        
+
         policyTows[currApplicablePolicyId] = getPlPerkValue(currApplicablePolicyId, "roadsideAssistance")
         metersDrivenSinceLastPay = 0
     end
@@ -889,6 +874,8 @@ local function getRepairData()
             repairOptionsSanitized[repairOptionName] = repairOptionSanitized
         end
     end
+
+    vehInfo.thumbnail = career_modules_inventory.getVehicleThumbnail(vehInfo.id) .. "?" .. (vehInfo.dirtyDate or "")
     local fullcost = 0
     local deductible = 0
 
@@ -933,6 +920,7 @@ local function updateEditPolicyTimer(dtReal)
 end
 
 -- gestures are commercial gestures, eg give the player a bonus after not having crashed for a while
+local data = {}
 local function checkPolicyGestures()
     local policyData = availablePolicies[currApplicablePolicyId]
     local plPolicyData = plPoliciesData[currApplicablePolicyId]
@@ -1027,8 +1015,8 @@ local function getMinApplicablePolicyId(conditionData)
             if conditionData.bodyStyle[bodyStyle] then
                 return 3  -- Commercial policy
             end
+            end
         end
-    end
 
     -- If not commercial, check value for Daily Driver vs Prestige
     if conditionData.vehValue and conditionData.vehValue > 80000 then
@@ -1629,8 +1617,8 @@ M.isRoadSideAssistanceFree = function(invVehId)
     end
     local value = policyTows[applicablePolicy.id]
     if value <= 0 then
-        return false
-    end
+    return false
+end
     return true
 end
 
@@ -1705,8 +1693,4 @@ M.resetPlPolicyData = function()
     loadPoliciesData(true)
 end
 
-M.dumpPolicyTows = function()
-    print("Policy Tows:")
-    dump(policyTows)
-end
 return M
