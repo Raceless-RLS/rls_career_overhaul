@@ -2,7 +2,7 @@ local function loadExtensions()
     print("Starting extension loading sequence")
     
     if extensions.isExtensionLoaded("core_recoveryPrompt") then
-        extensions.unload("core_recoveryPrompt")
+        etExtensionUnloadMode("core_recoveryPrompt", "manual")
     end
     extensions.load("core_recoveryPrompt")
     setExtensionUnloadMode("core_recoveryPrompt", "manual")
