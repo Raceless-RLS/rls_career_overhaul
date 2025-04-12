@@ -134,6 +134,7 @@ local function onCareerModulesActivated()
 end
 
 local function showPurchaseGaragePrompt(garageId)
+  print(garageId)
   if not career_career.isActive() then return end
   garageToPurchase = freeroam_facilities.getFacility("garage", garageId)
   guihooks.trigger('ChangeState', {state = 'purchase-garage'})

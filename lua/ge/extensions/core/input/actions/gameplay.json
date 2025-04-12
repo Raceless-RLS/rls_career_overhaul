@@ -50,7 +50,7 @@
     "toggleAITraffic"         :{"cat":"gameplay", "order": 96.1,"ctx":"vlua", "onDown"  :"ai.toggleTrafficMode()", "title": "ui.inputActions.gameplay.toggleAITraffic.title", "desc": "ui.inputActions.gameplay.toggleAITraffic.description" },
     "toggleWalkingMode"       :{"cat":"gameplay", "order": 97, "ctx": "tlua", "onDown"  :"if gameplay_walk then gameplay_walk.toggleWalkingMode() end", "title": "ui.inputActions.gameplay.toggleWalkingMode.title", "desc": "ui.inputActions.gameplay.toggleWalkingMode.description", "tags": ["tags.walkingMode", "tags.walk"] },
     "cycleTimeOfDay"          :{"cat":"gameplay", "order":97.5,"ctx": "tlua", "onDown":"core_environment.cycleTimeOfDay(true)", "title": "ui.inputActions.gameplay.cycleTimeOfDay.title", "desc": "ui.inputActions.gameplay.cycleTimeOfDay.title" },
-    "openPhone"               :{"cat":"gameplay", "order":97.6,"ctx": "tlua", "onDown":"if not gameplay_phone then extensions.load('gameplay_phone') end if gameplay_phone then gameplay_phone.togglePhone() end", "title": "Toggle Phone", "desc": "Toggle Phone" },
+    // "openPhone"               :{"cat":"gameplay", "order":97.6,"ctx": "tlua", "onDown":"if not gameplay_phone then extensions.load('gameplay_phone') end if gameplay_phone then gameplay_phone.togglePhone() end", "title": "Toggle Phone", "desc": "Toggle Phone" },
     
     // big map
     "toggleBigMap"            :{"cat":"gameplay",  "order": 98, "ctx": "tlua", "onDown":"if freeroam_bigMapMode then freeroam_bigMapMode.toggleBigMap() end", "title": "bigMap.action.toggle.title", "desc": "bigMap.action.toggle.description" },

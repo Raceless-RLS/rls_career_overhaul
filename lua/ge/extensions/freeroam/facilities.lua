@@ -391,7 +391,6 @@ M.walkingMarkerFormatFacility = function(f, elements)
       maxDistSqr = math.max(maxDistSqr, (obj:getPosition()-center):squaredLength() + square(pair[3] or 6))
     end
   end
-
   if count > 0 then
     local e = {
       id = f.id,

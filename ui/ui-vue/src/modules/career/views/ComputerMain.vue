@@ -8,12 +8,9 @@
 
       <div v-if="!computerLoading" class="vehicle-actions">
         <template v-if="hasVehicles">
-          <div v-if="currentVehicleThumbnail" class="veh-preview" :style="{ '--veh-preview': `url('${currentVehicleThumbnail}')` }" ></div>
-
           <h3>
-            {{ currentVehicleName }}
-            <div class="vehicle-select" v-if="showVehicleSelectorButtons">
-              <BngButton :accent="ACCENTS.outlined" @click="switchActiveVehicle(-1)" v-bng-on-ui-nav:tab_l.asMouse :icon="icons.arrowLargeLeft">
+            <div class="vehicle-select" >
+              <BngButton style="height: 3em;" v-if="showVehicleSelectorButtons" :accent="ACCENTS.outlined" @click="switchActiveVehicle(-1)" v-bng-on-ui-nav:tab_l.asMouse :icon="icons.arrowLargeLeft">
                 <BngBinding ui-event="tab_l" deviceMask="xinput" />
               </BngButton>
               <BngList v-if="currentVehicleData" style="width: 20em;">
@@ -37,6 +34,7 @@
           <div class="actions-list" v-if="computerStore.activeInventoryId && computerStore.vehicleSpecificComputerFunctions[computerStore.activeInventoryId]">
             <BngImageTile
               v-for="(computerFunction, index) in computerStore.vehicleSpecificComputerFunctions[computerStore.activeInventoryId]"
+              :key="computerFunction.id"
               :class="{ 'action-disabled': computerFunction.disabled }"
               tabindex="0" bng-nav-item v-bng-on-ui-nav:ok.asMouse.focusRequired
               @click="computerButtonCallback(computerFunction, computerStore.activeInventoryId)"
@@ -59,7 +57,7 @@
         <div v-if="computerStore.generalComputerFunctions">
           <h3>Inventory, Shopping, Insurance</h3>
           <div class="actions-list">
-            <template v-for="(computerFunction, index) in computerStore.generalComputerFunctions">
+            <template v-for="(computerFunction, index) in computerStore.generalComputerFunctions" :key="computerFunction.id">
               <BngImageTile
                 v-if="!computerFunction.type"
                 :class="{ 'action-disabled': computerFunction.disabled }"
@@ -114,7 +112,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue"
 import { lua } from "@/bridge"
 import { useComputerStore } from "../stores/computerStore"
 import ComputerWrapper from "./ComputerWrapper.vue"
-import { BngButton, ACCENTS, BngCard, BngCardHeading, BngBinding, BngImageTile, BngIcon, icons } from "@/common/components/base"
+import { BngButton, ACCENTS, BngCard, BngCardHeading, BngBinding, BngImageTile, BngIcon, icons, BngList } from "@/common/components/base"
 import { default as UINavEvents, UI_EVENT_GROUPS } from "@/bridge/libs/UINavEvents"
 import { vBngOnUiNav, vBngBlur, vBngUiNavFocus } from "@/common/directives"
 import VehicleTile from "../components/vehicleInventory/VehicleTile.vue"

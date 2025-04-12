@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" :class="{ [`veh-${layout}`]: true, selected }" role="button" v-bng-disabled="data.disabled">
+  <div v-if="data" :class="{ [`veh-${layout}`]: true, selected, 'hover-enabled': enableHover }" role="button" v-bng-disabled="data.disabled">
     <div :class="{ preview: true, locked }">
       <img v-if="thumbUrl" :src="thumbUrl" alt="" />
       <span class="lock-reason" v-if="locked">{{ locked.reason }}</span>
@@ -10,9 +10,21 @@
     <div class="info" v-if="!data._message">
       <div class="title" v-if="data.niceName">
         <span class="name">{{ data.niceName }}</span>
+        <div class="class-info">
+          <div class="class-details">
+            <span class="class-badge">
+              <span v-if="data.certificationData && data.certificationData.vehicleClass">
+                {{ data.certificationData.vehicleClass.class.name }} | {{ data.certificationData.vehicleClass.performanceIndex.toFixed(0) }}
+              </span>
+              <span v-else>
+                N/A
+              </span>
+            </span>
+          </div>
+        </div>
         <BngIcon v-if="data.favorite" :type="icons.star" color="#fd0" v-bng-tooltip="'Favourite'" />
         <BngIcon v-if="data.delayReason === 'repair'" :type="icons.wrench" color="#fff" />
-        <BngCondition v-else :integrity="data.partConditionAvg" :integrity-warning="data.needsRepair" :color="colour" show-tooltip />
+        <BngCondition v-else :integrity="partConditionAvg" :integrity-warning="data.needsRepair" :color="colour" show-tooltip />
       </div>
 
       <div v-if="description">
@@ -22,27 +34,20 @@
 
         <!-- hide price for loaned vehicle -->
         <span v-if="!data.returnLoanerPermission.allow">
-          <span v-if="data.partConditionAvg < 1" style="color: red;">Current Value:</span>
+          <span v-if="partConditionAvg < 1" style="color: red;">Current Value:</span>
           <BngUnit :money="data.value" />
-          <div v-if="data.partConditionAvg < 1">
+          <div v-if="partConditionAvg < 1">
             Total Value: <BngUnit :money="data.valueRepaired" />
           </div>
         </span>
 
-        <span class="compact status" v-if="(!locked || locked.location) && location != 'Storage'">
+        <span class="compact status" v-if="!locked || locked.location">
           {{ location }}
-        </span>
-        <span class="compact status" v-else-if="location == 'Storage'">
-          {{ data.niceLocation }}
         </span>
       </div>
 
       <div class="full row50">
-        <span v-if="location == 'Storage'">
-          Location:
-          {{ data.niceLocation }}
-        </span>
-        <span v-else>
+        <span>
           Location:
           {{ location }}
         </span>
@@ -81,20 +86,30 @@ const props = defineProps({
     default: "tile",
     validator: val => ["tile", "row"].includes(val),
   },
+  enableHover: {
+    type: Boolean,
+    default: true
+  }
 })
 
-const thumbUrl = computed(() => props.data.thumbnail ? `${props.data.thumbnail}?${props.data.dirtyDate}` : null)
+const partConditionAvg = computed(() => {
+  if (!props.data) return 1
+  if (props.data.partConditions) {
+    const conds = Object.values(props.data.partConditions)
+    return conds.reduce((i, c) => i + c.integrityValue, 0) / conds.length
+  }
+  return 1
+})
 
-const colour = computed(() => props.data.config && props.data.config.paints ? props.data.config.paints[0].baseColor : "#ccc")
+const colour = computed(() => props.data?.config?.paints?.[0]?.baseColor ?? "#ccc")
+
+const thumbUrl = computed(() => props.data.thumbnail ? `${props.data.thumbnail}?${props.data.dirtyDate}` : null)
 
 const description = computed(() => props.isTutorial ? "Tutorial Vehicle" : props.data.description)
 
 const location = computed(() => {
   let res
-  if (locked.value && locked.value.location && typeof locked.value.location === 'string') {
-    // Check for custom location string
-    res = locked.value.location
-  } else if (locked.value && !locked.value.location) {
+  if (locked.value && !locked.value.location) {
     res = locked.value.reason
   } else if (props.data.inGarage) {
     res = "In garage"
@@ -119,33 +134,12 @@ const locked = computed(() => {
   } else if (props.data.missingFile) {
     res = { reason: "Missing File!" }
   } else if (props.data.timeToAccess) {
-    const eta = (() => {
-      const hours = ~~(props.data.timeToAccess / 3600)
-      const minutes = ~~((props.data.timeToAccess % 3600) / 60)
-      const seconds = ~~(props.data.timeToAccess % 60)
-      
-      let parts = []
-      if (hours > 0) {
-        parts.push(`${hours}hrs`)
-      }
-      if (minutes > 0 || hours > 0) {
-        parts.push(`${minutes}min`)
-      }
-      parts.push(`${seconds}sec`)
-      
-      return parts.join(' ')
-    })()
-
+    // const eta = formatTime(props.data.timeToAccess, 1)
+    const eta = `${~~(props.data.timeToAccess / 60)}:${String(~~props.data.timeToAccess % 60).padStart(2, "0")}`
     if (props.data.delayReason === "bought") {
       res = { reason: "Out for delivery", eta }
     } else if (props.data.delayReason === "repair") {
-      res = { reason: "Being repaired", eta, location: "Repair Shop" }
-    } else if (props.data.delayReason === "rented") {
-      res = { reason: "Rented Out", eta, location: "Movie Studio" }
-    } else if (props.data.delayReason === "Police_certification") {
-      res = { reason: "Certifying", eta, location: "Police Station" }
-    } else if (props.data.delayReason === "delivery") {
-      res = { reason: "Delivering", eta, location: "Delivering to " + props.data.niceLocation }
+      res = { reason: "Being repaired", eta }
     } else {
       res = { reason: "Available in", eta }
     }
@@ -178,9 +172,15 @@ const locked = computed(() => {
   }
 
   &.selected,
-  &:hover,
   &:focus,
   &:focus-within {
+    // background-color: rgba(#747474, 0.8);
+    .info .name {
+      color: #f60;
+    }
+  }
+
+  &.hover-enabled:hover {
     // background-color: rgba(#747474, 0.8);
     .info .name {
       color: #f60;
@@ -203,8 +203,8 @@ const locked = computed(() => {
 }
 
 .veh-tile {
-  width: 20em;
-  height: 12em;
+  width: 14em;
+  height: 16em;
 }
 
 .veh-row {
@@ -345,5 +345,65 @@ const locked = computed(() => {
 
 .warn {
   color: rgb(242, 75, 75);
+}
+
+.class-info {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: 0.9em;
+
+  .separator {
+    color: #888;
+    margin: 0 0.25em;
+  }
+
+  .class-details {
+    display: flex;
+    gap: 0.35em;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+
+  .class-name {
+    color: #ccc;
+  }
+
+  .performance-index {
+    display: inline-flex;
+    font-weight: 600;
+    border-radius: 0.25em;
+    overflow: hidden;
+    align-items: center;
+
+    .class-segment {
+      background: #666;
+      color: #fff;
+      padding: 0.15em 0.4em;
+      display: flex;
+      align-items: center;
+    }
+
+    .number-segment {
+      background: #444;
+      color: #fff;
+      padding: 0.15em 0.4em;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .class-na {
+    color: #888;
+  }
+
+  .class-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(90, 78, 20, 0.541);
+    padding: 6px 8px 2px 8px;
+    border-radius: 999px;
+    color: #f0a500;
+  }
 }
 </style>

@@ -141,7 +141,7 @@ local function getVehiclePartsValue(modelName, configKey)
   local parts = jbeamIO.getAvailableParts(ioCtx)
   
   -- Iterate through each part in the PC file
-  dumpz(pcData.parts, 1)
+
   for slotName, partName in pairs(pcData.parts) do
       if partName and partName ~= "" then
           -- Get the part data using jbeamIO
@@ -314,6 +314,7 @@ local function onVehicleSpawnFinished(vehId)
     if spawnFollowUpActions.dealershipId and (spawnFollowUpActions.dealershipId == "policeDealership" or spawnFollowUpActions.dealershipId == "poliziaAuto") then
       career_modules_inventory.setVehicleRole(inventoryId, "police")
     end
+    career_modules_inventory.storeVehicle(inventoryId)
     spawnFollowUpActions = nil
   end
 end
@@ -465,6 +466,7 @@ local function buySpawnedVehicle(buyVehicleOptions)
     if buyVehicleOptions.dealershipId == "policeDealership" then
       career_modules_inventory.setVehicleRole(newInventoryId, "police")
     end
+    career_modules_inventory.storeVehicle(newInventoryId)
     removeNonUsedPlayerVehicles = true
     if be:getPlayerVehicleID(0) == vehObj:getID() then
       career_modules_inventory.enterVehicle(newInventoryId)
