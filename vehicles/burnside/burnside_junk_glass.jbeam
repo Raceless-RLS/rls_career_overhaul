@@ -1,0 +1,446 @@
+{
+"burnside_junk_glass_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":20,
+    },
+    "slotType" : "burnside_glass_F",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_windshield_dmg"},
+         ["burnside_windshield", ["burnside_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+         ["burnside_windshield_dmg", ["burnside_windshield"]],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"burnside_glass_int"},
+         ["burnside_windshield_int", ["burnside_windshield"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.05
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":2.2},
+         {"group":["burnside_windshield","gps"]},
+         //windshield node
+         ["wi1r", -0.32, -0.60, 1.33],
+         ["wi1l", 0.32, -0.60, 1.33],
+         {"nodeMaterial":"|NM_METAL"},
+
+          //--ADD WEIGHT--
+          //windshield
+          {"nodeWeight":2.4},
+          //a pillar
+          ["p1r", -0.78, -0.49, 1.27, {"group":["burnside_body","gps","burnside_windshield"]}],
+          ["p1l", 0.78, -0.49, 1.27, {"group":["burnside_body","gps","burnside_windshield"]}],
+          //roof
+          {"nodeWeight":3.1},
+          {"group":"burnside_roof"},
+          ["rf1rr",-0.735, -0.29, 1.48, {"group":["burnside_roof","gps","burnside_windshield"]}],
+          ["rf1r",-0.35, -0.36, 1.56, {"group":["burnside_roof","gps","burnside_windshield"],"nodeWeight":2.6}],
+          ["rf1l", 0.35, -0.36, 1.56, {"group":["burnside_roof","gps","burnside_windshield"],"nodeWeight":2.6}],
+          ["rf1ll", 0.735, -0.29, 1.48, {"group":["burnside_roof","gps","burnside_windshield"]}],
+          //cowl
+          {"nodeWeight":3.2},
+          {"group":"burnside_body"},
+          ["b6rr",-0.84, -0.58, 1.05, {"group":["burnside_body","gps","burnside_windshield","burnside_dash"]}],
+          ["b6r",-0.40, -0.75, 1.12, {"group":["burnside_body","gps","burnside_windshield","burnside_dash"]}],
+          ["b6l", 0.40, -0.75, 1.12, {"group":["burnside_body","gps","burnside_windshield","burnside_dash"]}],
+          ["b6ll", 0.84, -0.58, 1.05, {"group":["burnside_body","gps","burnside_windshield","burnside_dash"]}],
+          {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //windshield
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":971909.3,"beamDamp":81.9},
+          {"beamDeform":7224.75,"beamStrength":"FLT_MAX"},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.05},
+          ["wi1r","wi1l"],
+
+          ["wi1r","rf1r"],
+          ["wi1l","rf1l"],
+          ["wi1r","rf1rr"],
+          ["wi1l","rf1ll"],
+
+          ["wi1r","p1r"],
+          ["wi1l","p1l"],
+          ["wi1r","p2r"],
+          ["wi1l","p2l"],
+
+          ["wi1r","b6r"],
+          ["wi1l","b6l"],
+          ["wi1r","b6rr"],
+          ["wi1l","b6ll"],
+
+          ["wi1r","b6l"],
+          ["wi1l","b6r"],
+
+          ["wi1r", "rf1l"],
+          ["wi1l", "rf1r"],
+
+          ["wi1r","p2rr"],
+          ["wi1l","p2ll"],
+
+          {"beamDeform":3422.25,"beamStrength":10},
+          ["rf1r","b6r"],
+          ["rf1l","b6l"],
+
+          ["rf1r","b6rr"],
+          ["rf1l","b6ll"],
+
+          ["rf1rr","b6rr"],
+          ["rf1ll","b6ll"],
+
+          ["rf1rr","b6r"],
+          ["rf1ll","b6l"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+    ],
+},
+"burnside_junk_glass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "burnside_glass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"backlight_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_glass_dmg"},
+         ["burnside_backlight", ["burnside_body","burnside_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+
+         {"deformGroup":"backlight_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"burnside_glass_dmg"},
+         ["burnside_backlight_int", ["burnside_body","burnside_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+          //rear window
+          {"group":"burnside_body"},
+          //c pillar
+          {"nodeWeight":2.7},
+          ["p10r", -0.75, 1.27, 1.27],
+          ["p10l", 0.75, 1.27, 1.27],
+          //roof
+          {"group":"burnside_roof"},
+          {"nodeWeight":3.1},
+          ["rf4rr",-0.71, 1.20, 1.44],
+          ["rf4r",-0.35, 1.26, 1.51, {"nodeWeight":2.6}],
+          ["rf4l", 0.35, 1.26, 1.51, {"nodeWeight":2.6}],
+          ["rf4ll", 0.71, 1.20, 1.44],
+          {"group":"burnside_body"},
+          //trunk base
+          {"nodeWeight":2.9},
+          ["tb2rr",-0.79, 1.71, 1.05],
+          ["tb2r",-0.34, 1.75, 1.13],
+          ["tb2l", 0.34, 1.75, 1.13],
+          ["tb2ll", 0.79, 1.71, 1.05],
+          {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //backlight
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"backlight"},
+          {"deformGroup":"backlight_break","deformationTriggerRatio":0.05},
+          {"beamSpring":971909.3,"beamDamp":40.95},
+          {"beamDeform":12168,"beamStrength":10},
+          ["rf4rr","tb2l"],
+          ["rf4ll","tb2r"],
+
+          ["p10r","rf4l"],
+          ["p10l","rf4r"],
+
+          ["rf4r","tb2rr"],
+          ["rf4l","tb2ll"],
+          ["rf4rr","tb2rr"],
+          ["rf4ll","tb2ll"],
+          ["rf4rr","tb2r"],
+          ["rf4ll","tb2l"],
+
+          ["rf4l","tb2l"],
+          ["rf4r","tb2r"],
+          ["rf4r","tb2l"],
+          ["rf4l","tb2r"],
+
+          ["rf4r","p6r"],
+          ["rf4l","p6l"],
+
+          //["p6r","p6l"],
+          //["tb2r","p6l"],
+          //["tb2l","p6r"],
+
+          ["rf4r","q1r"],
+          ["rf4l","q1l"],
+
+          //["p10r","p10l"],
+          ["rf4rr","p10l"],
+          ["rf4ll","p10r"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+    ],
+},
+"burnside_junk_doorglass_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "burnside_doorglass_FR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_glass_dmg"},
+         {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+         ["burnside_doorglass_FR", ["burnside_door_FR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformSound":false, "deformVolume":false},
+         ["burnside_doorglass_FFR", ["burnside_door_FR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"glass_invisible"},
+         ["burnside_doorglass_FR_int", ["burnside_door_FR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["burnside_doorglass_FFR_int", ["burnside_door_FR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         //front right door glass
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"burnside_door_FR"},
+         {"nodeWeight":1.5},
+         ["d10r",-0.82, -0.40, 1.27],
+         ["d11r",-0.77, -0.27, 1.43],
+         ["d12r",-0.78, 0.29, 1.46],
+         ["d13r",-0.82, 0.29, 1.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //brittle glass beams
+          {"beamSpring":1219725,"beamDamp":97.5},
+          {"beamDeform":7605,"beamStrength":10},
+          {"deformGroup":"doorglass_FR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_FR"},
+          ["d11r","d8r"],
+          ["d12r","d8r"],
+          ["d10r","d13r"],
+          ["d10r","d9r"],
+          ["d13r","d7r"],
+          ["d9r","d11r"],
+          ["d7r","d11r"],
+          ["d9r","d12r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+},
+"burnside_junk_doorglass_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "burnside_doorglass_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_glass_dmg"},
+         {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0},
+         ["burnside_doorglass_FL", ["burnside_door_FL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformSound":false, "deformVolume":false},
+         ["burnside_doorglass_FFL", ["burnside_door_FL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"glass_invisible"},
+         ["burnside_doorglass_FL_int", ["burnside_door_FL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["burnside_doorglass_FFL_int", ["burnside_door_FL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         //front left door glass
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"burnside_door_FL"},
+         {"nodeWeight":1.5},
+         ["d10l", 0.82, -0.40, 1.27],
+         ["d11l", 0.77, -0.27, 1.43],
+         ["d12l", 0.78, 0.29, 1.46],
+         ["d13l", 0.82, 0.29, 1.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //brittle glass beams
+          {"beamSpring":1219725,"beamDamp":97.5},
+          {"beamDeform":7605,"beamStrength":10},
+          {"deformGroup":"doorglass_FL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_FL"},
+          ["d11l","d8l"],
+          ["d12l","d8l"],
+          ["d10l","d13l"],
+          ["d10l","d9l"],
+          ["d13l","d7l"],
+          ["d9l","d11l"],
+          ["d7l","d11l"],
+          ["d9l","d12l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+},
+"burnside_junk_doorglass_RR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "burnside_doorglass_RR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_RR_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_glass_dmg"},
+         {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0},
+         ["burnside_doorglass_RR", ["burnside_door_RR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformSound":false, "deformVolume":false},
+         ["burnside_doorglass_RRR", ["burnside_door_RR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":"doorglass_RR_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"glass_invisible"},
+         ["burnside_doorglass_RR_int", ["burnside_door_RR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["burnside_doorglass_RRR_int", ["burnside_door_RR"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //rear right door glass
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"burnside_door_RR"},
+         {"nodeWeight":1.4},
+         ["d22r",-0.82, 0.32, 1.27],
+         ["d23r",-0.78, 0.32, 1.46],
+         ["d24r",-0.785, 0.65, 1.455],
+         ["d25r",-0.79, 0.97, 1.435],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1219725,"beamDamp":97.5},
+          {"beamDeform":7605,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_RR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_RR"},
+          ["d22r","d21r"],
+          ["d22r","d25r"],
+          ["d24r","d20r"],
+          ["d25r","d20r"],
+          ["d23r","d20r"],
+          ["d24r","d19r"],
+          ["d21r","d24r"],
+          //["d26r","d23r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+},
+"burnside_junk_doorglass_RL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "burnside_doorglass_RL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_RL_break", "deformMaterialBase":"burnside_glass", "deformMaterialDamaged":"burnside_glass_dmg"},
+         {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0},
+         ["burnside_doorglass_RL", ["burnside_door_RL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformSound":false, "deformVolume":false},
+         ["burnside_doorglass_RRL", ["burnside_door_RL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":"doorglass_RL_break", "deformMaterialBase":"burnside_glass_int", "deformMaterialDamaged":"glass_invisible"},
+         ["burnside_doorglass_RL_int", ["burnside_door_RL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["burnside_doorglass_RRL_int", ["burnside_door_RL"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //rear Left door glass
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"burnside_door_RL"},
+         {"nodeWeight":1.4},
+         ["d22l", 0.82, 0.32, 1.27],
+         ["d23l", 0.78, 0.32, 1.46],
+         ["d24l", 0.785, 0.65, 1.455],
+         ["d25l", 0.79, 0.97, 1.435],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1219725,"beamDamp":97.5},
+          {"beamDeform":7605,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_RL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_RL"},
+          ["d22l","d21l"],
+          ["d22l","d25l"],
+          ["d24l","d20l"],
+          ["d25l","d20l"],
+          ["d23l","d20l"],
+          ["d24l","d19l"],
+          ["d21l","d24l"],
+          //["d26l","d23l"],
+          {"deformGroup":""},
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+},
+}

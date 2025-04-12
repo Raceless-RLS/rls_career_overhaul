@@ -1,0 +1,494 @@
+{
+"vivace_junk_engine_i4_1.6_petrol": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 1.6L I4 Engine",
+        "value":350,
+    },
+    "slotType" : "vivace_engine",
+    "slots": [
+        ["type", "default", "description"],
+        ["vivace_enginemounts","vivace_enginemounts", "Engine Mounts", {"coreSlot":true}],
+        ["vivace_oilpan","vivace_oilpan", "Oil Pan", {"coreSlot":true}],
+        ["vivace_intake_i4_1.6_petrol","vivace_turbo_i4_1.6_petrol", "Intake", {"coreSlot":true}],
+        ["vivace_exhaust_i4_1.6_petrol","vivace_exhaust_i4_1.6_petrol", "Exhaust"],
+        ["vivace_engine_ecu_i4_1.6","vivace_engine_ecu_i4_1.6_160", "Engine Management", {"coreSlot":true}],
+        ["n2o_system","", "Nitrous Oxide System"],
+        ["vivace_engine_internals_i4_1.6_petrol","vivace_engine_internals_i4_1.6_petrol", "Engine Long Block", {"coreSlot":true}],
+        ["vivace_transmission","vivace_transmission_6M", "Transmission"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+    ],
+    "mainEngine":{
+        "torque":[
+            ["rpm", "torque"],
+            [0, 0],
+            [500, 115],
+            [1000, 137],
+            [2000, 151],
+            [3000, 173],
+            [4000, 170],
+            [4500, 166],
+            [5000, 164],
+            [5500, 163],
+            [6000, 161],
+            [7000, 159],
+            [8000, 148],
+        ],
+        "idleRPM":675,
+		"idleRPMRoughness":1000
+        //max rpm physically capable of
+        "maxRPM":6800,
+        "revLimiterType":"soft",
+        "inertia":0.30,
+        "friction":16,
+        "dynamicFriction":0.025,
+        "engineBrakeTorque":44,
+        //"burnEfficiency":1.00
+        "burnEfficiency":[
+            [0, 0.12],
+            [0.05, 0.29],
+            [0.4, 0.41],
+            [0.7, 0.5],
+            [1, 0.34],
+        ],
+        //fuel system
+        "energyStorage": "mainTank",
+        "requiredEnergyType":"gasoline",
+
+        //exhaust
+        "instantAfterFireSound": "event:>Vehicle>Afterfire>i4_01>single",
+        "sustainedAfterFireSound": "event:>Vehicle>Afterfire>i4_01>multi",
+        "shiftAfterFireSound": "event:>Vehicle>Afterfire>i4_01>shift",
+        "particulates":4.00,
+        "instantAfterFireCoef": 0.01,
+        "sustainedAfterFireCoef": 0.01,
+        "instantAfterFireVolumeCoef": 0.1,
+        "sustainedAfterFireVolumeCoef": 0.1,
+        "shiftAfterFireVolumeCoef": 0.1,
+
+        //cooling and oil system
+        "thermalsEnabled":true,
+        "engineBlockMaterial":"aluminum",
+        "oilVolume":2.0,
+        "engineBlockAirCoolingEfficiency":50,
+
+        //engine durability
+        "cylinderWallTemperatureDamageThreshold":135,
+        "headGasketDamageThreshold":500000,
+        "pistonRingDamageThreshold":500000,
+        "connectingRodDamageThreshold":500000,
+        "maxTorqueRating": 150,
+        "maxOverTorqueDamage": 150,
+
+        //node beam interface
+        "torqueReactionNodes:":["e1l","e2l","e4r"],
+        "waterDamage": {"[engineGroup]:":["engine_intake"]},
+        "radiator": {"[engineGroup]:":["radiator"]},
+        "engineBlock": {"[engineGroup]:":["engine_block"]},
+        "breakTriggerBeam":"engine",
+        "uiName":"Engine",
+        "soundConfig": "soundConfig",
+        "soundConfigExhaust": "soundConfigExhaust",
+
+        //starter motor
+        "starterSample":"event:>Engine>Starter>i4_1996_eng",
+        "starterSampleExhaust":"event:>Engine>Starter>i4_1996_exh",
+        "shutOffSampleEngine":"event:>Engine>Shutoff>i4_1996_eng",
+        "shutOffSampleExhaust":"event:>Engine>Shutoff>i4_1996_exh",
+        "starterVolume":2.00,
+        "starterVolumeExhaust":0.76,
+        "shutOffVolumeEngine":0.76,
+        "shutOffVolumeExhaust":0.76,
+        "starterThrottleKillTime":4.62,
+        "idleRPMStartRate":5,
+        "idleRPMStartCoef":5,
+
+        //damage deformGroups
+        "deformGroups":["mainEngine", "mainEngine_piping", "mainEngine_accessories"]
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "soundConfig": {
+        "sampleName": "i4p_01600cc_motorsport_02_engine",
+        "intakeMuffling": 1,
+
+        "mainGain": -9,
+        "onLoadGain":1,
+        "offLoadGain":0.36,
+
+        "maxLoadMix": 0.67,
+        "minLoadMix": 0,
+
+        "lowShelfGain":2,
+        "lowShelfFreq":150,
+
+        "highShelfGain":4,
+        "highShelfFreq":7500,
+
+        "eqLowGain": 0,
+        "eqLowFreq": 120,
+        "eqLowWidth": 0.1,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 500,
+        "eqHighWidth": 0.1,
+
+        "fundamentalFrequencyCylinderCount":4,
+        "eqFundamentalGain":0,
+    },
+    "soundConfigExhaust": {
+        "sampleName": "i4p_01600cc_motorsport_02_exhaust",
+
+        "mainGain": 2,
+        "onLoadGain":1,
+        "offLoadGain":0.40,
+
+        "maxLoadMix": 0.67,
+        "minLoadMix": 0,
+
+        "lowShelfGain":-15,
+        "lowShelfFreq":120,
+
+        "highShelfGain":4,
+        "highShelfFreq":6500,
+
+        "eqLowGain": 0,
+        "eqLowFreq": 120,
+        "eqLowWidth": 0.2,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 4000,
+        "eqHighWidth": 0.1,
+
+        "fundamentalFrequencyCylinderCount":4,
+        "eqFundamentalGain": -3
+    },
+    "vehicleController": {
+        "clutchLaunchStartRPM":1600,
+        "clutchLaunchTargetRPM":2200,
+        //**highShiftDown can be overwritten by automatic transmissions**
+        "highShiftDownRPM":[0,0,0,6800,6800,6800,6800,6800],
+        //**highShiftUp can be overwritten by intake modifications**
+        "highShiftUpRPM":6800,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["vivace_engine_i4", ["vivace_engine"]],
+         ["vivace_intake_i4", ["vivace_engine"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--1.5L I4 Engine--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"vivace_engine"},
+         {"engineGroup":"engine_block"},
+         {"nodeWeight":13},
+         ["e1r", 0.14, -1.49, 0.21,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e1l", 0.14, -1.72, 0.26],
+         ["e2r", -0.37, -1.49, 0.21,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e2l", -0.37, -1.72, 0.26],
+         {"engineGroup":["engine_block","engine_intake"]},
+         ["e3r", 0.14, -1.63, 0.73,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e3l", 0.14, -1.39, 0.68, {"isExhaust":"mainEngine"}],
+         ["e4r", -0.37, -1.63, 0.73,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e4l", -0.37, -1.39, 0.68],
+         ["tc1", 0, -1.65, 0.42],
+         {"engineGroup":""},
+         {"group":""},
+         //engine mount node
+         ["em1r", -0.42, -1.5, 0.62, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":15001000,"beamDamp":400},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          //engine
+          {"deformGroup":"mainEngine", "deformationTriggerRatio":0.001}
+          ["e1r","e1l"],
+          ["e2r","e2l"],
+          ["e3r","e3l"],
+          ["e4r","e4l"],
+
+          ["e1r","e2r"],
+          ["e1l","e2l"],
+          ["e3r","e4r"],
+          ["e3l","e4l"],
+
+          ["e1r","e3r"],
+          ["e1l","e3l"],
+          ["e2r","e4r"],
+          ["e2l","e4l"],
+
+          ["e2r","e3r"],
+          ["e2l","e3l"],
+          ["e2r","e3l"],
+          ["e2l","e3r"],
+
+          ["e1r","e4r"],
+          ["e1l","e4l"],
+          ["e1r","e4l"],
+          ["e1l","e4r"],
+
+          ["e1r","e2l"],
+          ["e1l","e2r"],
+          ["e3r","e4l"],
+          ["e3l","e4r"],
+
+          ["e1r","e3l"],
+          ["e1l","e3r"],
+          ["e2r","e4l"],
+          ["e2l","e4r"],
+
+          ["tc1","e3l"],
+          ["tc1","e3r"],
+          ["tc1","e4l"],
+          ["tc1","e4r"],
+          ["tc1","e1l"],
+          ["tc1","e1r"],
+          ["tc1","e2l"],
+          ["tc1","e2r"],
+          {"deformGroup":""}
+          {"breakGroup":""},
+
+          //engine mount node
+          {"beamSpring":100,"beamDamp":150},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1r","e3l"],
+          ["em1r","e3r"],
+          ["em1r","e4l"],
+          ["em1r","e4r"],
+          ["em1r", "e1r"],
+          ["em1r", "e1l"],
+          ["em1r", "e2l"],
+          ["em1r", "e2r"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"vivace_junk_turbo_i4_1.6_petrol": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Turbocharger",
+        "value":250,
+    },
+    "slotType" : "vivace_intake_i4_1.6_petrol",
+    "turbocharger": {
+        "bovSoundFileName":"event:>Vehicle>Forced_Induction>Turbo_01>turbo_bov",
+        "hissLoopEvent":"event:>Vehicle>Forced_Induction>Turbo_01>turbo_hiss",
+        "whineLoopEvent":"event:>Vehicle>Forced_Induction>Turbo_01>turbo_spin",
+        "turboSizeCoef": 0.70,
+        "bovSoundVolumeCoef": 1.15,
+        "hissVolumePerPSI": 0.115,
+        "whineVolumePer10kRPM": 0.050,
+        "whinePitchPer10kRPM": 0.090,
+        "maxExhaustPower": 1000,
+        "backPressureCoef": 0.0000005,
+        "pressureRatePSI": 8,
+        "frictionCoef": 20.5,
+        "inertia":0.35,
+        "damageThresholdTemperature": 200,
+        "pressurePSI":[
+            //turbineRPM, pressure(PSI)
+            [0,         -3.5],
+            [30000,     -1.5],
+            [60000,     22],
+            [90000,     26],
+            [150000,    29],
+            [200000,    34],
+            [250000,    41],
+        ],
+        "engineDef":[
+            //engineRPM, efficiency, exhaustFactor
+            [0,     0.0,    0.0],
+            [650,   0.70,   0.0],
+            [1000,   0.85,   0.2],
+            [1500,  0.86,   0.4],
+            [2000,  0.79,    0.8],
+            [2500,  0.67,    1.0],
+            [3000,  0.58,    1.0],
+            [4000,  0.59,    1.0],
+            [5000,  0.49,    1.0],
+            [5500,  0.44,    1.0],
+            [6000,  0.38,    1.0],
+            [7000,  0.15,    1.0],
+            [8000,  0.08,    1.0],
+        ],
+    },
+    "soundConfig": {
+        "$+maxLoadMix": 0.2,
+        "$+intakeMuffling":-0.2,
+        "$+mainGain":2,
+        "$+eqHighGain": 2,
+    },
+    "mainEngine":{
+        //turbocharger name
+        "turbocharger":"turbocharger",
+        //"instantAfterFireCoef": 1,
+        //"sustainedAfterFireCoef": 0.75,
+        "$*sustainedAfterFireVolumeCoef": 1.25,
+        "$*instantAfterFireCoef": 1.5,
+        "$*sustainedAfterFireCoef": 1.5,
+
+        //damage deformGroups
+        "deformGroups_turbo":["mainEngine_turbo","mainEngine_intercooler"]
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["vivace_enginecover_i4", ["vivace_engine"]],
+         ["vivace_turbo_i4", ["vivace_engine", "vivace_downpipe"]],
+         ["vivace_intercooler", ["vivace_body"]],
+         {"deformGroup":"airbox", "deformMaterialBase":"vivace_mechanical", "deformMaterialDamaged":"invis"},
+         ["vivace_airbox", ["vivace_engine","vivace_body"]],
+         {"deformGroup":""},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--turbo and intercooler weight--
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":""},
+         {"nodeWeight":10},
+         ["turbo", -0.15, -1.35, 0.55],
+         {"collision":true},
+         {"group":"vivace_intercooler"},
+         {"nodeWeight":5},
+         ["interc", 0.0, -1.95, 0.35],
+         {"nodeWeight":1},
+         {"group":"vivace_intercooler"},
+         ["airb1", 0.4, -1.55, 0.74],
+         ["airb2", 0.1, -1.75, 0.65],
+         {"group":"vivace_downpipe"},
+         {"nodeWeight":2.0},
+         ["exd1", 0.08, -1.17, 0.43],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //turbo
+          {"beamSpring":2750550,"beamDamp":125},
+          {"beamDeform":30000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"mainEngine_turbo", "deformationTriggerRatio":0.001}
+          ["turbo", "e1r"],
+          ["turbo", "e1l"],
+          ["turbo", "e2r"],
+          ["turbo", "e2l"],
+          ["turbo", "e3r"],
+          ["turbo", "e3l"],
+          ["turbo", "e4r"],
+          ["turbo", "e4l"],
+
+          //downpipe
+          {"beamSpring":2750550,"beamDamp":125},
+          {"beamDeform":30000,"beamStrength":"FLT_MAX"},
+          ["exd1", "e1r"],
+          ["exd1", "e1l"],
+          ["exd1", "e2r"],
+          ["exd1", "e2l"],
+          ["exd1", "e3r"],
+          ["exd1", "e3l", {"isExhaust":"mainEngine"}],
+          ["exd1", "e4r"],
+          ["exd1", "e4l"],
+
+          //intercooler
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"mainEngine_intercooler", "deformationTriggerRatio":0.02}
+          ["interc","f13rr"],
+          ["interc","f13ll"],
+          ["interc","f11rr"],
+          ["interc","f11ll"],
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          //["interc","f18"],
+          ["interc","f18r"],
+          ["interc","f18l"],
+
+          //piping
+          {"beamSpring":501000,"beamDamp":60},
+          {"beamDeform":4000,"beamStrength":12000},
+          {"deformGroup":"mainEngine_piping", "deformationTriggerRatio":0.001}
+          ["airb1","e1r"],
+          ["airb1","e1l"],
+          ["airb1","e3r"],
+          ["airb1","e3l"],
+          ["airb1","e4r"],
+          ["airb1","e4l"],
+
+          ["airb2","e2r"],
+          ["airb2","e2l"],
+          ["airb2","e4r"],
+          ["airb2","e4l"],
+          ["airb2","e3r"],
+          ["airb2","e3l"],
+          {"breakGroup":""},
+
+          //airbox pipe
+          {"beamSpring":10550,"beamDamp":125},
+          {"beamDeform":5000,"beamStrength":3000},
+          {"breakGroup":"airbox"},
+          {"deformGroup":"airbox", "deformationTriggerRatio":0.01}
+          ["e3r", "f12ll"],
+          ["e3l", "f12ll"],
+          ["e1l", "f12ll"],
+          ["e1r", "f12ll"],
+          ["e3l", "fs1l"],
+          ["e3r", "fs1l"],
+          ["e3l", "f14l"],
+          ["e3r", "f14l"],
+          {"breakGroup":""},
+
+          {"beamType":"|BOUNDED", "beamLongBound":0.025, "beamShortBound":0.025},
+          {"beamSpring":20000,"beamDamp":50},
+          {"beamLimitSpring":1001000,"beamLimitDamp":200},
+          {"beamDeform":4000,"beamStrength":50000},
+          {"deformGroup":"mainEngine_piping", "deformationTriggerRatio":0.001}
+          ["airb1", "f12ll"],
+          ["airb1", "f5l"],
+          ["airb1", "f5"],
+          ["airb1", "f12ll"],
+          ["airb1", "f14ll"],
+          {"deformGroup":""}
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+
+"vivace_junk_engine_ecu_i4_1.6_160": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective 160 ECU",
+        "value":75,
+    },
+    "slotType" : "vivace_engine_ecu_i4_1.6",
+    "slots": [
+        ["type", "default", "description"],
+        ["vivace_engine_ecu_i4_1.6_speedlimit","vivace_engine_ecu_i4_1.6_speedlimit_220", "Speed Limiter", {"coreSlot":true}],
+    ],
+    "soundConfig": {
+        "$+mainGain":0,
+    },
+    "mainEngine":{
+        "$+idleRPM":50,
+        "revLimiterRPM":6500,
+        "$*sustainedAfterFireVolumeCoef": 1.1,
+        "$*instantAfterFireCoef": 1.25,
+        "$*sustainedAfterFireCoef": 1.25,    },
+    "turbocharger": {
+        "$*turboSizeCoef": 0.60,
+        "$*bovSoundVolumeCoef": 0.6,
+        "$*hissVolumePerPSI": 1.0,
+        "$*whineVolumePer10kRPM": 1.0,
+        "$*whinePitchPer10kRPM": 1.0,
+        "wastegateStart":[10.3, 17.3],
+    },
+},
+}

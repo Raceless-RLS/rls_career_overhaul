@@ -1,0 +1,158 @@
+{
+"bastion_junk_transmission_6M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 6-Speed Manual Transmission",
+        "value":350,
+    },
+    "slotType": "bastion_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["bastion_flywheel","bastion_flywheel","Flywheel", {"coreSlot":true}],
+        ["bastion_transfer_case","bastion_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.9, 0, 2.97, 2.10, 1.46, 1.0, 0.74, 0.50],
+        "friction":3.50,
+        "dynamicFriction":0.00350,
+        "torqueLossCoef": 0.0350,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [1.20, 0.00, 1.50, 1.50, 1.50, 2.50, 2.50, 2.50, 2.50, 2.75],
+        "gearWhineCoefsOutput": [0.00, 0.00, 1.50, 1.50, 1.50, 2.50, 2.50, 2.50, 2.50, 2.75],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "shiftDownRPMOffsetCoef":3.5,
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,7000,7000,7000,700,7000],
+        "lowShiftUpRPM":[0,0,7000,7000,7000,7000,7000],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["bastion_transmission", ["bastion_engine","bastion_transmission"],[]],
+        ["bastion_transmission_support", ["bastion_body"],[]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--6 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"bastion_transmission"},
+         {"nodeWeight":33},
+         ["tra1", 0.0, -0.44, 0.35],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":15001000,"beamDamp":500},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e1l"],
+          ["tra1","e3r"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bastion_junk_transmission_8A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 8-Speed Automatic Transmission",
+        "value":1500,
+    },
+    "slotType": "bastion_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["bastion_converter","bastion_converter","Torque Converter", {"coreSlot":true}],
+        ["bastion_transfer_case","bastion_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.30, 0, 4.71, 3.14, 2.11, 1.67, 1.285, 1.00, 0.84, 0.67],
+        "parkLockTorque":5000,
+        "oneWayViscousCoef":40,
+        "gearChangeTime": 3.2,
+        "shiftEfficiency":5.0,
+        "friction":2.50,
+        "dynamicFriction":0.00250,
+        "torqueLossCoef": 0.050,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRNDSM",
+        "shiftDownRPMOffsetCoef":1.15,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":3.2,
+        "aggressionHoldOffThrottleDelay":3.5,
+        "aggressionSmoothingUp":3.5,
+        "aggressionSmoothingDown":3.5,
+        "gearboxDecisionSmoothingUp":3.5,
+        "gearboxDecisionSmoothingDown":3.5,
+        "lowShiftDownRPM":7000,
+        "lowShiftUpRPM":4000,
+        "maxGearChangeTime": 3.5,
+        "minGearChangeTime": 3.5,
+        "sportGearChangeTime": 2.1,
+        "throttleCoefWhileShifting": 0.5,
+        "torqueConverterHasPartialLockup": true,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["bastion_transmission", ["bastion_engine","bastion_transmission"],[]],
+        ["bastion_transmission_support", ["bastion_body"],[]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--8 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"bastion_transmission"},
+         {"nodeWeight":48},
+         ["tra1", 0.0, -0.44, 0.35],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":15001000,"beamDamp":500},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e1l"],
+          ["tra1","e3r"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

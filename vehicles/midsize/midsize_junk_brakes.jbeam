@@ -1,0 +1,93 @@
+{
+"midsize_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":50,
+    },
+    "slotType" : "midsize_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_disc_solid", ["wheel_FR","wheelhub_FR"], [],                  {"pos":{"x":-0.77, "y":-1.34, "z":0.33}, "scale":{"x":0.95, "y":0.95, "z":0.95}, "rot":{"x": 0,    "y":180, "z":0   }}],
+        ["brake_disc_solid", ["wheel_FL","wheelhub_FL"], [],                  {"pos":{"x": 0.77, "y":-1.34, "z":0.33}, "scale":{"x":0.95, "y":0.95, "z":0.95}, "rot":{"x": 180,  "y":180, "z":0   }}],
+        ["brake_caliper_standard_plain", ["midsize_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.77, "y":-1.335, "z":0.33}, "scale":{"x":0.95, "y":0.88, "z":0.88}, "rot":{"x": 8,    "y":0,   "z":0   }}],
+        ["brake_caliper_standard_plain", ["midsize_hub_F","wheelhub_FL"], [], {"pos":{"x": 0.77, "y":-1.335, "z":0.33}, "scale":{"x":0.95, "y":0.88, "z":0.88}, "rot":{"x":-8,    "y":180, "z":0   }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1000"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.26},
+        {"brakeMass":6.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"midsize_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":40,
+    },
+    "slotType" : "midsize_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_disc_solid", ["wheel_RR","wheelhub_RR"], [],                  {"pos":{"x":-0.76, "y":1.37, "z":0.31}, "scale":{"x":0.863, "y":0.863, "z":0.863}, "rot":{"x": 0,    "y":180, "z":0   }}],
+        ["brake_disc_solid", ["wheel_RL","wheelhub_RL"], [],                  {"pos":{"x": 0.76, "y":1.37, "z":0.31}, "scale":{"x":0.863, "y":0.863, "z":0.863}, "rot":{"x": 180,  "y":180, "z":0   }}],
+        ["brake_caliper_standard_plain", ["midsize_hub_R","wheelhub_RR"], [], {"pos":{"x":-0.76, "y":1.37, "z":0.31}, "scale":{"x":0.863, "y":0.81,  "z":0.81},  "rot":{"x": 180,  "y":0,   "z":0   }}],
+        ["brake_caliper_standard_plain", ["midsize_hub_R","wheelhub_RL"], [], {"pos":{"x": 0.76, "y":1.37, "z":0.31}, "scale":{"x":0.863, "y":0.81,  "z":0.81},  "rot":{"x":-180,  "y":180, "z":0   }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*500"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":1300},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.24},
+        {"brakeMass":4.0},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"midsize_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":50,
+    },
+    "slotType":"midsize_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        //brake sounds
+        {"squealCoefNatural": 0.0, "squealCoefLowSpeed": 0.0}
+    ],
+},
+}

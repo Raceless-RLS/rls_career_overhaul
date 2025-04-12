@@ -1,0 +1,230 @@
+{
+"pickup_junk_tailgate_facelift_alt": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Violent Tailgate ( Late )",
+        "value":125,
+    },
+    "slotType" : "pickup_tailgate",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_lettering_facelift","pickup_lettering_facelift","Lettering"],
+        ["pickup_tailgatepanel","","Tailgate Panel"],
+        ["pickup_duallysignals_R_alt","","Rear Marker Lights"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pickup_tailgate_facelift_alt", ["pickup_tailgate"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"tailgateCoupler"}],
+    ]
+    "tailgateCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["ibd5ll",  "tlc1l",     20000,                     0.015,                  0.005,                      0.2,                 0.1,                   "tailgatelatch_L", {"forceCid1":"t3", "forceCid2":"t1"}]
+            ["ibd5rr",  "tlc1r",     20000,                     0.015,                  0.005,                      0.2,                 0.1,                   "tailgatelatch_R", {"forceCid1":"t3", "forceCid2":"t1"}]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["bd10"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 1500,
+        "openForceDuration": 0.1,
+        "closeForceMagnitude": 160,
+        "closeForceDuration": 3.0
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["tailgate", "", "t1","t1r","t2", "box", {"x":0.15, "y":0.06, "z":0.06}, {"x":-10, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.075, "y":0.17, "z":-0.04}, {"deformGroup":"pickup_tailgate_R"}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["tailgate", "action0", "tailgateLatch"]
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["tailgateLatch", "ui.inputActions.pickup.tailgateLatch.title", "ui.inputActions.pickup.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateCoupler').toggleGroupConditional({{'camperShellLatch','attached','vehicle.advancedCouplerControl.openOtherSideFirst'},{'spareholderCoupler','attached','vehicle.advancedCouplerControl.openOtherSideFirst'}})"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--TAILGATE--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":["pickup_tailgate","pickup_tailgate_standard"]},
+         {"nodeWeight":3.0},
+         ["t1rr",-0.82, 2.53, 1.21],
+         {"nodeWeight":1.0},
+         ["t1r",-0.42, 2.52, 1.21],
+         ["t1",  0.00, 2.52, 1.21,{"selfCollision":false}],
+         ["t1l", 0.42, 2.52, 1.21],
+         {"nodeWeight":3.0},
+         ["t1ll",0.82, 2.52, 1.21],
+
+         ["t2rr",-0.82, 2.52, 0.735],
+         ["t2r", -0.42, 2.52, 0.735],
+         ["t2",   0.00, 2.52, 0.735],
+         ["t2l",  0.42, 2.52, 0.735],
+         ["t2ll", 0.82, 2.52, 0.735],
+        //latch nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"group":""},
+         {"nodeWeight":1.1},
+         ["tlc1r",-0.845, 2.52, 1.21],
+         ["tlc1l", 0.845, 2.52, 1.21],
+         //rigidifier
+         {"selfCollision":false},
+         {"collision":false},
+         {"group":""},
+         {"nodeWeight":1.0},
+         ["t3",0.0, 2.23, 1.0],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TAILGATE--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1577390,"beamDamp":244.4},
+          {"beamDeform":21525,"beamStrength":"FLT_MAX"},
+          //tailgate main shape
+          {"deformLimitExpansion":1.2},
+          ["t1rr","t1r"],
+          ["t1r","t1"],
+          ["t1","t1l"],
+          ["t1l","t1ll"],
+
+          ["t2rr","t2r"],
+          ["t2r","t2", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t2","t2l", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t2l","t2ll"],
+
+          ["t1rr","t2rr"],
+          ["t1r","t2r"],
+          ["t1","t2", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t1l","t2l"],
+          ["t1ll","t2ll"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":8225,"beamStrength":"FLT_MAX"},
+          ["t1rr","t2r"],
+          ["t1r","t2rr"],
+          ["t1r","t2"],
+          ["t1","t2r", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t1","t2l", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t1l","t2"],
+          ["t1l","t2ll"],
+          ["t1ll","t2l"],
+
+          //rigidifier
+          {"beamSpring":1213390,"beamDamp":244.4},
+          {"beamDeform":8050,"beamStrength":"FLT_MAX"},
+          ["t1rr","t3"],
+          ["t1r","t3"],
+          ["t1","t3", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t1l","t3"],
+          ["t1ll","t3"],
+          ["t2rr","t3"],
+          ["t2r","t3"],
+          ["t2","t3"],
+          ["t2l","t3"],
+          ["t2ll","t3"],
+
+          //hinge
+          {"disableTriangleBreaking":true},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":250,"beamDamp":244.4},
+          {"beamDeform":10500,"beamStrength":250},
+          {"breakGroup":"tailgatehinge_a"},
+          ["t2rr","bd10rr"],
+          ["t2rr","bd5rr"],
+          ["t2l","bd10ll"],
+          ["t2","bd10rr", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+
+          ["t2rr","bd9rr"],
+          ["t2l","bd9ll"],
+          ["t2ll","bd9ll"],
+
+          {"breakGroup":"tailgatehinge_b"},
+          ["t2","bd10ll", {"deformGroup":"duallysignal_R_break", "deformationTriggerRatio":0.01}],
+          ["t2r","bd10rr"],
+          ["t2ll","bd10ll"],
+          ["t2ll","bd5ll"],
+
+          ["t2","bd9ll"],
+          ["t2r","bd9rr"],
+          ["t2","bd9rr"],
+          {"breakGroup":""},
+          {"beamSpring":920100,"beamDamp":50},
+          {"beamDeform":9975,"beamStrength":"FLT_MAX"},
+          ["tlc1r","t1rr"],
+          ["tlc1r","t1r"],
+          ["tlc1r","t2rr"],
+          ["tlc1r","t3"],
+          ["tlc1l","t1ll"],
+          ["tlc1l","t1l"],
+          ["tlc1l","t2ll"],
+          ["tlc1l","t3"],
+          //pop open
+          {"optional":true},
+          {"beamPrecompression":1.2,"beamType":"|SUPPORT","beamLongBound":20},
+          {"beamSpring":1540,"beamDamp":20},
+          {"beamDeform":13500,"beamStrength":199360},
+          ["bd4rr","t1rr"{"breakGroup":"tailgatehinge_a"}],
+          ["bd4ll","t1ll"{"breakGroup":"tailgatehinge_b"}],
+          //open limiters
+          {"beamPrecompression":1,"beamType":"|BOUNDED","beamLongBound":10.3},
+          {"beamSpring":0,"beamDamp":20},
+          {"beamLimitSpring":120400,"beamLimitDamp":1150},
+          {"beamDeform":6500,"beamStrength":7500},
+          ["bd5rr","t1rr"{"breakGroup":"tailgatehinge_a"}],
+          ["bd5ll","t1ll"{"breakGroup":"tailgatehinge_b"}],
+          //--TAILGATE SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":4},
+          {"beamSpring":470940,"beamDamp":244.4},
+          {"beamDeform":3500,"beamStrength":199360},
+          ["t2rr", "bd9rr"],
+          ["t2r", "bd9r"],
+          ["t2l", "bd9l"],
+          ["t2ll", "bd9ll"],
+          ["t2rr", "bd10rr"],
+          ["t2rr", "bd14rr"],
+          ["t2ll", "bd10ll"],
+          ["t2ll", "bd14ll"],
+          ["t2r", "bd10rr"],
+          ["t2l", "bd10ll"],
+          ["t1rr", "bd4rr"],
+          ["t1ll", "bd4ll"],
+          ["t1ll", "bd5ll", {"beamLongBound":25}],
+          ["t1rr", "bd5rr", {"beamLongBound":25}],
+          ["t1l", "bd5ll"],
+          ["t1r", "bd5rr"],
+          {"optional":false},
+          {"disableTriangleBreaking":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //tailgate
+            {"groundModel":"metal"},
+            {"group":"pickup_tailgateouter"},
+            {"dragCoef":7.5},
+            ["t2rr","t1rr","t2r"],
+            ["t1rr","t1r","t2r"],
+            ["t2r","t1r","t2"],
+            ["t1r","t1","t2"],
+            ["t1l","t2l","t2"],
+            ["t1l","t2","t1"],
+            ["t1ll","t2ll","t2l"],
+            ["t1ll","t2l","t1l"],
+            {"dragCoef":0},
+    ],
+},
+}

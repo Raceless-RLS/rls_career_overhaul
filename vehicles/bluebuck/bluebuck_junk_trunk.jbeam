@@ -1,0 +1,287 @@
+{"bluebuck_junk_trunk":,
+{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Stuck Open Trunk",
+        "value":75,
+    },
+
+    "slotType" : "bluebuck_trunk",
+
+    "flexbodies":[
+        ["mesh","[group]:","nonFlexMaterials"],
+        ["bluebuck_trunk",["bluebuck_trunk"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"trunkCoupler"}],
+    ]
+    "trunkCoupler":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["tb5",     "t6",        40000,                     0.01,                   0.005,                      0.2,                 0.1,                   "trunk_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["tb5"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 40,
+        "openForceDuration": 0.7,
+        "closeForceMagnitude": 70,
+        "closeForceDuration": 0.8,
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["trunk", "", "t3","t3r","t2", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.04, "y":-0.04, "z":-0.02}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["trunk", "action0", "trunkLatch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["trunkLatch", "ui.inputActions.bluebuck.trunkLatch.title", "ui.inputActions.bluebuck.trunkLatch.description", {"onUp":"controller.getControllerSafe('trunkCoupler').toggleGroup()"}],
+    ],
+    "nodes":[
+         ["id","posX","posY","posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":0.783},
+         //--trunk--
+         {"group":"bluebuck_trunk"},
+         ["t1rr",-0.69, 1.76, 0.97],
+         ["t1r",-0.32, 1.78, 0.99],
+         ["t1l",0.32, 1.78, 0.99],
+         ["t1ll",0.69, 1.76, 0.97],
+
+         ["t2rr",-0.69, 2.34, 0.915],
+         ["t2r",-0.38, 2.34, 0.94],
+         ["t2",0.0, 2.34, 0.95],
+         ["t2l",0.38, 2.34, 0.94],
+         ["t2ll",0.69, 2.34, 0.915],
+
+         ["t3rr",-0.69, 2.73, 0.84],
+         ["t3r",-0.40, 2.76, 0.84],
+         ["t3",0.0, 2.78, 0.84],
+         ["t3l",0.40, 2.76, 0.84],
+         ["t3ll",0.69, 2.73, 0.84],
+
+         {"group":"none"},
+         ["t4r",-0.26, 2.37, 0.77, {"collision":false, "selfCollision":false}],
+         ["t4l",0.26, 2.37, 0.77, {"collision":false, "selfCollision":false}],
+         //latch
+         {"nodeWeight":0.45},
+         ["t6", 0.0, 2.8, 0.81],
+         {"group":""},
+        ],
+    "beams":[
+          ["id1:","id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL","beamLongBound":1, "beamShortBound":1},
+
+          //trunk
+          //main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":1295925,"beamDamp":92.5},
+          {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+          //lengthwise
+          ["t3ll","t2ll"],
+          ["t2ll","t1ll"],
+          ["t3l","t2l"],
+          ["t2l","t1l"],
+          ["t3","t2"],
+          ["t3r","t2r"],
+          ["t2r","t1r"],
+          ["t3rr","t2rr"],
+          ["t2rr","t1rr"],
+          //widthwise
+          ["t3ll","t3l"],
+          ["t3l","t3"],
+          ["t3","t3r"],
+          ["t3r","t3rr"],
+          ["t2ll","t2l"],
+          ["t2l","t2"],
+          ["t2","t2r"],
+          ["t2r","t2rr"],
+          ["t1rr","t1r"],
+          ["t1r","t1l"],
+          ["t1l","t1ll"],
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":9000,"beamStrength":"FLT_MAX"},
+          ["t3ll","t2l"],
+          ["t2ll","t3l"],
+          ["t3l","t2"],
+          ["t2l","t3"],
+          ["t3","t2r"],
+          ["t2","t3r"],
+          ["t3r","t2rr"],
+          ["t3rr","t2r"],
+          ["t2l","t1ll"],
+          ["t2ll","t1l"],
+          ["t2r","t1rr"],
+          ["t1r","t2rr"],
+          ["t1r","t2"],
+          ["t2","t1l"],
+          ["t2l","t1r"],
+          ["t2r","t1l"],
+          //rigids
+          {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+          ["t3ll","t3"],
+          ["t3l","t3r"],
+          ["t3","t3rr"],
+          ["t2ll","t2"],
+          ["t2l","t2r"],
+          ["t2","t2rr"],
+          ["t1rr","t1l"],
+          ["t1ll","t1r"],
+          ["t3ll","t1ll"],
+          ["t3l","t1l"],
+          ["t3r","t1r"],
+          ["t3rr","t1rr"],
+
+          //rigidifier
+          {"beamSpring":833425,"beamDamp":92.5},
+          {"beamDeform":3400,"beamStrength":"FLT_MAX"},
+          ["t4l","t4r"],
+          ["t4l","t3"],
+          //["t4l","t2"],
+          ["t4l","t2l"],
+          ["t4l","t3l"],
+          ["t4l","t1l"],
+          ["t4l","t3ll"],
+          ["t4l","t2ll"],
+          ["t4l","t1ll"],
+          ["t4r","t3"],
+          //["t4r","t2"],
+          ["t4r","t2r"],
+          ["t4r","t3r"],
+          ["t4r","t1r"],
+          ["t4r","t3rr"],
+          ["t4r","t2rr"],
+          ["t4r","t1rr"],
+
+          //trunk latch node
+          ["t6", "t3"],
+          ["t6", "t2"],
+          ["t6", "t3r"],
+          ["t6", "t3l"],
+          ["t6", "t4r"],
+          ["t6", "t4l"],
+
+          //hinge
+          {"beamSpring":370000,"beamDamp":46.25},
+          {"beamDeform":12000,"beamStrength":60000},
+          //right
+          {"breakGroup":"trunk_hinge_R"},
+          ["t1rr","tb2r"],
+          ["t1rr","tb1r"],
+          ["t1rr","tb3r"],
+          ["t1rr","tb7r"],
+          ["t1rr","tb6r"],
+          ["t1rr", "q6r"],
+          ["t1rr", "q1r"],
+          ["t1rr", "q5r"],
+          //left
+          {"breakGroup":"trunk_hinge_L"},
+          ["t1ll","tb2l"],
+          ["t1ll","tb1l"],
+          ["t1ll","tb3l"],
+          ["t1ll","tb7l"],
+          ["t1ll","tb6l"],
+          ["t1ll", "q6l"],
+          ["t1ll", "q1l"],
+          ["t1ll", "q5l"],
+          {"breakGroup":""},
+
+          //pop open
+          {"breakGroupType":1},
+          {"beamType":"|SUPPORT", "beamLongBound":4},
+          {"beamSpring":35000,"beamDamp":200},
+          {"beamDeform":4000,"beamStrength":10000},
+          {"beamPrecompression":1.018},
+          ["t6","f10r", {"breakGroup":"trunk_hinge_R"}],
+          ["t6","f10l", {"breakGroup":"trunk_hinge_L"}],
+          {"beamPrecompression":1},
+
+          //opening springs
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0}
+          {"beamSpring":1000,"beamDamp":50},
+          {"beamDeform":4000,"beamStrength":10000},
+          {"beamPrecompression":0.5},
+          ["t3rr", "p10r", {"breakGroup":"trunk_hinge_R"}],
+          ["t3ll", "p10l", {"breakGroup":"trunk_hinge_L"}],
+          {"beamPrecompression":1},
+          {"breakGroupType":0},
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+
+          //limiters
+          {"beamType":"|SUPPORT","beamPrecompression":0.995, "beamLongBound":12},
+          {"beamSpring":1359750,"beamDamp":46.25},
+          {"beamDeform":9000,"beamStrength":150000},
+          //stop
+          ["t3ll","tb9ll"],
+          ["t2ll","tb8l"],
+          ["t1l","tb7l"],
+          ["t1ll","q7l"],
+          ["t1ll","tb7l"],
+          ["t3rr","tb9rr"],
+          ["t2rr","tb8r"],
+          ["t1r","tb7r"],
+          ["t1rr","q7r"],
+          ["t1rr","tb7r"],
+          //to rear quarter
+          {"beamPrecompression":0.95},
+          ["t3ll","q4l"],
+          ["t2ll","q3l"],
+          ["t1ll","q2l"],
+          ["t3rr","q4r"],
+          ["t2rr","q3r"],
+          ["t1rr","q2r"],
+          //to cowl
+          {"beamPrecompression":0.98},
+          ["t1rr","tb2r"],
+          ["t1r","tb3r", {"beamPrecompression":0.4, "beamLongBound":20}],
+          ["t1l","tb3l", {"beamPrecompression":0.4, "beamLongBound":20}],
+          ["t1ll","tb2l"],
+          //to rear fascia
+          ["t3r","tb9r"],
+          ["t3","tb9"],
+          ["t3l","tb9l"],
+          {"beamPrecompression":0.7},
+          ["t2ll","p10l"],
+          ["t2rr","p10r"],
+
+        {"beamPrecompression":1, "beamType":"|NORMAL","beamLongBound":1, "beamShortBound":1},
+    ],
+
+    "triangles":[
+        ["id1:","id2:","id3:"],
+        {"groundModel":"metal"},
+        //trunk
+            {"group":"bluebuck_trunk"},
+            {"dragCoef":15},
+            ["t2ll","t3ll","t3l"],
+            ["t2l","t2ll","t3l"],
+            ["t2l","t3l","t3"],
+            ["t3","t2","t2l"],
+            ["t2","t3","t2r"],
+            ["t2r","t3","t3r"],
+            ["t2r","t3r","t2rr"],
+            ["t2rr","t3r","t3rr"],
+            ["t1r","t2r","t2rr"],
+            ["t1r","t2rr","t1rr"],
+            ["t1l","t1ll","t2ll"],
+            ["t2ll","t2l","t1l"],
+            ["t1l","t2l","t2"],
+            ["t2","t2r","t1r"],
+            ["t1r","t1l","t2"],
+        ],
+},
+}

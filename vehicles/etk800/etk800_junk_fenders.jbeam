@@ -1,0 +1,501 @@
+{
+"etk800_junk_fender_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Right Fender",
+        "value":50,
+    },
+    "slotType" : "etk800_fender_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_fender_R", ["etk800_fender_R"]],
+         {"deformGroup":"fendersignal_R_break", "deformMaterialBase":"etk800_lights", "deformMaterialDamaged":"etk800_lights_dmg"},
+         ["etk800_fendersignal_R", ["etk800_fender_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound4", "deformVolume":0.0}],
+         {"deformGroup":"fendersignal_R_break", "deformMaterialBase":"etk800_glass", "deformMaterialDamaged":"etk800_glass_dmg"},
+         ["etk800_fendersignalglass_R", ["etk800_fender_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound4", "deformVolume":0.0}],
+         {"deformGroup":""},
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //fender signals
+        {
+            "lightInnerAngle":0,
+            "lightOuterAngle":120,
+            "lightRange":8,
+            "lightColor":{"r":255, "g":255, "b":0, "a":255},
+            "lightAttenuation":{"x":0, "y":1, "z":1},
+            "lightCastShadows":false,
+            "flareName":"vehicleBrakeLightFlare",
+        },
+        ["signal_R" ,         "SPOTLIGHT"        , "fe3r", "fe4r", "fe7r", {"x":0, "y":0, "z":160} , {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, 0, 0, 0, 1, {"baseTranslation":{"x":0.6, "y":0.42, "z":0.01},"flareScale":0.02,"lightBrightness":0.03,"deformGroup":"fendersignal_R_break"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--FENDER--
+         //r
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"etk800_fender_R"},
+         {"nodeWeight":0.76},
+         ["fe1r",-0.89, -0.77, 0.23],
+         ["fe2r",-0.89, -1.01, 0.23],
+
+         ["fe3r",-0.89, -0.82, 0.60],
+         ["fe4r",-0.91, -1.15, 0.62],
+         ["fe5r",-0.91, -1.37, 0.73],
+         ["fe6r",-0.90, -1.595, 0.68],
+
+         ["fe7r",-0.83, -0.74, 0.95],
+         ["fe8r",-0.82, -1.08, 0.935],
+         ["fe9r",-0.80, -1.34, 0.91],
+         ["fe10r",-0.79, -1.55, 0.875],
+
+         ["fe11r",-0.775, -1.79, 0.81],
+
+         //rigidifier
+         {"group":""},
+         {"collision":false},
+         {"selfCollision":false},
+         ["fe12r",-0.50, -1.33, 0.55],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FENDER--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":810600.1,"beamDamp":72},
+          {"beamDeform":12050,"beamStrength":"FLT_MAX"},
+          {"deformationTriggerRatio":0.01},
+          //fender main shape
+          {"deformLimitExpansion":1.1},
+          //r
+          ["fe1r","fe2r"],
+          ["fe3r","fe4r"],
+          ["fe4r","fe5r"],
+          ["fe5r","fe6r"],
+          ["fe7r","fe8r"],
+          ["fe8r","fe9r"],
+          ["fe9r","fe10r"],
+
+          ["fe1r","fe3r"],
+          ["fe2r","fe4r"],
+          ["fe3r","fe7r"],
+          ["fe4r","fe8r"],
+          ["fe5r","fe9r"],
+          ["fe6r","fe10r"],
+
+          ["fe6r","fe11r"],
+          ["fe11r","fe10r"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":7950,"beamStrength":"FLT_MAX"},
+          //r
+          ["fe1r","fe4r"],
+          ["fe2r","fe3r"],
+          ["fe5r","fe10r"],
+          ["fe6r","fe9r"],
+          {"deformGroup":"fendersignal_R_break"},
+          ["fe3r","fe8r"],
+          ["fe4r","fe7r"],
+          ["fe4r","fe9r"],
+          ["fe5r","fe8r"],
+          {"deformGroup":""},
+
+          //corner rigids
+          {"beamDeform":5850,"beamStrength":"FLT_MAX"},
+          //r
+          ["fe1r","fe7r"],
+          ["fe2r","fe8r"],
+          ["fe7r","fe9r"],
+          ["fe8r","fe10r"],
+          ["fe3r","fe5r"],
+          ["fe4r","fe6r"],
+          ["fe2r","fe5r"],
+          ["fe11r","fe9r"],
+
+          {"beamSpring":810600.1,"beamDamp":120},
+          {"beamDeform":3750,"beamStrength":"FLT_MAX"},
+          //rigidifier
+          ["fe1r","fe12r"],
+          ["fe2r","fe12r"],
+          ["fe3r","fe12r"],
+          ["fe4r","fe12r"],
+          ["fe5r","fe12r"],
+          ["fe6r","fe12r"],
+          ["fe7r","fe12r"],
+          ["fe8r","fe12r"],
+          ["fe9r","fe12r"],
+          ["fe10r","fe12r"],
+          ["fe11r","fe12r"],
+
+          //attach
+          {"beamDeform":100,"beamStrength":100},
+          {"disableTriangleBreaking":true},
+          //firewall
+          //r
+          {"breakGroup":"fender_a_R"},
+          {"deformGroup":"fendersignal_R_break"},
+          ["fe2r","f5r"],
+          ["fe2r","f5rr"],
+          ["fe3r","f5rr"],
+          ["fe7r","f6rr"],
+          ["fe1r","f1rr"],
+          ["fe2r","f1rr"],
+
+          //middle
+          {"beamDeform":100,"beamStrength":100},
+          //r
+          {"breakGroup":"fender_b_R"},
+          ["fe8r","f14rr"],
+          ["fe4r","f14rr"],
+          ["fe10r","f15rr"],
+          {"deformGroup":""},
+
+          //front
+          {"beamDeform":100,"beamStrength":100},
+          //r
+          {"breakGroup":"fender_c_R"},
+          ["fe9r","f15rr"],
+          ["fe6r","f15rr"],
+          ["fe5r","f15rr"],
+
+          ["fe6r","f11rr"],
+          ["fe5r","f11rr"],
+          ["fe6r","f13rr"],
+          ["fe5r","f13rr"],
+
+          ["fe11r","f15rr"],
+          ["fe6r","f19rr"],
+          {"breakGroup":""},
+
+          //fender support beams
+          {"beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":810600.1,"beamDamp":72},
+          {"beamPrecompression":0.98},
+          {"beamDeform":24800,"beamStrength":230000},
+          ["fe1r","f2rr"],
+          ["fe1r","f1r"],
+          ["fe2r","f1r"],
+          ["fe9r","fs1r"],
+          ["fe3r","f5r"],
+          ["fe4r","f5r"],
+
+          {"beamDeform":14900,"beamStrength":230000},
+          ["fe8r","f6r"],
+          ["fe7r","f6r"],
+          ["fe8r","f6rr"],
+          ["fe5r","f15r"],
+          ["fe7r","p1r"],
+          ["fe7r","p2r"],
+          ["fe7r","p2rr"],
+          ["fe3r","f1rr"],
+          ["fe3r","f6rr"],
+          ["fe7r","f1rr"],
+          ["fe8r","f5r"],
+          ["fe8r","fs1r"],
+          ["fe8r","f15r"],
+          ["fe11r","f13rr"],
+          ["fe11r","f11rr"],
+
+          {"optional":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //right fender
+            {"groundModel":"metal"},
+            {"group":"etk800_fender_R"},
+            {"dragCoef":6},
+            ["fe3r","fe1r","fe2r"],
+            ["fe3r","fe2r","fe4r"],
+            ["fe7r","fe3r","fe4r"],
+            ["fe7r","fe4r","fe8r"],
+            ["fe8r","fe4r","fe5r"],
+            ["fe8r","fe5r","fe9r"],
+            ["fe9r","fe5r","fe6r"],
+            ["fe9r","fe6r","fe10r"],
+            ["fe10r","fe6r","fe11r"],
+            {"group":""},
+            {"dragCoef":0},
+
+            ////gap
+            //{"optional":true}
+            //{"breakGroup":"fender_bumper_R"}
+            //["fe11r","fe6r","fb4rr"],
+            //["fe11r","fb4rr","fb1rr"],
+            //["fe11r","fb1rr","fb0rr"],
+            //
+            //{"breakGroup":"fender_body_R"}
+            //["fx2r", "fe5r", "fe4r"],
+            //["fe4r", "fe2r", "fx2r"],
+            //["fe6r", "fe5r", "fx2r"],
+            //["fx2r", "fx1r", "fe6r"],
+            //["fx1r", "f19rr", "fe6r"],
+            //["fe11r", "fe6r", "f19rr"],
+            //["f19rr", "f15rr", "fe11r"],
+            //
+            //{"breakGroup":["fender_door_R","doorhinge_a_FR"]}
+            //["d7r","d4r","fe3r"],
+            //["d7r","fe3r","fe7r"],
+            //["d4r","d1r","fe1r"],
+            //["d4r","fe1r","fe3r"],
+            //["d10r","d7r","fe7r"],
+            //{"optional":false}
+            //{"breakGroup":""}
+    ],
+},
+"etk800_junk_fender_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Left Fender",
+        "value":75,
+    },
+    "slotType" : "etk800_fender_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_fender_L", ["etk800_fender_L"]],
+         {"deformGroup":"fendersignal_L_break", "deformMaterialBase":"etk800_lights", "deformMaterialDamaged":"etk800_lights_dmg"},
+         ["etk800_fendersignal_L", ["etk800_fender_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound3", "deformVolume":0.0}],
+         {"deformGroup":"fendersignal_L_break", "deformMaterialBase":"etk800_glass", "deformMaterialDamaged":"etk800_glass_dmg"},
+         ["etk800_fendersignalglass_L", ["etk800_fender_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound4", "deformVolume":0.0}],
+         {"deformGroup":""},
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //fender signals
+        {
+            "lightInnerAngle":0,
+            "lightOuterAngle":120,
+            "lightRange":8,
+            "lightColor":{"r":255, "g":255, "b":0, "a":255},
+            "lightAttenuation":{"x":0, "y":1, "z":1},
+            "lightCastShadows":false,
+            "flareName":"vehicleBrakeLightFlare",
+        },
+        ["signal_L" ,         "SPOTLIGHT"        , "fe3l", "fe4l", "fe7l", {"x":0, "y":0, "z":0} , {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, 0, 0, 0, 1, {"baseTranslation":{"x":0.6, "y":0.42, "z":-0.01},"flareScale":0.02,"lightBrightness":0.03,"deformGroup":"fendersignal_L_break"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--FENDER--
+         //l
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"etk800_fender_L"},
+         {"nodeWeight":0.76},
+         ["fe1l", 0.89, -0.77, 0.23],
+         ["fe2l", 0.89, -1.01, 0.23],
+
+         ["fe3l", 0.89, -0.82, 0.60],
+         ["fe4l", 0.91, -1.15, 0.62],
+         ["fe5l", 0.91, -1.37, 0.73],
+         ["fe6l", 0.90, -1.595, 0.68],
+
+         ["fe7l", 0.83, -0.74, 0.95],
+         ["fe8l", 0.82, -1.08, 0.935],
+         ["fe9l", 0.80, -1.34, 0.91],
+         ["fe10l", 0.79, -1.55, 0.875],
+
+         ["fe11l", 0.775, -1.79, 0.81],
+
+         //rigidifier
+         {"group":""},
+         {"collision":false},
+         {"selfCollision":false},
+         ["fe12l", 0.50, -1.33, 0.55],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FENDER--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":810600.1,"beamDamp":72},
+          {"beamDeform":12050,"beamStrength":"FLT_MAX"},
+          {"deformationTriggerRatio":0.01},
+          //fender main shape
+          {"deformLimitExpansion":1.1},
+          //l
+          ["fe1l","fe2l"],
+          ["fe3l","fe4l"],
+          ["fe4l","fe5l"],
+          ["fe5l","fe6l"],
+          ["fe7l","fe8l"],
+          ["fe8l","fe9l"],
+          ["fe9l","fe10l"],
+
+          ["fe1l","fe3l"],
+          ["fe2l","fe4l"],
+          ["fe3l","fe7l"],
+          ["fe4l","fe8l"],
+          ["fe5l","fe9l"],
+          ["fe6l","fe10l"],
+
+          ["fe6l","fe11l"],
+          ["fe11l","fe10l"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":7950,"beamStrength":"FLT_MAX"},
+          //l
+          ["fe1l","fe4l"],
+          ["fe2l","fe3l"],
+          ["fe5l","fe10l"],
+          ["fe6l","fe9l"],
+
+          {"deformGroup":"fendersignal_L_break"},
+          ["fe3l","fe8l"],
+          ["fe4l","fe7l"],
+          ["fe4l","fe9l"],
+          ["fe5l","fe8l"],
+          {"deformGroup":""},
+
+          //corner rigids
+          {"beamDeform":5850,"beamStrength":"FLT_MAX"},
+          //l
+          ["fe1l","fe7l"],
+          ["fe2l","fe8l"],
+          ["fe7l","fe9l"],
+          ["fe8l","fe10l"],
+          ["fe3l","fe5l"],
+          ["fe4l","fe6l"],
+          ["fe2l","fe5l"],
+          ["fe11l","fe9l"],
+
+          {"beamSpring":810600.1,"beamDamp":120},
+          {"beamDeform":3750,"beamStrength":"FLT_MAX"},
+          //rigidifier
+          ["fe1l","fe12l"],
+          ["fe2l","fe12l"],
+          ["fe3l","fe12l"],
+          ["fe4l","fe12l"],
+          ["fe5l","fe12l"],
+          ["fe6l","fe12l"],
+          ["fe7l","fe12l"],
+          ["fe8l","fe12l"],
+          ["fe9l","fe12l"],
+          ["fe10l","fe12l"],
+          ["fe11l","fe12l"],
+
+          //attach
+          {"beamDeform":100,"beamStrength":100},
+          {"disableTriangleBreaking":true},
+          //firewall
+          //l
+          {"breakGroup":"fender_a_L"},
+          {"deformGroup":"fendersignal_L_break"},
+          ["fe2l","f5l"],
+          ["fe2l","f5ll"],
+          ["fe3l","f5ll"],
+          ["fe7l","f6ll"],
+          ["fe1l","f1ll"],
+          ["fe2l","f1ll"],
+
+          //middle
+          {"beamDeform":100,"beamStrength":100},
+          //l
+          {"breakGroup":"fender_b_L"},
+          ["fe8l","f14ll"],
+          ["fe4l","f14ll"],
+          ["fe10l","f15ll"],
+          {"deformGroup":""},
+
+          //front
+          {"beamDeform":100,"beamStrength":100},
+          //l
+          {"breakGroup":"fender_c_L"},
+          ["fe9l","f15ll"],
+          ["fe6l","f15ll"],
+          ["fe5l","f15ll"],
+
+          ["fe6l","f11ll"],
+          ["fe5l","f11ll"],
+          ["fe6l","f13ll"],
+          ["fe5l","f13ll"],
+
+          ["fe11l","f15ll"],
+          ["fe6l","f19ll"],
+          {"breakGroup":""},
+
+          //fender support beams
+          {"beamType":"|SUPPORT", "beamLongBound":4},
+          {"beamSpring":810600.1,"beamDamp":72},
+          {"beamPrecompression":0.98},
+          {"beamDeform":24800,"beamStrength":230000},
+
+          ["fe1l","f2ll"],
+          ["fe1l","f1l"],
+          ["fe2l","f1l"],
+          ["fe9l","fs1l"],
+          ["fe3l","f5l"],
+          ["fe4l","f5l"],
+
+          {"beamDeform":14900,"beamStrength":230000},
+          ["fe8l","f6l"],
+          ["fe7l","f6l"],
+          ["fe8l","f6ll"],
+          ["fe5l","f15l"],
+          ["fe7l","p1l"],
+          ["fe7l","p2l"],
+          ["fe7l","p2ll"],
+          ["fe3l","f1ll"],
+          ["fe3l","f6ll"],
+          ["fe7l","f1ll"],
+          ["fe8l","f5l"],
+          ["fe8l","fs1l"],
+          ["fe8l","f15l"],
+          ["fe11l","f13ll"],
+          ["fe11l","f11ll"],
+
+          {"optional":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //left fender
+            {"groundModel":"metal"},
+            {"group":"etk800_fender_L"},
+            {"dragCoef":6},
+            ["fe1l","fe3l","fe2l"],
+            ["fe2l","fe3l","fe4l"],
+            ["fe3l","fe7l","fe4l"],
+            ["fe4l","fe7l","fe8l"],
+            ["fe4l","fe8l","fe5l"],
+            ["fe5l","fe8l","fe9l"],
+            ["fe5l","fe9l","fe6l"],
+            ["fe6l","fe9l","fe10l"],
+            ["fe11l","fe6l","fe10l"],
+
+            //gap
+            {"group":""},
+            {"dragCoef":0},
+            //{"optional":true}
+            //{"breakGroup":"fender_bumper_L"}
+            //["fe6l","fe11l","fb4ll"],
+            //["fe11l","fb1ll","fb4ll"],
+            //["fe11l","fb0ll","fb1ll"],
+            //
+            //{"breakGroup":"fender_body_L"}
+            //["fe5l","fx2l","fe4l"],
+            //["fe2l","fe4l","fx2l"],
+            //["fe5l","fe6l","fx2l"],
+            //["fx1l","fx2l","fe6l"],
+            //["f19ll","fx1l","fe6l"],
+            //["f19ll","fe6l","fe11l"],
+            //["fe11l","f19ll","f15ll"],
+            //
+            //{"breakGroup":["fender_door_L","doorhinge_a_FL"]}
+            //["d4l","d7l","fe3l"],
+            //["d7l","fe7l","fe3l"],
+            //["d1l","d4l","fe1l"],
+            //["d4l","fe3l","fe1l"],
+            //["d7l","d10l","fe7l"],
+            //{"optional":false}
+            //{"breakGroup":""}
+    ],
+},
+}

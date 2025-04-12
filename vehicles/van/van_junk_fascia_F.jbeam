@@ -1,0 +1,126 @@
+{
+"van_junk_fascia_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Early Base Front Fascia",
+        "value":50,
+    },
+    "slotType" : "van_fascia_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["van_headlight_R","van_headlight_R", "Right Headlight"],
+        ["van_headlight_L","van_headlight_L", "Left Headlight"],
+        ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["van_grille", ["van_fascia_F"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_PLASTIC"},
+         //--FRONT FASCIA--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":1.2},
+         {"group":"van_fascia_F"},
+         ["fa1r", -0.46, -2.04, 1.08],
+         ["fa1", 0.0, -2.05, 1.08],
+         ["fa1l", 0.46, -2.04, 1.08],
+
+         ["fa2r", -0.46, -2.04, 0.78],
+         ["fa2", 0.0, -2.05, 0.78],
+         ["fa2l", 0.46, -2.04, 0.78],
+         {"collision":false},
+         {"selfCollision":false},
+         {"group":""},
+         ["fa3", 0.0, -1.87, 0.9],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FRONT FASCIA--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":50000,"beamDamp":73.32},
+          {"beamDeform":14175,"beamStrength":"FLT_MAX"},
+          //fascia main shape
+          {"deformLimitExpansion":1.2},
+          ["fa1r", "fa1"],
+          ["fa1", "fa1l"],
+          ["fa2r", "fa2"],
+          ["fa2", "fa2l"],
+          ["fa2l", "fa1l"],
+          ["fa1", "fa2"],
+          ["fa2r", "fa1r"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":3675,"beamStrength":"FLT_MAX"},
+          ["fa2r", "fa1"],
+          ["fa1r", "fa2"],
+          ["fa1l", "fa2"],
+          ["fa1", "fa2l"],
+
+          //rigids
+          {"beamDeform":3150,"beamStrength":"FLT_MAX"},
+          ["fa2r", "fa2l"],
+          ["fa1l", "fa1r"],
+
+          //rigidifier
+          {"beamDeform":1750,"beamStrength":"FLT_MAX"},
+          ["fa3", "fa2"],
+          ["fa3", "fa1"],
+          ["fa3", "fa2l"],
+          ["fa3", "fa1l"],
+          ["fa3", "fa2r"],
+          ["fa3", "fa1r"],
+
+          //attach
+          {"disableTriangleBreaking":false},
+          {"beamDeform":6825,"beamStrength":100},
+          {"breakGroup":"fascia_R"},
+          ["fa1r", "s1r"],
+          ["fa1r", "s2r"],
+          ["fa1r", "s1"],
+          ["fa2r", "s2r"],
+          ["fa2r", "s2"],
+          ["fa2r", "s1r"],
+          ["fa1", "s1r"],
+          ["fa2", "s2r"],
+          {"breakGroup":"fascia_L"},
+          ["fa1l", "s1l"],
+          ["fa1l", "s2l"],
+          ["fa1l", "s1"],
+          ["fa2l", "s2l"],
+          ["fa2l", "s2"],
+          ["fa2l", "s1l"],
+          ["fa1", "s1l"],
+          ["fa2", "s2l"],
+          {"breakGroup":""},
+
+          //--FASCIA SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":4},
+          {"beamSpring":829869.6,"beamDamp":0},
+          {"beamDeform":15540,"beamStrength":149520},
+          {"optional":true},
+          ["fa1r", "va2r"],
+          ["fa1", "va2"],
+          ["fa1l", "va2l"],
+          {"optional":false},
+
+          {"disableTriangleBreaking":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //fascia
+            {"groundModel":"plastic"},
+            {"group":"roamer_fascia"},
+            {"dragCoef":6},
+            ["fa1r", "fa2r", "fa2"],
+            ["fa2", "fa1", "fa1r"],
+            ["fa1", "fa2", "fa1l"],
+            ["fa1l", "fa2", "fa2l"],
+    ],
+},
+}

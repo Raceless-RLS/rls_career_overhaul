@@ -1,0 +1,290 @@
+{
+"burnside_junk_leaf_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Rear Leaf Springs",
+        "value":30,
+    },
+    "slotType" : "burnside_leaf_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["burnside_leafblock_R", ["burnside_axle"]],
+         ["burnside_leaf_R", ["burnside_leaf_R"]],
+    ],
+    "rails": {
+        "leaf_RL":{
+            "links:":["axsl","lf3l"], "broken:":[], "looped":false, "capped":true,
+        },
+        "leaf_RR":{
+            "links:":["axsr","lf3r"], "broken:":[], "looped":false, "capped":true,
+        },
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["ax2l", "leaf_RL", true, true, 0.0, 85000, "FLT_MAX", "FLT_MAX"],
+        ["ax2r", "leaf_RR", true, true, 0.0, 85000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":3.5},
+         {"group":"burnside_leaf_R"},
+         //shackle nodes
+         ["lf1r",-0.63, 2.17, 0.31],
+         ["lf1l", 0.63, 2.17, 0.31],
+         //anti wrap node
+         {"nodeWeight":2.0},
+         {"group":""},
+         {"collision":false},
+         {"selfCollision":false},
+         ["lf3r",-0.70, 1.47, 0.62],
+         ["lf3l", 0.70, 1.47, 0.62],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":14001000,"beamDamp":100},
+          {"beamDeform":65840,"beamStrength":193440},
+          //leaf bottom - stiff locating part
+          ["axsl","rx1l"],
+          ["axsr","rx1r"],
+          ["lf1r","axsr"],
+          ["lf1l","axsl"],
+
+          //anti axle wrap node
+          {"beamSpring":2501000,"beamDamp":150},
+          ["lf3r","rx1r"],
+          ["lf3l","rx1l"],
+          ["lf3r","lf1r"],
+          ["lf3l","lf1l"],
+
+          //damp
+          {"beamSpring":0,"beamDamp":150},
+          ["lf3r","ax2"],
+          ["lf3l","ax2"],
+
+          //leaf spring
+          {"beamType":"|LBEAM"},
+          {"beamSpring":55000,"beamDamp":1500},
+          {"beamPrecompression":0.88},
+          ["ax2r","rx1r", {"id3:":"axsr"}],
+          ["ax2l","rx1l", {"id3:":"axsl"}],
+          ["ax2r","lf1r", {"id3:":"axsr"}],
+          ["ax2l","lf1l", {"id3:":"axsl"}],
+          {"beamPrecompression":1},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":40100,"beamStrength":62400},
+          {"beamSpring":1001000,"beamDamp":2500},
+          //lateral location
+          ["axsr","rx1l", {"dampCutoffHz":500}],
+          ["axsl","rx1r", {"dampCutoffHz":500}],
+          ["axsr","lf1l", {"dampCutoffHz":500}],
+          ["axsl","lf1r", {"dampCutoffHz":500}],
+
+          //shackle
+          {"beamPrecompression":1.0},
+          {"beamSpring":2501000"beamDamp":250,"beamDeform":62500,"beamStrength":218400},
+          ["lf1r","rx2r"],
+          ["lf1l","rx2l"],
+          ["lf1r","rx2rr"],
+          ["lf1l","rx2ll"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":32000,"beamStrength":45240},
+          {"beamSpring":0,"beamDamp":500},
+
+          //pinion damper
+          //["ax3","f15r"],
+          //["ax3","f15l"],
+          //["ax3","f14rr"],
+          //["ax3","f14ll"],
+          //{"beamSpring":0,"beamDamp":1000},
+          //["ax1","tra1"],
+          //["ax2","tra1"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"triangleType":"NONCOLLIDABLE","dragCoef":0},
+          ["rx1r", "ax2r", "axsr"],
+          ["axsr", "ax2r", "lf1r"],
+
+          ["ax2l", "rx1l", "axsl"],
+          ["ax2l", "axsl", "lf1l"],
+          {"triangleType":"NORMALTYPE"},
+    ],
+},
+"burnside_junk_leaf_R_lowered": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Collapsed Rear Leaf Springs",
+        "value":10,
+    },
+    "slotType" : "burnside_leaf_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["burnside_leafblock_R", ["burnside_axle"]],
+         ["burnside_leaf_R", ["burnside_leaf_R"]],
+    ],
+    "rails": {
+        "leaf_RL":{
+            "links:":["axsl","lf3l"], "broken:":[], "looped":false, "capped":true,
+        },
+        "leaf_RR":{
+            "links:":["axsr","lf3r"], "broken:":[], "looped":false, "capped":true,
+        },
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["ax2l", "leaf_RL", true, true, 0.0, 45000, "FLT_MAX", "FLT_MAX"],
+        ["ax2r", "leaf_RR", true, true, 0.0, 45000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":3.5},
+         {"group":"burnside_leaf_R"},
+         //shackle nodes
+         ["lf1r",-0.63, 2.17, 0.31],
+         ["lf1l", 0.63, 2.17, 0.31],
+         //anti wrap node
+         {"nodeWeight":2.0},
+         {"group":""},
+         {"collision":false},
+         {"selfCollision":false},
+         ["lf3r",-0.70, 1.47, 0.55],
+         ["lf3l", 0.70, 1.47, 0.55],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":14001000,"beamDamp":100},
+          {"beamDeform":65840,"beamStrength":193440},
+          //leaf bottom - stiff locating part
+          ["axsl","rx1l"],
+          ["axsr","rx1r"],
+          ["lf1r","axsr"],
+          ["lf1l","axsl"],
+
+          //anti axle wrap node
+          {"beamSpring":2501000,"beamDamp":150},
+          ["lf3r","rx1r"],
+          ["lf3l","rx1l"],
+          ["lf3r","lf1r"],
+          ["lf3l","lf1l"],
+
+          //leaf spring
+          {"beamType":"|LBEAM"},
+          {"beamSpring":45000,"beamDamp":1500},
+          {"beamPrecompression":0.995},
+          ["ax2r","rx1r", {"id3:":"axsr"}],
+          ["ax2l","rx1l", {"id3:":"axsl"}],
+          ["ax2r","lf1r", {"id3:":"axsr"}],
+          ["ax2l","lf1l", {"id3:":"axsl"}],
+          {"beamPrecompression":1},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":40100,"beamStrength":62400},
+          {"beamSpring":1501000,"beamDamp":2500},
+          //lateral location
+          ["axsr","rx1l", {"dampCutoffHz":500}],
+          ["axsl","rx1r", {"dampCutoffHz":500}],
+          ["axsr","lf1l", {"dampCutoffHz":500}],
+          ["axsl","lf1r", {"dampCutoffHz":500}],
+
+          //shackle
+          {"beamPrecompression":1.0},
+          {"beamSpring":2501000"beamDamp":250,"beamDeform":58500,"beamStrength":218400},
+          ["lf1r","rx2r"],
+          ["lf1l","rx2l"],
+          ["lf1r","rx2rr"],
+          ["lf1l","rx2ll"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":32000,"beamStrength":45240},
+          {"beamSpring":0,"beamDamp":500},
+          //pinion damper
+          //["ax3","f15r"],
+          //["ax3","f15l"],
+          //["ax3","f14rr"],
+          //["ax3","f14ll"],
+          {"beamSpring":0,"beamDamp":500},
+          ["ax1","tra1"],
+          ["ax2","tra1"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"triangleType":"NONCOLLIDABLE","dragCoef":0},
+          ["rx1r", "ax2r", "axsr"],
+          ["axsr", "ax2r", "lf1r"],
+
+          ["ax2l", "rx1l", "axsl"],
+          ["ax2l", "axsl", "lf1l"],
+          {"triangleType":"NORMALTYPE"},
+    ],
+},
+"burnside_junk_shock_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Rear Shocks",
+        "value":35,
+    },
+    "slotType" : "burnside_shock_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["burnside_shocks_R", ["burnside_shock_R"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //rear shocks
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":16000,"beamStrength":156000},
+          {"beamSpring":10,"beamDamp":1500},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["axshr","rs1r", {"beamDampFast":95,"beamDampRebound":95,"beamDampReboundFast":95,"beamDampVelocitySplit":0.08,"dampCutoffHz":500,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":5,"volumeFactor":4.5,"decayFactor":55,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":10}],
+          ["axshl","rs1l", {"beamDampFast":95,"beamDampRebound":95,"beamDampReboundFast":95,"beamDampVelocitySplit":0.08,"dampCutoffHz":500,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":5,"volumeFactor":4.5,"decayFactor":55,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":10}],
+          //bumpstops
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":251000,"beamLimitDamp":10000},
+          ["axshr","rs1r", {"longBoundRange":0.12,"shortBoundRange":0.08,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["axshl","rs1l", {"longBoundRange":0.12,"shortBoundRange":0.08,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_shock_R_lowered": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Exploded Rear Shocks",
+        "value":10,
+    },
+    "slotType" : "burnside_shock_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["burnside_shocks_R", ["burnside_shock_R"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //rear shocks
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":16000,"beamStrength":156000},
+          {"beamSpring":10,"beamDamp":1750},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["axshr","rs1r", {"beamDampFast":10,"beamDampRebound":10,"beamDampReboundFast":10,"beamDampVelocitySplit":0.08,"dampCutoffHz":500,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":60,"volumeFactor":5.5,"decayFactor":80,"noiseFactor":0.01,"pitchFactor":0.1,"maxStress":10}],
+          ["axshl","rs1l", {"beamDampFast":10,"beamDampRebound":10,"beamDampReboundFast":10,"beamDampVelocitySplit":0.08,"dampCutoffHz":500,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":60,"volumeFactor":5.5,"decayFactor":80,"noiseFactor":0.01,"pitchFactor":0.1,"maxStress":10}],
+          //bumpstops
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":251000,"beamLimitDamp":10000},
+          ["axshr","rs1r", {"longBoundRange":0.11,"shortBoundRange":0.1,"boundZone":0.03,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["axshl","rs1l", {"longBoundRange":0.11,"shortBoundRange":0.1,"boundZone":0.03,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

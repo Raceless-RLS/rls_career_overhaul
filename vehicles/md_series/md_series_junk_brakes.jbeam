@@ -1,0 +1,254 @@
+{
+"md_series_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":150,
+    },
+    "slotType" : "md_series_brake_F",
+    "slots2": [
+        ["name",       "allowTypes",   "denyTypes", "default",    "description"],
+        ["brakepad_F", ["brakepad_F"], [],          "brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["pneumatics/airbrakes", { "name": "airbrakes_F" }],
+    ],
+    "airbrakes_F": {
+        "soundEvent":"event:>Vehicle>Pneumatics>Air_Brakes_02",
+        "soundNode:":["fa1"],
+        "brakedWheels":["FL", "FR"],
+        "brakeTorque": [
+            ["pressure", "torqueCoef"],
+            [21000, 0],
+            [413685, 1],
+    ],
+    "springBrakeTorque": [
+            ["pressure", "torqueCoef"],
+            [200000, 0],
+            [240000, 0],
+        ]
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //brake drums
+         ["md_series_brakedrum_FR", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_brakedrum_FL", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_axle_brakes_F", ["md_series_hub_a_FR","md_series_hub_b_FR","md_series_hub_a_FL","md_series_hub_b_FL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brake properties
+        {"brakeTorque":"$=$brakestrength*10000"},
+        {"useDefaultBrakeInput":false},
+        {"parkingTorque":0},
+        //{"brakeSpring":75},//define in hubs/wheels instead
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":45.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+    ],
+},
+"md_series_junk_brake_F_split": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":150,
+    },
+    "slotType" : "md_series_brake_F_split",
+    "slots2": [
+        ["name",       "allowTypes",   "denyTypes", "default",    "description"],
+        ["brakepad_F", ["brakepad_F"], [],          "brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["pneumatics/airbrakes", { "name": "airbrakes_F" }],
+    ],
+    "airbrakes_F": {
+        "soundEvent":"event:>Vehicle>Pneumatics>Air_Brakes_02",
+        "soundNode:":["fa1"],
+        "brakedWheels":["FL", "FR"],
+        "brakeTorque": [
+            ["pressure", "torqueCoef"],
+            [21000, 0],
+            [413685, 1],
+        ],
+        "springBrakeTorque": [
+            ["pressure", "torqueCoef"],
+            [200000, 0],
+            [240000, 0],
+        ]
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //brake drums
+         ["semi_wheel_split_F_brakedrum_20", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-1.05, "y":-1.454, "z":0.56}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["semi_wheel_split_F_brakedrum_20", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 1.05, "y":-1.454, "z":0.56}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_axle_brakes_F", ["md_series_hub_a_FR","md_series_hub_b_FR","md_series_hub_a_FL","md_series_hub_b_FL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brake properties
+        {"brakeTorque":"$=$brakestrength*12500"},
+        {"useDefaultBrakeInput":false},
+        {"parkingTorque":0},
+        //{"brakeSpring":75},//define in hubs/wheels instead
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":45.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+    ],
+},
+"md_series_junk_brake_F_SFA": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":150,
+    },
+    "slotType" : "md_series_brake_F_SFA",
+    "slots2": [
+        ["name",       "allowTypes",   "denyTypes", "default",    "description"],
+        ["brakepad_F", ["brakepad_F"], [],          "brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["pneumatics/airbrakes", { "name": "airbrakes_F" }],
+    ],
+    "airbrakes_F": {
+        "soundEvent":"event:>Vehicle>Pneumatics>Air_Brakes_02",
+        "soundNode:":["fa4"],
+        "brakedWheels":["FL", "FR"],
+        "brakeTorque": [
+            ["pressure", "torqueCoef"],
+            [21000, 0],
+            [413685, 1],
+    ],
+    "springBrakeTorque": [
+            ["pressure", "torqueCoef"],
+            [200000, 0],
+            [240000, 0],
+        ]
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //brake drums
+         ["md_series_brakedrum_FR", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":0, "y":0, "z":-0.283}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_brakedrum_FL", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":0, "y":0, "z":-0.283}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_axle_brakes_offroad_F", ["md_series_hub_a_FR","md_series_hub_b_FR","md_series_hub_a_FL","md_series_hub_b_FL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brake properties
+        {"brakeTorque":"$=$brakestrength*12500"},
+        {"useDefaultBrakeInput":false},
+        {"parkingTorque":0},
+        //{"brakeSpring":75},//define in hubs/wheels instead
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":45.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+    ],
+},
+"md_series_junk_brake_F_SFA_split": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":150,
+    },
+    "slotType" : "md_series_brake_F_SFA_split",
+    "slots2": [
+        ["name",       "allowTypes",   "denyTypes", "default",    "description"],
+        ["brakepad_F", ["brakepad_F"], [],          "brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["pneumatics/airbrakes", { "name": "airbrakes_F" }],
+    ],
+    "airbrakes_F": {
+        "soundEvent":"event:>Vehicle>Pneumatics>Air_Brakes_02",
+        "soundNode:":["fa4"],
+        "brakedWheels":["FL", "FR"],
+        "brakeTorque": [
+            ["pressure", "torqueCoef"],
+            [21000, 0],
+            [413685, 1],
+        ],
+        "springBrakeTorque": [
+            ["pressure", "torqueCoef"],
+            [200000, 0],
+            [240000, 0],
+        ]
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //brake drums
+         ["semi_wheel_split_F_brakedrum_20", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-1.0304, "y":-1.454, "z":0.277}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["semi_wheel_split_F_brakedrum_20", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 1.0304, "y":-1.454, "z":0.277}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_axle_brakes_offroad_F", ["md_series_hub_a_FR","md_series_hub_b_FR","md_series_hub_a_FL","md_series_hub_b_FL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brake properties
+        {"brakeTorque":"$=$brakestrength*12500"},
+        {"useDefaultBrakeInput":false},
+        {"parkingTorque":0},
+        //{"brakeSpring":75},//define in hubs/wheels instead
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":45.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+    ],
+},
+"md_series_junk_brake_DX1": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":75,
+    },
+    "slotType" : "md_series_brake_DX1",
+    "slots2": [
+        ["name",       "allowTypes",   "denyTypes", "default",    "description"],
+        ["brakepad_R", ["brakepad_R"], [],          "brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //brake drums
+         ["md_series_brakedrum_RR", ["wheel_R1RR","wheelhub_R1RR"], [], {"pos":{"x": 0.02, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_brakedrum_RL", ["wheel_R1LL","wheelhub_R1LL"], [], {"pos":{"x":-0.02, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["md_series_axle_brakes_R", ["md_series_axle_R"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*9500"},
+        {"useDefaultBrakeInput":false},
+        {"parkingTorque":0},
+        //{"brakeSpring":100},//define in hubs/wheels instead
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":54.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+    ],
+},
+
+}

@@ -1,0 +1,67 @@
+{
+"fullsize_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":15,
+    },
+    "slotType" : "fullsize_enginemounts",
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":100, "beamDamp":10},
+          {"beamLimitSpring":100, "beamLimitDamp":10},
+          {"beamDeform":20000, "beamStrength":17000},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "fx3r"],
+          ["em1r", "fx1r"],
+          ["em1r", "fx4r"],
+          ["em1r", "fx2r"],
+          ["em1r", "fx1l"],
+          ["em1r", "fx2l"],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "fx3l"],
+          ["em1l", "fx1l"],
+          ["em1l", "fx4l"],
+          ["em1l", "fx2l"],
+          ["em1l", "fx1r"],
+          ["em1l", "fx2r"],
+          //transmission mount
+          {"beamSpring":100, "beamDamp":10},
+          {"beamLimitSpring":100, "beamLimitDamp":10},
+          {"beamDeform":20000, "beamStrength":160000},
+          {"boundZone":0.03},
+
+          {"breakGroup":"transmissionmount"},
+          ["tra1", "f3r"],
+          ["tra1", "f3l"],
+          ["tra1", "f13l"],
+          ["tra1", "f13r"],
+          ["tra1", "fx2l"],
+          ["tra1", "fx2r"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":12000, "beamStrength":60000},
+          {"beamSpring":47175, "beamDamp":925},
+          ["e4r", "f21rr"],
+          ["e4l", "f21ll"],
+          ["e3r", "f2rr"],
+          ["e3l", "f2ll"],
+          {"dampCutoffHz":""},
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

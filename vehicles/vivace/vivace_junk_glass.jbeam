@@ -1,0 +1,387 @@
+{
+"vivace_junk_glass_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":20,
+    },
+    "slotType" : "vivace_glass_F",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_windshield", ["vivace_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_cracks"},
+         ["vivace_windshield_dmg", ["vivace_windshield"]],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_int"},
+         ["vivace_windshield_int", ["vivace_windshield"]],
+         {"deformGroup":""},
+
+         ["vivace_windshield_frit", ["vivace_windshield"],[]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.02
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":2.0},
+         {"group":["vivace_windshield","gps"]},
+         ["wi1", 0, -0.79, 1.16],
+         {"group":""},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--NODE WEIGHT ADD--
+         //windshield
+         {"group":"vivace_body"},
+
+         //a pillars
+         {"nodeWeight":2.5},
+         ["p2r",-0.703,-0.56,1.147, {"group":["vivace_body","gps","vivace_windshield"]}],
+         ["p2l",0.703,-0.56,1.147, {"group":["vivace_body","gps","vivace_windshield"]}],
+
+         //roof
+         {"nodeWeight":2.9},
+         ["rf1r",-0.6,-0.23,1.35, {"group":["vivace_body","gps","vivace_windshield"]}],
+         ["rf1",0.0,-0.35,1.36, {"nodeWeight":2.4,"group":["vivace_body","gps","vivace_windshield"]}],
+         ["rf1l",0.6,-0.23,1.35, {"group":["vivace_body","gps","vivace_windshield"]}],
+
+         //firewall
+         {"nodeWeight":6.1},
+         {"group":["vivace_engine_bay","vivace_windshield","gps","vivace_body","vivace_dash"]},
+         ["f6rr",-0.735,-0.883,0.921],
+         ["f6r",-0.325,-1.123,0.944, {"group":["vivace_engine_bay","vivace_windshield","gps","vivace_body","vivace_strutbar","vivace_dash"]}],
+         ["f6l",0.325,-1.123,0.944, {"group":["vivace_engine_bay","vivace_windshield","gps","vivace_body","vivace_strutbar","vivace_dash"]}],
+         ["f6ll",0.735,-0.883,0.921],
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //windshield
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":1001000,"beamDamp":50},
+          {"beamDeform":4100,"beamStrength":"FLT_MAX"},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.03},
+          ["rf1","wi1"],
+          ["rf1r","wi1"],
+          ["rf1l","wi1"],
+          ["wi1","f6r"],
+          ["wi1","f6l"],
+          ["wi1","p1r"],
+          ["wi1","p1l"],
+          ["wi1","f6rr"],
+          ["wi1","f6ll"],
+
+          ["wi1","p2rr"],
+          ["wi1","p2ll"],
+          {"beamDeform":5550,"beamStrength":10},
+          ["rf1","f6r"],
+          ["rf1","f6l"],
+
+          ["p1r","p1l"],
+
+          ["rf1r","f6r"],
+          ["rf1l","f6l"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"vivace_junk_doorglass_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "vivace_doorglass_FR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_FR", ["vivace_door_FR"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_FR_int", ["vivace_door_FR"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         //front right door glass
+         {"nodeWeight":1.2},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"vivace_door_FR"},
+         ["d10r",-0.722,-0.553,1.12],
+         ["d11r",-0.644,-0.199,1.295],
+         ["d12r",-0.62,0.325,1.363],
+         ["d13r",-0.716,0.29,1.183],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1401000,"beamDamp":60},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_FR_break", "deformationTriggerRatio":0.01},
+          {"breakGroup":"doorglass_FR"},
+          {"deformLimitExpansion":""},
+          ["d11r","d8r"],
+          ["d12r","d8r"],
+          ["d10r","d13r"],
+          ["d10r","d9r"],
+          ["d13r","d7r"],
+          ["d9r","d11r"],
+          ["d7r","d11r"],
+          ["d9r","d12r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"vivace_junk_doorglass_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "vivace_doorglass_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_FL", ["vivace_door_FL"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_FL_int", ["vivace_door_FL"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         //front left door glass
+         {"nodeWeight":1.2},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"vivace_door_FL"},
+         ["d10l",0.722,-0.553,1.12],
+         ["d11l",0.644,-0.199,1.295],
+         ["d12l",0.62,0.325,1.363],
+         ["d13l",0.716,0.29,1.183],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1401000,"beamDamp":60},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_FL_break", "deformationTriggerRatio":0.01},
+          {"breakGroup":"doorglass_FL"},
+          {"deformLimitExpansion":""},
+          ["d11l","d8l"],
+          ["d12l","d8l"],
+          ["d10l","d13l"],
+          ["d10l","d9l"],
+          ["d13l","d7l"],
+          ["d9l","d11l"],
+          ["d7l","d11l"],
+          ["d9l","d12l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"vivace_junk_doorglass_RR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "vivace_doorglass_RR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_RR_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_RR", ["vivace_door_RR"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_RR_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_RR_int", ["vivace_door_RR"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         //rear right door glass
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"vivace_door_RR"},
+         {"nodeWeight":1.2},
+         ["d23r",-0.716,0.322,1.183],
+         ["d24r",-0.62,0.357,1.363],
+         ["d25r",-0.626,0.695,1.358],
+         ["d26r",-0.629,1.033,1.333],
+         ["d27r",-0.709,1.169,1.172],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1101000,"beamDamp":60},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_RR_break", "deformationTriggerRatio":0.01},
+          {"breakGroup":"doorglass_RR"},
+          {"deformLimitExpansion":""},
+          ["d21r", "d25r"],
+          ["d23r", "d27r"],
+          ["d26r", "d20r"],
+          ["d24r", "d22r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"vivace_junk_doorglass_RL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "vivace_doorglass_RL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_RL_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_RL", ["vivace_door_RL"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_RL_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_doorglass_RL_int", ["vivace_door_RL"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         //rear left door glass
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"vivace_door_RL"},
+         {"nodeWeight":1.2},
+         ["d23l",0.716,0.322,1.183],
+         ["d24l",0.62,0.357,1.363],
+         ["d25l",0.626,0.695,1.358],
+         ["d26l",0.629,1.033,1.333],
+         ["d27l",0.709,1.169,1.172],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1101000,"beamDamp":60},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_RL_break", "deformationTriggerRatio":0.01},
+          {"breakGroup":"doorglass_RL"},
+          {"deformLimitExpansion":""},
+          ["d21l", "d25l"],
+          ["d23l", "d27l"],
+          ["d26l", "d20l"],
+          ["d24l", "d22l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"vivace_junk_tailgateglass": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Tailgate Glass",
+        "value":0,
+    },
+    "slotType" : "vivace_tailgateglass",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"vivace_glass", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_tailgateglass", ["vivace_tailgate"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"vivace_glass_int", "deformMaterialDamaged":"vivace_glass_dmg"},
+         ["vivace_tailgateglass_int", ["vivace_tailgate"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+         //--TAILGATE--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"vivace_tailgate"},
+         {"nodeWeight":2.0},
+         ["t2rr",-0.699,1.485,1.146],
+         ["t2r",-0.587,1.558,1.319],
+         ["t2",0.0,1.665,1.332],
+         ["t2l",0.587,1.558,1.319],
+         ["t2ll",0.699,1.485,1.146],
+
+         {"nodeWeight":1.6},
+         ["t3rr",-0.614,1.83,1.014],
+         ["t3r",-0.25,1.912,1.003],
+         ["t3l",0.25,1.912,1.003],
+         ["t3ll",0.614,1.83,1.014],
+
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle rear glass
+          {"beamSpring":1201000,"beamDamp":100},
+          {"beamDeform":3600,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"tailgateglass"},
+          {"deformGroup":"tailgateglass_break", "deformationTriggerRatio":0.02},
+          {"deformLimitExpansion":""},
+          ["t2", "t3l"],
+          ["t2", "t3r"],
+          ["t2l", "t3rr"],
+          ["t2r", "t3ll"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+}

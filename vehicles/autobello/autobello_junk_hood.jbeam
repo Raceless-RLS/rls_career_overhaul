@@ -1,0 +1,334 @@
+{
+"autobello_junk_hood": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Nose-Remaker Hood",
+        "value":25,
+    },
+
+    "slotType" : "autobello_hood",
+
+    "slots": [
+        ["type", "default", "description"],
+        //["autobello_logo_F","", "Logo"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_bonnet_a", ["hood"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"hoodLatchCoupler"}],
+        ["advancedCouplerControl", {"name":"hoodCatchCoupler"}],
+    ]
+    "hoodLatchCoupler":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["w2",     "h7",         30000,                     0.03,                   0.005,                      0.2,                 0.1,                   "hood_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["w2"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Hood>vintage_01_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Hood>vintage_03_open_lever",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0.0,
+        "closeForceMagnitude": 0,
+        "closeForceDuration": 0.0
+    }
+    "hoodCatchCoupler":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["h8",      "h1",        30000,                     0.01,                   0.005,                      0.2,                 0.1,                   "hood_latch"]
+        ]
+        "attachSoundVolume":0,
+        "detachSoundVolume":1,
+        "soundNode:":["h8"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Hood>vintage_01_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Hood>vintage_03_open_hood",
+        "breakSoundEvent":""
+        "openForceMagnitude": 750,
+        "openForceDuration": 0.2,
+        "closeForceMagnitude": 80,
+        "closeForceDuration": 1.5
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood",                 "", "h1","h1r","h2r",    "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.04, "y":-0.04, "z":-0.03}],
+        ["hood_int", "", "w1l","w1r","w2l", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.15, "y":0.0, "z":-0.08}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["hood", "action0", "hoodCatch"],
+        ["hood_int", "action0", "hoodRelease"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["hoodCatch", "ui.inputActions.miramar.hoodCatch.title", "ui.inputActions.miramar.hoodCatch.description", {"onDown":"controller.getControllerSafe('hoodCatchCoupler').toggleGroupConditional({{'hoodLatchCoupler','attached','vehicle.advancedCouplerControl.releaseHoodFirstInterior'}})"}],
+        ["hoodRelease", "ui.inputActions.miramar.hoodLatch.title", "ui.inputActions.miramar.hoodLatch.description", {"onDown":"controller.getControllerSafe('hoodLatchCoupler').toggleGroup()"}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--HOOD--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"group":"hood"},
+        {"nodeWeight":0.4},
+        {"collision":true},
+        {"selfCollision":true},
+        ["h1rr", -0.62, -0.73, 0.91],
+        ["h1r",  -0.25, -0.77, 0.97],
+        ["h1l",   0.25, -0.77, 0.97],
+        ["h1ll",  0.62, -0.73, 0.91],
+        ["h2rr", -0.53, -1.16, 0.87],
+        ["h2r",  -0.16, -1.17, 0.91],
+        ["h2l",   0.16, -1.17, 0.91],
+        ["h2ll",  0.53, -1.16, 0.87],
+        ["h3r",  -0.39, -1.56, 0.73],
+        ["h3",    0.00, -1.59, 0.76],
+        ["h3l",   0.39, -1.56, 0.73],
+        ["h4r",  -0.38, -1.60, 0.46],
+        ["h4",    0.00, -1.62, 0.46],
+        ["h4l",   0.38, -1.60, 0.46],
+        //rigidifier
+        {"selfCollision":false},
+        {"collision":false},
+        {"nodeWeight":0.85},
+        ["h5",0.0, -1.2, 0.50],
+        {"group":""},
+        {"nodeWeight":0.5},
+        //hood latch
+        ["h1", 0.0, -0.77, 0.97],
+        //cowl latch
+        ["w2", 0.0, -0.76, 0.955],
+        //latch node
+        ["h7", 0.0, -0.76, 0.955],
+        //catch node
+        ["h8", 0.0, -0.77, 0.97],
+    ],
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["h1", "h1", true, true, 0.0, 800100, "FLT_MAX", "FLT_MAX"],
+        ["w2", "w2", true, true, 0.0, 800100, "FLT_MAX", "FLT_MAX"],
+    ],
+    "rails": {
+        "h1":{"links:":["h1r", "h1l"], "broken:":[], "looped":false, "capped":true},
+        "w2":{"links:":["w2r", "w2l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "beams": [
+        ["id1:", "id2:"],
+        {"deformLimitExpansion":1.2},
+        {"deformationTriggerRatio":0.01},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--HOOD--
+        {"beamSpring":601000,"beamDamp":30},
+        {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+        //hood lengthwise
+        ["h1ll", "h2ll"],
+        ["h1rr", "h2rr"],
+        ["h2ll", "h3l"],
+        ["h2rr", "h3r"],
+        ["h3l", "h4l", {"deformGroup":"parkinglight_L_break"}],
+        ["h3r", "h4r", {"deformGroup":"parkinglight_R_break"}],
+        ["h1l", "h2l"],
+        ["h1r", "h2r"],
+        ["h2l", "h3"],
+        ["h2r", "h3"],
+        ["h3", "h4"],
+        //widthwise
+        ["h1l", "h1ll"],
+        ["h1r", "h1rr"],
+        ["h1l", "h1r"],
+        ["h2l", "h2ll"],
+        ["h2r", "h2rr"],
+        ["h2l", "h2r"],
+        ["h3", "h3l", {"deformGroup":"parkinglight_L_break"}],
+        ["h3", "h3r", {"deformGroup":"parkinglight_R_break"}],
+        ["h4", "h4l", {"deformGroup":"parkinglight_L_break"}],
+        ["h4", "h4r", {"deformGroup":"parkinglight_R_break"}],
+        //surficial crossing
+        {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+        ["h1ll", "h2l"],
+        ["h1l", "h2ll"],
+        ["h1rr", "h2r"],
+        ["h1r", "h2rr"],
+        ["h3l", "h2l"],
+        ["h2ll", "h3"],
+        ["h3r", "h2r"],
+        ["h2rr", "h3"],
+        ["h4", "h3l", {"deformGroup":"parkinglight_L_break"}],
+        ["h3", "h4l", {"deformGroup":"parkinglight_L_break"}],
+        ["h4", "h3r", {"deformGroup":"parkinglight_R_break"}],
+        ["h3", "h4r", {"deformGroup":"parkinglight_R_break"}],
+        //extra
+        //rigids
+        {"beamSpring":301000,"beamDamp":30},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        //front overhang rigids
+        ["h4l", "h2ll"],
+        ["h4r", "h2rr"],
+        ["h4", "h2r"],
+        //lengthwise
+        ["h1ll", "h3l"],
+        ["h1l", "h3"],
+        ["h1r", "h3"],
+        ["h1rr", "h3r"],
+        //widthwise
+        ["h1ll", "h1r"],
+        ["h1rr", "h1l"],
+        ["h2ll", "h2r"],
+        ["h2rr", "h2l"],
+        ["h3l", "h3r"],
+        ["h4l", "h4r"],
+        //rigidifier
+        {"beamSpring":501000,"beamDamp":40},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["h5", "h1ll"],
+        ["h5", "h1l"],
+        ["h5", "h1r"],
+        ["h5", "h1rr"],
+        ["h5", "h2ll"],
+        ["h5", "h2l"],
+        ["h5", "h2r"],
+        ["h5", "h2rr"],
+        ["h5", "h3l", {"deformGroup":"parkinglight_L_break"}],
+        ["h5", "h3"],
+        ["h5", "h3r", {"deformGroup":"parkinglight_R_break"}],
+        {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+        ["h5", "h4l", {"deformGroup":"parkinglight_L_break"}],
+        ["h5", "h4"],
+        ["h5", "h4r", {"deformGroup":"parkinglight_R_break"}],
+        {"deformLimitExpansion":1.2},
+        //hood center nodes
+        ["h1", "h1r"],
+        ["w2", "w2r"],
+
+        //latch node
+        ["h7","h1l"],
+        ["h7","h1"],
+        ["h7","h1r"],
+        ["h7","h2l"],
+        ["h7","h2r"],
+
+        //hood hinge
+        {"beamSpring":701000,"beamDamp":30},
+        {"beamDeform":4000,"beamStrength":18000},
+        {"breakGroupType":0},
+        {"breakGroup":"hoodhinge_R"},
+        //r
+        ["h5r", "h3r"],
+        ["h5r", "h4r"],
+        ["h5r", "h3l"],
+        ["h5r", "h4l"],
+        ["h5r", "h5"],
+        ["h5r", "h2rr"],
+        {"breakGroup":"hoodhinge_L"},
+        //l
+        ["h5l", "h3l"],
+        ["h5l", "h4l"],
+        ["h5l", "h3r"],
+        ["h5l", "h4r"],
+        ["h5l", "h5"],
+        ["h5l", "h2ll"],
+        {"breakGroup":""},
+/*
+        //hood latch
+        {"beamDeform":4000,"beamStrength":12000},
+        {"breakGroup":"hoodlatch"},
+        ["h1ll", "w2ll"],
+        ["h1ll", "w2l"],
+        ["h1ll", "w1ll"],
+        ["h1ll", "a2ll"],
+        ["h1ll", "w1l"],
+
+        ["h1rr", "w2rr"],
+        ["h1rr", "w2r"],
+        ["h1rr", "w1rr"],
+        ["h1rr", "a2rr"],
+        ["h1rr", "w1r"],
+        {"breakGroup":""},
+*/
+        //damping/spring
+        {"beamDeform":5000,"beamStrength":10000},
+        {"beamSpring":200,"beamDamp":30},
+        {"beamPrecompression":1.8},
+        {"breakGroup":"hoodhinge_R"},
+        ["h2rr","b1rr"],
+        {"breakGroup":"hoodhinge_L"},
+        ["h2ll","b1ll"],
+        {"breakGroup":""},
+        {"beamPrecompression":1},
+
+        //catch
+        {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+        {"beamSpring":0,"beamDamp":100},
+        {"beamLimitSpring":12001000,"beamLimitDamp":20},
+        {"beamDeform":7000,"beamStrength":90000},
+        {"longBoundRange":0.02, "shortBoundRange":0.01},
+        {"beamPrecompression":1.01},
+        ["h8", "w2"],
+        ["h8", "w1rr"],
+        ["h8", "w1ll"],
+        {"beamPrecompression":1.0},
+        {"longBoundRange":0.0, "shortBoundRange":0.0},
+        ["h8", "w2r"],
+        ["h8", "w2l"],
+        {"beamLimitSpring":101000,"beamLimitDamp":20},
+        ["h8", "fs1r"],
+        ["h8", "fs1l"],
+        {"longBoundRange":"", "shortBoundRange":""},
+
+        //hood support beams
+        {"beamType":"|SUPPORT", "beamLongBound":4},
+        {"beamSpring":401000,"beamDamp":10},
+        {"beamDeform":5000,"beamStrength":500000},
+        {"beamPrecompression":0.9},
+        ["h1ll", "a2ll"],
+        ["h1rr", "a2rr"],
+        {"beamPrecompression":0.95},
+        ["h1ll", "w1ll"],
+        ["h1rr", "w1rr"],
+        {"beamPrecompression":0.95},
+        ["h1l", "w1l"],
+        ["h1r", "w1r"],
+
+        {"beamDeform":3500,"beamStrength":500000},
+        {"beamPrecompression":0.90},
+        ["h4l", "fx2l"],
+        ["h4r", "fx2r"],
+        ["h4", "fx2"],
+        {"beamPrecompression":1},
+        {"deformLimitExpansion":1.2},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //hood
+        {"groundModel":"metal"},
+        {"group":"hood"},
+        {"dragCoef":6},
+        ["h1r", "h2r", "h2l"],
+        ["h2l", "h1l", "h1r"],
+        ["h2r", "h3", "h2l"],
+        ["h1ll", "h1l", "h2l"],
+        ["h2l", "h2ll", "h1ll"],
+        ["h1rr", "h2rr", "h2r"],
+        ["h2r", "h1r", "h1rr"],
+        ["h3l", "h2ll", "h2l"],
+        ["h2l", "h3", "h3l"],
+        ["h3r", "h3", "h2r"],
+        ["h2r", "h2rr", "h3r"],
+
+        {"dragCoef":0},
+        ["h3", "h4", "h4l"],
+        ["h4l", "h3l", "h3"],
+        ["h3", "h3r", "h4r"],
+        ["h4r", "h4", "h3"],
+        {"group":""},
+    ],
+},
+}

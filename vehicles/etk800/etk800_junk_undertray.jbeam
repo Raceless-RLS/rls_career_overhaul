@@ -1,0 +1,174 @@
+{
+"etk800_junk_undertray":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Undertray",
+        "value":25,
+    },
+    "slotType" : "etk800_undertray",
+    "flexbodies":[
+        ["mesh", "[group]:","nonFlexMaterials"],
+        ["etk800_underbody_cladding", ["etk800_tray_F"]],
+    ],
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+
+          //--UNDERTRAY--
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"nodeWeight":0.25},
+         {"group":"etk800_tray_F"},
+         ["ut1r",-0.442,-1.887,0.23],
+         ["ut1",0.0,-1.904,0.23],
+         ["ut1l",0.442,-1.887,0.23],
+
+         ["ut2r",-0.322,-1.65,0.195],
+         ["ut2",0.0,-1.65,0.195],
+         ["ut2l",0.322,-1.65,0.195],
+
+         ["ut3r",-0.317,-1.171,0.195],
+         ["ut3",0.0,-1.166,0.195],
+         ["ut3l",0.317,-1.171,0.195],
+
+         //rigidifier
+         ["ut4",0.0,-1.567,0.41, {"selfCollision":false}],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //--UNDERTRAY--
+
+          //main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":51000,"beamDamp":20},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["ut1l", "ut1"],
+          ["ut1", "ut1r"],
+          ["ut2l", "ut2"],
+          ["ut2", "ut2r"],
+          ["ut3l", "ut3"],
+          ["ut3", "ut3r"],
+          ["ut3l", "ut2l"],
+          ["ut2l", "ut1l"],
+          ["ut3", "ut2"],
+          ["ut2", "ut1"],
+          ["ut3r", "ut2r"],
+          ["ut2r", "ut1r"],
+
+          //crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+          ["ut2l", "ut1"],
+          ["ut1l", "ut2"],
+          ["ut2", "ut1r"],
+          ["ut2r", "ut1"],
+          ["ut3", "ut2r"],
+          ["ut3r", "ut2"],
+          ["ut2", "ut3l"],
+          ["ut2l", "ut3"],
+
+          //rigids
+          {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+          ["ut1l", "ut1r"],
+          ["ut2l", "ut2r"],
+          ["ut3l", "ut3r"],
+          ["ut3r", "ut1r"],
+          ["ut3", "ut1"],
+          ["ut3l", "ut1l"],
+
+          //rigidifier
+          ["ut4", "ut2"],
+          ["ut4", "ut2r"],
+          ["ut4", "ut2l"],
+          ["ut4", "ut3l"],
+          ["ut4", "ut3"],
+          ["ut4", "ut3r"],
+          ["ut4", "ut1"],
+          ["ut4", "ut1r"],
+          ["ut4", "ut1l"],
+
+          //attach
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":100},
+          //body
+          {"breakGroup":"undertray_FR"},
+          ["ut1r", "f18r"],
+          ["ut1r", "f11rr"],
+          ["ut1r", "f18"],
+          ["ut1r", "f10rr"],
+          {"breakGroup":"undertray_FM"},
+          ["ut1", "f18"],
+          ["ut1", "f18l"],
+          ["ut1", "f18r"],
+          ["ut1", "f11ll"],
+          ["ut1", "f11rr"],
+          {"breakGroup":"undertray_FL"},
+          ["ut1l", "f18l"],
+          ["ut1l", "f11ll"],
+          ["ut1l", "f18"],
+          ["ut1l", "f10ll"],
+
+          //subframe
+          {"breakGroup":"undertray_RL"},
+          ["ut3l", "fx2l"],
+          ["ut2l", "fx2l"],
+          ["ut3l", "fx6l"],
+          ["ut2l", "fx6l"],
+          {"breakGroup":"undertray_RM"},
+          ["ut3", "fx4l"],
+          ["ut3", "fx4r"],
+          ["ut3", "fx6r"],
+          ["ut3", "fx6l"],
+          {"breakGroup":"undertray_RR"},
+          ["ut3r", "fx2r"],
+          ["ut2r", "fx2r"],
+          ["ut3r", "fx6r"],
+          ["ut2r", "fx6r"],
+          {"breakGroup":""},
+          //limiters
+          {"beamPrecompression":1.0, "beamType":"|SUPPORT", "beamLongBound":15},
+          {"beamSpring":251000,"beamDamp":20},
+          {"beamDeform":15000,"beamStrength":65000},
+          ["ut1l", "f13ll"],
+          ["ut1r", "f13rr"],
+          ["ut1", "f13ll"],
+          ["ut1", "f13rr"],
+          ["ut2l", "f12ll"],
+          ["ut2l", "f13ll"],
+          ["ut2r", "f12rr"],
+          ["ut2r", "f13rr"],
+          ["ut3l", "f12ll"],
+          ["ut3l", "fs1l"],
+          ["ut3r", "f12rr"],
+          ["ut3r", "fs1r"],
+          ["ut3", "fs1l"],
+          ["ut3", "fs1r"],
+          ["ut2", "f12rr"],
+          ["ut2", "f12ll"],
+          {"optional":true},
+
+          {"optional":false}
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"plastic"},
+
+        {"dragCoef":5},
+        {"group":"etk800_undertray"},
+        ["ut1", "ut1r", "ut2r"],
+        ["ut1", "ut2r", "ut2"],
+        ["ut1", "ut2", "ut2l"],
+        ["ut2l", "ut1l", "ut1"],
+        ["ut2r", "ut3", "ut2"],
+        ["ut2", "ut3", "ut2l"],
+        ["ut2l", "ut3", "ut3l"],
+        ["ut3", "ut2r", "ut3r"],
+        ],
+},
+}

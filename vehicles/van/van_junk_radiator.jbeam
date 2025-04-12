@@ -1,0 +1,80 @@
+{
+"van_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":50,
+    },
+    "slotType" : "van_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["van_radiator", ["van_radsupport"]],
+         ["van_fanshroud", ["van_radsupport"]],
+    ],
+    "mainEngine":{
+        //cooling system
+        "radiatorArea":0.45,
+        "radiatorEffectiveness":1250,
+        "coolantVolume":3.5,
+        "radiatorFanType":"electric",
+        "radiatorFanTemperature":120,
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":115,
+        "radiatorFanLoopEvent": "event:>Vehicle>Cooling Fan>Electric_05",
+        "radiatorFanVolume": 3.9,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //Radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"roamer_radiator"},
+         {"nodeWeight":4.087},
+         {"engineGroup":"radiator"},
+         {"chemEnergy":200,"burnRate":0.4,"flashPoint":250,"specHeat":0.8,"smokePoint":150,"selfIgnitionCoef":false},
+         ["rad1", 0.0, -1.84, 0.65],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         ["rad2", 0.0, -1.84, 1.05],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":870369.5,"beamDamp":130.43},
+          {"beamDeform":6300,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          //radiator
+          {"deformLimitExpansion":""},
+          ["rad2", "s1"],
+          ["rad2", "s1r"],
+          ["rad2", "s1l"],
+          ["rad2", "s2r"],
+          ["rad2", "s2l"],
+          ["rad2", "s2"],
+          ["rad1", "s1"],
+          ["rad1", "s1r"],
+          ["rad1", "s1l"],
+          ["rad1", "s2r"],
+          ["rad1", "s2l"],
+          ["rad1", "s2"],
+          ["rad1", "rad2"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+            {"dragCoef":3},
+            {"group":"roamer_radsupport"},
+            ["rad2", "s1r", "s1"],
+            ["rad2", "s1", "s1l"],
+    ],
+},
+}

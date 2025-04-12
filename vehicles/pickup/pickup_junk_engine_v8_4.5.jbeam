@@ -1,0 +1,627 @@
+{
+"pickup_junk_engine_v8_4.5": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4.5L V8 Engine",
+        "value":350,
+    },
+    "slotType" : "pickup_engine",
+    "slots": [
+        ["type", "default","description"],
+        ["pickup_enginemounts","pickup_enginemounts", "Engine Mounts", {"coreSlot":true}],
+        ["pickup_oilpan_v8","pickup_oilpan_v8", "Oil Pan", {"coreSlot":true}],
+        ["pickup_intake_v8","pickup_intake_v8", "Intake", {"coreSlot":true}],
+        ["pickup_header_v8","pickup_header_v8", "Exhaust Manifolds", {"coreSlot":true}],
+        ["pickup_engine_v8_ecu","pickup_engine_v8_ecu", "Engine Management", {"coreSlot":true}],
+        ["pickup_engine_v8_internals","pickup_engine_v8_internals", "Engine Long Block", {"coreSlot":true}],
+        ["pickup_transmission","pickup_transmission_4A","Transmission"],
+        ["n2o_system","", "Nitrous Oxide System"],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+    ],
+    "mainEngine": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 0],
+            [500, 130],
+            [1000, 190],
+            [2000, 305],
+            [3000, 395],
+            [4000, 370],
+            [5000, 285],
+            [6000, 220],
+            [7000, 175],
+            [8000, 75],
+        ],
+        //engine performance
+        "idleRPM":550,
+		"idleRPMRoughness":1150,
+        //max rpm physically capable of
+        "maxRPM":6250,
+        "inertia":0.45,
+        "friction":40,
+        "dynamicFriction":0.050,
+        "engineBrakeTorque":46,
+        //"burnEfficiency":0.001,
+        "burnEfficiency":[
+            [0, 0.1],
+            [0.05, 0.22],
+            [0.4, 0.34],
+            [0.7, 0.38],
+            [1, 0.3],
+        ],
+        //fuel system
+        "energyStorage": ["mainTank","auxTank"],
+        "requiredEnergyType":"gasoline",
+
+        //exhaust
+        "instantAfterFireSound": "event:>Vehicle>Afterfire>01_Single_EQ1",
+        "sustainedAfterFireSound": "event:>Vehicle>Afterfire>01_Multi_EQ1",
+        "shiftAfterFireSound": "event:>Vehicle>Afterfire>01_Shift_EQ1",
+        "particulates":4.50,
+        "instantAfterFireCoef": 4.5,
+        "sustainedAfterFireCoef": 4.5,
+        "instantAfterFireVolumeCoef": 0.8,
+        "sustainedAfterFireVolumeCoef": 0.4,
+        "shiftAfterFireVolumeCoef": 0.6,
+
+        //cooling and oil system
+        "thermalsEnabled":true,
+        "engineBlockMaterial":"aluminum",
+        "oilVolume":3.5,
+        "engineBlockAirCoolingEfficiency":50,
+
+        //engine durability
+        "torqueReactionNodes:":["e1l","e2l","e4r"],
+        "cylinderWallTemperatureDamageThreshold":130,
+        "headGasketDamageThreshold":500000,
+        "pistonRingDamageThreshold":500000,
+        "connectingRodDamageThreshold":500000,
+        "maxTorqueRating": 400,
+        "maxOverTorqueDamage": 350,
+
+        //node beam interface
+        "waterDamage": {"[engineGroup]:":["engine_intake"]},
+        "radiator": {"[engineGroup]:":["radiator"]},
+        "engineBlock": {"[engineGroup]:":["engine_block"]},
+        "breakTriggerBeam":"engine",
+        "uiName":"Engine",
+        "soundConfig": "soundConfig",
+        "soundConfigExhaust": "soundConfigExhaust",
+
+        //starter motor
+        "starterSample":"event:>Engine>Starter>v8_20xy_eng",
+        "starterSampleExhaust":"event:>Engine>Starter>v8_20xy_exh",
+        "shutOffSampleEngine":"event:>Engine>Shutoff>v8_20xy_eng",
+        "shutOffSampleExhaust":"event:>Engine>Shutoff>v8_20xy_exh",
+        "starterVolume":3.75,
+        "starterVolumeExhaust":0.76,
+        "shutOffVolumeEngine":0.76,
+        "shutOffVolumeExhaust":0.76,
+        "idleRPMStartRate":3.0,
+        "idleRPMStartCoef":3.0,
+
+        //engine deform groups
+        "deformGroups":["mainEngine", "mainEngine_intake", "mainEngine_accessories"]
+    },
+    "soundConfig": {
+        "sampleName": "V8_cross_engine",
+        "intakeMuffling": 1,
+
+        "mainGain": -3,
+        "onLoadGain":1,
+        "offLoadGain":0.64,
+
+        "maxLoadMix": 0.7,
+        "minLoadMix": 0,
+
+        "lowShelfGain":6,
+        "lowShelfFreq":120,
+
+        "highShelfGain":4,
+        "highShelfFreq":6000,
+
+        "eqLowGain": 0,
+        "eqLowFreq": 150,
+        "eqLowWidth": 0.2,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 2500,
+        "eqHighWidth": 0.2,
+
+        "fundamentalFrequencyCylinderCount":8,
+        "eqFundamentalGain": -1,
+    },
+    "soundConfigExhaust": {
+        "sampleName": "V8_cross_exhaust",
+
+        "mainGain": -1,
+        "onLoadGain":1,
+        "offLoadGain":0.58,
+
+        "maxLoadMix": 0.69,
+        "minLoadMix": 0,
+
+        "lowShelfGain":-13,
+        "lowShelfFreq":90,
+
+        "highShelfGain":3,
+        "highShelfFreq":2400,
+
+        "eqLowGain": 0,
+        "eqLowFreq": 150,
+        "eqLowWidth": 0.2,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 2500,
+        "eqHighWidth": 0.2,
+
+        "fundamentalFrequencyCylinderCount":8,
+        "eqFundamentalGain": -4,
+    },
+    "vehicleController": {
+        "clutchLaunchStartRPM":1200,
+        "clutchLaunchTargetRPM":1600,
+        //**highShiftDown can be overwritten by automatic transmissions**
+        "highShiftDownRPM":[0,0,0,6250,6250,6250,6250,6250],
+        //**highShiftUp can be overwritten by intake modifications**
+        "highShiftUpRPM":6250,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup", ["pickup_engine"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["gavril_v8_pickup_gasparts", ["pickup_engine"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+        {"deformGroup":"engbay_break", "deformMaterialBase":"pickup", "deformMaterialDamaged":"invis"},
+        ["gavril_v8_pickup_radhose", ["pickup_engine", "pickup_radsupport","roamer_radsupport"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+    ],
+    "props": [
+        ["func",            "mesh",                   "idRef:", "idX:", "idY:", "baseRotation",          "rotation",            "translation",         "min", "max", "offset", "multiplier"],
+        ["rpmspin",             "gavril_v8_pickup_pulley1",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -360,  360,   0,        1],
+        ["rpmspin",             "gavril_v8_pickup_pulley2",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -360,  360,   0,       -1],
+        ["rpmspin",             "gavril_v8_pickup_pulley3",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -360,  360,   0,        1],
+        ["rpmspin",             "gavril_v8_pickup_pulley4",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -360,  360,   0,        1],
+        ["rpmspin",             "gavril_v8_pickup_pulley5",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -360,  360,   0,        1],
+        ["rpmspin",             "gavril_v8_pickup_pulley6",      "e3l","e3r","e4l",     {"x":-90, "y":0, "z":0}, {"x":0, "y":1, "z":0}, {"x":0, "y":0, "z":0}, -1440, 1440,  0,        4],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--4.5L V8 Engine-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":26.32},
+         {"group":"pickup_engine"},
+         {"engineGroup":"engine_block"},
+         ["e1r", -0.13, -1.14, 0.43, {"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.1,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.2}],
+         ["e1l", 0.13, -1.14, 0.43, {"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.1,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.2}],
+         ["e2r", -0.13, -1.74, 0.43, {"isExhaust":"mainEngine"}],
+         ["e2l", 0.13, -1.74, 0.43, {"isExhaust":"mainEngine"}],
+         {"engineGroup":["engine_block","engine_intake"]},
+         {"group":["pickup_engine","pickup_engine_intake"]},
+         ["e3r", -0.32, -1.14, 1.0],
+         ["e3l", 0.32, -1.14, 1.0],
+         ["e4r", -0.32, -1.74, 1.0, {"selfCollision":true}],
+         ["e4l", 0.32, -1.74, 1.0, {"selfCollision":true}],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false,"baseTemp":false,"conductionRadius":false},
+         {"engineGroup":""},
+         {"group":""},
+         //engine mount nodes
+         ["em1r", -0.27, -1.5, 0.7, {"nodeWeight":3}],
+         ["em1l", 0.27, -1.5, 0.7, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--ENGINE CUBE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":315000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"mainEngine", "deformationTriggerRatio":0.001}
+          ["e1r","e1l"],
+          ["e1r","e2r"],
+          ["e1r","e2l"],
+          ["e1r","e3r"],
+          ["e1r","e3l"],
+          ["e1r","e4r"],
+          ["e1r","e4l"],
+          ["e1l","e2r"],
+          ["e1l","e2l"],
+          ["e1l","e3r"],
+          ["e1l","e3l"],
+          ["e1l","e4r"],
+          ["e1l","e4l"],
+          ["e2r","e2l"],
+          ["e2r","e3r"],
+          ["e2r","e3l"],
+          ["e2r","e4r"],
+          ["e2r","e4l"],
+          ["e2l","e3r"],
+          ["e2l","e3l"],
+          ["e2l","e4r"],
+          ["e2l","e4l"],
+          ["e3r","e3l"],
+          ["e3r","e4r"],
+          ["e3r","e4l"],
+          ["e3l","e4r"],
+          ["e3l","e4l"],
+          ["e4r","e4l"],
+
+          //engine mount nodes
+          {"beamSpring":10,"beamDamp":10},
+          {"beamDeform":10,"beamStrength":"FLT_MAX"},
+          ["em1r","e3l"],
+          ["em1r","e3r"],
+          ["em1r","e4l"],
+          ["em1r","e4r"],
+          ["em1r", "e1r"],
+          ["em1r", "e1l"],
+          ["em1r", "e2l"],
+          ["em1r", "e2r"],
+
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          {"deformGroup":""},
+
+          //mesh break beams
+          {"beamPrecompression":0.8, "beamType":"|SUPPORT","beamLongBound":0.8},
+          {"beamSpring":9400,"beamDamp":0},
+          {"beamDeform":350,"beamStrength":700},
+          {"deformGroup":"engbay_break","deformationTriggerRatio":0.01},
+          {"optional":true},
+          ["e2r","rad2"],
+          ["e2l","rad2"],
+          ["e4r","rad2"],
+          ["e4l","rad2"],
+          {"optional":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_engine_v8_ecu": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sketchy ECU",
+        "value":50,
+    },
+    "slotType" : "pickup_engine_v8_ecu",
+    "mainEngine":{
+        "revLimiterRPM":6300,
+        "revLimiterType":"rpmDrop",
+        "revLimiterRPMDrop":250,
+    },
+},
+"pickup_junk_engine_v8_ecu_late": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sketchy Late ECU",
+        "value":75,
+    },
+    "slotType" : "pickup_engine_v8_ecu",
+    "mainEngine":{
+        "revLimiterRPM":8000,
+        "revLimiterType":"rpmDrop",
+        "revLimiterRPMDrop":50,
+    },
+},
+"pickup_junk_oilpan_v8": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Oil Pan",
+        "value":20,
+    },
+    "slotType" : "pickup_oilpan_v8",
+    "mainEngine": {
+
+        //engine durability
+        "oilpanMaximumSafeG": 1.0
+
+        //node beam interface
+        "oilpanNodes:":["oilpan","oilref"],
+
+        //engine deform groups
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //oil pan node
+         {"group":""},
+         {"nodeWeight":2},
+         ["oilpan", 0.0, -1.36, 0.42],
+         ["oilref", 0.0, -1.36, 0.92, {"nodeWeight":1, "collision":false}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //oilpan node
+          {"beamSpring":1501000,"beamDamp":250},
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"oilpan_damage","deformationTriggerRatio":0.005},
+          ["oilpan", "e1r"],
+          ["oilpan", "e1l"],
+          ["oilpan", "e2r"],
+          ["oilpan", "e2l"],
+          ["oilpan", "e3r"],
+          ["oilpan", "e3l"],
+          ["oilpan", "e4r"],
+          ["oilpan", "e4l"],
+          {"deformGroup":""},
+
+          //oil ref
+          {"beamSpring":1001000,"beamDamp":150},
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          ["oilref", "e1r"],
+          ["oilref", "e1l"],
+          ["oilref", "e2r"],
+          ["oilref", "e2l"],
+          ["oilref", "e3r"],
+          ["oilref", "e3l"],
+          ["oilref", "e4r"],
+          ["oilref", "e4l"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_intake_v8": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Clogged Stock Intake",
+        "value":25,
+    },
+    "slotType" : "pickup_intake_v8",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pickup_intake_stock", ["pickup_engine_intake","pickup_airbox"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["pickup_intake_stock_belts", ["pickup_engine"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0,    0 ],
+            [1000, 8],
+            [2000, 14],
+            [3000, 20],
+            [4000, 31],
+            [5000, 40],
+            [6000, 35],
+            [7000, 20],
+            [8000, 10],
+        ],
+        "$+particulates":1.50,
+    },
+    "soundConfig": {
+        "$+intakeMuffling": -0.3,
+        "$+mainGain": -3,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--Stock Intake
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":3.76},
+         {"group":["pickup_engine_intake"]},
+         ["intake1", 0.11, -1.35, 1.04],
+         {"group":["pickup_airbox"]},
+         {"nodeWeight":1.88},
+         {"selfCollision":true},
+         ["intake2", 0.6, -1.94, 1.04],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--Stock Intake
+          {"beamSpring":1880940,"beamDamp":235},
+          {"beamDeform":105000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["intake1", "e3r"],
+          ["intake1", "e3l"],
+          ["intake1", "e4r"],
+          ["intake1", "e4l"],
+          ["intake1", "e2l"],
+          ["intake1", "e2r"],
+          {"deformGroup":""}
+
+          {"beamSpring":120940,"beamDamp":141},
+          {"beamDeform":6150,"beamStrength":"FLT_MAX"},
+          ["intake2", "e4l"],
+          ["intake2", "e3l"],
+          ["intake2", "e2l"],
+          ["intake2", "e1l"],
+          ["intake2", "e4r"],
+          {"optional":true},
+          {"beamDeform":9150,"beamStrength":9900},
+          ["intake2", "s2l"],
+          ["intake2", "s2ll"],
+          ["intake2", "s1l"],
+          ["intake2", "s1ll"],
+          {"deformGroup":""}
+          {"optional":false},
+
+          //mesh break beams
+          {"beamPrecompression":0.8, "beamType":"|SUPPORT","beamLongBound":0.8},
+          {"beamSpring":9400,"beamDamp":0},
+          {"beamDeform":350,"beamStrength":700},
+          ["intake1", "intake2"],
+          ["intake2", "e4l"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_intake_v8_late": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Clogged Late Intake",
+        "value":50,
+    },
+    "slotType" : "pickup_intake_v8",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pickup_intake_stock", ["pickup_engine_intake","pickup_airbox"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["pickup_intake_stock_belts", ["pickup_engine"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0,    0 ],
+            [1000, 20],
+            [2000, 55],
+            [3000, 68],
+            [4000, 88],
+            [5000, 100],
+            [6000, 95],
+            [7000, 55],
+            [8000, 35],
+        ],
+        "$+particulates":2.50,
+    },
+    "soundConfig": {
+        "$+intakeMuffling": -0.3,
+        "$+mainGain": 0,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--Stock Intake
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":3.76},
+         {"group":["pickup_engine_intake"]},
+         ["intake1", 0.11, -1.35, 1.04],
+         {"group":["pickup_airbox"]},
+         {"nodeWeight":1.88},
+         {"selfCollision":true},
+         ["intake2", 0.6, -1.94, 1.04],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--Stock Intake
+          {"beamSpring":1880940,"beamDamp":235},
+          {"beamDeform":105000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["intake1", "e3r"],
+          ["intake1", "e3l"],
+          ["intake1", "e4r"],
+          ["intake1", "e4l"],
+          ["intake1", "e2l"],
+          ["intake1", "e2r"],
+          {"deformGroup":""}
+
+          {"beamSpring":120940,"beamDamp":141},
+          {"beamDeform":6150,"beamStrength":"FLT_MAX"},
+          ["intake2", "e4l"],
+          ["intake2", "e3l"],
+          ["intake2", "e2l"],
+          ["intake2", "e1l"],
+          ["intake2", "e4r"],
+          {"optional":true},
+          {"beamDeform":9150,"beamStrength":9900},
+          ["intake2", "s2l"],
+          ["intake2", "s2ll"],
+          ["intake2", "s1l"],
+          ["intake2", "s1ll"],
+          {"deformGroup":""}
+          {"optional":false},
+
+          //mesh break beams
+          {"beamPrecompression":0.8, "beamType":"|SUPPORT","beamLongBound":0.8},
+          {"beamSpring":9400,"beamDamp":0},
+          {"beamDeform":350,"beamStrength":700},
+          ["intake1", "intake2"],
+          ["intake2", "e4l"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_intake_v8_prefacelift": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Clogged Early Intake",
+        "value":20,
+    },
+    "slotType" : "pickup_intake_v8",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pickup_intake_carb", ["pickup_engine_intake","pickup_airbox"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["pickup_intake_stock_belts", ["pickup_engine"], [], {"pos":{"x":0, "y":0, "z":0}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--Stock Intake
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":5.76},
+         {"group":["pickup_engine_intake"]},
+         ["intake1", 0.11, -1.35, 1.04],
+         {"group":["pickup_airbox"]},
+         {"nodeWeight":1.88},
+         {"selfCollision":true},
+         ["intake2", 0.6, -1.94, 1.04],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--Stock Intake
+          {"beamSpring":1880940,"beamDamp":235},
+          {"beamDeform":105000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["intake1", "e3r"],
+          ["intake1", "e3l"],
+          ["intake1", "e4r"],
+          ["intake1", "e4l"],
+          ["intake1", "e2l"],
+          ["intake1", "e2r"],
+          {"deformGroup":""}
+
+          {"beamSpring":120940,"beamDamp":141},
+          {"beamDeform":6150,"beamStrength":"FLT_MAX"},
+          ["intake2", "e4l"],
+          ["intake2", "e3l"],
+          ["intake2", "e2l"],
+          ["intake2", "e1l"],
+          ["intake2", "e4r"],
+          {"optional":true},
+          {"beamDeform":9150,"beamStrength":9900},
+          ["intake2", "s2l"],
+          ["intake2", "s2ll"],
+          ["intake2", "s1l"],
+          ["intake2", "s1ll"],
+          {"deformGroup":""}
+          {"optional":false},
+
+          //mesh break beams
+          {"beamPrecompression":0.8, "beamType":"|SUPPORT","beamLongBound":0.8},
+          {"beamSpring":9400,"beamDamp":0},
+          {"beamDeform":350,"beamStrength":700},
+          ["intake1", "intake2"],
+          ["intake2", "e4l"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+}
+}

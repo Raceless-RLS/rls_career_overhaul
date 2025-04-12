@@ -1,0 +1,133 @@
+{
+"bolide_junk_transaxle_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed Manual Transaxle",
+        "value":2500,
+    },
+    "slotType" : "bolide_transaxle",
+    "slots": [
+        ["type", "default", "description"],
+        ["bolide_flywheel","bolide_flywheel","Flywheel", {"coreSlot":true}],
+        ["bolide_differential_R","bolide_differential_R_LSD", "Rear Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.14, 0, 3.305, 2.27, 1.63, 1.20, 0.88],
+        "friction":2.22,
+        "dynamicFriction":0.0050,
+        "torqueLossCoef": 0.0250,
+
+        "gearWhineCoefsInput":  [2.00, 0.00, 3.12, 3.12, 2.12, 3.12, 2.12, 3.12, 2.12, 1.12],
+        "gearWhineCoefsOutput": [2.00, 0.00, 3.12, 3.12, 2.12, 3.12, 2.12, 3.12, 2.12, 1.12],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefInput": 0.4
+        //"gearWhineFixedCoefOutput": 0.7
+
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.15,
+        "transmissionShiftDelay":0.50,
+        //"aggressionSmoothingUp":2
+        //"aggressionSmoothingDown":0.075
+        "lowShiftDownRPM":[0,0,0,1000,10000,10000,10000,10000],
+        "lowShiftUpRPM":[0,0,1200,1200,1200,1200,1200],
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["bolide_transaxle", ["bolide_engine","bolide_transaxle"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //transaxle
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"bolide_transaxle"},
+         {"nodeWeight":13.0},
+         ["tra1",0.0,1.26,0.359],
+         ["tra2r",-0.113,1.669,0.45],
+         ["tra2l",0.113,1.669,0.45],
+         ["tra3",0.0,1.669,0.21],
+         {"group":""},
+
+         //transmission mount nodes
+         {"nodeWeight":3.0},
+         ["tm1r",-0.138,1.4,0.297],
+         ["tm1l",0.138,1.4,0.297],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //transaxle
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":9501000,"beamDamp":250},
+          {"beamDeform":1120000,"beamStrength":"FLT_MAX"},
+          ["e2l", "tra1"],
+          ["e2r", "tra1"],
+          ["tra1", "e4l"],
+          ["tra1", "e4r"],
+          ["tra1", "tra3"],
+          ["tra1", "tra2r"],
+          ["tra1", "tra2l"],
+          ["tra2l", "tra2r"],
+          ["tra2r", "tra3"],
+          ["tra3", "tra2l"],
+          ["tra2r", "e2r"],
+          ["tra2r", "e2l"],
+          ["tra2r", "e4r"],
+          ["tra2r", "e4l"],
+          ["tra2l", "e2l"],
+          ["tra2l", "e2r"],
+          ["tra2l", "e4r"],
+          ["tra2l", "e4l"],
+          ["tra3", "e2r"],
+          ["tra3", "e2l"],
+          ["tra3", "e4l"],
+          ["tra3", "e4r"],
+
+          //transmission mount nodes
+          {"beamSpring":500,"beamDamp":10},
+          {"beamDeform":500,"beamStrength":"FLT_MAX"},
+          ["tm1r", "tra2r"],
+          ["tm1r", "tra2l"],
+          ["tm1r", "tra3"],
+          ["tm1r", "tra1"],
+          ["tm1r", "e2l"],
+          ["tm1r", "e2r"],
+          ["tm1r", "e4r"],
+          ["tm1r", "e4l"],
+
+          ["tm1l", "tra2r"],
+          ["tm1l", "tra2l"],
+          ["tm1l", "tra3"],
+          ["tm1l", "tra1"],
+          ["tm1l", "e2l"],
+          ["tm1l", "e2r"],
+          ["tm1l", "e4r"],
+          ["tm1l", "e4l"],
+
+          ["tm1r", "tm1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

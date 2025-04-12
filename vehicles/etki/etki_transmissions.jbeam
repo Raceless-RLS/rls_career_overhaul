@@ -1,0 +1,352 @@
+{
+"etki_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Automatic Transmission",
+        "value":450,
+    },
+    "slotType" : "etki_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["etki_converter","etki_converter","Torque Converter", {"coreSlot":true}],
+        ["etki_transfer_case","etki_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.09, 0, 2.73, 1.56, 1.0, 0.73],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":25,
+        "friction":1.60,
+        "dynamicFriction":0.0050,
+        "torqueLossCoef": 0.040,
+        "gearboxNode:":["tra1"],
+    },
+    "torqueConverter": {
+        "uiName":"Torque Converter",
+        "converterDiameter": 0.264,
+        "converterStiffness":9,
+        "couplingAVRatio":0.89,
+        "stallTorqueRatio":1.85,
+        "lockupClutchTorque":250,
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":1.5,
+        "shiftDownRPMOffsetCoef":1.4,
+        "gearboxDecisionSmoothingUp":1.0,
+        "gearboxDecisionSmoothingDown":1.0,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":[0,0,4000,4000,4000],
+        //"highShiftDownRPM":6000,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etki_transmission", ["etki_engine","etki_transmission"],[]{"pos":{"x":0,"y":0,"z":0}}],
+        ["etki_shifterbase_A", ["etki_body"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/singleAxisLever", {"name":"singleAxisLever"}],
+
+    ]
+    "singleAxisLever": {
+        "gearCoordinates": [
+            ["gearIndex",   "value"]
+            [1,            0.0]
+            [2,             0.2]
+            [3,             0.4]
+            [4,             0.6]
+            [5,             0.8]
+            [6,             1]
+        ]
+        "shiftSoundNode:":["int_shft"]
+        "shiftSoundEventSingleAxisLever": "event:>Vehicle>Interior>Gearshift>automatic_04",
+        "shiftSoundVolumeSingleAxisLever": 0.5,
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //automatic transmission
+        ["gearModeIndex"      ,"etki_shifter_A", "f7r","f7l","f8r", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":0}     , {"x":0, "y":0.2, "z":0.0}, 0, 1, 0, 1],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Auto--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"etki_transmission"},
+         {"nodeWeight":30},
+         ["tra1", 0.0, -0.22, 0.36],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":20001000,"beamDamp":500},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"etki_junk_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "etki_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["etki_flywheel","etki_flywheel","Flywheel", {"coreSlot":true}],
+        ["etki_transfer_case","etki_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.45, 0, 3.72, 2.01, 1.32, 1.0, 0.81],
+        "friction":1.11,
+        "dynamicFriction":0.0010,
+        "torqueLossCoef": 0.0155,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [3.60, 0.00, 2.12, 1.12, 3.12, 2.12, 1.12, 3.12, 1.12, 2.12],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.50,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,6000,6000,6000,6000],
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //clutch pedal
+        ["clutch"     ,"etki_clutchpedal", "f1l","f1r","f6l", {"x":0, "y":0, "z":180}, {"x":-15, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etki_shifter_boot_M", ["etki_body","etki_shifter_boot_M"]],
+        ["etki_shifter_knob_M", ["etki_body","etki_shifter_knob_M"]],
+        ["etki_transmission", ["etki_engine","etki_transmission"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/hPattern", {"name":"hPattern"}],
+
+    ]
+    "hPattern": {
+        "gearCoordinates": [
+            ["gearIndex",   "x",      "y"]
+            [-1,            1,       -1]
+            [0,             0,    0]
+            [1,             -1,   1]
+            [2,             -1,   -1]
+            [3,             0,    1]
+            [4,             0,    -1]
+            [5,             1,        1]
+        ]
+        "shiftSoundNode:":["sh_b3"]
+        "shiftSoundEventHPatternGearIn": "event:>Vehicle>Interior>Gearshift>manual_modern_02_in",
+        "shiftSoundEventHPatternGearOut": "event:>Vehicle>Interior>Gearshift>manual_modern_02_out",
+        "shiftSoundVolumeHPatternGearIn": 0.5,
+        "shiftSoundVolumeHPatternGearOut": 0.5,
+    },
+
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":"etki_shifter_boot_M"},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.055, -0.395, 0.458],
+         ["sh_b1r", -0.055, -0.395, 0.458],
+         ["sh_b2l",  0.055, -0.285, 0.458],
+         ["sh_b2r", -0.055, -0.285, 0.458],
+
+         ["sh_b3",   0.00, -0.34, 0.38],
+         {"selfCollision":true},
+         {"group":["etki_shifter_knob_M"]},
+         {"nodeWeight":0.5}
+         ["sh_l3",   0.00, -0.34, 0.58],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":["etki_shifter_knob_M","etki_shifter_boot_M"]},
+         ["sh_l1l",  0.03, -0.37, 0.53],
+         ["sh_l1r", -0.03, -0.37, 0.53],
+         ["sh_l2l",  0.03, -0.31, 0.53],
+         ["sh_l2r", -0.03, -0.31, 0.53],
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"etki_transmission"},
+         {"nodeWeight":29},
+         ["tra1", 0.0, -0.22, 0.36],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":300000,"beamDamp":70},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        ["sh_b1l", "f7r"],
+        ["sh_b1r", "f7r"],
+        ["sh_b2l", "f7r"],
+        ["sh_b2r", "f7r"],
+        ["sh_b3", "f7r"],
+
+        ["sh_b1l", "f7l"],
+        ["sh_b1r", "f7l"],
+        ["sh_b2l", "f7l"],
+        ["sh_b2r", "f7l"],
+        ["sh_b3", "f7l"],
+
+        ["sh_b1l", "f2r"],
+        ["sh_b1r", "f2r"],
+        ["sh_b2l", "f2r"],
+        ["sh_b2r", "f2r"],
+        ["sh_b3", "f2r"],
+
+        ["sh_b1l", "f2l"],
+        ["sh_b1r", "f2l"],
+        ["sh_b2l", "f2l"],
+        ["sh_b2r", "f2l"],
+        ["sh_b3", "f2l"],
+
+        ["sh_b1l", "f1r"],
+        ["sh_b1r", "f1r"],
+        ["sh_b2l", "f1r"],
+        ["sh_b2r", "f1r"],
+        ["sh_b3", "f1r"],
+
+        ["sh_b1l", "f1l"],
+        ["sh_b1r", "f1l"],
+        ["sh_b2l", "f1l"],
+        ["sh_b2r", "f1l"],
+        ["sh_b3", "f1l"],
+        {"beamSpring":200000,"beamDamp":20},
+        ["sh_b1l", "dsh"],
+        ["sh_b1r", "dsh"],
+        ["sh_b2l", "dsh"],
+        ["sh_b2r", "dsh"],
+        ["sh_b3",  "dsh"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.835,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.825}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        {"beamPrecompression":1,"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--TRANSMISSION CONE--
+        {"beamSpring":20001000,"beamDamp":500},
+        {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+        ["tra1","e1r"],
+        ["tra1","e3r"],
+        ["tra1","e1l"],
+        ["tra1","e3l"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisY","factor":-0.25}],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisX","factor":-0.30}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisY","factor":0.25}],
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisX","factor":0.30}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":100, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+
+    ],
+},
+}

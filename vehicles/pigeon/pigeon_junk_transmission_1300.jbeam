@@ -1,0 +1,86 @@
+{
+"pigeon_junk_i4_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "pigeon_i4_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_i4_flywheel","pigeon_i4_flywheel","Flywheel", {"coreSlot":true}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.466, 0, 3.65, 1.95, 1.36, 1.00, 0.795],
+        "friction":0.75,
+        "dynamicFriction":0.00080,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [3.60, 0.00, 2.12, 1.12, 3.12, 2.12, 2.12, 2.12, 0.12, 0.12],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.15,
+        "transmissionShiftDelay":0.75,
+        "lowShiftDownRPM":[0,0,0,1250,1250,1250,1500],
+        "lowShiftUpRPM":[0,0,4500,4500,4500,4500],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pigeon_i4_transmission", ["pigeon_engine","pigeon_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--5 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"pigeon_transmission"},
+         {"nodeWeight":13},
+         ["tra1", 0.0, -0.1, 0.31],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8001000,"beamDamp":150},
+          {"beamDeform":100000,"beamStrength":"FLT_MAX"},
+          //transmission
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"triangleType":"NONCOLLIDABLE"},
+            ["e1l", "e1r", "tra1"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+},
+}

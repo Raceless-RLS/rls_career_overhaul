@@ -1,0 +1,305 @@
+{
+"moonhawk_junk_radsupport": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator Support",
+        "value":50,
+    },
+    "slotType" : "moonhawk_radsupport",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_radiator","moonhawk_radiator", "Radiator"],
+        ["moonhawk_nosecone","moonhawk_nosecone", "Front Fascia"],
+    ],
+     "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //body
+         ["moonhawk_radsupport", ["moonhawk_radsupport"]],
+         ["moonhawk_engbay_radsupport", ["moonhawk_radsupport"]],
+
+         {"deformGroup":"engbay_R", "deformMaterialBase":"v8_classic", "deformMaterialDamaged":"invis"},
+         ["moonhawk_engbay_R", ["moonhawk_body","moonhawk_radsupport"],[]],
+         {"deformGroup":"engbay_L", "deformMaterialBase":"v8_classic", "deformMaterialDamaged":"invis"},
+         ["moonhawk_engbay_L", ["moonhawk_body","moonhawk_radsupport"],[]],
+         {"deformGroup":""},
+     ],
+     "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"group":"moonhawk_radsupport"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":2.23},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //radiator support
+         ["s1rr",-0.79,-2.07, 0.81],
+         {"engineGroup":"radiator"},
+         ["s1r",-0.43,-2.07, 0.83],
+         ["s1", 0.0,-2.07, 0.83],
+         ["s1l", 0.43,-2.07, 0.83],
+         {"engineGroup":""},
+         ["s1ll", 0.79,-2.07, 0.81],
+
+         ["s3rr",-0.79,-2.08, 0.54],
+         ["s3r",-0.44,-2.08, 0.53],
+         ["s3l", 0.44,-2.08, 0.53],
+         ["s3ll", 0.79,-2.08, 0.54],
+
+         ["s4rr",-0.79,-2.0, 0.54],
+         ["s4r",-0.44,-2.0, 0.53],
+         ["s4l", 0.44,-2.0, 0.53],
+         ["s4ll", 0.79,-2.0, 0.54],
+
+         ["s5r",-0.46,-2.08, 0.35],
+         ["s5", 0.0,-2.08, 0.35, {"tag":"tow_hook","couplerStrength":101000}],
+         ["s5l", 0.46,-2.08, 0.35],
+
+         ["s6r",-0.46,-1.90, 0.30],
+         ["s6", 0.0,-1.90, 0.30],
+         ["s6l", 0.46,-1.90, 0.30],
+
+         ["s7", 0.0, -1.90, 0.79],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"breakGroupType":0},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":45805.2,"beamStrength":"FLT_MAX"},
+          {"beamSpring":35000,"beamDamp":110},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.01},
+          //radiator support main shape widthwise
+          {"deformLimitExpansion":1.1},
+          {"deformGroup":"radiator_damage"},
+          ["s1r","s1"],
+          ["s1","s1l"],
+
+          ["s5r","s5"],
+          ["s5l","s5"],
+          ["s6r","s6"],
+          ["s6l","s6"],
+
+          ["s3r","s1r"],
+          ["s3l","s1l"],
+          ["s3r","s4r"],
+          ["s3l","s4l"],
+
+          ["s5r","s6r"],
+          ["s5","s6"],
+          ["s5l","s6l"],
+          {"deformGroup":""},
+          ["s1rr","s1r"],
+          ["s1l","s1ll"],
+
+          ["s3rr","s3r"],
+          ["s3l","s3ll"],
+
+          ["s4rr","s4r"],
+          ["s4l","s4ll"],
+
+          //vertical
+          ["s3rr","s1rr"],
+          ["s3ll","s1ll"],
+
+          ["s5r","s3r"],
+          ["s5l","s3l"],
+
+          ["s6r","s4r"],
+          ["s6l","s4l"],
+
+          //lengthwise
+          ["s3rr","s4rr"],
+          ["s3ll","s4ll"],
+
+          {"deformLimitExpansion":""},
+          {"beamDeform":16359,"beamStrength":"FLT_MAX"},
+          //cross
+          {"deformGroup":"radiator_damage"},
+          ["s1","s3r"],
+          ["s1","s3l"],
+
+          ["s1","s4r"],
+          ["s1","s4l"],
+
+          ["s1r","s4r"],
+          ["s1l","s4l"],
+
+          ["s5r","s4r"],
+          ["s5l","s4l"],
+          {"deformGroup":""},
+          ["s1rr","s3r"],
+          ["s1ll","s3l"],
+          ["s1r","s3rr"],
+          ["s1l","s3ll"],
+
+          ["s1rr","s4rr"],
+          ["s1ll","s4ll"],
+
+          {"beamDeform":9815.4,"beamStrength":"FLT_MAX"},
+          //
+          {"deformGroup":"radiator_damage"},
+          ["s3r","s5"],
+          ["s3l","s5"],
+          ["s4r","s6"],
+          ["s4l","s6"],
+
+          ["s3r","s6"],
+          ["s3l","s6"],
+          ["s4r","s5"],
+          ["s4l","s5"],
+
+          //
+          ["s6r","s3r"],
+          ["s6l","s3l"],
+          //bottom
+          ["s5","s6r"],
+          ["s5","s6l"],
+          ["s6","s5r"],
+          ["s6","s5l"],
+          {"deformGroup":""},
+
+          ["s3rr","s5r"],
+          ["s4rr","s6r"],
+          ["s3ll","s5l"],
+          ["s4ll","s6l"],
+          ["s3rr","s6r"],
+          ["s4rr","s5r"],
+          ["s3ll","s6l"],
+          ["s4ll","s5l"],
+
+          //top
+          ["s3r","s4rr"],
+          ["s3rr","s4r"],
+          ["s3l","s4ll"],
+          ["s3ll","s4l"],
+
+          //rigids
+          {"beamDeform":6543.6,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage"},
+
+          ["s5r","s5l"],
+          ["s6r","s6l"],
+
+          ["s1","s5"],
+          ["s1","s6"],
+          {"deformGroup":""},
+          ["s1rr","s1"],
+          ["s1r","s1l"],
+          ["s1","s1ll"],
+
+          //rigidifier
+          {"beamDeform":3271.8,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage"},
+          ["s1r","s7"],
+          ["s1","s7"],
+          ["s1l","s7"],
+          ["s3r","s7"],
+          ["s3l","s7"],
+
+          ["s5r","s7"],
+          ["s5","s7"],
+          ["s5l","s7"],
+
+          ["s4r","s7"],
+          ["s6r","s7"],
+          ["s6","s7"],
+          ["s6l","s7"],
+          ["s4l","s7"],
+          {"deformGroup":""},
+          ["s1rr","s7"],
+          ["s1ll","s7"],
+
+          ["s3rr","s7"],
+          ["s3ll","s7"],
+
+          ["s4rr","s7"],
+          ["s4ll","s7"],
+
+          //attach
+          {"beamDeform":11451.3,"beamStrength":51045},
+          //r
+          {"deformGroup":"engbay_R", "deformationTriggerRatio":0.01}
+          ["s3r","f24rr"],
+          ["s3r","f25rr"],
+          ["s3rr","f21rr"],
+          ["s3rr","f22rr"],
+          ["s3r","f22rr"],
+          ["s4r","f24rr"],
+          ["s4r","f25rr"],
+          ["s4rr","f21rr"],
+          ["s4rr","f22rr"],
+          ["s4r","f22rr"],
+          ["s1r","f24rr"],
+          ["s1r","f25rr"],
+          ["s1rr","f24rr"],
+
+          //l
+          {"deformGroup":"engbay_L", "deformationTriggerRatio":0.01}
+          ["s3l","f24ll"],
+          ["s3l","f25ll"],
+          ["s3ll","f21ll"],
+          ["s3ll","f22ll"],
+          ["s3l","f22ll"],
+          ["s4l","f24ll"],
+          ["s4l","f25ll"],
+          ["s4ll","f21ll"],
+          ["s4ll","f22ll"],
+          ["s4l","f22ll"],
+          ["s1l","f24ll"],
+          ["s1l","f25ll"],
+          ["s1ll","f24ll"],
+          {"deformGroup":""}
+
+          //extra rigidification
+          ["s1ll","f22rr", {"deformGroup":"engbay_R", "deformationTriggerRatio":0.01}],
+          ["s1ll","f25rr", {"deformGroup":"engbay_R", "deformationTriggerRatio":0.01}],
+          ["s1rr","f22ll", {"deformGroup":"engbay_L", "deformationTriggerRatio":0.01}],
+          ["s1rr","f25ll", {"deformGroup":"engbay_L", "deformationTriggerRatio":0.01}],
+
+          //to engine
+          {"beamType":"|SUPPORT", "beamLongBound":0.75},
+          {"beamSpring":101000,"beamDamp":100},
+          {"beamDeform":4100,"beamStrength":20500},
+          {"deformGroup":"radtube_break","deformationTriggerRatio":0.5},
+          {"optional":true},
+          ["s1l","e4l"],
+          ["s1r","e4r"],
+          {"optional":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"metal"},
+            {"group":"moonhawk_radsupport"},
+            {"dragCoef":5},
+            ["s1rr","s3rr","s3r"],
+            ["s1rr","s3r","s1r"],
+            ["s1r","s3r","s1"],
+            ["s1","s3r","s5"],
+            ["s1","s5","s3l"],
+            ["s1","s3l","s1l"],
+            ["s3ll","s1ll","s3l"],
+            ["s1ll","s1l","s3l"],
+
+            ["s3r","s5r","s5"],
+            ["s3l","s5","s5l"],
+
+            ["s1l", "s7", "s1"],
+            ["s1", "s7", "s1r"],
+
+            ["s3rr", "s1rr", "s4rr"],
+            ["s4rr", "s3r", "s3rr"],
+            ["s4rr", "s4r", "s3r"],
+
+            ["s1ll", "s3ll", "s4ll"],
+            ["s3l", "s4ll", "s3ll"],
+            ["s4l", "s4ll", "s3l"],
+
+            ["s5r", "s6r", "s5"],
+            ["s6r", "s6", "s5"],
+
+            ["s6l", "s5l", "s5"],
+            ["s6", "s6l", "s5"],
+    ],
+},
+}

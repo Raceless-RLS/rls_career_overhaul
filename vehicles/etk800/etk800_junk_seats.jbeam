@@ -1,0 +1,1834 @@
+{
+"etk800_dash": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Interior",
+        "value":400,
+    },
+    "slotType" : "etk800_dash",
+    "slots":[
+        ["type", "default", "description"],
+        ["skin_interior","etk800_skin_interior", "Interior Color", {"coreSlot":true}],
+        ["skin_gauges","etk800_gauges_imperial", "Gauges", {"coreSlot":true}],
+        ["etk800_screen_branding","etk800_screen_branding_default", "Branding", {"coreSlot":true}],
+        ["etk800_steer","etk800_steer", "Steering Wheel"],
+        ["gps","","Navigation Unit", {"nodeOffset":{"x":0.08,"y":-0.56,"z":1.05}}],
+        ["etk800_shifter","etk800_shifter_M", "Shifter"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk800_intcarpet_sedan", ["etk800_body"]],
+        ["etk800_dash", ["etk800_dash"]],
+        ["etk800_gauges", ["etk800_dash"]],
+        ["etk800_decals_gauges", ["etk800_dash"]],
+        ["etk800_intmirror", ["etk800_windshield"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"invis"},
+        ["etk800_gauges_screen", ["etk800_dash"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"etk800_gauges_break"},
+        ["etk800_screen", ["etk800_dash"]],
+        {"deformGroup":""},
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["etk800_intmirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.0,"y":-0.07,"z":-0.095},"baseRotationGlobal":{"x":5,"y":0.0,"z":22}}],
+    ],
+    "glowMap":{
+        "etk800_gauges_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"etk800_gauges_screen_accessory", "on_intense":"etk800_gauges_screen"},
+    },
+
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@etk800_screen", "htmlFilePath": "local://local/vehicles/common/ETK_navi_screen.html", "name":"etk800_navi"}],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+
+    "gauge": {
+        "configuration": {
+            "materialName": "@etk800_gauges_screen"
+            "htmlPath": "local://local/vehicles/etk800/gauges_screen/gauges_screen.html"
+            "displayWidth":512
+            "displayHeight":256
+        }
+        "displayData": {
+            "electrics": [
+                "signal_L",
+                "signal_R",
+                "lights",
+                "highbeam",
+                "fog",
+                "lowpressure",
+                "lowfuel",
+                "parkingbrake",
+                "checkengine",
+                "gear",//
+                "fuel",
+                "wheelspeed",//
+                "esc",
+                "escActive",
+                "tcs",
+                "tcsActive",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["combustionEngineData", "fuelDisplay"]
+                ["combustionEngineData", "fuelConsumption"]
+                ["environmentData", "temperatureEnv"]
+                ["environmentData", "time"]
+            ]
+        }
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+
+        //pedals
+        ["brake","etk800_brakepedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0}, {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle","etk800_gaspedal", "f1l","f1ll","f6l",  {"x":-5, "y":0, "z":0}, {"x":20, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+
+        //turn signal stalk
+        ["turnsignal", "etk800_signalstalk", "f5l","f5r","dsh5",  {"x":45, "y":0, "z":180}, {"x":0, "y":-16, "z":-12}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+        //wiper stalk
+        ["wipers", "etk800_wiperstalk", "f5l","f5r","dsh5",  {"x":0, "y":0, "z":180}, {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator6,
+        {"node:":"dsh5"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>AU5_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>AU5_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>AU5_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>AU5_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>BM1_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>BM1_On"],
+        //handbrake2
+        {"node:":"dsh3"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"f15"},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //dashboard
+         {"group":"etk800_dash"},
+         {"nodeWeight":5},
+         ["dsh1r",-0.613,-0.546,0.982],
+         ["dsh1",0.0,-0.56,1.016],
+         ["dsh1l",0.613,-0.546,0.982],
+
+         ["dsh2r",-0.667,-0.476,0.793],
+         ["dsh2",0.0,-0.476,0.793],
+         ["dsh2l",0.667,-0.476,0.793],
+
+         ["dsh3",0.0,-0.265,0.6],
+         ["dsh4",0.0,0.352,0.6],
+
+         //steering column
+         {"nodeWeight":2.0},
+         ["dsh5", 0.4, -0.364, 0.89, {"selfCollision":false}],
+         {"group":""},
+
+         //floor thickness nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"nodeWeight":6.0},
+         ["f7r", -0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f7l", 0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8r", -0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8l", 0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f9r", -0.33, 0.99, 0.5],
+         ["f9l", 0.33, 0.99, 0.5],
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //--DASHBOARD--
+          {"beamSpring":2501000,"beamDamp":250},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"display_break","deformationTriggerRatio":0.05},
+          ["dsh2l", "dsh2"],
+          ["dsh2", "dsh2r"],
+          ["dsh1l", "dsh1"],
+          ["dsh1", "dsh1r"],
+          ["dsh2", "dsh1"],
+          ["dsh2l", "dsh1l"],
+          ["dsh2r", "dsh1r"],
+          ["dsh2", "dsh3"],
+          ["dsh3", "dsh4"],
+          ["dsh1r", "f6rr"],
+          ["dsh2r", "f5rr"],
+          ["dsh1l", "f6ll"],
+          ["dsh2l", "f5ll"],
+          ["dsh1", "f6l"],
+          ["dsh1", "f6r"],
+          ["dsh2", "f5l"],
+          ["dsh2", "f5r"],
+          ["dsh3", "f7l"],
+          ["dsh3", "f7r"],
+          ["dsh4", "f8r"],
+          ["dsh4", "f8l"],
+          ["dsh3", "f5l"],
+          ["dsh3", "f5r"],
+          ["dsh2", "f7l"],
+          ["dsh2", "f7r"],
+          ["dsh3", "f8l"],
+          ["dsh4", "f7l"],
+          ["dsh4", "f7r"],
+          ["dsh3", "f8r"],
+          ["dsh2l", "f5l"],
+          ["dsh2", "f5ll"],
+          ["dsh2", "f5rr"],
+          ["dsh2r", "f5r"],
+          ["dsh2r", "f6rr"],
+          ["dsh1r", "f5rr"],
+          ["dsh1l", "f5ll"],
+          ["dsh2l", "f6ll"],
+          ["dsh1l", "dsh2"],
+          ["dsh2l", "dsh1"],
+          ["dsh1", "dsh2r"],
+          ["dsh1r", "dsh2"],
+          ["dsh1r", "f6r"],
+          ["dsh1l", "f6l"],
+          ["dsh1", "f6ll"],
+          ["dsh1", "f6rr"],
+          ["dsh1", "f5r"],
+          ["dsh1", "f5l"],
+          ["dsh2", "f6r"],
+          ["dsh2", "f6l"],
+          {"deformGroup":""},
+
+          //steering column
+          ["dsh5", "f5l"],
+          ["dsh5", "f1l"],
+          ["dsh5", "f5ll"],
+          ["dsh5", "f5r"],
+          ["dsh5", "f6l"],
+          ["dsh5", "dsh2l"],
+          ["dsh5", "dsh1l"],
+          ["dsh5", "dsh2"],
+          ["dsh5", "dsh1"],
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+            {"group":"etk800_dash"},
+            {"dragCoef":0},
+            ["dsh1r", "f6rr", "f6r"],
+            ["dsh1r", "f6r", "dsh1"],
+            ["dsh1", "f6r", "f6l"],
+            ["dsh1", "f6l", "dsh1l"],
+            ["dsh1l", "f6l", "f6ll"],
+            ["dsh1l", "f6ll", "dsh2l"],
+            ["f6ll", "f5ll", "dsh2l"],
+            ["dsh1r", "dsh2r", "f6rr"],
+            ["f6rr", "dsh2r", "f5rr"],
+            ["dsh1", "dsh2", "dsh2r"],
+            ["dsh2r", "dsh1r", "dsh1"],
+            ["dsh1", "dsh1l", "dsh2l"],
+            ["dsh2l", "dsh2", "dsh1"],
+            ["dsh2l", "f5l", "dsh2"],
+            ["dsh2l", "f5ll", "f5l"],
+            ["dsh2", "f5r", "dsh2r"],
+            ["dsh2r", "f5r", "f5rr"],
+            ["f5l", "dsh3", "dsh2"],
+            ["dsh2", "dsh3", "f5r"],
+            ["f5r", "fi1r", "f1rr"],
+            ["f1rr", "f5rr", "f5r"],
+            ["f5l", "f1ll", "fi1l"],
+            ["f5l", "f5ll", "f1ll"],
+            ["dsh4", "fi3l", "fi3r"],
+            ["fi3r", "fi2r", "dsh3"],
+            ["dsh3", "dsh4", "fi3r"],
+            ["dsh3", "fi2l", "fi3l"],
+            ["fi3l", "dsh4", "dsh3"],
+            ["dsh3", "fi2r", "fi1r"],
+            ["fi1r", "f5r", "dsh3"],
+            ["fi2l", "dsh3", "fi1l"],
+            ["f5l",  "fi1l", "dsh3"],
+
+            {"group":""},
+    ],
+},
+"etk800_dash_wagon": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Interior",
+        "value":400,
+    },
+    "slotType" : "etk800_dash_wagon",
+    "slots":[
+        ["type", "default", "description"],
+        ["skin_interior","etk800_skin_interior", "Interior Color", {"coreSlot":true}],
+        ["skin_gauges","etk800_gauges_imperial", "Gauges", {"coreSlot":true}],
+        ["etk800_screen_branding","etk800_screen_branding_default", "Branding", {"coreSlot":true}],
+        ["etk800_steer","etk800_steer", "Steering Wheel"],
+        ["gps","","Navigation Unit", {"nodeOffset":{"x":0.08,"y":-0.56,"z":1.05}}],
+        ["etk800_shifter","etk800_shifter_M", "Shifter"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk800_intcarpet", ["etk800_body"]],
+        ["etk800_dash", ["etk800_dash"]],
+        ["etk800_gauges", ["etk800_dash"]],
+        ["etk800_decals_gauges", ["etk800_dash"]],
+        ["etk800_intmirror", ["etk800_windshield"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"invis"},
+        ["etk800_gauges_screen", ["etk800_dash"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"etk800_gauges_break"},
+        ["etk800_screen", ["etk800_dash"]],
+        {"deformGroup":""},
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["etk800_intmirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.0,"y":-0.07,"z":-0.095},"baseRotationGlobal":{"x":5,"y":0.0,"z":22}}],
+    ],
+    "glowMap":{
+        "etk800_gauges_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"etk800_gauges_screen_accessory", "on_intense":"etk800_gauges_screen"},
+    },
+
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@etk800_screen", "htmlFilePath": "local://local/vehicles/common/ETK_navi_screen.html", "name":"etk800_navi"}],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+
+    "gauge": {
+        "configuration": {
+            "materialName": "@etk800_gauges_screen"
+            "htmlPath": "local://local/vehicles/etk800/gauges_screen/gauges_screen.html"
+            "displayWidth":512
+            "displayHeight":256
+        }
+        "displayData": {
+            "electrics": [
+                "signal_L",
+                "signal_R",
+                "lights",
+                "highbeam",
+                "fog",
+                "lowpressure",
+                "lowfuel",
+                "parkingbrake",
+                "checkengine",
+                "gear",//
+                "fuel",
+                "wheelspeed",//
+                "esc",
+                "escActive",
+                "tcs",
+                "tcsActive",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["combustionEngineData", "fuelDisplay"]
+                ["combustionEngineData", "fuelConsumption"]
+                ["environmentData", "temperatureEnv"]
+                ["environmentData", "time"]
+            ]
+        }
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+
+        //pedals
+        ["brake","etk800_brakepedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0}, {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle","etk800_gaspedal", "f1l","f1ll","f6l",  {"x":-5, "y":0, "z":0}, {"x":20, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+
+        //turn signal stalk
+        ["turnsignal", "etk800_signalstalk", "f5l","f5r","dsh5",  {"x":45, "y":0, "z":180}, {"x":0, "y":-16, "z":-12}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+        //wiper stalk
+        ["wipers", "etk800_wiperstalk", "f5l","f5r","dsh5",  {"x":0, "y":0, "z":180}, {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator6,
+        {"node:":"dsh5"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>AU5_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>AU5_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>AU5_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>AU5_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>BM1_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>BM1_On"],
+        //handbrake2
+        {"node:":"dsh3"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"f15"},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //dashboard
+         {"group":"etk800_dash"},
+         {"nodeWeight":5},
+         ["dsh1r",-0.613,-0.546,0.982],
+         ["dsh1",0.0,-0.56,1.016],
+         ["dsh1l",0.613,-0.546,0.982],
+
+         ["dsh2r",-0.667,-0.476,0.793],
+         ["dsh2",0.0,-0.476,0.793],
+         ["dsh2l",0.667,-0.476,0.793],
+
+         ["dsh3",0.0,-0.265,0.6],
+         ["dsh4",0.0,0.352,0.6],
+
+         //steering column
+         {"nodeWeight":2.0},
+         ["dsh5", 0.4, -0.364, 0.89, {"selfCollision":false}],
+         {"group":""},
+
+         //floor thickness nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"nodeWeight":6.0},
+         ["f7r", -0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f7l", 0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8r", -0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8l", 0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f9r", -0.33, 0.99, 0.5],
+         ["f9l", 0.33, 0.99, 0.5],
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //--DASHBOARD--
+          {"beamSpring":2501000,"beamDamp":250},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"display_break","deformationTriggerRatio":0.05},
+          ["dsh2l", "dsh2"],
+          ["dsh2", "dsh2r"],
+          ["dsh1l", "dsh1"],
+          ["dsh1", "dsh1r"],
+          ["dsh2", "dsh1"],
+          ["dsh2l", "dsh1l"],
+          ["dsh2r", "dsh1r"],
+          ["dsh2", "dsh3"],
+          ["dsh3", "dsh4"],
+          ["dsh1r", "f6rr"],
+          ["dsh2r", "f5rr"],
+          ["dsh1l", "f6ll"],
+          ["dsh2l", "f5ll"],
+          ["dsh1", "f6l"],
+          ["dsh1", "f6r"],
+          ["dsh2", "f5l"],
+          ["dsh2", "f5r"],
+          ["dsh3", "f7l"],
+          ["dsh3", "f7r"],
+          ["dsh4", "f8r"],
+          ["dsh4", "f8l"],
+          ["dsh3", "f5l"],
+          ["dsh3", "f5r"],
+          ["dsh2", "f7l"],
+          ["dsh2", "f7r"],
+          ["dsh3", "f8l"],
+          ["dsh4", "f7l"],
+          ["dsh4", "f7r"],
+          ["dsh3", "f8r"],
+          ["dsh2l", "f5l"],
+          ["dsh2", "f5ll"],
+          ["dsh2", "f5rr"],
+          ["dsh2r", "f5r"],
+          ["dsh2r", "f6rr"],
+          ["dsh1r", "f5rr"],
+          ["dsh1l", "f5ll"],
+          ["dsh2l", "f6ll"],
+          ["dsh1l", "dsh2"],
+          ["dsh2l", "dsh1"],
+          ["dsh1", "dsh2r"],
+          ["dsh1r", "dsh2"],
+          ["dsh1r", "f6r"],
+          ["dsh1l", "f6l"],
+          ["dsh1", "f6ll"],
+          ["dsh1", "f6rr"],
+          ["dsh1", "f5r"],
+          ["dsh1", "f5l"],
+          ["dsh2", "f6r"],
+          ["dsh2", "f6l"],
+          {"deformGroup":""},
+
+          //steering column
+          ["dsh5", "f5l"],
+          ["dsh5", "f1l"],
+          ["dsh5", "f5ll"],
+          ["dsh5", "f5r"],
+          ["dsh5", "f6l"],
+          ["dsh5", "dsh2l"],
+          ["dsh5", "dsh1l"],
+          ["dsh5", "dsh2"],
+          ["dsh5", "dsh1"],
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+            {"group":"etk800_dash"},
+            {"dragCoef":0},
+            ["dsh1r", "f6rr", "f6r"],
+            ["dsh1r", "f6r", "dsh1"],
+            ["dsh1", "f6r", "f6l"],
+            ["dsh1", "f6l", "dsh1l"],
+            ["dsh1l", "f6l", "f6ll"],
+            ["dsh1l", "f6ll", "dsh2l"],
+            ["f6ll", "f5ll", "dsh2l"],
+            ["dsh1r", "dsh2r", "f6rr"],
+            ["f6rr", "dsh2r", "f5rr"],
+            ["dsh1", "dsh2", "dsh2r"],
+            ["dsh2r", "dsh1r", "dsh1"],
+            ["dsh1", "dsh1l", "dsh2l"],
+            ["dsh2l", "dsh2", "dsh1"],
+            ["dsh2l", "f5l", "dsh2"],
+            ["dsh2l", "f5ll", "f5l"],
+            ["dsh2", "f5r", "dsh2r"],
+            ["dsh2r", "f5r", "f5rr"],
+            ["f5l", "dsh3", "dsh2"],
+            ["dsh2", "dsh3", "f5r"],
+            ["f5r", "fi1r", "f1rr"],
+            ["f1rr", "f5rr", "f5r"],
+            ["f5l", "f1ll", "fi1l"],
+            ["f5l", "f5ll", "f1ll"],
+            ["dsh4", "fi3l", "fi3r"],
+            ["fi3r", "fi2r", "dsh3"],
+            ["dsh3", "dsh4", "fi3r"],
+            ["dsh3", "fi2l", "fi3l"],
+            ["fi3l", "dsh4", "dsh3"],
+            ["dsh3", "fi2r", "fi1r"],
+            ["fi1r", "f5r", "dsh3"],
+            ["fi2l", "dsh3", "fi1l"],
+            ["f5l",  "fi1l", "dsh3"],
+
+            {"group":""},
+    ],
+},
+"etk800_dash_stripped": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Stripped Interior",
+        "value":400,
+    },
+    "slotType" : "etk800_dash",
+    "slots":[
+        ["type", "default", "description"],
+        ["skin_interior","etk800_skin_interior", "Interior Color", {"coreSlot":true}],
+        ["skin_gauges","etk800_gauges_imperial", "Gauges", {"coreSlot":true}],
+        ["etk800_screen_branding","etk800_screen_branding_default", "Branding", {"coreSlot":true}],
+        ["etk800_steer","etk800_steer", "Steering Wheel"],
+        ["gps","","Navigation Unit", {"nodeOffset":{"x":0.08,"y":-0.56,"z":1.05}}],
+        ["etk800_shifter","etk800_shifter_M", "Shifter"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk800_intcarpet_sedan_stripped", ["etk800_body"]],
+        ["etk800_dash", ["etk800_dash"]],
+        ["etk800_gauges", ["etk800_dash"]],
+        ["etk800_decals_gauges", ["etk800_dash"]],
+        ["etk800_intmirror", ["etk800_windshield"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"invis"},
+        ["etk800_gauges_screen", ["etk800_dash"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"etk800_gauges_break"},
+        ["etk800_screen", ["etk800_dash"]],
+        {"deformGroup":""},
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["etk800_intmirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.0,"y":-0.07,"z":-0.095},"baseRotationGlobal":{"x":5,"y":0.0,"z":22}}],
+    ],
+    "glowMap":{
+        "etk800_gauges_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"etk800_gauges_screen_accessory", "on_intense":"etk800_gauges_screen"},
+    },
+
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@etk800_screen", "htmlFilePath": "local://local/vehicles/common/ETK_navi_screen.html", "name":"etk800_navi"}],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+
+    "gauge": {
+        "configuration": {
+            "materialName": "@etk800_gauges_screen"
+            "htmlPath": "local://local/vehicles/etk800/gauges_screen/gauges_screen.html"
+            "displayWidth":512
+            "displayHeight":256
+        }
+        "displayData": {
+            "electrics": [
+                "signal_L",
+                "signal_R",
+                "lights",
+                "highbeam",
+                "fog",
+                "lowpressure",
+                "lowfuel",
+                "parkingbrake",
+                "checkengine",
+                "gear",//
+                "fuel",
+                "wheelspeed",//
+                "esc",
+                "escActive",
+                "tcs",
+                "tcsActive",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["combustionEngineData", "fuelDisplay"]
+                ["combustionEngineData", "fuelConsumption"]
+                ["environmentData", "temperatureEnv"]
+                ["environmentData", "time"]
+            ]
+        }
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+
+        //pedals
+        ["brake","etk800_brakepedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0}, {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle","etk800_gaspedal", "f1l","f1ll","f6l",  {"x":-5, "y":0, "z":0}, {"x":20, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+
+        //turn signal stalk
+        ["turnsignal", "etk800_signalstalk", "f5l","f5r","dsh5",  {"x":45, "y":0, "z":180}, {"x":0, "y":-16, "z":-12}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+        //wiper stalk
+        ["wipers", "etk800_wiperstalk", "f5l","f5r","dsh5",  {"x":0, "y":0, "z":180}, {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": -0.16
+    }
+    "soundscape": [
+        ["name", "src"],
+        //indicator6,
+        {"node:":"dsh5"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>AU5_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>AU5_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>AU5_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>AU5_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>BM1_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>BM1_On"],
+        //handbrake2
+        {"node:":"dsh3"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"f15"},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //dashboard
+         {"group":"etk800_dash"},
+         {"nodeWeight":0.7},
+         ["dsh1r",-0.613,-0.546,0.982],
+         ["dsh1",0.0,-0.56,1.016],
+         ["dsh1l",0.613,-0.546,0.982],
+
+         ["dsh2r",-0.667,-0.476,0.793],
+         ["dsh2",0.0,-0.476,0.793],
+         ["dsh2l",0.667,-0.476,0.793],
+
+         ["dsh3",0.0,-0.265,0.6],
+         ["dsh4",0.0,0.352,0.6],
+
+         //steering column
+         {"nodeWeight":1.0},
+         ["dsh5", 0.4, -0.364, 0.89, {"selfCollision":false}],
+         {"group":""},
+
+         //floor thickness nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"nodeWeight":3.8},
+         ["f7r", -0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f7l", 0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8r", -0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8l", 0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f9r", -0.33, 0.99, 0.5],
+         ["f9l", 0.33, 0.99, 0.5],
+         //reduce weight in the rear
+         {"nodeWeight":4.2},
+         {"group":["etk800_body"]}
+         ["r5", 0.0, 1.68, 0.54],
+         ["r6", 0.0, 2.00, 0.54]
+         ["r1", 0.0, 1.41, 0.54],
+         ["r3", 0.0, 1.97, 0.29, {"nodeWeight":5}]
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //--DASHBOARD--
+          {"beamSpring":701000,"beamDamp":50},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"display_break","deformationTriggerRatio":0.05},
+          ["dsh2l", "dsh2"],
+          ["dsh2", "dsh2r"],
+          ["dsh1l", "dsh1"],
+          ["dsh1", "dsh1r"],
+          ["dsh2", "dsh1"],
+          ["dsh2l", "dsh1l"],
+          ["dsh2r", "dsh1r"],
+          ["dsh2", "dsh3"],
+          ["dsh3", "dsh4"],
+          ["dsh1r", "f6rr"],
+          ["dsh2r", "f5rr"],
+          ["dsh1l", "f6ll"],
+          ["dsh2l", "f5ll"],
+          ["dsh1", "f6l"],
+          ["dsh1", "f6r"],
+          ["dsh2", "f5l"],
+          ["dsh2", "f5r"],
+          ["dsh3", "f7l"],
+          ["dsh3", "f7r"],
+          ["dsh4", "f8r"],
+          ["dsh4", "f8l"],
+          ["dsh3", "f5l"],
+          ["dsh3", "f5r"],
+          ["dsh2", "f7l"],
+          ["dsh2", "f7r"],
+          ["dsh3", "f8l"],
+          ["dsh4", "f7l"],
+          ["dsh4", "f7r"],
+          ["dsh3", "f8r"],
+          ["dsh2l", "f5l"],
+          ["dsh2", "f5ll"],
+          ["dsh2", "f5rr"],
+          ["dsh2r", "f5r"],
+          ["dsh2r", "f6rr"],
+          ["dsh1r", "f5rr"],
+          ["dsh1l", "f5ll"],
+          ["dsh2l", "f6ll"],
+          ["dsh1l", "dsh2"],
+          ["dsh2l", "dsh1"],
+          ["dsh1", "dsh2r"],
+          ["dsh1r", "dsh2"],
+          ["dsh1r", "f6r"],
+          ["dsh1l", "f6l"],
+          ["dsh1", "f6ll"],
+          ["dsh1", "f6rr"],
+          ["dsh1", "f5r"],
+          ["dsh1", "f5l"],
+          ["dsh2", "f6r"],
+          ["dsh2", "f6l"],
+          {"deformGroup":""},
+
+          //steering column
+          ["dsh5", "f5l"],
+          ["dsh5", "f1l"],
+          ["dsh5", "f5ll"],
+          ["dsh5", "f5r"],
+          ["dsh5", "f6l"],
+          ["dsh5", "dsh2l"],
+          ["dsh5", "dsh1l"],
+          ["dsh5", "dsh2"],
+          ["dsh5", "dsh1"],
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+            {"group":"etk800_dash"},
+            {"dragCoef":0},
+            ["dsh1r", "f6rr", "f6r"],
+            ["dsh1r", "f6r", "dsh1"],
+            ["dsh1", "f6r", "f6l"],
+            ["dsh1", "f6l", "dsh1l"],
+            ["dsh1l", "f6l", "f6ll"],
+            ["dsh1l", "f6ll", "dsh2l"],
+            ["f6ll", "f5ll", "dsh2l"],
+            ["dsh1r", "dsh2r", "f6rr"],
+            ["f6rr", "dsh2r", "f5rr"],
+            ["dsh1", "dsh2", "dsh2r"],
+            ["dsh2r", "dsh1r", "dsh1"],
+            ["dsh1", "dsh1l", "dsh2l"],
+            ["dsh2l", "dsh2", "dsh1"],
+            ["dsh2l", "f5l", "dsh2"],
+            ["dsh2l", "f5ll", "f5l"],
+            ["dsh2", "f5r", "dsh2r"],
+            ["dsh2r", "f5r", "f5rr"],
+            ["f5l", "dsh3", "dsh2"],
+            ["dsh2", "dsh3", "f5r"],
+            ["f5r", "fi1r", "f1rr"],
+            ["f1rr", "f5rr", "f5r"],
+            ["f5l", "f1ll", "fi1l"],
+            ["f5l", "f5ll", "f1ll"],
+            ["dsh4", "fi3l", "fi3r"],
+            ["fi3r", "fi2r", "dsh3"],
+            ["dsh3", "dsh4", "fi3r"],
+            ["dsh3", "fi2l", "fi3l"],
+            ["fi3l", "dsh4", "dsh3"],
+            ["dsh3", "fi2r", "fi1r"],
+            ["fi1r", "f5r", "dsh3"],
+            ["fi2l", "dsh3", "fi1l"],
+            ["f5l",  "fi1l", "dsh3"],
+
+            {"group":""},
+    ],
+},
+"etk800_dash_stripped_wagon": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Stripped Interior",
+        "value":400,
+    },
+    "slotType" : "etk800_dash_wagon",
+    "slots":[
+        ["type", "default", "description"],
+        ["skin_interior","etk800_skin_interior", "Interior Color", {"coreSlot":true}],
+        ["skin_gauges","etk800_gauges_imperial", "Gauges", {"coreSlot":true}],
+        ["etk800_screen_branding","etk800_screen_branding_default", "Branding", {"coreSlot":true}],
+        ["etk800_steer","etk800_steer", "Steering Wheel"],
+        ["gps","","Navigation Unit", {"nodeOffset":{"x":0.08,"y":-0.56,"z":1.05}}],
+        ["etk800_shifter","etk800_shifter_M", "Shifter"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk800_intcarpet_stripped", ["etk800_body"]],
+        ["etk800_dash", ["etk800_dash"]],
+        ["etk800_gauges", ["etk800_dash"]],
+        ["etk800_decals_gauges", ["etk800_dash"]],
+        ["etk800_intmirror", ["etk800_windshield"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"invis"},
+        ["etk800_gauges_screen", ["etk800_dash"]],
+        {"deformGroup":"display_break", "deformMaterialBase":"etk800_screen", "deformMaterialDamaged":"etk800_gauges_break"},
+        ["etk800_screen", ["etk800_dash"]],
+        {"deformGroup":""},
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["etk800_intmirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.0,"y":-0.07,"z":-0.095},"baseRotationGlobal":{"x":5,"y":0.0,"z":22}}],
+    ],
+    "glowMap":{
+        "etk800_gauges_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"etk800_gauges_screen_accessory", "on_intense":"etk800_gauges_screen"},
+    },
+
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@etk800_screen", "htmlFilePath": "local://local/vehicles/common/ETK_navi_screen.html", "name":"etk800_navi"}],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+
+    "gauge": {
+        "configuration": {
+            "materialName": "@etk800_gauges_screen"
+            "htmlPath": "local://local/vehicles/etk800/gauges_screen/gauges_screen.html"
+            "displayWidth":512
+            "displayHeight":256
+        }
+        "displayData": {
+            "electrics": [
+                "signal_L",
+                "signal_R",
+                "lights",
+                "highbeam",
+                "fog",
+                "lowpressure",
+                "lowfuel",
+                "parkingbrake",
+                "checkengine",
+                "gear",//
+                "fuel",
+                "wheelspeed",//
+                "esc",
+                "escActive",
+                "tcs",
+                "tcsActive",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["combustionEngineData", "fuelDisplay"]
+                ["combustionEngineData", "fuelConsumption"]
+                ["environmentData", "temperatureEnv"]
+                ["environmentData", "time"]
+            ]
+        }
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+
+        //pedals
+        ["brake","etk800_brakepedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0}, {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle","etk800_gaspedal", "f1l","f1ll","f6l",  {"x":-5, "y":0, "z":0}, {"x":20, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+
+        //turn signal stalk
+        ["turnsignal", "etk800_signalstalk", "f5l","f5r","dsh5",  {"x":45, "y":0, "z":180}, {"x":0, "y":-16, "z":-12}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+        //wiper stalk
+        ["wipers", "etk800_wiperstalk", "f5l","f5r","dsh5",  {"x":0, "y":0, "z":180}, {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": -0.16
+    }
+    "soundscape": [
+        ["name", "src"],
+        //indicator6,
+        {"node:":"dsh5"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>AU5_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>AU5_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>AU5_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>AU5_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>BM1_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>BM1_On"],
+        //handbrake2
+        {"node:":"dsh3"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"f15"},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //dashboard
+         {"group":"etk800_dash"},
+         {"nodeWeight":0.7},
+         ["dsh1r",-0.613,-0.546,0.982],
+         ["dsh1",0.0,-0.56,1.016],
+         ["dsh1l",0.613,-0.546,0.982],
+
+         ["dsh2r",-0.667,-0.476,0.793],
+         ["dsh2",0.0,-0.476,0.793],
+         ["dsh2l",0.667,-0.476,0.793],
+
+         ["dsh3",0.0,-0.265,0.6],
+         ["dsh4",0.0,0.352,0.6],
+
+         //steering column
+         {"nodeWeight":1.0},
+         ["dsh5", 0.4, -0.364, 0.89, {"selfCollision":false}],
+         {"group":""},
+
+         //floor thickness nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"nodeWeight":3.8},
+         ["f7r", -0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f7l", 0.33, -0.23, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8r", -0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f8l", 0.33, 0.30, 0.43, {"group":["etk800_body","etk800_dash"]}],
+         ["f9r", -0.33, 0.99, 0.5],
+         ["f9l", 0.33, 0.99, 0.5],
+         //reduce weight in the rear
+         {"nodeWeight":4.2},
+         {"group":["etk800_body"]}
+         ["r5", 0.0, 1.68, 0.54],
+         ["r6", 0.0, 2.00, 0.54]
+         ["r1", 0.0, 1.41, 0.54],
+         ["r3", 0.0, 1.97, 0.29, {"nodeWeight":5}]
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //--DASHBOARD--
+          {"beamSpring":701000,"beamDamp":50},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"display_break","deformationTriggerRatio":0.05},
+          ["dsh2l", "dsh2"],
+          ["dsh2", "dsh2r"],
+          ["dsh1l", "dsh1"],
+          ["dsh1", "dsh1r"],
+          ["dsh2", "dsh1"],
+          ["dsh2l", "dsh1l"],
+          ["dsh2r", "dsh1r"],
+          ["dsh2", "dsh3"],
+          ["dsh3", "dsh4"],
+          ["dsh1r", "f6rr"],
+          ["dsh2r", "f5rr"],
+          ["dsh1l", "f6ll"],
+          ["dsh2l", "f5ll"],
+          ["dsh1", "f6l"],
+          ["dsh1", "f6r"],
+          ["dsh2", "f5l"],
+          ["dsh2", "f5r"],
+          ["dsh3", "f7l"],
+          ["dsh3", "f7r"],
+          ["dsh4", "f8r"],
+          ["dsh4", "f8l"],
+          ["dsh3", "f5l"],
+          ["dsh3", "f5r"],
+          ["dsh2", "f7l"],
+          ["dsh2", "f7r"],
+          ["dsh3", "f8l"],
+          ["dsh4", "f7l"],
+          ["dsh4", "f7r"],
+          ["dsh3", "f8r"],
+          ["dsh2l", "f5l"],
+          ["dsh2", "f5ll"],
+          ["dsh2", "f5rr"],
+          ["dsh2r", "f5r"],
+          ["dsh2r", "f6rr"],
+          ["dsh1r", "f5rr"],
+          ["dsh1l", "f5ll"],
+          ["dsh2l", "f6ll"],
+          ["dsh1l", "dsh2"],
+          ["dsh2l", "dsh1"],
+          ["dsh1", "dsh2r"],
+          ["dsh1r", "dsh2"],
+          ["dsh1r", "f6r"],
+          ["dsh1l", "f6l"],
+          ["dsh1", "f6ll"],
+          ["dsh1", "f6rr"],
+          ["dsh1", "f5r"],
+          ["dsh1", "f5l"],
+          ["dsh2", "f6r"],
+          ["dsh2", "f6l"],
+          {"deformGroup":""},
+
+          //steering column
+          ["dsh5", "f5l"],
+          ["dsh5", "f1l"],
+          ["dsh5", "f5ll"],
+          ["dsh5", "f5r"],
+          ["dsh5", "f6l"],
+          ["dsh5", "dsh2l"],
+          ["dsh5", "dsh1l"],
+          ["dsh5", "dsh2"],
+          ["dsh5", "dsh1"],
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+            {"group":"etk800_dash"},
+            {"dragCoef":0},
+            ["dsh1r", "f6rr", "f6r"],
+            ["dsh1r", "f6r", "dsh1"],
+            ["dsh1", "f6r", "f6l"],
+            ["dsh1", "f6l", "dsh1l"],
+            ["dsh1l", "f6l", "f6ll"],
+            ["dsh1l", "f6ll", "dsh2l"],
+            ["f6ll", "f5ll", "dsh2l"],
+            ["dsh1r", "dsh2r", "f6rr"],
+            ["f6rr", "dsh2r", "f5rr"],
+            ["dsh1", "dsh2", "dsh2r"],
+            ["dsh2r", "dsh1r", "dsh1"],
+            ["dsh1", "dsh1l", "dsh2l"],
+            ["dsh2l", "dsh2", "dsh1"],
+            ["dsh2l", "f5l", "dsh2"],
+            ["dsh2l", "f5ll", "f5l"],
+            ["dsh2", "f5r", "dsh2r"],
+            ["dsh2r", "f5r", "f5rr"],
+            ["f5l", "dsh3", "dsh2"],
+            ["dsh2", "dsh3", "f5r"],
+            ["f5r", "fi1r", "f1rr"],
+            ["f1rr", "f5rr", "f5r"],
+            ["f5l", "f1ll", "fi1l"],
+            ["f5l", "f5ll", "f1ll"],
+            ["dsh4", "fi3l", "fi3r"],
+            ["fi3r", "fi2r", "dsh3"],
+            ["dsh3", "dsh4", "fi3r"],
+            ["dsh3", "fi2l", "fi3l"],
+            ["fi3l", "dsh4", "dsh3"],
+            ["dsh3", "fi2r", "fi1r"],
+            ["fi1r", "f5r", "dsh3"],
+            ["fi2l", "dsh3", "fi1l"],
+            ["f5l",  "fi1l", "dsh3"],
+
+            {"group":""},
+    ],
+},
+"etk800_shifter_M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Manual Shifter",
+        "value":80,
+    },
+    "slotType" : "etk800_shifter",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_shifter_knob_M", ["etk800_shifterknob_M"]],
+         ["etk800_shifter_boot_M", ["etk800_dash","etk800_shifterboot_M_1","etk800_shifterboot_M_2"]],
+         ["etk800_shifter_base_M", ["etk800_dash","etk800_shifterboot_M_1"]],
+    ],
+        "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        ["clutch"     ,"etk800_clutchpedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0} , {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/hPattern", {"name":"hPattern"}],
+
+    ]
+    "hPattern": {
+        "gearCoordinates": [
+            ["gearIndex",   "x",      "y"]
+            [-1,            -1,       1]
+            [0,             0.0,    -0.0]
+            [1,             -0.65,   0.95]
+            [2,             -0.65,   -1]
+            [3,             0.0,    0.95]
+            [4,             0.0,    -1]
+            [5,             0.65,        0.95]
+            [6,             0.65,        -1]
+        ]
+        "shiftSoundNode:":["sh_b3"]
+        "shiftSoundEventHPatternGearIn": "event:>Vehicle>Interior>Gearshift>manual_modern_08_in",
+        "shiftSoundEventHPatternGearOut": "event:>Vehicle>Interior>Gearshift>manual_modern_08_out",
+        "shiftSoundVolumeHPatternGearIn": 0.5,
+        "shiftSoundVolumeHPatternGearOut": 0.5,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":"etk800_shifterboot_M_1"},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.07, -0.288, 0.61],
+         ["sh_b1r", -0.01, -0.288, 0.61],
+         ["sh_b2l",  0.07, -0.172, 0.61],
+         ["sh_b2r", -0.01, -0.172, 0.61],
+
+         ["sh_b3", 0.03, -0.228, 0.56],
+         {"selfCollision":true},
+         {"group":["etk800_shifterknob_M","etk800_shifterboot_M_2"]},
+         {"nodeWeight":0.5}
+         ["sh_l3", 0.03, -0.231, 0.66],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":"etk800_shifterknob_M"},
+         ["sh_l1l", 0.00, -0.261, 0.71],
+         ["sh_l1r", 0.06, -0.261, 0.71],
+         ["sh_l2l", 0.00, -0.201, 0.70],
+         ["sh_l2r", 0.06, -0.201, 0.70],
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":300000,"beamDamp":70},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        ["sh_b1l", "f7r"],
+        ["sh_b1r", "f7r"],
+        ["sh_b2l", "f7r"],
+        ["sh_b2r", "f7r"],
+        ["sh_b3", "f7r"],
+
+        ["sh_b1l", "f7l"],
+        ["sh_b1r", "f7l"],
+        ["sh_b2l", "f7l"],
+        ["sh_b2r", "f7l"],
+        ["sh_b3", "f7l"],
+
+        ["sh_b1l", "f2r"],
+        ["sh_b1r", "f2r"],
+        ["sh_b2l", "f2r"],
+        ["sh_b2r", "f2r"],
+        ["sh_b3", "f2r"],
+
+        ["sh_b1l", "f2l"],
+        ["sh_b1r", "f2l"],
+        ["sh_b2l", "f2l"],
+        ["sh_b2r", "f2l"],
+        ["sh_b3", "f2l"],
+
+        ["sh_b1l", "f1r"],
+        ["sh_b1r", "f1r"],
+        ["sh_b2l", "f1r"],
+        ["sh_b2r", "f1r"],
+        ["sh_b3", "f1r"],
+
+        ["sh_b1l", "f1l"],
+        ["sh_b1r", "f1l"],
+        ["sh_b2l", "f1l"],
+        ["sh_b2r", "f1l"],
+        ["sh_b3", "f1l"],
+        {"beamSpring":200000,"beamDamp":20},
+        ["sh_b1l", "dsh2"],
+        ["sh_b1r", "dsh2"],
+        ["sh_b2l", "dsh2"],
+        ["sh_b2r", "dsh2"],
+        ["sh_b3",  "dsh2"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.895,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.82}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisY","factor":-0.15}],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisX","factor":-0.15}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisY","factor":0.15}],
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisX","factor":0.15}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":100, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+
+    ],
+},
+"etk800_shifter_A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Automatic Shifter",
+        "value":210,
+    },
+    "slotType" : "etk800_shifter",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_shifterbase_A", ["etk800_dash"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/singleAxisLever", {"name":"singleAxisLever"}],
+
+    ]
+    "singleAxisLever": {
+        "gearCoordinates": [
+            ["gearIndex",   "value"]
+            [1,            0.0]
+            [2,            0.08]
+            [3,            0.17]
+            [4,            0.25]
+            [5,            1.0]
+        ]
+        "shiftSoundNode:":["dsh3"]
+        "shiftSoundEventSingleAxisLever": "event:>Vehicle>Interior>Gearshift>automatic_01",
+        "shiftSoundVolumeSingleAxisLever": 0.5,
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+
+        ["gearModeIndex",         "etk800_shifter_A","f7r","f7l","f8r", {"x":87.5, "y":0, "z":0}, {"x":0, "y":0, "z":0},   {"x":0, "y":0.38, "z":0}, 0, 0.32, 0, 1],
+    ],
+},
+"etk800_shifter_SQ": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sequential Shifter",
+        "value":80,
+    },
+    "slotType" : "etk800_shifter",
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        ["clutch"     ,"etk800_clutchpedal", "f1l","f1ll","f6l",  {"x":0, "y":0, "z":0} , {"x":-25, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //shifter
+        ["dummy",     "grp_shifter_sq_housing",      "st_1r","st_1l","st_2r",      {"x":90, "y":180, "z":0}, {"x":0, "y":0, "z":0},   {"x":0, "y":0.0, "z":0}, 0, 0, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.097}}],
+        ["dummy",     "grp_shifter_sq_cablemount",   "st_1r","st_1l","st_2r",      {"x":90, "y":180, "z":0}, {"x":0, "y":0, "z":0},   {"x":0, "y":0.0, "z":0}, 0, 0, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.097}}],
+        ["dummy",     "grp_cable_M",                 "st_1r","st_1l","st_2r",      {"x":90, "y":180, "z":0}, {"x":0, "y":0, "z":0},   {"x":0, "y":0.0, "z":0}, 0, 0, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.097}}],
+        ["sequentialLeverY",  "grp_shifter_sq_lever",     "st_1r","st_1l","st_2r",         {"x":90, "y":180, "z":0}, {"x":-10, "y":0, "z":0}, {"x":0, "y":0.0, "z":0}, -1, 1, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.097}}],
+        ["sequentialLeverY",  "grp_shifter_sq_rod",       "st_1r","st_1l","st_2r",         {"x":90, "y":180, "z":0}, {"x":0, "y":0, "z":0},   {"x":0, "y":0.06, "z":0}, -1, 1, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.027}}],
+        ["sequentialLeverY",     "grp_shifter_knob_b",  "st_1r","st_1l","st_2r",         {"x":90, "y":180, "z":0} , {"x":-10, "y":0, "z":0}    , {"x":0, "y":0.0, "z":0}, -1, 1, 0, 1, {"baseTranslation":{"x":0.1, "y":0.15, "z":-0.097},"optional":true}]
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/sequentialLever", {"name":"sequentialLever"}],
+    ]
+    "sequentialLever": {
+        "shiftSoundNode:":["st_1r"],
+        "shiftSoundEventSequentialGearUp": "event:>Vehicle>Interior>Gearshift>sequential_03_out",
+        "shiftSoundEventSequentialGearDown": "event:>Vehicle>Interior>Gearshift>sequential_03_in",
+        "shiftSoundVolumeSequentialGearUp": 0.5,
+        "shiftSoundVolumeSequentialGearDown": 0.5,
+    }
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["grp_stand_plate", ["etkc_stand"], [], {"pos":{"x": 0.050, "y":-0.23, "z":0.625}, "rot":{"x":-2, "y":0, "z":0}, "scale":{"x":0.8, "y":0.8, "z":1.0}}],
+    ],
+     "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"etkc_stand"},
+         {"nodeWeight":0.6},
+         ["st_1r", -0.053, -0.32, 0.625],
+         ["st_1l", 0.067, -0.32, 0.625],
+
+         ["st_2r", -0.053, -0.20, 0.62],
+         {"group":""},
+    ],
+     "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //stand main shape
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":282000,"beamDamp":50},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        ["st_1r", "st_2r"],
+        ["st_1l", "st_1r"],
+        ["st_1l", "st_2r"],
+        //stand to floor
+        {"beamSpring":282000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":40000,"deformLimit":1.5},
+        ["st_1l", "f2r"],
+        ["st_1r", "f2r"],
+        ["st_2r", "f2r"],
+        ["st_1l", "f2l"],
+        ["st_1r", "f2l"],
+        ["st_2r", "f2l"],
+
+        ["st_1l", "f1r"],
+        ["st_1r", "f1r"],
+        ["st_2r", "f1r"],
+        ["st_1l", "f1l"],
+        ["st_1r", "f1l"],
+        ["st_2r", "f1l"],
+
+        ["st_1l", "f5r"],
+        ["st_1r", "f5r"],
+        ["st_1l", "f5l"],
+        ["st_1r", "f5l"],
+
+        ["st_1l", "f7"],
+        ["st_1r", "f7"],
+        ["st_2r", "f7"],
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+},
+"etk800_junk_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Driver Seat",
+        "value":125,
+    },
+    "slotType" : "etk800_seat_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_seat_FL", ["etk800_seat_FL", "etk800_floor"],[],{"pos":{"x":0,"y":0.1,"z":0}}],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.9},
+        {"selfCollision":false},
+        {"collision":false},
+        {"beamSpring":650,"beamDamp":120},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.4, 0.29, 1.20, 55, "f1ll","f2r","f3ll","f4ll","f4r",[], {"beamDeform":5001000,"beamStrength":"FLT_MAX"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"etk800_seat_FL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.0},
+         ["sf1l", 0.14, -0.2, 0.5],
+         ["sf1ll", 0.64, -0.2, 0.5],
+         ["sf2l", 0.12, 0.26, 0.43],
+         ["sf2ll", 0.70, 0.26, 0.43],
+         ["sf3l", 0.23, 0.44, 1.2],
+         ["sf3ll", 0.55, 0.44, 1.2],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3l", "sf1l"],
+        ["sf3ll", "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3ll", "r5ll"],
+        ["sf3l", "r1ll"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2l", "f3l"],
+        ["sf2l", "f2l"],
+        ["sf2l", "f3r"],
+        ["sf2l", "f2r"],
+
+        ["sf2ll", "f3l"],
+        ["sf2ll", "f3ll"],
+        ["sf2ll", "f2l"],
+        ["sf1l", "f2l"],
+        ["sf1ll", "f2l"],
+        ["sf1ll", "f2ll"],
+        ["sf1l", "f3l"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3l", "int7"],
+        ["sf3l", "p7l"],
+        ["sf3l", "p8l"],
+        ["sf3l", "rf2l"],
+        ["sf2l", "p4l"],
+        ["sf2l", "p3l"],
+        ["sf1l", "f1ll"],
+        ["sf1l", "f3ll"],
+
+        //to other seat
+        {"beamPrecompression":0.7},
+        ["sf1rr", "sf1ll"],
+        ["sf2rr", "sf2ll"],
+        ["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"etk800_junk_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Passenger Seat",
+        "value":125,
+    },
+    "slotType" : "etk800_seat_FR",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_FR","", "Front Seat Load", {
+            "nodeMove":{"x":-0.40, "y":-0.05, "z":0.64},
+            "variables":{
+                "$rotx":0, "$roty":0, "$rotz":90,
+                "$group":"etk800_seat_FR",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_seat_FR", ["etk800_seat_FR", "etk800_floor"],[],{"pos":{"x":0,"y":0.1,"z":0}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"etk800_seat_FR"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.0},
+         ["sf1r", -0.14, -0.2, 0.5],
+         ["sf1rr", -0.64, -0.2, 0.5],
+         ["sf2r", -0.12, 0.26, 0.43],
+         ["sf2rr", -0.70, 0.26, 0.43],
+         ["sf3r", -0.23, 0.44, 1.2],
+         ["sf3rr", -0.55, 0.44, 1.2],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3r", "sf1r"],
+        ["sf3rr", "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3rr", "r5rr"],
+        ["sf3r", "r1rr"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2r", "f3l"],
+        ["sf2r", "f2l"],
+        ["sf2r", "f3r"],
+        ["sf2r", "f2r"],
+
+        ["sf2rr", "f3r"],
+        ["sf2rr", "f3rr"],
+        ["sf2rr", "f2r"],
+        ["sf1r", "f2r"],
+        ["sf1rr", "f2r"],
+        ["sf1rr", "f2rr"],
+        ["sf1r", "f3r"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3r", "int7"],
+        ["sf3r", "p7r"],
+        ["sf3r", "p8r"],
+        ["sf3r", "rf2r"],
+        ["sf2r", "p4r"],
+        ["sf2r", "p3r"],
+        ["sf1r", "f1rr"],
+        ["sf1r", "f3rr"],
+        //to other seat
+        {"beamPrecompression":0.7},
+        //["sf1rr", "sf1ll"],
+        //["sf2rr", "sf2ll"],
+        //["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+"etk800_junk_seats_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Rear Seats",
+        "value":150,
+    },
+    "slotType" : "etk800_seats_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_R","", "Rear Seat Load", {
+            "nodeMove":{"x": 0.00, "y":0.96, "z":0.72},
+            "variables":{
+                "$rotx":-10, "$roty":0, "$rotz":0,
+                "$group":"etk800_seats_R",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etk800_seats_R", ["etk800_seats_R", "etk800_floor"]],
+    ],
+    "nodes":[
+          ["id", "posX", "posY", "posZ"],
+          {"group":"etk800_seats_R"},
+          {"collision":true},
+          {"selfCollision":true},
+          {"nodeWeight":1.5},
+          ["srsp1r", -0.74, 0.63, 0.57],
+          ["sr1", 0.0, 0.62, 0.57],
+          ["srsp1l", 0.74, 0.63, 0.57],
+
+          ["sr2rr", -0.69, 1.08, 0.6],
+          ["sr2", 0.0, 1.08, 0.55],
+          ["sr2ll", 0.69, 1.08, 0.6],
+
+          ["sr3rr", -0.63, 1.3, 1.08],
+          ["sr3", 0.0, 1.3, 1.05],
+          ["sr3ll", 0.63, 1.3, 1.08],
+          {"group":""},
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //main shape
+          {"beamSpring":201000,"beamDamp":300},
+          {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          ["sr3rr", "sr3"],
+          ["sr3", "sr3ll"],
+          ["sr2rr", "sr2"],
+          ["sr2", "sr2ll"],
+          ["srsp1l", "sr1"],
+          ["sr1", "srsp1r"],
+          ["sr2rr", "sr3rr"],
+          ["sr3", "sr2"],
+          ["sr3ll", "sr2ll"],
+          ["sr2ll", "srsp1l"],
+          ["sr1", "sr2"],
+          ["srsp1r", "sr2rr"],
+          //crossing
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["sr3", "sr2ll"],
+          ["sr2", "sr3ll"],
+          ["sr3", "sr2rr"],
+          ["sr2", "sr3rr"],
+          ["sr1", "sr2rr"],
+          ["sr2", "srsp1r"],
+          ["sr1", "sr2ll"],
+          ["sr2", "srsp1l"],
+          //corner
+          {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+          ["sr3rr", "srsp1r"],
+          ["sr3", "sr1"],
+          ["sr3ll", "srsp1l"],
+
+          //damper
+          {"beamSpring":0,"beamDamp":800},
+          //["sr3ll", "tb3ll"],
+          //["sr3rr", "tb3rr"],
+          //["sr3", "tb3rr"],
+          //["sr3", "tb3ll"],
+
+          //attach
+          {"beamSpring":5000,"beamDamp":300},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["sr2ll", "f4l"],
+          ["sr2ll", "f4ll"],
+          ["sr2ll", "f9l"],
+          ["sr2ll", "f3l"],
+          ["srsp1l", "f3ll"],
+          ["srsp1l", "f4ll"],
+          ["srsp1l", "f3l"],
+
+          ["sr2rr", "f4r"],
+          ["sr2rr", "f4rr"],
+          ["sr2rr", "f9r"],
+          ["sr2rr", "f3r"],
+          ["srsp1r", "f3rr"],
+          ["srsp1r", "f4rr"],
+          ["srsp1r", "f3r"],
+
+
+          {"beamSpring":101000,"beamDamp":150},
+          ["sr2", "f4l"],
+          ["sr2", "f4r"],
+          ["sr2", "f3r"],
+          ["sr2", "f3l"],
+
+          ["sr1", "f4l"],
+          ["sr1", "f4r"],
+          ["sr1", "f3r"],
+          ["sr1", "f3l"],
+
+          //limiter
+          {"beamType":"|SUPPORT", "beamLongBound":5},
+          {"beamSpring":470000,"beamDamp":141},
+          {"beamPrecompression":0.9},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          //{"optional":true},
+          ["sr3ll", "p10l"],
+          ["sr3ll", "q1l"],
+          ["sr2ll", "q5l"],
+          ["sr2ll", "f9l"],
+
+          ["sr3rr", "p10r"],
+          ["sr3rr", "q1r"],
+          ["sr2rr", "q5r"],
+          ["sr2rr", "f9r"],
+
+          {"beamPrecompression":0.7},
+          ["r1ll", "sr2ll"],
+          ["r1", "sr2"],
+          ["r1rr", "sr2rr"],
+          ["r1rr", "sr3rr"],
+          ["r1", "sr3"],
+          ["r1ll", "sr3ll"],
+          {"optional":false},
+          {"beamPrecompression":1},
+
+          //cargo load box
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":500001,"beamDamp":250},
+          {"beamDeform":510000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["seat_box_R", "sr1rr"],
+          ["seat_box_R", "sr1ll"],
+          ["seat_box_R", "sr2rr"],
+          ["seat_box_R", "sr2ll"],
+          ["seat_box_R", "sr3rr"],
+          ["seat_box_R", "sr3ll"],
+          {"optional":false},
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        ["sr3rr", "sr2rr", "sr2"],
+        ["sr2", "sr3", "sr3rr"],
+        ["sr2rr", "srsp1r", "sr1"],
+        ["sr1", "sr2", "sr2rr"],
+        ["sr2", "sr1", "srsp1l"],
+        ["srsp1l", "sr2ll", "sr2"],
+        ["sr2ll", "sr3ll", "sr3"],
+        ["sr3", "sr2", "sr2ll"],
+    ],
+},
+}

@@ -1,0 +1,64 @@
+{
+"etk_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":15,
+    },
+    "slotType" : "etk_enginemounts",
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":false},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":1000,"beamDamp":100},
+          {"beamLimitSpring":1000,"beamLimitDamp":500},
+          {"beamDeform":20000,"beamStrength":90000},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "fx2r"],
+          ["em1r", "fx4r"],
+          ["em1r", "fx6r"],
+          ["em1r", "fx2l", {"boundZone":0.005}],
+          ["em1r", "fx6l", {"boundZone":0.005}],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "fx2l"],
+          ["em1l", "fx4l"],
+          ["em1l", "fx6l"],
+          ["em1l", "fx2r", {"boundZone":0.005}],
+          ["em1l", "fx6r", {"boundZone":0.005}],
+
+          {"beamSpring":1000,"beamDamp":100},
+          {"beamLimitSpring":100,"beamLimitDamp":500},
+          {"beamDeform":10000,"beamStrength":90000},
+          {"boundZone":0.03},
+          {"breakGroup":"transmissionmount"},
+          ["tra1", "f7r"],
+          ["tra1", "f7l"],
+          ["tra1", "f2r"],
+          ["tra1", "f2l"],
+          ["tra1", "f1l"],
+          ["tra1", "f1r"],
+          ["tra1", "f5l"],
+          ["tra1", "f5r"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":15000,"beamStrength":60000},
+          {"beamSpring":1000,"beamDamp":100},
+          ["e3l", "f12rr"],
+          ["e4l", "f12rr"],
+          ["e4r", "f12ll"],
+          ["e3r", "f12ll"],
+          {"dampCutoffHz":""},
+          {"optional":false},
+    ],
+},
+}

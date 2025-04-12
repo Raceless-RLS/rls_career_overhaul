@@ -1,0 +1,271 @@
+{
+"autobello_junk_decklid": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Backglass Tickler Decklid",
+        "value":75,
+    },
+
+    "slotType" : "autobello_decklid",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["autobello_licenseplate_R_decklid","autobello_licenseplate_R_decklid", "Rear License Plate"],
+    ],
+    "mainEngine": {
+        //reduce Airflow to engine
+        "$*engineBlockAirflowCoef":0.6,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_tailgate_a", ["decklid"]],
+        ["autobello_tailgate_molding", ["decklid"]],
+        ["autobello_tailgate_hinge", ["body"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"decklidCoupler"}],
+    ]
+    "decklidCoupler":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["m3",      "dd3",       40000,                     0.01,                   0.005,                      0.2,                 0.10,                  "decklidlatch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["m3"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Trunk>vintage_01_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Trunk>modern_04_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 1500,
+        "openForceDuration": 0.1,
+        "closeForceMagnitude": 150,
+        "closeForceDuration": 0.3,
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["decklid", "", "dd3l","dd3r","dd2l", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":15, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.11, "y":-0.02, "z":-0.04}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["decklid", "action0", "decklidLatch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["decklidLatch", "ui.inputActions.autobello.decklidLatch.title", "ui.inputActions.autobello.decklidLatch.description", {"onUp":"controller.getControllerSafe('decklidCoupler').toggleGroup()"}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--decklid--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"group":"decklid"},
+        {"nodeWeight":0.3},
+        {"collision":true},
+        {"selfCollision":true},
+        ["dd1rr", -0.52, 1.385, 0.90],
+        ["dd1r",  -0.21, 1.439, 0.992, {"nodeWeight":0.7}],
+        ["dd1l",   0.21, 1.439, 0.992, {"nodeWeight":0.7}],
+        ["dd1ll",  0.52, 1.385, 0.90],
+
+        ["dd2rr", -0.51, 1.53, 0.72],
+        ["dd2r",  -0.175, 1.63, 0.75],
+        ["dd2l",   0.175, 1.63, 0.75],
+        ["dd2ll",  0.51, 1.53, 0.72],
+
+        ["dd3rr",  -0.47, 1.645, 0.51],
+        ["dd3r",   -0.15, 1.75, 0.51],
+        ["dd3l",    0.15, 1.75, 0.51],
+        ["dd3ll",   0.47, 1.645, 0.51],
+
+        {"selfCollision":false},
+        {"collision":false},
+        //rigidifier
+        {"group":""},
+        {"nodeWeight":0.6},
+        ["dd5",0.0, 1.4, 0.70],
+
+        //body latch
+        ["m3", 0.0, 1.70, 0.54],
+        //latch node
+        ["dd3", 0.0, 1.70, 0.54],
+    ],
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["m3", "m3", true, true, 0.0, 800100, "FLT_MAX", "FLT_MAX"],
+    ],
+    "rails": {
+        "m3":{"links:":["m3r", "m3l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "beams": [
+        ["id1:", "id2:"],
+        {"deformLimitExpansion":1.2},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--DECKLID--
+        {"beamSpring":501000,"beamDamp":30},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        //lengthwise
+        ["dd1ll", "dd2ll"],
+        ["dd1rr", "dd2rr"],
+        ["dd2ll", "dd3ll"],
+        ["dd2rr", "dd3rr"],
+        ["dd1l", "dd2l"],
+        ["dd1r", "dd2r"],
+        ["dd2l", "dd3l"],
+        ["dd2r", "dd3r"],
+
+        //widthwise
+        ["dd1ll", "dd1l"],
+        ["dd1rr", "dd1r"],
+        ["dd1l", "dd1r"],
+        ["dd2ll", "dd2l"],
+        ["dd2rr", "dd2r"],
+        ["dd2l", "dd2r"],
+        ["dd3ll", "dd3l"],
+        ["dd3rr", "dd3r"],
+        ["dd3l", "dd3r"],
+        //surficial crossing
+        {"beamDeform":3500,"beamStrength":"FLT_MAX"},
+        ["dd1ll", "dd2l"],
+        ["dd1l", "dd2ll"],
+        ["dd1rr", "dd2r"],
+        ["dd1r", "dd2rr"],
+        ["dd1l", "dd2r"],
+        ["dd1r", "dd2l"],
+        ["dd2ll", "dd3l"],
+        ["dd2l", "dd3ll"],
+        ["dd2rr", "dd3r"],
+        ["dd2r", "dd3rr"],
+        ["dd2l", "dd3r"],
+        ["dd2r", "dd3l"],
+        //extra
+        //rigids
+        {"beamSpring":301000,"beamDamp":20},
+        {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+        //lengthwise
+        ["dd1ll", "dd3ll"],
+        ["dd1rr", "dd3rr"],
+        ["dd1l", "dd3l"],
+        ["dd1r", "dd3r"],
+        //widthwise
+        ["dd1ll", "dd1r"],
+        ["dd1rr", "dd1l"],
+        ["dd2ll", "dd2r"],
+        ["dd2rr", "dd2l"],
+        ["dd3ll", "dd3r"],
+        ["dd3rr", "dd3l"],
+        //rigidifier
+        {"beamSpring":501000,"beamDamp":30},
+        {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["dd1ll", "dd5"],
+        ["dd1l", "dd5"],
+        ["dd1r", "dd5"],
+        ["dd1rr", "dd5"],
+        ["dd2ll", "dd5"],
+        ["dd2l", "dd5"],
+        ["dd2r", "dd5"],
+        ["dd2rr", "dd5"],
+        ["dd3ll", "dd5"],
+        ["dd3l", "dd5"],
+        ["dd3r", "dd5"],
+        ["dd3rr", "dd5"],
+
+        //latch node
+        {"beamSpring":101000,"beamDamp":30},
+        ["m3","m3r"],
+        ["dd3","dd3r"],
+        ["dd3","dd3l"],
+        ["dd3","dd2r"],
+        ["dd3","dd2l"],
+        ["dd3","dd5"],
+
+        {"deformLimitExpansion":1.2},
+        //decklid hinge
+        {"beamSpring":601000,"beamDamp":40},
+        {"beamDeform":6000,"beamStrength":12000},
+        {"breakGroupType":0},
+        {"breakGroup":"deckhinge_R"},
+        //r
+        ["dd1r", "m5r"],
+        ["dd1r", "m6r"],
+        ["dd1r", "q8rr"],
+        ["dd1r", "m5l"],
+        ["dd1r", "k4r"],
+        //{"breakGroup":"deckhinge_L"},
+        //l
+        ["dd1l", "m5l"],
+        ["dd1l", "m6l"],
+        ["dd1l", "q8ll"],
+        ["dd1l", "m5r"],
+        ["dd1l", "k4l"],
+        {"breakGroup":""},
+
+        //pop open
+        {"breakGroupType":1},
+        {"beamType":"|SUPPORT", "beamLongBound":4},
+        {"beamSpring":10000,"beamDamp":200},
+        {"beamDeform":4000,"beamStrength":10000},
+        {"beamPrecompression":1.02},
+        ["dd3r","k2r", {"breakGroup":"tailgatehinge_R"}],
+        ["dd3l","k2l", {"breakGroup":"tailgatehinge_L"}],
+        {"beamPrecompression":1},
+
+        //support beams
+        {"beamType":"|SUPPORT","beamLongBound":6},
+        {"beamSpring":5000,"beamDamp":100},
+        {"beamDeform":3000,"beamStrength":50000},
+        {"beamPrecompression":0.3},
+        ["dd2l", "t5l"],
+        ["dd2r", "t5r"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+
+        //decklid latch
+        {"beamDeform":3500,"beamStrength":9000},
+        {"breakGroup":"decklidlatch"},
+        {"optional":true},
+        //["dd2r", "m3r"],
+        //["dd2l", "m3l"],
+        //["m3r", "dd3r"],
+        //["m3l", "dd3l"],
+        //["m3l", "dd3r"],
+        //["m3r", "dd3l"],
+        {"optional":false},
+        {"breakGroup":""},
+        //damping/spring
+        {"beamDeform":5000,"beamStrength":10000},
+        {"beamSpring":100,"beamDamp":50},
+        {"beamPrecompression":1.5},
+        {"breakGroup":"deckhinge_R"},
+        //["dd2rr","m6r"],
+        //{"breakGroup":"hoodhinge_L"},
+        //["dd2ll","m6l"],
+        {"breakGroup":""},
+        {"beamPrecompression":1},
+        {"deformLimitExpansion":1.2},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //decklid
+        {"groundModel":"metal"},
+        {"group":"decklid"},
+        {"dragCoef":8},
+        ["dd1ll", "dd2ll", "dd2l"],
+        ["dd2l", "dd1l", "dd1ll"],
+        ["dd1rr", "dd1r", "dd2r"],
+        ["dd2r", "dd2rr", "dd1rr"],
+        ["dd1l", "dd2l", "dd2r"],
+        ["dd2r", "dd1r", "dd1l"],
+        ["dd3ll", "dd3l", "dd2l"],
+        ["dd2l", "dd2ll", "dd3ll"],
+        ["dd3rr", "dd2rr", "dd2r"],
+        ["dd2r", "dd3r", "dd3rr"],
+        ["dd2l", "dd3l", "dd3r"],
+        ["dd3r", "dd2r", "dd2l"],
+        {"group":""},
+    ],
+},
+}

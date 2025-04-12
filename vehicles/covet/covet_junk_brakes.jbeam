@@ -1,0 +1,95 @@
+{
+"covet_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":25,
+    },
+    "slotType" : "covet_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_plain",             ["wheel_FR","wheelhub_FR"],    [], {"pos":{"x":-0.72, "y":-1.25, "z":0.288}, "scale":{"x":0.8, "y":0.86, "z":0.86},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_disc_plain",             ["wheel_FL","wheelhub_FL"],    [], {"pos":{"x": 0.72, "y":-1.25, "z":0.288}, "scale":{"x":0.8, "y":0.86, "z":0.86},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["covet_hub_FR","wheelhub_FR"], [], {"pos":{"x":-0.72, "y":-1.25, "z":0.288}, "scale":{"x":0.8, "y":0.76, "z":0.76},  "rot":{"x":-10, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["covet_hub_FL","wheelhub_FL"], [], {"pos":{"x": 0.72, "y":-1.25, "z":0.288}, "scale":{"x":0.8, "y":0.76, "z":0.76},  "rot":{"x":10,  "y":180,"z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1350"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.24},
+        {"brakeMass":4.0},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 7.5, "squealCoefLowSpeed": 7.5}
+    ],
+},
+"covet_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "covet_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_solid",             ["wheel_RR","wheelhub_RR"],    [], {"pos":{"x":-0.72, "y":1.25, "z":0.288}, "scale":{"x":0.7, "y":0.79, "z":0.79},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_disc_solid",             ["wheel_RL","wheelhub_RL"],    [], {"pos":{"x": 0.72, "y":1.25, "z":0.288}, "scale":{"x":0.7, "y":0.79, "z":0.79},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["covet_hub_R","wheelhub_RR","covet_lowerarm_a_R","covet_lowerarm_b_R","covet_upperarm_R"], [], {"pos":{"x":-0.72, "y":1.25, "z":0.288}, "scale":{"x":0.7, "y":0.69, "z":0.69},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["covet_hub_R","wheelhub_RL","covet_lowerarm_a_R","covet_lowerarm_b_R","covet_upperarm_R"], [], {"pos":{"x": 0.72, "y":1.25, "z":0.288}, "scale":{"x":0.7, "y":0.69, "z":0.69},  "rot":{"x":180, "y":180,"z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*540"},
+        {"brakeInputSplit":0.6},
+        {"brakeSplitCoef":0.3},
+        {"parkingTorque":900},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.22},
+        {"brakeMass":3.0},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 7.5, "squealCoefLowSpeed": 7.5}
+    ],
+},
+"covet_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":25,
+    },
+    "slotType":"covet_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        //brake sounds
+        {"squealCoefNatural": 0.0, "squealCoefLowSpeed": 0.0}
+    ],
+}
+}

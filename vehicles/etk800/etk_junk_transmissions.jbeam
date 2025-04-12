@@ -1,0 +1,147 @@
+{
+"etk_junk_transmission_6M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 6-Speed Manual Transmission",
+        "value":350,
+    },
+    "slotType": "etk_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["etk_flywheel","etk_flywheel","Flywheel", {"coreSlot":true}],
+        ["etk_transfer_case","etk_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.348, 0, 3.683, 2.062, 1.313, 1.00, 0.809, 0.677],
+        "friction": 1.75
+        "dynamicFriction": 0.00200,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [4.60, 0.00, 3.12, 1.12, 2.12, 4.12, 2.12, 3.12, 1.12, 1.12],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "visualPositionRelativeParent":[0,0.4,0]
+    },
+    "vehicleController": {
+        "shiftDownRPMOffsetCoef":1.2,
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,7000,7000,7000,7000,7000],
+        "clutchLaunchStartRPM": 2000,
+        "clutchLaunchTargetRPM": 2500,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk_transmission", ["etk_engine","etk_transmission"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--6 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"etk_transmission"},
+         {"nodeWeight":33},
+         ["tra1", 0.0, -0.36, 0.375],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":15001000,"beamDamp":500},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e1l"],
+          ["tra1","e3r"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"etk_junk_transmission_8A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 8-Speed Automatic Transmission",
+        "value":1000,
+    },
+    "slotType": "etk_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["etk_converter","etk_converter","Torque Converter", {"coreSlot":true}],
+        ["etk_transfer_case","etk_transfer_case_RWD", "Transfer Case"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.295, 0, 4.714, 3.143, 2.106, 1.667, 1.285, 1.00, 0.839, 0.667],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":40,
+        "gearChangeTime": 0.1,
+        "shiftEfficiency":0.8,
+        "friction": 1.90,
+        "dynamicFriction": 0.0045,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1"],
+        "visualPositionRelativeParent":[0,0.4,0]
+    },
+    "vehicleController": {
+        "automaticModes":"PRNDSM",
+        "shiftDownRPMOffsetCoef":1.15,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":1.0,
+        "aggressionHoldOffThrottleDelay":2.5,
+        "aggressionSmoothingUp":2,
+        "aggressionSmoothingDown":0.2,
+        "gearboxDecisionSmoothingUp":2,
+        "gearboxDecisionSmoothingDown":2,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":4500,
+        "maxGearChangeTime": 1.0,
+        "minGearChangeTime": 1.0,
+        "sportGearChangeTime": 1.0,
+        "throttleCoefWhileShifting": 0.5,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["etk_transmission", ["etk_engine","etk_transmission"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--8 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"etk_transmission"},
+         {"nodeWeight":42},
+         ["tra1", 0.0, -0.36, 0.33],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":15001000,"beamDamp":500},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e1l"],
+          ["tra1","e3r"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

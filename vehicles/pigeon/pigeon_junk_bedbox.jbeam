@@ -1,0 +1,623 @@
+{
+"pigeon_junk_bedbox": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Bed Box",
+        "value":25,
+    },
+    "slotType" : "pigeon_bed_accessory",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_box_accessory","", "Roof Accessory"],
+        ["pigeon_bedbox_tailgate","pigeon_bedbox_tailgate", "Bed Box Tailgate"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_box", ["pigeon_bedbox"]],
+     ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //bedbox roof
+         {"nodeWeight":0.6},
+         {"group":"pigeon_bedbox"},
+         ["bx1r",-0.548,0.381,1.486],
+         ["bx1",0.0,0.381,1.504],
+         ["bx1l",0.548,0.381,1.486],
+
+         ["bx2r",-0.548,0.8,1.486],
+         ["bx2",0.0,0.8,1.504],
+         ["bx2l",0.548,0.8,1.486],
+
+         ["bx3r",-0.548,1.27,1.486],
+         ["bx3",0.0,1.27,1.504],
+         ["bx3l",0.548,1.27,1.486],
+
+         ["bx4r",-0.548,1.71,1.486],
+         ["bx4",0.0,1.71,1.504,{"selfCollision":false}],
+         ["bx4l",0.548,1.71,1.486],
+
+         //bedbox sides
+         {"nodeWeight":0.3},
+         ["bx5r",-0.601,0.381,1.15],
+         ["bx5l",0.601,0.381,1.15],
+
+         ["bx6r",-0.601,0.8,1.15],
+         ["bx6l",0.601,0.8,1.15],
+
+         ["bx7r",-0.601,1.27,1.15],
+         ["bx7l",0.601,1.27,1.15],
+
+         ["bx8r",-0.601,1.71,1.15],
+         ["bx8l",0.601,1.71,1.15],
+
+         ["bx9r",-0.61,0.381,0.774, {"couplerTag":"bedex_1r", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_1r"}],
+         ["bx9l",0.61,0.381,0.774,  {"couplerTag":"bedex_1l", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_1l"}],
+
+         ["bx10r",-0.61,0.8,0.774, {"couplerTag":"bedex_2r", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_2r"}],
+         ["bx10l",0.61,0.8,0.774,  {"couplerTag":"bedex_2l", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_2l"}],
+
+         ["bx11r",-0.61,1.27,0.774, {"couplerTag":"bedex_3r", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_3r"}],
+         ["bx11l",0.61,1.27,0.774,  {"couplerTag":"bedex_3l", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_3l"}],
+
+         ["bx12r",-0.61,1.71,0.774, {"couplerTag":"bedex_4r", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_4r"}],
+         ["bx12l",0.61,1.71,0.774,  {"couplerTag":"bedex_4l", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_4l"}],
+
+         //front wall
+         ["bx5",0.0,0.381,1.15],
+         ["bx9",0.0,0.381,0.774, {"couplerTag":"bedex_1", "couplerStrength":12000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"bedex_1"}],
+
+         //rigidifier
+         {"group":""},
+         {"nodeWeight":0.5},
+         {"collision":false},
+         {"selfCollision":false},
+         //roof
+         ["bx13",0.0,1.015,1.295],
+         //bedbox sides
+         ["bx13r",-0.299,1.015,1.092],
+         ["bx13l", 0.299,1.015,1.092],
+         //bedbox wall
+         ["bx14",0.0,0.612,1.15],
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //--EXPANSION DEFORM LIMIT DEFAULT--
+          {"deformLimitExpansion":1.2},
+
+          //bedbox sides
+          {"beamSpring":30000,"beamDamp":30},
+          {"beamDeform":4200,"beamStrength":150000},
+          //main shape lengthwise
+          {"deformLimitExpansion":1.2},
+          ["bx9r", "bx10r"],
+          ["bx10r", "bx11r"],
+          ["bx11r", "bx12r"],
+          ["bx5r", "bx6r"],
+          ["bx6r", "bx7r"],
+          ["bx7r", "bx8r"],
+          ["bx1r", "bx2r"],
+          ["bx2r", "bx3r"],
+          ["bx3r", "bx4r"],
+
+          ["bx9l", "bx10l"],
+          ["bx10l", "bx11l"],
+          ["bx11l", "bx12l"],
+          ["bx5l", "bx6l"],
+          ["bx6l", "bx7l"],
+          ["bx7l", "bx8l"],
+          ["bx1l", "bx2l"],
+          ["bx2l", "bx3l"],
+          ["bx3l", "bx4l"],
+          //main shape vertical
+          ["bx9r", "bx5r"],
+          ["bx5r", "bx1r"],
+          ["bx10r", "bx6r"],
+          ["bx6r", "bx2r"],
+          ["bx11r", "bx7r"],
+          ["bx7r", "bx3r"],
+          ["bx12r", "bx8r"],
+          ["bx8r", "bx4r"],
+
+          ["bx9l", "bx5l"],
+          ["bx5l", "bx1l"],
+          ["bx10l", "bx6l"],
+          ["bx6l", "bx2l"],
+          ["bx11l", "bx7l"],
+          ["bx7l", "bx3l"],
+          ["bx12l", "bx8l"],
+          ["bx8l", "bx4l"],
+
+          //surficial crossing
+          {"beamDeform":2000,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["bx1r", "bx6r"],
+          ["bx5r", "bx2r"],
+          ["bx2r", "bx7r"],
+          ["bx6r", "bx3r"],
+          ["bx3r", "bx8r"],
+          ["bx7r", "bx4r"],
+          ["bx5r", "bx10r"],
+          ["bx9r", "bx6r"],
+          ["bx6r", "bx11r"],
+          ["bx10r", "bx7r"],
+          ["bx7r", "bx12r"],
+          ["bx11r", "bx8r"],
+
+          ["bx1l", "bx6l"],
+          ["bx5l", "bx2l"],
+          ["bx2l", "bx7l"],
+          ["bx6l", "bx3l"],
+          ["bx3l", "bx8l"],
+          ["bx7l", "bx4l"],
+          ["bx5l", "bx10l"],
+          ["bx9l", "bx6l"],
+          ["bx6l", "bx11l"],
+          ["bx10l", "bx7l"],
+          ["bx7l", "bx12l"],
+          ["bx11l", "bx8l"],
+
+          //rigidifier
+          {"beamDeform":1500,"beamStrength":150000},
+          ["bx13r", "bx1r"],
+          ["bx13r", "bx2r"],
+          ["bx13r", "bx3r"],
+          ["bx13r", "bx4r"],
+          ["bx13r", "bx5r"],
+          ["bx13r", "bx6r"],
+          ["bx13r", "bx7r"],
+          ["bx13r", "bx8r"],
+          ["bx13r", "bx9r"],
+          ["bx13r", "bx10r"],
+          ["bx13r", "bx11r"],
+          ["bx13r", "bx12r"],
+
+          ["bx13l", "bx1l"],
+          ["bx13l", "bx2l"],
+          ["bx13l", "bx3l"],
+          ["bx13l", "bx4l"],
+          ["bx13l", "bx5l"],
+          ["bx13l", "bx6l"],
+          ["bx13l", "bx7l"],
+          ["bx13l", "bx8l"],
+          ["bx13l", "bx9l"],
+          ["bx13l", "bx10l"],
+          ["bx13l", "bx11l"],
+          ["bx13l", "bx12l"],
+
+          //rigids
+          {"beamDeform":1000,"beamStrength":150000},
+          //vertical
+          ["bx9l", "bx1l"],
+          ["bx12l", "bx4l"],
+          ["bx10l", "bx2l"],
+          ["bx11l", "bx3l"],
+
+          //bedbox roof
+          {"beamSpring":30000,"beamDamp":30},
+          {"beamDeform":4200,"beamStrength":150000},
+          //main shape lengthwise
+          {"deformLimitExpansion":1.2},
+          ["bx4", "bx3"],
+          ["bx3", "bx2"],
+          ["bx2", "bx1"],
+          //main shape widthwise
+          ["bx1l", "bx1"],
+          ["bx1", "bx1r"],
+          ["bx2l", "bx2"],
+          ["bx2", "bx2r"],
+          ["bx3l", "bx3"],
+          ["bx3", "bx3r"],
+          ["bx4l", "bx4"],
+          ["bx4", "bx4r"],
+
+          //surficial crossing
+          {"beamDeform":2000,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["bx1l", "bx2"],
+          ["bx1", "bx2l"],
+          ["bx2l", "bx3"],
+          ["bx2", "bx3l"],
+          ["bx3l", "bx4"],
+          ["bx3", "bx4l"],
+          ["bx1", "bx2r"],
+          ["bx1r", "bx2"],
+          ["bx2", "bx3r"],
+          ["bx2r", "bx3"],
+          ["bx3", "bx4r"],
+          ["bx3r", "bx4"],
+
+          //rigidifier
+          {"beamDeform":1500,"beamStrength":150000},
+          ["bx13", "bx1"],
+          ["bx13", "bx2"],
+          ["bx13", "bx3"],
+          ["bx13", "bx4"],
+          ["bx13", "bx1l"],
+          ["bx13", "bx2l"],
+          ["bx13", "bx3l"],
+          ["bx13", "bx4l"],
+          ["bx13", "bx1r"],
+          ["bx13", "bx2r"],
+          ["bx13", "bx3r"],
+          ["bx13", "bx4r"],
+
+          //rigids
+          {"beamDeform":1000,"beamStrength":150000},
+          //widthwise
+          ["bx4r", "bx4l"],
+          ["bx3r", "bx3l"],
+          ["bx2r", "bx2l"],
+          ["bx1r", "bx1l"],
+
+          //corner
+          ["bx2", "bx5"],
+          ["bx2", "bx6r"],
+          ["bx2", "bx6l"],
+          ["bx3", "bx7r"],
+          ["bx3", "bx7l"],
+          ["bx4", "bx8r"],
+          ["bx4", "bx8l"],
+
+          //bedbox front wall
+          {"beamSpring":30000,"beamDamp":30},
+          {"beamDeform":4200,"beamStrength":150000},
+          //main shape widthwise
+          {"deformLimitExpansion":1.2},
+          ["bx5r", "bx5"],
+          ["bx5", "bx5l"],
+          ["bx9r", "bx9"],
+          ["bx9l", "bx9"],
+          //main shape vertical
+          ["bx9", "bx5"],
+          ["bx5", "bx1"],
+
+          //surficial crossing
+          {"beamDeform":2000,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["bx5r", "bx9"],
+          ["bx5", "bx9r"],
+          ["bx5", "bx1r"],
+          ["bx5r", "bx1"],
+          ["bx1", "bx5l"],
+          ["bx1l", "bx5"],
+          ["bx5", "bx9l"],
+          ["bx9", "bx5l"],
+
+          //rigidifier
+          {"beamDeform":1500,"beamStrength":150000},
+          ["bx14", "bx1r"],
+          ["bx14", "bx5r"],
+          ["bx14", "bx9r"],
+          ["bx14", "bx9"],
+          ["bx14", "bx5"],
+          ["bx14", "bx1"],
+          ["bx14", "bx9l"],
+          ["bx14", "bx5l"],
+          ["bx14", "bx1l"],
+
+          //rigids
+          {"beamDeform":1000,"beamStrength":150000},
+          //vertical
+          ["bx9", "bx1"],
+          //widthwise
+          ["bx9r", "bx9l"],
+          ["bx5r", "bx5l"],
+
+          //limiter
+          {"beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":361000,"beamDamp":30},
+          {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+          ["bx12l", "bd8ll"],
+          ["bx11l", "bd7ll"],
+          ["bx10l", "bd6ll"],
+          ["bx9l", "bd5ll"],
+          ["bx9", "bd5"],
+          ["bx9r", "bd5rr"],
+          ["bx10r", "bd6rr"],
+          ["bx11r", "bd7rr"],
+          ["bx12r", "bd8rr"],
+
+          ["bx9r", "bd6rr"],
+          ["bx10r", "bd5rr"],
+          ["bx10r", "bd7rr"],
+          ["bx11r", "bd6rr"],
+          ["bx11r", "bd8rr"],
+          ["bx12r", "bd7rr"],
+
+          ["bx9l", "bd6ll"],
+          ["bx10l", "bd5ll"],
+          ["bx10l", "bd7ll"],
+          ["bx11l", "bd6ll"],
+          ["bx11l", "bd8ll"],
+          ["bx12l", "bd7ll"],
+
+          ["bx9r", "bd5"],
+          ["bx9", "bd5rr"],
+          ["bx9", "bd5ll"],
+          ["bx9l", "bd5"],
+
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+
+            //sides
+            {"dragCoef":8},
+            {"group":"pigeon_bedbox_rightside"},
+            ["bx2r",  "bx5r",  "bx1r"],
+            ["bx2r",  "bx6r",  "bx5r"],
+            ["bx3r",  "bx6r",  "bx2r"],
+            ["bx3r",  "bx7r",  "bx6r"],
+            ["bx4r",  "bx7r",  "bx3r"],
+            ["bx4r",  "bx8r",  "bx7r"],
+            ["bx8r",  "bx11r", "bx7r"],
+            ["bx8r",  "bx12r", "bx11r"],
+            ["bx11r", "bx10r", "bx7r"],
+            ["bx7r",  "bx10r", "bx6r"],
+            ["bx6r",  "bx10r", "bx9r"],
+            ["bx9r",  "bx5r",  "bx6r"],
+            {"group":"pigeon_bedbox_leftside"},
+            ["bx5l",  "bx2l",  "bx1l"],
+            ["bx6l",  "bx2l",  "bx5l"],
+            ["bx6l",  "bx3l",  "bx2l"],
+            ["bx7l",  "bx3l",  "bx6l"],
+            ["bx7l",  "bx4l",  "bx3l"],
+            ["bx8l",  "bx4l",  "bx7l"],
+            ["bx11l", "bx8l",  "bx7l"],
+            ["bx12l", "bx8l",  "bx11l"],
+            ["bx10l", "bx11l", "bx7l"],
+            ["bx10l", "bx7l",  "bx6l"],
+            ["bx10l", "bx6l",  "bx9l"],
+            ["bx5l",  "bx9l",  "bx6l"],
+
+            //front wall
+            {"dragCoef":3},
+            {"group":"pigeon_bedbox_front"},
+            ["bx1r", "bx5", "bx1"],
+            ["bx1", "bx5", "bx1l"],
+            ["bx1l", "bx5", "bx5l"],
+            ["bx1r", "bx5r", "bx5"],
+            ["bx5", "bx5r", "bx9"],
+            ["bx9", "bx5l", "bx5"],
+            ["bx9", "bx9l", "bx5l"],
+            ["bx5r", "bx9r", "bx9"],
+
+            //bedbox roof
+            {"dragCoef":8},
+            {"group":"pigeon_bedbox_floor"},
+            ["bx4", "bx4r", "bx3r"],
+            ["bx3r", "bx3", "bx4"],
+            ["bx4", "bx3", "bx3l"],
+            ["bx3l", "bx4l", "bx4"],
+            ["bx2r", "bx3", "bx3r"],
+            ["bx2r", "bx2", "bx3"],
+            ["bx3", "bx2", "bx2l"],
+            ["bx2l", "bx3l", "bx3"],
+            ["bx2r", "bx1r", "bx2"],
+            ["bx2", "bx1r", "bx1"],
+            ["bx1", "bx1l", "bx2"],
+            ["bx2", "bx1l", "bx2l"],
+            {"group":""},
+    ],
+},
+"pigeon_junk_bedbox_tailgate": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Bed Box Broken Tailgate",
+        "value":15,
+    },
+    "slotType" : "pigeon_bedbox_tailgate",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_boxdoor", ["pigeon_boxdoor"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"tailgateBoxCoupler"}],
+    ]
+    "tailgateBoxCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["t1",      "blc1",      20000,                     0.015,                  0.005,                      0.2,                 0.1,                   "tailgateBox_latch", {"forceCid1":"bxr4", "forceCid2":"bxt1"}]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["bxt1"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_01_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 45,
+        "openForceDuration": 0.6,
+        "closeForceMagnitude": 850,
+        "closeForceDuration": 0.1
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["boxdoorL", "", "bxt1l","bxt1","bxt2l", "box", {"x":0.15, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.00, "y":-0.02, "z":0.002}, {"deformGroup":"tailgatehinge_L"}],
+        ["boxdoorR", "", "bxt1r","bxt1","bxt2r", "box", {"x":0.15, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.00, "y":-0.02, "z":-0.082}, {"deformGroup":"tailgatehinge_R"}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["boxdoorL", "action0", "tailgateBoxLatch"]
+        ["boxdoorR", "action0", "tailgateBoxLatch"]
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["tailgateBoxLatch", "ui.inputActions.pickup.tailgateLatch.title", "ui.inputActions.pickup.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateBoxCoupler').toggleGroup()"}],
+        ["tailgateLatch", "ui.inputActions.pickup.tailgateLatch.title", "ui.inputActions.pickup.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateCoupler').toggleGroupConditional({{'tailgateBoxCoupler','attached','vehicle.advancedCouplerControl.openOtherSideFirst'}})"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         {"group":"pigeon_boxdoor"},
+         {"nodeWeight":0.3},
+         ["bxt1r",-0.57,1.733,0.786],
+         ["bxt1",0.0,1.733,0.786],
+         ["bxt1l",0.57,1.733,0.786],
+
+         ["bxt2r",-0.56,1.733,1.15],
+         ["bxt2",0.0,1.733,1.15],
+         ["bxt2l",0.56,1.733,1.15],
+
+         ["bxt3r",-0.548,1.733,1.486],
+         ["bxt3",0.0,1.733,1.486],
+         ["bxt3l",0.548,1.733,1.486],
+
+         {"collision":false},
+         {"selfCollision":false},
+         ["bxr4",0.0,1.536,1.15],
+         {"group":""},
+
+         //latch nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"group":""},
+         {"nodeWeight":0.5},
+         ["blc1", 0.0, 1.72, 0.77],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //bedbox tailgate
+          {"beamSpring":291000,"beamDamp":30},
+          {"beamDeform":4200,"beamStrength":150000},
+          //main shape widthwise
+          {"deformLimitExpansion":1.2},
+          ["bxt3l", "bxt3"],
+          ["bxt3", "bxt3r"],
+          ["bxt2l", "bxt2"],
+          ["bxt2", "bxt2r"],
+          ["bxt1l", "bxt1"],
+          ["bxt1", "bxt1r"],
+          //main shape vertical
+          ["bxt1", "bxt2"],
+          ["bxt2", "bxt3"],
+          ["bxt1r", "bxt2r"],
+          ["bxt2r", "bxt3r"],
+          ["bxt1l", "bxt2l"],
+          ["bxt2l", "bxt3l"],
+
+          //surficial crossing
+          {"beamDeform":2000,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["bxt3l", "bxt2"],
+          ["bxt2", "bxt3r"],
+          ["bxt3", "bxt2r"],
+          ["bxt3", "bxt2l"],
+          ["bxt2l", "bxt1"],
+          ["bxt2", "bxt1l"],
+          ["bxt2", "bxt1r"],
+          ["bxt1", "bxt2r"],
+
+          //rigidifier
+          {"beamDeform":1500,"beamStrength":150000},
+          ["bxr4", "bxt3"],
+          ["bxr4", "bxt2"],
+          ["bxr4", "bxt1"],
+          ["bxr4", "bxt1l"],
+          ["bxr4", "bxt1r"],
+          ["bxr4", "bxt2l"],
+          ["bxr4", "bxt2r"],
+          ["bxr4", "bxt3l"],
+          ["bxr4", "bxt3r"],
+
+          //rigids
+          {"beamDeform":1000,"beamStrength":150000},
+          ["bxt1l", "bxt3l"],
+          ["bxt1r", "bxt3r"],
+          ["bxt1r", "bxt1l"],
+          ["bxt3r", "bxt3l"],
+
+          //hinge
+          {"beamSpring":1000,"beamDamp":10},
+          {"beamDeform":4500,"beamStrength":1000},
+          {"breakGroup":"boxdoor_hinge_R"},
+          ["bxt3r", "bx4r"],
+          ["bxt3r", "bx4"],
+          ["bxt3r", "bx8r"],
+          ["bxt3r", "bx3r"],
+          ["bxt3r", "bx13"],
+          ["bxt3", "bx4r"],
+          {"breakGroup":"boxdoor_hinge_L"},
+          ["bxt3l", "bx4l"],
+          ["bxt3l", "bx4"],
+          ["bxt3l", "bx8l"],
+          ["bxt3l", "bx3l"],
+          ["bxt3l", "bx13"],
+          ["bxt3", "bx4l"],
+          {"breakGroup":""},
+
+          {"beamSpring":520100,"beamDamp":50},
+          {"beamDeform":9975,"beamStrength":"FLT_MAX"},
+          ["blc1","bxt1r"],
+          ["blc1","bxt1"],
+          ["blc1","bxt2"],
+          ["blc1","bxr4"],
+
+          //limiter
+          {"beamType":"|SUPPORT", "beamLongBound":8},
+          {"beamSpring":361000,"beamDamp":30},
+          {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+          ["bxt1l", "bx11l"],
+          ["bxt2l", "bx7l"],
+          ["bxt3l", "bx3l"],
+          ["bxt3", "bx3"],
+          ["bxt3r", "bx3r"],
+          ["bxt2r", "bx7r"],
+          ["bxt1r", "bx11r"],
+
+          //to bed tailgate
+          {"optional":true}
+          ["bxt1l", "t2ll"],
+          ["bxt1", "t2"],
+          ["bxt1r", "t2rr"],
+          ["bxt1l", "t2l"],
+          ["bxt1", "t2l"],
+          ["bxt1", "t2r"],
+          ["bxt1r", "t2r"],
+          {"optional":false}
+          {"beamPrecompression":0.6},
+          {"beamSpring":3000,"beamDamp":150},
+          ["bxt2l", "bx3l"],
+          ["bxt2r", "bx3r"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"plastic"},
+
+            //box tailgate
+            {"group":"pigeon_boxdoor"},
+            {"dragCoef":6},
+            ["bxt3l", "bxt2", "bxt3"],
+            ["bxt3l", "bxt2l", "bxt2"],
+            ["bxt3", "bxt2", "bxt3r"],
+            ["bxt3r", "bxt2", "bxt2r"],
+            ["bxt2l", "bxt1", "bxt2"],
+            ["bxt2", "bxt1", "bxt2r"],
+            ["bxt2l", "bxt1l", "bxt1"],
+            ["bxt1", "bxt1r", "bxt2r"],
+            {"group":""},
+    ],
+},
+}

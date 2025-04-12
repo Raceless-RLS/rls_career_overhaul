@@ -1,0 +1,299 @@
+{
+"barstow_junk_radsupport": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator Support",
+        "value":45,
+    },
+    "slotType" : "barstow_radsupport",
+    "slots": [
+        ["type", "default", "description"],
+        ["barstow_radiator","barstow_radiator", "Radiator"],
+        ["barstow_grille","barstow_grille", "Grille"],
+    ],
+     "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //body
+         ["barstow_radsupport", ["barstow_radsupport"]],
+         ["barstow_engbay_radsupport", ["barstow_radsupport"]],
+         ["barstow_engbay_firewall", ["barstow_body"]],
+     ],
+     "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"group":"barstow_radsupport"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":1.75},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //radiator support
+         ["ra1rr",-0.79,-2.03, 0.77],
+         {"engineGroup":"radiator"},
+         ["ra1r",-0.42,-1.99, 0.82,{"group":["barstow_radsupport","barstow_radtube"]}],
+         ["ra1", 0.0,-1.99, 0.82],
+         ["ra1l", 0.42,-1.99, 0.82,{"group":["barstow_radsupport","barstow_radtube"]}],
+         {"engineGroup":""},
+         ["ra1ll", 0.79,-2.03, 0.77],
+
+         ["ra3rr",-0.84,-2.03, 0.54],
+         ["ra3r",-0.42,-1.99, 0.53],
+         ["ra3", 0.0,-1.99, 0.53],
+         ["ra3l", 0.42,-1.99, 0.53],
+         ["ra3ll", 0.84,-2.03, 0.54],
+
+         ["ra4rr",-0.72,-1.85, 0.54],
+         ["ra4ll", 0.72,-1.85, 0.54],
+
+         ["ra5r",-0.40,-1.99, 0.33],
+         ["ra5", 0.0,-1.99, 0.32, {"tag":"tow_hook","couplerStrength":101000}],
+         ["ra5l", 0.40,-1.99, 0.33],
+
+         ["ra6r",-0.36,-1.82, 0.35,{"group":["barstow_radsupport","barstow_radtube"]}],
+         ["ra6", 0.0,-1.82, 0.35],
+         ["ra6l", 0.36,-1.82, 0.35,{"group":["barstow_radsupport","barstow_radtube"]}],
+
+         ["ra7r", -0.25, -1.78, 0.86,{"group":["barstow_radsupport","barstow_radtube"]}],
+         ["ra7l", 0.25, -1.78, 0.86,{"group":["barstow_radsupport","barstow_radtube"]}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--Radiator Support--
+          {"breakGroupType":0},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":25000,"beamDamp":75},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.005},
+          //main shape widthwise
+          {"deformLimitExpansion":1.1},
+          ["ra1r","ra1"],
+          ["ra1","ra1l"],
+          ["ra3r","ra3"],
+          ["ra3","ra3l"],
+          ["ra5r","ra5"],
+          ["ra5l","ra5"],
+          ["ra6r","ra6"],
+          ["ra6l","ra6"],
+          {"deformGroup":""},
+
+          ["ra1rr","ra1r"],
+          ["ra1l","ra1ll"],
+          ["ra3rr","ra3r"],
+          ["ra3l","ra3ll"],
+
+          ["ra4rr","ra6r"],
+          ["ra4ll","ra6l"],
+
+          //main shape vertical
+          {"deformGroup":"radiator_damage"},
+          ["ra3r","ra1r"],
+          ["ra3l","ra1l"],
+          ["ra5r","ra3r"],
+          ["ra5l","ra3l"],
+          ["ra5r","ra6r"],
+          ["ra5l","ra6l"],
+          ["ra5","ra3"],
+          ["ra3","ra1"],
+          ["ra5","ra6"],
+          {"deformGroup":""},
+
+          ["ra3rr","ra1rr"],
+          ["ra3ll","ra1ll"],
+          ["ra3rr","ra4rr"],
+          ["ra3ll","ra4ll"],
+
+          //front crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":8500,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage"},
+          ["ra1","ra3r"],
+          ["ra1","ra3l"],
+          ["ra3","ra1r"],
+          ["ra3","ra1l"],
+          ["ra3r","ra5"],
+          ["ra3l","ra5"],
+          ["ra5r","ra3"],
+          ["ra5l","ra3"],
+          {"deformGroup":""},
+
+          ["ra1rr","ra3r"],
+          ["ra1ll","ra3l"],
+          ["ra1r","ra3rr"],
+          ["ra1l","ra3ll"],
+
+          ["ra3rr","ra5r"],
+          ["ra3ll","ra5l"],
+
+          //bottom crossing
+          {"deformGroup":"radiator_damage"},
+          ["ra3r","ra6"],
+          ["ra3l","ra6"],
+          ["ra5","ra6r"],
+          ["ra5","ra6l"],
+          ["ra6","ra5r"],
+          ["ra6","ra5l"],
+          {"deformGroup":""},
+
+          ["ra4rr","ra5r"],
+          ["ra4ll","ra5l"],
+
+          ["ra3rr","ra6r"],
+          ["ra3ll","ra6l"],
+
+          //width and height rigids
+          {"beamSpring":25000,"beamDamp":75},
+          {"beamDeform":3400,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage"},
+          ["ra5r","ra5l"],
+          ["ra6r","ra6l"],
+          ["ra1","ra5"],
+          ["ra1","ra6"],
+          ["ra1r","ra1l"],
+          {"deformGroup":""},
+          ["ra1rr","ra1"],
+          ["ra1","ra1ll"],
+
+          //corner rigid
+          ["ra6r","ra3r"],
+          ["ra6","ra3"],
+          ["ra6l","ra3l"],
+          ["ra1rr","ra4rr"],
+          ["ra1ll","ra4ll"],
+          ["ra3r","ra4rr"],
+          ["ra3l","ra4ll"],
+
+          //cross rigid
+          ["ra1rr","ra6l"],
+          ["ra1ll","ra6r"],
+          ["ra1rr","ra6r"],
+          ["ra1ll","ra6l"],
+
+          //rigidifier
+          {"beamSpring":1001000,"beamDamp":75},
+          {"beamDeform":2550,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage"},
+          ["ra1r","ra7r"],
+          ["ra1","ra7r"],
+          ["ra1l","ra7r"],
+          ["ra3r","ra7r"],
+          ["ra3","ra7r"],
+          ["ra3l","ra7r"],
+          ["ra5r","ra7r"],
+          ["ra5","ra7r"],
+          ["ra5l","ra7r"],
+          {"deformGroup":""},
+          ["ra6r","ra7r"],
+          ["ra6","ra7r"],
+          ["ra6l","ra7r"],
+
+          ["ra1rr","ra7r"],
+          ["ra3rr","ra7r"],
+          ["ra4rr","ra7r"],
+
+          {"deformGroup":"radiator_damage"},
+          ["ra1r","ra7l"],
+          ["ra1","ra7l"],
+          ["ra1l","ra7l"],
+          ["ra3r","ra7l"],
+          ["ra3","ra7l"],
+          ["ra3l","ra7l"],
+          ["ra5r","ra7l"],
+          ["ra5","ra7l"],
+          ["ra5l","ra7l"],
+          {"deformGroup":""},
+          ["ra6r","ra7l"],
+          ["ra6","ra7l"],
+          ["ra6l","ra7l"],
+
+          ["ra1ll","ra7l"],
+          ["ra3ll","ra7l"],
+          ["ra4ll","ra7l"],
+
+          //attach
+          {"beamDeform":10200,"beamStrength":29750},
+          //r
+          ["ra3rr","s5r"],
+          ["ra3rr","s5rr"],
+          ["ra3rr","s5rrr"],
+
+          ["ra4rr","s5r"],
+          ["ra4rr","s5rr"],
+          ["ra4rr","s5rrr"],
+
+          ["ra5r","s5r"],
+          ["ra5r","s5rr"],
+          ["ra5r","s5rrr"],
+
+          ["ra6r","s5r"],
+          ["ra6r","s5rr"],
+          ["ra6r","s5rrr"],
+
+          ["ra1r","s4rrr", {"deformGroup":"radiator_damage","deformationTriggerRatio":0.02,"breakGroup":"radsupport_damper_R"}],
+
+          ["ra1rr", "s5r", {"beamSpring":0,"beamDamp":750,"breakGroup":"radsupport_damper_R"}],
+          ["ra1rr", "s3rrr", {"beamSpring":0,"beamDamp":750,"breakGroup":"radsupport_damper_R"}],
+
+          //l
+          ["ra3ll","s5l"],
+          ["ra3ll","s5ll"],
+          ["ra3ll","s5lll"],
+
+          ["ra4ll","s5l"],
+          ["ra4ll","s5ll"],
+          ["ra4ll","s5lll"],
+
+          ["ra5l","s5l"],
+          ["ra5l","s5ll"],
+          ["ra5l","s5lll"],
+
+          ["ra6l","s5l"],
+          ["ra6l","s5ll"],
+          ["ra6l","s5lll"],
+
+          ["ra1l","s4lll", {"deformGroup":"radiator_damage","deformationTriggerRatio":0.02,"breakGroup":"radsupport_damper_L"}],
+
+          ["ra1ll", "s5l", {"beamSpring":0,"beamDamp":750,"breakGroup":"radsupport_damper_L"}],
+          ["ra1ll", "s3lll", {"beamSpring":0,"beamDamp":750,"breakGroup":"radsupport_damper_L"}],
+
+
+          //to engine
+          {"beamType":"|SUPPORT", "beamLongBound":0.5},
+          {"beamSpring":101000,"beamDamp":100},
+          {"beamDeform":4250,"beamStrength":21250},
+          {"deformGroup":"radtube_break","deformationTriggerRatio":0.5},
+          {"optional":true},
+          ["ra7r","e4l"],
+          ["ra7l","e4r"],
+          ["ra6r","e2l"],
+          ["ra6l","e2r"],
+          {"optional":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_radsupport"},
+            {"dragCoef":6},
+            ["ra1rr","ra3rr","ra3r"],
+            ["ra1rr","ra3r","ra1r"],
+            ["ra1r","ra3r","ra1"],
+            ["ra1","ra3l","ra1l"],
+            ["ra3ll","ra1ll","ra3l"],
+            ["ra1ll","ra1l","ra3l"],
+
+            ["ra3r","ra5r","ra5"],
+            ["ra3l","ra5","ra5l"],
+
+            ["ra1", "ra3r", "ra3"],
+            ["ra3r", "ra5", "ra3"],
+
+            ["ra3l", "ra1", "ra3"],
+            ["ra5", "ra3l", "ra3"],
+
+            {"dragCoef":20},
+            ["ra5r","ra6r","ra6"],
+            ["ra5r","ra6","ra5"],
+            ["ra5l","ra6","ra6l"],
+            ["ra5","ra6","ra5l"],
+    ],
+},
+}

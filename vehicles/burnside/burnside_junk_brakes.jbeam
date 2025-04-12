@@ -1,0 +1,82 @@
+{
+"burnside_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":20,
+    },
+    "slotType" : "burnside_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["burnside_spindle_FR", ["wheel_FR","wheelhub_FR"], [],{"scale":{"x":0.995,"y":1,"z":1}}],
+        ["burnside_spindle_FL", ["wheel_FL","wheelhub_FL"], [],{"scale":{"x":0.995,"y":1,"z":1}}],
+        ["burnside_brakedrum_FR", ["wheel_FR","wheelhub_FR"], []],
+        ["burnside_brakedrum_FL", ["wheel_FL","wheelhub_FL"], []],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        {"brakeTorque":"$=$brakestrength*1600"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":0},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.27},
+        {"brakeMass":8.5},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"burnside_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":15,
+    },
+    "slotType" : "burnside_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake drums
+        ["burnside_brakedrum_RR", ["burnside_axle","burnside_shock_R","burnside_spring_R","wheelhub_RR"]],
+        ["burnside_brakedrum_RL", ["burnside_axle","burnside_shock_R","burnside_spring_R","wheelhub_RL"]],
+        ["burnside_spindle_RR", ["wheel_RR","wheelhub_RR"],[],{"scale":{"x":0.995,"y":1,"z":1}}],
+        ["burnside_spindle_RL", ["wheel_RL","wheelhub_RL"],[],{"scale":{"x":0.995,"y":1,"z":1}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        {"brakeTorque":"$=$brakestrength*500"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":800},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.26},
+        {"brakeMass":6.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 3.0, "squealCoefLowSpeed": 3.0}
+    ],
+},
+}

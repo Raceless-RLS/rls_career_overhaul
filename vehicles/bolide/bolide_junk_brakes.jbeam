@@ -1,0 +1,78 @@
+{
+"bolide_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":250,
+    },
+    "slotType" : "bolide_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_sport", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_plain",          ["wheel_FR","wheelhub_FR"],    [],  {"pos":{"x":-0.775, "y":-1.28, "z":0.345}, "scale":{"x":0.9, "y":0.95, "z":0.95},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_disc_plain",          ["wheel_FL","wheelhub_FL"],    [],  {"pos":{"x": 0.775, "y":-1.28, "z":0.345}, "scale":{"x":0.9, "y":0.95, "z":0.95},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_4pot_yellow", ["bolide_hub_F"], [], {"pos":{"x":-0.775, "y":-1.285, "z":0.345}, "scale":{"x":0.9, "y":0.85, "z":0.85},  "rot":{"x":-15, "y":0,  "z":0  }}],
+        ["brake_caliper_4pot_yellow", ["bolide_hub_F"], [], {"pos":{"x": 0.775, "y":-1.285, "z":0.345}, "scale":{"x":0.9, "y":0.85, "z":0.85},  "rot":{"x":15,  "y":180,"z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"brakeTorque":"$=$brakestrength*900"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.305},
+        {"brakeMass":8.25},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //brake sounds
+        {"squealCoefNatural": 5.5, "squealCoefLowSpeed": 5.5}
+    ],
+},
+"bolide_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":200,
+    },
+    "slotType" : "bolide_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_sport", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_plain",          ["wheel_RR","wheelhub_RR"],    [],                           {"pos":{"x":-0.765, "y":1.25, "z":0.345}, "scale":{"x":0.9, "y":0.95,  "z":0.95},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_disc_plain",          ["wheel_RL","wheelhub_RL"],    [],                           {"pos":{"x": 0.765, "y":1.25, "z":0.345}, "scale":{"x":0.9, "y":0.95,  "z":0.95},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_4pot_yellow", ["bolide_hub_R"], [], {"pos":{"x":-0.765, "y":1.25, "z":0.345}, "scale":{"x":0.9, "y":0.85, "z":0.85}, "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_4pot_yellow", ["bolide_hub_R"], [], {"pos":{"x": 0.765, "y":1.25, "z":0.345}, "scale":{"x":0.9, "y":0.85, "z":0.85}, "rot":{"x":180, "y":180,"z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"brakeTorque":"$=$brakestrength*550"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":700},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.305},
+        {"brakeMass":7.75},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+}

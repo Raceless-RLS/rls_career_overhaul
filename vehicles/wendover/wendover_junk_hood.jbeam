@@ -1,0 +1,499 @@
+{
+"wendover_junk_hood_a": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Hood Latch",
+        "value":100,
+    },
+    "slotType" : "wendover_hood",
+    "slots": [
+        ["type", "default", "description"],
+        ["wendover_hoodplates","","Hood Bolts"],
+        ["wendover_hood_accessory","","Hood Accessory"],
+        ["wendover_hood_lights","","Hood Lights"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["wendover_hood_a", ["wendover_hood"]],
+         {"deformGroup":"hoodhinge_R", "deformMaterialBase":"wendover", "deformMaterialDamaged":"invis"},
+         ["wendover_hood_hinge_R", ["wendover_hoodhinge"],[]{"deformSound":""}],
+         {"deformGroup":"hoodhinge_L", "deformMaterialBase":"wendover", "deformMaterialDamaged":"invis"},
+         ["wendover_hood_hinge_L", ["wendover_hoodhinge"],[]{"deformSound":""}],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"hoodLatchF"}],
+        ["advancedCouplerControl", {"name":"hoodLatchR"}],
+        ["advancedCouplerControl", {"name":"hoodLatchL"}],
+        ["advancedCouplerControl", {"name":"hoodCatch"}],
+    ]
+    "hoodLatchF":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["f15",     "h5",        0,                     0.0,                    0.000,                      0.0,                 0.0,                   "hoodF_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["h5"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Hood>90s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Hood>modern_02_open_lever",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0,
+        "closeForceMagnitude": 0,
+        "closeForceDuration": 0,
+    }
+    "hoodLatchR":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["f6rr",    "h5r",       0,                     0.00,                   0.000,                      0.0,                 0.0,                   "hoodR_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["h5r"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 40,
+        "openForceDuration": 4,
+        "closeForceMagnitude": 125,
+        "closeForceDuration": 0.5,
+    }
+    "hoodLatchL":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["f6ll",    "h5l",       0,                     0.00,                   0.000,                      0.0,                 0.0,                   "hoodR_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["h5l"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Trunk>90s_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 40,
+        "openForceDuration": 4,
+        "closeForceMagnitude": 125,
+        "closeForceDuration": 0.5,
+    }
+    "hoodCatch":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["h9",      "h4",        0,                     0.00,                   0.000,                      0.0,                 0.0,                   "hoodF_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["h4"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Hood>90s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Hood>modern_05_open_hood",
+        "breakSoundEvent":""
+        "openForceMagnitude": 350,
+        "openForceDuration": 1.5,
+        "closeForceMagnitude": 50,
+        "closeForceDuration": 3,
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood", "", "h4","h4r","h3", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":0, "y":-2, "z":2}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.04, "y":-0.03, "z":-0.05}],
+        ["hood_int", "", "f5ll","f5l","f6ll", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":45, "y":-5, "z":-5}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.1, "y":0.1, "z":-0.25}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["hood", "action0", "hoodLatchR"],
+        ["hood", "action0", "hoodLatchL"],
+        ["hood", "action0", "hoodCatch"],
+        ["hood_int", "action0", "hoodLatchF"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["hoodLatchR", "ui.inputActions.wendover.hoodLatch.title", "ui.inputActions.wendover.hoodLatch.description", {"onUp":"controller.getControllerSafe('hoodLatchR').toggleGroupConditional({{'hoodLatchF','attached','vehicle.advancedCouplerControl.releaseHoodFirstInterior'}})"}],
+        ["hoodLatchL", "ui.inputActions.wendover.hoodLatch.title", "ui.inputActions.wendover.hoodLatch.description", {"onUp":"controller.getControllerSafe('hoodLatchL').toggleGroupConditional({{'hoodLatchF','attached','vehicle.advancedCouplerControl.releaseHoodFirstInterior'}})"}],
+        ["hoodLatchF", "ui.inputActions.wendover.hoodLatch.title", "ui.inputActions.wendover.hoodLatch.description", {"onUp":"controller.getControllerSafe('hoodLatchF').toggleGroup()"}],
+        ["hoodCatch", "ui.inputActions.wendover.hoodLatch.title", "ui.inputActions.wendover.hoodLatch.description", {"onUp":"controller.getControllerSafe('hoodCatch').toggleGroupConditional({{'hoodLatchF','attached','vehicle.advancedCouplerControl.releaseHoodFirstInterior'}})"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         //--HOOD--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"wendover_hood"},
+         {"nodeWeight":0.9},
+         ["h1rr", -0.85, -0.9, 0.91],
+         ["h1r", -0.33, -1.07, 0.95],
+         ["h1l", 0.33, -1.07, 0.95],
+         ["h1ll", 0.85, -0.9, 0.91],
+
+         ["h2rr", -0.84, -1.41, 0.86],
+         ["h2r", -0.37, -1.49, 0.91],
+         ["h2l", 0.37, -1.49, 0.91],
+         ["h2ll", 0.84, -1.41, 0.86],
+
+         ["h3rr", -0.83, -1.82, 0.8],
+         ["h3r", -0.40, -1.86, 0.84],
+         ["h3", 0.0, -1.87, 0.84],
+         ["h3l", 0.40, -1.86, 0.84],
+         ["h3ll", 0.83, -1.82, 0.8],
+
+         ["h4rr", -0.79, -2.22, 0.7],
+         ["h4r", -0.41, -2.28, 0.71],
+         ["h4", 0.0, -2.3, 0.715],
+         ["h4l", 0.41, -2.28, 0.71],
+         ["h4ll", 0.79, -2.22, 0.7],
+
+         //latch nodes
+         {"group":""},
+         {"selfCollision":false},
+         {"collision":false},
+         ["h5r", -0.85, -0.86, 0.86],
+         ["h5", 0.0, -2.13, 0.72],
+         ["h5l",  0.85, -0.86, 0.86],
+         ["h9", 0.0, -2.3, 0.715],
+
+         //rigidifier
+         {"group":""},
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":1.4},
+         ["h6", 0.0, -1.54, 0.65],
+
+         //hinge upper
+         {"nodeWeight":1.4},
+         {"group":"wendover_hoodhinge"},
+         {"selfCollision":true},
+         {"collision":true},
+         ["h7rr", -0.76, -1.61, 0.79],
+         ["h7ll", 0.76, -1.61, 0.79],
+         //hinge support
+         {"nodeWeight":1.0},
+         {"selfCollision":false},
+         {"collision":false},
+         ["h7r", -0.76, -1.61, 0.68, {"group":""}],
+         ["h7l", 0.76, -1.61, 0.68, {"group":""}],
+         //hinge lower
+         {"selfCollision":true},
+         ["h8rr", -0.76, -1.96, 0.69],
+         ["h8ll", 0.76, -1.96, 0.69],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--HOOD--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":801000,"beamDamp":50},
+          {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+          //hood main shape
+          {"deformLimitExpansion":1.1},
+          ["h1rr","h2rr"],
+          ["h1r","h2r"],
+          ["h1l","h2l"],
+          ["h1ll","h2ll"],
+          ["h2rr","h3rr"],
+          ["h2r","h3r"],
+          ["h2l","h3l"],
+          ["h2ll","h3ll"],
+          ["h3rr","h4rr"],
+          ["h3r","h4r"],
+          ["h3","h4"],
+          ["h3l","h4l"],
+          ["h3ll","h4ll"],
+
+          //widthwise
+          ["h1rr","h1r"],
+          ["h1r","h1l"],
+          ["h1l","h1ll"],
+          ["h2rr","h2r"],
+          ["h2r","h2l"],
+          ["h2l","h2ll"],
+          ["h3rr","h3r"],
+          ["h3r","h3"],
+          ["h3","h3l"],
+          ["h3l","h3ll"],
+          ["h4rr","h4r"],
+          ["h4r","h4"],
+          ["h4","h4l"],
+          ["h4l","h4ll"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":9000,"beamStrength":"FLT_MAX"},
+          ["h1rr","h2r"],
+          ["h1r","h2rr"],
+          ["h1r","h2l"],
+          ["h1l","h2r"],
+          ["h1l","h2ll"],
+          ["h1ll","h2l"],
+          ["h2rr","h3r"],
+          ["h2r","h3rr"],
+          ["h2r","h3"],
+          ["h2l","h3"],
+          ["h2l","h3r"],
+          ["h2r","h3l"],
+          ["h2l","h3ll"],
+          ["h2ll","h3l"],
+          ["h3rr","h4r"],
+          ["h3r","h4rr"],
+          ["h3r","h4"],
+          ["h3","h4r"],
+          ["h3","h4l"],
+          ["h3l","h4"],
+          ["h3l","h4ll"],
+          ["h3ll","h4l"],
+
+          //rigids
+          {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+          ["h4rr", "h4"],
+          ["h4r", "h4l"],
+          ["h4", "h4ll"],
+          ["h1rr", "h1l"],
+          ["h1r", "h1ll"],
+
+          //rigidifier
+          {"beamSpring":1101000,"beamDamp":50},
+          {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+          ["h6", "h4r"],
+          ["h6", "h4"],
+          ["h6", "h4l"],
+          ["h6", "h4ll"],
+          ["h6", "h4rr"],
+          ["h6", "h1ll"],
+          ["h6", "h1l"],
+          ["h6", "h1r"],
+          ["h6", "h1rr"],
+          ["h6", "h3ll"],
+          ["h6", "h2ll"],
+          ["h6", "h3rr"],
+          ["h6", "h2rr"],
+          ["h6", "h3l"],
+          ["h6", "h2l"],
+          ["h3", "h6"],
+          ["h6", "h3r"],
+          ["h6", "h2r"],
+
+          //latch
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          ["h5r", "h6"],
+          ["h5r", "h1r"],
+          ["h5r", "h2rr"],
+          ["h5r", "h3rr"],
+          ["h5r", "h1rr"],
+          ["h5", "h4"],
+          ["h5", "h3"],
+          ["h5", "h4l"],
+          ["h5", "h4r"],
+          ["h5", "h6"],
+          ["h5l", "h6"],
+          ["h5l", "h1l"],
+          ["h5l", "h2ll"],
+          ["h5l", "h3ll"],
+          ["h5l", "h1ll"],
+
+          //hinge upper
+          {"beamSpring":1101000,"beamDamp":50},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["h7rr", "h2rr"],
+          ["h7rr", "h2r"],
+          ["h7rr", "h3rr"],
+          ["h7rr", "h3r"],
+          ["h7rr", "h6"],
+
+          ["h7ll", "h2ll"],
+          ["h7ll", "h2l"],
+          ["h7ll", "h3ll"],
+          ["h7ll", "h3l"],
+          ["h7ll", "h6"],
+
+          //hinge lower
+          {"beamDeform":9000,"beamStrength":"FLT_MAX"},
+          ["h8rr", "f15rr"],
+          ["h8rr", "f19rr"],
+          ["h8rr", "f13rr"],
+          ["h8rr", "f15r"],
+          ["h8rr", "f14rr", {"beamDeform":5000, "deformLimitExpansion":2.0}],
+
+          ["h8ll", "f15ll"],
+          ["h8ll", "f19ll"],
+          ["h8ll", "f13ll"],
+          ["h8ll", "f15l"],
+          ["h8ll", "f14ll", {"beamDeform":5000, "deformLimitExpansion":2.0}],
+
+          //hinge support
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["h7r", "h2rr"],
+          ["h7r", "h2r"],
+          ["h7r", "h3rr"],
+          ["h7r", "h3r"],
+          ["h7r", "h6"],
+          ["h7r", "h7rr"],
+
+          ["h7l", "h2ll"],
+          ["h7l", "h2l"],
+          ["h7l", "h3ll"],
+          ["h7l", "h3l"],
+          ["h7l", "h6"],
+          ["h7l", "h7ll"],
+
+          //hinge bars
+          {"beamDeform":11000,"beamStrength":61000},
+          ["h8ll", "h7ll", {"breakGroup":"hoodhinge_L", "deformGroup":"hoodhinge_L", "deformationTriggerRatio":1.0}],
+          ["h7ll", "h8rr", {"breakGroup":"hoodhinge_L", "deformGroup":"bullbar_light_L_break", "deformationTriggerRatio":1.0}],
+          ["h8rr", "h7rr",  {"breakGroup":"hoodhinge_R", "deformGroup":"hoodhinge_R", "deformationTriggerRatio":1.0}],
+          ["h7rr", "h8ll",  {"breakGroup":"hoodhinge_R", "deformGroup":"bullbar_light_R_break", "deformationTriggerRatio":1.0}],
+
+          //hinge springs
+          {"beamSpring":1200,"beamDamp":55},
+          {"beamDeform":3915,"beamStrength":9000},
+          {"beamPrecompression":0.8},
+          ["h8rr", "h2rr", {"breakGroup":"hoodhinge_R", "breakGroupType":1}],
+          ["h8ll", "h2ll", {"breakGroup":"hoodhinge_L", "breakGroupType":1}],
+          {"beamPrecompression":""},
+
+          //limit
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.65, "beamShortBound":0},
+          {"beamDeform":8000,"beamStrength":9000},
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":501000,"beamLimitDamp":100},
+          ["f19rr", "h3rr", {"breakGroup":"hoodhinge_R"}],
+          ["f19ll", "h3ll", {"breakGroup":"hoodhinge_L"}],
+          {"beamPrecompression":1, "beamType":"|NORMAL"},
+
+          //catch
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1.02, "beamShortBound":1},
+          {"beamSpring":0,"beamDamp":100},
+          {"beamLimitSpring":12001000,"beamLimitDamp":20},
+          {"beamDeform":7000,"beamStrength":90000},
+          {"longBoundRange":0.02, "shortBoundRange":0.0},
+          {"beamPrecompression":1.01},
+          ["h9", "f15"],
+          ["h9", "f13rr"],
+          ["h9", "f13ll"],
+          {"beamPrecompression":1.0},
+          {"longBoundRange":0.0, "shortBoundRange":0.0},
+          ["h9", "f15r"],
+          ["h9", "f15l"],
+          {"beamLimitSpring":101000,"beamLimitDamp":20},
+          ["h9", "f12rr"],
+          ["h9", "f12ll"],
+          {"longBoundRange":"", "shortBoundRange":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL"},
+
+          //damping
+          {"beamDeform":24000,"beamStrength":200000},
+          {"beamSpring":0,"beamDamp":20},
+          ["h1rr", "f1rr", {"breakGroup":"hoodhinge_R"}],
+          ["h1ll", "f1ll", {"breakGroup":"hoodhinge_L"}],
+          {"beamSpring":0,"beamDamp":150},
+          ["h7ll", "f11ll", {"breakGroup":"hoodhinge_R"}],
+          ["h7rr", "f11rr", {"breakGroup":"hoodhinge_L"}],
+          ["h8rr", "h2rr", {"breakGroup":"hoodhinge_R"}],
+          ["h8ll", "h2ll", {"breakGroup":"hoodhinge_L"}],
+          ["h4rr", "f11rr", {"breakGroup":"hoodhinge_R"}],
+          ["h4r", "f11rr", {"breakGroup":"hoodhinge_R"}],
+          ["h4", "f11rr", {"breakGroup":"hoodhinge_R"}],
+          ["h4", "f11ll", {"breakGroup":"hoodhinge_L"}],
+          ["h4l", "f11ll", {"breakGroup":"hoodhinge_L"}],
+          ["h4ll", "f11ll", {"breakGroup":"hoodhinge_L"}],
+          {"breakGroup":""},
+
+          //pop open
+          {"beamType":"|SUPPORT", "beamLongBound":8},
+          {"beamSpring":8000,"beamDamp":55},
+          {"beamDeform":3915,"beamStrength":9000},
+          {"beamPrecompression":1.15},
+          ["h5", "f20r", {"breakGroup":"hoodhinge_R", "optional":true}],
+          ["h5", "f20l", {"breakGroup":"hoodhinge_L", "optional":true}],
+          {"beamPrecompression":1},
+
+          //hood support beams
+          {"beamSpring":601000,"beamDamp":60},
+          {"beamDeform":9000,"beamStrength":1125000},
+          ["h4ll", "f19ll", {"beamPrecompression":0.8}],
+          ["h4l", "f11ll", {"beamPrecompression":0.8}],
+          ["h4", "f11ll", {"beamPrecompression":0.8}],
+          ["h4", "f11rr", {"beamPrecompression":0.8}],
+          ["h4r", "f11rr", {"beamPrecompression":0.8}],
+          ["h4rr", "f11rr", {"beamPrecompression":0.8}],
+          ["h2ll", "f14l"],
+          ["h2rr", "f14r"],
+          ["h1ll", "f5ll"],
+          ["h1rr", "f5rr"],
+
+          ["h1l", "f5l"],
+          ["h1r", "f5r"],
+
+          ["h5r", "f14r", {"beamPrecompression":0.65}],
+          ["h5l", "f14l", {"beamPrecompression":0.65}],
+          ["h5r", "f1rr", {"beamPrecompression":1}],
+          ["h5l", "f1ll", {"beamPrecompression":1}],
+          ["h2rr", "h8rr", {"beamPrecompression":0.48}],
+          ["h2ll", "h8ll", {"beamPrecompression":0.48}],
+
+          //hinge bar limiter
+          ["h7ll", "f11ll", {"beamPrecompression":0.875}],
+          ["h7rr", "f11rr", {"beamPrecompression":0.875}],
+
+          //to fenders
+          {"optional":true},
+          ["h4ll", "fe7l"],
+          ["h3ll", "fe6l"],
+          ["h2ll", "fe5l"],
+          ["h1ll", "fe3l"],
+          ["h4rr", "fe7r"],
+          ["h3rr", "fe6r"],
+          ["h2rr", "fe5r"],
+          ["h1rr", "fe3r"],
+          {"beamLongBound":25},
+          ["h4rr", "fe11r"],
+          ["h3rr", "fe10r"],
+          ["h2rr", "fe9r"],
+          ["h1rr", "fe8r"],
+          ["h4ll", "fe11l"],
+          ["fe10l", "h3ll"],
+          ["h2ll", "fe9l"],
+          ["h1ll", "fe8l"],
+          {"optional":false},
+
+          {"disableTriangleBreaking":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //hood
+            {"groundModel":"metal"},
+            {"dragCoef":9},
+            {"group":"wendover_hood"},
+            ["h1rr","h2rr","h2r"],
+            ["h2r","h1r","h1rr"],
+            ["h1l","h1r","h2r"],
+            ["h1l","h2r","h2l"],
+            ["h1ll","h1l","h2l"],
+            ["h1ll","h2l","h2ll"],
+            ["h2r","h2rr","h3rr"],
+            ["h2r","h3rr","h3r"],
+            ["h2r","h3r","h3"],
+            ["h2l","h2r","h3"],
+            ["h2l","h3","h3l"],
+
+            ["h2ll","h2l","h3ll"],
+            ["h2l","h3l","h3ll"],
+
+            {"dragCoef":5},
+            ["h3r","h3rr","h4rr"],
+            ["h3r","h4rr","h4r"],
+            ["h3","h3r","h4r"],
+            ["h3","h4r","h4"],
+
+            ["h3l","h4ll","h3ll"],
+            ["h4l","h4ll","h3l"],
+            ["h3","h4l","h3l"],
+            ["h4","h4l","h3"],
+            {"group":""},
+    ],
+},
+}

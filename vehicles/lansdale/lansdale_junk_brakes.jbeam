@@ -1,0 +1,136 @@
+{
+"lansdale_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":35,
+    },
+    "slotType" : "lansdale_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_FR","wheelhub_FR"],     [], {"pos":{"x":-0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":1.0, "z":1.0}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_hub_5l",                 ["wheel_FL","wheelhub_FL"],     [], {"pos":{"x" :0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":1.0, "z":1.0}, "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_plain",             ["wheel_FR","wheelhub_FR"],     [], {"pos":{"x":-0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":0.9, "z":0.9}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_disc_plain",             ["wheel_FL","wheelhub_FL"],     [], {"pos":{"x": 0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":0.9, "z":0.9}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["lansdale_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":0.8, "z":0.8}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["lansdale_hub_F","wheelhub_FL"], [], {"pos":{"x": 0.80, "y":-1.46, "z":0.255}, "scale":{"x":0.9, "y":0.8, "z":0.8}, "rot":{"x":0,   "y":180, "z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1250"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.29},
+        {"brakeMass":8.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //abs
+        {"absSlipRatioTarget":0.2},
+        //brake sounds
+        {"squealCoefNatural": 5.5, "squealCoefLowSpeed": 5.0}
+    ],
+},
+"lansdale_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":10,
+    },
+    "slotType" : "lansdale_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake drums
+        ["lansdale_brakedrum_RR", ["wheel_RR","wheelhub_RR"], [],{"scale":{"x":0.99,"y":1,"z":1}}],
+        ["lansdale_brakedrum_RL", ["wheel_RL","wheelhub_RL"], [],{"scale":{"x":0.99,"y":1,"z":1}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*425"},
+        {"brakeInputSplit":0.6},
+        {"brakeSplitCoef":0.4},
+        {"parkingTorque":600},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.21},
+        {"brakeMass":4.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //abs
+        {"absSlipRatioTarget":0.15},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"lansdale_junk_brake_R_disc": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "lansdale_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_RR","wheelhub_RR"],                       [], {"pos":{"x":-0.80, "y":1.565, "z":0.2402}, "scale":{"x":0.8, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_hub_5l",                 ["wheel_RL","wheelhub_RL"],                       [], {"pos":{"x": 0.80, "y":1.565, "z":0.2402}, "scale":{"x":0.8, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_plain",             ["wheel_RR","wheelhub_RR"],                       [], {"pos":{"x":-0.80, "y":1.565, "z":0.2402}, "scale":{"x":1.0, "y":0.82, "z":0.82}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_disc_plain",             ["wheel_RL","wheelhub_RL"],                       [], {"pos":{"x": 0.80, "y":1.565, "z":0.2402}, "scale":{"x":1.0, "y":0.82, "z":0.82}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["lansdale_axle_R","lansdale_hub_R"], [], {"pos":{"x":-0.80, "y":1.565, "z":0.2402}, "scale":{"x":1.0, "y":0.72, "z":0.72}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["lansdale_axle_R","lansdale_hub_R"], [], {"pos":{"x": 0.80, "y":1.565, "z":0.2402}, "scale":{"x":1.0, "y":0.72, "z":0.72}, "rot":{"x":180, "y":180, "z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*600"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":800},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.22},
+        {"brakeMass":5.5},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.75},
+        //brake sounds
+        {"squealCoefNatural": 5.5, "squealCoefLowSpeed": 5.0}
+    ],
+},
+"lansdale_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":50,
+    },
+    "slotType":"lansdale_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+    ],
+},
+}

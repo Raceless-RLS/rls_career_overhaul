@@ -1,0 +1,102 @@
+{
+"etki_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "etki_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_FR","wheelhub_FR"],   [], {"pos":{"x":-0.72,"y":-1.35, "z":0.28}, "scale":{"x":0.6,"y":1.0, "z":1.0},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_hub_5l",                 ["wheel_FL","wheelhub_FL"],   [], {"pos":{"x" :0.72,"y":-1.35, "z":0.28}, "scale":{"x":0.6,"y":1.0, "z":1.0},  "rot":{"x":0,   "y":0,  "z":180}}],
+        ["brake_disc_plain",             ["wheel_FR","wheelhub_FR"],   [], {"pos":{"x":-0.71,"y":-1.35, "z":0.28}, "scale":{"x":0.9,"y":0.9, "z":0.9},  "rot":{"x":0,   "y":0,  "z":0  }}],
+        ["brake_disc_plain",             ["wheel_FL","wheelhub_FL"],   [], {"pos":{"x": 0.71,"y":-1.35, "z":0.28}, "scale":{"x":0.9,"y":0.9, "z":0.9},  "rot":{"x":180, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["etki_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.71,"y":-1.35, "z":0.28}, "scale":{"x":0.9,"y":0.8, "z":0.8},  "rot":{"x":-10, "y":0,  "z":0  }}],
+        ["brake_caliper_standard_plain", ["etki_hub_F","wheelhub_FL"], [], {"pos":{"x": 0.71,"y":-1.35, "z":0.28}, "scale":{"x":0.9,"y":0.8, "z":0.8},  "rot":{"x":10,  "y":180,"z":0  }}],
+    ],
+
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*800"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":50},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.25},
+        {"brakeMass":6.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //abs
+        {"absSlipRatioTarget":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"etki_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":10,
+    },
+    "slotType" : "etki_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["brake_hub_5l",                 ["wheel_RR","wheelhub_RR"],   [], {"pos":{"x":-0.7,"y":1.3,"z":0.28}, "scale":{"x":0.68,"y":1.0,  "z":1.0},   "rot":{"x":0,    "y":0,  "z":0  }}],
+         ["brake_hub_5l",                 ["wheel_RL","wheelhub_RL"],   [], {"pos":{"x" :0.7,"y":1.3,"z":0.28}, "scale":{"x":0.68,"y":1.0,  "z":1.0},   "rot":{"x":0,    "y":0,  "z":180}}],
+         ["brake_disc_plain",             ["wheel_RR","wheelhub_RR"],   [], {"pos":{"x":-0.7,"y":1.3,"z":0.28}, "scale":{"x":0.89,"y":0.89, "z":0.89},  "rot":{"x":0,    "y":0,  "z":0  }}],
+         ["brake_disc_plain",             ["wheel_RL","wheelhub_RL"],   [], {"pos":{"x": 0.7,"y":1.3,"z":0.28}, "scale":{"x":0.89,"y":0.89, "z":0.89},  "rot":{"x":180,  "y":0,  "z":0  }}],
+         ["brake_caliper_standard_plain", ["etki_hub_R","wheelhub_RR"], [], {"pos":{"x":-0.7,"y":1.3,"z":0.28}, "scale":{"x":0.89,"y":0.78, "z":0.78},  "rot":{"x":-170, "y":0,  "z":0  }}],
+         ["brake_caliper_standard_plain", ["etki_hub_R","wheelhub_RL"], [], {"pos":{"x": 0.7,"y":1.3,"z":0.28}, "scale":{"x":0.89,"y":0.78, "z":0.78},  "rot":{"x":170,  "y":180,"z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*375"},
+        {"brakeInputSplit":0.75},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":600},
+        {"brakeSpring":50},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.24},
+        {"brakeMass":4.0},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //abs
+        {"absSlipRatioTarget":0.15},
+        //brake sounds
+        {"squealCoefNatural": 3.0, "squealCoefLowSpeed": 3.0}
+    ],
+},
+"etki_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":50,
+    },
+    "slotType":"etki_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        //brake sounds
+        {"squealCoefNatural": 0.0, "squealCoefLowSpeed": 0.0}
+    ],
+},
+}

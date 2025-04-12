@@ -1,0 +1,207 @@
+{
+"pessima_junk_exhaust": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Exhaust",
+        "value":50,
+    },
+    "slotType" : "pessima_exhaust",
+    "mainEngine":{
+        "torqueModExhaust":[
+            ["rpm", "torque"],
+            [0, 0],
+            [1000, -0],
+            [2000, -1.2],
+            [3000, -4.6],
+            [4000, -7.3],
+            [5000, -9.3],
+            [6000, -11.2],
+            [7000, -14.6],
+            [8000, -17.4],
+            [9000, -20.2],
+        ],
+    },
+    "soundConfigExhaust": {
+        "$+lowShelfGain":8,
+        "$+highShelfGain":-6,
+        "$+eqHighGain":0,
+        "$+eqFundamentalGain":0,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pessima_exhaust", ["pessima_exhaust"]],
+         ["pessima_exhausttip", ["pessima_exhaust"]],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        //--exhaust
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+        {"nodeWeight":1.8},
+        {"group":"pessima_exhaust"},
+        ["exh0",-0.12,-1.70,0.19],
+        ["exh1",0.0,-0.98,0.19],
+        {"collision":false},
+        {"selfCollision":false},
+        ["exh2",0.3,-0.8,0.65],
+        ["exh4",-0.4,1.10,0.65],
+        {"collision":true},
+        {"selfCollision":true},
+        ["exh3",-0.15,-0.098,0.17],
+        ["exh5",-0.02,0.66,0.17],
+        ["exh7",-0.07,1.28,0.17],
+        ["exh8",-0.45,1.80,0.29],
+        ["exh9",-0.54,1.95,0.26],
+        ["exh10",-0.468,2.26,0.29, {"selfCollision":false, "afterFireAudioCoef":0.15, "afterFireVisualCoef":0.15, "afterFireVolumeCoef":0.4, "afterFireMufflingCoef":0.0, "exhaustAudioMufflingCoef":0.15, "exhaustAudioGainChange":-6}],
+        {"group":""},
+    ],
+
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamSpring":1501000,"beamDamp":30},
+        {"beamDeform":9450,"beamStrength":"FLT_MAX"},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+        //main shape
+        {"deformLimitExpansion":1.1},
+        ["exh1","exh0", {"isExhaust":"mainEngine"}],
+        ["exh3","exh1", {"isExhaust":"mainEngine"}],
+        ["exh3","exh5", {"isExhaust":"mainEngine"}],
+        ["exh7","exh5", {"isExhaust":"mainEngine"}],
+        ["exh7","exh8", {"isExhaust":"mainEngine"}],
+        ["exh10","exh8", {"isExhaust":"mainEngine"}],
+        {"deformLimitExpansion":""},
+        ["exh10","exh9"],
+        ["exh9","exh8"],
+        //rigids
+        {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+        ["exh3","exh0"],
+        ["exh1","exh5"],
+        ["exh8", "exh3"],
+        ["exh10","exh5"],
+        ["exh9","exh7"],
+
+        ["exh0","exh5"],
+        ["exh10","exh7"],
+        ["exh8", "exh5"],
+
+        ["exh3", "exh7"],
+        ["exh9", "exh3"],
+
+        //rigidifiers
+        {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+        ["exh4","exh2"],
+        ["exh2","exh3"],
+        ["exh2","exh1"],
+        ["exh2","exh5"],
+        ["exh2","exh0"],
+
+        ["exh4","exh5"],
+        ["exh9","exh4"],
+        ["exh7","exh4"],
+        ["exh10","exh4"],
+        ["exh4","exh3"],
+        ["exh4","exh8"],
+
+        //["exh4","exh6"],
+        //["exh6","exh2"],
+        //["exh6","exh3"],
+        //["exh7","exh6"],
+        //["exh6","exh8"],
+        //["exh10","exh6"],
+        //["exh6","exh0"],
+        //["exh6","exh5"],
+        //["exh4","exh1"],
+
+        {"beamSpring":501000,"beamDamp":30},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        ["exh2","exh7"],
+        ["exh4","exh0"],
+
+        //connecting beams
+        {"beamSpring":500,"beamDamp":150},
+        {"beamDeform":8000,"beamStrength":500},
+        //front
+        {"breakGroup":"exhaust_a"},
+        ["exh0","e1r"],
+        ["exh0","e2r", {"isExhaust":"mainEngine", "deformLimitExpansion":1.1}],
+        ["exh0","e3r"],
+        ["exh0","e4r"],
+        ["exh0","tra1l"],
+        ["exh0","tra1r"],
+
+        {"beamSpring":500,"beamDamp":150},
+        ["exh1","tra1r"],
+        ["exh1","tra1l"],
+
+        //middle
+        {"beamSpring":500,"beamDamp":150},
+        {"beamDeform":3000,"beamStrength":500},
+        {"breakGroup":"exhaust_b"},
+        ["exh3","f7l"],
+        ["exh3","f7r"],
+        ["exh3","f8r"],
+        ["exh3","f8l"],
+        ["exh5","f8r"],
+        ["exh5","f8l"],
+        ["exh5","f9r"],
+        ["exh5","f9l"],
+
+        //rear
+        {"breakGroup":"exhaust_c"},
+        ["exh7", "rx1r", {"optional":true}],
+        ["exh7", "rx2r", {"optional":true}],
+        ["exh7", "rx2l", {"optional":true}],
+        ["exh7", "r2"],
+
+        {"breakGroup":"exhaust_d"},
+        ["exh8", "r3rr"],
+        ["exh8", "r2rr"],
+        ["exh8", "r6rr"],
+
+        {"beamSpring":500,"beamDamp":300},
+        {"breakGroupType":1},
+        ["exh10","r4rr"],
+        ["exh10","r4"],
+        {"breakGroupType":0},
+        {"breakGroup":""},
+
+        //support beams
+        {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":4, "beamShortBound":0},
+        {"beamDeform":9720,"beamStrength":500},
+        {"beamSpring":500,"beamDamp":30},
+        {"beamPrecompression":0.85},
+        ["exh8","r3"],
+        ["exh9","r3"],
+
+        ["exh5","rx1", {"optional":false}],
+
+        ["exh0","e3r"],
+        ["exh0","e4r"],
+
+        ["exh8","rx1r", {"optional":false}],
+        ["exh7","rx1r", {"optional":false}],
+
+        ["exh10","r7rr", {"beamPrecompression":0.95}],
+        {"beamPrecompression":0.75},
+        ["exh5","r1"],
+
+        ["exh3","f2r"],
+        ["exh3","f2l"],
+
+        ["exh5","f4l"],
+        ["exh5","f4r"],
+
+        ["exh10","r4"],
+        ["exh10","r3"],
+
+        {"optional":true},
+        ["exh10","rb2r"],
+        ["exh10","rb2rr"],
+        {"optional":false},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+        {"deformLimitExpansion":1.1},
+    ],
+},
+}

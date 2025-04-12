@@ -1,0 +1,227 @@
+{
+"pigeon_junk_tailgate": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Tailgate",
+        "value":45,
+    },
+    "slotType" : "pigeon_tailgate",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_bin","", "Bin"],
+        ["pigeon_licenseplate_R_tailgate","", "Rear License Plate"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_tailgate", ["pigeon_tailgate"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"tailgateCoupler"}],
+    ]
+    "tailgateCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["bd4ll",   "tlc1l",     0,                     0.000,                  0.000,                      0.0,                 0.0,                   "tailgatelatch_L", {"forceCid1":"t4", "forceCid2":"t1"}]
+            ["bd4rr",   "tlc1r",     0,                     0.000,                  0.000,                      0.0,                 0.0,                   "tailgatelatch_R", {"forceCid1":"t4", "forceCid2":"t1"}]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["t1"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_01_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>tailgate_01_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 2000,
+        "openForceDuration": 0.1,
+        "closeForceMagnitude": 50,
+        "closeForceDuration": 3.5
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["tailgateL", "", "t1ll","t1","t2ll", "box", {"x":0.15, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.0, "y":-0.02, "z":-0.07}],
+        ["tailgateR", "", "t1rr","t1","t2rr", "box", {"x":0.15, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.0, "y":-0.02, "z":-0.01}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["tailgateL", "action0", "tailgateLatch"]
+        ["tailgateR", "action0", "tailgateLatch"]
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["tailgateLatch", "ui.inputActions.pickup.tailgateLatch.title", "ui.inputActions.pickup.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateCoupler').toggleGroup()"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.8},
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         {"group":"pigeon_tailgate"},
+         {"nodeWeight":0.45},
+         ["t1rr",-0.57, 1.72, 0.77],
+         ["t1r", -0.316, 1.72, 0.77],
+         ["t1", 0.0, 1.72, 0.77],
+         ["t1l", 0.316, 1.72, 0.77],
+         ["t1ll", 0.57, 1.72, 0.77],
+
+         ["t2rr",-0.57, 1.72, 0.47],
+         ["t2r", -0.316, 1.72, 0.47],
+         ["t2", 0.0, 1.72, 0.47],
+         ["t2l", 0.316, 1.72, 0.47],
+         ["t2ll", 0.57, 1.72, 0.47],
+
+         //rigidifier
+         {"group":""},
+         ["t4", 0.0, 1.56, 0.65, {"collision":false, "selfCollision":false}],
+
+         //latch nodes
+         {"collision":false},
+         {"selfCollision":false},
+         {"group":""},
+         {"nodeWeight":0.5},
+         ["tlc1r",-0.61,1.71,0.774],
+         ["tlc1l", 0.61,1.71,0.774],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //tailgate
+          {"beamSpring":461000,"beamDamp":40},
+          {"beamDeform":20000,"beamStrength":100000},
+          {"deformLimitExpansion":1.2},
+          //main shape vertical
+          ["t1rr", "t2rr"],
+          ["t1r", "t2r"],
+          ["t1", "t2"],
+          ["t1l", "t2l"],
+          ["t1ll", "t2ll"],
+          //main shape widthwise
+          ["t1ll", "t1l"],
+          ["t1l", "t1"],
+          ["t1", "t1r"],
+          ["t1r", "t1rr"],
+          ["t2ll", "t2l"],
+          ["t2l", "t2"],
+          ["t2", "t2r"],
+          ["t2r", "t2rr"],
+
+          //surficial crossing
+          {"beamDeform":4000,"beamStrength":100000},
+          {"deformLimitExpansion":""},
+          ["t1ll", "t2l"],
+          ["t1l", "t2ll"],
+          ["t1l", "t2"],
+          ["t1", "t2l"],
+          ["t1", "t2r"],
+          ["t1r", "t2"],
+          ["t1r", "t2rr"],
+          ["t1rr", "t2r"],
+
+          //rigids
+          {"beamDeform":2500,"beamStrength":100000},
+          ["t1ll", "t1"],
+          ["t1l", "t1r"],
+          ["t1", "t1rr"],
+          ["t2ll", "t2"],
+          ["t2l", "t2r"],
+          ["t2", "t2rr"],
+
+          //rigidifier
+          {"beamDeform":2500,"beamStrength":100000},
+          ["t1rr","t4"],
+          ["t2rr","t4"],
+          ["t1r","t4"],
+          ["t2r","t4"],
+          ["t1","t4"],
+          ["t2","t4"],
+          ["t1l","t4"],
+          ["t2l","t4"],
+          ["t1ll","t4"],
+          ["t2ll","t4"],
+
+          //hinge
+          {"beamSpring":241000,"beamDamp":40},
+          {"beamDeform":12000,"beamStrength":22000},
+          {"breakGroup":"tailgatehinge_R"},
+          ["t2rr", "bd8rr"],
+          ["t2rr", "bd4rr"],
+          ["t2rr", "bd12rr"],
+          ["t2rr", "bd7rr"],
+          ["t2rr", "bd8r"],
+          {"breakGroup":"tailgatehinge_L"},
+          ["t2ll", "bd8ll"],
+          ["t2ll", "bd4ll"],
+          ["t2ll", "bd12ll"],
+          ["t2ll", "bd7ll"],
+          ["t2ll", "bd8l"],
+          {"breakGroup":""},
+
+          {"beamSpring":520100,"beamDamp":50},
+          {"beamDeform":9975,"beamStrength":"FLT_MAX"},
+          ["tlc1r","t1rr"],
+          ["tlc1r","t1r"],
+          ["tlc1r","t2rr"],
+          ["tlc1r","t4"],
+          ["tlc1l","t1ll"],
+          ["tlc1l","t1l"],
+          ["tlc1l","t2ll"],
+          ["tlc1l","t4"],
+
+          //pop open
+          {"optional":true},
+          {"beamPrecompression":1.035,"beamType":"|SUPPORT","beamLongBound":25},
+          {"beamSpring":50000,"beamDamp":20},
+          {"beamDeform":13500,"beamStrength":199360},
+          ["bd3rr","tlc1r"{"breakGroup":"tailgatehinge_R"}],
+          ["bd3ll","tlc1l"{"breakGroup":"tailgatehinge_L"}],
+          //tailgate open limiter
+          {"beamPrecompression":0.78},
+          {"beamSpring":50000,"beamDamp":100},
+          ["bd12rr","t1rr"{"breakGroup":"tailgatehinge_R"}],
+          ["bd12ll","t1ll"{"breakGroup":"tailgatehinge_L"}],
+
+          //limiter
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1.0,"beamType":"|SUPPORT", "beamLongBound":4},
+          {"beamSpring":291000,"beamDamp":40},
+          {"beamDeform":12000,"beamStrength":60000},
+          ["t1ll", "bd3ll"],
+          ["t1ll", "bd4ll", {"beamLongBound":12}],
+          ["t1rr", "bd3rr"],
+          ["t1rr", "bd4rr", {"beamLongBound":12}],
+          ["t2", "bd7l"],
+          ["t2", "bd7r"],
+          ["t2l", "bd7l"],
+          ["t2ll", "bd12ll"],
+          ["t2ll", "bd4ll"],
+          ["t2ll", "bd7ll"],
+          ["t2ll", "bd8ll"],
+          ["t2r", "bd7r"],
+          ["t2rr", "bd12rr"],
+          ["t2rr", "bd4rr"],
+          ["t2rr", "bd7rr"],
+          ["t2rr", "bd8rr"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"pigeon_tailgate"},
+            {"groundModel":"plastic"},
+            {"dragCoef":6},
+            ["t1ll", "t2ll", "t2l"],
+            ["t2l", "t1l", "t1ll"],
+            ["t1l", "t2l", "t2"],
+            ["t2", "t1", "t1l"],
+
+            ["t2rr", "t1rr", "t2r"],
+            ["t1r", "t2r", "t1rr"],
+            ["t2r", "t1r", "t2"],
+            ["t1", "t2", "t1r"],
+            {"group":""},
+    ],
+},
+}

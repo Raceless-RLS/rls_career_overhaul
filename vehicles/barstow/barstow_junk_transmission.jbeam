@@ -1,0 +1,342 @@
+{
+"barstow_junk_transmission_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Manual Transmission",
+        "value":100,
+    },
+    "slotType" : "barstow_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["barstow_flywheel","barstow_flywheel","Flywheel", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.71, 0, 2.67, 1.84, 1.33, 1.0],
+        "friction": 1.50,
+        "dynamicFriction": 0.00190,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [0.60, 0.00, 3.12, 1.12, 2.12, 3.12, 3.12, 0.12, 0.12, 0.12],
+        "gearWhineCoefsOutput": [4.00, 0.00, 0.24, 3.24, 1.24, 2.24, 1.24, 0.24, 0.24, 0.24],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "shiftDownRPMOffsetCoef":1.18,
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,3500,3500,3500],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["barstow_transmission", ["barstow_engine","barstow_transmission"]],
+        ["barstow_shifter_boot_M", ["barstow_shifterbase_M","barstow_shifterboot_M"]],
+        ["barstow_shifter_knob_M", ["barstow_shifterknob_M"]],
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //manual transmission
+        //clutch
+        ["clutch"     ,"barstow_clutchpedal", "b2l","b2r","b11l",  {"x":0, "y":0, "z":180} , {"x":-22, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+     "controller": [
+        ["fileName"],
+        ["propAnimation/hPattern", {"name":"hPattern"}],
+
+    ]
+    "hPattern": {
+        "gearCoordinates": [
+            ["gearIndex",   "x",      "y"]
+            [-1,            1,       -1]
+            [0,             0,    0]
+            [1,             -1,   1]
+            [2,             -1,   -1]
+            [3,             0,    1]
+            [4,             0,    -1]
+        ]
+        "shiftSoundNode:":["sh_b3"]
+        "shiftSoundEventHPatternGearIn": "event:>Vehicle>Interior>Gearshift>manual_modern_10_in",
+        "shiftSoundEventHPatternGearOut": "event:>Vehicle>Interior>Gearshift>manual_modern_10_out",
+        "shiftSoundVolumeHPatternGearIn": 0.5,
+        "shiftSoundVolumeHPatternGearOut": 0.5,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":"barstow_shifterbase_M"},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.06, -0.04, 0.45],
+         ["sh_b1r", -0.06, -0.04, 0.45],
+         ["sh_b2l",  0.06,  0.08, 0.45],
+         ["sh_b2r", -0.06,  0.08, 0.45],
+
+         ["sh_b3", 0.00, 0.02, 0.37],
+         {"selfCollision":true},
+         {"group":["barstow_shifterknob_M","barstow_shifterboot_M"]},
+         {"nodeWeight":0.5}
+         ["sh_l3",  0.00, 0.04, 0.613],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":"barstow_shifterknob_M"},
+         ["sh_l1l",  0.03, 0.01, 0.53],
+         ["sh_l1r", -0.03, 0.01, 0.53],
+         ["sh_l2l",  0.03, 0.05, 0.52],
+         ["sh_l2r", -0.03, 0.05, 0.52],
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"barstow_transmission"},
+         {"nodeWeight":32},
+         ["tra1", 0.0, -0.36, 0.29],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":200000,"beamDamp":70},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        ["sh_b1l", "b12r"],
+        ["sh_b1r", "b12r"],
+        ["sh_b2l", "b12r"],
+        ["sh_b2r", "b12r"],
+        ["sh_b3",  "b12r"],
+
+        ["sh_b1l", "b12l"],
+        ["sh_b1r", "b12l"],
+        ["sh_b2l", "b12l"],
+        ["sh_b2r", "b12l"],
+        ["sh_b3",  "b12l"],
+
+        ["sh_b1l", "b3r"],
+        ["sh_b1r", "b3r"],
+        ["sh_b2l", "b3r"],
+        ["sh_b2r", "b3r"],
+        ["sh_b3",  "b3r"],
+
+        ["sh_b1l", "b3l"],
+        ["sh_b1r", "b3l"],
+        ["sh_b2l", "b3l"],
+        ["sh_b2r", "b3l"],
+        ["sh_b3",  "b3l"],
+
+        ["sh_b1l", "dsh"],
+        ["sh_b1r", "dsh"],
+        ["sh_b2l", "dsh"],
+        ["sh_b2r", "dsh"],
+        ["sh_b3",  "dsh"],
+
+        ["sh_b1l", "b2r"],
+        ["sh_b1r", "b2r"],
+        ["sh_b2l", "b2r"],
+        ["sh_b2r", "b2r"],
+        ["sh_b3",  "b2r"],
+
+        ["sh_b1l", "b2l"],
+        ["sh_b1r", "b2l"],
+        ["sh_b2l", "b2l"],
+        ["sh_b2r", "b2l"],
+        ["sh_b3",  "b2l"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.86,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.88}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        ["sh_l3", "sh_b3"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--TRANSMISSION CONE--
+        {"beamSpring":20001000,"beamDamp":500},
+        {"beamDeform":212500,"beamStrength":"FLT_MAX"},
+        ["tra1","e1r"],
+        ["tra1","e3r"],
+        ["tra1","e1l"],
+        ["tra1","e3l"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisY","factor":-0.20}],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisX","factor":-0.20}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisY","factor":0.20}],
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisX","factor":0.20}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":50, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+
+    ],
+},
+"barstow_junk_transmission_3A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed Automatic Transmission",
+        "value":250,
+    },
+    "slotType" : "barstow_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["barstow_converter","barstow_converter","Torque Converter", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.18, 0, 2.46, 1.46, 1.00],
+        "parkLockTorque":2500,
+        "oneWayViscousCoef":35,
+        "friction": 2.00,
+        "dynamicFriction": 0.00195,
+        "torqueLossCoef": 0.035,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":2,
+        "gearboxDecisionSmoothingUp":2,
+        "gearboxDecisionSmoothingDown":2,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":[0,0,3500,3500],
+        "wheelSlipUpThreshold":99999,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["barstow_transmission", ["barstow_engine","barstow_transmission"]],
+        ["barstow_shifterbase_A", ["barstow_body","barstow_floor"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/singleAxisLever", {"name":"singleAxisLever"}],
+
+    ]
+    "singleAxisLever": {
+        "gearCoordinates": [
+            ["gearIndex",   "value"]
+            [1,            0.0]
+            [2,             0.2]
+            [3,             0.4]
+            [4,             0.6]
+            [5,             0.8]
+            [6,             1]
+        ]
+        "shiftSoundNode:":["int_shft"]
+        "shiftSoundEventSingleAxisLever": "event:>Vehicle>Interior>Gearshift>automatic_04",
+        "shiftSoundVolumeSingleAxisLever": 0.5,
+    },
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //automatic transmission
+        ["gearModeIndex"      , "barstow_shifter_A"    , "b2r","b2l","b3r", {"x":90, "y":0, "z":0} , {"x":-35, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Automatic--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"barstow_transmission"},
+         {"nodeWeight":40},
+         ["tra1", 0.0, -0.36, 0.29],
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":20001000,"beamDamp":500},
+          {"beamDeform":212500,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

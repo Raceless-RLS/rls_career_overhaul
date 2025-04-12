@@ -1,0 +1,703 @@
+{
+"sunburst2_junk_suspension_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Independent Front Suspension",
+        "value":250,
+    },
+    "slotType" : "sunburst2_suspension_F",
+    "slots2": [
+        ["name",                  "allowTypes",              "denyTypes", "default",                "description"],
+        ["sunburst2_brake_F",      ["sunburst2_brake_F"],      [],          "sunburst2_brake_F",       "Front Brakes"],
+        ["wheel_F_5",             ["wheel_F_5"],             [],          "steelwheel_01a_15x7_F",  "Front Wheels",   {"nodeOffset":{"x":"$=$trackoffset_F+0.235", "y":-1.31, "z":0.285}}],
+        ["sunburst2_wheeldata_F",  ["sunburst2_wheeldata_F"],  [],          "sunburst2_wheeldata_F",   "Front Spindles", {"coreSlot":true}],
+        ["sunburst2_strut_F",      ["sunburst2_strut_F"],      [],          "sunburst2_strut_F",       "Front Struts"],
+        ["sunburst2_swaybar_F",    ["sunburst2_swaybar_F"],    [],          "sunburst2_swaybar_F",     "Front Sway Bar"],
+        ["sunburst2_steering",     ["sunburst2_steering"],     [],          "sunburst2_steering",      "Steering"],
+        ["sunburst2_halfshafts_F", ["sunburst2_halfshafts_F"], [],          "sunburst2_halfshafts_F",  "Front Halfshafts"],
+        ["sunburst2_undertray",    ["sunburst2_undertray"],    [],          "suburst_undertray",      "Undertray"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"]
+        ["$camber_F", "range", "", "Wheel Alignment", -4.950, 0.98, 1.02, "Camber Adjust", "Adjusts the wheel camber angle at the strut/hub joint", {"subCategory":"Front"}]
+        ["$trackoffset_F", "range", "+m", "Wheels", 0.0, -0.02, 0.05, "Wheel Offset", "Spacing of the wheel from the hub", {"stepDis":0.001,"subCategory":"Front"}]
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["sunburst2_lowerarm_mount_F", ["sunburst2_body"]],
+        ["sunburst2_subframe_F", ["sunburst2_subframe_F"]],
+        ["sunburst2_lowerarm_FR", ["sunburst2_lowerarm_FR"]],
+        ["sunburst2_lowerarm_FL", ["sunburst2_lowerarm_FL"]],
+        ["sunburst2_hub_FR", ["sunburst2_hub_FR"]],
+        ["sunburst2_hub_FL", ["sunburst2_hub_FL"]],
+    ],
+    "nodes": [
+         ["id",     "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //front subframe
+         {"group":"sunburst2_subframe_F"},
+         {"nodeWeight":6.5},
+         ["fx1r",  -0.41,  -1.5,    0.203,  {"group":["sunburst2_subframe_F","sunburst2_swaybar_F"]}],
+         ["fx1l",   0.41,  -1.5,    0.203,  {"group":["sunburst2_subframe_F","sunburst2_swaybar_F"]}],
+         ["fx2r",  -0.343, -1.344,  0.214,  {"group":["sunburst2_lowerarm_FR","sunburst2_subframe_F", "sunburst2_swaybar_link_FR"], "tag":"rideheight_FR"}],
+         ["fx2l",   0.343, -1.344,  0.214,  {"group":["sunburst2_lowerarm_FL","sunburst2_subframe_F", "sunburst2_swaybar_link_FL"], "tag":"rideheight_FL"}],
+         {"nodeWeight":5.0},
+         ["fx6r",  -0.42,  -1.4,    0.411,  {"selfCollision":false}],
+         ["fx6l",   0.42,  -1.4,    0.411,  {"selfCollision":false}],
+         //rigidifier
+         {"nodeWeight":3.0},
+         ["fx6",    0.0,   -1.382,  0.45,   {"group":"", "collision":false, "selfCollision":false}],
+         {"nodeWeight":2.0},
+         ["fx7",    0.0,   -1.15,  0.3,   {"group":"", "collision":false, "selfCollision":false}],
+
+         //steering rack
+         {"nodeWeight":6.0},
+         {"group":["sunburst2_steeringrack"]},
+         ["fx5r",  -0.22,   -1.409,  0.2675, {"selfCollision":false}],
+         ["fx5l",   0.22,   -1.409,  0.2675, {"selfCollision":false}],
+
+         //--STRUT MOUNTS--
+
+         //overwrite top strut mount with coupler data
+         {"nodeWeight":7.5},
+         {"group":["sunburst2_body", "sunburst2_strutbar"]}
+         ["fsm1r", -0.540, -1.278, 0.804,   {"couplerTag":"strutmount_FR", "couplerStrength":250000, "couplerLatchSpeed":0.3, "couplerStartRadius":0.2, "couplerLockRadius":0.0001, "couplerLock":true, "couplerWeld":true}],
+         ["fsm1l",  0.540, -1.278, 0.804,   {"couplerTag":"strutmount_FL", "couplerStrength":250000, "couplerLatchSpeed":0.3, "couplerStartRadius":0.2, "couplerLockRadius":0.0001, "couplerLock":true, "couplerWeld":true}],
+
+         //--FRONT INDEPENDENT SUSPENSION--
+
+         //strut top
+         {"nodeWeight":7.5},
+         ["fs1r",  -0.540, -1.278, 0.804,   {"selfCollision":false, "tag":"strutmount_FR", "group":["sunburst2_strut_FR"]}],
+         ["fs1l",   0.540, -1.278, 0.804,   {"selfCollision":false, "tag":"strutmount_FL", "group":["sunburst2_strut_FL"]}],
+
+         //strut bottom
+         {"nodeWeight":3.5},
+         ["fs2r",  -0.58, -1.31, 0.285,   {"selfCollision":false, "group":["sunburst2_strut_FR"]}],
+         ["fs2l",   0.58, -1.31, 0.285,   {"selfCollision":false, "group":["sunburst2_strut_FL"]}],
+
+         //front hub
+         {"nodeWeight":7.5},
+         ["fh1r",  -0.6810,-1.318,  0.2064, {"group":["sunburst2_lowerarm_FR","sunburst2_hub_FR"]}],
+         ["fh1l",   0.6810,-1.318,  0.2064, {"group":["sunburst2_lowerarm_FL","sunburst2_hub_FL"]}],
+         //tie rod end -- overwritten with drift steering
+         {"nodeWeight":5.25},
+         {"selfCollision":false},
+         ["fh3r",  -0.697, -1.442,  0.2564, {"group":["sunburst2_tierod_FR","sunburst2_hub_FR"]}],
+         ["fh3l",   0.697, -1.442,  0.2564, {"group":["sunburst2_tierod_FL","sunburst2_hub_FL"]}],
+         {"nodeWeight":4.5},
+         ["fh4r",  -0.5555, -1.2905,  0.6,    {"group":["sunburst2_hub_FR"]}],
+         ["fh4l",   0.5555, -1.2905,  0.6,    {"group":["sunburst2_hub_FL"]}],
+         {"selfCollision":true},
+         {"nodeWeight":3.5},
+         ["fh5r",  -0.72,  -1.14,   0.285,  {"group":["sunburst2_hub_FR"]}],
+         ["fh5l",   0.72,  -1.14,   0.285,  {"group":["sunburst2_hub_FL"]}],
+         //flexbody node
+         ["fh7r",  -0.44,  -1.291,  0.6,    {"nodeWeight":0.2, "group":["sunburst2_hub_FR"], "collision":false, "selfCollision":false}],
+         ["fh7l",   0.44,  -1.291,  0.6,    {"nodeWeight":0.2, "group":["sunburst2_hub_FL"], "collision":false, "selfCollision":false}],
+         //swaybar end link
+         {"nodeWeight":1.5},
+         {"selfCollision":false},
+         ["arbf1r",-0.529, -1.33,   0.21,   {"group":["sunburst2_swaybar_link_FR"]}],
+         ["arbf1l", 0.529, -1.33,   0.21,   {"group":["sunburst2_swaybar_link_FL"]}],
+         {"group":""},
+    ],
+    "rails": {
+        //strut
+        "strut_FR":{"links:":["fs2r", "fs1r"], "broken:":[], "looped":false, "capped":true},
+        "strut_FL":{"links:":["fs2l", "fs1l"], "broken:":[], "looped":false, "capped":true},
+        //swaybar end link
+        "endlink_FR":{"links:":["fh1r", "fx2r"], "broken:":[], "looped":false, "capped":true},
+        "endlink_FL":{"links:":["fh1l", "fx2l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        //strut
+        ["fh4r", "strut_FR", true, true, 0.0, 18001000, "FLT_MAX", "FLT_MAX"],
+        ["fh4l", "strut_FL", true, true, 0.0, 18001000, "FLT_MAX", "FLT_MAX"],
+        //swaybar end link
+        ["arbf1r", "endlink_FR", true, true, 0.0, 12001000, "FLT_MAX", "FLT_MAX"],
+        ["arbf1l", "endlink_FL", true, true, 0.0, 12001000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":200000, "damp":0.5, "deform":25000, "strength":100000},
+        //rigidify steering arm
+        ["fw1rr", "fh4r", "fh1r", "fh3r"],
+        ["fw1ll", "fh4l", "fh1l", "fh3l"],
+    ],
+    "beams": [
+          ["id1:",  "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //front subframe main shape
+          {"beamSpring":6001000,"beamDamp":180},
+          {"beamDeform":30000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.1},
+          ["fx2r",  "fx1r"],
+          ["fx1r",  "fx1l"],
+          ["fx1l",  "fx2l"],
+          {"beamSpring":10001000,"beamDamp":150},
+          ["fx2l",  "fx2r"],
+
+          {"beamSpring":4001000,"beamDamp":180},
+          ["fx2r",  "fx6r"],
+          ["fx6r",  "fx1r"],
+          ["fx1l",  "fx6l"],
+          ["fx6l",  "fx2l"],
+          //crossing
+          {"beamDeform":23000},
+          {"deformLimitExpansion":""},
+          ["fx1r",  "fx2l"],
+          ["fx1l",  "fx2r"],
+
+          //corner rigids
+          {"beamDeform":18000},
+          ["fx6r",  "fx2l"],
+          ["fx6r",  "fx1l"],
+          ["fx6l",  "fx1r"],
+          ["fx6l",  "fx2r"],
+
+          //rigidifier
+          {"beamSpring":4001000,"beamDamp":180},
+          {"beamDeform":15000},
+          ["fx6",   "fx2r"],
+          ["fx6",   "fx2l"],
+          ["fx6",   "fx1r"],
+          ["fx6",   "fx1l"],
+          ["fx6",   "fx5r"],
+          ["fx6",   "fx5l"],
+          {"beamSpring":2001000,"beamDamp":180},
+          {"beamDeform":8000},
+          ["fx6",   "fx6r"],
+          ["fx6",   "fx6l"],
+
+          //extra rigidifier
+          {"beamSpring":2001000,"beamDamp":120},
+          {"beamDeform":8000},
+          ["fx7",   "fx2r"],
+          ["fx7",   "fx2l"],
+          ["fx7",   "fx1r"],
+          ["fx7",   "fx1l"],
+          ["fx7",   "fx5r"],
+          ["fx7",   "fx5l"],
+          {"beamSpring":1001000,"beamDamp":120},
+          {"beamDeform":4000},
+          ["fx7",   "fx6r"],
+          ["fx7",   "fx6l"],
+          ["fx7",   "fx6"],
+
+          //steering rack
+          {"beamSpring":4501000,"beamDamp":180},
+          {"beamDeform":25000},
+          ["fx5r",  "fx5l"],
+          {"beamSpring":4001000,"beamDamp":180},
+          ["fx5r",  "fx2r"],
+          ["fx5r",  "fx1r"],
+          ["fx5r",  "fx1l"],
+          ["fx5r",  "fx2l"],
+          ["fx5l",  "fx2r"],
+          ["fx5l",  "fx1r"],
+          ["fx5l",  "fx1l"],
+          ["fx5l",  "fx2l"],
+          {"beamSpring":2001000,"beamDamp":180},
+          ["fx5r",  "fx6r"],
+          ["fx5r",  "fx6l"],
+          ["fx5l",  "fx6r"],
+          ["fx5l",  "fx6l"],
+
+          //attach to body
+          {"beamSpring":1250000,"beamDamp":150},
+          {"beamDeform":25000,"beamStrength":170000},
+          {"breakGroup":"subframemount_FR"},
+          ["fx6r",  "f10rr"],
+          ["fx6r",  "f12rr"],
+          ["fx1r",  "f10rr"],
+          ["fx1r",  "f12rr"],
+          {"beamSpring":2500000,"beamDamp":150},
+          ["fx2r",  "f10rr"],
+          ["fx2r",  "f12rr"],
+          {"beamSpring":1250000,"beamDamp":150},
+          {"breakGroup":"subframemount_FL"},
+          ["fx6l",  "f10ll"],
+          ["fx6l",  "f12ll"],
+          ["fx1l",  "f10ll"],
+          ["fx1l",  "f12ll"],
+          {"beamSpring":2500000,"beamDamp":150},
+          ["fx2l",  "f10ll"],
+          ["fx2l",  "f12ll"],
+          //weak
+          {"beamDeform":13000,"beamStrength":170000},
+          {"beamSpring":3001000,"beamDamp":150},
+          {"breakGroup":"subframemount_FR"},
+          //["fx2r", "f1r"],
+          ["fx2r",  "f5r"],
+          ["fx1r",  "f1r"],
+          ["fx1r",  "f5r"],
+          ["fx6r",  "f1r"],
+          ["fx6r",  "f5r"],
+          ["fx1l",  "f10rr"],
+          ["fx1l",  "f12rr"],
+          {"beamSpring":5001000,"beamDamp":150},
+          ["fx2l",  "f10rr"],
+          ["fx2l",  "f12rr"],
+          {"beamSpring":3001000,"beamDamp":150},
+          {"breakGroup":"subframemount_FL"},
+          //["fx2l", "f1l"],
+          ["fx2l",  "f5l"],
+          ["fx1l",  "f1l"],
+          ["fx1l",  "f5l"],
+          ["fx6l",  "f1l"],
+          ["fx6l",  "f5l"],
+          ["fx1r",  "f10ll"],
+          ["fx1r",  "f12ll"],
+          {"beamSpring":5001000,"beamDamp":150},
+          ["fx2r",  "f10ll"],
+          ["fx2r",  "f12ll"],
+          {"breakGroup":""},
+
+          //limiter
+          {"beamPrecompression":0.98, "beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":4001000,"beamDamp":180},
+          {"beamDeform":15000,"beamStrength":80000},
+          {"deformLimitExpansion":""}
+          ["fx1l",  "f12ll"],
+          ["fx2l",  "f12ll"],
+          ["fx1r",  "f12rr"],
+          ["fx2r",  "f12rr"],
+          {"beamPrecompression":0.8},
+          ["fx6r",  "f12ll"],
+          ["fx6r",  "f5l"],
+          ["fx6l",  "f12rr"],
+          ["fx6l",  "f5r"],
+          {"beamPrecompression":1},
+
+          //--FRONT INDEPENDENT SUSPENSION--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //mcpherson strut suspension
+          {"beamSpring":7501000,"beamDamp":100},
+          {"beamDeform":85000,"beamStrength":350000},
+          {"deformLimitExpansion":1.1},
+          //front hub
+          ["fh1r",  "fh3r"],
+          ["fh1l",  "fh3l"],
+          ["fh3r",  "fh4r"],
+          ["fh3l",  "fh4l"],
+          ["fh1r",  "fh4r"],
+          ["fh1l",  "fh4l"],
+
+          {"beamSpring":5001000,"beamDamp":100},
+          ["fh1r",  "fh5r"],
+          ["fh1l",  "fh5l"],
+          ["fh3r",  "fh5r"],
+          ["fh3l",  "fh5l"],
+          ["fh4r",  "fh5r"],
+          ["fh4l",  "fh5l"],
+          //flexbody node
+          {"beamSpring":201000,"beamDamp":20},
+          ["fh7r",  "fh4r"],
+          ["fh7r",  "fh1r"],
+          ["fh7r",  "fh3r"],
+          ["fh7r",  "fh5r"],
+          ["fh7l",  "fh4l"],
+          ["fh7l",  "fh1l"],
+          ["fh7l",  "fh3l"],
+          ["fh7l",  "fh5l"],
+
+          {"beamSpring":9001000,"beamDamp":100},
+          {"beamDeform":85000,"beamStrength":275000},
+          {"optional":true},
+          //attach to wheel
+          {"breakGroup":"wheel_FR"},
+          ["fh1r",  "fw1r",   {"name":"axle_FR"}],
+          ["fh3r",  "fw1r"],
+          ["fh4r",  "fw1r"],
+          ["fh5r",  "fw1r",   {"beamSpring":6001000}],
+          ["fh1r",  "fw1rr"],
+          ["fh3r",  "fw1rr"],
+          ["fh5r",  "fw1rr",   {"beamSpring":6001000}],
+          ["fs2r",  "fw1rr"],
+          {"breakGroup":"wheel_FL"},
+          ["fh1l",  "fw1l",   {"name":"axle_FL"}],
+          ["fh3l",  "fw1l"],
+          ["fh4l",  "fw1l"],
+          ["fh5l",  "fw1l",   {"beamSpring":6001000}],
+          ["fh1l",  "fw1ll"],
+          ["fh3l",  "fw1ll"],
+          ["fh5l",  "fw1ll",   {"beamSpring":6001000}],
+          ["fs2l",  "fw1ll"],
+          //camber
+          ["fh4r",  "fw1rr",  {"beamPrecompression":"$camber_F","beamPrecompressionTime":0.5, "breakGroup":"wheel_FR"}],
+          ["fh4l",  "fw1ll",  {"beamPrecompression":"$camber_F","beamPrecompressionTime":0.5, "breakGroup":"wheel_FL"}],
+          {"breakGroup":""},
+          {"optional":false},
+
+          //strut bottom node
+          {"beamSpring":6001000,"beamDamp":150,"beamDeform":47500,"beamStrength":"FLT_MAX"},
+          ["fh4r","fs2r"],
+          ["fh4l","fs2l"],
+          ["fh3r","fs2r"],
+          ["fh3l","fs2l"],
+          ["fh5r","fs2r"],
+          ["fh5l","fs2l"],
+          ["fh1l","fs2l"],
+          ["fh1r","fs2r"],
+
+          //swaybar end link
+          {"beamSpring":2501000,"beamDamp":50,"beamDeform":37500,"beamStrength":450000},
+          ["fx2l",  "arbf1l"],
+          ["fx2r",  "arbf1r"],
+
+          //lower arm
+          {"beamSpring":9000000,"beamDamp":1500},
+          {"beamDeform":75000,"beamStrength":450000},
+          ["fx2r",  "fh1r",   {"dampCutoffHz":500}],
+          ["fx2l",  "fh1l",   {"dampCutoffHz":500}],
+          ["f1r",   "fx2r",   {"dampCutoffHz":500}],
+          ["f1l",   "fx2l",   {"dampCutoffHz":500}],
+
+          {"beamSpring":9001000,"beamDamp":4000},
+          ["f1r",   "fh1r",   {"dampCutoffHz":500}],
+          ["f1l",   "fh1l",   {"dampCutoffHz":500}],
+
+          //front limiters
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":0.7, "beamType":"|SUPPORT", "beamLongBound":3},
+          {"beamSpring":501000,"beamDamp":1000,"beamDeform":15000,"beamStrength":900000},
+          {"optional":true},
+          ["fw1r",  "f1rr"],
+          ["fw1r",  "f1r"],
+          ["fw1r",  "f5rr"],
+          ["fw1r",  "f5r"],
+          ["fw1r",  "f6rr"],
+          ["fw1r",  "f6r"],
+          ["fw1r",  "f12rr"],
+          ["fw1r",  "f10rr"],
+          ["fw1r",  "f11rr"],
+          ["fw1r",  "f15r"],
+          ["fw1r",  "f19rr"],
+          ["fw1r",  "f15rr"],
+          ["fw1rr", "f1rr"],
+          ["fw1rr", "f1r"],
+          ["fw1rr", "f5rr"],
+          ["fw1rr", "f5r"],
+          ["fw1rr", "f6rr"],
+          ["fw1rr", "f6r"],
+          ["fw1rr", "f12rr"],
+          ["fw1rr", "f10rr"],
+          ["fw1rr", "f11rr"],
+          ["fw1rr", "f15r"],
+          ["fw1rr", "f19rr"],
+          ["fw1rr", "f15rr"],
+
+          ["fw1l",  "f1ll"],
+          ["fw1l",  "f1l"],
+          ["fw1l",  "f5ll"],
+          ["fw1l",  "f5l"],
+          ["fw1l",  "f6ll"],
+          ["fw1l",  "f6l"],
+          ["fw1l",  "f12ll"],
+          ["fw1l",  "f10ll"],
+          ["fw1l",  "f11ll"],
+          ["fw1l",  "f15l"],
+          ["fw1l",  "f19ll"],
+          ["fw1l",  "f15ll"],
+          ["fw1ll", "f1ll"],
+          ["fw1ll", "f1l"],
+          ["fw1ll", "f5ll"],
+          ["fw1ll", "f5l"],
+          ["fw1ll", "f6ll"],
+          ["fw1ll", "f6l"],
+          ["fw1ll", "f12ll"],
+          ["fw1ll", "f10ll"],
+          ["fw1ll", "f11ll"],
+          ["fw1ll", "f15l"],
+          ["fw1ll", "f19ll"],
+          ["fw1ll", "f15ll"],
+
+          ["fw1r",  "f14rr"],
+          ["fw1r",  "fs1r"],
+          ["fw1rr", "f14rr"],
+          ["fw1rr", "fs1r"],
+          ["fw1l",  "f14ll"],
+          ["fw1l",  "fs1l"],
+          ["fw1ll", "f14ll"],
+          ["fw1ll", "fs1l"],
+
+          {"beamPrecompression":0.5},
+          ["fw1r",  "f2rr"],
+          ["fw1r",  "f2r"],
+          ["fw1rr", "f2rr"],
+          ["fw1rr", "f2r"],
+          ["fw1l",  "f2ll"],
+          ["fw1l",  "f2l"],
+          ["fw1ll", "f2ll"],
+          ["fw1ll", "f2l"],
+
+          //{"breakGroupType":0},
+          {"optional":false},
+
+          {"beamPrecompression":0.73, "beamType":"|SUPPORT"},
+          ["fh1r",  "f5r"],
+          ["fh1l",  "f5l"],
+          ["fh1r",  "f6r"],
+          ["fh1l",  "f6l"],
+          ["fh1r",  "f6rr"],
+          ["fh1l",  "f6ll"],
+          ["fh3r",  "f5r"],
+          ["fh3l",  "f5l"],
+          //["fh3r","f1r"],
+          //["fh3l","f1l"],
+          ["fh4r",  "f1r"],
+          ["fh4l",  "f1l"],
+          ["fh4r",  "f1rr"],
+          ["fh4l",  "f1ll"],
+
+          //steering limit
+          {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":3},
+          {"beamSpring":2501000,"beamDamp":150,"beamDeform":100000,"beamStrength":"FLT_MAX"},
+          {"beamPrecompression":0.63},
+          ["fh3r",  "fx2r"],
+          ["fh3l",  "fx2l"],
+          {"beamPrecompression":0.63},
+          ["fh5r",  "fx2r"],
+          ["fh5l",  "fx2l"],
+          {"beamPrecompression":0.85},
+          ["fh3r",  "f1r"],
+          ["fh3l",  "f1l"],
+          {"beamPrecompression":1.0},
+
+          //hard travel limit
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":15000,"beamStrength":150000},
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":1001000,"beamLimitDamp":1000},
+          ["fh1r",  "fs1r",   {"longBoundRange":0.12,"shortBoundRange":0.12,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1l",  "fs1l",   {"longBoundRange":0.12,"shortBoundRange":0.12,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:", "id2:", "id3:"],
+            //suspension shape
+            {"triangleType":"NONCOLLIDABLE"},
+            ["fh5r", "fh1r", "fh4r"],
+            ["fh4r", "fh1r", "fh3r"],
+            ["fh4l", "fh3l", "fh1l"],
+            ["fh1l", "fh5l", "fh4l"],
+            {"triangleType":"NORMALTYPE"},
+
+            //subframe
+            ["fx1r", "fx2r", "fx2l"],
+            ["fx2l", "fx1l", "fx1r"],
+            ["fx1l", "fx2l", "fx6l"],
+            ["fx6r", "fx2r", "fx1r"],
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            //cancel out brake properties
+            {"brakeTorque":0},
+            {"parkingTorque":0},
+            {"enableBrakeThermals":false},
+            {"brakeDiameter":false},
+            {"brakeMass":false},
+            {"brakeType":false},
+            {"rotorMaterial":false},
+            {"brakeVentingCoef":false},
+    ],
+},
+"sunburst2_junk_strut_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Front Struts",
+        "value":35,
+    },
+    "slotType" : "sunburst2_strut_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["sunburst2_strut_FR", ["sunburst2_hub_FR"]],
+        ["sunburst2_strut_uppermount_FR", ["sunburst2_hub_FR", "sunburst2_strut_FR"]],
+        ["sunburst2_strut_spring_FR", ["sunburst2_hub_FR", "sunburst2_strut_FR"]],
+        ["sunburst2_strut_FL", ["sunburst2_hub_FL"]],
+        ["sunburst2_strut_uppermount_FL", ["sunburst2_hub_FL", "sunburst2_strut_FL"]],
+        ["sunburst2_strut_spring_FL", ["sunburst2_hub_FL", "sunburst2_strut_FL"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front springs with soft initial bump stop
+          {"beamPrecompression":1, "beamType":"|BOUNDED","beamLongBound":1,"beamShortBound":1},
+          {"beamDeform":17000,"beamStrength":180000},
+          {"beamSpring":24500,"beamDamp":0},
+          {"beamLimitSpring":42000,"beamLimitDamp":500},
+          ["fh4r","fs1r", {"precompressionRange":0.115,"longBoundRange":1,"shortBoundRange":0.124,"boundZone":0.08,"beamLimitDampRebound":0,"dampCutoffHz":500,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":8,"volumeFactor":3.5,"decayFactor":25,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":1200}],
+          ["fh4l","fs1l", {"precompressionRange":0.115,"longBoundRange":1,"shortBoundRange":0.124,"boundZone":0.08,"beamLimitDampRebound":0,"dampCutoffHz":500,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":8,"volumeFactor":4.5,"decayFactor":35,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":1200}],
+          //dampers
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":0,"beamDamp":3500},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["fh1r", "fs1r", {"beamDampFast":50,"beamDampRebound":50,"beamDampReboundFast":50,"beamDampVelocitySplit":0.06,"dampCutoffHz":500}],
+          ["fh1l", "fs1l", {"beamDampFast":50,"beamDampRebound":50,"beamDampReboundFast":50,"beamDampVelocitySplit":0.06,"dampCutoffHz":500}],
+          //harder bump stop
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":181000,"beamLimitDamp":5000},
+          ["fh4r", "fs1r", {"longBoundRange":0.06,"shortBoundRange":0.085,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh4l", "fs1l", {"longBoundRange":0.06,"shortBoundRange":0.085,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+}
+"sunburst2_junk_swaybar_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Sway Bar",
+        "value":15,
+    },
+    "slotType" : "sunburst2_swaybar_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["sunburst2_swaybar_F", ["sunburst2_swaybar_F"]],
+        ["sunburst2_swaybar_link_FR", ["sunburst2_swaybar_link_FR"]],
+        ["sunburst2_swaybar_link_FL", ["sunburst2_swaybar_link_FL"]],
+    ],
+    "nodes": [
+         ["id",     "posX", "posY", "posZ"],
+         //anti-roll
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":false},
+         {"collision":true}
+         {"nodeWeight":1.5},
+         //front anti-roll
+         ["arbf2r",-0.53,  -1.33,  0.26, {"group":["sunburst2_swaybar_F", "sunburst2_swaybar_link_FR"]}],
+         ["arbf2l", 0.53,  -1.33,  0.26, {"group":["sunburst2_swaybar_F", "sunburst2_swaybar_link_FL"]}],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //19mm -- 1718
+        //20mm -- 2109
+        //21mm -- 2564
+        //22mm -- 3088
+        //23mm -- 3689
+        //24mm -- 4373
+        {"spring":2109, "damp":10, "deform":10000, "strength":9999999},
+        ["arbf2r", "fx1r", "fx1l", "arbf2l"],
+    ],
+    "beams": [
+          ["id1:",   "id2:"],
+          //--ANTI-ROLL--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":15000,"beamStrength":10},
+          //end links
+          ["arbf2r", "arbf1r"],
+          ["arbf2l", "arbf1l"],
+          //rigids
+          ["arbf2r", "fx1r"],
+          ["arbf2l", "fx1l"],
+          ["arbf2r", "fx1l"],
+          ["arbf2l", "fx1r"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"sunburst2_junk_steering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Steering Rack",
+        "value":40,
+    },
+    "slotType" : "sunburst2_steering",
+    "slots2": [
+        ["name",                    "allowTypes",                "denyTypes", "default", "description"],
+        ["sunburst2_power_steering", ["sunburst2_power_steering"], [],          "",        "Power Steering"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["sunburst2_steeringrack", ["sunburst2_subframe_F", "sunburst2_steeringrack"]],
+        ["sunburst2_tierod_FR", ["sunburst2_tierod_FR"]],
+        ["sunburst2_tierod_FL", ["sunburst2_tierod_FL"]],
+        ["sunburst2_steeringboot_R", ["sunburst2_tierod_FR", "sunburst2_steeringrack"]],
+        ["sunburst2_steeringboot_L", ["sunburst2_tierod_FL", "sunburst2_steeringrack"]],
+        //["sunburst2_steering_column", ["sunburst2_subframe_F","sunburst2_column"]],
+    ],
+    "props": [
+        ["func"      , "mesh"           ,             "idRef:", "idX:", "idY:",               "baseRotation"        , "rotation"            , "translation"        , "min", "max", "offset", "multiplier",],
+        ["steering", "sunburst2_steering_column",      "stc1","stc3","stc2", {"x":0, "y":0, "z":0}, {"x":0, "y":1, "z":0} , {"x":0, "y":0, "z":0}, -1000, 1000, 0, 1,{"baseTranslationGlobal":{"x": 0.373, "y":-1.140, "z":0.543},"baseRotationGlobal":{"x":-47.45, "y":0, "z":25.15}}],
+        ["steering", "sunburst2_steering_column_top",  "stc1","stc3","stc2", {"x":0, "y":0, "z":0}, {"x":0, "y":1, "z":0} , {"x":0, "y":0, "z":0}, -1000, 1000, 0, 1,{"baseTranslationGlobal":{"x": 0.373, "y":-1.140, "z":0.543},"baseRotationGlobal":{"x":-20.8, "y":0, "z":0}}],
+        ["steering", "sunburst2_steering_column_rack", "fx5l","stc3","fx5r", {"x":0, "y":0, "z":0}, {"x":0, "y":1, "z":0} , {"x":0, "y":0, "z":0}, -1000, 1000, 0, 1,{"baseTranslationGlobal":{"x": 0.214, "y":-1.374, "z":0.278},"baseRotationGlobal":{"x":-60.19, "y":0, "z":14.45}}],
+    ],
+    "rails": {"steeringrack":{"links:":["fh6r", "fh6l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["fx5r", "steeringrack", true, true, 0.0, 35000, "FLT_MAX", "FLT_MAX"],
+        ["fx5l", "steeringrack", true, true, 0.0, 35000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "nodes": [
+         ["id",   "posX", "posY", "posZ"],
+         //--steering rod--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"nodeWeight":4.75},
+         ["fh6r",-0.319, -1.409,  0.2675, {"group":"sunburst2_tierod_FR"}],
+         ["fh6l", 0.319, -1.409,  0.2675, {"group":"sunburst2_tierod_FL"}],
+         {"group":""},
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"]
+        ["$toe_F", "range", "", "Wheel Alignment", 0.9996, 1.02, 0.98, "Toe Adjust", "Adjusts the wheel toe-in angle", {"subCategory":"Front"}]
+        ["$steer_center_F", "range", "", "Wheel Alignment", 0, -0.002, 0.002, "Toe Left/Right Trim", "Fine tunes the centerpoint of the steering", {"subCategory":"Front"}]
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":10001000,"beamDamp":150,"beamDeform":79500,"beamStrength":142500},
+          ["fh6r", "fh6l"],
+          //toe out
+          {"beamSpring":15001000,"beamDamp":150,"beamDeform":75500,"beamStrength":127500},
+          ["fh3r", "fh6r", {"beamPrecompression":"$=$toe_F-$steer_center_F","beamPrecompressionTime":0.5}],
+          ["fh3l", "fh6l", {"beamPrecompression":"$=$toe_F+$steer_center_F","beamPrecompressionTime":0.5}],
+          //steering damper
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":0,"beamDeform":20000,"beamStrength":35000},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          {"beamDamp":80},
+          ["fh3r", "fx1r", {"beamDampVelocitySplit":0.1,"beamDampFast":800,"dampCutoffHz":750}],
+          ["fh3l", "fx2l", {"beamDampVelocitySplit":0.1,"beamDampFast":800,"dampCutoffHz":750}],
+          ["fh5r", "fx2r", {"beamDampVelocitySplit":0.1,"beamDampFast":800,"dampCutoffHz":750}],
+          ["fh5l", "fx2l", {"beamDampVelocitySplit":0.1,"beamDampFast":800,"dampCutoffHz":750}],
+          {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "hydros": [
+        ["id1:","id2:"],
+        {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+        {"beamSpring":10001000,"beamDamp":50,"beamDeform":"FLT_MAX","beamStrength":92500},
+        ["fh6r","fx5l", {"factor":0.135,"steeringWheelLock":510, "inRate":1.25,"outRate":1.25}],
+        ["fh6l","fx5r", {"factor":-0.135,"steeringWheelLock":510, "inRate":1.25,"outRate":1.25}],
+        {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "input": {
+        "FFBcoef":"$=$ffbstrength*9",
+    },
+},
+"sunburst2_junk_power_steering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Power Steering Pump",
+        "value":25,
+    }
+    "slotType" : "sunburst2_power_steering",
+    "controller": [
+        ["fileName"],
+        ["powerSteering", {"strengthFast":1, "strengthSlow": 0.01, "speedSlow": 1, "speedFast": 3, "constantOffset":-0.05}],
+    ],
+},
+}

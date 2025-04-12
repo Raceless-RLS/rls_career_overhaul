@@ -1,0 +1,76 @@
+{
+"bluebuck_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":20,
+    },
+    "slotType" : "bluebuck_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["bluebuck_brakedrum_FR", ["wheel_FR","wheelhub_FR"], []],
+        ["bluebuck_brakedrum_FL", ["wheel_FL","wheelhub_FL"], []],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        {"brakeTorque":"$=$brakestrength*1250"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":0},
+        {"brakeSpring":65},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.28},
+        {"brakeMass":8},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"bluebuck_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":10,
+    },
+    "slotType" : "bluebuck_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["bluebuck_brakedrum_RR", ["wheel_RR","wheelhub_RR"]],
+        ["bluebuck_brakedrum_RL", ["wheel_RL","wheelhub_RL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        {"brakeTorque":"$=$brakestrength*650"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":800},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.28},
+        {"brakeMass":7},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 3.8, "squealCoefLowSpeed": 3.8}
+    ],
+},
+}

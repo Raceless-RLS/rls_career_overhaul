@@ -1,0 +1,82 @@
+{
+"etki_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":50,
+    },
+    "slotType" : "etki_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["etki_radtube", ["etki_engine","etki_radiator"]],
+         ["etki_radiator", ["etki_radiator"]],
+    ],
+    "mainEngine":{
+        "radiatorArea":0.34,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":0.5,
+        "radiatorFanType":"electric",
+        "radiatorFanTemperature":115,
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":100,
+        "radiatorFanLoopEvent": "event:>Vehicle>Cooling Fan>Electric_05",
+        "radiatorFanVolume": 4.5,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"],
+        },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"etki_radiator"},
+         {"nodeWeight":2.7},
+         {"engineGroup":"radiator"},
+         {"chemEnergy":200,"burnRate":0.4,"flashPoint":250,"specHeat":0.8,"smokePoint":150,"selfIgnitionCoef":false},
+         ["rad1", 0.0, -1.8, 0.7],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         ["rad2", 0.0, -1.8, 0.3],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":5000,"beamDamp":150},
+          {"beamDeform":7500,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          //radiator
+          {"deformLimitExpansion":""},
+          ["rad2", "rad1"],
+          ["rad1", "f15"],
+          ["rad1", "f15r"],
+          ["rad1", "f13rr"],
+          ["rad1", "f11rr"],
+          ["rad1", "f15l"],
+          ["rad1", "f13ll"],
+          ["rad1", "f11ll"],
+          ["rad2", "f11"],
+          ["rad2", "f11ll"],
+          ["rad2", "f11rr"],
+          ["rad2", "f13ll"],
+          ["rad2", "f13rr"],
+          //to engine
+          {"beamSpring":14000,"beamDamp":300},
+          {"beamDeform":1450,"beamStrength":3600},
+          {"optional":true},
+          //duplicate beams for better flexbody breaking
+          ["rad1","e4r"],
+          ["rad1","e4l"],
+          ["rad1","e4r"],
+          ["rad1","e4l"],
+          //tube
+          ["rad2","e4l"],
+          {"optional":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

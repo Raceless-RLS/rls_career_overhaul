@@ -1,0 +1,318 @@
+{
+"pessima_junk_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Driver Seat",
+        "value":100,
+    },
+    "slotType" : "pessima_seat_FL",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pessima_seat_FL" ["pessima_seat_FL","pessima_floor"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"pessima_seat_FL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.0},
+         ["sf1l", 0.11, -0.3, 0.5],
+         ["sf1ll", 0.63, -0.3, 0.5],
+         ["sf2l", 0.14, 0.1, 0.43],
+         ["sf2ll", 0.6, 0.1, 0.43],
+         ["sf3l", 0.2, 0.34, 1.17],
+         ["sf3ll", 0.54, 0.34, 1.17],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3l", "sf1l"],
+        ["sf3ll", "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3ll", "r5ll"],
+        ["sf3l", "r1ll"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2l", "f3l"],
+        ["sf2l", "f2l"],
+        ["sf2l", "f3r"],
+        ["sf2l", "f2r"],
+
+        ["sf2ll", "f3l"],
+        ["sf2ll", "f3ll"],
+        ["sf2ll", "f2l"],
+        ["sf1l", "f2l"],
+        ["sf1ll", "f2l"],
+        ["sf1ll", "f2ll"],
+        ["sf1l", "f3l"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3l", "int7"],
+        ["sf3l", "p7l"],
+        ["sf3l", "p8l"],
+        ["sf3l", "rf2l"],
+        ["sf2l", "p4l"],
+        ["sf2l", "p3l"],
+        ["sf1l", "f1ll"],
+        ["sf1l", "f3ll"],
+
+        //to other seat
+        {"beamPrecompression":0.7},
+        ["sf1rr", "sf1ll"],
+        ["sf2rr", "sf2ll"],
+        ["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"pessima_junk_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Passenger Seat",
+        "value":100,
+    },
+    "slotType" : "pessima_seat_FR",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_FR","", "Front Seat Load", {
+            "nodeMove":{"x":-0.37, "y":-0.18, "z":0.61},
+            "variables":{
+                "$rotx":-8, "$roty":0, "$rotz":90,
+                "$group":"pessima_seat_FR",
+            },
+        }],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pessima_seat_FR" ["pessima_seat_FR","pessima_floor"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"pessima_seat_FR"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.0},
+         ["sf1r", -0.11, -0.3, 0.5],
+         ["sf1rr", -0.63, -0.3, 0.5],
+         ["sf2r", -0.14, 0.1, 0.43],
+         ["sf2rr", -0.6, 0.1, 0.43],
+         ["sf3r", -0.2, 0.34, 1.17],
+         ["sf3rr", -0.54, 0.34, 1.17],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3r", "sf1r"],
+        ["sf3rr", "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3rr", "r5rr"],
+        ["sf3r", "r1rr"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2r", "f3l"],
+        ["sf2r", "f2l"],
+        ["sf2r", "f3r"],
+        ["sf2r", "f2r"],
+
+        ["sf2rr", "f3r"],
+        ["sf2rr", "f3rr"],
+        ["sf2rr", "f2r"],
+        ["sf1r", "f2r"],
+        ["sf1rr", "f2r"],
+        ["sf1rr", "f2rr"],
+        ["sf1r", "f3r"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3r", "int7"],
+        ["sf3r", "p7r"],
+        ["sf3r", "p8r"],
+        ["sf3r", "rf2r"],
+        ["sf2r", "p4r"],
+        ["sf2r", "p3r"],
+        ["sf1r", "f1rr"],
+        ["sf1r", "f3rr"],
+        //to other seat
+        {"beamPrecompression":0.7},
+        //["sf1rr", "sf1ll"],
+        //["sf2rr", "sf2ll"],
+        //["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+"pessima_junk_seats_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Rear Seats",
+        "value":125,
+    },
+    "slotType" : "pessima_seats_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_R","", "Rear Seat Load", {
+            "nodeMove":{"x": 0.00, "y":0.81, "z":0.65},
+            "variables":{
+                "$rotx":-10, "$roty":0, "$rotz":0,
+                "$group":"pessima_seats",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pessima_seats_R", ["pessima_seats"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":7},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"pessima_seats"},
+         ["int7", 0.42, 1.15, 0.90],
+         ["int8", -0.42, 1.15, 0.90],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1.0},
+          {"beamSpring":200000,"beamDamp":150},
+          {"beamDeform":3160,"beamStrength":"FLT_MAX"},
+          //interior flexbody
+          ["int7","int8"],
+
+          ["int7","f4ll"],
+          ["int7","f3ll"],
+          ["int7","tb1l"],
+          ["int7","f8r"],
+          ["int7","f9l"],
+          ["int7","f4l"],
+          ["int7","f3l"],
+
+          ["int8","f4rr"],
+          ["int8","f3rr"],
+          ["int8","tb1r"],
+          ["int8","f8l"],
+          ["int8","f9r"],
+          ["int8","f4r"],
+          ["int8","f3r"],
+
+          ["int7","tb1"],
+          ["int8","tb1"],
+
+          //cargo load box
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":500001,"beamDamp":250},
+          {"beamDeform":510000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["seat_box_R","f4ll"],
+          ["seat_box_R","f3ll"],
+          ["seat_box_R","tb1l"],
+          ["seat_box_R","f8r"],
+          ["seat_box_R","f9l"],
+          ["seat_box_R","f4l"],
+          ["seat_box_R","f3l"],
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1.0},
+    ],
+},
+}

@@ -1,0 +1,758 @@
+{"scintilla_junk_subframe_R":
+{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Previously Crashed Rear Subframe",
+        "value":1000,
+    },
+
+    "slotType" :"scintilla_subframe_R",
+
+    "slots":[
+        ["type", "default", "description"],
+        //bodywork
+        ["scintilla_bumpersupport_R","scintilla_bumpersupport_R", "Rear Body Support"],
+        //running gear
+        ["scintilla_suspension_R","scintilla_suspension_R", "Rear Suspension"],
+        //powertrain
+        ["scintilla_engine","scintilla_engine_5.0_v10", "Engine"],
+        //misc
+        ["scintilla_skidplate","", "Skidplate"],
+        ["scintilla_towhitch","", "Tow Hitch"],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["scintilla_rear_chassis", ["scintilla_subframe_R"]],
+        ["scintilla_fuel_pipe", ["scintilla_subframe_R"]],
+    ],
+   "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigidify bumper bar
+        {"spring":10000, "damp":10, "deform":5000, "strength":100000},
+        ["bbr2l", "rx3l", "rx3r", "rx6r"],
+        ["bbr2r", "rx3r", "rx3l", "rx6l"],
+        //rigidify rear subframe
+        {"spring":10000, "damp":40, "deform":5000, "strength":100000},
+        ["rx4l", "rx3l", "rx3r", "rx1r"],
+        ["rx4r", "rx3r", "rx3l", "rx1l"],
+    ],
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+
+         //--RUNNING GEAR--
+
+         //rear upper shock mount
+         {"nodeWeight":10.0},
+         {"group":["scintilla_subframe_R","scintilla_shock_R"]}
+         ["rs1r",-0.482,1.412,0.596, {"selfCollision":false}],
+         ["rs1l",0.482,1.412,0.596, {"selfCollision":false}],
+
+         //rear swaybar mount
+         {"group":["scintilla_swaybar_R","scintilla_swaybar_mount_R"]},
+         {"nodeWeight":2.0},
+         ["arr3r", -0.48, 1.61, 0.53, {"selfCollision":false}],
+         ["arr3l",  0.48, 1.61, 0.53, {"selfCollision":false}],
+
+         //rear lower arm axis
+         {"nodeWeight":8},
+         {"group":["scintilla_subframe_R","scintilla_lowerarm_R","scintilla_lowermounts_R"]}
+         ["rx3r",-0.36,1.17,0.2],
+         ["rx3l",0.36,1.17,0.2],
+         ["rx4r",-0.36,1.648,0.2],
+         ["rx4l",0.36,1.648,0.2],
+
+         //rear upper link axis
+         {"selfCollision":false},
+         {"nodeWeight":7},
+         {"group":["scintilla_subframe_R","scintilla_upperarm_R"]}
+         //["rx8r",-0.469,1.322,0.487],
+         //["rx8l",0.469,1.322,0.487],
+         ["rx8r",-0.469,1.322,0.467],
+         ["rx8l", 0.469,1.322,0.467],
+
+         //rear tierod
+         {"group":["scintilla_subframe_R","scintilla_tierod_R"]}
+         //["rx9r",-0.464,1.5,0.339],
+         //["rx9l",0.464,1.5,0.339],
+         ["rx9r",-0.464,1.53,0.327],
+         ["rx9l", 0.464,1.53,0.327],
+         {"selfCollision":true},
+
+         //--REAR SUBFRAME--
+
+         //lower rails
+         {"nodeWeight":5.0},
+         {"group":"scintilla_subframe_R"},
+         ["rx1r",-0.3,0.117,0.142, {"tag":"subframe_R_1r"}],
+         ["rx1l",0.3,0.117,0.142, {"tag":"subframe_R_1l"}],
+
+         ["rx2r",-0.344,0.654,0.137],
+         ["rx2l",0.344,0.654,0.137],
+
+         //upper rails
+         {"group":"scintilla_subframe_R"},
+         ["rx5r",-0.274,0.496,0.603, {"tag":"subframe_R_2r"}],
+         ["rx5l",0.274,0.496,0.603, {"tag":"subframe_R_2l"}],
+
+         ["rx6r",-0.43,1.151,0.617, {"tag":"quarter_support_RR1"}],
+         ["rx6l",0.43,1.151,0.617, {"tag":"quarter_support_RL1"}],
+
+         ["rx7r",-0.43,1.602,0.617, {"tag":"quarter_support_RR2"}],
+         ["rx7l",0.43,1.602,0.617, {"tag":"quarter_support_RL2"}],
+
+         //rear crossmembers
+         {"nodeWeight":4.5},
+         ["rx4",0.0,1.685,0.2],
+         ["rx7",0.0,1.602,0.617],
+
+         //lower braces
+         {"nodeWeight":4.0},
+         ["rx1rr",-0.884,0.117,0.145, {"tag":"subframe_R_1rr"}],
+         ["rx1ll",0.884,0.117,0.145, {"tag":"subframe_R_1ll"}],
+
+         ["rx2rr",-0.56,0.781,0.137],
+         ["rx2ll",0.56,0.781,0.137],
+
+         //upper braces
+         {"nodeWeight":3.5},
+         ["rx5rr",-0.849,0.496,0.603, {"tag":"subframe_R_2rr"}],
+         ["rx5ll",0.849,0.496,0.603, {"tag":"subframe_R_2ll"}],
+
+         //extra structure
+         {"nodeWeight":2.0},
+         ["rx10rr",-0.884,0.481,0.226, {"tag":"subframe_R_3rr"}],
+         ["rx10ll",0.884,0.481,0.226, {"tag":"subframe_R_3ll"}],
+
+         ["rx11rr",-0.807,0.796,0.185],
+         ["rx11ll",0.807,0.796,0.185],
+         {"nodeWeight":4.0},
+
+         //rear crash bar
+         {"nodeWeight":1.0},
+         ["bbr1r",-0.589,1.965,0.34],
+         ["bbr1",0.0,2.0,0.4],
+         ["bbr1l",0.589,1.965,0.34],
+
+         ["bbr2r",-0.589,1.965,0.5],
+         ["bbr2",0.0,2.0,0.5],
+         ["bbr2l",0.589,1.965,0.5],
+
+         {"nodeWeight":1.5},
+         {"collision":false},
+         {"selfCollision":false},
+         ["bbr3",0.0,1.832,0.431, {"group":""}],
+         {"group":""},
+        ],
+
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //prevent unrealistic engine ejection
+          {"beamSpring":500, "beamDamp":10},
+          {"beamDeform":500, "beamStrength":35000},
+          {"optional":true},
+
+          {"dampCutoffHz":""},
+
+          //engine limiters
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":5250000, "beamDamp":200, "beamDeform":13000, "beamStrength":"FLT_MAX"},
+          {"beamPrecompression":0.85},
+          //bottom
+          ["e3r", "rx2r"],
+          ["e3l", "rx2l"],
+          ["e4l", "rx3l"],
+          ["e4r", "rx3r"],
+          ["e4l", "rx2l"],
+          ["e4l", "rx7l"],
+          ["e4r", "rx3l"],
+          ["e4r", "rx2r"],
+          ["e3l", "rx3l"],
+          ["e3l", "rx2r"],
+          ["e3r", "rx2l"],
+          ["e3r", "rx3r"],
+          //side
+          ["e1l", "rx2r"],
+          ["e1r", "rx2l"],
+          ["e3l", "rx5r"],
+          ["e3r", "rx5l"],
+          ["e2r", "rx3l"],
+          ["e2l", "rx3r"],
+          ["e4l", "rx6r"],
+          ["e4r", "rx6l"],
+          //front
+          ["e4l", "rx5l"],
+          ["e4r", "rx5r"],
+          ["e2r", "rx2r"],
+          ["e2l", "rx2l"],
+          ["e1l", "rx1l"],
+          ["e1r", "rx1r"],
+          //rear
+          {"beamPrecompression":0.75},
+          ["e1l", "rx3l"],
+          ["e3l", "rx6l"],
+          ["e3r", "rx6r"],
+          ["e1r", "rx3r"],
+          ["e2l", "rx4l"],
+          ["e2r", "rx4r"],
+          ["e4l", "rx7l"],
+          ["e4r", "rx7r"],
+
+          //top
+          {"beamPrecompression":0.8},
+          ["e3r", "rbs1r"],
+          ["rbs1r", "e3l"],
+          ["e3l", "rbs1l"],
+          ["rbs1l", "e3r"],
+          ["rbs1r", "e4r"],
+          ["rbs1r", "e4l"],
+          ["e4l", "rbs1l"],
+          ["rbs1l", "e4r"],
+
+          ["e1r", "rbs1rr"],
+          ["e1r", "rbs1l"],
+          ["e1l", "rbs1ll"],
+          ["e1l", "rbs1r"],
+          ["e2r", "rbs1rr"],
+          ["e2r", "rbs1l"],
+          ["e2l", "rbs1ll"],
+          ["e2l", "rbs1r"],
+          ["e2l", "rbs2ll"],
+          ["e2l", "rbs2rr"],
+          ["e2r", "rbs2rr"],
+          ["e2r", "rbs2ll"],
+
+          //to chassis
+          {"beamPrecompression":0.9},
+          ["e3l", "f8l"],
+          ["e3r", "f8r"],
+          ["e3r", "f8l"],
+          ["f8r", "e3l"],
+          ["e4l", "f9l"],
+          ["e4r", "f9r"],
+          ["f9r", "e4l"],
+          ["e4r", "f9l"],
+          ["e4l", "f4l"],
+          ["e4r", "f4r"],
+          ["e2l", "f9l"],
+          ["e2r", "f9r"],
+
+          //transmission limiters
+          {"beamPrecompression":0.8},
+          ["tra2", "rx7"],
+          ["tra1r", "rx4"],
+          ["tra1l", "rx4"],
+          ["tra1r", "rx4r"],
+          ["tra2", "rx7r"],
+          ["tra1l", "rx4l"],
+          ["tra2", "rx7l"],
+          ["tra1l", "rx7r"],
+          ["tra1r", "rx7l"],
+          ["tra2", "rx4r"],
+          ["tra2", "rx4l"],
+          {"beamPrecompression":0.5},
+          ["tra1l", "rbs3l"],
+          ["rbs3l", "tra1r"],
+          ["rbs3r", "tra1r"],
+          ["tra1r", "rbs3rr"],
+          ["tra1l", "rbs3r"],
+          ["tra1l", "rbs3ll"],
+
+          //engine break
+          {"beamLongBound":0.9},
+          {"beamSpring":311069.5,"beamDamp":130.43,"beamDeform":14000},
+          {"beamPrecompression":0.85},
+          ["e4l", "rx5r", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          ["e4r", "rx5l", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          ["e2r", "rx2l", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          ["e2l", "rx2r", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          {"beamLongBound":1.3},
+          ["e1r", "f4r", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          ["e1l", "f4l", {"name":"engine","beamStrength":16100,"disableMeshBreaking":true,"disableTriangleBreaking":true}],
+          {"beamPrecompression":1},
+
+          //--EXPANSION DEFORM LIMIT DEFAULT--
+
+          //--MISC--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //torsion bar break beams
+          {"beamSpring":100, "beamDamp":1},
+          {"beamDeform":150, "beamStrength":5550},
+          {"optional":true},
+          ["bbr1r", "rx7r"],
+          ["bbr1l", "rx7l"],
+          ["rx7r", "rx7l"],
+          ["rx7r", "rx6r"],
+          ["rx7l", "rx6l"],
+
+          ["rx4r", "rx3r"],
+          ["rx3r", "rx3l"],
+          ["rx3l", "rx4l"],
+          ["rx3r", "rx1r"],
+          ["rx3l", "rx1l"],
+          {"optional":false},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          //enticer
+          {"beamSpring":4001000,"beamDamp":30},
+          {"beamDeform":85000,"beamStrength":"FLT_MAX"},
+          ["bbr2r", "rx3r"],
+          ["bbr2l", "rx3l"],
+
+          //--REAR RUNNING GEAR--
+
+          {"deformLimitExpansion":1.2},
+          //rear shock mount
+          {"beamSpring":4001000,"beamDamp":50},
+          {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+
+          ["rx6r", "rs1r"],
+          ["rx7r", "rs1r"],
+
+          ["rx6l", "rs1l"],
+          ["rx7l", "rs1l"],
+
+          {"deformLimitExpansion":""},
+          ["rx6l", "rs1r"],
+          ["rx7l", "rs1r"],
+          ["rx3l", "rs1r"],
+          ["rx4l", "rs1r"],
+          ["rx3r", "rs1l"],
+          ["rx4r", "rs1l"],
+          ["rx6r", "rs1l"],
+          ["rx7r", "rs1l"],
+
+          {"beamSpring":6001000,"beamDamp":50},
+          ["rs1l", "rs1r"],
+          ["rx3r", "rs1r"],
+          ["rx4r", "rs1r"],
+          ["rx3l", "rs1l"],
+          ["rx4l", "rs1l"],
+
+          //upper link
+          {"beamSpring":5001000,"beamDamp":125},
+          {"beamDeform":14000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          ["rx6r", "rx8r"],
+          ["rx7r", "rx8r"],
+          ["rx6l", "rx8l"],
+          ["rx7l", "rx8l"],
+          ["rx3r", "rx8r"],
+          ["rx4r", "rx8r"],
+          ["rx3l", "rx8l"],
+          ["rx4l", "rx8l"],
+
+          {"deformLimitExpansion":""},
+          ["rx6l", "rx8r"],
+          ["rx7l", "rx8r"],
+          ["rx3l", "rx8r"],
+          ["rx4l", "rx8r"],
+          ["rx3r", "rx8l"],
+          ["rx4r", "rx8l"],
+          ["rx6r", "rx8l"],
+          ["rx7r", "rx8l"],
+          ["rs1l", "rx8r"],
+
+          //tierod
+          {"deformLimitExpansion":1.2},
+          ["rx3r", "rx9r"],
+          ["rx4r", "rx9r"],
+          ["rx3l", "rx9l"],
+          ["rx4l", "rx9l"],
+          ["rx6r", "rx9r"],
+          ["rx7r", "rx9r"],
+          ["rx6l", "rx9l"],
+          ["rx7l", "rx9l"],
+
+          {"deformLimitExpansion":""},
+          ["rx6r", "rx9l"],
+          ["rx7r", "rx9l"],
+          ["rx6l", "rx9r"],
+          ["rx7l", "rx9r"],
+          ["rx3l", "rx9r"],
+          ["rx4l", "rx9r"],
+          ["rx3r", "rx9l"],
+          ["rx4r", "rx9l"],
+          ["rs1l", "rx9l"],
+
+          //rear sway bar mount
+          {"beamSpring":2001000,"beamDamp":90},
+          {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+          ["arr3r", "rx7r"],
+          ["arr3r", "rx4r"],
+          ["arr3r", "rx4"],
+          ["arr3r", "rx7"],
+          ["arr3r", "rx3r"],
+          ["arr3r", "rx6r"],
+
+          ["arr3l", "rx7l"],
+          ["arr3l", "rx4l"],
+          ["arr3l", "rx4"],
+          ["arr3l", "rx7"],
+          ["arr3l", "rx3l"],
+          ["arr3l", "rx6l"],
+
+          //--REAR SUBFRAME--
+
+          //subframe main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":5000,"beamDamp":10},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          //lengthwise
+          ["rx3l", "rx4l"],
+          ["rx3r", "rx4r"],
+          ["rx6l", "rx7l"],
+          ["rx6r", "rx7r"],
+          ["rx1l", "rx2l"],
+          ["rx2l", "rx3l"],
+          ["rx1r", "rx2r"],
+          ["rx2r", "rx3r"],
+          ["rx5r", "rx6r"],
+          ["rx5l", "rx6l"],
+          ["rx1l", "rx5l"],
+          ["rx1r", "rx5r"],
+          //vertical
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx2l", "rx5l"],
+          ["rx2r", "rx5r"],
+          ["rx3l", "rx6l"],
+          ["rx3r", "rx6r"],
+          ["rx4l", "rx7l"],
+          ["rx4r", "rx7r"],
+          //widthwise strong
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx3l", "rx3r", {"beamSpring":10000,"beamDamp":10}],
+          ["rx6l", "rx6r"],
+          ["rx4l", "rx4"],
+          ["rx4", "rx4r"],
+          ["rx7l", "rx7"],
+          ["rx7", "rx7r"],
+          //weak
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx2l", "rx2r"],
+          ["rx5l", "rx5r"],
+          ["rx1l", "rx1r"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          //yz
+          ["rx3l", "rx7l"],
+          ["rx4l", "rx6l"],
+          ["rx3r", "rx7r"],
+          ["rx4r", "rx6r"],
+          ["rx2l", "rx6l"],
+          ["rx5l", "rx3l"],
+          ["rx3r", "rx5r"],
+          ["rx2r", "rx6r"],
+          //xy
+          ["rx3l", "rx4r", {"beamSpring":10000,"beamDamp":10}],
+          ["rx4l", "rx3r", {"beamSpring":10000,"beamDamp":10}],
+          ["rx3r", "rx2l"],
+          ["rx2r", "rx3l"],
+          ["rx2l", "rx1r", {"beamSpring":10000,"beamDamp":90}],
+          ["rx1l", "rx2r", {"beamSpring":10000,"beamDamp":90}],
+          ["rx6l", "rx5r"],
+          ["rx5l", "rx6r"],
+          ["rx7l", "rx6r"],
+          ["rx6l", "rx7r"],
+          //xz
+          ["rx7l", "rx4r"],
+          ["rx7r", "rx4l"],
+          ["rx6l", "rx3r"],
+          ["rx6r", "rx3l"],
+          ["rx5l", "rx2r"],
+          ["rx5r", "rx2l"],
+
+          //brace
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx6r", "rx4l"],
+          ["rx7l", "rx3r"],
+          ["rx6l", "rx4r"],
+          ["rx7r", "rx3l"],
+          ["rx5l", "rx3r"],
+          ["rx6r", "rx2l"],
+          ["rx5r", "rx3l"],
+          ["rx6l", "rx2r"],
+          ["rx5l", "rx1r"],
+          ["rx5r", "rx1l"],
+
+          //rigids
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          //widthwise
+          ["rx7l", "rx7r"],
+          ["rx4l", "rx4r", {"beamSpring":10000,"beamDamp":10}],
+          //corner
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx4", "rx3l"],
+          ["rx4", "rx3r"],
+          ["rx7", "rx6l"],
+          ["rx7", "rx6r"],
+          ["rx7", "rx4r"],
+          ["rx4", "rx7r"],
+          ["rx7", "rx4l"],
+          ["rx4", "rx7l"],
+
+          //subframe braces main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":5000,"beamDamp":10},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          //lengthwise
+          ["rx3l", "rx2ll"],
+          ["rx2ll", "rx1ll"],
+          ["rx3r", "rx2rr"],
+          ["rx2rr", "rx1rr"],
+          ["rx6l", "rx5ll"],
+          ["rx6r", "rx5rr"],
+          ["rx11ll", "rx10ll"],
+          ["rx11rr", "rx10rr"],
+          //widthwise
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx1ll", "rx1l"],
+          ["rx1r", "rx1rr"],
+          ["rx11ll", "rx2ll"],
+          ["rx2ll", "rx2l"],
+          ["rx2r", "rx2rr"],
+          ["rx2rr", "rx11rr"],
+          ["rx5ll", "rx5l"],
+          ["rx5r", "rx5rr"],
+          //vertical
+          ["rx10ll", "rx5ll"],
+          ["rx1ll", "rx5ll"],
+          ["rx1rr", "rx5rr"],
+          ["rx10rr", "rx5rr"],
+          ["rx11ll", "rx5ll"],
+          ["rx11rr", "rx5rr"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx2ll", "rx1l"],
+          ["rx1ll", "rx2l"],
+          ["rx2r", "rx1rr"],
+          ["rx1r", "rx2rr"],
+
+          //rigids
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["rx10rr", "rx2rr"],
+          ["rx10ll", "rx2ll"],
+          ["rx5rr", "rx2rr"],
+          ["rx5ll", "rx2ll"],
+          ["rx5r", "rx2rr"],
+          ["rx5l", "rx2ll"],
+          ["rx10ll", "rx2l"],
+          ["rx10rr", "rx2r"],
+          ["rx10rr", "rx1r"],
+          ["rx10ll", "rx1l"],
+          ["rx10rr", "rx5r"],
+          ["rx10ll", "rx5l"],
+          ["rx11ll", "rx2l"],
+          ["rx11rr", "rx2r"],
+
+          //rear bumper bar main shape
+          {"beamSpring":5000,"beamDamp":10},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          //widthwise
+          {"deformLimitExpansion":1.2},
+          ["bbr1r", "bbr1"],
+          ["bbr1", "bbr1l"],
+          ["bbr2r", "bbr2"],
+          ["bbr2", "bbr2l"],
+          //vertical
+          ["bbr2r", "bbr1r"],
+          ["bbr2", "bbr1"],
+          ["bbr2l", "bbr1l"],
+
+          //surficial cross
+          {"deformLimitExpansion":""},
+          ["bbr2r", "bbr1"],
+          ["bbr2", "bbr1r"],
+          ["bbr2", "bbr1l"],
+          ["bbr2l", "bbr1"],
+
+          //rigids
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["bbr1r", "bbr1l"],
+          ["bbr2r", "bbr2l"],
+
+          //rigidifier
+          {"beamSpring":10000,"beamDamp":10},
+          ["bbr3", "bbr1l"],
+          ["bbr3", "bbr2l"],
+          ["bbr3", "bbr1"],
+          ["bbr3", "bbr2"],
+          ["bbr3", "bbr1r"],
+          ["bbr3", "bbr2r"],
+
+          //rear frame rail extensions main shape
+          {"beamSpring":5000,"beamDamp":10},
+          {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+          //lengthwise
+          {"deformLimitExpansion":1.2},
+          ["rx4l", "bbr1l"],
+          ["rx7l", "bbr2l"],
+          ["rx4r", "bbr1r"],
+          ["rx7r", "bbr2r"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+          ["rx7r", "bbr1r"],
+          ["bbr2r", "rx4r"],
+          ["rx7l", "bbr1l"],
+          ["bbr2l", "rx4l"],
+
+          //corner rigids
+          {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+          ["bbr2l", "rx7"],
+          ["bbr1l", "rx4"],
+          ["bbr1r", "rx4"],
+          ["bbr2r", "rx7"],
+          ["bbr1", "rx4l"],
+          ["bbr2", "rx7l"],
+          ["bbr1", "rx4r"],
+          ["bbr2", "rx7r"],
+          ["rx7r", "bbr1"],
+          ["bbr2", "rx4r"],
+          ["rx7l", "bbr1"],
+          ["bbr2", "rx4l"],
+
+          //rigids
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":5000,"beamStrength":"FLT_MAX"},
+          ["bbr2r", "rx6r"],
+          ["bbr2l", "rx6l"],
+          ["bbr1l", "rx3l"],
+          ["bbr1r", "rx3r"],
+          {"deformLimitExpansion":""},
+
+          //limiters
+          {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":2501000,"beamDamp":70},
+          {"beamDeform":5000, "beamStrength":"FLT_MAX"},
+          ["f3l", "rx2l"],
+          ["f3r", "rx2r"],
+          ["rx1l", "f2l"],
+          ["rx1r", "f2r"],
+          ["rx1rr", "f2rr"],
+          ["rx1ll", "f2ll"],
+
+          ["f8r", "rx5r"],
+          ["f8l", "rx5l"],
+          ["f8rr", "rx5rr"],
+          ["f8ll", "rx5ll"],
+          ["rx6r", "f9rr"],
+          ["rx6r", "f9r"],
+          ["rx6l", "f9l"],
+          ["rx6l", "f9ll"],
+
+          ["rx2r", "f2r"],
+          ["rx2l", "f2l"],
+          ["rx6r", "f8r"],
+          ["rx6l", "f8l"],
+          {"beamType":"|NORMAL", "beamLongBound":1},
+
+          //bleed through
+          {"deformLimitExpansion":1.2},
+    ],
+
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"triangleType":"NORMALTYPE"},
+        {"groundModel":"metal"},
+
+        {"dragCoef":15},
+        //underside
+        {"group":"scintilla_subframe_R"},
+        ["rx11ll", "rx1ll", "rx2ll"],
+        ["rx2ll", "rx1ll", "rx1l"],
+        ["rx1l", "rx2l", "rx2ll"],
+        ["rx2r", "rx1r", "rx2rr"],
+        ["rx2rr", "rx1r", "rx1rr"],
+        ["rx1rr", "rx11rr", "rx2rr"],
+        ["rx3r", "rx2r", "rx2rr"],
+        ["rx3l", "rx2ll", "rx2l"],
+        ["rx2l", "rx1l", "rx1r"],
+        ["rx1r", "rx2r", "rx2l"],
+        ["rx3l", "rx2l", "rx2r"],
+        ["rx2r", "rx3r", "rx3l"],
+        ["rx4l", "rx3l", "rx4"],
+        ["rx4", "rx3l", "rx3r"],
+        ["rx3r", "rx4r", "rx4"],
+        ["bbr1l", "rx4l", "bbr1"],
+        ["bbr1", "rx4l", "rx4"],
+        ["bbr1", "rx4", "rx4r"],
+        ["rx4r", "bbr1r", "bbr1"],
+
+        //sides
+        {"dragCoef":8},
+        {"group":"scintilla_subframe_R_side"},
+        ["rx10rr", "rx1rr",  "rx5rr"],
+        ["rx10rr", "rx5rr",  "rx11rr"],
+        ["rx11rr", "rx5rr",  "rx2rr"],
+        ["rx6r",   "rx2rr",  "rx5rr"],
+        ["rx3r",   "rx2rr",  "rx6r"],
+        ["rx4r",   "rx3r",   "rx7r"],
+        ["rx6r",   "rx7r",   "rx3r"],
+        ["rx4r",   "rx7r",   "bbr1r"],
+        ["bbr2r",  "bbr1r",  "rx7r"],
+        ["rx1rr",  "rx10rr", "rx11rr"],
+
+        ["rx1ll",  "rx10ll", "rx5ll"],
+        ["rx5ll",  "rx10ll", "rx11ll"],
+        ["rx5ll",  "rx11ll", "rx2ll"],
+        ["rx2ll",  "rx6l",   "rx5ll"],
+        ["rx2ll",  "rx3l",   "rx6l"],
+        ["rx3l",   "rx4l",   "rx7l"],
+        ["rx7l",   "rx6l",   "rx3l"],
+        ["rx7l",   "rx4l",   "bbr1l"],
+        ["bbr1l",  "bbr2l",  "rx7l"],
+        ["rx10ll", "rx1ll",  "rx11ll"],
+
+        {"dragCoef":0},
+        ["rx5ll", "rx6l", "rx5l"],
+        ["rx5r", "rx6r", "rx5rr"],
+
+        //rear
+        {"dragCoef":10},
+        {"group":"scintilla_subframe_R_rear"},
+        ["bbr2l", "bbr1l", "bbr2"],
+        ["bbr2", "bbr1l", "bbr1"],
+        ["bbr2", "bbr1", "bbr1r"],
+        ["bbr1r", "bbr2r", "bbr2"],
+
+        //rear upper
+        {"dragCoef":0},
+        ["rx7l", "bbr2l", "bbr2"],
+        ["bbr2", "bbr2r", "rx7r"],
+        ["rx7", "bbr2", "rx7r"],
+        ["rx7", "rx7l", "bbr2"],
+        {"group":""},
+
+        //lift
+        {"dragCoef":0.1},
+
+        {"triangleType":"NONCOLLIDABLE"},
+        //["rx1r", "rx7", "rx1l", {"liftCoef":100}],
+        ["rx8l", "rx7", "rx8r", {"liftCoef":85, "stallAngle":0.45, "breakGroup":["subframe_R1","subframe_L1"]}],
+        ["rx5l", "rx5r", "f8r", {"liftCoef":140, "stallAngle":0.35, "breakGroup":"subframe_R1"}],
+        ["f8r", "f8l", "rx5l", {"liftCoef":140, "stallAngle":0.35, "breakGroup":"subframe_L1"}],
+        {"dragCoef":1},
+
+        {"dragCoef":0},
+        {"triangleType":"NONCOLLIDABLE"},
+        ["rx7l", "rx9l", "rx4l"],
+        ["rx7r", "rx4r", "rx9r"],
+        ["rx7r", "rs1r", "rx6r"],
+        ["rx6l", "rs1l", "rx7l"],
+        {"triangleType":"NORMALTYPE"},
+    ],
+},
+}

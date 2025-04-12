@@ -1,0 +1,74 @@
+{
+"bluebuck_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":10,
+    },
+    "slotType" : "bluebuck_enginemounts",
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":100, "beamDamp":100},
+          {"beamLimitSpring":100, "beamLimitDamp":100},
+          {"beamDeform":20000, "beamStrength":17000},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "fx1r"],
+          ["em1r", "e1r"],
+          ["em1r", "fx1rr"],
+          ["em1r", "fx3rr"],
+          ["em1r", "fx4"],
+          ["em1r", "fx6"],
+          ["em1r", "fx6r"],
+          ["em1r", "fx4r"],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "fx1l"],
+          ["em1l", "e1l"],
+          ["em1l", "fx1ll"],
+          ["em1l", "fx3ll"],
+          ["em1l", "fx4"],
+          ["em1l", "fx6"],
+          ["em1l", "fx6l"],
+          ["em1l", "fx4l"],
+
+          //transmission mount
+          {"beamSpring":100, "beamDamp":2700},
+          {"beamLimitSpring":100, "beamLimitDamp":100},
+          {"beamDeform":100, "beamStrength":160000},
+          {"boundZone":0.03},
+
+          {"breakGroup":"transmissionmount"},
+          ["tra1", "f3r"],
+          ["tra1", "f3l"],
+          ["tra1", "f2r"],
+          ["tra1", "f2l"],
+          ["tra1", "f13r"],
+          ["tra1", "f13l"],
+          ["tra1", "f12r"],
+          ["tra1", "f12l"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":15000, "beamStrength":60000},
+          {"beamSpring":47175, "beamDamp":925},
+          ["e4r", "fx3rr"],
+          ["e3r", "fx1rr"],
+          ["e4l", "fx3ll"],
+          ["e3l", "fx1ll"],
+          {"dampCutoffHz":""},
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

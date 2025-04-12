@@ -1,0 +1,321 @@
+{
+"burnside_junk_spring_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Front Springs",
+        "value":25,
+    },
+
+    "slotType" : "burnside_spring_F",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_spring_F", ["burnside_shock_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front springs
+          {"beamPrecompression":1, "beamType":"|NORMAL"},
+          {"beamDeform":25000,"beamStrength":187200},
+          {"beamSpring":60000,"beamDamp":0},//attached to wishbone
+          ["fh4r","fs1r", {"precompressionRange":0.150,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":5,"volumeFactor":4.4,"decayFactor":50,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":2400}],
+          ["fh4l","fs1l", {"precompressionRange":0.150,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":5,"volumeFactor":4.4,"decayFactor":50,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":2400}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_spring_F_lowered": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Collapsed Front Springs",
+        "value":10,
+    },
+
+    "slotType" : "burnside_spring_F",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_spring_F", ["burnside_shock_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front springs
+          {"beamPrecompression":1, "beamType":"|NORMAL"},
+          {"beamDeform":25000,"beamStrength":187200},
+          {"beamSpring":50000,"beamDamp":0},//attached to wishbone
+          ["fh4r","fs1r", {"precompressionRange":0.0250,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.8,"attackFactor":60,"volumeFactor":5.2,"decayFactor":80,"noiseFactor":0.01,"pitchFactor":0.1,"maxStress":2400}],
+          ["fh4l","fs1l", {"precompressionRange":0.0250,"soundFile":"event:>Vehicle>Suspension>car_vint_med_01>spring_compress_01","colorFactor":0.8,"attackFactor":60,"volumeFactor":5.2,"decayFactor":80,"noiseFactor":0.01,"pitchFactor":0.1,"maxStress":2400}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_shock_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Front Shocks",
+        "value":25,
+    },
+
+    "slotType" : "burnside_shock_F",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_shock_F", ["burnside_shock_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front shocks
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":25600,"beamStrength":187200},
+          {"beamSpring":0,"beamDamp":6000},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["fh4r","fs1r", {"beamDampFast":100,"beamDampRebound":100,"beamDampReboundFast":100,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          ["fh4l","fs1l", {"beamDampFast":100,"beamDampRebound":100,"beamDampReboundFast":100,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          //bump stops
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":351000,"beamLimitDamp":10000},
+          ["fh1r","fs1r", {"longBoundRange":0.1,"shortBoundRange":0.065,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1l","fs1l", {"longBoundRange":0.1,"shortBoundRange":0.065,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_shock_F_lowered": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Exploded Front Shocks",
+        "value":15,
+    },
+
+    "slotType" : "burnside_shock_F",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_shock_F", ["burnside_shock_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front shocks
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":25600,"beamStrength":200000},
+          {"beamSpring":0,"beamDamp":10000},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["fh4r","fs1r", {"beamDampFast":10,"beamDampRebound":10,"beamDampReboundFast":10,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          ["fh4l","fs1l", {"beamDampFast":10,"beamDampRebound":10,"beamDampReboundFast":10,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          //bump stops
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":351000,"beamLimitDamp":10000},
+          ["fh1r","fs1r", {"longBoundRange":0.07,"shortBoundRange":0.07,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1l","fs1l", {"longBoundRange":0.07,"shortBoundRange":0.07,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_swaybar_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Sway Bar",
+        "value":15,
+    },
+
+    "slotType" : "burnside_swaybar_F",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_swaybar_F", ["burnside_swaybar_F"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //anti-roll
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":""},
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeWeight":1.8},
+         //front anti-roll
+         {"group":"burnside_swaybar_F"},
+         ["arbfr", -0.68, -1.48, 0.33],
+         ["arbfl", 0.68, -1.48, 0.33],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //23mm 1096
+        //24mm 1299
+        //25mm 1530
+        //26mm 1789
+        //27mm 2081
+        {"spring":1096, "damp":10, "deform":10000, "strength":9999999},
+        ["arbfr", "f21rr", "f21ll", "arbfl"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--ANTI-ROLL--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":10,"beamDamp":1},
+          {"beamDeform":10,"beamStrength":10},
+          //end links
+          ["arbfr","fh1r"],
+          ["arbfl","fh1l"],
+          //rigids
+          ["arbfr","f21rr"],
+          ["arbfl","f21ll"],
+          ["arbfr","f21ll"],
+          ["arbfl","f21rr"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_steering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Steering",
+        "value":20,
+    },
+
+    "slotType" : "burnside_steering",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["burnside_steeringbox","burnside_steeringbox", "Steering Box"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_tierod_F", ["burnside_tierod_F","burnside_hub_F"]],
+        ["burnside_tierod_M", ["burnside_tierod_M","burnside_idler","burnside_pitman"]],
+        ["burnside_idler", ["burnside_idler","burnside_pitman","burnside_tierod_M"]],
+        ["burnside_pitman", ["burnside_idler","burnside_pitman","burnside_tierod_M","burnside_steeringlink"]],
+        ["burnside_steeringlink_A", ["burnside_frame"]],
+        ["burnside_steeringlink_F", ["burnside_steeringlink"]],
+        //["burnside_steeringbox", ["burnside_frame"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //front parallelogram steering
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         {"group":""},
+         {"nodeWeight":7.0},
+         ["st3r",-0.18,-1.32, 0.25, {"group":["burnside_tierod_F","burnside_tierod_M"]}],
+         ["st3l", 0.18,-1.32, 0.25, {"group":["burnside_tierod_F","burnside_tierod_M"]}],
+         {"nodeWeight":5.5},
+         {"collision":false},
+         {"group":"burnside_idler"},
+         ["st5r",-0.175,-1.42, 0.24],
+         {"group":"burnside_pitman"},
+         ["st5l", 0.175,-1.42, 0.24],
+         {"group":"burnside_idler"},
+         ["st6r",-0.175,-1.42, 0.32],
+         {"group":"burnside_pitman"},
+         ["st6l", 0.175,-1.42, 0.32],
+         {"nodeWeight":0.5},
+         //flexbody helper
+         ["st7l", 0.24,-1.42, 0.32, {"group":"burnside_steeringlink"}],
+         {"group":""},
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$toe_FR", "range", "", "Wheel Alignment", 0.99, 0.99, 1.01, "Toe Adjust", "Adjusts the wheel toe-in angle", {"subCategory":" Front"}],
+        ["$steer_center_F", "range", "", "Wheel Alignment", -0.002, -0.002, 0.002, "Steering L/R Trim", "Fine tunes the centerpoint of the steering", {"subCategory":" Front"}]
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FRONT PARALLELOGRAM STEERING
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":18001000,"beamDamp":150},
+          {"deformLimitExpansion":""},
+          {"beamDeform":75000,"beamStrength":285000},
+          //tie rod
+          ["fh3l","st3l", {"beamPrecompression":"$=$toe_FR+$steer_center_F","beamPrecompressionTime":0.5}],
+          ["fh3r","st3r", {"beamPrecompression":"$=$toe_FR-$steer_center_F","beamPrecompressionTime":0.5}],
+          //center tie rod
+          {"beamSpring":12001000,"beamDamp":150},
+          ["st3r","st3l"],
+          {"beamPrecompression":1},
+          //steering arms
+          {"beamSpring":8001000,"beamDamp":150},
+          {"beamDeform":97500,"beamStrength":214500},
+          ["st3r","st5r"],
+          ["st3l","st5l"],
+          ["st3r","st6r"],
+          ["st3l","st6l"],
+          ["st5r","st6r"],
+          ["st5l","st6l"],
+          {"beamSpring":1001000,"beamDamp":50},
+          ["st3l","st7l"],
+          ["st5l","st7l"],
+          ["st6l","st7l"],
+          //attach to axis points
+          {"beamSpring":4001000,"beamDamp":200},
+          {"beamDeform":11700,"beamStrength":"FLT_MAX"},
+          ["st5l", "fx2l"],
+          ["st5r", "fx2r"],
+          ["st6l", "fx2l"],
+          ["st6r", "fx2r"],
+          ["st5l", "fx1l"],
+          ["st6l", "fx1l"],
+          ["st5r", "fx1r"],
+          ["st6r", "fx1r"],
+
+          {"beamSpring":4001000,"beamDamp":200},
+          ["st5l", "fx2r"],
+          ["st5r", "fx2l"],
+          ["st6l", "fx2r"],
+          ["st6r", "fx2l"],
+          ["st5l", "fx1r"],
+          ["st5r", "fx1l"],
+          ["st6l", "fx1r"],
+          ["st6r", "fx1l"],
+
+          {"beamSpring":3001000,"beamDamp":200},
+          ["st5r", "fx4r"],
+          ["st5l", "fx4l"],
+          ["st6r", "fx4r"],
+          ["st6l", "fx4l"],
+
+          ["st5l", "fx4r"],
+          ["st5r", "fx4l"],
+          ["st6l", "fx4r"],
+          ["st6r", "fx4l"],
+          //attach to each other
+          {"beamSpring":3001000,"beamDamp":200},
+          {"beamDeform":20280,"beamStrength":"FLT_MAX"},
+          ["st5l","st5r"],
+          ["st6l","st6r"],
+          ["st6l","st5r"],
+          ["st5l","st6r"],
+          //steering damper
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":0,"beamDeform":17690.4,"beamStrength":45864},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          {"beamDamp":150},
+          ["fh3r","fx1r", {"beamDampVelocitySplit":0.1,"beamDampFast":500, "dampCutoffHz":1000}],
+          ["fh3l","fx1l", {"beamDampVelocitySplit":0.1,"beamDampFast":500, "dampCutoffHz":1000}],
+          ["fh5r","fx2r", {"beamDampVelocitySplit":0.1,"beamDampFast":500, "dampCutoffHz":1000}],
+          ["fh5l","fx2l", {"beamDampVelocitySplit":0.1,"beamDampFast":500, "dampCutoffHz":1000}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_steeringbox": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Steering Box",
+        "value":25,
+    },
+
+    "slotType" : "burnside_steeringbox",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_steeringbox", ["burnside_frame"]],
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":250000, "damp":5, "deform":"FLT_MAX", "strength":"FLT_MAX"},
+        ["st3l","st5l","st6l","fx1r", {"factor":0.8,"steeringWheelLock":720,"inRate":1,"outRate":4,"inputSource":"steering_input"}],
+        ["st3r","st5r","st6r","fx1l", {"factor":0.8,"steeringWheelLock":720,"inRate":3,"outRate":2,"inputSource":"steering_input"}],
+
+    ],
+    "input": {
+        "FFBcoef":"$=$ffbstrength*8",
+    },
+},
+}

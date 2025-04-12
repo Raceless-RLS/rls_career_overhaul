@@ -1,0 +1,60 @@
+{
+"barstow_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":75,
+    },
+    "slotType" : "barstow_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["barstow_radiator_stock", ["barstow_radiator","barstow_radsupport"]],
+    ],
+    "mainEngine":{
+        "radiatorArea":0.37,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":5.5,
+        "radiatorFanType":"mechanical",
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":100,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"]
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //Radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"barstow_radiator"},
+         {"nodeWeight":4},
+         ["rad1", 0.0, -1.93, 0.6],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1660830,"beamDamp":168},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          {"beamDeform":10327.5,"beamStrength":"FLT_MAX"},
+          //radiator
+          {"deformLimitExpansion":1.2},
+          ["rad1","ra1"],
+          ["rad1","ra1r"],
+          ["rad1","ra1l"],
+          ["rad1","ra3r"],
+          ["rad1","ra3l"],
+          ["rad1","ra5"],
+          ["rad1","ra6"],
+          ["rad1","ra6r"],
+          ["rad1","ra6l"],
+          ["rad1","ra7r"],
+          ["rad1","ra7l"],
+          {"deformLimitExpansion":""},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

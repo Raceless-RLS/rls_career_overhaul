@@ -1,0 +1,72 @@
+{
+"bx_junk_radiator_i4": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":60,
+    },
+    "slotType" : "bx_radiator_i4",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["bx_radiator", ["bx_radiator"]],
+         ["bx_radiator_shroud", ["bx_radiator"]],
+    ],
+    "mainEngine":{
+        "radiatorArea":0.32,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":1.5,
+        "radiatorFanType":"electric",
+        "radiatorFanTemperature":100,
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":110,
+        "radiatorFanLoopEvent": "event:>Vehicle>Cooling Fan>Electric_05",
+        "radiatorFanVolume": 4.5,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"],
+        },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"bx_radiator"},
+         {"nodeWeight":2.0},
+         {"engineGroup":"radiator"},
+         {"chemEnergy":200,"burnRate":0.4,"flashPoint":250,"specHeat":0.8,"smokePoint":150,"selfIgnitionCoef":false},
+         ["rad1", 0.0, -1.62 0.75],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         ["rad2", 0.0, -1.62, 0.35],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //radiator
+          {"beamSpring":25000,"beamDamp":50},
+          {"beamDeform":7500,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          {"deformLimitExpansion":""},
+          ["rad2", "rad1"],
+          ["rad1", "f15"],
+          ["rad1", "f15r"],
+          ["rad1", "f13rr"],
+          ["rad1", "f11rr"],
+          ["rad1", "f15l"],
+          ["rad1", "f13ll"],
+          ["rad1", "f11ll"],
+          ["rad2", "f11"],
+          ["rad2", "f11ll"],
+          ["rad2", "f11rr"],
+          ["rad2", "f13ll"],
+          ["rad2", "f13rr"],
+          {"deformGroup":""},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

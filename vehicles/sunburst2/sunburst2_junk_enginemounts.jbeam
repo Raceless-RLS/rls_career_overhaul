@@ -1,0 +1,76 @@
+{
+"sunburst2_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":15,
+    },
+    "slotType" : "sunburst2_enginemounts",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //body
+        ["sunburst2_engine_mounts", ["sunburst2_subframe_F"]],
+        ["sunburst2_transmission_mountbraket", ["sunburst2_body"]],
+     ],
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":100,"beamDamp":100},
+          {"beamLimitSpring":100,"beamLimitDamp":100},
+          {"beamDeform":20000,"beamStrength":120000},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "fx2r"],
+          ["em1r", "fx1r"],
+          ["em1r", "fx6r"],
+          ["em1r", "fx2r"],
+          ["em1r", "fx1r"],
+          ["em1r", "fx6r"],
+          //extra
+          ["fx1r", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx2r", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx1r", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx2r", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "fx2l"],
+          ["em1l", "fx1l"],
+          ["em1l", "fx6l"],
+          ["em1l", "fx2r"],
+          ["em1l", "fx1r"],
+          ["em1l", "fx6r"],
+          //extra
+          ["fx1l", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx2l", "e3r",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx1l", "e3l",  {"beamSpring":21000,"beamDamp":500}],
+          ["fx2l", "e3l",  {"beamSpring":21000,"beamDamp":500}],
+
+          //transmission mount
+          {"breakGroup":"transmount"},
+          {"beamDeform":100,"beamStrength":1000},
+          ["tra1", "f5r"],
+          ["tra1", "f5l"],
+          ["tra1", "f1l"],
+          ["tra1", "f1r"],
+          ["tra1", "f2l"],
+          ["tra1", "f2r"],
+          ["tra1", "f7r"],
+          ["tra1", "f7l"],
+          ["tra1", "f6r"],
+          ["tra1", "f6l"],
+
+          {"boundZone":""},
+          {"breakGroup":""},
+          {"dampCutoffHz":""},
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

@@ -1,0 +1,514 @@
+{
+"barstow_junk_glass_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":20,
+    },
+    "slotType" : "barstow_glass_F",
+
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_windshield_dmg"},
+         ["barstow_windshield", ["barstow_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+         ["barstow_windshield_dmg", ["barstow_windshield"]],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_int"},
+         ["barstow_windshield_int", ["barstow_windshield"]],
+         {"deformGroup":""},
+
+         ["barstow_wipers", ["barstow_body"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.03
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":2.1},
+         {"group":["gps","barstow_windshield"]},
+         //windshield node
+         ["wi1r", -0.32, -0.34, 1.14],
+         ["wi1l", 0.32, -0.34, 1.14],
+
+         {"nodeMaterial":"|NM_METAL"},
+         //--ADD WEIGHT--
+         //windshield
+         {"group":"barstow_body"},
+         //a pillar
+         {"nodeWeight":3.2},
+         ["p2r",-0.775, -0.19, 1.09, {"selfCollision":false,"group":["barstow_body","barstow_windshield"]}],
+         ["p2l", 0.775, -0.19, 1.09, {"selfCollision":false,"group":["barstow_body","barstow_windshield"]}],
+         //roof
+         {"nodeWeight":3.5},
+         {"group":"barstow_roof"},
+         ["r1rr",-0.69, 0.05, 1.29, {"group":["gps","barstow_windshield","barstow_roof"]}],
+         ["r1", 0.0, -0.02, 1.34, {"nodeWeight":2.8,"group":["gps","barstow_windshield","barstow_roof"]}],
+         ["r1ll", 0.69, 0.05, 1.29, {"group":["gps","barstow_windshield","barstow_roof"]}],
+         //cowl
+         {"nodeWeight":4.2},
+         {"group":"barstow_body"},
+         ["b11rr",-0.82,-0.40, 0.90, {"group":["barstow_body","gps","barstow_windshield","barstow_interior"]}],
+         ["b11r",-0.32,-0.57, 0.93, {"group":["barstow_body","gps","barstow_windshield","barstow_interior"]}],
+         ["b11l", 0.32,-0.57, 0.93, {"group":["barstow_body","gps","barstow_windshield","barstow_interior"]}],
+         ["b11ll", 0.82,-0.40, 0.90, {"group":["barstow_body","gps","barstow_windshield","barstow_interior"]}],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //windshield
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":801000,"beamDamp":100},
+          {"beamDeform":3098.25,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.005},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformLimitExpansion":""},
+          ["wi1r","wi1l"],
+
+          ["wi1r","r1"],
+          ["wi1l","r1"],
+          ["wi1r","r1rr"],
+          ["wi1l","r1ll"],
+
+          ["wi1r","p1r"],
+          ["wi1l","p1l"],
+          ["wi1r","p2rr"],
+          ["wi1l","p2ll"],
+
+          ["wi1r","b11r"],
+          ["wi1l","b11l"],
+          ["wi1r","b11rr"],
+          ["wi1l","b11ll"],
+
+          ["wi1r","r1"],
+          ["wi1l","r1"],
+
+          ["wi1r","b11l"],
+          ["wi1l","b11r"],
+
+          {"beamDeform":3098.25,"beamStrength":10},
+          ["r1","b11r"],
+          ["r1","b11l"],
+
+          ["r1","b11rr"],
+          ["r1","b11ll"],
+
+          ["r1rr","b11rr"],
+          ["r1ll","b11ll"],
+
+          ["r1rr","b11r"],
+          ["r1ll","b11l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+},
+"barstow_junk_glass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "barstow_glass_R",
+
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"backlight_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_backlight", ["barstow_body","barstow_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound9", "deformVolume":0.0}],
+
+         {"deformGroup":"backlight_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_backlight_int", ["barstow_body","barstow_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--ADD WEIGHT--
+
+         //rear window
+         //c pillar
+         {"group":"barstow_body"},
+         {"nodeWeight":2.2},
+         ["p6r",-0.72, 1.65, 1.10],
+         ["p6l", 0.72, 1.65, 1.10],
+         //roof
+         {"nodeWeight":3.0},
+         {"group":"barstow_roof"},
+         ["r4rr",-0.73, 1.27, 1.19],
+         ["r4", 0.0, 1.27, 1.24, {"nodeWeight":2.4}],
+         ["r4ll", 0.73, 1.27, 1.19],
+         //trunk perimeter structure
+         {"group":"barstow_body"},
+         {"nodeWeight":3.0},
+         ["tb2r",-0.64, 2.07, 0.96],
+         ["tb2", 0.0, 2.08, 0.98],
+         ["tb2l", 0.64, 2.07, 0.96],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":801000,"beamDamp":100},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.005},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformLimitExpansion":""},
+
+          //backlight
+          {"beamDeform":6358,"beamStrength":10},
+          {"breakGroup":"backlight"},
+          {"deformGroup":"backlight_break","deformationTriggerRatio":0.005},
+          ["r4","tb2"],
+
+          ["r4","tb2l"],
+          ["r4","tb2r"],
+
+          ["r4","p6r"],
+          ["r4","p6l"],
+
+          ["p6r","p6l"],
+          ["tb2r","p6l"],
+          ["tb2l","p6r"],
+
+          ["r4rr","tb2"],
+          ["r4ll","tb2"],
+
+          ["r4rr","tb2r"],
+          ["r4ll","tb2l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_roof"},
+            {"dragCoef":10},
+            {"breakGroup":"backlight"},
+            ["p6l","tb2","p6r"],
+            ["r4","p6l","p6r"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+"barstow_junk_quarterglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Quarter Glass",
+        "value":0,
+    },
+    "slotType" : "barstow_quarterglass_R",
+
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+
+         {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_quarterglass_R", ["barstow_body","barstow_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+         {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"barstow", "deformMaterialDamaged":"invis"},
+         ["barstow_bpillar_R", ["barstow_body","barstow_roof"]],
+
+         {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_quarterglass_R_int", ["barstow_body","barstow_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--ADD WEIGHT--
+
+         //rear side glass
+         //quarter panel
+         {"group":"barstow_body"},
+         {"nodeWeight":2.7},
+         ["q1r",-0.86, 0.72, 0.90],
+         ["q2r",-0.86, 1.11, 0.92],
+         //c pillar
+         {"nodeWeight":2.2},
+         ["p5r",-0.80, 1.22, 1.05],
+         //roof
+         {"nodeWeight":2.8},
+         {"group":"barstow_roof"},
+         ["r3rr",-0.705, 0.74, 1.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":801000,"beamDamp":100},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.005},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformLimitExpansion":""},
+
+          //quarterglass
+          {"beamDeform":6358,"beamStrength":10},
+          {"breakGroup":"quarterglass_R"},
+          {"deformGroup":"quarterglass_R_break","deformationTriggerRatio":0.005},
+          ["r3rr","q1r"],
+
+          ["r4rr","q2r"],
+          ["r4rr","q1r"],
+          ["r4rr","q3r"],
+          ["p5r","q1r"],
+          //["r2rr","q1r"],
+          ["p5r","r3rr"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_roof"},
+            {"dragCoef":14},
+            {"breakGroup":"quarterglass_R"},
+            ["r3rr","p5r","q1r"],
+            ["r4rr","p5r","r3rr"],
+            ["p5r","q2r","q1r"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+"barstow_junk_quarterglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Quarter Glass",
+        "value":0,
+    },
+    "slotType" : "barstow_quarterglass_L",
+
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+
+         {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_quarterglass_L", ["barstow_body","barstow_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0}],
+
+         {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"barstow", "deformMaterialDamaged":"invis"},
+         ["barstow_bpillar_L", ["barstow_body","barstow_roof"]],
+
+         {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_quarterglass_L_int", ["barstow_body","barstow_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--ADD WEIGHT--
+
+         //rear side glass
+         //quarter panel
+         {"nodeWeight":2.7},
+         {"group":"barstow_body"},
+         ["q1l",0.86, 0.72, 0.90],
+         ["q2l",0.86, 1.11, 0.92],
+         //c pillar
+         {"nodeWeight":2.2},
+         ["p5l", 0.80, 1.22, 1.05],
+         //roof
+         {"nodeWeight":2.8},
+         {"group":"barstow_roof"},
+         ["r3ll", 0.705, 0.74, 1.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":801000,"beamDamp":100},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.005},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformLimitExpansion":""},
+
+          //quarterglass
+          {"beamDeform":6358,"beamStrength":10},
+
+          {"breakGroup":"quarterglass_L"},
+          {"deformGroup":"quarterglass_L_break","deformationTriggerRatio":0.005},
+          ["r3ll","q1l"],
+          ["r4ll","q2l"],
+          ["r4ll","q1l"],
+          ["r4ll","q3l"],
+          ["p5l","q1l"],
+          //["r2ll","q1l"],
+          ["p5l","r3ll"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_roof"},
+            {"dragCoef":14},
+            {"breakGroup":"quarterglass_L"},
+            ["r3ll","q1l","p5l"],
+            ["r3ll","p5l","r4ll"],
+            ["p5l","q1l","q2l"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+"barstow_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "barstow_doorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_doorglass_R", ["barstow_door_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_doorglass_R_int", ["barstow_door_R"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         //right door glass
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"barstow_door_R"},
+         {"nodeWeight":1.85},
+         ["d10r",-0.73, 0.07, 1.26],
+         ["d11r",-0.735, 0.74, 1.24],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1650550,"beamDamp":75},
+          {"beamDeform":6630,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.1},
+          {"deformGroup":"doorglass_R_break","deformationTriggerRatio":0.04},
+          ["d10r","d11r"],
+          ["d10r","d9r", {"beamStrength":10,"breakGroup":"doorglass_R_break"}],
+          ["d10r","d8r"],
+          ["d10r","d7r"],
+          ["d11r","d9r", {"beamStrength":10,"breakGroup":"doorglass_R_break"}],
+          ["d11r","d8r"],
+          ["d11r","d7r"],
+          ["d10r","d14r"],
+          ["d11r","d14r"],
+
+          //window frame
+          {"beamDeform":2125,"beamStrength":"FLT_MAX"},
+          ["d11r", "d6r"],
+          ["d10r", "d5r"],
+          ["d10r", "d4r"],
+          {"deformLimitExpansion":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_door_R"},
+            {"dragCoef":12},
+            {"breakGroup":"doorglass_R_break"},
+            ["d7r", "d10r", "d8r"],
+            ["d9r", "d8r", "d10r"],
+            ["d11r", "d9r", "d10r"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+"barstow_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "barstow_doorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"barstow_glass", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_doorglass_L", ["barstow_door_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"barstow_glass_int", "deformMaterialDamaged":"barstow_glass_dmg"},
+         ["barstow_doorglass_L_int", ["barstow_door_L"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         //left door glass
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":1.85},
+         {"group":"barstow_door_L"},
+         ["d10l", 0.73, 0.07, 1.26],
+         ["d11l", 0.735, 0.74, 1.24],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //left door glass
+          {"beamSpring":2201000,"beamDamp":125},
+          {"beamDeform":4250,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"doorglass_L_break","deformationTriggerRatio":0.04},
+          {"deformLimitExpansion":1.1},
+          ["d10l","d11l"],
+
+          ["d10l","d9l", {"beamStrength":10,"breakGroup":"doorglass_L_break"}],
+          ["d10l","d8l"],
+          ["d10l","d7l"],
+          ["d11l","d9l"],
+          ["d11l","d8l"],
+          ["d11l","d7l", {"beamStrength":10,"breakGroup":"doorglass_L_break"}],
+
+          ["d10l","d14l"],
+          ["d10l","d16l"],
+          ["d11l","d14l"],
+
+          //window frame
+          {"deformLimitExpansion":""},
+          ["d11l", "d6l"],
+          ["d10l", "d4l"],
+          ["d10l", "d5l"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"barstow_door_L"},
+            {"dragCoef":12},
+            {"breakGroup":"doorglass_L_break"},
+            ["d10l", "d7l", "d8l"],
+            ["d8l", "d9l", "d10l"],
+            ["d9l", "d11l", "d10l"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+}

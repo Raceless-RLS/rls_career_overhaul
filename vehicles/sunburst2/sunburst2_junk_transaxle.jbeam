@@ -1,0 +1,162 @@
+{
+"sunburst2_junk_transaxle_CVT": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Continuously Broken Transaxle",
+        "value":1250,
+    },
+    "slotType" : "sunburst2_transaxle",
+    "slots2": [
+        ["name",                    "allowTypes",                "denyTypes", "default",                    "description"],
+        ["sunburst2_transfer_case",  ["sunburst2_transfer_case"],  [],          "sunburst2_transfer_case_FWD", "Transfer Case"],
+        ["sunburst2_differential_F", ["sunburst2_differential_F"], [],          "sunburst2_differential_F",    "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["cvtGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "torqueConverter": {
+        "uiName":"Torque Converter",
+        "converterDiameter": 0.242,
+        "converterStiffness":6,
+        "couplingAVRatio":0.92,
+        "stallTorqueRatio":2.00,
+        "additionalEngineInertia":0.14,
+    },
+    "gearbox": {
+        "uiName":"Gearbox",
+        "minGearRatio":0.570,
+        "maxGearRatio":3.58,
+        "friction": 1.25,
+        "dynamicFriction": 0.00125,
+        "torqueLossCoef": 0.035,
+        "oneWayViscousCoef":30,
+        "parkLockTorque":2000,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "shiftLogicName":"cvtGearbox2"
+        "automaticModes":"PRNDS",
+        "aggressionSmoothingDown":1.0,
+        "aggressionHoldOffThrottleDelay":2.25,
+        "cvtGearRatioSmoothingIn": 6
+        "cvtGearRatioSmoothingOut": 4
+        "cvtTargetRPMMap":[
+            [0,50],
+            [0, 700, 1200],
+            [0.33, 1800, 2000],
+            [0.67, 2400, 2400],
+            [1, 6177, 6177],
+        ],
+        "cvtSportGearRatios": [3.58, 2.37, 1.75, 1.32, 0.98, 0.73, 0.57], // Same as DCT, but with CVT limits
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_transmission", ["sunburst2_engine","sunburst2_transaxle"]],
+         //["sunburst2_transmission_mountbraket", ["sunburst2_body"]],
+    ],
+    "nodes": [
+         ["id",   "posX", "posY", "posZ"],
+         //--CVT transmission--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"sunburst2_transaxle"},
+         {"nodeWeight":30},
+         ["tra1", 0.000, -0.750,  0.335],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--TRANSMISSION CONE--
+        {"beamSpring":15001000,"beamDamp":500},
+        {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+        ["tra1", "e2r"],
+        ["tra1", "e4r"],
+        ["tra1", "e2l"],
+        ["tra1", "e4l"],
+        ["tra1", "e1r"],
+        ["tra1", "e3r"],
+        ["tra1", "e1l"],
+        ["tra1", "e3l"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"sunburst2_junk_transaxle_DCT": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 6-Speed Dual-Clutch Transaxle",
+        "value":1500,
+    },
+    "slotType" : "sunburst2_transaxle",
+    "slots2": [
+        ["name",                    "allowTypes",                "denyTypes", "default",                    "description"],
+        ["sunburst2_transfer_case",  ["sunburst2_transfer_case"],  [],          "sunburst2_transfer_case_FWD", "Transfer Case"],
+        ["sunburst2_differential_F", ["sunburst2_differential_F"], [],          "sunburst2_differential_F",    "Front Differential"],
+    ],
+     "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["dctGearbox", "gearbox", "mainEngine", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.35, 0, 3.65, 2.37, 1.75, 1.32, 0.98, 0.73],
+        "friction": 0.87,
+        "dynamicFriction": 0.00120,
+        "torqueLossCoef": 0.0190,
+        "parkLockTorque":2000,
+        "additionalEngineInertia":0.15,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [0.60, 0.00, 1.13, 2.13, 3.13, 1.13, 2.13, 3.13, 1.13, 2.13],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.27, 0.27, 0.27, 0.27, 0.27, 0.27, 0.27, 0.27],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+    },
+    "vehicleController": {
+        "automaticModes":"PRNDSM",
+        "calculateOptimalLoadShiftPoints":false,
+        "shiftDownRPMOffsetCoef":1.25,
+        //"aggressionSmoothingUp":2
+        //"aggressionSmoothingDown":0.06
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,4000,4000,4000,3500,3500],
+        "dctClutchTime": 0.9
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_transmission", ["sunburst2_engine","sunburst2_transaxle"]],
+         //["sunburst2_transmission_mountbraket", ["sunburst2_body"]],
+    ],
+    "nodes": [
+         ["id",   "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"sunburst2_transaxle"},
+         {"nodeWeight":40},
+         ["tra1", 0.000, -0.750,  0.335],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--TRANSMISSION CONE--
+        {"beamSpring":15001000,"beamDamp":500},
+        {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+        ["tra1", "e2r"],
+        ["tra1", "e4r"],
+        ["tra1", "e2l"],
+        ["tra1", "e4l"],
+        ["tra1", "e1r"],
+        ["tra1", "e3r"],
+        ["tra1", "e1l"],
+        ["tra1", "e3l"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

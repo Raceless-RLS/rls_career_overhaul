@@ -1,0 +1,145 @@
+{
+"moonhawk_junk_transmission_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "moonhawk_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["moonhawk_flywheel","moonhawk_flywheel","Flywheel", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.71, 0, 2.67, 1.84, 1.33, 1.0],
+        "friction": 1.41,
+        "dynamicFriction": 0.00141,
+        "torqueLossCoef": 0.0155,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [2.60, 0.00, 2.12, 3.12, 1.12, 2.12, 1.12, 3.12, 2.12, 1.12],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24, 0.24],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.2,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,4000,4000,4000],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_transmission", ["moonhawk_engine","moonhawk_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Manual--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"moonhawk_transmission"},
+         {"nodeWeight":32},
+         ["tra1", 0.0, -0.38, 0.32],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":20001000,"beamDamp":400},
+          {"beamDeform":205000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"moonhawk_junk_transmission_3A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed Automatic Transmission",
+        "value":250,
+    },
+    "slotType" : "moonhawk_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_converter","moonhawk_converter","Torque Converter", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.18, 0, 2.46, 1.46, 1.00],
+        "parkLockTorque":2500,
+        "oneWayViscousCoef":40,
+        "friction": 1.90,
+        "dynamicFriction": 0.00200,
+        "torqueLossCoef": 0.030,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND1",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":2,
+        "gearboxDecisionSmoothingUp":2,
+        "gearboxDecisionSmoothingDown":2,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":[0,0,4000,4000],
+        "wheelSlipUpThreshold":99999,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_transmission", ["moonhawk_engine","moonhawk_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Automatic--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"moonhawk_transmission"},
+         {"nodeWeight":33},
+         ["tra1", 0.0, -0.38, 0.32],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":20001000,"beamDamp":400},
+          {"beamDeform":205000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

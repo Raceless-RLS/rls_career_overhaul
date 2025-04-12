@@ -1,0 +1,291 @@
+{
+"burnside_junk_transmission_3M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "burnside_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["burnside_flywheel","burnside_flywheel","Flywheel", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.95, 0, 2.85, 1.68, 1.0],
+        "friction":1.90,
+        "dynamicFriction":0.00250,
+        "torqueLossCoef": 0.0250,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [4.50, 0.00, 3.37, 2.37, 1.37, 3.37, 3.37, 2.37, 2.37, 2.37],
+        "gearWhineCoefsOutput": [4.50, 0.00, 3.37, 2.37, 1.37, 3.37, 3.37, 2.37, 2.37, 2.37],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1000,1000],
+        "lowShiftUpRPM":[0,0,5000,5000],
+    },
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_transmission", ["burnside_engine","burnside_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Manual--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"burnside_transmission"},
+         {"nodeWeight":45.825},
+         ["tra1", 0.0, -0.51, 0.27],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //--TRANSMISSION CONE--
+        {"beamSpring":19500980,"beamDamp":487.5},
+        {"beamDeform":190125,"beamStrength":"FLT_MAX"},
+        ["tra1","e1r"],
+        ["tra1","e3r"],
+        ["tra1","e1l"],
+        ["tra1","e3l"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_transmission_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Manual Transmission",
+        "value":200,
+    },
+    "slotType" : "burnside_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["burnside_flywheel","burnside_flywheel","Flywheel", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.71, 0, 2.67, 1.84, 1.33, 1.0],
+        "friction":1.47,
+        "dynamicFriction":0.00147,
+        "torqueLossCoef": 0.0156,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [4.00, 0.00, 1.50, 2.50, 3.50, 4.25, 0.37, 0.37, 0.37, 0.37],
+        "gearWhineCoefsOutput": [4.00, 0.00, 1.50, 2.50, 3.50, 4.25, 0.37, 0.37, 0.37, 0.37],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "shiftDownRPMOffsetCoef":1.18,
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,5000,5000,5000],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_transmission", ["burnside_engine","burnside_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Manual--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"burnside_transmission"},
+         {"nodeWeight":45.825},
+         ["tra1", 0.0, -0.51, 0.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":19500980,"beamDamp":487.5},
+          {"beamDeform":190125,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_transmission_3A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed Super-Matic AT",
+        "value":350,
+    },
+    "slotType" : "burnside_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["burnside_converter","burnside_converter","Torque Converter", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.18, 0, 2.46, 1.46, 1.00],
+        "parkLockTorque":3500,
+        "oneWayViscousCoef":55,
+        "friction":1.900,
+        "dynamicFriction":0.00300,
+        "torqueLossCoef": 0.030,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":3.2,
+        "gearboxDecisionSmoothingUp":0.4,
+        "gearboxDecisionSmoothingDown":0.4,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":[0,0,4000,4000],
+        "wheelSlipUpThreshold":99999,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_transmission", ["burnside_engine","burnside_transmission"]],
+        //["burnside_centergauge_A", ["burnside_dash"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Auto--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"burnside_transmission"},
+         {"nodeWeight":40.784},
+         ["tra1", 0.0, -0.46, 0.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":19500980,"beamDamp":487.5},
+          {"beamDeform":190125,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"burnside_junk_transmission_2A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 2-Speed Dual-Matic AT",
+        "value":1600,
+    },
+    "slotType" : "burnside_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["burnside_converter","burnside_converter","Torque Converter", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-1.82, 0, 1.82, 1.00],
+        "parkLockTorque":4500,
+        "oneWayViscousCoef":50,
+        "friction":2.000,
+        "dynamicFriction":0.00350,
+        "torqueLossCoef": 0.035,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":5.5,
+        "shiftDownRPMOffsetCoef":1.4,
+        "gearboxDecisionSmoothingUp":0.25,
+        "gearboxDecisionSmoothingDown":0.25,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":4500,
+        //"highShiftDownRPM":5000,
+        "wheelSlipUpThreshold":99999,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["burnside_transmission", ["burnside_engine","burnside_transmission"]],
+        //["burnside_centergauge_A", ["burnside_dash"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--2 Speed Auto--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"burnside_transmission"},
+         {"nodeWeight":38.025},
+         ["tra1", 0.0, -0.46, 0.27],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":19500980,"beamDamp":487.5},
+          {"beamDeform":190125,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}
