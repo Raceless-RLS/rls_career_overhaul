@@ -41,13 +41,20 @@
           </div>
         </span>
 
-        <span class="compact status" v-if="!locked || locked.location">
+        <span class="compact status" v-if="(!locked || locked.location) && location != 'Storage'">
           {{ location }}
+        </span>
+        <span class="compact status" v-else-if="location == 'Storage'">
+          {{ data.niceLocation }}
         </span>
       </div>
 
       <div class="full row50">
-        <span>
+        <span v-if="location == 'Storage'">
+          Location:
+          {{ data.niceLocation }}
+        </span>
+        <span v-else>
           Location:
           {{ location }}
         </span>
@@ -109,7 +116,10 @@ const description = computed(() => props.isTutorial ? "Tutorial Vehicle" : props
 
 const location = computed(() => {
   let res
-  if (locked.value && !locked.value.location) {
+  if (locked.value && locked.value.location && typeof locked.value.location === 'string') {
+    // Check for custom location string
+    res = locked.value.location
+  } else if (locked.value && !locked.value.location) {
     res = locked.value.reason
   } else if (props.data.inGarage) {
     res = "In garage"
@@ -134,12 +144,33 @@ const locked = computed(() => {
   } else if (props.data.missingFile) {
     res = { reason: "Missing File!" }
   } else if (props.data.timeToAccess) {
-    // const eta = formatTime(props.data.timeToAccess, 1)
-    const eta = `${~~(props.data.timeToAccess / 60)}:${String(~~props.data.timeToAccess % 60).padStart(2, "0")}`
+    const eta = (() => {
+      const hours = ~~(props.data.timeToAccess / 3600)
+      const minutes = ~~((props.data.timeToAccess % 3600) / 60)
+      const seconds = ~~(props.data.timeToAccess % 60)
+      
+      let parts = []
+      if (hours > 0) {
+        parts.push(`${hours}hrs`)
+      }
+      if (minutes > 0 || hours > 0) {
+        parts.push(`${minutes}min`)
+      }
+      parts.push(`${seconds}sec`)
+      
+      return parts.join(' ')
+    })()
+
     if (props.data.delayReason === "bought") {
       res = { reason: "Out for delivery", eta }
     } else if (props.data.delayReason === "repair") {
-      res = { reason: "Being repaired", eta }
+      res = { reason: "Being repaired", eta, location: "Repair Shop" }
+    } else if (props.data.delayReason === "rented") {
+      res = { reason: "Rented Out", eta, location: "Movie Studio" }
+    } else if (props.data.delayReason === "Police_certification") {
+      res = { reason: "Certifying", eta, location: "Police Station" }
+    } else if (props.data.delayReason === "delivery") {
+      res = { reason: "Delivering", eta, location: "Delivering to " + props.data.niceLocation }
     } else {
       res = { reason: "Available in", eta }
     }
