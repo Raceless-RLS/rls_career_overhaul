@@ -1616,9 +1616,9 @@ M.isRoadSideAssistanceFree = function(invVehId)
         policyTows[applicablePolicy.id] = getPlPerkValue(applicablePolicy.id, "roadsideAssistance")
     end
     local value = policyTows[applicablePolicy.id]
-    if value <= 0 then
-    return false
-end
+    if value and value <= 0 then
+        return false
+    end
     return true
 end
 
