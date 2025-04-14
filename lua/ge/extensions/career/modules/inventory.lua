@@ -1734,42 +1734,44 @@ local function specificCapcityCases(partName)
   return nil
 end
 
+local function cyclePartsTree(partData, seatingCapacity)
+  for first, part in pairs(partData) do
+    local partName = part.chosenPartName
+    if partName:find("seat") and not partName:find("cargo") and not partName:find("captains") then
+      local seatSize = nil
+      if partName:find("seats") then
+        seatSize = 3
+      elseif partName:find("ext") then
+        seatSize = 2
+      else
+        if partName:match("(%d+)R") then
+          seatSize = 2
+        else
+          seatSize = 1
+        end
+      end
+      if partName:find("citybus_seats") then seatSize = 44
+      elseif partName:find("skin") then seatSize = 0 end
+      if specificCapcityCases(partName) then seatSize = specificCapcityCases(partName) end
+      seatingCapacity = seatingCapacity + seatSize
+    end
+    if part.children then
+      seatingCapacity = cyclePartsTree(part.children, seatingCapacity)
+    end
+    if partName == "pickup" then
+      seatingCapacity = math.max(seatingCapacity, 7)
+    end
+  end
+  return seatingCapacity
+end
+
 local function calculateSeatingCapacity(inventoryId)
   if not inventoryId then inventoryId = currentVehicle end
   local veh = vehicles[inventoryId]
   if not veh then return 0 end
-  local partData = veh.config.parts
-  local seatingCapacity = 0
+  local partData = veh.config.partsTree
 
-  local rearSeats = {}
-
-  for partName, part in pairs(partData) do
-    -- Check if the part is a seat
-    if (partName:find("seat") or partName:find("bench")) and not partName:find("cargo") then
-      if part:find("seat") and not part:find("cargo") and not part:find("captains") then
-        local seatSize = nil
-        if partName:find("seats") then
-          seatSize = 3
-        elseif partName:find("ext") then
-          seatSize = 2
-        else
-          if partName:match("(%d+)R") then
-            seatSize = 2
-          else
-            seatSize = 1
-          end
-        end
-        if part:find("citybus_seats") then seatSize = 44
-        elseif part:find("skin") then seatSize = 0 end
-        if specificCapcityCases(partName) then seatSize = specificCapcityCases(partName) end
-        seatingCapacity = seatingCapacity + seatSize
-      end
-    end
-  end
-  if veh.config.mainPartName == "pickup" then
-    seatingCapacity = math.max(seatingCapacity, 7)
-  end
-  return seatingCapacity
+  return cyclePartsTree({partData}, 0)
 end
 
 -- RLS Marketplace Functions
