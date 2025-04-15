@@ -300,31 +300,32 @@ local function onPlayerCameraReady()
 end
 
 local function onVehicleSwitched(oldId, newId)
-    if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
-        setPlayerData(newId, oldId)
-        setTrafficVars()
-        local licenseText = career_modules_inventory.getLicensePlateText(newId)
-        if licenseText then
-            licenseText = licenseText:lower()
-            for i = 1, #licenseText do
-                print(string.format("[RLS Career][Debug] Char %d: '%s' (byte: %d)", 
-                    i, licenseText:sub(i,i), string.byte(licenseText, i)))
-            end
+  if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
+    setPlayerData(newId, oldId)
+    setTrafficVars()
+    local licenseText = career_modules_inventory.getLicensePlateText(newId)
+    if licenseText then
+        licenseText = licenseText:lower()
+        for i = 1, #licenseText do
+          print(string.format("[RLS Career][Debug] Char %d: '%s' (byte: %d)", i, licenseText:sub(i, i),
+              string.byte(licenseText, i)))
         end
-        if licenseText and licenseText == "repo" then
-            if repoJob then
-                repoJob:onVehicleSwitched(oldId, newId)
-            else
-                repoJob.generateJob()
-            end
-        end
+    end
+    if licenseText and licenseText == "repo" then
+      if repoJob then
+        repoJob:onVehicleSwitched(oldId, newId)
+      else
+        repoJob.generateJob()
+      end
+    end
 
-        local playerIsCop = getPlayerIsCop()
-        if playerIsCop then
-            ui_message("You are now a cop", 5, "Police", "info")
+    local playerIsCop = getPlayerIsCop()
+    if playerIsCop then
+      ui_message("You are now a cop", 5, "Police", "info")
     end
   end
 end
+
 
 local function playerPursuitActive()
   return playerData.traffic and playerData.traffic.pursuit and playerData.traffic.pursuit.mode ~= 0
@@ -449,12 +450,6 @@ end
 
 local function onPlayerCameraReady()
   setupTraffic() -- spawns traffic while the loading screen did not fade out yet
-end
-
-local function onVehicleSwitched(oldId, newId)
-  if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
-    setPlayerData(newId, oldId)
-  end
 end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
