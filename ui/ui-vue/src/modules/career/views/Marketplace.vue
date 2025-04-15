@@ -324,7 +324,9 @@ const listedVehicles = computed(() => {
 .marketplace-container {
     width: max-content;
     min-width: 40%;
-    height: 95%;
+    max-width: 60%;
+    min-height: 400px;
+    max-height: 95%;
     background-color: #282828;
     border-radius: 15px;
     padding: 20px;

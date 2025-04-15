@@ -217,7 +217,15 @@ local function pullVehicleData(inventoryId)
     powerPerWeight = string.format("%0.3f", power / weight)
   end
 
-  local newParts = veh.config.parts
+  local partInventory = career_modules_partInventory.getInventory()
+
+  local newParts = {}
+  -- Loop through partInventory to find parts belonging to this vehicle
+  for _, part in pairs(partInventory) do
+    if part.location == veh.id then
+      newParts[part.containingSlot] = part.name
+    end
+  end
   local originalParts = veh.originalParts
   local changedSlots = veh.changedSlots
 

@@ -191,6 +191,7 @@ export default {
     removeVehicleFromSale: id => Number,
     requestListedVehicles: () => {},
     deliverVehicle: (id, money) => [Number, Number],
+    storeVehicle: id => Number,
   },
 
   career_modules_vehiclePerformance: {
