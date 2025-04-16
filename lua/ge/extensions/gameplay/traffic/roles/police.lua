@@ -180,7 +180,7 @@ function C:onTrafficTick(dt)
         self.driveInLane = false
       end
 
-      if self.validTargets[self.targetId].interDist <= 2500 then -- within 50 m of focus point of police vehicle
+      if self.validTargets and self.validTargets[self.targetId] and self.validTargets[self.targetId].interDist <= 2500 then -- within 50 m of focus point of police vehicle
         self.avoidSpeed = self.avoidSpeed or 40
         if self.veh.speed >= 8 and targetVeh.speed >= 8 and self.veh.speed + targetVeh.speed >= self.avoidSpeed
         and targetVeh.driveVec:dot(self.veh.driveVec) <= -0.707 and (targetVeh.pos - self.veh.pos):normalized():dot(self.veh.driveVec) >= 0.707 then
