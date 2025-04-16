@@ -210,7 +210,7 @@ local function generateVehicleList()
 
       local totalPartsValue = getVehiclePartsValue(randomVehicleInfo.model_key, randomVehicleInfo.key)
       totalPartsValue = career_modules_valueCalculator.getDepreciatedPartValue(totalPartsValue, randomVehicleInfo.Mileage) * 1.081
-      local baseValue = math.max(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2023 - randomVehicleInfo.year}), totalPartsValue)
+      local baseValue = math.max(career_modules_valueCalculator.getAdjustedVehicleBaseValue(randomVehicleInfo.Value, {mileage = randomVehicleInfo.Mileage, age = 2025 - randomVehicleInfo.year}), totalPartsValue)
 
       randomVehicleInfo.Value = getRandomizedPrice(baseValue, seller.range)
       randomVehicleInfo.shopId = tableSize(vehiclesInShop) + 1

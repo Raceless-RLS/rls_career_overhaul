@@ -32,25 +32,8 @@ local function getPartNamesFromTree(Tree)
   return partNames
 end
 
-local function getVehicleMileage(vehicle)
-  for _, partName in ipairs(getPartNamesFromTree(vehicle.config.partsTree)) do
-    if partName == vehicle.config.mainPartName then
-      if vehicle.partConditions and vehicle.partConditions[partName] then
-      return vehicle.partConditions[partName]["odometer"]
-      else
-        if not vehicle.partConditions then
-          vehicle.partConditions = {}
-        end
-        vehicle.partConditions[partName] = {odometer = 0}
-    return 0
-  end
-    end
-  end
-  return 0 -- Return a default value if main part is not found
-end
-
 local function getVehicleMileageById(inventoryId)
-  return getVehicleMileage(career_modules_inventory.getVehicles()[inventoryId])
+  return career_modules_inventory.getVehicles()[inventoryId].mileage or 0
 end
 
 
@@ -98,7 +81,8 @@ local function getAdjustedVehicleBaseValue(value, vehicleCondition)
   local scrapValue = valueByAge * scrapValueRelative
   local valueLossFromMileage = valueByAge * vehicleCondition.mileage/1000 * lossPerKmRelative
   local valueTemp = math.max(0, valueByAge - valueLossFromMileage)
-  return math.max(valueTemp, scrapValue)
+  valueTemp = math.max(valueTemp, scrapValue)
+  return valueTemp
 end
 
 local function getPartDifference(originalParts, newParts, changedSlots)
@@ -237,7 +221,7 @@ local function getTableSize(t)
 end
 
 local function getVehicleValue(configBaseValue, vehicle, ignoreDamage)
-  local mileage = getVehicleMileage(vehicle)
+  local mileage = vehicle.mileage or 0
 
   local partInventory = career_modules_partInventory.getInventory()
 

@@ -186,9 +186,6 @@ end
 
 local function onPursuitAction(vehId, action, data)
     local playerIsCop = getPlayerIsCop()
-    if vehId ~= be:getPlayerVehicleID(0) then
-      return
-    end
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
     if action == "start" then -- pursuit started
         gameplay_parking.disableTracking(vehId)
@@ -211,7 +208,6 @@ local function onPursuitAction(vehId, action, data)
         log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
         resetPursuit()
     elseif action == "evade" then
-        dump(data)
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
             if playerIsCop == true then
@@ -237,6 +233,9 @@ local function onPursuitAction(vehId, action, data)
                 career_saveSystem.saveCurrent()
                 ui_message("The suspect got away, Here is " .. pity .. " for repairs", 5, "Police", "info")
             else
+                if vehId ~= be:getPlayerVehicleID(0) then
+                    return
+                end
                 if playerIsCop == false then
                     local reward = math.floor(110 * (data.score or 10)) / 100
                     career_modules_payment.reward({
