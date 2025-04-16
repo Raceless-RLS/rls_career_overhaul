@@ -57,7 +57,6 @@ local function getPlayerIsCop()
             return false
         end
         local role = gameplay_traffic.getTrafficData()[vehId].role.name
-        print("role: " .. role)
         if role == 'police' then
           local vehicleRole = career_modules_inventory.getVehicleRole(invId)
           if vehicleRole == nil then
@@ -185,14 +184,13 @@ local function resetPursuit()
     end
 end
 
-local function onPursuitAction(vehId, data)
+local function onPursuitAction(vehId, action, data)
     local playerIsCop = getPlayerIsCop()
-    if vehId ~= be:getPlayerVehicleID(0) and playerIsCop == false then
+    if vehId ~= be:getPlayerVehicleID(0) then
       return
     end
-    local playerIsCop = getPlayerIsCop()
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-    if data.type == "start" then -- pursuit started
+    if action == "start" then -- pursuit started
         gameplay_parking.disableTracking(vehId)
         if inventoryId and hasLicensePlate(inventoryId) then
             gameplay_police.setPursuitVars({
@@ -205,14 +203,15 @@ local function onPursuitAction(vehId, data)
         end
         -- core_recoveryPrompt.deactivateAllButtons()
         log("I", "career", "Police pursuing player, now deactivating recovery prompt buttons")
-    elseif data.type == "reset" then -- pursuit ended, return to normal
+    elseif action == "reset" then -- pursuit ended, return to normal
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
         end
         -- core_recoveryPrompt.setDefaultsForCareer()
         log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
         resetPursuit()
-    elseif data.type == "evade" then
+    elseif action == "evade" then
+        dump(data)
         if not gameplay_walk.isWalking() then
             gameplay_parking.enableTracking(vehId)
             if playerIsCop == true then
@@ -266,7 +265,7 @@ local function onPursuitAction(vehId, data)
             log("I", "career", "Pursuit ended, now activating recovery prompt buttons")
         end
         resetPursuit()
-    elseif data.type == "arrest" then -- pursuit arrest, make the player pay a fine
+    elseif action == "arrest" then -- pursuit arrest, make the player pay a fine
         if playerIsCop == true then
             local bonus = math.floor(240 * data.score) / 100
 

@@ -1075,9 +1075,9 @@ local offenseNames = {
     ["hitPolice"] = "Hitting a Police Vehicle"
 }
 
-local function onPursuitAction(vehId, data)
+local function onPursuitAction(vehId, action, data)
     if not gameplay_missions_missionManager.getForegroundMissionId() and vehId == be:getPlayerVehicleID(0) then
-        if data.type == "arrest" then
+        if action == "arrest" then
             local fine = math.floor(data.score * 130) / 100
 
             local insuranceRate = 0
@@ -1092,19 +1092,19 @@ local function onPursuitAction(vehId, data)
                 insuranceRate = 1.1 + (0.9 * (1 - math.exp(-(score - 600) / 2000)))
             end
             insuranceRate = math.floor(insuranceRate * 100) / 100
-            local vehId
+            local invId
             local policyId
             if career_modules_inventory.getInventoryIdFromVehicleId(vehId) then
-                vehId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
-                if insuredInvVehs[tostring(vehId)] then
-                    policyId = insuredInvVehs[tostring(vehId)]
+                invId = career_modules_inventory.getInventoryIdFromVehicleId(vehId)
+                if insuredInvVehs[tostring(invId)] then
+                    policyId = insuredInvVehs[tostring(invId)]
                 end
             end
             if not policyId then
                 policyId = 1
             end
             M.changePolicyScore(policyId, insuranceRate)
-            if not vehId or not hasLicensePlate(vehId) then
+            if not invId or not hasLicensePlate(invId) then
                 fine = fine * 2.5
             end
             if career_modules_hardcore.isHardcoreMode() then
@@ -1130,18 +1130,18 @@ local function onPursuitAction(vehId, data)
             end
 
             if arrested then
-                career_modules_inventory.addArrest(vehId)
+                career_modules_inventory.addArrest(invId)
             else
-                career_modules_inventory.addTicket(vehId)
+                career_modules_inventory.addTicket(invId)
                 fine = fine * 0.5
             end
 
             local eventDescription = arrested and "Arrested for " or "Ticketed for " .. table.concat(offenseNames, ", ")
 
-            if not vehId then
+            if not invId then
                 eventDescription = eventDescription .. "(Foreign Vehicle)"
             else
-                if not hasLicensePlate(vehId) then
+                if not career_modules_inventory.getLicensePlateText(vehId) then
                     eventDescription = eventDescription .. " (No License Plate)"
                 end
 
