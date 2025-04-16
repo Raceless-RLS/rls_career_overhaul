@@ -300,6 +300,9 @@ local function onPlayerCameraReady()
 end
 
 local function onVehicleSwitched(oldId, newId)
+  if be:getPlayerVehicleID(0) ~= newId then
+    return
+  end
   if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
     setPlayerData(newId, oldId)
     setTrafficVars()

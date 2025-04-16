@@ -148,13 +148,13 @@ export const useMinimapStore = defineStore("minimap", () => {
         })
 
         // Load Lua extension
-        lua.extensions.load("ui_phoneMinimap")
+        lua.extensions.load("ui_phone_minimap")
     }
 
     function cleanup() {
         events.off('PhoneMinimapData')
         events.off('PhoneMinimapUpdate')
-        lua.extensions.unload("ui_phoneMinimap")
+        lua.extensions.unload("ui_phone_minimap")
     }
 
     return {

@@ -27,18 +27,12 @@ local function onExtensionLoaded()
     guihooks.trigger("phone_time_update", time)
 end
 
-local function requestTimeUpdate()
-    time = formatTime(scenetree.tod.time)
-    guihooks.trigger("phone_time_update", time)
-end
-
 local function clearTime()
     time = nil
 end
 
 M.onUpdate = onUpdate
 M.onExtensionLoaded = onExtensionLoaded
-M.requestTimeUpdate = requestTimeUpdate
 M.clearTime = clearTime
 
 return M

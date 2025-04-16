@@ -943,10 +943,6 @@ export default {
     cancelGaragePurchase: () => {}
   },
 
-  ui_phone_time: {
-    requestTimeUpdate: () => {},
-  },
-
   career_modules_taxi: {
     prepareTaxiJob: () => {},
     acceptJob: () => {},
