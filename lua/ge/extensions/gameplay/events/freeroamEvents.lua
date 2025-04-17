@@ -29,6 +29,7 @@ local checkpointsHit = 0
 local totalCheckpoints = 0
 local currentExpectedCheckpoint = 1
 local invalidLap = false
+local delayTrafficRestore = nil
 
 local mInventoryId = nil
 local newBestSession = false
@@ -378,7 +379,7 @@ local function exitRace()
         Assets:hideAllAssets()
         checkpointManager.removeCheckpoints()
         utils.displayMessage("You exited the race zone, Race cancelled", 3)
-        utils.restoreTrafficAmount()
+        delayTrafficRestore = 10
         newBestSession = false
         if gameplay_drift_general.getContext() == "inChallenge" then
             gameplay_drift_general.setContext("inFreeRoam")
@@ -667,7 +668,7 @@ local function onBeamNGTrigger(data)
             mSplitTimes = {}
             mActiveRace = nil
             utils.setActiveLight(raceName, "red")
-            utils.restoreTrafficAmount()
+            delayTrafficRestore = 10
             if career_career.isActive() then
                 career_modules_pauseTime.enablePauseCounter()
             end
@@ -713,6 +714,13 @@ local function onUpdate(dtReal, dtSim, dtRaw)
         in_race_time = in_race_time + dtSim
     else
         in_race_time = 0
+    end
+    if delayTrafficRestore ~= nil then
+        delayTrafficRestore = delayTrafficRestore - dtSim
+        if delayTrafficRestore <= 0 then
+            utils.restoreTrafficAmount()
+            delayTrafficRestore = nil
+        end
     end
 end
 
