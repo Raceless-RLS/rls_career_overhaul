@@ -473,7 +473,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
         else
-            if not core_groundMarkers.getTargetPos() or core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
+            if self.deliveryLocation.pos ~= nil and (not core_groundMarkers.getTargetPos() or core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos) then
                 core_groundMarkers.setPath(self.deliveryLocation.pos)
             end
         end
