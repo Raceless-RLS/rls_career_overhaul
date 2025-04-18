@@ -1,0 +1,395 @@
+{"bolide_junk_subframe_F":
+{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Previously Crashed Front Subframe",
+        "value":1000,
+    },
+
+    "slotType" :"bolide_subframe_F",
+
+    "slots":[
+        ["type", "default", "description"],
+        //running gear
+        ["bolide_suspension_F","bolide_suspension_F", "Front Suspension"],
+        //powertrain
+        ["bolide_radiator","bolide_radiator", "Radiator"],
+        //bodywork
+        ["bolide_nosecone_support","bolide_nosecone_support", "Nosecone Support"],
+        ["bolide_hood","bolide_hood_a", "Hood"],
+        ["bolide_frunk","bolide_frunk", "Frunk Liner"],
+        ["bolide_fender_R","bolide_fender_a_R", "Front Right Fender"],
+        ["bolide_fender_L","bolide_fender_a_L", "Front Left Fender"],
+        ["soundscape_horn", "soundscape_horn_107", "Horn"],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"bb1"},
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["bolide_subframe_F", ["bolide_subframe_F"]],
+        ["bolide_bumperbar", ["bolide_bumperbar"]],
+        ["bolide_engbaycrap_F", ["bolide_subframe_F"]],
+    ],
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeWeight":0.7}
+         //nosecone coupled node is here due to differences in suspension geometry between subframes
+         {"group":"bolide_nosecone_support"},
+         ["ncs4r",-0.382, -1.51, 0.202, {"couplerTag":"nosecone_support_R2", "couplerStrength":90000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"nosecone_support_R2"}],
+         ["ncs4l", 0.382, -1.51, 0.202, {"couplerTag":"nosecone_support_L2", "couplerStrength":90000, "couplerRadius":0.1, "couplerStartRadius":0.1, "couplerLock":true, "breakGroup":"nosecone_support_L2"}],
+
+         //integral bumper bar
+         {"nodeWeight":0.8}
+         {"group":["bolide_airduct_F", "bolide_bumperbar"]},
+         ["bb1r",-0.44,-1.923,0.427],
+         ["bb1",0.0,-1.989,0.427],
+         ["bb1l",0.44,-1.923,0.427],
+
+         ["bb2r",-0.44,-1.923,0.31],
+         ["bb2",0.0,-1.989,0.31],
+         ["bb2l",0.44,-1.923,0.31],
+
+         //upper rails
+         {"nodeWeight":2.5}
+         {"group":"bolide_subframe_F"},
+         ["fx7r",-0.404,-0.938,0.428, {"nodeWeight":3.0, "tag":"subframe_F_1r", "selfCollision":false}],
+         ["fx7l", 0.404,-0.938,0.428, {"nodeWeight":3.0, "tag":"subframe_F_1l", "selfCollision":false}],
+
+         ["fx9r",-0.38,-1.8,0.427, {"tag":"nosecone_support_R1"}],
+         ["fx9l", 0.38,-1.8,0.427, {"tag":"nosecone_support_L1"}],
+
+         //lower tubes
+         ["fx6r",-0.35,-0.911,0.157, {"nodeWeight":3.0, "tag":"subframe_F_2r", "selfCollision":false}],
+         ["fx6l", 0.35,-0.911,0.157, {"nodeWeight":3.0, "tag":"subframe_F_2l", "selfCollision":false}],
+
+         ["fx8r",-0.36,-1.8,0.235, {"tag":"nosecone_support_R3""group":["bolide_subframe_F","bolide_shock_F"]}],
+         ["fx8l", 0.36,-1.8,0.235, {"tag":"nosecone_support_L3""group":["bolide_subframe_F","bolide_shock_F"]}],
+
+         //lower arm axis points
+         {"nodeWeight":6.5},
+         {"group":["bolide_subframe_F","bolide_lowerarm_F", "bolide_radiator"]}
+         ["fx1r",-0.382, -1.51, 0.202, {"tag":"nosecone_support_R2"}],
+         ["fx1l", 0.382, -1.51, 0.202, {"tag":"nosecone_support_L2"}],
+         {"group":["bolide_subframe_F","bolide_lowerarm_F"]}
+         ["fx2r",-0.382, -1.09, 0.202, {"tag":"rideheight_FR"}],
+         ["fx2l", 0.382, -1.09, 0.202, {"tag":"rideheight_FL"}],
+
+         //upper arm axis points
+         {"group":["bolide_subframe_F","bolide_upperarm_F", "bolide_frunk"]}
+         ["fx3r",-0.475, -1.47, 0.458],
+         ["fx3l", 0.475, -1.47, 0.458],
+
+         ["fx4r",-0.475, -1.11, 0.440],
+         ["fx4l", 0.475, -1.11, 0.440],
+
+         //shock mount
+         {"nodeWeight":7.0},
+         {"group":["bolide_subframe_F","bolide_shock_F"]}
+         ["fs2r",-0.50,-1.3,0.53, {"selfCollision":false}],
+         ["fs2l", 0.50,-1.3,0.53, {"selfCollision":false}],
+
+         {"group":""},
+        ],
+
+    "beams":[
+          ["id1:", "id2:"],
+          //--EXPANSION DEFORM LIMIT DEFAULT--
+          {"deformLimitExpansion":1.2},
+
+          //--MISC--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //torsion bar break beams
+          {"beamSpring":50000, "beamDamp":100},
+          {"beamDeform":100000, "beamStrength":100000},
+          {"optional":true},
+
+          {"optional":false},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          //--BUMPER BAR--
+
+          //front bumper bar
+          {"beamSpring":50000,"beamDamp":60},
+          {"beamDeform":17000,"beamStrength":100000},
+          //main shape
+          {"deformLimitExpansion":1.2},
+          ["bb1r", "bb1"],
+          ["bb1", "bb1l"],
+          ["bb2r", "bb2"],
+          ["bb2", "bb2l"],
+          //vertical
+          ["bb2r", "bb1r"],
+          ["bb2", "bb1"],
+          ["bb2l", "bb1l"],
+
+          //surficial cross
+          {"deformLimitExpansion":""},
+          ["bb2r", "bb1"],
+          ["bb2", "bb1r"],
+          ["bb2", "bb1l"],
+          ["bb2l", "bb1"],
+
+          //rigids
+          {"beamDeform":11000,"beamStrength":100000},
+          ["bb1r", "bb1l"],
+          ["bb2r", "bb2l"],
+
+          //attach
+          {"deformLimitExpansion":""},
+          {"beamSpring":50000,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":100000},
+          //rigid
+          ["bb1r", "fx3r"],
+          ["bb2r", "fx1r"],
+          ["bb1l", "fx3l"],
+          ["bb2l", "fx1l"],
+          //normal
+          {"beamSpring":50000,"beamDamp":100},
+          {"beamDeform":10000,"beamStrength":100000},
+          ["fx8r", "bb2r"],
+          ["fx9r", "bb1r"],
+          ["bb1r", "fx8r"],
+          ["fx9r", "bb2r"],
+          ["fx8r", "bb2"],
+          ["fx9r", "bb1"],
+
+          ["fx8l", "bb2l"],
+          ["fx9l", "bb1l"],
+          ["bb1l", "fx8l"],
+          ["fx9l", "bb2l"],
+          ["fx8l", "bb2"],
+          ["fx9l", "bb1"],
+
+          //--FRONT SUBFRAME--
+
+          //enticers
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":50000,"beamDamp":100},
+          {"beamDeform":10000,"beamStrength":100000},
+          ["fx9r", "fx6r"],
+          ["fx9l", "fx6l"],
+          {"beamDeform":30000,"beamStrength":100000},
+          ["fx3r", "fx6r"],
+          ["fx3l", "fx6l"],
+
+          //crossmember main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":50000,"beamDamp":100},
+          {"beamDeform":33000,"beamStrength":100000},
+          //lengthwise
+          ["fx4r", "fx3r"],
+          ["fx2r", "fx1r"],
+          ["fx2l", "fx1l"],
+          ["fx4l", "fx3l"],
+          //widthwise
+          ["fx3r", "fx1r"],
+          ["fx3l", "fx1l"],
+          ["fx1l", "fx1r"],
+          ["fx4l", "fx2l"],
+          ["fx2l", "fx2r"],
+          ["fx2r", "fx4r"],
+          ["fx4r", "fx4l", {"deformLimitExpansion":""}],
+          ["fx3r", "fx3l", {"deformLimitExpansion":""}],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":39000,"beamStrength":100000},
+          ["fx4r", "fx1r"],
+          ["fx2r", "fx3r"],
+          ["fx1r", "fx2l"],
+          ["fx2r", "fx1l"],
+          ["fx1l", "fx4l"],
+          ["fx2l", "fx3l"],
+
+          //rigids
+          {"beamDeform":52000,"beamStrength":100000},
+          //corner
+          ["fx3r", "fx1l"],
+          ["fx3l", "fx1r"],
+          ["fx4r", "fx2l"],
+          ["fx4l", "fx2r"],
+          //extra
+          ["fx3r", "fx2l"],
+          ["fx4r", "fx1l"],
+          ["fx4l", "fx1r"],
+          ["fx3l", "fx2r"],
+
+          //subframe main shape
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":50000,"beamDamp":100},
+          {"beamDeform":26000,"beamStrength":100000},
+          //lengthwise
+          ["fx7l", "fx4l"],
+          ["fx6l", "fx2l"],
+          ["fx7r", "fx4r"],
+          ["fx6r", "fx2r"],
+          //weak
+          {"beamDeform":23000,"beamStrength":100000},
+          ["fx3l", "fx9l"],
+          ["fx1l", "fx8l"],
+          ["fx3r", "fx9r"],
+          ["fx1r", "fx8r"],
+          //widthwise
+          ["fx6r", "fx6l"],
+          ["fx7r", "fx7l"],
+          //vertical
+          ["fx8r", "fx9r"],
+          ["fx8l", "fx9l"],
+          ["fx6r", "fx7r"],
+          ["fx6l", "fx7l"],
+
+          //surficial crossing
+          {"deformLimitExpansion":""},
+          {"beamDeform":19000,"beamStrength":100000},
+          ["fx2r", "fx7r"],
+          ["fx6r", "fx4r"],
+          ["fx2l", "fx7l"],
+          ["fx6l", "fx4l"],
+          //weak
+          {"beamDeform":12000,"beamStrength":100000},
+          ["fx1r", "fx9r"],
+          ["fx8r", "fx3r"],
+          ["fx1l", "fx9l"],
+          ["fx8l", "fx3l"],
+
+          //brace
+          {"beamDeform":16000,"beamStrength":100000},
+          ["fx2r", "fx6l"],
+          ["fx6r", "fx2l"],
+          ["fx4r", "fx7l"],
+          ["fx7r", "fx4l"],
+          ["fx7r", "fx6l"],
+          ["fx6r", "fx7l"],
+
+          //rigids
+          {"beamDeform":9000,"beamStrength":100000},
+          //lengthwise
+          ["fx9l", "fx4l"],
+          ["fx9r", "fx4r"],
+          ["fx1r", "fx6r"],
+          ["fx1l", "fx6l"],
+          //corner
+          {"beamDeform":8000,"beamStrength":100000}
+          ["fx1l", "fx8r"],
+          ["fx3l", "fx9r"],
+          ["fx3r", "fx9l"],
+          ["fx8l", "fx1r"],
+          ["fx9r", "fx1l"],
+          ["fx3l", "fx8r"],
+          ["fx3r", "fx8l"],
+          ["fx9l", "fx1r"],
+
+          //front shock mount
+          {"beamSpring":50000,"beamDamp":125},
+          {"beamDeform":42400,"beamStrength":100000},
+          ["fs2r", "fx4r"],
+          ["fs2r", "fx3r"],
+          ["fs2r", "fx2r"],
+          ["fs2r", "fx1r"],
+          ["fs2r", "fx4l"],
+          ["fs2r", "fx3l"],
+          ["fs2l", "fx3l"],
+          ["fs2l", "fx4l"],
+          ["fs2l", "fx1l"],
+          ["fs2l", "fx2l"],
+          ["fs2l", "fx3r"],
+          ["fs2l", "fx4r"],
+          ["fs2l", "fs2r", {"deformLimitExpansion":1.2}],
+
+          //limiters
+          {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":2},
+          {"beamSpring":50000,"beamDamp":100},
+          {"beamDeform":11000, "beamStrength":100000},
+          ["fx7r", "f7"],
+          ["fx7l", "f7"],
+          ["fx6r", "f2r"],
+          ["fx6l", "f2l"],
+          {"beamType":"|NORMAL", "beamLongBound":1},
+
+          //bleed through
+          {"deformLimitExpansion":1.2},
+    ],
+
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        //bumper bar
+        {"dragCoef":8},
+        {"group":"bolide_bumperbar"},
+        ["bb1r", "bb2r", "bb2"],
+        ["bb2", "bb1", "bb1r"],
+        ["bb1", "bb2", "bb1l"],
+        ["bb1l", "bb2", "bb2l"],
+        {"dragCoef":10},
+        ["bb2r", "fx8r", "bb2"],
+        ["bb2", "fx8r", "fx8l"],
+        ["fx8l", "bb2l", "bb2"],
+        {"dragCoef":0},
+        ["fx9l", "bb1", "bb1l"],
+        ["fx9r", "bb1", "fx9l"],
+        ["fx9r", "bb1r", "bb1"],
+        {"dragCoef":0}
+        ["bb1l", "bb2l", "fx8l"],
+        ["bb1l", "fx8l", "fx9l"],
+        ["fx9r", "fx8r", "bb2r"],
+        ["bb2r", "bb1r", "fx9r"],
+
+        {"dragCoef":10},
+        //underside
+        {"group":"bolide_subframe_F"},
+        ["fx8r", "fx1r", "fx1l"],
+        ["fx1l", "fx8l", "fx8r"],
+        ["fx1r", "fx2r", "fx2l"],
+        ["fx2l", "fx1l", "fx1r"],
+        ["fx2r", "fx6r", "fx6l"],
+        ["fx6l", "fx2l", "fx2r"],
+
+        //sides
+        {"dragCoef":8},
+        {"group":"bolide_subframe_F_side"},
+        ["fx7r", "fx6r", "fx2r"],
+        ["fx2r", "fx4r", "fx7r"],
+        ["fx4r", "fx2r", "fx1r"],
+        ["fx1r", "fx3r", "fx4r"],
+        ["fx3r", "fx1r", "fx8r"],
+        ["fx8r", "fx9r", "fx3r"],
+        ["fx9l", "fx8l", "fx3l"],
+        ["fx3l", "fx8l", "fx1l"],
+        ["fx3l", "fx1l", "fx2l"],
+        ["fx2l", "fx4l", "fx3l"],
+        ["fx4l", "fx2l", "fx6l"],
+        ["fx6l", "fx7l", "fx4l"],
+        ["fs2l", "fx3l", "fx4l"],
+        ["fs2r", "fx4r", "fx3r"],
+
+        //top
+        {"dragCoef":5},
+        {"group":"bolide_subframe_F_rear"},
+        ["fx4l", "fx7l", "fx7r"],
+        ["fx7r", "fx4r", "fx4l"],
+        ["fs2l", "fx4l", "fx4r"],
+        ["fx4r", "fs2r", "fs2l"],
+        ["fx3l", "fx3r", "fx9r"],
+        ["fx9r", "fx9l", "fx3l"],
+
+        {"dragCoef":0},
+        ["fs2l", "fs2r", "fx3r"],
+        ["fx3r", "fx3l", "fs2l"],
+
+        //front end lift tuning
+        {"group":""},
+        {"dragCoef":1},
+        ["fs2l", "fx5l", "fx5r", {"liftCoef":60,"stallAngle":0.85}],
+        ["fx5r", "fs2r", "fs2l", {"liftCoef":60,"stallAngle":0.85}],
+        {"group":""},
+        ],
+},
+}

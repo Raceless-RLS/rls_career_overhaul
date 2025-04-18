@@ -1,0 +1,318 @@
+{
+"midsize_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed AT",
+        "value":250,
+    },
+    "slotType" : "midsize_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["midsize_converter","midsize_converter","Torque Converter", {"coreSlot":true}],
+        ["midsize_differential_F","midsize_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.33, 0, 2.8, 1.54, 1.00, 0.7],
+        "parkLockTorque":5000,
+        "oneWayViscousCoef":40,
+        "shiftEfficiency":0.2,
+        "gearChangeTime": 2.7,
+        "friction": 1.50,
+        "dynamicFriction": 0.0011,
+        "torqueLossCoef": 0.150,
+        "gearboxNode:":["ta1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":2.7,
+        "aggressionSmoothingUp":2.7,
+        "aggressionSmoothingDown":2.7,
+        "gearboxDecisionSmoothingUp":2.7,
+        "gearboxDecisionSmoothingDown":2.7,
+        "lowShiftDownRPM":6500,
+        "lowShiftUpRPM":4250,
+        //"highShiftDownRPM":6500,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["midsize_transmission", ["midsize_engine","midsize_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"midsize_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.31, -1.34, 0.365],
+         ["tra1l", 0.31, -1.34, 0.365],
+         {"group":""},
+         ["ta1", 0, -1.34, 0.39],
+         //transmission mount node
+         ["em1l", 0.275, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l","e2r"],
+          ["tra1l","e4r"],
+          ["tra1l","e2l"],
+          ["tra1l","e4l"],
+          ["tra1r","e1r"],
+          ["tra1r","e3r"],
+          ["tra1r","e1l"],
+          ["tra1r","e3l"],
+          ["tra1r","tra1l"],
+          ["ta1","e1l"],
+          ["ta1","e2l"],
+          ["ta1","e4l"],
+          ["ta1","e3l"],
+          ["ta1","tra1l"],
+          ["ta1","tra1r"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"midsize_junk_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed MT",
+        "value":150,
+    },
+    "slotType" : "midsize_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["midsize_flywheel","midsize_flywheel","Flywheel", {"coreSlot":true}],
+        ["midsize_differential_F","midsize_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.17, 0, 3.31, 1.83, 1.23, 0.97, 0.76],
+        "friction": 1.00,
+        "dynamicFriction": 0.00150,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["ta1"],
+
+        "gearWhineCoefsInput":  [1.50, 0.00, 2.00, 2.00, 2.00, 1.50, 1.75, 2.00, 2.00, 2.00],
+        "gearWhineCoefsOutput": [0.00, 0.00, 2.00, 2.00, 2.00, 2.00, 1.75, 2.00, 2.00, 2.00],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400,1300],
+        "lowShiftUpRPM":[0,0,3000,2600,2550,2400],
+        //"wheelSlipUpThreshold":120,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["midsize_transmission", ["midsize_engine","midsize_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--5 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"midsize_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.31, -1.34, 0.365],
+         ["tra1l", 0.31, -1.34, 0.365],
+         {"group":""},
+         ["ta1", 0, -1.34, 0.39],
+         //transmission mount node
+         ["em1l", 0.275, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l","e2r"],
+          ["tra1l","e4r"],
+          ["tra1l","e2l"],
+          ["tra1l","e4l"],
+          ["tra1r","e1r"],
+          ["tra1r","e3r"],
+          ["tra1r","e1l"],
+          ["tra1r","e3l"],
+          ["tra1r","tra1l"],
+          ["ta1","e1l"],
+          ["ta1","e2l"],
+          ["ta1","e4l"],
+          ["ta1","e3l"],
+          ["ta1","tra1l"],
+          ["ta1","tra1r"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"midsize_junk_transmission_5M_V6": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk V6 5-Speed MT",
+        "value":215,
+    },
+    "slotType" : "midsize_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["midsize_flywheel","midsize_flywheel","Flywheel", {"coreSlot":true}],
+        ["midsize_differential_F","midsize_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.17, 0, 3.31, 1.83, 1.31, 1.03, 0.84],
+        "friction": 1.5,
+        "dynamicFriction": 0.0025,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["ta1"],
+
+        "gearWhineCoefsInput":  [1.50, 0.00, 1.50, 1.75, 2.00, 0.12, 1.90, 2.00, 2.50, 2.00],
+        "gearWhineCoefsOutput": [0.00, 0.00, 1.50, 1.75, 2.00, 0.12, 1.90, 2.00, 2.50, 2.00],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400,1300],
+        "lowShiftUpRPM":[0,0,3000,2600,2550,2400],
+        //"wheelSlipUpThreshold":120,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["midsize_transmission", ["midsize_engine","midsize_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--5 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"midsize_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.31, -1.34, 0.365],
+         ["tra1l", 0.31, -1.34, 0.365],
+         {"group":""},
+         ["ta1", 0, -1.34, 0.39],
+         //transmission mount node
+         ["em1l", 0.275, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l","e2r"],
+          ["tra1l","e4r"],
+          ["tra1l","e2l"],
+          ["tra1l","e4l"],
+          ["tra1r","e1r"],
+          ["tra1r","e3r"],
+          ["tra1r","e1l"],
+          ["tra1r","e3l"],
+          ["tra1r","tra1l"],
+          ["ta1","e1l"],
+          ["ta1","e2l"],
+          ["ta1","e4l"],
+          ["ta1","e3l"],
+          ["ta1","tra1l"],
+          ["ta1","tra1r"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

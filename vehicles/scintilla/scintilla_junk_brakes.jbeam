@@ -1,0 +1,229 @@
+{
+"scintilla_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":250,
+    },
+    "slotType" : "scintilla_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_semi_race", "Front Brake Pads", {"coreSlot":true}],
+        ["scintilla_calipers_F","scintilla_calipers_F_red", "Front Brake Calipers", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["scintilla_brakedisc_F", ["wheel_FR","wheelhub_FR"],        [], {"pos":{"x":-0.84,"y":-1.3347, "z":0.3475}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+        ["scintilla_brakedisc_F", ["wheel_FL","wheelhub_FL"],        [], {"pos":{"x": 0.84,"y":-1.3347, "z":0.3475}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1550"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":120},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.36},
+        {"brakeMass":10.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.3},
+        {"absSlipRatioTarget":0.2},
+        //hub
+        //general settings
+        {"hubRadius":0.18},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"scintilla_junk_brake_F_carbon": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Carbon-Ceramic Front Disc Brakes",
+        "value":500,
+    },
+    "slotType" : "scintilla_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F_carbon","brakepad_F_carbon", "Front Brake Pads", {"coreSlot":true}],
+        ["scintilla_calipers_F","scintilla_calipers_F_yellow", "Front Brake Calipers", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["scintilla_brakedisc_F_carbon", ["wheel_FR","wheelhub_FR"],        [], {"pos":{"x":-0.84,"y":-1.3347, "z":0.3475}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+        ["scintilla_brakedisc_F_carbon", ["wheel_FL","wheelhub_FL"],        [], {"pos":{"x": 0.84,"y":-1.3347, "z":0.3475}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$brakebias", "range", "", "Brakes", 0.6, 0, 1, "Front/Rear Bias", "Percent of brake torque to the front wheels", {"minDis":0, "maxDis":100}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*2500*$brakebias"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":120},
+        {"padMaterial":"carbon-ceramic", "padGlazingSusceptibility":0.0},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.36},
+        {"brakeMass":4.25},
+        {"brakeType":"carbon-ceramic-vented-disc"},
+        {"rotorMaterial":"carbon-ceramic"},
+        {"brakeVentingCoef":0.6},
+        {"absSlipRatioTarget":0.18},
+
+        //hub
+        //general settings
+        {"hubRadius":0.18},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.6},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 6.5, "squealCoefLowSpeed": 6.5}
+    ],
+},
+"scintilla_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":250,
+    },
+    "slotType" : "scintilla_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_semi_race", "Rear Brake Pads", {"coreSlot":true}],
+        ["scintilla_calipers_R","scintilla_calipers_R_red", "Rear Brake Calipers", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["scintilla_brakedisc_R", ["wheel_RR","wheelhub_RR"],        [], {"pos":{"x":-0.84,"y":1.320, "z":0.3476}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+        ["scintilla_brakedisc_R", ["wheel_RL","wheelhub_RL"],        [], {"pos":{"x": 0.84,"y":1.320, "z":0.3476}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1000"},
+        {"brakeInputSplit":0.65},
+        {"brakeSplitCoef":0.45},
+        {"parkingTorque":2500},
+        {"brakeSpring":120},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.32},
+        {"brakeMass":7.25},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        {"absSlipRatioTarget":0.14},
+        //hub
+        //general settings
+        {"hubRadius":0.16},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 3.5, "squealCoefLowSpeed": 3.5}
+    ],
+},
+"scintilla_junk_brake_R_carbon": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Carbon-Ceramic Rear Disc Brakes",
+        "value":500,
+    },
+    "slotType" : "scintilla_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R_carbon","brakepad_R_carbon", "Rear Brake Pads", {"coreSlot":true}],
+        ["scintilla_calipers_R","scintilla_calipers_R_yellow", "Rear Brake Calipers", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["scintilla_brakedisc_R_carbon", ["wheel_RR","wheelhub_RR"],        [], {"pos":{"x":-0.84,"y":1.320, "z":0.3476}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+        ["scintilla_brakedisc_R_carbon", ["wheel_RL","wheelhub_RL"],        [], {"pos":{"x": 0.84,"y":1.320, "z":0.3476}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":180}}],
+
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakebias == nil and $brakestrength*2150 or $brakestrength*2000*(1-$brakebias)"},
+        {"brakeInputSplit":0.65},
+        {"brakeSplitCoef":0.45},
+        {"parkingTorque":2500},
+        {"brakeSpring":80},
+        {"padMaterial":"carbon-ceramic", "padGlazingSusceptibility":0.0},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.32},
+        {"brakeMass":3.2},
+        {"brakeType":"carbon-ceramic-vented-disc"},
+        {"rotorMaterial":"carbon-ceramic"},
+        {"brakeVentingCoef":0.5},
+        {"absSlipRatioTarget":0.14},
+        //hub
+        //general settings
+        {"hubRadius":0.18},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.6},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 5.0, "squealCoefLowSpeed": 5.0}
+    ],
+},
+}

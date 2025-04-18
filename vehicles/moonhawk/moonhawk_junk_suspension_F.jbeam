@@ -1,0 +1,598 @@
+{
+"moonhawk_junk_suspension_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Front Suspension",
+        "value":150,
+    },
+    "slotType" : "moonhawk_suspension_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_brake_F","moonhawk_brake_F", "Front Brakes"],
+        //The case() is for backwards compatibility for old configs that use "trackwidth_F" variable.
+        //To change the base track width, edit the trackoffset_F offset in the expression.
+        //nodeOffset is used to move the common wheel axle nodes to the right place
+        ["wheel_F_5","steelwheel_03a_15x7_F", "Front Wheels", {"nodeOffset":{"x":"$=case($trackwidth_F == nil, $trackoffset_F+0.29, $trackwidth_F)", "y":-1.43, "z":0.33}}],
+        ["moonhawk_wheeldata_F","moonhawk_wheeldata_F", "Front Spindles", {"coreSlot":true}],
+        ["moonhawk_spring_F","moonhawk_spring_F", "Front Springs"],
+        ["moonhawk_shock_F","moonhawk_shock_F", "Front Shocks"],
+        ["moonhawk_swaybar_F","moonhawk_swaybar_F", "Front Sway Bar"],
+        ["moonhawk_steering","moonhawk_steering", "Steering"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$camber_FR", "range", "", "Wheel Alignment", -3.550, 0.955, 1.045, "Camber Adjust", "Adjusts the wheel camber angle", {"subCategory":"Front"}],
+        ["$caster_FR", "range", "", "Wheel Alignment", -2.5, 0.985, 1.015, "Caster Adjust", "Adjust forward rake of the steering axis", {"subCategory":"Front"}],
+        ["$trackoffset_F", "range", "+m", "Wheels", 0.0, -0.02, 0.05, "Track Offset", "Spacing of the wheel from the hub", {"stepDis":0.001, "subCategory":"Front"}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_upperarm_F", ["moonhawk_uppermounts_a_F","moonhawk_uppermounts_b_F","moonhawk_upperarm_F"]],
+        ["moonhawk_lowerarm_F", ["moonhawk_lowermounts_a_F","moonhawk_lowermounts_b_F","moonhawk_lowerarm_F","moonhawk_shockbottom_F"]],
+        ["moonhawk_hub_FR", ["moonhawk_hub_FR"]],
+        ["moonhawk_hub_FL", ["moonhawk_hub_FL"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //front independent suspension
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeWeight":4.5},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"moonhawk_hub_FR"},
+         ["fw2r", -0.75, -1.28, 0.31],
+         {"group":"moonhawk_hub_FL"},
+         ["fw2l", 0.75, -1.28, 0.31],
+         //front hub
+         //this is the steering axis
+         {"nodeWeight":6.75},
+         {"group":["moonhawk_hub_FR", "moonhawk_lowerarm_F"]},
+         {"selfCollision":true},
+         ["fh1r", -0.705, -1.445, 0.20],
+         {"group":["moonhawk_hub_FL", "moonhawk_lowerarm_F"]},
+         ["fh1l", 0.705, -1.445, 0.20],
+         {"selfCollision":false},
+         {"nodeWeight":6.25},
+         {"group":["moonhawk_hub_FR", "moonhawk_upperarm_F"]},
+         ["fh2r", -0.665, -1.425, 0.51],
+         {"group":["moonhawk_hub_FL", "moonhawk_upperarm_F"]},
+         ["fh2l", 0.665, -1.425, 0.51],
+         {"selfCollision":false},
+         //tie rod goes here
+         {"nodeWeight":5.75},
+         //drift steering relocates fh3*
+         {"group":["moonhawk_hub_FR", "moonhawk_tierod_FR"]},
+         ["fh3r", -0.73, -1.58, 0.237],
+         {"group":["moonhawk_hub_FL", "moonhawk_tierod_FL"]},
+         ["fh3l", 0.73, -1.58, 0.237],
+         {"collision":true},
+         {"nodeWeight":8},
+         //bottom of shock
+         {"group":["moonhawk_hub_FR", "moonhawk_shockbottom_F","moonhawk_swaybar_F"]},
+         ["fh4r", -0.50, -1.39, 0.22],
+         {"group":["moonhawk_hub_FL", "moonhawk_shockbottom_F","moonhawk_swaybar_F"]},
+         ["fh4l", 0.50, -1.39, 0.22],
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":2.5},
+         {"collision":true},
+         //extra hub rigidification node + flexbody help
+         {"nodeWeight":2.5},
+         {"group":["moonhawk_hub_FR", "moonhawk_tierod_FR"]},
+         ["fh5r", -0.75, -1.58, 0.48],
+         {"group":["moonhawk_hub_FL", "moonhawk_tierod_FL"]},
+         ["fh5l", 0.75, -1.58, 0.48],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //rigidify steering arm
+        {"spring":250000, "damp":0.5, "deform":25000, "strength":100000},
+        ["fw1rr", "fh2r", "fh1r", "fh3r"],
+        ["fw1ll", "fh2l", "fh1l", "fh3l"],
+        //rigidify lower shock mount
+        {"spring":2200000, "damp":0, "deform":75000, "strength":150000},
+        ["fh4r", "fx1r", "fx2r", "fh1r"],
+        ["fh4l", "fx1l", "fx2l", "fh1l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //double wishbone suspension
+          {"breakGroup":""},
+          {"breakGroupType":0},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":81795,"beamStrength":456330},
+          {"beamSpring":8501000,"beamDamp":125},
+          {"deformLimitExpansion":1.2},
+          //front hub
+          ["fh1r","fh2r"],
+          ["fh1l","fh2l"],
+          ["fh1r","fh3r"],
+          ["fh1l","fh3l"],
+          ["fh2r","fh3r"],
+          ["fh2l","fh3l"],
+
+          ["fh1r","fw2r"],
+          ["fh2r","fw2r"],
+          ["fh3r","fw2r"],
+          ["fh1l","fw2l"],
+          ["fh2l","fw2l"],
+          ["fh3l","fw2l"],
+
+          {"beamSpring":3501000,"beamDamp":25},
+          ["fh1r","fh5r"],
+          ["fh1l","fh5l"],
+          ["fh2r","fh5r"],
+          ["fh2l","fh5l"],
+          ["fh3r","fh5r"],
+          ["fh3l","fh5l"],
+          ["fw2r","fh5r"],
+          ["fw2l","fh5l"],
+
+          {"deformLimitExpansion":""},
+          //attach to wheel
+          {"beamSpring":9001000,"beamDamp":125},
+          {"optional":true},
+          {"beamDeform":65600,"beamStrength":201000},
+          {"breakGroup":"wheel_FR"},
+          ["fh1r","fw1r", {"name":"axle_FR"}],
+          ["fh2r","fw1r"],
+          ["fh3r","fw1r", {"beamSpring":12001000,"beamDamp":50}],
+          ["fh1r","fw1rr"],
+          ["fh2r","fw1rr"],
+          ["fh3r","fw1rr", {"beamSpring":12001000,"beamDamp":50}],
+          ["fw1r","fh5r", {"beamSpring":3501000,"beamDamp":25}],
+          ["fw1rr","fh5r", {"beamSpring":3501000,"beamDamp":25}],
+          ["fw2r","fw1r"],
+          ["fw2r","fw1rr"],
+          {"breakGroup":"wheel_FL"},
+          ["fh1l","fw1l", {"name":"axle_FL"}],
+          ["fh2l","fw1l"],
+          ["fh3l","fw1l", {"beamSpring":12001000,"beamDamp":50}],
+          ["fh1l","fw1ll"],
+          ["fh2l","fw1ll"],
+          ["fh3l","fw1ll", {"beamSpring":12001000,"beamDamp":50}],
+          ["fw1l","fh5l", {"beamSpring":3501000,"beamDamp":25}],
+          ["fw1ll","fh5l", {"beamSpring":3501000,"beamDamp":25}],
+          ["fw2l","fw1l"],
+          ["fw2l","fw1ll"],
+          {"breakGroup":""},
+          {"optional":false},
+
+          //lower arm
+          {"beamDeform":74620,"beamStrength":225500},
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":5000000,"beamDamp":2000},
+          ["fx1r","fh1r", {"dampCutoffHz":500}],
+          ["fx1l","fh1l", {"dampCutoffHz":500}],
+          //affect compliance steer
+          {"deformLimitExpansion":""},
+          {"beamSpring":15001000,"beamDamp":2000},
+          ["fx2r","fh1r", {"beamPrecompression":"$caster_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          ["fx2l","fh1l", {"beamPrecompression":"$caster_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          //lower spring perch
+          {"beamSpring":4001000,"beamDamp":150},
+          ["fh1r","fh4r"],
+          ["fh1l","fh4l"],
+          ["fx2r","fh4r"],
+          ["fx2l","fh4l"],
+          ["fx1r","fh4r"],
+          ["fx1l","fh4l"],
+
+          //anti shake fore aft
+          {"beamSpring":0},
+          {"optional":true},
+          ["fw1rr","f11rr", {"breakGroup":"wheel_FR","beamDampVelocitySplit":0.1,"beamDampFast":500,"beamDampReboundFast":500,"beamDamp":150,"beamDampRebound":150}],
+          ["fw1ll","f11ll", {"breakGroup":"wheel_FL","beamDampVelocitySplit":0.1,"beamDampFast":500,"beamDampReboundFast":500,"beamDamp":150,"beamDampRebound":150}],
+          ["fw1r","f11rr", {"breakGroup":"wheel_FR","beamDampVelocitySplit":0.1,"beamDampFast":500,"beamDampReboundFast":500,"beamDamp":150,"beamDampRebound":150}],
+          ["fw1l","f11ll", {"breakGroup":"wheel_FL","beamDampVelocitySplit":0.1,"beamDampFast":500,"beamDampReboundFast":500,"beamDamp":150,"beamDampRebound":150}],
+          {"optional":false},
+
+          //upper arm
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":3500000,"beamDamp":2000},
+          {"beamDeform":64780,"beamStrength":184500},
+          ["fh2r","fx3r", {"beamPrecompression":"$camber_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          ["fh2l","fx3l", {"beamPrecompression":"$camber_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          {"beamSpring":13001000,"beamDamp":2000},
+          ["fh2r","fx4r", {"beamPrecompression":"$camber_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          ["fh2l","fx4l", {"beamPrecompression":"$camber_FR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+
+          //front limiters
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":0.7, "beamType":"|SUPPORT", "beamLongBound":4},
+          {"beamDeform":52348.8,"beamStrength":360882},
+          {"beamSpring":1501000,"beamDamp":150},
+          {"beamLongBound":2},
+          //firewall
+          {"breakGroupType":1},
+          {"optional":true},
+          {"breakGroup":"wheel_FR"},
+          ["fw1r","b1rr"],
+          ["fw1r","b1r"],
+          ["fw1r","b11r"],
+          {"breakGroup":"wheel_FL"},
+          ["fw1l","b1ll"],
+          ["fw1l","b1l"],
+          ["fw1l","b11l"],
+          {"beamPrecompression":0.65, "beamType":"|SUPPORT"},
+          {"breakGroup":"wheel_FR"},
+          ["fw1rr","b11rr"],
+          ["fw1rr","b1rr", {"beamPrecompression":0.55}],
+          ["fw1rr","b1r"],
+          {"breakGroup":"wheel_FL"},
+          ["fw1ll","b11ll"],
+          ["fw1ll","b1ll", {"beamPrecompression":0.55}],
+          ["fw1ll","b1l"],
+          {"breakGroupType":0},
+          {"breakGroup":""},
+          {"optional":false},
+
+          //compression last resort
+          {"beamPrecompression":0.8, "beamType":"|SUPPORT"},
+          ["fh4r","fs1r"],
+          ["fh4l","fs1l"],
+          ["fh1r","fs1r"],
+          ["fh1l","fs1l"],
+
+          //steering anti invert
+          {"beamPrecompression":0.72, "beamType":"|SUPPORT"},
+          {"beamSpring":2501000,"beamDamp":150},
+          {"beamDeform":70000,"beamStrength":360000},
+          {"beamLongBound":2},
+          ["fw2r","fx1r"],
+          ["fw2l","fx1l"],
+          {"beamPrecompression":0.74},
+          ["fw2r","f26rr"],
+          ["fw2l","f26ll"],
+          {"beamPrecompression":0.72},
+          ["fw2r","fx2r"],
+          ["fw2l","fx2l"],
+
+          {"beamPrecompression":0.83},
+          ["fh3r","fx1r"],
+          ["fh3l","fx1l"],
+          {"beamPrecompression":0.87},
+          ["fh3r","fx2r"],
+          ["fh3l","fx2l"],
+
+          //upper arm anti invert
+          {"beamPrecompression":0.75},
+          ["fh2r","fx1r"],
+          ["fh2l","fx1l"],
+          ["fh2r","fx2r"],
+          ["fh2l","fx2l"],
+
+          //hard travel limit
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":18000,"beamStrength":180000},
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":1001000,"beamLimitDamp":500},
+          //a little more to fx3 because of different angles
+          ["fh1r","fx3r", {"longBoundRange":0.08,"shortBoundRange":0.075,"boundZone":0.015,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1l","fx3l", {"longBoundRange":0.08,"shortBoundRange":0.075,"boundZone":0.015,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1r","fx4r", {"longBoundRange":0.07,"shortBoundRange":0.06,"boundZone":0.015,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["fh1l","fx4l", {"longBoundRange":0.07,"shortBoundRange":0.06,"boundZone":0.015,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //suspension shape
+            {"triangleType":"NONCOLLIDABLE"},
+            ["fx1r", "fh1r", "fh4r"],
+            ["fx2r", "fx1r", "fh4r"],
+            ["fh1r", "fx2r", "fh4r"],
+            ["fh2r", "fx3r", "fx4r"],
+            ["fh5r", "fh2r", "fw2r"],
+            ["fh3r", "fh5r", "fw2r"],
+            ["fh1r", "fh3r", "fw2r"],
+
+            ["fh1l", "fx1l", "fh4l"],
+            ["fx1l", "fx2l", "fh4l"],
+            ["fx2l", "fh1l", "fh4l"],
+            ["fx3l", "fh2l", "fx4l"],
+            ["fh2l", "fh5l", "fw2l"],
+            ["fh5l", "fh3l", "fw2l"],
+            ["fh3l", "fh1l", "fw2l"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            //cancel out brake properties
+            {"brakeTorque":0},
+            {"parkingTorque":0},
+            {"enableBrakeThermals":false},
+            {"brakeDiameter":false},
+            {"brakeMass":false},
+            {"brakeType":false},
+            {"rotorMaterial":false},
+            {"brakeVentingCoef":false},
+    ],
+},
+"moonhawk_junk_spring_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Front Springs",
+        "value":25,
+    },
+    "slotType" : "moonhawk_spring_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_spring_F", ["moonhawk_shockbottom_F","moonhawk_shocktop_F","moonhawk_lowermounts_b_F","moonhawk_lowerarm_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front springs
+          {"beamPrecompression":1, "beamType":"|NORMAL"},
+          {"beamDeform":12300,"beamStrength":123000},
+          {"beamSpring":63000,"beamDamp":0},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["fh4r","fs1r", {"precompressionRange":0.120,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":10,"volumeFactor":3.5,"decayFactor":45,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":2300}],
+          ["fh4l","fs1l", {"precompressionRange":0.120,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.5,"attackFactor":10,"volumeFactor":2.7,"decayFactor":30,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":2300}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"moonhawk_junk_shock_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Front Shocks",
+        "value":20,
+    },
+    "slotType" : "moonhawk_shock_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_shock_F", ["moonhawk_shockbottom_F","moonhawk_shocktop_F","moonhawk_lowermounts_b_F","moonhawk_lowerarm_F"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //front dampers
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":22400,"beamStrength":144000},
+          {"beamSpring":20,"beamDamp":5800},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          ["fh4r","fs1r", {"beamDampFast":30,"beamDampRebound":30,"beamDampReboundFast":30,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          ["fh4l","fs1l", {"beamDampFast":30,"beamDampRebound":30,"beamDampReboundFast":30,"beamDampVelocitySplit":0.15,"dampCutoffHz":500}],
+          //hard bumpstop
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":251000,"beamLimitDamp":5000},
+          ["fh1r","fs1r", {"longBoundRange":0.065,"shortBoundRange":0.05,"boundZone":0.04,"beamLimitDampRebound":1000,"dampCutoffHz":500}],
+          ["fh1l","fs1l", {"longBoundRange":0.065,"shortBoundRange":0.05,"boundZone":0.04,"beamLimitDampRebound":1000,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"moonhawk_junk_swaybar_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Sway Bar",
+        "value":5,
+    },
+    "slotType" : "moonhawk_swaybar_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_swaybar_F", ["moonhawk_swaybar_F"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //anti-roll
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":""},
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeWeight":1.6},
+         //front anti-roll
+         ["arbfr", -0.50, -1.40, 0.31],
+         ["arbfl", 0.50, -1.40, 0.31],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //20mm 1722
+        //22mm 2521
+        //24mm 3571
+        //26mm 4919
+        {"spring":2521, "damp":10, "deform":10000, "strength":9999999},
+        ["arbfr", "f26rr", "f26ll", "arbfl"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--ANTI-ROLL--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":10,"beamDamp":100},
+          {"beamDeform":15000,"beamStrength":10},
+          //end links
+          ["arbfr","fh4r"],
+          ["arbfl","fh4l"],
+          //rigids
+          ["arbfr","f26rr"],
+          ["arbfl","f26ll"],
+          ["arbfr","f26ll"],
+          ["arbfl","f26rr"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"moonhawk_junk_steering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Steering",
+        "value":30,
+    },
+    "slotType" : "moonhawk_steering",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_steeringbox","moonhawk_steeringbox", "Steering Box"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_tierod_FL", ["moonhawk_tierod_FL"]],
+        ["moonhawk_tierod_FR", ["moonhawk_tierod_FR"]],
+        ["moonhawk_tierod_M",  ["moonhawk_tierod_M"]],
+        ["moonhawk_idler", ["moonhawk_idler"]],
+        ["moonhawk_pitman", ["moonhawk_pitman"]],
+        ["moonhawk_idlerbracket", ["moonhawk_idlerbracket","moonhawk_frame"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //front parallelogram steering
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         {"group":""},
+         {"nodeWeight":6},
+         ["st3r", -0.22,-1.53, 0.28, {"group":"moonhawk_tierod_FR"}],
+         ["st3l",  0.22,-1.53, 0.28, {"group":"moonhawk_tierod_FL"}],
+         ["st3rr",-0.31,-1.53, 0.28, {"group":["moonhawk_idler",  "moonhawk_tierod_M"]}],
+         ["st3ll", 0.31,-1.53, 0.28, {"group":["moonhawk_pitman", "moonhawk_tierod_M"]}],
+         ["st5r", -0.31,-1.65, 0.25, {"group":["moonhawk_idler",  "moonhawk_idlerbracket"]}],
+         ["st5l",  0.31,-1.65, 0.25, {"group":["moonhawk_pitman", "moonhawk_steeringbox"]}],
+         ["st6r", -0.31,-1.70, 0.42, {"group":["moonhawk_idler",  "moonhawk_idlerbracket", "moonhawk_tierod_M"]}],
+         ["st6l",  0.31,-1.70, 0.42, {"group":["moonhawk_pitman", "moonhawk_steeringbox",  "moonhawk_tierod_M"]}],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$toe_FR", "range", "", "Wheel Alignment", -2.550, 1.02, 0.98, "Toe Adjust", "Adjusts the wheel toe-in angle", {"subCategory":"Front"}],
+        ["$steer_center_F", "range", "", "Wheel Alignment", 0, -0.002, 0.002, "Steering L/R Trim", "Fine tunes the centerpoint of the steering", {"subCategory":"Front"}]
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FRONT PARALLELOGRAM STEERING
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":18001000,"beamDamp":125},
+          {"beamDeform":65000,"beamStrength":275000},
+          //tie rod
+          ["fh3l","st3l", {"beamPrecompression":"$=$toe_FR-$steer_center_F","beamPrecompressionTime":0.5}],
+          ["fh3r","st3r", {"beamPrecompression":"$=$toe_FR+$steer_center_F","beamPrecompressionTime":0.5}],
+          //steering bar
+          {"beamDeform":75000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":18001000,"beamDamp":125},
+          ["st3ll","st3l"],
+          ["st3rr","st3r"],
+
+          {"beamSpring":4001000,"beamDamp":125},
+          ["st3r","st3l"],
+
+          //steering linkage
+          {"beamSpring":8001000,"beamDamp":125},
+          {"beamDeform":34440,"beamStrength":"FLT_MAX"},
+          ["st3rr","st5r"],
+          ["st3rr","st6r"],
+          ["st5r", "st6r"],
+
+          ["st3ll","st5l"],
+          ["st3ll","st6l"],
+          ["st5l", "st6l"],
+
+          //attach to frame
+
+          //attach to subframe
+          {"beamSpring":4001000,"beamDamp":150},
+          {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+          //r
+
+          ["st6r", "fx3r"],
+          ["st5r", "fx3r"],
+          ["st5r", "fx1r"],
+          ["st6r", "fx1r"],
+          ["st5r", "fx2r"],
+          ["st6r", "fx2r"],
+          //l
+          {"beamSpring":4001000,"beamDamp":150},
+          ["st6l", "fx3l"],
+          ["st5l", "fx3l"],
+          ["st5l", "fx1l"],
+          ["st6l", "fx1l"],
+          ["st5l", "fx2l"],
+          ["st6l", "fx2l"],
+
+          {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":4001000,"beamDamp":150},
+          ["st5l", "fx1r"],
+          ["st6l", "fx1r"],
+          ["st5l", "fx3r"],
+          ["st6l", "fx3r"],
+          ["st5r", "fx1l"],
+          ["st6r", "fx1l"],
+          ["st5r", "fx3l"],
+          ["st6r", "fx3l"],
+
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":2001000,"beamDamp":150},
+          ["st5l", "f26ll"],
+          ["st6l", "f26ll"],
+          ["st5r", "f26rr"],
+          ["st6r", "f26rr"],
+
+          //steering damper
+          {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":18040"beamStrength":27060},
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          {"beamDamp":150},
+          ["fh3r","fx2r", {"beamDampVelocitySplit":0.1,"beamDampFast":1500,"dampCutoffHz":750}],
+          ["fh3l","fx2l", {"beamDampVelocitySplit":0.1,"beamDampFast":1500,"dampCutoffHz":750}],
+          ["fw2r","fx1r", {"beamDampVelocitySplit":0.1,"beamDampFast":1500,"dampCutoffHz":750}],
+          ["fw2l","fx1l", {"beamDampVelocitySplit":0.1,"beamDampFast":1500,"dampCutoffHz":750}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"triangleType":"NONCOLLIDABLE"},
+            ["st5r", "st6r", "st3rr"],
+            ["st5r", "st3r", "st3rr"],
+
+            ["st6l", "st5l", "st3ll"],
+            ["st3l", "st5l", "st3ll"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+    "rails": {
+        "steering_bar":{"links:":["st3rr", "st3ll"], "broken:":[], "looped":false, "capped":true},
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["st3r", "steering_bar", true, true, 0.0, 40000, "FLT_MAX", "FLT_MAX"],
+        ["st3l", "steering_bar", true, true, 0.0, 40000, "FLT_MAX", "FLT_MAX"],
+    ],
+},
+"moonhawk_junk_steeringbox": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Steering Box",
+        "value":45,
+    },
+    "slotType" : "moonhawk_steeringbox",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_power_steering","", "Power Steering"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_steeringbox", ["moonhawk_swaymounts_F","moonhawk_steeringbox"]],
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":350000, "damp":5, "deform":"FLT_MAX", "strength":40000},
+        ["st3ll","st5l","st6l","fx4l", {"factor":-0.67,"steeringWheelLock":570,"inRate":5,"outRate":5,"inputSource":"steering_input"}],
+        ["st3rr","st5r","st6r","fx4r", {"factor":-0.67,"steeringWheelLock":570,"inRate":5,"outRate":5,"inputSource":"steering_input"}],
+    ],
+    "input": {
+        "FFBcoef":"$=$ffbstrength*16",
+    },
+},
+"moonhawk_junk_power_steering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Power Steering Pump",
+        "value":20,
+    },
+    "slotType" : "moonhawk_power_steering",
+    "controller": [
+        ["fileName"],
+        ["powerSteering", {"strengthFast":0, "strengthSlow": 0.1, "speedSlow": 1, "speedFast": 3, "constantOffset":-0.05}],
+    ],
+},
+}

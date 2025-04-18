@@ -7,10 +7,10 @@
     "rarity":1,
     "worth":0.5,
     "generationChance":0.3,
-    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "duplicationChance":[1,0.8,0.4],
     "offerDuration":360,
     "weight":[1,2,3,4,5],
-    "modChance":{"aid":1}
+    "modChance":{"post":1, "precious":0.25},
   },
   "mediumPostParcel": {
     "names":["Medium Post Parcel"],
@@ -20,10 +20,10 @@
     "rarity":1,
     "worth":0.7,
     "generationChance":0.25,
-    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "duplicationChance":[1,0.6,0.3],
     "offerDuration":360,
     "weight":[8,10,12],
-    "modChance":{"aid":1}
+    "modChance":{"post":1, "precious":0.25},
   },
   "bigPostParcel": {
     "names":["Big Post Parcel"],
@@ -33,10 +33,11 @@
     "rarity":2,
     "worth":0.9,
     "generationChance":0.2,
-    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "duplicationChance":[1,0.2],
     "offerDuration":360,
     "weight":[10,15,20],
-    "modChance":{"supplies":1}
+    "modChance":{},
+    "modChance":{"post":1, "precious":0.25},
   },
   "specialPostParcel": {
     "names":["Special Post Parcel"],
@@ -49,7 +50,8 @@
     "duplicationChance":[1],
     "offerDuration":360,
     "weight":[4,6,8,10],
-    "modChance":{"aid":1}
+    "modChance":{},
+    "modChance":{"post":1, "precious":0.5},
   },
   "smallOfficeWares": {
     "names":["Office Wares","Office Supplies","Box of Documents"],
@@ -62,7 +64,7 @@
     "duplicationChance":[1,0.8,0.4],
     "offerDuration":360,
     "weight":[5,10,15],
-    "modChance":{"aid":1}
+    "modChance":{"supplies":1},
   },
   "medOfficeWares": {
     "names":["Office Computers","Office Furniture"],
@@ -72,10 +74,10 @@
     "rarity":1.5,
     "worth":0.9,
     "generationChance":0.25,
-    "duplicationChance":[1,1,0.6,0.3,0.2,0.1],
+    "duplicationChance":[1],
     "offerDuration":180,
     "weight":[12,15,18],
-    "modChance":{"aid":1}
+    "modChance":{"supplies":1},
   },
   "bigOfficeWares": {
     "names":["Cubicle Set","Industrial Shredder"],
@@ -88,7 +90,7 @@
     "duplicationChance":[1],
     "offerDuration":360,
     "weight":[50,60,70],
-    "modChance":{"supplies":1}
+    "modChance":{"supplies":1},
   },
   "drivingSimulator": {
     "names":["Driving Simulator"],
@@ -97,11 +99,11 @@
     "cargoType":"parcel",
     "rarity":3,
     "worth":1.3,
-    "generationChance":0.2,
-    "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8],    
+    "generationChance":0.02,
+    "duplicationChance":[0,0,1  ],
     "offerDuration":360,
-    "weight":[400,600],
-    "modChance":{"large":1, "precious":1}
+    "weight":[150,300],
+    "modChance":{"timed":0.0, "large":1, "precious":1},
   },
   "smallShopSupplies": {
     "names":["Shop Supplies","Shop Stock","Commercial Wares"],
@@ -114,7 +116,7 @@
     "duplicationChance":[1,1,1,0.8,0.4],
     "offerDuration":360,
     "weight":[6,9,12],
-    "modChance":{"aid":1}
+    "modChance":{"supplies":1},
   },
   "medShopSupplies": {
     "names":["Shop Decoration","Advertisements","Cash Register"],
@@ -127,7 +129,7 @@
     "duplicationChance":[1,0.8],
     "offerDuration":180,
     "weight":[15,17,19],
-    "modChance":{"supplies":1}
+    "modChance":{"supplies":1},
   },
   "medFragileShopSupplies": {
     "names":["Glassware","Neon Signs"],
@@ -140,7 +142,8 @@
     "duplicationChance":[1,0.8],
     "offerDuration":180,
     "weight":[30,35,41],
-    "modChance":{"supplies":1}
+    "modChance":{},
+    "modChance":{"supplies":1},
   },
   "bigShopSupplies": {
     "names":["Shop Furniture","Shop Supplies Crate"],
@@ -153,7 +156,8 @@
     "duplicationChance":[1,0.8],
     "offerDuration":180,
     "weight":[25,30,35],
-    "modChance":{"supplies":1}
+    "modChance":{},
+    "modChance":{"supplies":1},
   },
   "bigIndustrialGoods": {
     "names":["Industrial Goods","Industrial Wares","Industrial Pallet","Industrial Box"],
@@ -162,10 +166,11 @@
     "cargoType":"parcel",
     "rarity":1,
     "worth":0.8,
-    "generationChance":0.9,
-    "duplicationChance":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.4],
+    "generationChance":0.4,
+    "duplicationChance":[0,0,1,0,0,0,0.75,0,0,0,0.5],
     "offerDuration":360,
-    "weight":[400,500,600,800,1000],
-    "modChance":{"large":0.1}
-  }
+    "weight":[100,125,150,175,200,225,250,275,300,400,500,800],
+    "modChance":{"timed":0.2},
+  },
+
 }

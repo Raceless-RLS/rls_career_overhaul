@@ -1,0 +1,80 @@
+{
+"bolide_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":50,
+    },
+    "slotType" : "bolide_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["bolide_radiator", ["bolide_radiator"]],
+         ["bolide_radsupport", ["bolide_radiator", "bolide_subframe_F"]],
+         ["bolide_radiator_hose_F", ["bolide_radiator", "bolide_subframe_F"]],
+         ["bolide_radiator_fan_shroud", ["bolide_radiator"]],
+         ["bolide_airduct_F", ["bolide_subframe_F"]],
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        ["radiatorFanSpin"  , "bolide_radiator_fan_R", "rad1r","rad1l","fx1r",  {"x":9, "y":0, "z":180}, {"x":0, "y":0.25, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["radiatorFanSpin"  , "bolide_radiator_fan_L", "rad1l","rad1r","fx1l",  {"x":9, "y":0, "z":0},   {"x":0, "y":0.25, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1]
+    ],
+    "mainEngine":{
+        "radiatorArea":0.35,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":3,
+        "radiatorFanType":"electric",
+        "radiatorFanTemperature":120,
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":110,
+        "radiatorFanLoopEvent": "event:>Vehicle>Cooling Fan>Electric_05",
+        "radiatorFanVolume": 3.9,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"bolide_radiator"},
+         {"engineGroup":"radiator"},
+         {"nodeWeight":4.0},
+
+         {"chemEnergy":200,"burnRate":0.4,"flashPoint":250,"specHeat":0.8,"smokePoint":150,"selfIgnitionCoef":false},
+         ["rad1r",-0.291,-1.579,0.574],
+         ["rad1l",0.291,-1.579,0.574],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1500000,"beamDamp":150},
+          {"beamDeform":3500,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.03},
+          //radiator
+          {"deformLimitExpansion":""},
+          ["rad1r", "rad1l"],
+          ["rad1r", "fx1r"],
+          ["rad1l", "fx1l"],
+          ["fx1l", "rad1r"],
+          ["rad1l", "fx1r"],
+          ["rad1r", "fx3r"],
+          ["rad1l", "fx3l"],
+          ["rad1l", "fx9l"],
+          ["rad1r", "fx9r"],
+          ["rad1r", "fx9l"],
+          ["rad1l", "fx9r"],
+          ["rad1r", "fx3l"],
+          ["rad1l", "fx3r"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

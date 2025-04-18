@@ -1,0 +1,136 @@
+{
+"legran_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "legran_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_FR","wheelhub_FR"],     [], {"pos":{"x":-0.72, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":1.0, "z":1.0}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_hub_5l",                 ["wheel_FL","wheelhub_FL"],     [], {"pos":{"x" :0.72, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":1.0, "z":1.0}, "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_plain",             ["wheel_FR","wheelhub_FR"],     [], {"pos":{"x":-0.73, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":0.9, "z":0.9}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_disc_plain",             ["wheel_FL","wheelhub_FL"],     [], {"pos":{"x": 0.73, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":0.9, "z":0.9}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["legran_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.73, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":0.8, "z":0.8}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["legran_hub_F","wheelhub_FL"], [], {"pos":{"x": 0.73, "y":-1.34, "z":0.26}, "scale":{"x":0.9, "y":0.8, "z":0.8}, "rot":{"x":0,   "y":180, "z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*900"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.25},
+        {"brakeMass":6.4},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //abs
+        {"absSlipRatioTarget":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"legran_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":10,
+    },
+    "slotType" : "legran_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake drums
+        ["legran_brakedrum_RR", ["wheel_RR","wheelhub_RR"], [],{"scale":{"x":0.99,"y":1,"z":1}}],
+        ["legran_brakedrum_RL", ["wheel_RL","wheelhub_RL"], [],{"scale":{"x":0.99,"y":1,"z":1}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*300"},
+        {"brakeInputSplit":0.6},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":500},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.23},
+        {"brakeMass":4.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //abs
+        {"absSlipRatioTarget":0.15},
+        //brake sounds
+        {"squealCoefNatural": 3.5, "squealCoefLowSpeed": 3.5}
+    ],
+},
+"legran_junk_brake_R_disc": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "legran_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_RR","wheelhub_RR"],                       [], {"pos":{"x":-0.71, "y":1.33, "z":0.24}, "scale":{"x":0.8, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_hub_5l",                 ["wheel_RL","wheelhub_RL"],                       [], {"pos":{"x": 0.71, "y":1.33, "z":0.24}, "scale":{"x":0.8, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_plain",             ["wheel_RR","wheelhub_RR"],                       [], {"pos":{"x":-0.72, "y":1.33, "z":0.24}, "scale":{"x":1.0, "y":0.82, "z":0.82}, "rot":{"x":0,   "y":0,   "z":0  }}],
+        ["brake_disc_plain",             ["wheel_RL","wheelhub_RL"],                       [], {"pos":{"x": 0.72, "y":1.33, "z":0.24}, "scale":{"x":1.0, "y":0.82, "z":0.82}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["legran_axle_R", "legran_hub_R", "wheelhub_RR"], [], {"pos":{"x":-0.72, "y":1.33, "z":0.24}, "scale":{"x":1.0, "y":0.72, "z":0.72}, "rot":{"x":180, "y":0,   "z":0  }}],
+        ["brake_caliper_standard_plain", ["legran_axle_R", "legran_hub_R", "wheelhub_RL"], [], {"pos":{"x": 0.72, "y":1.33, "z":0.24}, "scale":{"x":1.0, "y":0.72, "z":0.72}, "rot":{"x":180, "y":180, "z":0  }}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*350"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":700},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.23},
+        {"brakeMass":4.0},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"legran_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":30,
+    },
+    "slotType":"legran_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+    ],
+},
+}

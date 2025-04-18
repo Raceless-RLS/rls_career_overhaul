@@ -1,0 +1,178 @@
+{
+"scintilla_junk_rearglass_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Hardtop Rear Glass",
+        "value":0,
+    },
+    "slotType" : "scintilla_rearglass_hardtop",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"rearglass_break", "deformMaterialBase":"scintilla_glass", "deformMaterialDamaged":"scintilla_glass_dmg"},
+        ["scintilla_rear_glass_hardtop", ["scintilla_body","scintilla_chassis"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+        {"deformGroup":"rearglass_break", "deformMaterialBase":"scintilla_glass_int", "deformMaterialDamaged":"scintilla_glass_dmg"},
+        //["scintilla_rear_glass_hardtop_int", ["scintilla_body","scintilla_chassis"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //roof
+         {"nodeWeight":2.5},
+         {"group":["scintilla_body","scintilla_roof"]}
+         ["rf4rr",-0.42,0.526,1.085],
+         ["rf4",0.0,0.551,1.12],
+         ["rf4ll",0.42,0.526,1.085],
+
+         //rear firewall
+         {"nodeWeight":3.5},
+         {"group":"scintilla_chassis"}
+         ["f10",0.0,0.526,0.85],
+         {"group":""}
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //rear window
+          {"deformLimitExpansion":""},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"backlight", "deformGroup":"rearglass_break","deformationTriggerRatio":0.05},
+          {"beamSpring":832500,"beamDamp":45},
+          {"beamDeform":13000,"beamStrength":10},
+          {"optional":true}
+          ["f10", "rf4"],
+          ["f10l", "rf4rr"],
+          ["f10r", "rf4ll"],
+          {"optional":false}
+          {"breakGroup":"", "deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"scintilla_junk_doorglass_R_hardtop": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Hardtop Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "scintilla_doorglass_R_hardtop",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"scintilla_glass", "deformMaterialDamaged":"scintilla_glass_dmg"},
+         ["scintilla_door_window_hardtop_R", ["scintilla_windowframe_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"scintilla_glass_int", "deformMaterialDamaged":"scintilla_glass_dmg"},
+         //["scintilla_door_window_hardtop_R_int", ["scintilla_door_R", "scintilla_windowframe_R"]],
+         {"deformGroup":""},
+    ],
+    "doorRCoupler":{
+        "$+openForceMagnitude": 20,
+        "$+closeForceMagnitude":-20,
+    }
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--RIGHT DOOR--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"scintilla_windowframe_R"},
+         {"nodeWeight":2.5},
+
+         //window frame
+         {"group":"scintilla_windowframe_R"},
+         ["d10r",-0.649,-0.599,0.957],
+         ["d11r",-0.544,-0.367,1.1],
+         ["d12r",-0.484,-0.024,1.128],
+         ["d13r",-0.451,0.319,1.101],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1101000,"beamDamp":80},
+          {"beamDeform":8000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"doorglass_R", "deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.005},
+          {"deformLimitExpansion":""},
+          ["d9r", "d11r"],
+          ["d13r", "d7r"],
+          ["d10r", "d9r"],
+          ["d8r", "d11r"],
+          ["d12r", "d8r"],
+          ["d12r", "d7r"],
+          {"breakGroup":"", "deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"scintilla_junk_doorglass_L_hardtop": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Hardtop Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "scintilla_doorglass_L_hardtop",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"scintilla_glass", "deformMaterialDamaged":"scintilla_glass_dmg"},
+         ["scintilla_door_window_hardtop_L", ["scintilla_windowframe_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"scintilla_glass_int", "deformMaterialDamaged":"scintilla_glass_dmg"},
+         //["scintilla_door_window_hardtop_L_int", ["scintilla_door_L", "scintilla_windowframe_L"]],
+         {"deformGroup":""},
+    ],
+     "doorLCoupler":{
+        "$+openForceMagnitude": 20,
+        "$+closeForceMagnitude":-20,
+    }
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--LEFT DOOR--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.5},
+
+         //window frame
+         {"group":"scintilla_windowframe_L"},
+         ["d10l",0.649,-0.599,0.957],
+         ["d11l",0.544,-0.367,1.1],
+         ["d12l",0.484,-0.024,1.128],
+         ["d13l",0.451,0.319,1.101],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1101000,"beamDamp":80},
+          {"beamDeform":8000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"doorglass_L", "deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.005},
+          {"deformLimitExpansion":""},
+          ["d9l", "d11l"],
+          ["d13l", "d7l"],
+          ["d10l", "d9l"],
+          ["d8l", "d11l"],
+          ["d12l", "d8l"],
+          ["d12l", "d7l"],
+          {"breakGroup":"", "deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+}

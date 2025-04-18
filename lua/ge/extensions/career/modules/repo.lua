@@ -58,7 +58,7 @@ end
 -- Destroy the current job and clean up resources
 function VehicleRepoJob:destroy()
     if self.vehicleId then
-        local vehicle = be:getObjectByID(self.vehicleId)
+        local vehicle = getObjectByID(self.vehicleId)
         if vehicle then
             vehicle:delete()
         end
@@ -268,8 +268,8 @@ end
 
 -- Handle vehicle switch events
 function VehicleRepoJob:onVehicleSwitched(oldId, newId)
-    if core_vehicles.getVehicleLicenseText(be:getObjectByID(newId)) == "repo" then
-        self.repoVehicle = be:getObjectByID(newId)
+    if core_vehicles.getVehicleLicenseText(getObjectByID(newId)) == "repo" then
+        self.repoVehicle = getObjectByID(newId)
         self.repoVehicleID = newId
         if not self.isJobStarted then
             self:destroy()
@@ -313,7 +313,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
 
     if self.isCompleted then
             local playerPos = be:getPlayerVehicle(0):getPosition()
-            local vehicle = be:getObjectByID(self.vehicleId)
+            local vehicle = getObjectByID(self.vehicleId)
             local vehiclePos = vehicle:getPosition()
 
             if (playerPos - vehiclePos):length() >= 15 then
@@ -340,7 +340,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 
     local playerPos = playerVehicle:getPosition()
-    local vehicle = be:getObjectByID(self.vehicleId)
+    local vehicle = getObjectByID(self.vehicleId)
     if not vehicle then
         return
     end
@@ -348,11 +348,11 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     local vehiclePos = vehicle:getPosition()
     local repoPos
     local distance
-    if not be:getObjectByID(self.repoVehicleID) then
+    if not getObjectByID(self.repoVehicleID) then
         self.repoVehicleID = nil
         self.repoVehicle = nil
         if self.vehicleId then
-            local vehicle = be:getObjectByID(self.vehicleId)
+            local vehicle = getObjectByID(self.vehicleId)
             if vehicle then
                 vehicle:delete()
             end
@@ -465,7 +465,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             self.isMonitoring = false
             
             -- Add safety check for vehicle
-            local vehicle = be:getObjectByID(self.vehicleId)
+            local vehicle = getObjectByID(self.vehicleId)
             if vehicle then
                 core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
             end
@@ -473,7 +473,7 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
         else
-            if core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos then
+            if self.deliveryLocation.pos ~= nil and (not core_groundMarkers.getTargetPos() or core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos) then
                 core_groundMarkers.setPath(self.deliveryLocation.pos)
             end
         end

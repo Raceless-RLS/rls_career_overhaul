@@ -62,6 +62,7 @@ M.formatPoiForBigmap = function(poi)
     label = '',
     quickTravelAvailable = bmi.quickTravelPosRotFunction and qtEnabled or false,
     quickTravelUnlocked = bmi.quickTravelPosRotFunction and qtEnabled or false,
+    canSetRoute = bmi.pos,
   }
 end
 
@@ -102,6 +103,7 @@ M.formatMissionForBigmap = function(elemData)
       --rating = {type = 'done'}, -- show done
       --rating = {type = 'new'}, -- show new
       ]]
+      canSetRoute = true,
     }
     ret.formattedProgress =  gameplay_missions_progress.formatSaveDataForUi(elemData.missionId)
     ret.leaderboardKey = mission.defaultLeaderboardKey or 'recent'
@@ -115,9 +117,17 @@ M.formatMissionForBigmap = function(elemData)
   return nil
 end
 
+local function getBranchIcons()
+  local icons = {money = 'beamCurrency', beamXP = 'beamXP', vouchers = 'voucherHorizontal3'}
+  for _, branch in ipairs(career_branches.getSortedBranches()) do
+    icons[branch.id] = branch.icon
+  end
+  return icons
+end
+
 local noBranch = "branch_noBranch"
 M.sendCurrentLevelMissionsToBigmap = function()
-  local data = {poiData = {}, levelData = {}}
+  local data = {poiData = {}, levelData = {}, branchIcons = getBranchIcons()}
   local level = getCurrentLevelIdentifier()
   local missionData = {}
   local playerPos = core_camera.getPosition()
@@ -135,17 +145,19 @@ M.sendCurrentLevelMissionsToBigmap = function()
     rating_done = {label = "Rating: Done"},
     type_mission = {label = "Mission"},
     type_driftSpots = {label = "Drift Spots"},
+    type_dragstrip = {label = "Dragstrips"},
     type_spawnPoint = {label = "Quicktravel Points"},
     type_garage = {label = "Garages"},
     type_gasStation = {label = "Gas Stations"},
     type_dealership = {label = "Dealerships"},
+    type_playerVehicle = {label = "Player Vehicles"},
     type_events = {label = "Free-Roam Events"}, -- Create a type for sections
     type_travel = {label = "Travel Points"},
     type_assignRole = {label = "Role Assignment"},
     type_other = {label = "Other"},
 
-    delivery_facility = {label = "Delivery Facility"},
-    delivery_dropoff = {label = "Delivery Dropoff"},
+    delivery_facility = {label = "Logistics: Delivery Facility"},
+    delivery_dropoff = {label = "Logistics: Delivery Dropoff"},
 
     distance_veryClose = {label = "Distance: Very Close"},
     distance_close = {label = "Distance: Close"},
@@ -155,8 +167,9 @@ M.sendCurrentLevelMissionsToBigmap = function()
   }
 
   for _, branch in ipairs(career_branches.getSortedBranches()) do
-    if not branch.isSkill then
-      groupData["branch_"..branch.id] = {label = {txt = "ui.career.branchSemicolon", context={branch=branch.name}}}
+    if branch and not branch.isDomain then
+      local domain = career_branches.getBranchById(branch.parentDomain)
+      groupData["branch_"..branch.id] = {label = {txt = "ui.career.domainSlashBranch", context={domain=domain.name, branch=branch.name}}}
     end
   end
   groupData[noBranch] = {label = "Branchless Missions"}
@@ -211,12 +224,20 @@ M.sendCurrentLevelMissionsToBigmap = function()
         filterData.sortingValues['depth'] = mission.unlocks.depth
 
         -- branch data
-        for branchKey, _ in pairs(mission.unlocks.branchTags) do
-          filterData.groupTags['branch_'..branchKey] = true
+        --for branchKey, _ in pairs(mission.unlocks.branchTags) do
+        --  filterData.groupTags['branch_'..branchKey] = true
+        --end
+        --if not next(mission.unlocks.branchTags) then
+        --  filterData.groupTags[noBranch] = true
+        --end
+
+        if career_career.isActive() and mission.careerSetup.skill then
+          local skill = career_branches.getBranchById(mission.careerSetup.skill)
+          if skill then
+            filterData.groupTags['branch_'..skill.id] = true
+          end
         end
-        if not next(mission.unlocks.branchTags) then
-          filterData.groupTags[noBranch] = true
-        end
+
         filterData.sortingValues['maxBranchTier'] = mission.unlocks.maxBranchlevel
         filterData.groupTags['maxBranchTier_'..mission.unlocks.maxBranchlevel] = true
         groupData['maxBranchTier_'..mission.unlocks.maxBranchlevel] = {label = 'Tier ' .. mission.unlocks.maxBranchlevel, elements = {}}
@@ -269,6 +290,12 @@ M.sendCurrentLevelMissionsToBigmap = function()
       elseif poi.data.type == "driftSpot" then
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['type_driftSpots'] = true
+      elseif poi.data.type == "dragstrip" then
+        data.poiData[poi.id] = M.formatPoiForBigmap(poi)
+        filterData.groupTags['type_dragstrip'] = true
+      elseif poi.data.type == "playerVehicle" then
+        data.poiData[poi.id] = M.formatPoiForBigmap(poi)
+        filterData.groupTags['type_playerVehicle'] = true
       else -- other
         data.poiData[poi.id] = M.formatPoiForBigmap(poi)
         filterData.groupTags['type_other'] = true
@@ -294,119 +321,103 @@ M.sendCurrentLevelMissionsToBigmap = function()
     table.sort(elementsAsPois,gameplay_missions_unlocks.depthIdSort)
     for i, poi in ipairs(elementsAsPois) do gr.elements[i] = elementsAsPois[i].id end
   end
+
+
+
   -- build premade filters
-
-  local filterQuickTravel = {
-    key = 'quickTravelPoints',
-    icon = 'mission_system_fast_travel',
-    groups = {
-      groupData['type_spawnPoint']
-    }
-  }
-
-  local filterGarages = {
-    key = 'garages',
-    icon = 'mission_system_fast_travel',
-    groups = {
-      groupData['type_garage']
-    }
-  }
-
-  local filterDefault = {
-    key = 'default',
-    icon = 'flag',
+  local filterFreeroamPois = {
+    key = 'freeroamPois',
+    icon = 'mapPoint',
     groups = {
       groupData['type_spawnPoint'],
       groupData['type_gasStation'],
       groupData['type_driftSpots'],
+      groupData['type_dragstrip'],
       groupData['type_other'],
     }
   }
-  for _, groupKey in ipairs(tableKeysSorted(groupData)) do
-    if string.startswith(groupKey,'missionGroup_') then
-      table.insert(filterDefault.groups, groupData[groupKey])
-    end
-  end
-
-  local filterMissionType = {
-    key = 'missionTypes',
-    icon = 'mission_system_cup',
+  local filterCareerPois = {
+    key = 'careerPois',
+    icon = 'mapPoint',
+    groups = {
+      groupData['type_playerVehicle'],
+      groupData['type_dealership'],
+      groupData['type_garage'],
+      groupData['type_gasStation'],
+      groupData['type_dragstrip'],
+      groupData['type_events'], -- Added types here for sections
+      groupData['type_travel'],
+      groupData['type_assignRole'],
+      groupData['type_other'],
+    }
+  }
+  local filterMissionsByType = {
+    key = 'missionsByType',
+    icon = 'flag',
     groups = {},
   }
   for _, groupKey in ipairs(tableKeysSorted(groupData)) do
     if string.startswith(groupKey,'missionType_') then
-      table.insert(filterMissionType.groups, groupData[groupKey])
-      table.insert(filterDefault.groups, groupData[groupKey])
+      table.insert(filterMissionsByType.groups, groupData[groupKey])
     end
   end
 
 
-  local filterRating = {
-    key = 'missionTypes',
-    icon = 'mission_system_flag_new',
-    groups = {},
-  }
-  for _, grName in ipairs({'new', 'attempts', 'locked', 'done'}) do
-    table.insert(filterRating.groups, groupData['rating_'..grName])
-  end
-
-
-  local filterBranchTag = {
-    key = 'branchTag',
-    icon = 'flag',
-    groups = {
-      groupData['type_spawnPoint'],
-      groupData['type_garage'],
-      groupData['type_gasStation'],
-      groupData['type_dealership'],
-      groupData['type_driftSpots'],
-      groupData['type_other'],
-      groupData['type_events'], -- Added types here for sections
-      groupData['type_travel'],
-      groupData['type_assignRole'],
-    }
-  }
-  table.insert(filterBranchTag.groups, groupData[noBranch])
   local branchOrdered = career_branches.orderBranchNamesKeysByBranchOrder()
-  for _, grName in ipairs(branchOrdered) do
-    if groupData['branch_'..grName] then
-      table.insert(filterBranchTag.groups, groupData['branch_'..grName])
-      if grName == "labourer" then
-        table.insert(filterBranchTag.groups, groupData["delivery_facility"])
-      end
-    end
-  end
-
-  local filterGarageAndQT = {
-    key = 'garageAndQT',
-    icon = 'mission_system_fast_travel',
-    groups = {
-      groupData['type_spawnPoint'],
-      groupData['type_garage'],
-      groupData['type_gasStation'],
-    }
-  }
-
-  local filterBranchIndividuals = {}
-  for _, grName in ipairs(branchOrdered) do
-    if groupData["branch_"..grName] then
-      filterBranchIndividuals[grName] =
-      {
-        key = 'branchTag',
-        icon = 'flag',
-        branchIcon = grName,
-        groups = {groupData['branch_'..grName]}
+  local domainFilters = {}
+  for _, domainId in ipairs(branchOrdered) do
+    local domain = career_branches.getBranchById(domainId)
+    if domain.isDomain then
+      local hasContent = false
+      local filter = {
+        key = 'domain_'..domainId,
+        icon = domain.icon,
+        groups = {}
       }
+      if domain.id == "logistics" then
+        table.insert(filter.groups, groupData['delivery_dropoff'])
+        table.insert(filter.groups, groupData['delivery_facility'])
+        hasContent = true
+      end
 
-      if grName == "labourer" then
-        table.insert(filterBranchIndividuals[grName].groups, 1, groupData["delivery_facility"])
+      if domain.id == "apm" then
+        data.poiData["apmChallengeInfo"] = {
+          id = "apmChallengeInfo",
+          type = "apmChallengeInfo",
+          name = "APM Challenges",
+          description = "APM Challenges and progress can be found in the Career Paths Menu.",
+          thumbnailFile = domain.thumbnail,
+          previewFiles = {domain.progressCover},
+        }
+        table.insert(filter.groups, {
+          label = "APM Challenges",
+          elements = { "apmChallengeInfo" }
+        })
+        hasContent = true
+      end
+
+      for _, branchId in ipairs(branchOrdered) do
+        local branch = career_branches.getBranchById(branchId)
+        if branch.parentDomain == domainId then
+          if groupData['branch_'..branchId] and next(groupData['branch_'..branchId].elements) then
+            table.insert(filter.groups, groupData['branch_'..branchId])
+            hasContent = true
+          end
+          if branch.id == "bmra-drift" then
+            table.insert(filter.groups, groupData['type_driftSpots'])
+            hasContent = true
+          end
+        end
+      end
+      if hasContent then
+        table.insert(domainFilters, filter)
       end
     end
   end
 
   local filterDelivery = {
     key = 'delivery',
-    icon = 'route',
+    icon = 'boxTruckFast',
     groups = {
       groupData['delivery_dropoff']
     }
@@ -416,6 +427,13 @@ M.sendCurrentLevelMissionsToBigmap = function()
     if string.lower(lvl.levelName) == getCurrentLevelIdentifier() then
       data.levelData = lvl
     end
+  end
+  data.gameMode = "freeroam"
+  if career_career and career_career.isActive() then
+    data.gameMode = "career"
+  end
+  if gameplay_missions_missionManager.getForegroundMissionId() then
+    data.gameMode = "mission"
   end
 
 
@@ -434,9 +452,9 @@ M.sendCurrentLevelMissionsToBigmap = function()
       canSetRoute = not career_modules_testDrive.isActive()
     }
 
-    data.filterData = {filterBranchTag,  filterGarageAndQT}
+    data.filterData = {filterCareerPois}
 
-    for _, grName in ipairs(branchOrdered) do table.insert(data.filterData, filterBranchIndividuals[grName]) end
+    for _, filter in ipairs(domainFilters) do table.insert(data.filterData, filter) end
     --table.insert(data.filterData, allGroupsFilter)
 
     if career_modules_delivery_general.isDeliveryModeActive() then
@@ -444,7 +462,7 @@ M.sendCurrentLevelMissionsToBigmap = function()
       table.insert(data.filterData, filterDelivery)
     end
   else
-    data.filterData = {filterDefault, filterGarageAndQT, filterMissionType, filterRating}
+    data.filterData = {filterMissionsByType, filterFreeroamPois}
 
     data.rules = {
       canSetRoute = true

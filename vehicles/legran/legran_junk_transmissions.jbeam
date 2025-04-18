@@ -1,0 +1,386 @@
+{
+"legran_junk_transmission_3A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed AT",
+        "value":250,
+    },
+    "slotType" : "legran_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["legran_converter","legran_converter","Torque Converter", {"coreSlot":true}],
+        ["legran_transfer_case","legran_transfer_case_FWD", "Transfer Case"],
+        ["legran_differential_F","legran_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.38, 0, 2.92, 1.56, 1.00],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":35,
+        "friction":1.75,
+        "dynamicFriction":0.0080,
+        "torqueLossCoef": 0.030,
+        "gearboxNode:":["tra1l"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":3.5,
+        "gearboxDecisionSmoothingUp":3.5,
+        "gearboxDecisionSmoothingDown":3.5,
+        "lowShiftDownRPM":1100,
+        "lowShiftUpRPM":4000,
+        //"highShiftDownRPM":3100,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["legran_transmission", ["legran_engine","legran_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"legran_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.26, -1.31, 0.29],
+         ["tra1l", 0.26, -1.31, 0.29],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.42, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"legran_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed AT",
+        "value":350,
+    },
+    "slotType" : "legran_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["legran_converter","legran_converter_locking","Torque Converter", {"coreSlot":true}],
+        ["legran_transfer_case","legran_transfer_case_FWD", "Transfer Case"],
+        ["legran_differential_F","legran_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.38, 0, 2.92, 1.56, 1.00, 0.7],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":35,
+        "friction":1.70,
+        "dynamicFriction":0.0050,
+        "torqueLossCoef": 0.045,
+        "gearboxNode:":["tra1l"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":2.5,
+        "gearboxDecisionSmoothingUp":2.5,
+        "gearboxDecisionSmoothingDown":2.5,
+        "lowShiftDownRPM":1100,
+        "lowShiftUpRPM":4500,
+        //"highShiftDownRPM":3300,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["legran_transmission", ["legran_engine","legran_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"legran_transmission"},
+         {"nodeWeight":14},
+         ["tra1r",-0.26, -1.31, 0.29],
+         ["tra1l", 0.26, -1.31, 0.29],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.42, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"legran_junk_transmission_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed MT",
+        "value":150,
+    },
+    "slotType" : "legran_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["legran_flywheel","legran_flywheel","Flywheel", {"coreSlot":true}],
+        ["legran_transfer_case","legran_transfer_case_FWD", "Transfer Case"],
+        ["legran_differential_F","legran_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.15, 0, 3.25, 1.72, 1.30, 1.00],
+        "friction":1.70,
+        "dynamicFriction":0.0050,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1l"],
+
+        "gearWhineCoefsInput":  [2.00, 2.00, 0.12, 2.50, 0.12, 3.00, 0.12, 1.50, 1.00, 1.50],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.12, 2.50, 0.12, 3.00, 0.12, 1.50, 1.00, 1.50],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400],
+        "lowShiftUpRPM":[0,0,2800,2500,2400],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["legran_transmission", ["legran_engine","legran_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"legran_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.26, -1.31, 0.29],
+         ["tra1l", 0.26, -1.31, 0.29],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.42, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"legran_junk_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed MT",
+        "value":200,
+    },
+    "slotType" : "legran_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["legran_flywheel","legran_flywheel","Flywheel", {"coreSlot":true}],
+        ["legran_transfer_case","legran_transfer_case_FWD", "Transfer Case"],
+        ["legran_differential_F","legran_differential_F", "Front Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.41, 0, 3.50, 2.05, 1.38, 0.94, 0.72],
+        "friction":1.00,
+        "dynamicFriction":0.0010,
+        "torqueLossCoef": 0.0100,
+        "gearboxNode:":["tra1l"],
+
+        "gearWhineCoefsInput":  [3.60, 0.00, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12],
+        "gearWhineCoefsOutput": [0.00, 0.00, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12, 3.12],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400,1300],
+        "lowShiftUpRPM":[0,0,3000,2600,2550,2400],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["legran_transmission", ["legran_engine","legran_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--5 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"legran_transmission"},
+         {"nodeWeight":12},
+         ["tra1r",-0.26, -1.31, 0.29],
+         ["tra1l", 0.26, -1.31, 0.29],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.42, -1.55, 0.5, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

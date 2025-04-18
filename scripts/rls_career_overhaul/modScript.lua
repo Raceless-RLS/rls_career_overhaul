@@ -43,31 +43,25 @@ local function loadExtensions()
     extensions.load("gameplay_phone")
     setExtensionUnloadMode("gameplay_phone", "manual")
 
-    if extensions.isExtensionLoaded("careerMaps") then
-        extensions.unload("careerMaps")
-    end
-    extensions.load("careerMaps")
-    setExtensionUnloadMode("careerMaps", "manual")
-
     if extensions.isExtensionLoaded("freeroam_facilities") then
         extensions.unload("freeroam_facilities")
     end
     extensions.load("freeroam_facilities")
     setExtensionUnloadMode("freeroam_facilities", "manual")
-    
-    if extensions.isExtensionLoaded("freeroam_bigMapPoiProvider") then
-        extensions.unload("freeroam_bigMapPoiProvider")
-    end
-    extensions.load("freeroam_bigMapPoiProvider")
-    setExtensionUnloadMode("freeroam_bigMapPoiProvider", "manual")
-
-    if extensions.isExtensionLoaded("UIloader") then
-        extensions.unload("UIloader")
-    end
-    extensions.load("UIloader")
-    setExtensionUnloadMode("UIloader", "manual")
 end
+
+if extensions.isExtensionLoaded("careerMaps") then
+    extensions.unload("careerMaps")
+end
+extensions.load("careerMaps")
+setExtensionUnloadMode("careerMaps", "manual")
 
 if not core_gamestate.state or core_gamestate.state.state ~= "career" then
     loadExtensions()
 end
+
+if extensions.isExtensionLoaded("UIloader") then
+    extensions.unload("UIloader")
+end
+extensions.load("UIloader")
+setExtensionUnloadMode("UIloader", "manual")

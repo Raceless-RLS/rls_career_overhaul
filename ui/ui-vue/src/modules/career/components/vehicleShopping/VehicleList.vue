@@ -2,9 +2,7 @@
   <!--div class="vehicle-shop-wrapper"-->
   <BngCard class="vehicle-shop-wrapper" v-bng-blur bng-ui-scope="vehicleList">
     <div class="address-bar">
-      <BngButton v-bng-on-ui-nav:back,menu.asMouse @click="close" :accent="ACCENTS.attention">
-        <BngBinding ui-event="back" deviceMask="xinput" />Back
-      </BngButton>
+      <BngButton v-bng-on-ui-nav:back,menu.asMouse @click="close" :accent="ACCENTS.attention"><BngBinding ui-event="back" deviceMask="xinput" />Back</BngButton>
       <div class="spacer"></div>
       <div class="field">
         <BngInput 
@@ -49,7 +47,7 @@
       <div v-else>
         <Accordion class="dealer-groups" singular>
           <AccordionItem
-            v-for="dealer in vehicleShoppingStore.vehiclesByDealer"
+            v-for="dealer in sortedDealers"
             :key="dealer.id"
             :data-dealerid="dealer.id"
             navigable
@@ -153,10 +151,7 @@ const allFilteredVehicles = computed(() => {
 })
 
 // Fetch dealership data on component mount
-onMounted(async () => {
-  const currentLevel = await lua.getCurrentLevelIdentifier()
-  console.log("Current Level:", currentLevel)
-  
+onMounted(async () => {  
   const facilities = await lua.career_modules_vehicleShopping.getShoppingData()
   console.log("Facilities:", facilities)
   
@@ -230,6 +225,7 @@ const sortedDealers = computed(() => {
       border-radius: var(--bng-corners-1);
       background-color: var(--bng-cool-gray-900);
       // border: 0.0625rem solid var(--bng-cool-gray-600);
+      padding: 0.5rem 0.75rem;
       flex: 1 1 auto;
       text-overflow: ellipsis;
       color: white;

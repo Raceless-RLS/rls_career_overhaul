@@ -1,0 +1,294 @@
+{
+"pickup_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":25,
+    },
+    "slotType" : "pickup_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_premium", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_plain", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.18,"z":1.18}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_plain", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.18,"z":1.18}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["pickup_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.05,"z":1.05}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["pickup_hub_F","wheelhub_FL"], [], {"pos":{"x":0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.05,"z":1.05}, "rot":{"x":180,"y":180,"z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1600"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":155},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.330},
+        {"brakeMass":12.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+
+        //hub
+        //general settings
+        {"hubRadius":0.165},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"pickup_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "pickup_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_premium", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_solid", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":1.07,"z":1.07}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_solid", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x":0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":1.07,"z":1.07}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["pickup_axle_R","wheelhub_RR"], [], {"pos":{"x":-0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.96,"z":0.96}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["pickup_axle_R","wheelhub_RL"], [], {"pos":{"x":0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.96,"z":0.96}, "rot":{"x":0,"y":180,"z":0}}],
+        ["pickup_hub_R", ["wheelhub_RR", "wheelhub_RL", "pickup_axle_R", "pickup_rearshockbottom"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}, "scale":{"x":0.98,"y":1.0,"z":1.0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*800"},
+        {"brakeInputSplit":0.6},
+        {"brakeSplitCoef":0.1},
+        {"parkingTorque":250},
+        {"brakeSpring":150},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.300},
+        {"brakeMass":9},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+
+        //hub
+        //general settings
+        {"hubRadius":0.165},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"pickup_junk_brake_R_drum": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":10,
+    },
+    "slotType" : "pickup_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_premium", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["pickup_brakedrum_RR", ["wheel_RR","wheelhub_RR"], []],
+        ["pickup_brakedrum_RL", ["wheel_RL","wheelhub_RL"], []],
+        ["pickup_brakedrum_shield_R", ["pickup_axle_R"], []],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*800"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":1000},
+        {"brakeSpring":125},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.29},
+        {"brakeMass":11},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.0},
+
+        //hub
+        //general settings
+        {"hubRadius":0.165},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.08},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+
+        //brake sounds
+        {"squealCoefNatural": 3.0, "squealCoefLowSpeed": 3.0}
+    ],
+},
+"pickup_junk_brake_F_offroad": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Off-Road Front Disc Brakes",
+        "value":100,
+    },
+    "slotType" : "pickup_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_sport", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_slotted", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_slotted", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.0,"z":1.0}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_4pot_yellow_rotopad", ["pickup_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.0,"z":1.07}, "rot":{"x":-160,"y":0,"z":0}}],
+        ["brake_caliper_4pot_yellow_rotopad", ["pickup_hub_F","wheelhub_FL"], [], {"pos":{"x":0.78,"y":-1.463, "z":0.46}, "scale":{"x":1.3,"y":1.0,"z":1.07}, "rot":{"x":160,"y":180,"z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1500"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":100},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.330},
+        {"brakeMass":12.5},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+
+        //hub
+        //general settings
+        {"hubRadius":0.165},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 5.0, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"pickup_junk_brake_R_offroad": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Off-Road Rear Disc Brakes",
+        "value":75,
+    },
+    "slotType" : "pickup_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_sport", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_disc_slotted", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.92,"z":0.92}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_slotted", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x":0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.92,"z":0.92}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_yellow", ["pickup_axle_R","wheelhub_RR"], [], {"pos":{"x":-0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.96,"z":0.96}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_caliper_standard_yellow", ["pickup_axle_R","wheelhub_RL"], [], {"pos":{"x":0.78,"y":1.487, "z":0.4101}, "scale":{"x":1.3,"y":0.96,"z":0.96}, "rot":{"x":0,"y":180,"z":0}}],
+        ["pickup_hub_R", ["wheelhub_RR", "wheelhub_RL", "pickup_axle_R", "pickup_rearshockbottom"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}, "scale":{"x":0.98,"y":1.0,"z":1.0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1400"},
+        {"brakeInputSplit":0.65},
+        {"brakeSplitCoef":0.0},
+        {"parkingTorque":1500},
+        {"brakeSpring":100},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.300},
+        {"brakeMass":9},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+
+        //hub
+        //general settings
+        {"hubRadius":0.165},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"numRays":5},
+
+        //hub options
+        {"hubTreadBeamSpring":1128940, "hubTreadBeamDamp":5.64},
+        {"hubPeripheryBeamSpring":1128940, "hubPeripheryBeamDamp":5.64},
+        {"hubSideBeamSpring":2256940, "hubSideBeamDamp":5.64},
+        {"hubNodeWeight":0.7},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+        //brake sounds
+        {"squealCoefNatural": 3.5, "squealCoefLowSpeed": 3.5}
+    ],
+},
+"pickup_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":50,
+    },
+    "slotType":"pickup_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        //brake sounds
+        {"squealCoefNatural": 0.0, "squealCoefLowSpeed": 0.0}
+    ],
+},
+}

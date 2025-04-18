@@ -27,12 +27,12 @@ local function getWIPWarningLabel()
     local m = gameplay_missions_missions.getMissionById(gameplay_missions_missionManager.getForegroundMissionId())
     if m then
       if m.missionType == 'rallyStage' then
-        return "ui.rally.experimentalWarning"
+          return "ui.rally.experimentalWarning"
+        end
       end
     end
-  end
   if career_career.isActive() then
-    return "RLS Career Overhaul v2.2.4 Dev - WIP"
+    return "RLS Career Overhaul v2.3.0 - WIP"
   end
   return nil
 end

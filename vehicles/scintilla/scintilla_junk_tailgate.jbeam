@@ -1,0 +1,278 @@
+{
+"scintilla_junk_tailgate_hardtop": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Oopsi Hardtop Tailgate",
+        "value":250,
+    },
+    "slotType" : "scintilla_tailgate_hardtop",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["scintilla_trunklid_stock", ["scintilla_tailgate"]],
+         ["scintilla_trunklid_stock_grille", ["scintilla_tailgate"]],
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"scintilla_glass", "deformMaterialDamaged":"scintilla_glass_dmg"},
+         ["scintilla_trunklid_glass", ["scintilla_tailgate"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.8}],
+         {"deformGroup":""},
+         ["grp_latch", ["scintilla_body", "scintilla_chassis"], [], {"pos":{"x":0.85,"y":0.294,"z":0.5},"rot":{"x":99,"y":200,"z":20},"scale":{"x":0.8,"y":0.8,"z":0.8}}],
+         ["grp_latch_lever", ["scintilla_body", "scintilla_chassis"], [], {"pos":{"x":0.85,"y":0.294,"z":0.5},"rot":{"x":99,"y":200,"z":20},"scale":{"x":0.8,"y":0.8,"z":0.8}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"tailgateCoupler"}],
+        ["advancedCouplerControl", {"name":"tailgateCatch"}],
+    ]
+    "tailgateCoupler":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["rfs2",      "tg5",        40000,                     0.01,                   0.005,                      0.2,                 0.1,                   "tailgate_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["tg5"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>rearwindow_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>rearwindow_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0,
+        "closeForceMagnitude": 0,
+        "closeForceDuration": 0,
+    }
+    "tailgateCatch":{
+        "groupType": "autoCoupling",
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["tg6",      "tg4",        40000,                     0.01,                   0.005,                      0.2,                 0.1,                   "tailgate_latch"]
+        ]
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["tg4"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>rearwindow_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>rearwindow_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0,
+        "closeForceMagnitude": 1998,
+        "closeForceDuration": 0.1,
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["tailgate", "Engine Cover Release", "q3l","q7l","q1l", "box", {"x":0.06, "y":0.08, "z":0.107}, {"x":-6, "y":40, "z":10}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.098, "y":0.168, "z":-0.07}],
+        ["tailgateCatch", "", "tg3l","tg3r","tg2l", "box", {"x":0.08, "y":0.08, "z":0.08}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.125, "y":-0.08, "z":-0.035}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["tailgate", "action0", "tailgateLatch"],
+        ["tailgateCatch", "action0", "tailgateCatch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["tailgateLatch", "ui.inputActions.scintilla.tailgateLatch.title", "ui.inputActions.scintilla.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateCoupler').toggleGroup()"}],
+        ["tailgateCatch", "ui.inputActions.scintilla.tailgateLatch.title", "ui.inputActions.scintilla.tailgateLatch.description", {"onUp":"controller.getControllerSafe('tailgateCatch').toggleGroupConditional({{'tailgateCoupler','attached','vehicle.advancedCouplerControl.releaseHoodFirstInterior'}})"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.8},
+         {"nodeMaterial":"|NM_PLASTIC"},
+         //--TAILGATE--
+
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":0.4},
+         {"group":"scintilla_tailgate"},
+         ["tg1rr",-0.337,1.015,1.06],
+         ["tg1r",-0.162,0.894,1.083],
+         ["tg1l",0.162,0.894,1.083],
+         ["tg1ll",0.337,1.015,1.06],
+
+         ["tg2rr",-0.379,1.172,0.946],
+         ["tg2r",-0.281,1.266,1.002],
+         ["tg2l",0.281,1.266,1.002],
+         ["tg2ll",0.379,1.172,0.946],
+
+         ["tg3r",-0.176,1.693,0.904],
+         ["tg3l",0.176,1.693,0.904],
+         {"group":""},
+
+         //rigidifier
+         {"selfCollision":false, "collision":false},
+         ["tg4",0.0,1.266,0.795],
+         //latch
+         ["tg5",0.0,1.732,0.883],
+         ["tg6",0.0,1.266,0.795],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TAILGATE--
+
+          //tailgate main shape
+          {"beamSpring":601000,"beamDamp":40},
+          {"beamDeform":15000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          {"deformGroup":"tailgateglass_break", "deformationTriggerRatio":0.01}
+          ["tg1ll", "tg1l"],
+          ["tg1l", "tg1r"],
+          ["tg1r", "tg1rr"],
+          ["tg2ll", "tg1ll"],
+          ["tg2rr", "tg1rr"],
+          ["tg3r", "tg2rr"],
+          ["tg3l", "tg2ll"],
+          ["tg3l", "tg2l"],
+          ["tg1ll", "tg2l"],
+          ["tg3r", "tg2r"],
+          ["tg2r", "tg1rr"],
+          ["tg3l", "tg3r"],
+
+          //surf cross
+          {"deformLimitExpansion":""},
+          {"beamDeform":7200,"beamStrength":85440},
+          ["tg2ll", "tg2l"],
+          ["tg2rr", "tg2r"],
+          ["tg2r", "tg2l"],
+          ["tg2l", "tg3r"],
+          ["tg2r", "tg3l"],
+          ["tg2r", "tg1r"],
+          ["tg1l", "tg2l"],
+          ["tg2l", "tg1r"],
+          ["tg2r", "tg1l"],
+          ["tg1ll", "tg2r"],
+          ["tg1rr", "tg2l"],
+
+          //rigids
+          {"beamDeform":3720,"beamStrength":85440},
+          ["tg1ll", "tg1r"],
+          ["tg1rr", "tg1l"],
+          ["tg2ll", "tg2r"],
+          ["tg2rr", "tg2l"],
+          ["tg3l", "tg1ll"],
+          ["tg3r", "tg1rr"],
+
+          //rigidifier
+          {"beamDeform":3920,"beamStrength":85440},
+          ["tg4", "tg3l"],
+          ["tg4", "tg3r"],
+          ["tg4", "tg2ll"],
+          ["tg4", "tg2l"],
+          ["tg4", "tg2rr"],
+          ["tg4", "tg2r"],
+          ["tg4", "tg1ll"],
+          ["tg4", "tg1l"],
+          ["tg4", "tg1rr"],
+          ["tg4", "tg1r"],
+          {"deformGroup":""}
+
+          //hinge
+          {"beamSpring":501000,"beamDamp":20},
+          {"beamDeform":13440,"beamStrength":32040},
+          {"breakGroup":"tailgatehinge_R"},
+          ["tg1r", "rrf6"],
+          ["tg1r", "rrf6rr"],
+          ["tg1r", "rrf5rr"],
+          ["tg1r", "rrf5"],
+          ["tg1r", "tb1r"],
+          ["tg1r", "tb2r"],
+          ["tg1l", "tb1r"],
+          ["tg1l", "rrf5rr"],
+          {"breakGroup":"tailgatehinge_L"},
+          ["tg1l", "rrf6"],
+          ["tg1l", "rrf6ll"],
+          ["tg1l", "rrf5ll"],
+          ["tg1l", "rrf5"],
+          ["tg1l", "tb1l"],
+          ["tg1l", "tb2l"],
+          ["tg1r", "tb1l"],
+          ["tg1r", "rrf5ll"],
+
+          //latch node
+          {"beamSpring":51000,"beamDamp":250},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["tg5", "tg3l"],
+          ["tg5", "tg3r"],
+          ["tg5", "tg2l"],
+          ["tg5", "tg2r"],
+          ["tg5", "tg4"],
+          {"breakGroup":""},
+
+          //damping
+          {"beamDeform":33600,"beamStrength":106800},
+          {"beamSpring":0,"beamDamp":10},
+          ["tg3r", "tb4r", {"breakGroup":"tailgatehinge_R"}],
+          ["tg3l", "tb4l", {"breakGroup":"tailgatehinge_L"}],
+
+          //pop open
+          {"breakGroupType":1},
+          {"beamSpring":170,"beamDamp":250},
+          {"beamDeform":3915,"beamStrength":9000},
+          {"beamPrecompression":4.0},
+          ["tg2ll", "tb2l", {"breakGroup":"tailgatehinge_L", "beamPrecompressionTime":0.5}],
+          ["tg2rr", "tb2r", {"breakGroup":"tailgatehinge_R", "beamPrecompressionTime":0.5}],
+          {"breakGroup":""},
+          {"beamPrecompression":1},
+
+          //limiter
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.9, "beamShortBound":1},
+          {"beamSpring":0,"beamDamp":100,"beamDeform":3000,"beamStrength":30000},
+          {"beamLimitSpring":201000,"beamLimitDamp":500},
+          ["tg2l", "tb3l", {"breakGroup":"tailgatehinge_L"}],
+          ["tg2r", "tb3r", {"breakGroup":"tailgatehinge_R"}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"breakGroupType":0},
+
+          //catch
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":0,"beamDamp":100},
+          {"beamLimitSpring":12001000,"beamLimitDamp":20},
+          {"beamDeform":7000,"beamStrength":90000},
+          {"longBoundRange":0.02, "shortBoundRange":0.0},
+          {"beamPrecompression":1.005},
+          //["tg6", "rfs2"],
+          ["tg6", "rx8r"],
+          ["tg6", "rx8l"],
+          {"beamPrecompression":1.0},
+          {"longBoundRange":0.0, "shortBoundRange":0.0},
+          ["tg6", "tb3r"],
+          ["tg6", "tb3l"],
+          {"beamLimitSpring":101000,"beamLimitDamp":20},
+          ["tg6", "rqs5r"],
+          ["tg6", "rqs5l"],
+          {"longBoundRange":"", "shortBoundRange":""},
+
+          //support beams
+          {"beamType":"|SUPPORT","beamLongBound":4},
+          {"beamSpring":601000,"beamDamp":80},
+          {"beamDeform":6720,"beamStrength":178000},
+          ["tg1ll", "tb2l"],
+          ["tg1rr", "tb2r"],
+          ["tg2rr", "tb3r"],
+          ["tg3r", "tb4r"],
+          ["tg3l", "tb4l"],
+          ["tg2ll", "tb3l"],
+          {"beamLongBound":50},
+          ["tg2ll", "tb5l"],
+          ["tg3l", "tb6l"],
+          ["tg3r", "tb6r"],
+          ["tg1ll", "rrf6ll"],
+          ["tg1rr", "rrf6rr"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //tailgate
+            {"groundModel":"plastic"},
+            {"dragCoef":12},
+            {"group":"scintilla_tailgate"},
+            ["tg2ll", "tg2l", "tg1ll"],
+            ["tg2ll", "tg3l", "tg2l"],
+            ["tg2r", "tg2rr", "tg1rr"],
+            ["tg2r", "tg3r", "tg2rr"],
+            ["tg2r", "tg2l", "tg3l"],
+            ["tg3l", "tg3r", "tg2r"],
+            ["tg1r", "tg2r", "tg1rr"],
+            ["tg1l", "tg1ll", "tg2l"],
+            ["tg2l", "tg2r", "tg1r"],
+            ["tg1r", "tg1l", "tg2l"],
+            {"group":""},
+    ],
+},
+}

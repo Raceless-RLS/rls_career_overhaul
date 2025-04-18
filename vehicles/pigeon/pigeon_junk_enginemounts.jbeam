@@ -1,0 +1,75 @@
+{
+"pigeon_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":10,
+    },
+    "slotType" : "pigeon_enginemounts",
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":10, "beamDamp":10},
+          {"beamLimitSpring":10, "beamLimitDamp":10},
+          {"beamDeform":12000, "beamStrength":10},
+          {"dampCutoffHz":250},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "ecm1r"],
+          ["em1r", "ecm1l"],
+          ["em1r", "f3r"],
+          ["em1r", "f2r"],
+          ["em1r", "f2"],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "ecm1l"],
+          ["em1l", "ecm1r"],
+          ["em1l", "f3r"],
+          ["em1l", "f2r"],
+          ["em1l", "f2"],
+
+          //transmission mount
+          {"beamSpring":10, "beamDamp":10},
+          {"beamLimitSpring":10, "beamLimitDamp":10},
+          {"beamDeform":12000, "beamStrength":26000},
+          {"boundZone":0.01},
+
+          {"breakGroup":"transmissionmount"},
+          ["tra1", "f9"],
+          ["tra1", "f3"],
+          ["tra1", "f3r"],
+          ["tra1", "f9r"],
+          ["tra1", "f3l"],
+          ["tra1", "f9l"],
+          ["tra1", "f8l"],
+          ["tra1", "f8r"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":15000, "beamStrength":60000},
+          {"beamSpring":500, "beamDamp":250},
+          {"breakGroup":"enginemount_L"},
+          ["e3l", "f2l"],
+          ["e3l", "f3r"],
+          ["e3r", "f2r"],
+          ["e3r", "f3l"],
+          {"breakGroup":"enginemount_R"},
+          ["e4l", "f2r"],
+          ["e4l", "f3l"],
+          ["e4r", "f2l"],
+          ["e4r", "f3r"],
+          {"breakGroup":""},
+          {"dampCutoffHz":""},
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

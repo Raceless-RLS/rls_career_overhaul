@@ -1,0 +1,926 @@
+{
+"van_junk_windshield": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":20,
+    },
+    "slotType" : "van_windshield",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"windshield_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_windshield_dmg"},
+         ["van_windshield", ["van_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_int"},
+         ["van_windshield_int", ["van_windshield"]],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+         ["van_windshield_dmg", ["van_windshield"]],
+
+         {"deformGroup":""},
+         ["van_wipers", ["van_cab","van_body"]],
+         ["van_intmirror", ["van_cab","van_body","van_windshield"]],
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["van_intmirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.09,"y":-0.04,"z":-0.21},"baseRotationGlobal":{"x":5,"y":0,"z":19}}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.03
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":1.88},
+         {"group":["van_windshield","gps"]},
+         ["wi1", 0.0, -0.90, 1.72],
+
+         //roof
+         {"group":"van_body"},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":4.606},
+         //weight added by glass
+         ["rf1r", -0.80, -0.51, 2.00, {"tag":"roof_1r", "group":["van_body","van_windshield","gps"]}],
+         ["rf1", 0.0, -0.54, 2.06, {"tag":"roof_1", "group":["van_body","van_windshield","gps"]}],
+         ["rf1l", 0.80, -0.51, 2.00, {"tag":"roof_1l", "group":["van_body","van_windshield","gps"]}],
+
+         //a pillar
+         {"group":"van_body"},
+         {"nodeWeight":2.256},
+         //weight added by glass
+         ["p1r", -0.73, -0.84, 1.71, {"group":["van_body","van_windshield","gps"]}],
+         ["p1l", 0.73, -0.84, 1.71, {"group":["van_body","van_windshield","gps"]}],
+         ["p2r", -0.88, -0.81, 1.70, {"group":["van_body","van_windshield","gps"]}],
+         ["p2l", 0.88, -0.81, 1.70, {"group":["van_body","van_windshield","gps"]}],
+
+         //firewall
+         {"nodeWeight":5.264},
+         {"group":"van_body"},
+         //weight added by glass
+         ["b6rr", -0.92, -1.07, 1.35, {"group":["van_body","van_windshield","gps","van_snorkel"]}],
+         ["b6r", -0.37, -1.15, 1.37, {"group":["van_body","van_windshield","gps"]}],
+         ["b6l", 0.37, -1.15, 1.37, {"group":["van_body","van_windshield","gps"]}],
+         ["b6ll", 0.92, -1.07, 1.37, {"group":["van_body","van_windshield","gps"]}],
+         {"group":""},
+
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],{"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1895830,"beamDamp":244.4},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"windshield_break", "deformationTriggerRatio":0.04},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          //windshield
+          {"deformLimitExpansion":""},
+          ["wi1","rf1"],
+          ["p1r","wi1"],
+          ["p1l","wi1"],
+          ["wi1","b6r"],
+          ["wi1","b6l"],
+          ["wi1","rf2"],
+          ["rf1r","wi1"],
+          ["rf1l","wi1"],
+
+          ["wi1","b6rr"],
+          ["wi1","b6ll"],
+
+          {"beamDeform":7000,"beamStrength":10},
+          ["p1r","p1l"],
+          ["rf1r","b6r"],
+          ["rf1l","b6l"],
+
+          ["rf1","b6r"],
+          ["rf1","b6l"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_backlight": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "van_backlight",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"backlight_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_cabrearfaceglass", ["van_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound9", "deformVolume":0.0}],
+         {"deformGroup":"backlight_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_cabrearfaceglass_int", ["van_body"]],
+         {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //backlight
+
+         {"group":"van_body"},
+
+         //-ROOF--
+         {"nodeWeight":4.7},
+         ["rf2r", -0.80, 0.09, 2.04],
+         ["rf2", 0.0, 0.09, 2.09],
+         ["rf2l", 0.80, 0.09, 2.04],
+
+         //--PILLARS--
+         {"nodeWeight":4.7},
+         ["rp3r", -0.88, 0.07, 1.7],
+         ["rp3l", 0.88, 0.07, 1.7],
+
+         //--CAB--
+         {"nodeWeight":4.888},
+         ["rb8rr", -0.92, 0.09, 1.35],
+         ["rb8r", -0.35, 0.09, 1.35],
+         ["rb8l", 0.35, 0.09, 1.35],
+         ["rb8ll", 0.92, 0.09, 1.35],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //backlight
+          {"beamSpring":1895830,"beamDamp":122.2},
+          {"deformGroup":"backlight_break", "deformationTriggerRatio":0.03},
+          {"beamDeform":14700,"beamStrength":10},
+          {"breakGroup":"backlight"},
+          {"deformLimitExpansion":""},
+          ["rf2", "rb8l"],
+          ["rf2", "rb8r"],
+          ["rp3r", "rp3l"],
+          ["rb8l", "rf2r"],
+          ["rb8r", "rf2l"],
+          ["rb8ll", "rf2"],
+          ["rb8rr", "rf2"],
+          ["rp3l", "rf2r"],
+          ["rp3r", "rf2l"],
+          ["rp3l", "rb8rr"],
+          ["rp3r", "rb8ll"],
+          ["rf2l", "rb8rr"],
+          ["rb8ll", "rf2r"],
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_doorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_doorglass_FR", ["van_door_FR"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_FR_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_doorglass_FR_int", ["van_door_FR"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--DOOR--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"van_door_FR"},
+         {"nodeWeight":2.068},
+         ["d10r",-0.93, -0.79, 1.69],
+         ["d11r",-0.82, -0.51, 1.99],
+         ["d12r",-0.84, 0.05, 2.00],
+         ["d13r",-0.94, 0.05, 1.69],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1880940,"beamDamp":141},
+          {"beamDeform":9800,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_FR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_FR"},
+          {"deformLimitExpansion":""},
+          ["d11r","d8r"],
+          ["d12r","d8r"],
+          ["d10r","d13r"],
+          ["d10r","d9r"],
+          ["d13r","d7r"],
+          ["d9r","d11r"],
+          ["d7r","d11r"],
+          ["d9r","d12r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_doorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_doorglass_FL", ["van_door_FL"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_FL_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_doorglass_FL_int", ["van_door_FL"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--DOOR--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"van_door_FL"},
+         {"nodeWeight":2.068},
+         ["d10l", 0.93, -0.79, 1.69],
+         ["d11l", 0.82, -0.51, 1.99],
+         ["d12l", 0.84, 0.05, 2.00],
+         ["d13l", 0.94, 0.05, 1.69],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1880940,"beamDamp":141},
+          {"beamDeform":9800,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"doorglass_FL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_FL"},
+          {"deformLimitExpansion":""},
+          ["d11l","d8l"],
+          ["d12l","d8l"],
+          ["d10l","d13l"],
+          ["d10l","d9l"],
+          ["d13l","d7l"],
+          ["d9l","d11l"],
+          ["d7l","d11l"],
+          ["d9l","d12l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sidedoorglass_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Side Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_sidedoorglass_FR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sidedoorglass_FR_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_sidedoor_glass_b", ["van_sidedoor_FR"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sidedoorglass_FR_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_sidedoor_glass_b_int", ["van_sidedoor_FR"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"van_sidedoor_FR"},
+         {"nodeWeight":2.1},
+         ["d28r", -0.94, 0.09, 1.69],
+         ["d27r", -0.84, 0.09, 2.0],
+         ["d26r", -0.84, 0.46, 2.0],
+         ["d25r", -0.84, 0.83, 2.0],
+         ["d24r", -0.94, 0.83, 1.69],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1895830,"beamDamp":195.52},
+          {"beamDeform":9800,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sidedoorglass_FR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"sidedoorglass_FR_break"},
+          {"deformLimitExpansion":""},
+          ["d26r", "d16r"],
+          ["d24r", "d15r"],
+          ["d28r", "d17r"],
+          ["d15r", "d25r"],
+          ["d27r", "d17r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sidedoorglass_RR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Side Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_sidedoorglass_RR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sidedoorglass_RR_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_sidedoor_glass_a", ["van_sidedoor_RR"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sidedoorglass_RR_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_sidedoor_glass_a_int", ["van_sidedoor_RR"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"van_sidedoor_RR"},
+         {"nodeWeight":2.1},
+         ["d43r", -0.94, 0.85, 1.69],
+         ["d42r", -0.84, 0.85, 2.0],
+         ["d41r", -0.84, 1.14, 2.0],
+         ["d40r", -0.84, 1.43, 2.0],
+         ["d39r", -0.94, 1.43, 1.69],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1895830,"beamDamp":195.52},
+          {"beamDeform":9800,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sidedoorglass_RR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"sidedoorglass_RR_break"},
+          {"deformLimitExpansion":""},
+          ["d31r", "d41r"],
+          ["d39r", "d43r"],
+          ["d40r", "d30r"],
+          ["d32r", "d42r"],
+          ["d39r", "d30r"],
+          ["d43r", "d32r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_reardoorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Rear Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_reardoorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"reardoorglass_R_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_reardoorglass_R", ["van_reardoor_R"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+         {"deformGroup":"reardoorglass_R_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_reardoorglass_R_int", ["van_reardoor_R"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"van_reardoor_R"},
+         {"nodeWeight":1.927},
+         ["rd3r",-0.015, 3.15, 1.33],
+         ["rd3rr",-0.845, 3.15, 1.33],
+
+         ["rd4r",-0.015, 3.11, 1.67],
+         ["rd4rr",-0.78, 3.11, 1.67],
+         ["rd5r",-0.02, 3.00, 2.01],
+         ["rd5rr",-0.70, 3.00, 2.00],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"reardoorglass_R_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"reardoorglass_R"},
+          {"deformLimitExpansion":""},
+          ["rd5rr","rd4r"],
+          ["rd5r","rd4rr"],
+          ["rd4r","rd3rr"],
+          ["rd4rr","rd3r"],
+          ["rd3r","rd5r"],
+          ["rd3rr","rd5rr"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_reardoorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Rear Door Glass",
+        "value":0,
+    },
+    "slotType" : "van_reardoorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"reardoorglass_L_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_reardoorglass_L", ["van_reardoor_L"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"reardoorglass_L_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_reardoorglass_L_int", ["van_reardoor_L"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"van_reardoor_L"},
+         {"nodeWeight":1.927},
+         ["rd3l",0.015, 3.15, 1.33],
+         ["rd3ll",0.845, 3.15, 1.33],
+
+         ["rd4l",0.015, 3.11, 1.67],
+         ["rd4ll",0.78, 3.11, 1.67],
+         ["rd5l",0.02, 3.00, 2.01],
+         ["rd5ll",0.70, 3.00, 2.00],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"reardoorglass_L_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"reardoorglass_L"},
+          {"deformLimitExpansion":""},
+          ["rd5ll","rd4l"],
+          ["rd5l","rd4ll"],
+          ["rd4l","rd3ll"],
+          ["rd4ll","rd3l"],
+          ["rd3l","rd5l"],
+          ["rd3ll","rd5ll"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Left Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_FL_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_a_L", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_FL_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_a_L_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":4.5},
+         ["rf2l", 0.80, 0.09, 2.04, {"tag":"roof_2l"}],
+         ["rf3l", 0.80, 0.90, 2.04, {"tag":"roof_3l"}],
+
+         //b pillar
+         {"nodeWeight":2.5},
+         ["p7l",0.84, 0.14, 1.70],
+         ["p8l",0.84, 0.0, 1.70],
+
+         //c pillar
+         {"nodeWeight":2.0},
+         ["v8l", 0.92, 0.93, 1.70],
+
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_FL_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_FL"},
+          {"deformLimitExpansion":""},
+          ["p7l", "v8l"],
+          ["rf2l", "v2l"],
+          ["rf3l", "v1l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_ML": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Middle Left Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_ML",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_ML_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_b_L", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_ML_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_b_L_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":5.0},
+         ["rf4l", 0.80, 1.5, 2.04, {"tag":"roof_4l"}],
+
+         //c pillar
+         {"nodeWeight":2.5},
+         ["v9l", 0.92, 1.06, 1.70],
+
+         //d pillar
+         ["v10l", 0.92, 1.77, 1.70],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_ML_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_ML"},
+          {"deformLimitExpansion":""},
+          ["v3l", "rf4l"],
+          ["v9l", "v10l"],
+          ["rf3l", "v3l"],
+          ["v2l", "rf4l"],
+          ["rf3l", "v10l"],
+          ["v10l", "v2l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_ML_ext": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Middle Left Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_ML_ext",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_ML_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_b_L_ext", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_ML_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_b_L_ext_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":5.0},
+         ["rf4r", -0.8, 2.088, 2.04, {"tag":"roof_8r"}],
+
+         //c pillar
+         {"nodeWeight":2.5},
+         ["v9l", 0.92, 1.06, 1.70],
+
+         //d pillar
+         ["v10l", 0.92, 2.278, 1.70],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_ML_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_ML"},
+          {"deformLimitExpansion":""},
+          ["rf4l", "v20l"],
+          ["rf10l", "v3l"],
+          ["rf10l", "v2l"],
+          ["rf3l", "v20l"],
+          ["rf10l", "v20l"],
+          ["v9l", "v3l"],
+          ["v10l", "v2l"],
+          ["v9l", "v10l"],
+          ["rf3l", "v3l"],
+          ["rf4l", "v2l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_RR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_RR",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_RR_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_d_glass_R", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_RR_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_d_glass_R_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":4.5},
+         ["rf4r", -0.80, 1.5, 2.04, {"tag":"roof_4r"}],
+         ["rf5r", -0.80, 2.04, 2.04, {"tag":"roof_5r"}],
+         ["rf6r", -0.80, 2.49, 2.04, {"tag":"roof_6r"}],
+         ["rf7r", -0.78, 2.95, 2.03, {"tag":"roof_7r"}],
+
+         //d pillar
+         {"nodeWeight":2.0},
+         ["v10r", -0.88, 1.42, 1.70],
+         ["v11r", -0.92, 1.55, 1.70],
+
+         //e pillar
+         ["v13r", -0.915, 2.9, 1.70],
+         ["v14r", -0.885, 3.05, 1.70],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_RR_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_RR"},
+          {"deformLimitExpansion":""},
+          ["rf6r", "v5r"],
+          ["v4r", "rf5r"],
+          ["rf5r", "v5r"],
+          ["rf6r", "v4r"],
+          ["v13r", "v11r"],
+          ["rf4r", "v13r"],
+          ["v13r", "v3r"],
+          ["v11r", "v6r"],
+          ["rf6r", "v3r"],
+          ["rf4r", "v5r"],
+          ["v6r", "rf5r"],
+          ["v6r", "rf4r"],
+          ["rf7r", "v5r"],
+          ["rf7r", "v4r"],
+          ["rf7r", "v3r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_RR_ext": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_RR_ext",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_RR_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_d_glass_R_ext", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_RR_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_d_glass_R_ext_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":4.5},
+         ["rf10r", -0.8, 1.5, 2.04, {"tag":"roof_4r"}],
+         ["rf4r", -0.8, 2.088, 2.04, {"tag":"roof_8r"}],
+         ["rf5r", -0.8, 2.548, 2.04, {"tag":"roof_5r"}],
+         ["rf6r", -0.8, 2.998, 2.04, {"tag":"roof_6r"}],
+         ["rf7r", -0.78, 3.45800, 2.03, {"tag":"roof_7r"}],
+
+         //d pillar
+         {"nodeWeight":2.0},
+         ["v10r", -0.88, 1.42, 1.70],
+         ["v11r", -0.92, 1.55, 1.70],
+
+         //e pillar
+         ["v13r", -0.915, 3.408, 1.70],
+         ["v14r", -0.885, 3.558, 1.70],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_RR_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_RR"},
+          {"deformLimitExpansion":""},
+          ["v5r", "rf6r"],
+          ["rf5r", "v4r"],
+          ["v3r", "rf4r"],
+          ["rf4r", "v4r"],
+          ["rf5r", "v3r"],
+          ["rf5r", "v5r"],
+          ["v4r", "rf6r"],
+          ["rf6r", "v3r"],
+          ["rf4r", "v5r"],
+          ["rf5r", "v6r"],
+          ["rf6r", "v20r"],
+          ["rf10r", "v4r"],
+          ["rf5r", "v20r"],
+          ["v4r", "rf7r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+"van_junk_sideglass_RL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Side Glass",
+        "value":0,
+    },
+    "slotType" : "van_sideglass_RL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"sideglass_RL_break", "deformMaterialBase":"van_glass", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_c_L", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_RL_break", "deformMaterialBase":"van_glass_int", "deformMaterialDamaged":"van_glass_dmg"},
+         ["van_body_sides_e_glass_c_L_int", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //roof
+         {"group":"van_body"},
+         {"nodeWeight":4.5},
+         ["rf5l", 0.80, 2.04, 2.04, {"tag":"roof_5l"}],
+         ["rf6l", 0.80, 2.49, 2.04, {"tag":"roof_6l"}],
+         ["rf7l", 0.78, 2.95, 2.03, {"tag":"roof_7l"}],
+
+         //d pillar
+         {"nodeWeight":2.0},
+         ["v11l", 0.92, 1.89, 1.70],
+
+         //e pillar
+         ["v13l", 0.915, 2.9, 1.70],
+         ["v14l", 0.885, 3.05, 1.70],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle glass beams
+          {"beamSpring":1668350,"beamDamp":145.7},
+          {"beamDeform":7000,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"deformGroup":"sideglass_RL_break", "deformationTriggerRatio":0.03},
+          {"breakGroup":"sideglass_RL"},
+          {"deformLimitExpansion":""},
+          ["v4l", "rf5l"],
+          ["v5l", "rf6l"],
+          ["v4l", "rf6l"],
+          ["v5l", "rf5l"],
+          ["v11l", "v13l"],
+          ["v6l", "rf5l"],
+          ["v6l", "rf6l"],
+          ["v6l", "v11l"],
+          ["rf7l", "v4l"],
+          ["rf7l", "v5l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+},
+}

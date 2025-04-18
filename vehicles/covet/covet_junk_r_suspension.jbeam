@@ -1,0 +1,526 @@
+{
+"covet_junk_suspension_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Rear Suspension",
+        "value":125,
+    },
+    "slotType" : "covet_suspension_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["covet_hub_R","covet_hub_R_4", "Rear Wheel Hubs"],
+        ["covet_wheeldata_R","covet_wheeldata_R", "Rear Spindles", {"coreSlot":true}],
+        ["covet_coilover_R","covet_coilover_R", "Rear Struts"],
+        ["covet_swaybar_R","covet_swaybar_R", "Rear Sway Bar"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$camber_RR", "range", "", "Wheel Alignment", 0.987, 0.90, 1.04, "Camber Adjust", "Percentage of adjustment range", {"subCategory":"Rear"}],
+        ["$toe_RR", "range", "", "Wheel Alignment", 0.989, 1.08, 0.93, "Toe Adjust", "Percentage of adjustment range", {"subCategory":"Rear"}],
+        ["$trackoffset_R", "range", "+m", "Wheels", 0.0,-0.02, 0.05, "Wheel Offset", "Spacing of the wheel from the hub", {"stepDis":0.001,"subCategory":"Rear"}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //rear running gear
+        ["covet_subframe_R", ["covet_body"]],
+        ["covet_lowerarm_R", ["covet_lowermounts_a_R","covet_lowerarm_a_R","covet_lowermounts_b_R","covet_lowerarm_b_R"]],
+        ["covet_upperarm_R", ["covet_uppermounts_R","covet_upperarm_R"]],
+        ["covet_hub_R", ["covet_hub_R","covet_lowerarm_a_R","covet_lowerarm_b_R","covet_upperarm_R"]],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+         //--REAR RUNNING GEAR--
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+         //multilink suspension
+         //rear suspension axis points
+         //lower
+         {"group":["covet_lowermounts_a_R","covet_body"]},
+         {"nodeWeight":4.5},
+         ["rx1r", -0.3231, 1.304, 0.2059, {"tag":"rideheight_RR"}],
+         ["rx1l",  0.3231, 1.304, 0.2059, {"tag":"rideheight_RL"}],
+         {"selfCollision":false},
+         {"group":["covet_lowermounts_b_R","covet_body"]},
+         {"nodeWeight":3.5},
+         ["rx2r", -0.4233, 0.5888, 0.2414],
+         ["rx2l",  0.4233, 0.5888, 0.2414]
+         //upper
+         {"nodeWeight":4.5},
+         {"group":["covet_uppermounts_R","covet_body"]},
+         ["rx3r", -0.4267, 1.1627, 0.4328],
+         ["rx3l",  0.4267, 1.1627, 0.4328],
+         {"group":""},
+         //trailing arm pivot rail
+         {"nodeWeight":3.5},
+         ["rx4r", -0.53, 0.8461, 0.2615],
+         ["rx4l",  0.53, 0.8461, 0.2615],
+         ["rx5r", -0.61, 0.8461, 0.2615],
+         ["rx5l",  0.61, 0.8461, 0.2615],
+
+        //--REAR INDEPENDENT SUSPENSION--
+        {"collision":true},
+        {"selfCollision":false},
+        //rear hub
+        {"group":"covet_hub_R"},
+        {"nodeWeight":3.5},
+        ["rw2r", -0.6759, 0.8461, 0.2615],
+        ["rw2l",  0.6759, 0.8461, 0.2615],
+        {"collision":false},
+        ["rw3r", -0.57, 0.846, 0.15],
+        ["rw3l",  0.57, 0.846, 0.15],
+        {"collision":true},
+        {"selfCollision":true},
+        {"nodeWeight":4.5},
+        {"group":"covet_lowerarm_a_R"},
+        //rally suspension overwrites this location
+        ["rh1r", -0.6632, 1.2844, 0.1971],
+        ["rh1l",  0.6632, 1.2844, 0.1971],
+        {"selfCollision":false},
+        {"group":""},
+        //["rh2r", -0.582, 0.647, 0.269],
+        //["rh2l", 0.582, 0.647, 0.269],
+        {"nodeWeight":3.5},
+        {"group":"covet_lowerarm_b_R"},
+        ["rh2r", -0.5798, 0.6384, 0.2468],
+        ["rh2l",  0.5798, 0.6384, 0.2468],
+        {"group":"covet_upperarm_R"},
+        ["rh3r", -0.5999, 1.1595, 0.4394],
+        ["rh3l",  0.5999, 1.1595, 0.4394],
+        {"group":""},
+        ["rh4r", -0.5758, 0.8461, 0.2615],
+        ["rh4l",  0.5758, 0.8461, 0.2615],
+        //rear strut mount
+        {"nodeWeight":2.75},
+        {"group":["covet_lowerarm_a_R", "covet_strutbottom_R"]}
+        ["rsp2r",-0.568,1.2899,0.199],
+        ["rsp2l", 0.568,1.2899,0.199],
+        //mr test beam
+        {"selfCollision":false},
+        //["mr_R",0.3231, 1.304, 0.1],
+        {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+
+          //test beam
+          {"beamSpring":0,"beamDamp":0},
+          //["rx1l", "mr_R", {"name":"mr_R"}],
+
+          //--REAR RUNNING GEAR--
+
+          //lower link mounts
+          {"beamSpring":4001000,"beamDamp":100},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["rx1r", "r1r"],
+          ["rx1r", "f4r"],
+          ["rx1r", "r3r"],
+          ["rx1r", "f9r"],
+          ["rx1r", "r1l"],
+          ["rx1r", "f4l"],
+          ["rx1r", "r3l"],
+          ["rx1r", "f9l"],
+          ["rx1l", "r1r"],
+          ["rx1l", "f4r"],
+          ["rx1l", "r3r"],
+          ["rx1l", "f9r"],
+          ["rx1l", "r1l"],
+          ["rx1l", "f4l"],
+          ["rx1l", "r3l"],
+          ["rx1l", "f9l"],
+          ["rx1r", "rx1l"],
+          ["rx1l", "rx3l"],
+          ["rx1r", "rx3r"],
+
+          //upper link mounts
+          ["rx3r", "r1r"],
+          ["rx3r", "f4r"],
+          ["rx3r", "r3r"],
+          ["rx3r", "f9r"],
+          ["rx3r", "r1l"],
+          ["rx3r", "f4l"],
+          ["rx3r", "r3l"],
+          ["rx3r", "f9l"],
+          ["rx3l", "r1r"],
+          ["rx3l", "f4r"],
+          ["rx3l", "r3r"],
+          ["rx3l", "f9r"],
+          ["rx3l", "r1l"],
+          ["rx3l", "f4l"],
+          ["rx3l", "r3l"],
+          ["rx3l", "f9l"],
+          ["rx3r", "rx3l"],
+
+          //trailing arm
+          {"beamDeform":9000,"beamStrength":"FLT_MAX"},
+          ["rx4l", "f4l"],
+          ["rx4l", "f9l"],
+          ["rx4l", "f3l"],
+          ["rx4l", "f8l"],
+          ["rx4l", "q6l"],
+          ["rx4l", "f4ll"],
+          ["rx4l", "f3ll"],
+          ["rx5l", "f4l"],
+          ["rx5l", "f9l"],
+          ["rx5l", "f3l"],
+          ["rx5l", "f8l"],
+          ["rx5l", "q6l"],
+          ["rx5l", "f4ll"],
+          ["rx5l", "f3ll"],
+          ["rx4r", "f4r"],
+          ["rx4r", "f9r"],
+          ["rx4r", "f3r"],
+          ["rx4r", "f8r"],
+          ["rx4r", "q6r"],
+          ["rx4r", "f4rr"],
+          ["rx4r", "f3rr"],
+          ["rx5r", "f4r"],
+          ["rx5r", "f9r"],
+          ["rx5r", "f3r"],
+          ["rx5r", "f8r"],
+          ["rx5r", "q6r"],
+          ["rx5r", "f4rr"],
+          ["rx5r", "f3rr"],
+
+          //toe link
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["rx2r", "f3r"],
+          ["rx2r", "f8r"],
+          ["rx2r", "f4r"],
+          ["rx2r", "f9r"],
+          ["rx2r", "f3rr"],
+          ["rx2r", "f4rr"],
+          ["rx2r", "q6r"],
+          ["rx2l", "f3l"],
+          ["rx2l", "f8l"],
+          ["rx2l", "f4l"],
+          ["rx2l", "f9l"],
+          ["rx2l", "f3ll"],
+          ["rx2l", "f4ll"],
+          ["rx2l", "q6l"],
+
+          //--REAR INDEPENDENT SUSPENSION--
+          {"deformLimitExpansion":1.1},
+          //multilink suspension
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0,"beamPrecompression":1.0},
+          {"beamDeform":76000,"beamStrength":280000},
+          {"beamSpring":8001000,"beamDamp":1000},
+
+          //lower arm
+          ["rx1r","rh1r", {"dampCutoffHz":500}],
+          ["rx1l","rh1l", {"dampCutoffHz":500}],
+          //strut mount
+          {"beamSpring":3501000,"beamDamp":150},
+          {"beamDeform":20000},
+          ["rx1r","rsp2r"],
+          ["rx1l","rsp2l"],
+          ["rh1r","rsp2r"],
+          ["rh1l","rsp2l"],
+          //toe link
+          {"beamSpring":8001000,"beamDamp":1000},
+          ["rx2r","rh2r", {"beamPrecompression":"$toe_RR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          ["rx2l","rh2l", {"beamPrecompression":"$toe_RR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+
+          //upper arm
+          {"beamSpring":8001000,"beamDamp":1000},
+          ["rx3r","rh3r", {"beamPrecompression":"$camber_RR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+          ["rx3l","rh3l", {"beamPrecompression":"$camber_RR","beamPrecompressionTime":0.5,"dampCutoffHz":500}],
+
+          //rear hub
+          {"beamDeform":97000,"beamStrength":220000},
+          {"beamSpring":6001000,"beamDamp":80},
+          ["rh1r","rh3r"],
+          ["rh1l","rh3l"],
+          ["rh2r","rh3r"],
+          ["rh2l","rh3l"],
+          //attach to trailing arm pivot
+          ["rh1r","rh4r"],
+          ["rh1l","rh4l"],
+          ["rh2r","rh4r"],
+          ["rh2l","rh4l"],
+          ["rh3r","rh4r"],
+          ["rh3l","rh4l"],
+          ["rw3r","rh4r"],
+          ["rw3l","rh4l"],
+          {"beamDeform":68000,"beamStrength":150000},
+          ["rh3r","rw2r"],
+          ["rh1r","rw2r"],
+          ["rh2r","rw2r"],
+          ["rh3l","rw2l"],
+          ["rh1l","rw2l"],
+          ["rh2l","rw2l"],
+          ["rh4l","rw2l"],
+          ["rh4r","rw2r"],
+          ["rw2r", "rw3r"],
+          ["rh2r", "rw3r"],
+          ["rh1r", "rw3r"],
+          ["rh3r", "rw3r"],
+          ["rw2l", "rw3l"],
+          ["rh2l", "rw3l"],
+          ["rw3l", "rh1l"],
+          ["rw3l", "rh3l"],
+          {"optional":true},
+
+          //attach to wheel
+          {"beamSpring":6001000,"beamDamp":60},
+          {"breakGroup":"wheel_RR"},
+          ["rh3r","rw1r", {"name":"axle_RR"}],
+          ["rh3r","rw1rr"],
+          ["rh1r","rw1r"],
+          ["rh1r","rw1rr"],
+          ["rh2r","rw1r"],
+          ["rh4r","rw1rr", {"beamSpring":4501000}],
+          ["rh4r","rw1r", {"beamSpring":4501000}],
+          ["rw3r","rw1rr"],
+          ["rw3r","rw1r"],
+          ["rh2r","rw1rr"],
+          //["rw2r","rw1rr"],
+          //["rw2r","rw1r"],
+          {"breakGroup":"wheel_RL"},
+          ["rh3l","rw1l", {"name":"axle_RL"}],
+          ["rh3l","rw1ll"],
+          ["rh1l","rw1l"],
+          ["rh1l","rw1ll"],
+          ["rh2l","rw1l"],
+          ["rh4l","rw1ll", {"beamSpring":4501000}],
+          ["rh4l","rw1l", {"beamSpring":4501000}],
+          ["rw3l","rw1ll"],
+          ["rw3l","rw1l"],
+          ["rh2l","rw1ll"],
+          //["rw2l","rw1ll"],
+          //["rw2l","rw1l"],
+          {"breakGroup":""},
+          {"optional":false},
+
+          //damping for the trailing arm bushing
+          {"beamDeform":15000,"beamStrength":25000},
+          {"beamSpring":0,"beamDamp":2000},
+          ["rx4r","rh2r", {"dampCutoffHz":500}],
+          ["rx4l","rh2l", {"dampCutoffHz":500}],
+          ["rx5r","rh2r", {"dampCutoffHz":500}],
+          ["rx5l","rh2l", {"dampCutoffHz":500}],
+
+          //some lateral stiffness to trailing arm bushing
+          {"beamSpring":101000,"beamDamp":1000},
+          ["f9r","rh4r"],
+          ["f9l","rh4l"],
+          ["f4r","rh4r"],
+          ["f4l","rh4l"],
+
+          //bushing is stiffer in vertical direction but soft in longitudinal which is controlled by the slidenode rail spring
+          {"beamSpring":501000,"beamDamp":1000},
+          ["rx4r","rw3r"],
+          ["rx4l","rw3l"],
+          ["rx5r","rw3r"],
+          ["rx5l","rw3l"],
+
+          //multilink suspension
+          {"deformLimitExpansion":""},
+          //rear limiters
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.2, "beamShortBound":0.27},
+          {"beamSpring":0,"beamDamp":0,"beamDeform":58000,"beamStrength":150000},
+          {"beamLimitSpring":2501000,"beamLimitDamp":250},
+          ["rh3r","r3r"],
+          ["rh3l","r3l"],
+          ["rh3r","f4r"],
+          ["rh3l","f4l"],
+          ["rh1r","r3r"],
+          ["rh1l","r3l"],
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.25, "beamShortBound":0.25},
+          //rear end collide
+          ["rh1r","q7r"],
+          ["rh1l","q7l"],
+          ["rh1r","r5r"],
+          ["rh1l","r5l"],
+          ["rh1r","r2r"],
+          ["rh1l","r2l"],
+          //inner collide
+          ["rh1r","f9r"],
+          ["rh1l","f9l"],
+          ["rh3r","f9r"],
+          ["rh3l","f9l"],
+          ["rh1r","f8r"],
+          ["rh1l","f8l"],
+          ["rh3r","f8r"],
+          ["rh3l","f8l"],
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.19, "beamShortBound":0.19},
+          ["rh2r","q7r"],
+          ["rh2l","q7l"],
+
+          //suspension travel hard limit
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":0,"beamDamp":100,"beamDeform":15000,"beamStrength":150000},
+          {"beamLimitSpring":1001000,"beamLimitDamp":500},
+          ["rsp2r","rs1r", {"longBoundRange":0.1,"shortBoundRange":0.09,"boundZone":0.025,"beamLimitDampRebound":500,"dampCutoffHz":500}],
+          ["rsp2l","rs1l", {"longBoundRange":0.1,"shortBoundRange":0.09,"boundZone":0.025,"beamLimitDampRebound":500,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"triangleType":"NONCOLLIDABLE"}
+          {"dragCoef":0},
+          ["rx2r", "rx1l", "rx2l"],
+          ["rx2r", "rx1r", "rx1l"],
+
+          ["rh3r", "rh1r", "rw2r"],
+          ["rh3r", "rw2r", "rh2r"],
+          ["rh1r", "rh4r", "rw2r"],
+          ["rw2r", "rh4r", "rh2r"],
+          ["r3r",  "rx3r", "f9r"],
+
+          ["rh1l", "rh3l", "rw2l"],
+          ["rw2l", "rh3l", "rh2l"],
+          ["rh4l", "rh1l", "rw2l"],
+          ["rh4l", "rw2l", "rh2l"],
+          ["rx3l", "r3l",  "f9l"],
+          {"triangleType":"NORMALTYPE"},
+    ],
+    "rails": {
+        "trailing_arm_pivot_R":{"links:":["rx4r", "rx5r"], "broken:":[], "looped":false, "capped":true},
+        "trailing_arm_pivot_L":{"links:":["rx4l", "rx5l"], "broken:":[], "looped":false, "capped":true},
+
+        "springmount_RR":{"links:":["rx1r", "rh1r"], "broken:":[], "looped":false, "capped":true},
+        "springmount_RL":{"links:":["rx1l", "rh1l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["rh4r", "trailing_arm_pivot_R", true, true, 0.0, 501000, 150000, 150000],
+        ["rh4l", "trailing_arm_pivot_L", true, true, 0.0, 501000, 150000, 150000],
+        ["rsp2r", "springmount_RR", true, true, 0.0, 10001000, "FLT_MAX", "FLT_MAX"],
+        ["rsp2l", "springmount_RL", true, true, 0.0, 10001000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            //cancel out brake properties
+            {"brakeTorque":0},
+            {"parkingTorque":0},
+            {"enableBrakeThermals":false},
+            {"brakeDiameter":false},
+            {"brakeMass":false},
+            {"brakeType":false},
+            {"rotorMaterial":false},
+            {"brakeVentingCoef":false},
+    ],
+},
+"covet_junk_coilover_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Blown Rear Struts",
+        "value":75,
+    },
+    "slotType" : "covet_coilover_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["covet_coilover_R", ["covet_lowerarm_a_R","covet_shocktop_R"]],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //rear springs with soft initial bump stop
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":12500,"beamStrength":125000},
+          {"beamSpring":19500,"beamDamp":0},
+          {"beamLimitSpring":33500,"beamLimitDamp":1000},
+          //MR 0.7
+          ["rsp2l","rs1l", {"name":"spring_RL", "precompressionRange":0.098,"longBoundRange":1,"shortBoundRange":0.123,"boundZone":0.05,"beamLimitDampRebound":0,"dampCutoffHz":500,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":10,"volumeFactor":4.0,"decayFactor":10,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":600}],
+          ["rsp2r","rs1r", {"name":"spring_RR", "precompressionRange":0.098,"longBoundRange":1,"shortBoundRange":0.123,"boundZone":0.05,"beamLimitDampRebound":0,"dampCutoffHz":500,
+              "soundFile":"event:>Vehicle>Suspension>car_modn_med_01>spring_compress_01","colorFactor":0.3,"attackFactor":10,"volumeFactor":4.0,"decayFactor":10,"noiseFactor":0.01,"pitchFactor":0.2,"maxStress":600}],
+          //shocks
+          {"beamSpring":0,"beamDamp":1600},
+          {"beamLimitSpring":0,"beamLimitDamp":0},
+          //MR 0.95
+          ["rs1r","rh1r", {"name":"damper_RR", "beamDampFast":50,"beamDampRebound":50,"beamDampReboundFast":50,"beamDampVelocitySplit":0.1,"dampCutoffHz":500}],
+          ["rs1l","rh1l", {"name":"damper_RL", "beamDampFast":50,"beamDampRebound":50,"beamDampReboundFast":50,"beamDampVelocitySplit":0.1,"dampCutoffHz":500}],
+          //high speed choking
+          {"beamSpring":0,"beamDamp":0},
+          ["rs1r","rh1r", {"beamDampFast":3000,"beamDampRebound":0,"beamDampReboundFast":0,"beamDampVelocitySplit":2,"dampCutoffHz":500}],
+          ["rs1l","rh1l", {"beamDampFast":3000,"beamDampRebound":0,"beamDampReboundFast":0,"beamDampVelocitySplit":2,"dampCutoffHz":500}],
+          //harder bump stop
+          {"beamSpring":0,"beamDamp":0},
+          {"beamLimitSpring":201000,"beamLimitDamp":8000},
+          ["rs1r","rh1r", {"longBoundRange":0.08,"shortBoundRange":0.08,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["rs1l","rh1l", {"longBoundRange":0.08,"shortBoundRange":0.08,"boundZone":0.04,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"covet_junk_swaybar_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Sway Bar",
+        "value":25,
+    },
+
+    "slotType" : "covet_swaybar_R",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["covet_swaybar_R", ["covet_lowerarm_a_R","covet_lowermounts_a_R","covet_lowerarm_b_R","covet_lowermounts_b_R","covet_uppermounts_R","covet_swaybar_R"],[]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //anti-roll
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"covet_swaybar_R"},
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeWeight":1.1},
+         //rear anti-roll
+         ["arbr2r", -0.605, 1.297, 0.33],
+         ["arbr2l",  0.605, 1.297, 0.33],
+         //roll bar mounts
+         ["arbr1r", -0.47, 1.4465, 0.3],
+         ["arbr1l",  0.47, 1.4465, 0.3],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //10mm 33.3
+        //11mm 48.7
+        //12mm 69.0
+        //13mm 95.1
+        //14mm 127.9
+        //15mm 168.5
+        //16mm 218.2
+        //17mm 278.0
+        //18mm 349.5
+        //19mm 433.9
+        //20mm 532.7
+        {"spring":127.9, "damp":5, "deform":"FLT_MAX", "strength":"FLT_MAX"},
+        ["arbr2r", "arbr1r", "arbr1l", "arbr2l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--ANTI-ROLL--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":2501000,"beamDamp":80},
+          {"beamDeform":15000,"beamStrength":310000},
+          //end links
+          ["arbr2r","rsp2r"],
+          ["arbr2l","rsp2l"],
+          //rigids
+          ["arbr2r","arbr1r"],
+          ["arbr2l","arbr1l"],
+          ["arbr2r","arbr1l"],
+          ["arbr2l","arbr1r"],
+          //roll bar mounts
+          ["arbr1r","rx1r"],
+          ["arbr1l","rx1l"],
+          ["arbr1r","r1r"],
+          ["arbr1l","r1l"],
+          ["arbr1r","r3r"],
+          ["arbr1l","r3l"],
+          ["arbr1l","arbr1r"],
+
+          ["arbr1r","rx3r"],
+          ["arbr1l","rx3l"],
+          ["arbr1r","rs1r"],
+          ["arbr1l","rs1l"]
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

@@ -1,0 +1,619 @@
+{
+"wendover_junk_dashboard": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Dashboard",
+        "value":150,
+    },
+    "slotType" : "wendover_dashboard",
+    "slots": [
+        ["type", "default", "description"],
+        ["wendover_steer","wendover_steer", "Steering Wheel"],
+        ["wendover_gaugecluster","wendover_gaugecluster", "Gauge Cluster"],
+        ["wendover_climatecontrol","wendover_climatecontrol", "Climate Control Unit"],
+        ["wendover_centerconsole","wendover_centerconsole", "Shifter", {"coreSlot":true}],
+        ["wendover_shiftlight","", "Shift Light"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["wendover_dash", ["wendover_dash"]],
+         ["wendover_console", ["wendover_dash"]],
+    ],
+    "props": [
+        ["func",         "mesh",                "idRef:","idX:","idY:", "baseRotation",           "rotation",              "translation",          "min", "max", "offset", "multiplier"],
+        //parkingbrake
+        ["parkingbrake", "wendover_parkingbrake", "f1l","f1r","f6l",      {"x":0, "y":0, "z":180},  {"x":-35, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["brake",        "wendover_brakepedal",   "f1l","f1r","f6l",      {"x":0, "y":0, "z":180},  {"x":-18, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "wendover_gaspedal",     "f1l","f1r","f6l",      {"x":0, "y":0, "z":180},  {"x":-20, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+
+        //turn signal stalk
+        ["turnsignal",   "wendover_signalstalk",   "dshl","dsh","int_strw",     {"x":90, "y":0, "z":180}, {"x":0, "y":-15, "z":0}, {"x":0, "y":0, "z":0},   -1, 1, 0, 1],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+         {"selfCollision":true},
+         {"collision":true},
+
+         //interrior flexbody
+         {"group":"wendover_dash"},
+         {"nodeWeight":4.0},
+         ["dshr", -0.4, -0.5, 0.8],
+         ["dsh",   0.00, -0.5, 0.8],
+         ["dshl",  0.4, -0.5, 0.8],
+         ["int_strw",  0.4, -0.36, 0.845],
+         {"group":""},
+         {"nodeWeight":0.2},
+         ["int_pbrk", 0.69, -0.86, 0.57],
+         ["int_shft", 0.0, -0.25, 0.53],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "f5l"],
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //dash board
+          {"beamSpring":125000,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","f5r"],
+          ["dshl","f5l"],
+          ["dshr","f6r"],
+          ["dshl","f6l"],
+          ["dshr","f1r"],
+          ["dshl","f1l"],
+          ["dshr","f5rr"],
+          ["dshl","f5ll"],
+          ["dshr","f6rr"],
+          ["dshl","f6ll"],
+          ["dshl","dshr"],
+          ["dsh","f5r"],
+          ["dsh","f5l"],
+          ["dsh","f6r"],
+          ["dsh","f6l"],
+          ["dsh","f1r"],
+          ["dsh","f1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","f5ll"],
+          ["int_pbrk","f5l"],
+          ["int_pbrk","f6ll"],
+          ["int_shft","f5l"],
+          ["int_shft","f5r"],
+          ["int_shft","f2r"],
+          ["int_shft","f2l"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"plastic"},
+        //Dashboard
+        {"dragCoef":0},
+        ["dshl", "f6ll", "f5ll"],
+        ["f6ll", "dshl", "f6l"],
+        ["f6l", "dshl", "dsh"],
+        ["dsh", "f6r", "f6l"],
+        ["dsh", "dshr", "f6r"],
+        ["f6r", "dshr", "f6rr"],
+        ["dshr", "f5rr", "f6rr"],
+        ["dshl", "f5ll", "f5l"],
+        ["f5l", "dsh", "dshl"],
+        ["f5l", "f5r", "dsh"],
+        ["dsh", "f5r", "dshr"],
+        ["dshr", "f5r", "f5rr"],
+    ],
+},
+"wendover_junk_gaugecluster": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Gauge Cluster",
+        "value":65,
+    },
+    "slotType" : "wendover_gaugecluster",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"display_break", "deformMaterialBase":"wendover_gauges_screen", "deformMaterialDamaged":"wendover_gauges_break"},
+         ["wendover_gaugecluster", ["wendover_dash"]],
+         {"deformGroup":""},
+    ],
+    "glowMap":{
+        "wendover_dash_digital_gauge":{"simpleFunction":{"ignitionLevel":0.5}, "off":"wendover_dash_digital_gauge_off", "on":"wendover_dash_digital_gauge", "on_intense":"wendover_dash_digital_gauge_off"},
+    },
+    "controller": [
+        ["fileName"],
+        ["gauges/genericGauges", {"name":"gauges"}],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+    "gauges": {
+        "configuration": {
+            "materialName": "@wendover_gauges_screen"
+            "htmlPath": "local://local/vehicles/wendover/gauges_screen/gauges_screen.html"
+            "displayWidth":1024
+            "displayHeight":161
+        }
+        "displayData": {
+            "electrics": [
+                "signal_L",
+                "signal_R",
+                "lights",
+                "highbeam",
+                "lowfuel",
+                "parkingbrake",
+                "checkengine",
+                "gear",
+                "fuel",
+                "wheelspeed",
+                "abs",
+                "absActive",
+                "hazard",
+                "rpmTacho",
+                "watertemp",
+                "oiltemp",
+                "oil",
+                "engineRunning",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                ["gearbox", "type"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["combustionEngineData", "fuelConsumption"]
+                ["environmentData", "time"]
+            ]
+        }
+    }
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+         {"selfCollision":true},
+         {"collision":true},
+
+         //add weight
+         {"group":"wendover_dash"},
+         {"nodeWeight":7.0},
+         ["dshl",   0.40, -0.5, 0.8],
+         {"group":""},
+    ],
+},
+"wendover_junk_climatecontrol": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Glitched Climate Control Unit",
+        "value":75,
+    },
+    "slotType" : "wendover_climatecontrol",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"display_break", "deformMaterialBase":"wendover_gauges_screen", "deformMaterialDamaged":"wendover_gauges_break"},
+         ["wendover_climate_screen", ["wendover_dash"]],
+         {"deformGroup":""},
+         ["wendover_climate", ["wendover_dash"]],
+    ],
+    "glowMap":{
+        "wendover_dash_climate_controls":{"simpleFunction":{"ignitionLevel":0.5}, "off":"wendover_dash_climate_controls", "on":"screen_off", "on_intense":"screen_off"},
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+         {"selfCollision":true},
+         {"collision":true},
+
+         //add weight
+         {"group":"wendover_dash"},
+         {"nodeWeight":7.0},
+         ["dsh",   0.00, -0.5, 0.8],
+         {"group":""},
+    ],
+},
+"wendover_junk_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Driver Seat",
+        "value":75,
+    },
+    "slotType" : "wendover_seat_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["wendover_seat_FL" ["wendover_seat_FL","wendover_floor"],[],{"pos":{"x":0,"y":0.05,"z":0}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"wendover_seat_FL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.5},
+         ["sf1l", 0.14, -0.27, 0.5],
+         ["sf1ll", 0.67, -0.27, 0.5],
+         ["sf2l", 0.14, 0.2, 0.44],
+         ["sf2ll", 0.67, 0.2, 0.44],
+         ["sf3l", 0.21, 0.45, 1.05],
+         ["sf3ll", 0.6, 0.45, 1.05],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3l", "sf1l"],
+        ["sf3ll", "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3ll", "r5ll"],
+        ["sf3l", "r1ll"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2l", "f3l"],
+        ["sf2l", "f2l"],
+        ["sf2l", "f3r"],
+        ["sf2l", "f2r"],
+
+        ["sf2ll", "f3l"],
+        ["sf2ll", "f3ll"],
+        ["sf2ll", "f2l"],
+        ["sf1l", "f2l"],
+        ["sf1ll", "f2l"],
+        ["sf1ll", "f2ll"],
+        ["sf1l", "f3l"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3l", "q7l"],
+        ["sf3l", "q1l"],
+        ["sf3l", "rf2l"],
+        ["sf2l", "p4l"],
+        ["sf2l", "p3l"],
+        ["sf1l", "f1ll"],
+        ["sf1l", "f3ll"],
+
+        //to other seat
+        {"beamPrecompression":0.7},
+        ["sf1rr", "sf1ll"],
+        ["sf2rr", "sf2ll"],
+        ["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"wendover_junk_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Passenger Seat",
+        "value":75,
+    },
+    "slotType" : "wendover_seat_FR",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_FR","", "Front Seat Load", {
+            "nodeMove":{"x":-0.40, "y":-0.10, "z":0.63},
+            "variables":{
+                "$rotx":-5, "$roty":0, "$rotz":90,
+                "$group":"wendover_seat_FR",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["wendover_seat_FR" ["wendover_seat_FR","wendover_floor"],[],{"pos":{"x":0,"y":0.05,"z":0}}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"wendover_seat_FR"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.5},
+         ["sf1r", -0.14, -0.27, 0.5],
+         ["sf1rr", -0.67, -0.27, 0.5],
+         ["sf2r", -0.14, 0.2, 0.44],
+         ["sf2rr", -0.67, 0.2, 0.44],
+         ["sf3r", -0.21, 0.45, 1.05],
+         ["sf3rr", -0.6, 0.45, 1.05],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":501000,"beamDamp":300},
+        {"beamDeform":10000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+        //corners
+        {"beamDeform":3000},
+        ["sf3r", "sf1r"],
+        ["sf3rr", "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3rr", "r5rr"],
+        ["sf3r", "r1rr"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":37.6},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        ["sf2r", "f3l"],
+        ["sf2r", "f2l"],
+        ["sf2r", "f3r"],
+        ["sf2r", "f2r"],
+
+        ["sf2rr", "f3r"],
+        ["sf2rr", "f3rr"],
+        ["sf2rr", "f2r"],
+        ["sf1r", "f2r"],
+        ["sf1rr", "f2r"],
+        ["sf1rr", "f2rr"],
+        ["sf1r", "f3r"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":470000,"beamDamp":141},
+        {"beamPrecompression":0.9},
+        {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3r", "q7r"],
+        ["sf3r", "q1r"],
+        ["sf3r", "rf2r"],
+        ["sf2r", "p4r"],
+        ["sf2r", "p3r"],
+        ["sf1r", "f1rr"],
+        ["sf1r", "f3rr"],
+        //to other seat
+        {"beamPrecompression":0.7},
+        //["sf1rr", "sf1ll"],
+        //["sf2rr", "sf2ll"],
+        //["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+"wendover_junk_seats_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Rear Seats",
+        "value":85,
+    },
+    "slotType" : "wendover_seats_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["load_seat_R","", "Rear Seat Load", {
+            "nodeMove":{"x": 0.00, "y":0.80, "z":0.62},
+            "variables":{
+                "$rotx":-10, "$roty":0, "$rotz":0,
+                "$group":"wendover_seats_R",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["wendover_seats_R", ["wendover_seats_R"]],
+    ],
+    "nodes":[
+          ["id", "posX", "posY", "posZ"],
+          {"group":"wendover_seats_R"},
+          {"collision":true},
+          {"selfCollision":true},
+          {"nodeWeight":2.0},
+          ["sr1rr", -0.67, 0.53, 0.48],
+          ["sr1", 0.0, 0.53, 0.48],
+          ["sr1ll", 0.67, 0.53, 0.48],
+
+          ["sr2rr", -0.67, 0.96, 0.44],
+          ["sr2", 0.0, 0.96, 0.44],
+          ["sr2ll", 0.67, 0.96, 0.44],
+
+          ["sr3rr", -0.6, 1.2, 1.02],
+          ["sr3", 0.0, 1.2, 0.92],
+          ["sr3ll", 0.6, 1.2, 1.02],
+          {"group":""},
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //main shape
+          {"beamSpring":2001000,"beamDamp":300},
+          {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          ["sr3rr", "sr3"],
+          ["sr3", "sr3ll"],
+          ["sr2rr", "sr2"],
+          ["sr2", "sr2ll"],
+          ["sr1ll", "sr1"],
+          ["sr1", "sr1rr"],
+          ["sr2rr", "sr3rr"],
+          ["sr3", "sr2"],
+          ["sr3ll", "sr2ll"],
+          ["sr2ll", "sr1ll"],
+          ["sr1", "sr2"],
+          ["sr1rr", "sr2rr"],
+          //crossing
+          {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["sr3", "sr2ll"],
+          ["sr2", "sr3ll"],
+          ["sr3", "sr2rr"],
+          ["sr2", "sr3rr"],
+          ["sr1", "sr2rr"],
+          ["sr2", "sr1rr"],
+          ["sr1", "sr2ll"],
+          ["sr2", "sr1ll"],
+          //corner
+          {"beamDeform":3000,"beamStrength":"FLT_MAX"},
+          ["sr3rr", "sr1rr"],
+          ["sr3", "sr1"],
+          ["sr3ll", "sr1ll"],
+
+          //damper
+          {"beamSpring":0,"beamDamp":800},
+          ["sr3ll", "r4ll"],
+          ["sr3rr", "r4rr"],
+          ["sr3", "r4rr"],
+          ["sr3", "r4ll"],
+
+          //attach
+          {"beamSpring":7500,"beamDamp":37.6},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["sr2rr", "f4r"],
+          ["sr2rr", "f4rr"],
+          ["sr2rr", "f3r"],
+          ["sr1rr", "f3r"],
+          ["sr1rr", "f4r"],
+          ["sr1rr", "f3rr"],
+
+          ["sr2ll", "f4l"],
+          ["sr2ll", "f4ll"],
+          ["sr2ll", "f3l"],
+          ["sr1ll", "f3l"],
+          ["sr1ll", "f4l"],
+          ["sr1ll", "f3ll"],
+
+          ["sr2", "f4r"],
+          ["sr2", "f4l"],
+          ["sr2", "f3r"],
+          ["sr2", "f3l"],
+          ["sr1", "f3r"],
+          ["sr1", "f3l"],
+          ["sr1", "f4l"],
+          ["sr1", "f4r"],
+
+          //limiter
+          {"beamType":"|SUPPORT", "beamLongBound":5},
+          {"beamSpring":470000,"beamDamp":141},
+          {"beamPrecompression":0.9},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["sr1", "f3rr"],
+          ["sr1", "f3ll"],
+          ["sr2", "f4rr"],
+          ["sr2", "f4ll"],
+          ["sr3", "q1l"],
+          ["sr3", "q1r"],
+          {"optional":false},
+          {"beamPrecompression":1},
+
+          //cargo load box
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":500001,"beamDamp":250},
+          {"beamDeform":510000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["seat_box_R", "sr1rr"],
+          ["seat_box_R", "sr1ll"],
+          ["seat_box_R", "sr2rr"],
+          ["seat_box_R", "sr2ll"],
+          ["seat_box_R", "sr3rr"],
+          ["seat_box_R", "sr3ll"],
+          {"optional":false},
+
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        ["sr3rr", "sr2rr", "sr2"],
+        ["sr2", "sr3", "sr3rr"],
+        ["sr2rr", "sr1rr", "sr1"],
+        ["sr1", "sr2", "sr2rr"],
+        ["sr2", "sr1", "sr1ll"],
+        ["sr1ll", "sr2ll", "sr2"],
+        ["sr2ll", "sr3ll", "sr3"],
+        ["sr3", "sr2", "sr2ll"],
+    ],
+},
+}

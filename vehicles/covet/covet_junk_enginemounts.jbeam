@@ -1,0 +1,88 @@
+{
+"covet_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":15,
+    },
+    "slotType" : "covet_enginemounts",
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--1.5L I4 Engine--
+        {"selfCollision":false},
+        {"collision":true},
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"group":""},
+        //engine mount slidenode
+         {"group":""},
+         {"nodeWeight":2.0},
+         ["fx2", 0.00, -1.1919, 0.2166],
+    ],
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["fx2", "enginemountnode", true, true, 0.0, 11001000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.1, "beamShortBound":0.1,"boundZone":0.02},
+          {"beamSpring":10,"beamDamp":10},
+          {"beamLimitSpring":10,"beamLimitDamp":10},
+          {"beamDeform":10,"beamStrength":10},
+          {"breakGroup":"enginemount_a"},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+          ["em1r", "f12rr"],
+          ["em1r", "f10rr"],
+          ["em1r", "f12ll", {"boundZone":0.005}],
+          ["em1r", "f10ll", {"boundZone":0.005}],
+          ["em1r", "f1r"],
+          ["em1r", "f5r"],
+
+          //transmission soft mount
+          {"breakGroup":"enginemount_b"},
+          ["em1l", "f12ll"],
+          ["em1l", "f10ll"],
+          ["em1l", "f12rr", {"boundZone":0.005}],
+          ["em1l", "f10rr", {"boundZone":0.005}],
+          ["em1l", "f1l"],
+          ["em1l", "f5l"],
+
+          //engine torque mount
+          {"beamSpring":10,"beamDamp":10},
+          {"beamLimitSpring":10,"beamLimitDamp":10},
+          {"beamDeform":10,"beamStrength":10},
+          {"breakGroup":"enginemount_c"},
+          {"boundZone":0.02},
+          ["em2", "fx2"],
+          ["em2", "fx6r"],
+          ["em2", "fx6l"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":10,"beamStrength":10},
+          {"beamSpring":10,"beamDamp":10},
+          {"breakGroup":"enginemount_d"},
+          ["e3l", "f11rr"],
+          ["e4l", "f11ll"],
+          ["e4r", "f10rr"],
+          ["e3r", "f10ll"],
+          {"dampCutoffHz":""},
+          //damper break
+          {"beamSpring":0,"beamDamp":0},
+          {"beamPrecompression":1, "beamType":"|SUPPORT", "beamLongBound":2.0},
+          ["e3l", "f11rr"],
+          ["e4l", "f11ll"],
+          ["e4r", "f10rr"],
+          ["e3r", "f10ll"],
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0,"boundZone":""},
+    ],
+},
+}

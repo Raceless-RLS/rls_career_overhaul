@@ -1,0 +1,562 @@
+{
+"van_junk_reardoor_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Rear Door Latch",
+        "value":100,
+    },
+    "slotType" : "van_reardoor_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["van_reardoorglass_R","van_reardoorglass_R", "Right Rear Door Glass"],
+        ["van_reardoorpanel_R","", "Right Rear Door Panel"],
+        ["van_lettering_reardoor_R","", "Right Rear Door Lettering"],
+        ["van_doordetent_RR","van_doordetent_RR", "Rear Right Door Detent"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["van_reardoor_R", ["van_reardoor_R"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         ["van_reardoor_hinge_R", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"rearRightDoorCoupler"}],
+    ]
+    "rearRightDoorCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["rd2l",    "rdc2l",     0,                     0.00,                   0.000,                      0.0,                 0.0,                   "rearRightDoor_latch", {"forceCid1":"rd9r", "forceCid2":"rd3r"}]
+            ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["rd2r"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Door>90s_06_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Door>90s_06_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 55,
+        "openForceDuration": 1.8,
+        "closeForceMagnitude": 500,
+        "closeForceDuration": 0.1
+    },
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["rearRightDoor", "", "rd2r","rd2rr","rd3r", "box", {"x":0.08, "y":0.05, "z":0.15}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.02, "y":0.06, "z":-0.01}, {"deformGroup":"cargobox_reardoorhinge_b_R"}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["rearRightDoor", "action0", "rearRightDoorLatch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["rearRightDoorLatch", "ui.inputActions.covet.rearRightDoorLatch.title", "ui.inputActions.covet.rearRightDoorLatch.description", {"onUp":"controller.getControllerSafe('rearRightDoorCoupler').toggleGroup()"}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.02
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"van_reardoor_R"},
+         {"nodeWeight":1.316},
+         ["rd1r",-0.015, 3.15, 0.72],
+         ["rd1rr",-0.845, 3.15, 0.72],
+
+         ["rd2r",-0.015, 3.15, 0.93],
+         ["rd2rr",-0.845, 3.15, 0.93],
+
+         ["rd3r",-0.015, 3.15, 1.33],
+         ["rd3rr",-0.845, 3.15, 1.33],
+
+         ["rd4r",-0.015, 3.11, 1.67],
+         ["rd4rr",-0.78, 3.11, 1.67],
+         ["rd5r",-0.02, 3.00, 2.01],
+         ["rd5rr",-0.70, 3.00, 2.00],
+
+         {"selfCollision":false},
+         //dent nodes
+         ["rd6r",-0.43, 3.15, 0.72],
+         ["rd7r",-0.43, 3.15, 0.93],
+         ["rd8r",-0.43, 3.15, 1.33],
+
+         {"selfCollision":false},
+         {"collision":false},
+         //rigidifier
+         ["rd9r",-0.13, 2.75, 1.39],
+         //latch nodes
+         {"group":""},
+         ["rdc2l", 0.015, 3.15, 0.93],
+         ["rdc2r",-0.015, 3.20, 0.93],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //damper
+        {"spring":0, "damp":20, "deform":5000, "strength":1000},
+        ["rd1r", "rd1rr", "rd5rr", "v6r"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--RIGHT DOOR--
+          {"beamSpring":2044350,"beamDamp":145.7},
+          {"beamDeform":76125,"beamStrength":"FLT_MAX"},
+          //door main shape
+          {"deformLimitExpansion":1.2},
+          ["rd1rr","rd6r"],
+          ["rd1r","rd6r"],
+          ["rd2rr","rd7r"],
+          ["rd2r","rd7r"],
+          ["rd3rr","rd8r"],
+          ["rd3r","rd8r"],
+
+
+          ["rd1r","rd2r"],
+          ["rd6r","rd7r"],
+          ["rd1rr","rd2rr"],
+          ["rd2r","rd3r"],
+          ["rd7r","rd8r"],
+          ["rd2rr","rd3rr"],
+          ["rd3r","rd4r"],
+          //["rd8r","rd9r"],
+          ["rd3rr","rd4rr"],
+
+          //["rd4r","rd4rr"],
+          ["rd5r","rd5rr"],
+          ["rd4r","rd5r"],
+          ["rd4rr","rd5rr"],
+
+          {"beamDeform":9240,"beamStrength":"FLT_MAX"},
+          //corner rigids
+          {"deformLimitExpansion":""},
+          ["rd1r","rd3r"],
+          ["rd1rr","rd3rr"],
+          ["rd6r","rd8r"],
+          ["rd8r","rd5r"],
+          ["rd8r","rd5rr"],
+          ["rd4r","rd8r"],
+          ["rd4rr","rd8r"],
+
+          {"beamDeform":14700,"beamStrength":"FLT_MAX"},
+          ["rd1r","rd1rr"],
+          ["rd2r","rd2rr"],
+          ["rd3r","rd3rr"],
+
+          //lengthwise
+          {"beamStrength":"FLT_MAX"},
+
+          //surficial crossing
+          ["rd1rr","rd7r"],
+          ["rd2rr","rd6r"],
+          ["rd2rr","rd8r"],
+          ["rd3rr","rd7r"],
+
+          ["rd1r","rd7r"],
+          ["rd2r","rd6r"],
+          ["rd2r","rd8r"],
+          ["rd3r","rd7r"],
+
+          //rigidifier
+          {"beamDeform":6492.5,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"reardoorglass_R_break", "deformationTriggerRatio":0.03},
+          {"beamSpring":1258510,"beamDamp":145.7},
+          ["rd1r","rd9r"],
+          ["rd1rr","rd9r"],
+          ["rd2r","rd9r"],
+          ["rd2rr","rd9r"],
+          ["rd3r","rd9r"],
+          ["rd3rr","rd9r"],
+          ["rd4r","rd9r"],
+          ["rd4rr","rd9r"],
+          ["rd5r","rd9r"],
+          ["rd5rr","rd9r"],
+
+          ["rd6r","rd9r"],
+          ["rd7r","rd9r"],
+          ["rd8r","rd9r"],
+          {"deformGroup":""},
+          //latch node
+          {"beamSpring":1880940,"beamDamp":141},
+          {"beamDeform":31850,"beamStrength":"FLT_MAX"},
+          ["rdc2l","rd2r"],
+          ["rdc2l","rd1r"],
+          ["rdc2l","rd3r"],
+          ["rdc2l","rd9r"],
+          ["rdc2r","rd2r"],
+          ["rdc2r","rd1r"],
+          ["rdc2r","rd9r"],
+          ["rdc2r","rdc2l"],
+          //door hinge
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":2093230,"beamDamp":235},
+          {"beamDeform":27300,"beamStrength":58562},
+          {"breakGroup":"reardoorhinge_a_R"},
+          ["rd1rr", "b11rr"],
+          ["rd1rr", "v19r"],
+          ["rd1rr", "b10rr"],
+          ["rd1rr", "b11r"],
+          ["rd1rr", "b9r"],
+          ["rd3rr", "b11rr"],
+          {"breakGroup":"reardoorhinge_b_R"},
+          ["rd3rr", "v7r"],
+          ["rd3rr", "vr5rr"],
+          ["rd3rr", "v14r"],
+          ["rd1rr", "v7r"],
+
+          ////--DOOR LATCH--
+          //{"beamDeform":17325,"beamStrength":23051},
+          //{"breakGroup":"reardoorlatch_a_R"},
+          //["rd1r", "b11"],
+          //["rd1r", "b11r"],
+          //["rd2r", "b11"],
+          //{"breakGroup":"reardoorlatch_b_R"},
+          //["rd5r", "rf7"],
+          //["rd5r", "rf7r"],
+          //["rd5r", "rf6"],
+          {"breakGroup":""},
+
+          //--DOOR SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":8},
+          {"beamSpring":540349.6,"beamDamp":0},
+          {"beamDeform":13545,"beamStrength":348880},
+          {"beamPrecompression":1.0},
+          ["rd1r", "b9r"],
+          ["rd6r", "b9r"],
+          ["rd1rr", "b9rr"],
+          ["rd3rr", "v5r"],
+          ["rd5r", "rf6", {"optional":true}],
+          ["rd1rr", "v7r"],
+          ["rd5rr", "v7r"],
+          ["b11rr", "rd3rr"],
+          ["rf7r", "rd3rr"],
+          ["rd5r", "rf7r"],
+          ["rd4r", "rf7"],
+          ["b11", "rd2r"],
+          {"optional":true},
+          {"beamLongBound":180},
+          {"beamPrecompression":1.0},
+          {"beamSpring":540349.6,"beamDamp":0},
+          ["rdc2r", "rd2l",{"beamLongBound":300}],
+          ["rdc2r", "rd1l"],
+          ["rdc2r", "rd3l"],
+          {"beamLongBound":30},
+          {"beamPrecompression":0.98},
+          ["rd1r", "rd6l"],
+          ["rd2r", "rd7l"],
+          {"optional":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //right rear door
+            {"groundModel":"metal"},
+            {"group":"van_reardoor_R"},
+            {"dragCoef":6},
+            ["rd2r","rd1r","rd6r"],
+            ["rd2r","rd6r","rd7r"],
+            ["rd7r","rd6r","rd1rr"],
+            ["rd7r","rd1rr","rd2rr"],
+            ["rd3r","rd2r","rd7r"],
+            ["rd3r","rd7r","rd8r"],
+            ["rd8r","rd7r","rd2rr"],
+            ["rd8r","rd2rr","rd3rr"],
+
+            ["rd5r","rd4r","rd4rr"],
+            ["rd5r","rd4rr","rd5rr"],
+            ["rd4r","rd3r","rd8r"],
+            ["rd4r","rd8r","rd4rr"],
+            ["rd4rr","rd8r","rd3rr"],
+
+    ],
+},
+"van_junk_reardoor_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Rear Door Latch",
+        "value":100,
+    },
+    "slotType" : "van_reardoor_L",
+    "slots": [
+        ["type", "default", "description"],
+        ["van_reardoorglass_L","van_reardoorglass_L", "Left Rear Door Glass"],
+        ["van_reardoorpanel_L","", "Left Rear Door Panel"],
+        ["van_lettering_reardoor_L","van_lettering_gavril_reardoor_L", "Left Rear Door Lettering"],
+        ["van_doordetent_RL","van_doordetent_RL", "Rear Left Door Detent"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["van_reardoor_L", ["van_reardoor_L"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         ["van_reardoor_hinge_L", ["van_body"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"rearLeftDoorCoupler"}],
+    ]
+    "rearLeftDoorCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["rdc5l",   "rd5l",      0,                     0.00,                   0.000,                      0.0,                 0.0,                   "rearLeftDoor_latch", {"forceCid1":"rd9l", "forceCid2":"rd3l"}]
+            ["rdc1l",   "rd1l",      0,                     0.00,                   0.000,                      0.0,                 0.0,                   "rearLeftDoor_latch", {"forceCid1":"rd9l", "forceCid2":"rd3l"}]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["rd2l"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Door>90s_06_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Door>90s_06_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 55,
+        "openForceDuration": 1.8,
+        "closeForceMagnitude": 500,
+        "closeForceDuration": 0.1
+    },
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["rearLeftDoor", "", "rd2l","rd7l","rd3l", "box", {"x":0.05, "y":0.05, "z":0.16}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.00, "y":0.00, "z":-0.08}],
+        ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["rearLeftDoor", "action0", "rearLeftDoorLatch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["rearLeftDoorLatch", "ui.inputActions.covet.rearLeftDoorLatch.title", "ui.inputActions.covet.rearLeftDoorLatch.description", {"onUp":"controller.getControllerSafe('rearLeftDoorCoupler').toggleGroupConditional({{'rearRightDoorCoupler','attached','vehicle.advancedCouplerControl.openOtherSideFirst'}})"}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.02
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         //--DOOR--
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"van_reardoor_L"},
+         {"nodeWeight":1.316},
+         ["rd1l", 0.015, 3.15, 0.72],
+         ["rd1ll", 0.845, 3.15, 0.72],
+
+         ["rd2l", 0.015, 3.15, 0.93],
+         ["rd2ll", 0.845, 3.15, 0.93],
+
+         ["rd3l", 0.015, 3.15, 1.33],
+         ["rd3ll", 0.845, 3.15, 1.33],
+
+         ["rd4l", 0.015, 3.11, 1.67],
+         ["rd4ll", 0.78, 3.11, 1.67],
+         ["rd5l", 0.02, 3.00, 2.01],
+         ["rd5ll", 0.70, 3.00, 2.00],
+
+         {"selfCollision":false},
+         //dent nodes
+         ["rd6l", 0.43, 3.15, 0.72],
+         ["rd7l", 0.43, 3.15, 0.93],
+         ["rd8l", 0.43, 3.15, 1.33],
+
+         {"selfCollision":false},
+         {"collision":false},
+         //rigidifier
+         ["rd9l", 0.13, 2.75, 1.39],
+         {"group":""},
+         //latches
+         ["rdc5l", 0.02, 3.00, 2.01],
+         ["rdc1l", 0.015, 3.15, 0.72],
+         {"group":""},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //damper
+        {"spring":0, "damp":20, "deform":5000, "strength":1000},
+        ["rd1l", "rd1ll", "rd5ll", "v6l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--LEFT DOOR--
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":2044350,"beamDamp":145.7},
+          {"beamDeform":76125,"beamStrength":"FLT_MAX"},
+          //door main shape
+          ["rd1ll","rd6l"],
+          ["rd1l","rd6l"],
+          ["rd2ll","rd7l"],
+          ["rd2l","rd7l"],
+          ["rd3ll","rd8l"],
+          ["rd3l","rd8l"],
+
+
+          ["rd1l","rd2l"],
+          ["rd6l","rd7l"],
+          ["rd1ll","rd2ll"],
+          ["rd2l","rd3l"],
+          ["rd7l","rd8l"],
+          ["rd2ll","rd3ll"],
+          ["rd3l","rd4l"],
+          //["rd8l","rd9l"],
+          ["rd3ll","rd4ll"],
+
+          //["rd4l","rd4ll"],
+          ["rd5l","rd5ll"],
+          ["rd4l","rd5l"],
+          ["rd4ll","rd5ll"],
+
+          {"beamDeform":9240,"beamStrength":"FLT_MAX"},
+          //corner rigids
+          {"deformLimitExpansion":""},
+          ["rd1l","rd3l"],
+          ["rd1ll","rd3ll"],
+          ["rd6l","rd8l"],
+          ["rd8l","rd5l"],
+          ["rd8l","rd5ll"],
+          ["rd4l","rd8l"],
+          ["rd4ll","rd8l"],
+
+          {"beamDeform":14700,"beamStrength":"FLT_MAX"},
+          ["rd1l","rd1ll"],
+          ["rd2l","rd2ll"],
+          ["rd3l","rd3ll"],
+
+          //lengthwise
+          {"beamStrength":"FLT_MAX"},
+
+          //surficial crossing
+          ["rd1ll","rd7l"],
+          ["rd2ll","rd6l"],
+          ["rd2ll","rd8l"],
+          ["rd3ll","rd7l"],
+
+          ["rd1l","rd7l"],
+          ["rd2l","rd6l"],
+          ["rd2l","rd8l"],
+          ["rd3l","rd7l"],
+
+
+          //rigidifier
+          {"beamDeform":6492.5,"beamStrength":"FLT_MAX"},
+          {"beamSpring":1164510,"beamDamp":145.7},
+          {"deformGroup":"reardoorglass_L_break", "deformationTriggerRatio":0.03},
+          ["rd1l","rd9l"],
+          ["rd1ll","rd9l"],
+          ["rd2l","rd9l"],
+          ["rd2ll","rd9l"],
+          ["rd3l","rd9l"],
+          ["rd3ll","rd9l"],
+          ["rd4l","rd9l"],
+          ["rd4ll","rd9l"],
+          ["rd5l","rd9l"],
+          ["rd5ll","rd9l"],
+
+          ["rd6l","rd9l"],
+          ["rd7l","rd9l"],
+          ["rd8l","rd9l"],
+          {"deformGroup":""},
+
+          //door hinge
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":2093230,"beamDamp":235},
+          {"beamDeform":27300,"beamStrength":58562},
+          {"breakGroup":"reardoorhinge_a_L"},
+          ["rd1ll", "b11ll"],
+          ["rd1ll", "v19l"],
+          ["rd1ll", "b10ll"],
+          ["rd1ll", "b11l"],
+          ["rd1ll", "b9l"],
+          ["rd3ll", "b11ll"],
+          {"breakGroup":"reardoorhinge_b_L"},
+          ["rd3ll", "v7l"],
+          ["rd3ll", "vr5ll"],
+          ["rd3ll", "v14l"],
+          ["rd1ll", "v7l"],
+          //latch node
+          {"beamSpring":1880940,"beamDamp":141},
+          {"beamDeform":31850,"beamStrength":"FLT_MAX"},
+          ["rdc1l","b11"],
+          ["rdc1l","b11l"],
+          ["rdc1l","b9l"],
+          ["rdc5l","rf7"],
+          ["rdc5l","rf7l"],
+          ["rdc5l","rf6", {"optional":true}],
+          ["rdc5l","rf6l"],
+          ["rdc5l","rf6r"],
+          ////--DOOR LATCH--
+          //{"beamDeform":17325,"beamStrength":23051},
+          //{"breakGroup":"reardoorlatch_a_L"},
+          //["rd1l", "b11"],
+          //["rd1l", "b11l"],
+          //["rd2l", "b11"],
+          //{"breakGroup":"reardoorlatch_b_L"},
+          //["rd5l", "rf7"],
+          //["rd5l", "rf7l"],
+          //["rd5l", "rf6"],
+          //{"beamDeform":17325,"beamStrength":23051},
+          //{"breakGroup":"reardoorlatch_M"},
+          //{"optional":true},
+          //["rd9l", "rd9r"],
+          //["rd3l", "rd3r"],
+          //["rd3r", "rd4l"],
+          //["rd3l", "rd4r"],
+          //["rd3l", "rd2r"],
+          //["rd3r", "rd2l"],
+          //["rd9l", "rd3r"],
+          //["rd9r", "rd3l"],
+          //{"optional":false},
+          {"breakGroup":""},
+
+          //--DOOR SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":8},
+          {"beamSpring":540349.6,"beamDamp":0},
+          {"beamDeform":13545,"beamStrength":348880},
+          {"beamPrecompression":1.0},
+          ["rd1l", "b9l"],
+          ["rd6l", "b9l"],
+          ["rd1ll", "b9ll"],
+          ["rd3ll", "v5l"],
+          ["rd5l", "rf6", {"optional":true}],
+          ["rd1ll", "v7l"],
+          ["rd5ll", "v7l"],
+          ["b11ll", "rd3ll"],
+          ["rf7l", "rd3ll"],
+          ["rd5l", "rf7l"],
+          ["rd4l", "rf7"],
+          ["b11", "rd2l"],
+          {"optional":true},
+          {"beamLongBound":20},
+          {"beamPrecompression":1.0},
+          ["rd1l", "rd6r"],
+          ["rd2l", "rd7r"],
+          {"optional":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //left rear door
+            {"groundModel":"metal"},
+            {"group":"van_reardoor_L"},
+            {"dragCoef":6},
+            ["rd1l","rd2l","rd6l"],
+            ["rd2l","rd7l","rd6l"],
+            ["rd6l","rd7l","rd1ll"],
+            ["rd7l","rd2ll","rd1ll"],
+            ["rd3l","rd7l","rd2l"],
+            ["rd3l","rd8l","rd7l"],
+            ["rd7l","rd8l","rd2ll"],
+            ["rd8l","rd3ll","rd2ll"],
+
+            ["rd5l","rd4ll","rd4l"],
+            ["rd5l","rd5ll","rd4ll"],
+            ["rd4l","rd8l","rd3l"],
+            ["rd8l","rd4l","rd4ll"],
+            ["rd3ll","rd8l","rd4ll"],
+
+    ],
+},
+}

@@ -13,8 +13,6 @@ local C = {}
 local logTag = 'traffic'
 local daylightValues = {0.22, 0.78} -- sunset & sunrise
 local damageLimits = {50, 1000, 30000}
-local baseSightDirValue = 200
-local baseSightStrength = 500
 local lowSpeed = 2.5
 local tickTime = 0.25
 local tempVec = vec3()
@@ -24,7 +22,7 @@ local vecUp = vec3(0, 0, 1)
 
 function C:init(id, role)
   id = id or 0
-  local obj = be:getObjectByID(id)
+  local obj = getObjectByID(id)
   if not obj then
     log('E', logTag, 'Unable to add vehicle object with id ['..id..'] to traffic!')
     return
@@ -34,18 +32,16 @@ function C:init(id, role)
   local modelType = modelData and string.lower(modelData.Type) or 'none'
   if obj.jbeam == 'unicycle' and obj:isPlayerControlled() then modelType = 'player' end
   if not modelData or not arrayFindValueIndex({'car', 'truck', 'automation', 'traffic', 'proptraffic', 'player'}, modelType) or obj.ignoreTraffic then
-    log('W', logTag, 'Invalid vehicle type for traffic, now ignoring id ['..id..']')
+    log('I', logTag, 'Invalid vehicle type for traffic, now ignoring id ['..id..']')
     return
   end
 
-  be:getObjectByID(id):setMeshAlpha(1, '') -- force vehicle to be visible
+  getObjectByID(id):setMeshAlpha(1, '') -- force vehicle to be visible
 
   self.vars = gameplay_traffic.getTrafficVars()
   self.policeVars = gameplay_police.getPoliceVars()
   self.damageLimits = damageLimits
   self.collisions = {}
-  self.zones = {}
-  self.playerData = {}
 
   self.id = id
   self.state = 'reset'
@@ -56,6 +52,8 @@ function C:init(id, role)
   self.headlights = false
   self.isAi = false
   self.isPlayerControlled = obj:isPlayerControlled()
+  self.focus = gameplay_traffic.getFocus()
+  self.focusDist = 0
 
   self:resetAll()
   self:applyModelConfigData()
@@ -68,9 +66,7 @@ function C:init(id, role)
   self.debugLine = true
   self.debugText = true
 
-  self.pos, self.focusPos, self.dirVec, self.vel, self.driveVec = vec3(), vec3(), vec3(), vec3(), vec3()
-  self.dist = 0
-  self.distCam = 0
+  self.pos, self.targetPos, self.dirVec, self.vel, self.driveVec = vec3(), vec3(), vec3(), vec3(), vec3()
   self.damage = 0
   self.prevDamage = 0
   self.crashDamage = 0
@@ -83,7 +79,7 @@ end
 
 function C:applyModelConfigData() -- sets data that depends on the vehicle model & config, and returns the generated vehicle role
   local role = 'standard'
-  local obj = be:getObjectByID(self.id)
+  local obj = getObjectByID(self.id)
   local modelData = core_vehicles.getModel(obj.jbeam).model
   local _, configKey = path.splitWithoutExt(obj.partConfig)
   local configData = core_vehicles.getModel(obj.jbeam).configs[configKey]
@@ -117,10 +113,11 @@ function C:applyModelConfigData() -- sets data that depends on the vehicle model
   if offRoadScore then
     drivability = clamp(10 / max(1e-12, offRoadScore - 4 * max(0, width - 2) - 4 * max(0, length - 5)), 0, 1) -- minimum drivability
     -- large vehicles lower this value even more
+    -- this could be better
   end
 
   local configTypeLower = string.lower(configType or '')
-  if configTypeLower == 'police' or string.find(string.lower(obj.partConfig), 'police') then
+  if configTypeLower == 'police' or (string.endswith(obj.partConfig, '.pc') and string.find(string.lower(obj.partConfig), 'police')) then -- assumes police vehicle
     role = 'police'
   end
   if configTypeLower == 'service' then
@@ -153,23 +150,21 @@ function C:resetTracking()
 end
 
 function C:resetValues()
-  self.pos = self.pos or be:getObjectByID(self.id):getPosition()
+  self.pos = self.pos or getObjectByID(self.id):getPosition()
   self.respawn = {
-    sightDirValue = baseSightDirValue, -- smoothed sight direction value, from -200 (behind you) to 200 (ahead of you)
-    sightStrength = clamp(self.pos:distance(core_camera.getPosition()), baseSightStrength, baseSightStrength * 5), -- based on camera distance
+    spawnValue = self.vars.spawnValue, -- respawnability coefficient, from 0 (slow) to 3 (rapid); exactly 0 disables respawning
     spawnDirBias = self.vars.spawnDirBias, -- probability of direction of next respawn, from -1 (towards you) to 1 (away from you)
     spawnRandomization = 1, -- spawn point search randomization (from 0 to 1; 0 = straight ahead, 1 = branching and scattering)
-    spawnValue = self.vars.spawnValue, -- respawnability coefficient, from 0 (slow) to 3 (rapid); exactly 0 disables respawning
-    spawnCoef = 1, -- coefficient for value in previous line
-    finalSpawnValue = 1, -- calculated spawn value
-    extraRadius = 0, -- additional radius to keep the vehicle from respawning
-    finalRadius = 80 -- calculated radius to compare with player vehicle position and camera position
+    activeRadius = self.pos:distance(self.focus.pos) + 500, -- radius to stay active in (compares distance to focus point)
+    finalRadius = 1e6, -- calculated active radius
+    innerRadius = 50, -- minimum inner radius to stay active in (compares distances of non-traffic vehicles)
+    staticVisibility = 1 -- world visibility value (lower if occluded)
   }
   self.queuedFuncs = {} -- keys: timer, func, args, vLua (vLua string overrides func and args)
 end
 
 function C:resetElectrics()
-  local obj = be:getObjectByID(self.id)
+  local obj = getObjectByID(self.id)
   obj:queueLuaCommand('electrics.set_lightbar_signal(0)')
   obj:queueLuaCommand('electrics.set_warn_signal(0)')
   obj:queueLuaCommand('electrics.horn(false)')
@@ -183,20 +178,20 @@ function C:resetAll() -- resets everything
 end
 
 function C:honkHorn(duration) -- set horn with duration
-  be:getObjectByID(self.id):queueLuaCommand('electrics.horn(true)')
+  getObjectByID(self.id):queueLuaCommand('electrics.horn(true)')
   self.queuedFuncs.horn = {timer = duration or 1, vLua = 'electrics.horn(false)'}
 end
 
 function C:useSiren(duration, disableAfterUse) -- set siren with duration
-  be:getObjectByID(self.id):queueLuaCommand('electrics.set_lightbar_signal(2)')
+  getObjectByID(self.id):queueLuaCommand('electrics.set_lightbar_signal(2)')
   local cmd = disableAfterUse and 'electrics.set_lightbar_signal(0)' or 'electrics.set_lightbar_signal(1)'
   self.queuedFuncs.horn = {timer = duration or 1, vLua = cmd}
 end
 
-function C:setAiMode(mode) -- sets the AI mode
+function C:setAiMode(mode, ignoreRole) -- sets the AI mode and a few automatic parameters
   mode = mode or self.vars.aiMode
 
-  local obj = be:getObjectByID(self.id)
+  local obj = getObjectByID(self.id)
   obj:queueLuaCommand('ai.setMode("'..mode..'")')
   obj:queueLuaCommand('ai.reset()')
   if mode == 'traffic' then
@@ -205,21 +200,32 @@ function C:setAiMode(mode) -- sets the AI mode
     obj:queueLuaCommand('ai.driveInLane("on")')
   end
 
+  -- if ignoreRole is false, then the appropriate role is set for the vehicle
+  if not ignoreRole then
+    if mode == 'traffic' and self.roleName == 'empty' then
+      self:setRole(self.autoRole)
+    elseif mode ~= 'traffic' and self.roleName ~= 'empty' then
+      self:setRole('empty') -- prevents role logic from affecting vehicle AI mode
+    end
+  end
+
   self.isAi = mode ~= 'disabled'
 end
 
 function C:setAiAware(mode) -- sets the AI awareness
-  mode = mode or self.vars.aiAware
+  mode = mode or self.vars.aiAware -- mode can be: off, on, auto
 
-  be:getObjectByID(self.id):queueLuaCommand('ai.setAvoidCars("'..mode..'")')
-  be:getObjectByID(self.id):queueLuaCommand('ai.reset()') -- this is called to reset the AI plan
+  getObjectByID(self.id):queueLuaCommand('ai.setAvoidCars("'..mode..'")')
+  getObjectByID(self.id):queueLuaCommand('ai.reset()') -- this is called to reset the AI plan
 end
 
 function C:setRole(roleName) -- sets the driver role
   roleName = roleName or 'standard'
-  local prevName
   local roleClass = gameplay_traffic.getRoleConstructor(roleName)
   if roleClass then
+    self.roleName = roleName
+    local prevName
+
     if self.role then -- only if there is a previous role
       prevName = self.role.name
       self.role:onRoleEnded()
@@ -233,24 +239,22 @@ function C:setRole(roleName) -- sets the driver role
     end
 
     self.role:onRoleStarted()
-    extensions.hook('onTrafficAction', self.id, {targetId = self.role.targetId or 0, name = 'role'..string.sentenceCase(roleName), prevName = prevName and 'role'..string.sentenceCase(prevName), data = {}})
-
-    self.roleName = roleName
+    extensions.hook('onTrafficAction', self.id, 'changeRole', {targetId = self.role.targetId or 0, name = roleName, prevName = prevName, data = {}})
   end
 end
 
 function C:getInteractiveDistance(pos, squared) -- returns the distance of the "look ahead" point from this vehicle
   if pos then
-    return squared and (self.focusPos):squaredDistance(pos) or (self.focusPos):distance(pos)
+    return squared and (self.targetPos):squaredDistance(pos) or (self.targetPos):distance(pos)
   else
     return huge
   end
 end
 
-function C:modifyRespawnValues(addSightStrength, addExtraRadius, addSpawnDirBias) -- instantly modifies respawn values (can be used to keep a vehicle active for longer)
-  self.respawn.sightStrength = self.respawn.sightStrength + (addSightStrength or 0)
-  self.respawn.extraRadius = self.respawn.extraRadius + (addExtraRadius or 0)
-  self.respawn.spawnDirBias = clamp(self.respawn.spawnDirBias + (addSpawnDirBias or 0), -1, 1)
+function C:modifyRespawnValues(addActiveRadius, addInnerRadius) -- instantly modifies respawn values (can be used to keep a vehicle active for longer)
+  -- for example, this is used after collisions and within the police pursuit system
+  self.respawn.activeRadius = self.respawn.activeRadius + (addActiveRadius or 0)
+  self.respawn.innerRadius = self.respawn.innerRadius + (addInnerRadius or 0)
 end
 
 function C:getBrakingDistance(speed, accel) -- gets estimated braking distance
@@ -267,8 +271,8 @@ function C:checkCollisions() -- checks for contact with other tracked vehicles
       local isCurrentCollision = map.objects[id] and map.objects[id].objectCollisions[self.id] == 1
 
       if not self.collisions[id] and isCurrentCollision then -- init collision table
-        local bb1 = be:getObjectByID(self.id):getSpawnWorldOOBB()
-        local bb2 = be:getObjectByID(id):getSpawnWorldOOBB()
+        local bb1 = getObjectByID(self.id):getSpawnWorldOOBB()
+        local bb2 = getObjectByID(id):getSpawnWorldOOBB()
 
         if overlapsOBB_OBB(bb1:getCenter(), bb1:getAxis(0) * bb1:getHalfExtents().x, bb1:getAxis(1) * bb1:getHalfExtents().y, bb1:getAxis(2) * bb1:getHalfExtents().z, bb2:getCenter(), bb2:getAxis(0) * bb2:getHalfExtents().x, bb2:getAxis(1) * bb2:getHalfExtents().y, bb2:getAxis(2) * bb2:getHalfExtents().z) then
           self.collisions[id] = {state = 'active', inArea = false, speed = self.speed, vehDist = 0, damage = 0, dot = 0, count = 0, stop = 0}
@@ -277,7 +281,7 @@ function C:checkCollisions() -- checks for contact with other tracked vehicles
 
       local collision = self.collisions[id]
       if collision then -- update existing collision table
-        local dist = self.pos:squaredDistance(veh.pos)
+        local dist = self.pos:squaredDistance(veh.pos) -- distance is used to ensure accuracy with body collisions and rebounds
         if isCurrentCollision then collision.damage = max(collision.damage, self.damage - self.prevDamage) end -- update damage value while in contact
 
         if not isCurrentCollision and dist > square(collision.vehDist + 1) then
@@ -300,10 +304,10 @@ function C:checkCollisions() -- checks for contact with other tracked vehicles
 
         if self.isAi then
           veh = gameplay_traffic.getTrafficData()[id]
-          if veh and veh.isPerson then
-            if isCurrentCollision and not self.role.flags.pullOver then
+          if veh and veh.isPerson then -- specific logic that handles collision with unicycle (walking mode)
+            if isCurrentCollision and not self.role.flags.pullOver then -- stops AI during contact
               self.role:setAction('pullOver')
-            elseif not isCurrentCollision and self.role.flags.pullOver and dist > square(collision.vehDist + 3) then
+            elseif not isCurrentCollision and self.role.flags.pullOver and dist > square(collision.vehDist + 3) then -- restarts AI after a small distance
               self.role:resetAction()
             end
           end
@@ -340,7 +344,7 @@ end
 
 function C:fade(rate, isFadeOut) -- fades vehicle mesh
   self.alpha = clamp(self.alpha + (rate or 0.1) * (isFadeOut and -1 or 1), 0, 1)
-  be:getObjectByID(self.id):setMeshAlpha(self.alpha, '')
+  getObjectByID(self.id):setMeshAlpha(self.alpha, '')
 
   if isFadeOut and self.alpha == 0 then
     self.state = 'queued'
@@ -358,37 +362,59 @@ function C:checkRayCast(startPos, endPos) -- returns true if ray reaches positio
   return castRayStatic(startPos, tempVec, vecLen) >= vecLen
 end
 
-function C:tryRespawn(queueCoef) -- tests if the vehicle is out of sight and ready to respawn
-  if not self.enableRespawn or self.respawn.finalSpawnValue <= 0 then
-    self.respawn.sightDirValue = baseSightDirValue
-    self.respawn.sightStrength = baseSightStrength
+function C:updateActiveRadius(tickTime) -- updates values that track if the vehicle should stay active or respawn
+  if not self.enableRespawn or self.respawn.spawnValue <= 0 or not be:getObjectActive(self.id) then return end
+
+  local baseRadius = lerp(150, 80, min(1, self.respawn.spawnValue)) -- based on spawn value (larger radius if value is smaller)
+  local extraRadius = 0
+
+  tempVec:setSub2(self.pos, self.focus.pos)
+  tempVec:normalize()
+  local dotDirVec = self.focus.dirVec:dot(tempVec) -- in relation to focus direction
+
+  if commands.isFreeCamera() then
+    extraRadius = self.focus.pos.z - self.pos.z
+    extraRadius = clamp(square(extraRadius) / 30, 0, 300) * ((dotDirVec + 1) * 0.5) -- height difference adjustment
+  end
+
+  if dotDirVec > 0 then
+    extraRadius = extraRadius + square(dotDirVec) * (150 + self.focus.dist) -- outer active radius, is larger if focus direction is facing this vehicle
+  end
+
+  local visibilityValue = self.camVisible and 1 or -1
+  self.respawn.staticVisibility = clamp(self.respawn.staticVisibility + visibilityValue * tickTime * 0.2, 0, 1) -- 5 seconds of smoothing from 0 to 1
+
+  local decrement = tickTime * self.respawn.spawnValue * (2 - self.respawn.staticVisibility) * 40
+  self.respawn.activeRadius = max(baseRadius, self.respawn.activeRadius - decrement) -- gradually reduces active radius
+  self.respawn.finalRadius = self.respawn.activeRadius + extraRadius
+end
+
+function C:tryRespawn() -- tests if the vehicle is out of sight and ready to respawn
+  if not be:getObjectActive(self.id) then
+    self.state = 'queued'
     return
   end
 
-  if be:getObjectActive(self.id) then
-    queueCoef = queueCoef or 1 -- used as a coefficient if method is called on a cycle (not every frame)
-    -- maybe this coefficient should be lower if very many traffic vehicles are spawned
-    self.respawn.playerRadius = clamp(self.respawn.finalRadius, 40, 200) -- base radius for active area
-    tempVec:setSub2(self.pos, self.playerData.camPos)
-    tempVec:normalize()
-    local dotDirVecFromCam = self.playerData.camDirVec:dot(tempVec) -- directionality from camera
-    local heightValue = max(0, square(self.playerData.camPos.z - self.pos.z) / 8 * dotDirVecFromCam) -- camera height augments final distance if generally looking at vehicle
+  if not self.enableRespawn or self.respawn.spawnValue <= 0 then return end
 
-    local sightCoef = -1 -- negative value reduces sight value until vehicle might respawn
-    if self.camVisible then
-      sightCoef = self.respawn.sightStrength <= 0 and 1 or 0
+  if self.respawn.finalRadius < self.focusDist then
+    -- check all non-traffic vehicles to ensure that they are not much too close to this vehicle
+    local valid = true
+    for _, veh in ipairs(getAllVehiclesByType()) do
+      if not veh.isTraffic and not veh.isParked and map.objects[veh:getId()] then
+        local mapData = map.objects[veh:getId()]
+        tempVec:setScaled2(mapData.dirVec, self.respawn.innerRadius * 0.5) -- forwards offset
+        tempVec:setAdd2(mapData.pos, tempVec)
+        if self.pos:squaredDistance(tempVec) < square(self.respawn.innerRadius) then -- prevents respawning if too close
+          valid = false
+          break
+        end
+      end
     end
 
-    self.respawn.sightDirValue = lerp(self.respawn.sightDirValue, dotDirVecFromCam * 200, 0.01 * queueCoef) -- sight direction smoothing
-    self.respawn.sightStrength = max(-self.respawn.playerRadius, self.respawn.sightStrength + sightCoef * queueCoef) -- updated sight strength value
-    self.respawn.camRadius = self.respawn.playerRadius + max(0, self.respawn.sightDirValue + self.respawn.sightStrength + heightValue) -- maximum radius to check if the vehicle should stay active
-
-    -- player radius, camera sight virtual radius
-    if self.dist >= self.respawn.playerRadius and self.distCam >= self.respawn.camRadius then
+    if valid or self.ignoreInnerRadius then
       self.state = 'fadeOut'
     end
-  else
-    self.state = 'queued'
   end
 end
 
@@ -436,20 +462,21 @@ function C:trackDriving(dt, fullTracking) -- basic tracking for how a vehicle dr
           self.tracking.side = 1
         end
 
+        local speedCoef = (self.speed / self.tracking.speedLimit)
+
         -- reduces score if player is driving at speed on wrong side of the road (no logic for overtaking yet)
         -- TODO: in the future, track wrong side and wrong way separately
         if self.tracking.side < 0 then
-          local speedCoef = (self.speed / self.tracking.speedLimit) * 0.08
-          self.tracking.directionScore = max(0, self.tracking.directionScore + self.tracking.side * dt * speedCoef) -- decreases faster if wrong way on oneWay
+          self.tracking.directionScore = max(0, self.tracking.directionScore + self.tracking.side * dt * speedCoef * 0.08) -- decreases faster if wrong way on oneWay
         else
           self.tracking.directionScore = min(1, self.tracking.directionScore + dt * 0.05)
         end
 
         -- reduces score if player is driving recklessly (rapidly crossing lanes, doing donuts, etc.)
         if self.tracking.side ~= self.tracking.lastSide then
-          self.tracking.driveScore = max(0, self.tracking.driveScore - 0.05) -- decreases per instance of side switch
+          self.tracking.driveScore = max(0, self.tracking.driveScore - dt * speedCoef * 0.32) -- decreases every time the vehicle switches from legal side to illegal side
         else
-          self.tracking.driveScore = min(1, self.tracking.driveScore + dt * 0.02)
+          self.tracking.driveScore = min(1, self.tracking.driveScore + dt * 0.025)
         end
       else
         self.tracking.driveScore, self.tracking.directionScore = 1, 1
@@ -463,6 +490,7 @@ function C:trackDriving(dt, fullTracking) -- basic tracking for how a vehicle dr
         local mapNodeSignals = core_trafficSignals.getMapNodeSignals()
         if not self.tracking.signal and mapNodeSignals[n1] and mapNodeSignals[n1][n2] then
           for _, signal in ipairs(mapNodeSignals[n1][n2]) do -- get best signal from current road segment
+            -- TODO: this fails when the navgraph network is complex or overlapping
             local bestDist = 400
             if signal.target then
               local dist = self.pos:squaredDistance(signal.pos)
@@ -536,9 +564,7 @@ function C:triggerOffense(data) -- triggers a pursuit offense
     table.insert(self.pursuit.offensesList, key)
     self.pursuit.uniqueOffensesCount = self.pursuit.uniqueOffensesCount + 1
 
-    local tempData = deepcopy(data)
-    tempData.key = key
-    extensions.hook('onPursuitOffense', self.id, tempData)
+    extensions.hook('onPursuitOffense', self.id, key, data)
   end
   self.pursuit.offensesCount = self.pursuit.offensesCount + 1
   self.pursuit.offenseFlag = true
@@ -616,7 +642,7 @@ end
 
 function C:onVehicleResetted() -- triggers whenever vehicle resets (automatically or manually)
   if self.role.flags.freeze then
-    be:getObjectByID(self.id):queueLuaCommand('controller.setFreeze(0)')
+    getObjectByID(self.id):queueLuaCommand('controller.setFreeze(0)')
     self.role.flags.freeze = false
   end
   self:resetTracking()
@@ -642,14 +668,12 @@ end
 
 function C:onRefresh() -- triggers whenever vehicle data needs to be refreshed
   if self.isAi then
-    local obj = be:getObjectByID(self.id)
+    local obj = getObjectByID(self.id)
     obj.uiState = settings.getValue('trafficMinimap') and 1 or 0
 
     self.vars = gameplay_traffic.getTrafficVars()
     self.policeVars = gameplay_police.getPoliceVars()
     self:resetAll()
-
-    self:modifyRespawnValues(math.random(400)) -- randomly keeps some vehicles active for longer
 
     if self.vars.aiDebug == 'traffic' then
       obj:queueLuaCommand('ai.setVehicleDebugMode({debugMode = "off"})')
@@ -660,7 +684,7 @@ function C:onRefresh() -- triggers whenever vehicle data needs to be refreshed
     local isDaytime = self:checkTimeOfDay()
 
     if not isDaytime then
-      self.respawn.spawnCoef = self.respawn.spawnCoef * 0.25 -- ideally, this needs to scale smoothly with the time value
+      self.respawn.spawnValue = self.respawn.spawnValue * 0.25 -- ideally, this needs to scale smoothly with the time value
     end
     self.state = self.alpha == 1 and 'active' or 'fadeIn'
 
@@ -708,7 +732,8 @@ function C:onTrafficTick(tickTime)
   end
 
   if self.isAi then
-    self.camVisible = self:checkRayCast(self.playerData.camPos)
+    self.camVisible = self:checkRayCast(self.focus.pos)
+    self:updateActiveRadius(tickTime)
 
     if self.state == 'active' then
       local isDaytime = self:checkTimeOfDay()
@@ -721,12 +746,12 @@ function C:onTrafficTick(tickTime)
         isTunnel = not self:checkRayCast(nil, raisedPos) and not self:checkRayCast(nil, raisedPos - sideVec) and not self:checkRayCast(nil, raisedPos + sideVec)
       end
       if (isTunnel or not isDaytime) and not self.headlights then
-        local coef = min(4, 200 / self.distCam) -- larger if the vehicle is closely observed
+        local coef = min(4, 200 / self.focusDist) -- larger if the vehicle is closely observed
         self.queuedFuncs.headlights = {timer = random() * coef, vLua = 'electrics.setLightsState(1)'}
         self.headlights = true
       elseif (not isTunnel and isDaytime) and self.headlights then
         self.queuedFuncs.headlights = nil
-        be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
+        getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
         self.headlights = false
       end
     end
@@ -762,17 +787,16 @@ function C:onUpdate(dt, dtSim)
   self.dirVec = map.objects[self.id].dirVec
   self.vel = map.objects[self.id].vel
   self.speed = self.isPerson and self.vel:z0():length() or self.vel:length()
-
-  self.distCam = self.pos:distance(self.playerData.camPos)
-  self.dist = self.playerData.pos ~= self.playerData.camPos and self.pos:distance(self.playerData.pos) or self.distCam
+  self.focus = gameplay_traffic.getFocus() -- the origin point, whether it's the game camera, player, or other entity
+  self.focusDist = self.pos:distance(self.focus.pos)
 
   if self.speed < 1 then
     self.driveVec = self.dirVec
   else
     self.driveVec:setScaled2(self.vel, 1 / (self.speed + 1e-12))
   end
-  self.focusPos:setScaled2(self.driveVec, clamp(self.speed * 2, 20, 50))
-  self.focusPos:setAdd2(self.pos, self.focusPos) -- virtual point ahead of vehicle trajectory, dependent on speed
+  self.targetPos:setScaled2(self.driveVec, clamp(self.speed * 2, 10, 50))
+  self.targetPos:setAdd2(self.pos, self.targetPos) -- virtual point ahead of vehicle trajectory, dependent on speed
 
   if (not be:getObjectActive(self.id) or self.state == 'active') and not self.enableRespawn then
     self.state = 'locked'
@@ -787,7 +811,8 @@ function C:onUpdate(dt, dtSim)
       if self.state == 'fadeOut' or self.state == 'fadeIn' then
         if self.state == 'fadeIn' then
           if self.respawnSpeed then
-            be:getObjectByID(self.id):queueLuaCommand('thrusters.applyVelocity(obj:getDirectionVector() * '..(self.respawnSpeed * self.alpha)..')') -- makes vehicle start at speed
+            getObjectByID(self.id):queueLuaCommand('thrusters.applyVelocity(obj:getDirectionVector() * '..(self.respawnSpeed * self.alpha)..')') -- makes vehicle start at speed
+            -- NOTE: why is this disabled?
           end
           if self.damage >= 1000 and self.respawnActive and self.alpha > 0 then
             log('W', logTag, string.format('Traffic vehicle with id [%d] respawned with big damage! (%.1f, %.1f, %.1f)', self.id, self.pos.x, self.pos.y, self.pos.z))
@@ -796,7 +821,7 @@ function C:onUpdate(dt, dtSim)
         end
 
         if self.headlights then
-          be:getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
+          getObjectByID(self.id):queueLuaCommand('electrics.setLightsState(0)')
           self.headlights = false
         end
 
@@ -808,16 +833,14 @@ function C:onUpdate(dt, dtSim)
           self.respawnActive = nil
           self.respawnSpeed = nil
         end
-
-        self.respawn.finalSpawnValue = clamp(self.respawn.spawnValue * self.respawn.spawnCoef, 0, 3)
-        self.respawn.finalRadius = self.respawn.extraRadius + 20 + 60 / (self.respawn.finalSpawnValue + 1e-12)
-        if self.respawn.sightStrength > 0 then
-          self.respawn.sightStrength = max(0, self.respawn.sightStrength - dtSim * self.respawn.finalSpawnValue * 40) -- linear reduce base sight strength
-        end
       end
     end
 
-    if self.vars.aiMode ~= 'traffic' then return end -- if main AI mode is not traffic, ignore everything below meant for traffic
+    self.tickTimer = self.tickTimer + dtSim
+    if self.tickTimer >= tickTime then
+      self:onTrafficTick(tickTime)
+      self.tickTimer = self.tickTimer - tickTime
+    end
 
     if self.enableTracking and self.tracking.delay == 0 then
       self:checkCollisions()
@@ -831,12 +854,6 @@ function C:onUpdate(dt, dtSim)
       end
     end
 
-    self.tickTimer = self.tickTimer + dtSim
-    if self.tickTimer >= tickTime then
-      self:onTrafficTick(tickTime)
-      self.tickTimer = self.tickTimer - tickTime
-    end
-
     -- queued functions
     for k, v in pairs(self.queuedFuncs) do
       if not v.timer then v.timer = 0 end
@@ -845,7 +862,7 @@ function C:onUpdate(dt, dtSim)
         if not v.vLua then
           v.func(unpack(v.args))
         else
-          be:getObjectByID(self.id):queueLuaCommand(v.vLua)
+          getObjectByID(self.id):queueLuaCommand(v.vLua)
         end
         self.queuedFuncs[k] = nil
       end

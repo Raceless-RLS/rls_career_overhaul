@@ -1,0 +1,69 @@
+{
+"fullsize_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Automatic Transmission",
+        "value":250,
+    },
+    "slotType" : "fullsize_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["fullsize_converter","fullsize_converter","Torque Converter", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.00, 0, 2.4, 1.47, 1.0, 0.68],
+        "parkLockTorque":3000,
+        "oneWayViscousCoef":75,
+        "friction": 2.00,
+        "dynamicFriction": 0.00300,
+        "torqueLossCoef": 0.030,
+        "gearboxNode:":["tra1"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRN21",
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":2.5,
+        "gearboxDecisionSmoothingUp":2.5,
+        "gearboxDecisionSmoothingDown":2.5,
+        "aggressionSmoothingUp":1.9,
+        "aggressionSmoothingDown":1.9,
+        "aggressionHoldOffThrottleDelay":1.9,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":3500,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_fullsize_transmission", ["fullsize_engine","fullsize_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Auto--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"fullsize_transmission"},
+         {"nodeWeight":33.25},
+         ["tra1", 0.0, -0.60, 0.43],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":30010000,"beamDamp":500},
+          {"beamDeform":500000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

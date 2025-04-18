@@ -1,0 +1,362 @@
+{
+"md_series_junk_exhaust_regCab_stack_single": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Single Right Exhaust Stack",
+        "value":45,
+    },
+    "slotType" : "md_series_exhaust_regCab",
+    "slots2": [
+        ["name",                      "allowTypes",                  "denyTypes", "default",                        "description"],
+        //exhaust stacks
+        ["md_series_exhauststack_R",    ["md_series_exhauststack_R",],   [""],                        "md_series_exhauststack_R", "Right Exhaust Stack", {
+            "variables": {
+                "$components.stackMaterial.Material": "us_semi_common",
+            }
+        }
+        ],
+        ["md_series_exhaustmaterial", ["md_series_exhaustmaterial"], [""],        "md_series_exhaustmaterial_bare", "Exhaust Finish Type", {"coreSlot":true}],
+    ],
+    "components": {
+        "rearFrameOffset": {
+            "exhaustClearanceOffset": 0,
+        },
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["md_series_exhaust_downpipe", ["md_series_ypipe"]],
+         ["md_series_muffler", ["md_series_ypipe"]],
+         ["md_series_exhaust_single_stack", ["md_series_ypipe"]],
+    ],
+    "soundConfigExhaust": {
+        "$+lowShelfGain":10,
+        "$+highShelfGain":-6,
+        "$+eqFundamentalGain":12,
+    },
+    "nodes": [
+         ["id",   "posX", "posY", "posZ"],
+         {"nodeWeight":3.5},
+         {"group":"md_series_ypipe"},
+         {"selfCollision":true},
+         {"collision":true},
+         ["ex1", -0.25,  -1.2361, 1.13],
+         ["ex2", -0.29,  -0.5825, 0.59]
+         ["ex3", -0.27,   0.2864, 0.59],
+         ["ex4", -0.27,   0.494,  1.01],
+         ["ex5r",-0.75,   0.495,  0.76],
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":1},
+         ["ex6",  0.05,  -0.1396, 1.3448],
+         {"group":""},
+
+    ],
+    "beams": [
+          ["id1:",   "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":1501000,"beamDamp":250},
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          //ypipe main shape
+          ["entb2",  "ex1",    {"isExhaust":"mainEngine","beamStrength":"FLT_MAX", "breakGroup":"ypipe_break_F"}],
+          ["ex1",    "ex2",    {"isExhaust":"mainEngine"}],
+          ["ex2",    "ex3",    {"isExhaust":"mainEngine"}],
+          ["ex3",    "ex4",    {"isExhaust":"mainEngine"}],
+          ["ex4",    "ex5r",   {"isExhaust":"mainEngine"}],
+          //rigidifier
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          ["ex1",    "ex6"],
+          ["ex2",    "ex6"],
+          ["ex3",    "ex6"],
+          ["ex4",    "ex6"],
+          ["ex5r",   "ex6"],
+
+          //rigids
+          ["ex1",    "ex3"],
+          ["ex2",    "ex4"],
+          ["ex3",    "ex5r"],
+
+          {"beamSpring":601000,"beamDamp":150},
+          {"beamDeform":8000,"beamStrength":36000},
+          {"breakGroup":"ypipe_break_R"},
+          ["ex2",    "mf11r"],
+          ["ex2",    "mf1r"],
+          ["ex2",    "ff14r"],
+          ["ex2",    "ff4r"],
+          ["ex3",    "mf11r"],
+          ["ex3",    "mf1r"],
+          ["ex3",    "ff14r"],
+          ["ex3",    "ff4r"],
+          ["ex2",    "ff14l"],
+          ["ex3",    "mf11l"],
+
+          {"breakGroup":"ypipe_break_F"},
+          {"beamDeform":5000,"beamStrength":146000},
+          ["ex1",    "en4r"],
+          ["ex1",    "en3r"],
+          ["ex1",    "en4l"],
+          ["ex1",    "en2l"],
+          ["ex1",    "en2r"],
+          ["ex2",    "en4r"],
+          ["ex2",    "en2r"],
+          ["ex4",    "ff14l"],
+
+
+          //attach beams for exhaust stacks go here as they will be different per cab length
+          {"beamSpring":5000,"beamDamp":50},
+          {"beamDeform":12000,"beamStrength":5000},
+          {"optional":true},
+          {"breakGroup":"exhauststack_a_R"},
+          ["esa1r",  "rp3rr"],
+          ["esa1r",  "rp3r"],
+          ["esa1r",  "rb8rr"],
+
+          ["esm2r",  "rb8rrr"],
+          ["esm2r",  "rp3rr"],
+          ["esm2r",  "rp3r"],
+          ["esm2r",  "rb8rr"],
+          ["esm1r",  "rb8rrr"],
+          ["esm1r",  "rp3rr"],
+          ["esm1r",  "rp3r"],
+          ["esm1r",  "rb8rr"],
+          ["esm2rr", "rb8rrr"],
+          ["esm2rr", "rp3rr"],
+          ["esm2rr", "rp3r"],
+          ["esm2rr", "rb8rr"],
+          ["esm1rr", "rb8rrr"],
+          ["esm1rr", "rp3rr"],
+          ["esm1rr", "rp3r"],
+          ["esm1rr", "rb8rr"],
+
+          {"breakGroup":"exhauststack_b_R"},
+          ["esa2r",  "rb7rr"],
+          ["esa2r",  "rb7rrr"],
+          ["esa2r",  "b3rr"],
+          ["esa2r",  "b3rrr"],
+
+          ["esm6r",  "rb7rr"],
+          ["esm6r",  "rb7rrr"],
+          ["esm6r",  "b3rr"],
+          ["esm6r",  "b3rrr"],
+          ["es10r",  "b3rr"],
+
+          {"optional":false},
+
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "triangles": [
+          ["id1:", "id2:", "id3:"],
+          {"triangleType":"NONCOLLIDABLE"},
+
+          ["ex1",  "ex2",  "ex3"],
+          ["ex3",  "ex4",  "ex5r"],
+          {"triangleType":"NORMALTYPE"},
+    ],
+},
+
+"md_series_junk_exhaust_regCab_stacks": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Twin Exhaust Stacks",
+        "value":150,
+    },
+    "slotType" : "md_series_exhaust_regCab",
+    "slots2": [
+        ["name",                      "allowTypes",                  "denyTypes", "default",                        "description"],
+        //exhaust stacks
+        ["md_series_exhauststack_R",    ["md_series_exhauststack_R",],   [""],                        "md_series_exhauststack_R", "Right Exhaust Stack", {
+            "variables": {
+                "$components.stackMaterial.Material": "us_semi_common",
+            }
+        }
+        ],
+        ["md_series_exhauststack_L",    ["md_series_exhauststack_L",],   [""],                        "md_series_exhauststack_L", "Left Exhaust Stack", {
+            "variables": {
+                "$components.stackMaterial.Material": "us_semi_common",
+            }
+        }
+        ],
+        ["md_series_exhaustmaterial", ["md_series_exhaustmaterial"], [""],        "md_series_exhaustmaterial_bare", "Exhaust Finish Type", {"coreSlot":true}],
+    ],
+    "components": {
+        "rearFrameOffset": {
+            "exhaustClearanceOffset": 0,
+        },
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["md_series_exhaust_downpipe", ["md_series_ypipe"]],
+         ["md_series_muffler", ["md_series_ypipe"]],
+         ["md_series_exhaust_twin_single", ["md_series_ypipe"]],
+    ],
+    "soundConfigExhaust": {
+        "$+lowShelfGain":10,
+        "$+highShelfGain":-6,
+        "$+eqFundamentalGain":12,
+    },
+    "nodes": [
+         ["id",   "posX", "posY", "posZ"],
+         {"nodeWeight":3.5},
+         {"group":"md_series_ypipe"},
+         {"selfCollision":true},
+         {"collision":true},
+         ["ex1", -0.25,  -1.2361, 1.13],
+         ["ex2", -0.29,  -0.5825, 0.59]
+         ["ex3", -0.27,   0.2864, 0.59],
+         ["ex4", -0.27,   0.494,  1.01],
+         ["ex4l", 0.42,   0.494,  1.01],
+         ["ex5l", 0.75,   0.495,  0.76],
+         ["ex5r",-0.75,   0.495,  0.76],
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":1},
+         ["ex6",  0.05,  -0.1396, 1.3448],
+         {"group":""},
+
+    ],
+    "beams": [
+          ["id1:",   "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":1501000,"beamDamp":250},
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          //ypipe main shape
+          ["entb2",  "ex1",    {"isExhaust":"mainEngine","beamStrength":"FLT_MAX", "breakGroup":"ypipe_break_F"}],
+          ["ex1",    "ex2",    {"isExhaust":"mainEngine"}],
+          ["ex2",    "ex3",    {"isExhaust":"mainEngine"}],
+          ["ex3",    "ex4",    {"isExhaust":"mainEngine"}],
+          ["ex4",    "ex4l",   {"isExhaust":"mainEngine"}],
+          ["ex4",    "ex5r",   {"isExhaust":"mainEngine"}],
+          ["ex4l",   "ex5l",   {"isExhaust":"mainEngine"}],
+          //rigidifier
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          ["ex1",    "ex6"],
+          ["ex2",    "ex6"],
+          ["ex3",    "ex6"],
+          ["ex4",    "ex6"],
+          ["ex4l",   "ex6"],
+          ["ex5r",   "ex6"],
+          ["ex5l",   "ex6"],
+
+          //rigids
+          ["ex1",    "ex3"],
+          ["ex2",    "ex4"],
+          ["ex2",    "ex4l"],
+          ["ex3",    "ex5r"],
+          ["ex3",    "ex4l"],
+          ["ex3",    "ex5l"],
+
+          {"beamSpring":601000,"beamDamp":150},
+          {"beamDeform":8000,"beamStrength":36000},
+          {"breakGroup":"ypipe_break_R"},
+          ["ex2",    "mf11r"],
+          ["ex2",    "mf1r"],
+          ["ex2",    "ff14r"],
+          ["ex2",    "ff4r"],
+          ["ex3",    "mf11r"],
+          ["ex3",    "mf1r"],
+          ["ex3",    "ff14r"],
+          ["ex3",    "ff4r"],
+          ["ex2",    "ff14l"],
+          ["ex3",    "mf11l"],
+
+          {"breakGroup":"ypipe_break_F"},
+          {"beamDeform":5000,"beamStrength":146000},
+          ["ex1",    "en4r"],
+          ["ex1",    "en3r"],
+          ["ex1",    "en4l"],
+          ["ex1",    "en2l"],
+          ["ex1",    "en2r"],
+          ["ex2",    "en4r"],
+          ["ex2",    "en2r"],
+          ["ex4l",   "ff14l"],
+
+
+          //attach beams for exhaust stacks go here as they will be different per cab length
+          {"beamSpring":5000,"beamDamp":50},
+          {"beamDeform":12000,"beamStrength":5000},
+          {"optional":true},
+          {"breakGroup":"exhauststack_a_R"},
+          ["esa1r",  "rp3rr"],
+          ["esa1r",  "rp3r"],
+          ["esa1r",  "rb8rr"],
+
+          ["esm2r",  "rb8rrr"],
+          ["esm2r",  "rp3rr"],
+          ["esm2r",  "rp3r"],
+          ["esm2r",  "rb8rr"],
+          ["esm1r",  "rb8rrr"],
+          ["esm1r",  "rp3rr"],
+          ["esm1r",  "rp3r"],
+          ["esm1r",  "rb8rr"],
+          ["esm2rr", "rb8rrr"],
+          ["esm2rr", "rp3rr"],
+          ["esm2rr", "rp3r"],
+          ["esm2rr", "rb8rr"],
+          ["esm1rr", "rb8rrr"],
+          ["esm1rr", "rp3rr"],
+          ["esm1rr", "rp3r"],
+          ["esm1rr", "rb8rr"],
+
+          {"breakGroup":"exhauststack_a_L"},
+          ["esa1l",  "rp3ll"],
+          ["esa1l",  "rp3l"],
+          ["esa1l",  "rb8ll"],
+
+          ["esm2l",  "rb8lll"],
+          ["esm2l",  "rp3ll"],
+          ["esm2l",  "rp3l"],
+          ["esm2l",  "rb8ll"],
+          ["esm1l",  "rb8lll"],
+          ["esm1l",  "rp3ll"],
+          ["esm1l",  "rp3l"],
+          ["esm1l",  "rb8ll"],
+          ["esm2ll", "rb8lll"],
+          ["esm2ll", "rp3ll"],
+          ["esm2ll", "rp3l"],
+          ["esm2ll", "rb8ll"],
+          ["esm1ll", "rb8lll"],
+          ["esm1ll", "rp3ll"],
+          ["esm1ll", "rp3l"],
+          ["esm1ll", "rb8ll"],
+
+          {"breakGroup":"exhauststack_b_R"},
+          ["esa2r",  "rb7rr"],
+          ["esa2r",  "rb7rrr"],
+          ["esa2r",  "b3rr"],
+          ["esa2r",  "b3rrr"],
+
+          ["esm6r",  "rb7rr"],
+          ["esm6r",  "rb7rrr"],
+          ["esm6r",  "b3rr"],
+          ["esm6r",  "b3rrr"],
+          ["es10r",  "b3rr"],
+
+          {"breakGroup":"exhauststack_b_L"},
+          ["esa2l",  "rb7ll"],
+          ["esa2l",  "rb7lll"],
+          ["esa2l",  "b3ll"],
+          ["esa2l",  "b3lll"],
+
+          ["esm6l",  "rb7ll"],
+          ["esm6l",  "rb7lll"],
+          ["esm6l",  "b3ll"],
+          ["esm6l",  "b3lll"],
+          ["es10l",  "b3ll"],
+          {"optional":false},
+
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "triangles": [
+          ["id1:", "id2:", "id3:"],
+          {"triangleType":"NONCOLLIDABLE"},
+
+          ["ex1",  "ex2",  "ex3"],
+          ["ex3",  "ex4",  "ex5r"],
+          ["ex3",  "ex4l", "ex4"],
+          ["ex3",  "ex5l", "ex4l"],
+          {"triangleType":"NORMALTYPE"},
+    ],
+},
+
+}

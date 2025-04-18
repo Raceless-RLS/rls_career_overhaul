@@ -1,0 +1,316 @@
+{
+"pigeon_junk_windshield": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":5,
+    },
+    "slotType" : "pigeon_windshield",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"windshield_break", "deformMaterialBase":"pigeon_glass", "deformMaterialDamaged":"pigeon_windshield_dmg"},
+         ["pigeon_windshield", ["pigeon_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"pigeon_glass_int", "deformMaterialDamaged":"pigeon_glass_int"},
+         ["pigeon_windshield_int", ["pigeon_windshield"]],
+
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_cracks"},
+         ["pigeon_windshield_dmg", ["pigeon_windshield"]],
+         {"deformGroup":""},
+         ["pigeon_wiper", ["pigeon_windshield"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.02
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"group":["pigeon_windshield","gps"]},
+         {"nodeWeight":0.3},
+         ["wi1", 0, -0.44, 1.19],
+         {"nodeMaterial":"|NM_PLASTIC"},
+
+         //--ADD WEIGHT--
+
+         //windshield
+         //a pillar
+         {"nodeWeight":0.45},
+         ["p2r",-0.549,-0.421,1.181, {"group":["pigeon_body","gps","pigeon_windshield"]}],
+         ["p2l",0.549,-0.421,1.181, {"group":["pigeon_body","gps","pigeon_windshield"]}],
+         //roof
+         {"nodeWeight":0.45},
+         ["rf1r",-0.483,-0.216,1.45, {"group":["pigeon_roof","pigeon_body","gps","pigeon_windshield"]},],
+         ["rf1",0.0,-0.232,1.472, {"nodeWeight":0.3, "group":["pigeon_roof","pigeon_body","gps","pigeon_windshield"]}],
+         ["rf1l",0.483,-0.216,1.45, {"group":["pigeon_roof","pigeon_body","gps","pigeon_windshield"]},],
+         //firewall
+         {"nodeWeight":0.75},
+         {"group":["gps","pigeon_windshield","pigeon_dash","pigeon_body"]},
+         ["b6rr",-0.611,-0.6,0.912],
+         ["b6r",-0.244,-0.622,0.925],
+         ["b6l",0.244,-0.622,0.925],
+         ["b6ll",0.611,-0.6,0.912, {"group":["gps","pigeon_windshield","pigeon_body"]}],
+         {"group":""},
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //weak windshield beams
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":241000,"beamDamp":40},
+          {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+
+          {"deformLimitExpansion":""},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.03},
+          ["wi1","rf1"],
+          ["p1r","wi1"],
+          ["p1l","wi1"],
+          ["wi1","b6r"],
+          ["wi1","b6l"],
+          ["wi1","rf2"],
+          ["rf1r","wi1"],
+          ["rf1l","wi1"],
+          ["wi1","b6rr"],
+          ["wi1","b6ll"],
+          {"beamDeform":1200,"beamStrength":10},
+          ["p1r","p1l"],
+          ["rf1r","b6r"],
+          ["rf1l","b6l"],
+          ["rf1","b6r"],
+          ["rf1","b6l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //windshield
+            {"groundModel":"glass"},
+            {"dragCoef":2},
+            {"group":"pigeon_windshield"},
+            ["p1r", "b6r", "b6l"],
+            ["p1l", "p1r", "b6l"],
+            ["rf1", "p1r", "p1l"],
+            {"group":""},
+    ],
+},
+"pigeon_junk_backlight": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "pigeon_backlight",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"backlight_break", "deformMaterialBase":"pigeon_glass", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_backlight", ["pigeon_body", "pigeon_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound9", "deformVolume":0.0}],
+         {"deformGroup":"backlight_break", "deformMaterialBase":"pigeon_glass_int", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_backlight_int", ["pigeon_body", "pigeon_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_PLASTIC"},
+
+         //--ADD WEIGHT--
+
+         //rear window
+         //b pillar
+         //weight added by glass
+         {"nodeWeight":0.4},
+         {"group":"pigeon_body"},
+         ["p3r",-0.549,0.349,1.181],
+         ["p3l",0.549,0.349,1.181],
+         //roof
+         {"nodeWeight":0.4},
+         ["rf2r",-0.483,0.349,1.45]
+         ["rf2",0.0,0.349,1.472, {"nodeWeight":0.3}],
+         ["rf2l",0.483,0.349,1.45]
+         //rear wall
+         {"nodeWeight":0.7},
+         ["b8rr",-0.611,0.349,0.87],
+         ["b8",0.0,0.349,0.87],
+         ["b8ll",0.611,0.349,0.87],
+         {"group":""},
+         //windshield 12kg, rear windshield 10kg, sedan window 3kg, coupe window 4kg
+         //1411kg
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":241000,"beamDamp":40},
+          {"beamDeform":1200,"beamStrength":"FLT_MAX"},
+
+          //brittle glass beams
+          {"breakGroup":"backlight"},
+          {"deformGroup":"backlight_break","deformationTriggerRatio":0.03},
+          {"deformLimitExpansion":""},
+          ["p3l", "p3r"],
+          ["b8", "rf2"],
+          ["rf2r", "b8"],
+          ["rf2l", "b8"],
+          ["b8ll", "rf2"],
+          ["b8rr", "rf2"],
+          ["rf2r", "b8ll"],
+		  {"beamDeform":1200,"beamStrength":10},
+          ["rf2l", "b8rr"],
+          ["p3l", "rf2r"],
+          ["p3r", "rf2l"],
+          ["p3l", "b8rr"],
+          ["p3r", "b8ll"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pigeon_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "pigeon_doorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"pigeon_glass", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_doorglass_R", ["pigeon_door_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"pigeon_glass_int", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_doorglass_R_int", ["pigeon_door_R"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         //front right door glass
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"pigeon_door_R"},
+         {"nodeWeight":0.65},
+         ["d10r",-0.59, -0.37, 1.18],
+         ["d11r",-0.52, -0.2, 1.42],
+         ["d12r",-0.52, 0.3, 1.42],
+         ["d13r",-0.59, 0.3, 1.18],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":241000,"beamDamp":40},
+          {"beamDeform":1200,"beamStrength":"FLT_MAX"},
+
+          //brittle glass beams
+          {"deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_FR"},
+          {"deformLimitExpansion":""},
+          ["d11r","d8r"],
+          ["d12r","d8r"],
+          ["d10r","d13r"],
+          ["d10r","d9r"],
+          ["d13r","d7r"],
+          ["d9r","d11r"],
+		  {"beamDeform":1200,"beamStrength":10},
+          ["d7r","d11r"],
+          ["d9r","d12r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pigeon_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "pigeon_doorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"pigeon_glass", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_doorglass_L", ["pigeon_door_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"pigeon_glass_int", "deformMaterialDamaged":"pigeon_glass_dmg"},
+         ["pigeon_doorglass_L_int", ["pigeon_door_L"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         //left door glass
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"frictionCoef":0.5},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"pigeon_door_L"},
+         {"nodeWeight":0.65},
+         ["d10l",0.59, -0.37, 1.18],
+         ["d11l",0.52, -0.2, 1.42],
+         ["d12l",0.52, 0.3, 1.42],
+         ["d13l",0.59, 0.3, 1.18],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":241000,"beamDamp":40},
+          {"beamDeform":1200,"beamStrength":"FLT_MAX"},
+
+          //brittle glass beams
+          {"deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"doorglass_L"},
+          {"deformLimitExpansion":""},
+          ["d11l","d8l"],
+          ["d12l","d8l"],
+          ["d10l","d13l"],
+          ["d10l","d9l"],
+          ["d13l","d7l"],
+          ["d9l","d11l"],
+		  {"beamDeform":1200,"beamStrength":10},
+          ["d7l","d11l"],
+          ["d9l","d12l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

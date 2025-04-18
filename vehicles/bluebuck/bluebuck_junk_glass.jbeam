@@ -1,0 +1,1033 @@
+{"bluebuck_junk_glass_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":20,
+    },
+    "slotType" : "bluebuck_glass_F",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_windshield_dmg"},
+        ["bluebuck_windshield", ["bluebuck_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+
+        {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+        ["bluebuck_windshield_dmg", ["bluebuck_windshield"]],
+
+        {"deformGroup":"windshield_break", "deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"glass_invisible"},
+        ["bluebuck_windshield_int", ["bluebuck_windshield"]],
+        {"deformGroup":""},
+
+        ["bluebuck_wipers", ["bluebuck_body"]],
+        ["bluebuck_intmirror", ["bluebuck_roof"]],
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["bluebuck_intmirror","rf1l","rf1r","rf2l",{"refBaseTranslation":{"x":-0.28,"y":-0.02,"z":-0.104},"baseRotationGlobal":{"x":8,"y":0,"z":26.6}}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":1.295},
+         {"group":["bluebuck_windshield","gps"]},
+         //windshield nodes
+         ["wi1l", 0.35, -0.55, 1.2],
+         ["wi1r", -0.35, -0.55, 1.2],
+         {"group":""},
+         {"nodeMaterial":"|NM_METAL"},
+         //--ADD WEIGHT--
+
+         //windshield
+         //a pillars
+         {"nodeWeight":1.943},
+         ["p2r",-0.76, -0.38, 1.15, {"group":["bluebuck_body","bluebuck_roof","bluebuck_windshield","gps"]}],
+         ["p2l",0.76, -0.38, 1.15, {"group":["bluebuck_body","bluebuck_roof","bluebuck_windshield","gps"]}],
+         //roof
+         {"nodeWeight":2.498},
+         {"group":"bluebuck_roof"},
+         ["rf1rr",-0.7, -0.28, 1.34, {"group":["bluebuck_roof","bluebuck_windshield","gps"]}],
+         ["rf1r",-0.28, -0.30, 1.39, {"nodeWeight":2.313, "group":["bluebuck_roof","bluebuck_windshield","gps"]}],
+         ["rf1l",0.28, -0.30, 1.39, {"nodeWeight":2.313, "group":["bluebuck_roof","bluebuck_windshield","gps"]}],
+         ["rf1ll",0.7, -0.28, 1.34, {"group":["bluebuck_roof","bluebuck_windshield","gps"]}],
+         //front cowl
+         {"nodeWeight":2.96},
+         {"group":["bluebuck_body","bluebuck_roof","bluebuck_dash","bluebuck_windshield","gps"]},
+         ["b9rr",-0.8, -0.54, 0.92],
+         ["b9r",-0.3, -0.78, 0.98, {"group":["bluebuck_body","bluebuck_dash","bluebuck_windshield","gps"]}],
+         ["b9l",0.3, -0.78, 0.98, {"group":["bluebuck_body","bluebuck_dash","bluebuck_windshield","gps"]}],
+         ["b9ll",0.8, -0.54, 0.92],
+         {"group":""},
+
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //windshield
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":899016.1,"beamDamp":75.76},
+          {"beamDeform":7224.75,"beamStrength":"FLT_MAX"},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.05},
+          {"deformLimitExpansion":""},
+          ["wi1l", "rf1l"],
+          ["wi1l", "b9l"],
+          ["wi1l", "rf1ll"],
+          ["wi1l", "p1l"],
+          ["wi1l", "b9ll"],
+          ["wi1r", "rf1r"],
+          ["wi1r", "b9r"],
+          ["wi1r", "rf1rr"],
+          ["wi1r", "p1r"],
+          ["wi1r", "b9rr"],
+          ["wi1r", "wi1l"],
+          ["wi1l", "rf1r"],
+          ["wi1r", "rf1l"],
+          ["wi1l", "b9r"],
+          ["wi1r", "b9l"],
+
+          {"beamDeform":3422.25,"beamStrength":10},
+          ["rf1l", "b9l"],
+          ["rf1r", "b9r"],
+          ["rf1l", "b9ll"],
+          ["b9l", "rf1ll"],
+          ["rf1rr", "b9r"],
+          ["b9rr", "rf1r"],
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_R":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"backlight_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_backlight", ["bluebuck_body","bluebuck_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+
+        {"deformGroup":"backlight_break", "deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_backlight_int", ["bluebuck_body","bluebuck_roof"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //rear window
+         //c pillars
+         {"group":"bluebuck_roof"},
+         {"nodeWeight":2.498},
+         ["p10r",-0.74, 1.3, 1.17],
+         ["p10l",0.74, 1.3, 1.17],
+         //roof
+         {"nodeWeight":2.59},
+         ["rf5rr",-0.68, 1.23, 1.34],
+         ["rf5r",-0.28, 1.23, 1.38, {"nodeWeight":2.498}],
+         ["rf5l",0.26, 1.23, 1.38, {"nodeWeight":2.498}],
+         ["rf5ll",0.68, 1.23, 1.34],
+         //rear deck
+         {"group":"bluebuck_body"},
+         {"nodeWeight":2.22},
+         ["tb2r",-0.74, 1.47, 0.97, {"group":["bluebuck_body","bluebuck_roof"]}],
+         ["tb2l",0.74, 1.47, 0.97, {"group":["bluebuck_body","bluebuck_roof"]}],
+         ["tb3r",-0.36, 1.7, 0.96],
+         ["tb3l",0.36, 1.7, 0.96],
+         {"group":"bluebuck_body"},
+
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //windshield
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.05},
+          {"deformLimitExpansion":""},
+          //rear window
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"backlight"},
+          {"deformGroup":"backlight_break","deformationTriggerRatio":0.05},
+          {"beamSpring":832500,"beamDamp":46.25},
+          {"beamDeform":13000,"beamStrength":10},
+          ["rf5l", "tb3l"],
+          ["rf5r", "tb3r"],
+          ["tb3r", "rf5l"],
+          ["rf5r", "tb3l"],
+          ["rf5r", "tb2r"],
+          ["rf5l", "tb2l"],
+          ["rf5l", "p10r"],
+          ["rf5r", "p10l"],
+          ["p10l", "tb3l"],
+          ["p10r", "tb3r"],
+          {"beamSpring":277500,"beamDamp":46.25},
+          ["tb3l", "rf5ll"],
+          ["rf5rr", "tb3r"],
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_FR_4door_sedan":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FR_4door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FR_4door_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        ["bluebuck_quarterglass_FR_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":""},
+        ["bluebuck_glass_FR_4door_sedan_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        ["bluebuck_quarterglass_FR_sedan_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformGroup":""},
+
+        ["bluebuck_quarterwindowframe_FR_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--front right window frame--
+         {"group":"bluebuck_windowframe_FR"},
+         {"nodeWeight":1.203},
+         ["d12r", -0.78, -0.36, 1.15],
+         ["d13r", -0.78, 0.31, 1.13],
+         ["d14r", -0.73, -0.25, 1.3],
+         ["d15r", -0.73, 0.03, 1.32],
+         ["d16r", -0.73, 0.33, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+          //brittle glass beams
+          {"beamSpring":1087745,"beamDamp":86.95},
+          {"beamDeform":5539.42,"beamStrength":10},
+          {"deformGroup":"glass_FR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"glass_FR"},
+          ["d12r", "d13r"],
+          ["d8r", "d15r"],
+          ["d14r", "d9r"],
+          ["d16r", "d7r"],
+          ["d9r", "d15r"],
+          ["d7r", "d15r"],
+          ["d14r", "d8r"],
+          ["d16r", "d8r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_FL_4door_sedan":{
+    "information":{
+    "authors":"BeamNG",
+    "name":"Broken Front Left Door Glass",
+    "value":0,
+    },
+    "slotType" : "bluebuck_glass_FL_4door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FL_4door_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        ["bluebuck_quarterglass_FL_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FL_4door_sedan_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        ["bluebuck_quarterglass_FL_sedan_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformGroup":""},
+
+        ["bluebuck_quarterwindowframe_FL_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--front left window frame--
+         {"group":"bluebuck_windowframe_FL"},
+         {"nodeWeight":1.203},
+         ["d12l", 0.78, -0.36, 1.15],
+         ["d13l", 0.78, 0.31, 1.13],
+         ["d14l", 0.73, -0.25, 1.3],
+         ["d15l", 0.73, 0.03, 1.32],
+         ["d16l", 0.73, 0.33, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+          //brittle glass beams
+          {"beamSpring":1087745,"beamDamp":86.95},
+          {"beamDeform":5539.42,"beamStrength":10},
+          {"deformGroup":"glass_FL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"glass_FL"},
+          ["d12l", "d13l"],
+          ["d8l", "d15l"],
+          ["d14l", "d9l"],
+          ["d16l", "d7l"],
+          ["d9l", "d15l"],
+          ["d7l", "d15l"],
+          ["d14l", "d8l"],
+          ["d16l", "d8l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_RR_4door_sedan":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_RR_4door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_RR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_RR_4door_sedan", ["bluebuck_door_RR", "bluebuck_windowframe_RR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_RR_4door_sedan_int", ["bluebuck_door_RR", "bluebuck_windowframe_RR"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--rear right window--
+         {"group":"bluebuck_windowframe_RR"},
+         {"nodeWeight":1.388},
+         ["d28r", -0.78, 0.36, 1.13],
+         ["d29r", -0.78, 1.02, 1.15],
+         ["d30r", -0.73, 0.38, 1.32],
+         ["d31r", -0.73, 0.78, 1.3],
+         {"group":"none"},
+         ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+        //brittle glass beams
+        {"beamSpring":1087745,"beamDamp":86.95},
+        {"beamDeform":5539.42,"beamStrength":10},
+        {"deformGroup":"glass_RR_break", "deformationTriggerRatio":0.02},
+        {"breakGroup":"glass_RR"},
+        ["d28r", "d29r"],
+        ["d24r", "d30r"],
+        ["d23r", "d31r"],
+        ["d29r", "d23r"],
+        ["d28r", "d25r"],
+        ["d30r", "d25r"],
+        {"breakGroup":""},
+        {"deformGroup":""},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_RL_4door_sedan":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_RL_4door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_RL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_RL_4door_sedan", ["bluebuck_door_RL", "bluebuck_windowframe_RL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_RL_4door_sedan_int", ["bluebuck_door_RL", "bluebuck_windowframe_RL"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--rear left window--
+         {"group":"bluebuck_windowframe_RL"},
+         {"nodeWeight":1.388},
+         ["d28l", 0.78, 0.36, 1.13],
+         ["d29l", 0.78, 1.02, 1.15],
+         ["d30l", 0.73, 0.38, 1.32],
+         ["d31l", 0.73, 0.78, 1.3],
+         {"group":"none"},
+         ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+          //brittle glass beams
+          {"beamSpring":1087745,"beamDamp":86.95},
+          {"beamDeform":5539.42,"beamStrength":10},
+          {"deformGroup":"glass_RL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"glass_RL"},
+          ["d28l", "d29l"],
+          ["d24l", "d30l"],
+          ["d23l", "d31l"],
+          ["d29l", "d23l"],
+          ["d28l", "d25l"],
+          ["d30l", "d25l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_FR_4door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FR_4door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FR_4door_hardtop", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FR_4door_hardtop_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_FR_4door_hardtop", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":2.313},
+         //--front right door glass
+         {"group":"bluebuck_windowframe_FR"},
+         ["d16r", -0.73, 0.33, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_FR_break","deformationTriggerRatio":0.03},
+          ["d16r", "d10r"],
+          ["d16r", "d7r"],
+          ["d16r", "d8r"],
+          ["d16r", "d9r", {"beamStrength":10,"breakGroup":"glass_FR"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d14r", "d16r"],
+          ["d16r", "d9r"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d16r", "d6r"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //front right door
+           {"group":"bluebuck_door_FR"},
+           {"dragCoef":5},
+           ["d8r",  "d14r", "d9r"],
+           ["d16r", "d9r",  "d14r"],
+    ],
+},
+"bluebuck_junk_glass_FL_4door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FL_4door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FL_4door_hardtop", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FL_4door_hardtop_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_FL_4door_hardtop", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":2.313},
+         //--front left door glass
+         {"group":"bluebuck_windowframe_FL"},
+         ["d16l", 0.73, 0.33, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_FL_break","deformationTriggerRatio":0.03},
+          ["d16l", "d10l"],
+          ["d16l", "d7l"],
+          ["d16l", "d8l"],
+          ["d16l", "d9l", {"beamStrength":10,"breakGroup":"glass_FL"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d14l", "d16l"],
+          ["d16l", "d9l"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d16l", "d6l"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //front left door
+           {"group":"bluebuck_door_FL"},
+           {"dragCoef":5},
+           ["d14l", "d8l",  "d9l"],
+           ["d9l",  "d16l", "d14l"],
+    ],
+},
+"bluebuck_junk_glass_RR_4door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_RR_4door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_RR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_RR_4door_hardtop", ["bluebuck_windowframe_RR", "bluebuck_door_RR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_RR_4door_hardtop_int", ["bluebuck_windowframe_RR", "bluebuck_door_RR"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_RR_4door_hardtop", ["bluebuck_windowframe_RR", "bluebuck_door_RR"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":1.388},
+         //--rear right door glass
+         {"group":"bluebuck_windowframe_RR"},
+         ["d30r", -0.73, 0.36, 1.32],
+         ["d31r", -0.73, 0.78, 1.3],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_RR_break","deformationTriggerRatio":0.03},
+          ["d31r", "d24r"],
+          ["d31r", "d23r", {"beamStrength":10,"breakGroup":"glass_RR"}],
+          ["d31r", "d26r"],
+          ["d30r", "d24r"],
+          ["d30r", "d25r"],
+          ["d30r", "d27r"],
+          ["d30r", "d23r", {"beamStrength":10,"breakGroup":"glass_RR"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d23r", "d30r"],
+          ["d30r", "d31r"],
+          ["d31r", "d25r"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d30r", "d20r"],
+          ["d31r", "d21r"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //rear right door
+           {"group":"bluebuck_door_RR"},
+           {"dragCoef":5},
+           ["d23r", "d30r", "d24r"],
+           ["d31r", "d24r", "d30r"],
+           ["d24r", "d31r", "d25r"],
+    ],
+},
+"bluebuck_junk_glass_RL_4door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_RL_4door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_RL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_RL_4door_hardtop", ["bluebuck_windowframe_RL", "bluebuck_door_RL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_RL_4door_hardtop_int", ["bluebuck_windowframe_RL", "bluebuck_door_RL"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_RL_4door_hardtop", ["bluebuck_windowframe_RL", "bluebuck_door_RL"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":1.388},
+         //--front left door glass
+         {"group":"bluebuck_windowframe_RL"},
+         ["d30l", 0.73, 0.36, 1.32],
+         ["d31l", 0.73, 0.78, 1.3],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_RL_break","deformationTriggerRatio":0.03},
+          ["d31l", "d24l"],
+          ["d31l", "d23l", {"beamStrength":10,"breakGroup":"glass_RR"}],
+          ["d31l", "d26l"],
+          ["d30l", "d24l"],
+          ["d30l", "d25l"],
+          ["d30l", "d27l"],
+          ["d30l", "d23l", {"beamStrength":10,"breakGroup":"glass_RR"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d23l", "d30l"],
+          ["d30l", "d31l"],
+          ["d31l", "d25l"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d30l", "d20l"],
+          ["d31l", "d21l"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //rear left door
+           {"group":"bluebuck_door_RL"},
+           {"dragCoef":5},
+           ["d30l", "d23l", "d24l"],
+           ["d24l", "d31l", "d30l"],
+           ["d31l", "d24l", "d25l"],
+    ],
+},
+"bluebuck_junk_glass_FR_2door_sedan":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FR_2door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FR_2door_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        ["bluebuck_quarterglass_FR_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FR_2door_sedan_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        ["bluebuck_quarterglass_FR_sedan_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformGroup":""},
+
+        ["bluebuck_quarterwindowframe_FR_sedan", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--front right window--
+         {"group":"bluebuck_windowframe_FR"},
+         {"nodeWeight":1.388},
+         ["d12r", -0.78, -0.36, 1.15],
+         ["d13r", -0.81, 0.49, 1.13],
+         ["d14r", -0.73, -0.25, 1.3],
+         ["d15r", -0.73, 0.11, 1.32],
+         ["d16r", -0.73, 0.51, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+          //brittle glass beams
+          {"beamSpring":1087745,"beamDamp":86.95},
+          {"beamDeform":5539.42,"beamStrength":10},
+          {"deformGroup":"glass_FR_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"glass_FR"},
+          ["d12r", "d13r"],
+          ["d8r", "d15r"],
+          ["d14r", "d9r"],
+          ["d16r", "d7r"],
+          ["d9r", "d15r"],
+          ["d7r", "d15r"],
+          ["d14r", "d8r"],
+          ["d16r", "d8r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_FL_2door_sedan":{
+    "information":{
+    "authors":"BeamNG",
+    "name":"Broken Front Left Door Glass",
+    "value":0,
+    },
+    "slotType" : "bluebuck_glass_FL_2door_sedan",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FL_2door_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        ["bluebuck_quarterglass_FL_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FL_2door_sedan_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        ["bluebuck_quarterglass_FL_sedan_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformGroup":""},
+
+        ["bluebuck_quarterwindowframe_FL_sedan", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--front left window--
+         {"group":"bluebuck_windowframe_FL"},
+         {"nodeWeight":1.388},
+         ["d12l", 0.78, -0.36, 1.15],
+         ["d13l", 0.81, 0.49, 1.13],
+         ["d14l", 0.73, -0.25, 1.3],
+         ["d15l", 0.73, 0.11, 1.32],
+         ["d16l", 0.73, 0.51, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+
+          //brittle glass beams
+          {"beamSpring":1087745,"beamDamp":86.95},
+          {"beamDeform":5539.42,"beamStrength":10},
+          {"deformGroup":"glass_FL_break", "deformationTriggerRatio":0.02},
+          {"breakGroup":"glass_FL"},
+          ["d12l", "d13l"],
+          ["d8l", "d15l"],
+          ["d14l", "d9l"],
+          ["d16l", "d7l"],
+          ["d9l", "d15l"],
+          ["d7l", "d15l"],
+          ["d14l", "d8l"],
+          ["d16l", "d8l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"bluebuck_junk_glass_FR_2door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FR_2door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FR_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FR_2door_hardtop", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FR_2door_hardtop_int", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_FR_2door_hardtop", ["bluebuck_windowframe_FR", "bluebuck_door_FR"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":2.775},
+         //--front right door glass
+         {"group":"bluebuck_windowframe_FR"},
+         ["d16r", -0.73, 0.51, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //right door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_FR_break","deformationTriggerRatio":0.03},
+          ["d16r", "d10r"],
+          ["d16r", "d7r"],
+          ["d16r", "d8r"],
+          ["d16r", "d9r", {"beamStrength":10,"breakGroup":"glass_FR"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d14r", "d16r"],
+          ["d16r", "d9r"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d16r", "d6r"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //front right door
+           {"group":"bluebuck_door_FR"},
+           {"dragCoef":5},
+           ["d8r",  "d14r", "d9r"],
+           ["d16r", "d9r",  "d14r"],
+    ],
+},
+"bluebuck_junk_glass_FL_2door_hardtop":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Front Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "bluebuck_glass_FL_2door_hardtop",
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"glass_FL_break", "deformMaterialBase":"bluebuck_glass", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        {"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0},
+
+        ["bluebuck_glass_FL_2door_hardtop", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformSound":false, "deformVolume":false},
+
+        {"deformMaterialBase":"bluebuck_glass_int", "deformMaterialDamaged":"bluebuck_glass_dmg"},
+        ["bluebuck_glass_FL_2door_hardtop_int", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+        {"deformGroup":""},
+
+        ["bluebuck_windowframe_FL_2door_hardtop", ["bluebuck_windowframe_FL", "bluebuck_door_FL"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":2.775},
+         //--front left door glass
+         {"group":"bluebuck_windowframe_FL"},
+         ["d16l", 0.73, 0.51, 1.32],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //left door glass
+          {"beamSpring":1480925,"beamDamp":69.38},
+          {"beamDeform":6500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          {"deformGroup":"glass_FL_break","deformationTriggerRatio":0.03},
+          ["d16l", "d10l"],
+          ["d16l", "d7l"],
+          ["d16l", "d8l"],
+          ["d16l", "d9l", {"beamStrength":10,"breakGroup":"glass_FL"}],
+
+          //window frame
+          {"deformLimitExpansion":1.2},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          ["d14l", "d16l"],
+          ["d16l", "d9l"],
+          {"deformLimitExpansion":""},
+          //rigids
+          ["d16l", "d6l"],
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles":[
+           ["id1:", "id2:", "id3:"],
+           {"groundModel":"metal"},
+           //front left door
+           {"group":"bluebuck_door_FL"},
+           {"dragCoef":5},
+           ["d14l", "d8l",  "d9l"],
+           ["d9l",  "d16l", "d14l"],
+    ],
+},
+}

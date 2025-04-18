@@ -43,10 +43,11 @@ local function isDiscoveredGarage(garageId)
 end
 
 local function reloadRecoveryPrompt()
+  --[[
   if core_recoveryPrompt then
     core_recoveryPrompt.addTowingButtons()
     core_recoveryPrompt.addTaxiButtons()
-  end
+  end]]
 end
 
 local function buildGarageSizes()
@@ -133,6 +134,7 @@ local function onCareerModulesActivated()
 end
 
 local function showPurchaseGaragePrompt(garageId)
+  print(garageId)
   if not career_career.isActive() then return end
   garageToPurchase = freeroam_facilities.getFacility("garage", garageId)
   guihooks.trigger('ChangeState', {state = 'purchase-garage'})

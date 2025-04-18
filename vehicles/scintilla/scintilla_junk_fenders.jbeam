@@ -1,0 +1,470 @@
+{
+"scintilla_junk_fender_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Right Fender",
+        "value":500,
+    },
+
+    "slotType" : "scintilla_fender_R",
+
+    "slots":[
+        ["type", "default", "description"],
+        ["scintilla_fenderflare_FR","", "Front Right Fender Flare"],
+        ["scintilla_lettering_fender_R","scintilla_lettering_fender_R", "Front Right Fender Badge"],
+        ["scintilla_innerfender_FR","scintilla_innerfender_FR", "Front Right Inner Fender"],
+        ["scintilla_headlight_R","scintilla_headlight_R", "Right Headlight"],
+        ["scintilla_fender_cover_R","scintilla_fender_cover_R", "Right Fender Trim", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["scintilla_fender_R", ["scintilla_fender_R"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--FENDER--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":0.4},
+         {"group":"scintilla_fender_R"},
+         ["fe1r",-0.483,-2.202,0.507],
+
+         ["fe2r",-0.435,-2.024,0.601],
+         ["fe2rr",-0.788,-2.008,0.52],
+
+         ["fe3r",-0.39,-1.723,0.719],
+         ["fe3rr",-0.839,-1.732,0.715],
+         ["fe3rrr",-0.967,-1.671,0.514, {"group":["scintilla_fender_R", "scintilla_innerfender_FR"]}],
+
+         ["fe4r",-0.453,-1.378,0.783],
+         ["fe4rr",-0.86,-1.419,0.819],
+         ["fe4rrr",-0.967,-1.407,0.713, {"group":["scintilla_fender_R", "scintilla_innerfender_FR"]}],
+
+         ["fe5rr",-0.78,-0.881,0.814],
+         ["fe5rrr",-0.967,-1.117,0.654, {"group":["scintilla_fender_R", "scintilla_innerfender_FR"]}],
+
+         //rigidifier
+         {"selfCollision":false, "collision":false},
+         {"nodeWeight":1.0},
+         ["fe6r",-0.718,-1.415,0.553, {"group":""}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FENDER--
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":401000,"beamDamp":20},
+          {"beamDeform":17500,"beamStrength":"FLT_MAX"},
+          //main shape
+          {"deformLimitExpansion":1.2},
+          {"deformGroup":"headlightglass_R_break", "deformationTriggerRatio":0.01}
+          ["fe1r", "fe2rr"],
+          ["fe2rr", "fe3rr"],
+          ["fe3rr", "fe2r"],
+          ["fe2r", "fe1r"],
+          ["fe3rr", "fe4rr"],
+          ["fe3r", "fe2r"],
+          ["fe4rr", "fe3r"],
+          {"deformGroup":""}
+          ["fe2rr", "fe3rrr"],
+          ["fe3rrr", "fe4rrr"],
+          ["fe4rrr", "fe4rr"],
+          ["fe3rr", "fe4rrr"],
+          ["fe3r", "fe4r"],
+          ["fe4rr", "fe5rr"],
+          ["fe5rr", "fe4r"],
+          ["fe4rrr", "fe5rrr"],
+          ["fe5rrr", "fe5rr"],
+
+          //cross
+          {"deformLimitExpansion":""},
+          {"beamDeform":7600,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"headlightglass_R_break", "deformationTriggerRatio":0.01}
+          ["fe2rr", "fe2r"],
+          ["fe1r", "fe3rr"],
+          ["fe3rr", "fe3r"],
+          ["fe2r", "fe4rr"],
+          {"deformGroup":""}
+          ["fe2rr", "fe4rrr"],
+          ["fe3rrr", "fe3rr"],
+          ["fe3rrr", "fe4rr"],
+          ["fe4rr", "fe4r"],
+          ["fe3r", "fe5rr"],
+          ["fe4rr", "fe5rrr"],
+          ["fe4rrr", "fe5rr"],
+
+          //rigids
+          {"beamDeform":8280,"beamStrength":"FLT_MAX"},
+          //vertical/corner
+          ["fe3rrr", "fe3r"],
+          ["fe4rrr", "fe4r"],
+          ["fe5rrr", "fe4r"],
+
+          //lengthwise
+          {"beamDeform":5280,"beamStrength":"FLT_MAX"}
+          ["fe2rr", "fe4rr"],
+          ["fe3rr", "fe5rr"],
+          ["fe3rrr", "fe5rrr"],
+          ["fe1r", "fe3r", {"deformGroup":"headlightglass_R_break", "deformationTriggerRatio":0.01}],
+          ["fe2r", "fe4r"],
+
+          //rigidifier
+          {"beamDeform":3280,"beamStrength":"FLT_MAX"}
+          ["fe6r", "fe4rrr"],
+          ["fe6r", "fe4rr"],
+          ["fe6r", "fe4r"],
+          ["fe6r", "fe5rrr"],
+          ["fe6r", "fe5rr"],
+          ["fe6r", "fe3rrr"],
+          {"deformGroup":"headlightglass_R_break", "deformationTriggerRatio":0.01}
+          ["fe6r", "fe3rr"],
+          ["fe6r", "fe3r"],
+          ["fe6r", "fe2rr"],
+          ["fe6r", "fe2r"],
+          ["fe6r", "fe1r"],
+          {"deformGroup":""}
+
+          //attach
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":100,"beamStrength":1000},
+          {"breakGroup":"fender_a_R"},
+          ["fe5rr", "f5rr"],
+          ["f5rr", "fe5rrr"],
+          ["f6rrr", "fe5rrr"],
+          ["f6rrr", "fe5rr"],
+          ["fe5rr", "f6rr"],
+          ["fe4r", "f6rr"],
+          ["fe4r", "f6r"],
+          ["f6r", "fe5rr"],
+          ["fe4r", "fx4r"],
+          ["fe5rr", "fx4r"],
+          {"breakGroup":"fender_b_R"},
+          {"beamDeform":5800,"beamStrength":1000},
+          {"deformGroup":"headlightglass_R_break", "deformationTriggerRatio":0.01}
+          ["fe1r", "bbf2r"],
+          ["fe2r", "bbf2r"],
+          ["fe2rr", "bbf2r"],
+          ["fe1r", "bbf1r"],
+          {"deformGroup":""}
+          {"breakGroup":"fender_c_R"},
+          ["fe3rr", "f13rr"],
+          ["fe3rrr", "f13rr"],
+          ["fe4rrr", "f13rr"],
+          ["f13rr", "fe3r"],
+          {"breakGroup":"fender_d_R"},
+          {"optional":false},
+          ["fe3rrr", "fbs4rrr"],
+          ["fbs4rrr", "fe2rr"],
+          ["fe3rr", "fbs4rrr"],
+          {"optional":false},
+          {"breakGroup":""},
+
+          //fender support beams
+          {"beamType":"|SUPPORT","beamLongBound":10},
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":15080,"beamStrength":1000},
+          ["fe5rr", "f5rr"],
+          ["fe5rrr", "f5rr"],
+          ["fe4r", "f6r"],
+          ["fe4r", "fx4r"],
+          ["fe4r", "fx3r"],
+          ["fe3r", "fx3r"],
+          ["fe2r", "bbf2r"],
+          ["fe2r", "fx3r"],
+          ["fe1r", "bbf2r"],
+          ["fe1r", "bbf2"],
+          ["fe3rr", "f13rr"],
+          ["fe5rr", "f6rr"],
+          ["fe5rr", "f6r"],
+          //to hood
+          {"beamLongBound":35},
+          {"optional":false},
+          ["fe1r", "h4r"],
+          ["fe2r", "h3r"],
+          ["fe3r", "h2r"],
+          ["fe4r", "h1"],
+          {"beamLongBound":10},
+          ["fe2rr", "h4r"],
+          ["fe3rr", "h3r"],
+          ["fx4r", "h2r"],
+          ["fe5rr", "h1r"],
+          //to front bumper support
+          ["fbs2rrr", "fe3rrr"],
+          ["fbs1rr", "fe2rr"],
+          ["fe2rr", "fbs2rrr"],
+          ["fbs1rr", "fe3rrr"],
+          ["fe1r", "fbs1r"],
+          ["fbs1r", "fe2rr"],
+          ["fbs1rr", "fe1r"],
+          ["fe2r", "fbs1r"],
+          ["fe2r", "fbs1rr"],
+          ["fe3rr", "fbs1rr"],
+          ["fe3rr", "fbs2rrr"],
+          //to door
+          {"beamPrecompression":0.7},
+          ["fe4rrr", "d4r"],
+          ["fe4rr", "d7r"],
+          {"beamLongBound":25},
+          ["fe5rr", "d7r"],
+          ["fe5rrr", "d4r"],
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //right fender
+            {"groundModel":"metal"},
+            {"group":"scintilla_fender_R"},
+            {"dragCoef":5},
+            ["fe2rr",  "fe1r",   "fe3rr", {"liftCoef":20}],
+            ["fe2r",   "fe3rr",  "fe1r", {"liftCoef":20}],
+            ["fe3rr",  "fe2r",   "fe3r", {"liftCoef":20}],
+            ["fe3rr",  "fe3r",   "fe4rr", {"liftCoef":20}],
+            ["fe4rr",  "fe3r",   "fe4r", {"liftCoef":20}],
+            ["fe5rr",  "fe4rr",  "fe4r"],
+            ["fe4rrr", "fe4rr",  "fe5rr"],
+            ["fe5rrr", "fe4rrr", "fe5rr"],
+            ["fe4rrr", "fe3rr",  "fe4rr"],
+            ["fe3rrr", "fe3rr",  "fe4rrr"],
+            ["fe3rrr", "fe2rr",  "fe3rr"],
+            {"group":""},
+    ],
+},
+"scintilla_junk_fender_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Left Fender",
+        "value":500,
+    },
+
+    "slotType" : "scintilla_fender_L",
+
+    "slots":[
+        ["type", "default", "description"],
+        ["scintilla_fenderflare_FL","", "Front Left Fender Flare"],
+        ["scintilla_lettering_fender_L","scintilla_lettering_fender_L", "Front Left Fender Badge"],
+        ["scintilla_innerfender_FL","scintilla_innerfender_FL", "Front Left Inner Fender"],
+        ["scintilla_headlight_L","scintilla_headlight_L", "Left Headlight"],
+        ["scintilla_fender_cover_L","scintilla_fender_cover_L", "Left Fender Trim", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["scintilla_fender_L", ["scintilla_fender_L"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--FENDER--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":0.4},
+         {"group":"scintilla_fender_L"},
+         ["fe1l",0.483,-2.202,0.507],
+
+         ["fe2l",0.435,-2.024,0.601],
+         ["fe2ll",0.788,-2.008,0.52],
+
+         ["fe3l",0.39,-1.723,0.719],
+         ["fe3ll",0.839,-1.732,0.715],
+         ["fe3lll",0.967,-1.671,0.514, {"group":["scintilla_fender_L", "scintilla_innerfender_FL"]}],
+
+         ["fe4l",0.453,-1.378,0.783],
+         ["fe4ll",0.86,-1.419,0.819],
+         ["fe4lll",0.967,-1.407,0.713, {"group":["scintilla_fender_L", "scintilla_innerfender_FL"]}],
+
+         ["fe5ll",0.78,-0.881,0.814],
+         ["fe5lll",0.967,-1.117,0.654, {"group":["scintilla_fender_L", "scintilla_innerfender_FL"]}],
+
+         //rigidifier
+         {"selfCollision":false, "collision":false},
+         {"nodeWeight":1.0},
+         ["fe6l",0.718,-1.415,0.553, {"group":""}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--FENDER--
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":401000,"beamDamp":20},
+          {"beamDeform":17500,"beamStrength":"FLT_MAX"},
+          //main shape
+          {"deformLimitExpansion":1.2},
+          {"deformGroup":"headlightglass_L_break", "deformationTriggerRatio":0.01}
+          ["fe1l", "fe2ll"],
+          ["fe2ll", "fe3ll"],
+          ["fe3ll", "fe2l"],
+          ["fe2l", "fe1l"],
+          ["fe3ll", "fe4ll"],
+          ["fe3l", "fe2l"],
+          ["fe4ll", "fe3l"],
+          {"deformGroup":""}
+          ["fe2ll", "fe3lll"],
+          ["fe3lll", "fe4lll"],
+          ["fe4lll", "fe4ll"],
+          ["fe3ll", "fe4lll"],
+          ["fe3l", "fe4l"],
+          ["fe4ll", "fe5ll"],
+          ["fe5ll", "fe4l"],
+          ["fe4lll", "fe5lll"],
+          ["fe5lll", "fe5ll"],
+
+          //cross
+          {"deformLimitExpansion":""},
+          {"beamDeform":7600,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"headlightglass_L_break", "deformationTriggerRatio":0.01}
+          ["fe2ll", "fe2l"],
+          ["fe1l", "fe3ll"],
+          ["fe3ll", "fe3l"],
+          ["fe2l", "fe4ll"],
+          {"deformGroup":""}
+          ["fe2ll", "fe4lll"],
+          ["fe3lll", "fe3ll"],
+          ["fe3lll", "fe4ll"],
+          ["fe4ll", "fe4l"],
+          ["fe3l", "fe5ll"],
+          ["fe4ll", "fe5lll"],
+          ["fe4lll", "fe5ll"],
+
+          //rigids
+          {"beamDeform":8280,"beamStrength":"FLT_MAX"},
+          //vertical/corner
+          ["fe3lll", "fe3l"],
+          ["fe4lll", "fe4l"],
+          ["fe5lll", "fe4l"],
+
+          //lengthwise
+          {"beamDeform":5280,"beamStrength":"FLT_MAX"}
+          ["fe2ll", "fe4ll"],
+          ["fe3ll", "fe5ll"],
+          ["fe3lll", "fe5lll"],
+          ["fe1l", "fe3l", {"deformGroup":"headlightglass_L_break", "deformationTriggerRatio":0.01}],
+          ["fe2l", "fe4l"],
+
+          //rigidifier
+          {"beamDeform":3280,"beamStrength":"FLT_MAX"}
+          ["fe6l", "fe4lll"],
+          ["fe6l", "fe4ll"],
+          ["fe6l", "fe4l"],
+          ["fe6l", "fe5lll"],
+          ["fe6l", "fe5ll"],
+          ["fe6l", "fe3lll"],
+          {"deformGroup":"headlightglass_L_break", "deformationTriggerRatio":0.01}
+          ["fe6l", "fe3ll"],
+          ["fe6l", "fe3l"],
+          ["fe6l", "fe2ll"],
+          ["fe6l", "fe2l"],
+          ["fe6l", "fe1l"],
+          {"deformGroup":""}
+
+          //attach
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":100,"beamStrength":1000},
+          {"breakGroup":"fender_a_L"},
+          ["fe5ll", "f5ll"],
+          ["f5ll", "fe5lll"],
+          ["f6lll", "fe5lll"],
+          ["f6lll", "fe5ll"],
+          ["fe5ll", "f6ll"],
+          ["fe4l", "f6ll"],
+          ["fe4l", "f6l"],
+          ["f6l", "fe5ll"],
+          ["fe4l", "fx4l"],
+          ["fe5ll", "fx4l"],
+          {"breakGroup":"fender_b_L"},
+          {"beamDeform":5800,"beamStrength":1000},
+          {"deformGroup":"headlightglass_L_break", "deformationTriggerRatio":0.01}
+          ["fe1l", "bbf2l"],
+          ["fe2l", "bbf2l"],
+          ["fe2ll", "bbf2l"],
+          ["fe1l", "bbf1l"],
+          {"deformGroup":""}
+          {"breakGroup":"fender_c_L"},
+          ["fe3ll", "f13ll"],
+          ["fe3lll", "f13ll"],
+          ["fe4lll", "f13ll"],
+          ["f13ll", "fe3l"],
+          {"breakGroup":"fender_d_L"},
+          {"optional":false},
+          ["fe3lll", "fbs4lll"],
+          ["fbs4lll", "fe2ll"],
+          ["fe3ll", "fbs4lll"],
+          {"optional":false},
+          {"breakGroup":""},
+
+          //fender support beams
+          {"beamType":"|SUPPORT","beamLongBound":10},
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":15080,"beamStrength":1000},
+          ["fe5ll", "f5ll"],
+          ["fe5lll", "f5ll"],
+          ["fe4l", "f6l"],
+          ["fe4l", "fx4l"],
+          ["fe4l", "fx3l"],
+          ["fe3l", "fx3l"],
+          ["fe2l", "bbf2l"],
+          ["fe2l", "fx3l"],
+          ["fe1l", "bbf2l"],
+          ["fe1l", "bbf2"],
+          ["fe3ll", "f13ll"],
+          ["fe5ll", "f6ll"],
+          ["fe5ll", "f6l"],
+          //to hood
+          {"beamLongBound":35},
+          {"optional":false},
+          ["fe1l", "h4l"],
+          ["fe2l", "h3l"],
+          ["fe3l", "h2l"],
+          ["fe4l", "h1"],
+          {"beamLongBound":10},
+          ["fe2ll", "h4l"],
+          ["fe3ll", "h3l"],
+          ["fx4l", "h2l"],
+          ["fe5ll", "h1l"],
+          //to front bumper support
+          ["fbs2lll", "fe3lll"],
+          ["fbs1ll", "fe2ll"],
+          ["fe2ll", "fbs2lll"],
+          ["fbs1ll", "fe3lll"],
+          ["fe1l", "fbs1l"],
+          ["fbs1l", "fe2ll"],
+          ["fbs1ll", "fe1l"],
+          ["fe2l", "fbs1l"],
+          ["fe2l", "fbs1ll"],
+          ["fe3ll", "fbs1ll"],
+          ["fe3ll", "fbs2lll"],
+          //to door
+          {"beamPrecompression":0.7},
+          ["fe4lll", "d4l"],
+          ["fe4ll", "d7l"],
+          {"beamLongBound":25},
+          ["fe5ll", "d7l"],
+          ["fe5lll", "d4l"],
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //left fender
+            {"groundModel":"metal"},
+            {"group":"scintilla_fender_L"},
+            {"dragCoef":6},
+            ["fe1l",   "fe2ll",  "fe3ll", {"liftCoef":20}],
+            ["fe3ll",  "fe2l",   "fe1l", {"liftCoef":20}],
+            ["fe2l",   "fe3ll",  "fe3l", {"liftCoef":20}],
+            ["fe3l",   "fe3ll",  "fe4ll", {"liftCoef":20}],
+            ["fe3l",   "fe4ll",  "fe4l", {"liftCoef":20}],
+            ["fe4ll",  "fe5ll",  "fe4l"],
+            ["fe4ll",  "fe4lll", "fe5ll"],
+            ["fe4lll", "fe5lll", "fe5ll"],
+            ["fe3ll",  "fe4lll", "fe4ll"],
+            ["fe3ll",  "fe3lll", "fe4lll"],
+            ["fe2ll",  "fe3lll", "fe3ll"],
+            {"group":""},
+    ],
+},
+}

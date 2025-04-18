@@ -1,0 +1,386 @@
+{
+"lansdale_junk_transmission_3A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3-Speed Automatic Transmission",
+        "value":350,
+    },
+    "slotType" : "lansdale_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_converter","lansdale_converter","Torque Converter", {"coreSlot":true}],
+        ["lansdale_transfer_case","lansdale_transfer_case_FWD", "Transfer Case", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+        ["lansdale_differential_F","lansdale_differential_F", "Front Differential", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.38, 0, 2.92, 1.56, 1.00],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":35,
+        "friction":2.80,
+        "dynamicFriction":0.0750,
+        "torqueLossCoef": 0.400,
+        "gearboxNode:":["tra1l"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":6,
+        "gearboxDecisionSmoothingUp":4.5,
+        "gearboxDecisionSmoothingDown":4.5,
+        "lowShiftDownRPM":1100,
+        "lowShiftUpRPM":4000,
+        //"highShiftDownRPM":3100,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_transmission", ["lansdale_engine","lansdale_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_transmission"},
+         {"nodeWeight":12},
+         ["tra1r", -0.22, -1.445, 0.25],
+         ["tra1l", 0.3, -1.445, 0.25],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":4400000,"beamDamp":150},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Automatic Transmission",
+        "value":450,
+    },
+    "slotType" : "lansdale_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_converter","lansdale_converter_locking","Torque Converter", {"coreSlot":true}],
+        ["lansdale_transfer_case","lansdale_transfer_case_FWD", "Transfer Case", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+        ["lansdale_differential_F","lansdale_differential_F", "Front Differential", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.21, 0, 2.84, 1.57, 1.00, 0.69],
+        "parkLockTorque":2000,
+        "oneWayViscousCoef":35,
+        "friction":2.00,
+        "dynamicFriction":0.0250,
+        "torqueLossCoef": 0.250,
+        "gearboxNode:":["tra1l"],
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "useSmartAggressionCalculation":false,
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":5,
+        "gearboxDecisionSmoothingUp":5.5,
+        "gearboxDecisionSmoothingDown":5.5,
+        "lowShiftDownRPM":6800,
+        "lowShiftUpRPM":4500,
+        //"highShiftDownRPM":6800,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_transmission", ["lansdale_engine","lansdale_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Auto--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_transmission"},
+         {"nodeWeight":14},
+         ["tra1r", -0.22, -1.445, 0.25],
+         ["tra1l", 0.3, -1.445, 0.25],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":4400000,"beamDamp":150},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_transmission_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "lansdale_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_flywheel","lansdale_flywheel","Flywheel", {"coreSlot":true}],
+        ["lansdale_transfer_case","lansdale_transfer_case_FWD", "Transfer Case", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+        ["lansdale_differential_F","lansdale_differential_F", "Front Differential", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.15, 0, 3.25, 1.72, 1.30, 1.00],
+        "friction":3.50,
+        "dynamicFriction":0.0500,
+        "torqueLossCoef": 0.0750,
+        "gearboxNode:":["tra1l"],
+
+        "gearWhineCoefsInput":  [1.50, 0.00, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50],
+        "gearWhineCoefsOutput": [0.00, 0.00, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 2.7
+        //"gearWhineFixedCoefInput": 2.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": true,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400],
+        "lowShiftUpRPM":[0,0,2800,2500,2400],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_transmission", ["lansdale_engine","lansdale_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--4 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_transmission"},
+         {"nodeWeight":12},
+         ["tra1r", -0.22, -1.445, 0.25],
+         ["tra1l", 0.3, -1.445, 0.25],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":4400000,"beamDamp":150},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Noisy 5-Speed Manual Transmission",
+        "value":250,
+    },
+    "slotType" : "lansdale_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_flywheel","lansdale_flywheel","Flywheel", {"coreSlot":true}],
+        ["lansdale_transfer_case","lansdale_transfer_case_FWD", "Transfer Case", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+        ["lansdale_differential_F","lansdale_differential_F", "Front Differential", {"nodeMove":{"x":0.00,"y":0.0,"z":0}}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.46, 0, 3.64, 2.06, 1.39, 1.02, 0.82],
+        "friction":1.21,
+        "dynamicFriction":0.0012,
+        "torqueLossCoef": 0.0155,
+        "gearboxNode:":["tra1l"],
+
+        "gearWhineCoefsInput":  [2.00, 0.00, 1.50, 1.75, 2.00, 2.50, 2.75, 3.00, 3.25, 3.50],
+        "gearWhineCoefsOutput": [0.00, 0.00, 1.50, 1.75, 2.00, 2.50, 2.75, 3.00, 3.25, 3.50],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 5.0
+        //"gearWhineFixedCoefInput": 5.0
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": true,
+        "lowShiftDownRPM":[0,0,0,1300,1400,1400,1300],
+        "lowShiftUpRPM":[0,0,3000,2600,2550,2400],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_transmission", ["lansdale_engine","lansdale_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--5 Speed Manual--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_transmission"},
+         {"nodeWeight":12},
+         ["tra1r", -0.22, -1.445, 0.25],
+         ["tra1l", 0.3, -1.445, 0.25],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+
+          //transmission mount node
+          {"beamSpring":4400000,"beamDamp":150},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

@@ -1,0 +1,88 @@
+{
+"burnside_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":45,
+    },
+    "slotType" : "burnside_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["burnside_radiator", ["burnside_radiator","burnside_radsupport"]],
+    ],
+    "mainEngine":{
+        "radiatorArea":0.35,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":3.5,
+        "radiatorFanType":"mechanical",
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":150,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"]
+        },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //Radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"burnside_radiator"},
+         {"nodeWeight":4.875},
+           {"engineGroup":"radiator"},
+         {"chemEnergy":200,"burnRate":0.4,"flashPoint":250,"specHeat":0.8,"smokePoint":150,"selfIgnitionCoef":false},
+         ["rad1", 0.0, -1.94, 0.45],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         ["rad2", 0.0, -1.92, 0.92],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1619309,"beamDamp":163.8},
+          {"beamDeform":11407.5,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          {"deformLimitExpansion":1.2},
+          //radiator
+          ["rad1","s1"],
+          ["rad1","s1r"],
+          ["rad1","s1l"],
+          ["rad1","s3"],
+          ["rad1","s3r"],
+          ["rad1","s3l"],
+
+          ["rad2","s1"],
+          ["rad2","s1r"],
+          ["rad2","s1l"],
+          ["rad2","s3"],
+          ["rad2","s3r"],
+          ["rad2","s3l"],
+          //to engine
+          {"deformLimitExpansion":""},
+          {"beamSpring":97919.25,"beamDamp":98.28},
+          {"beamDeform":2091.38,"beamStrength":6692.4},
+          {"optional":true},
+          //duplicate beams for better flexbody breaking
+          ["rad1","e4r"],
+          ["rad1","e4l"],
+          ["rad1","e4r"],
+          ["rad1","e4l"],
+
+          //tube
+          ["rad2","e4l"],
+          {"optional":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"dragCoef":2.1},
+            {"group":"burnside_radsupport"},
+            ["rad2","s1r","s1"],
+            ["rad2","s1","s1l"],
+    ],
+},
+}

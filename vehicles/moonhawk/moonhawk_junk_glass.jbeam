@@ -1,0 +1,518 @@
+{
+"moonhawk_junk_glass_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":10,
+    },
+    "slotType" : "moonhawk_glass_F",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["moonhawk_wipers", ["moonhawk_body"]],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_windshield_dmg"},
+         ["moonhawk_windshield", ["moonhawk_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+         ["moonhawk_windshield_dmg", ["moonhawk_windshield"]],
+         {"deformGroup":"windshield_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_int"},
+         ["moonhawk_windshield_int", ["moonhawk_windshield"]],
+         {"deformGroup":""},
+         ["moonhawk_intmirror", ["moonhawk_windshield"]],
+         {"deformGroup":""},
+     ],
+     "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["moonhawk_intmirror","r1","r1rr","r2",{"refBaseTranslation":{"x":0.0,"y":0.031,"z":-0.089},"baseRotationGlobal":{"x":0,"y":0,"z":20}}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         {"nodeWeight":2.3},
+         {"group":["moonhawk_windshield","gps"]},
+         //windshield node
+         ["wi1r", -0.3, -0.525, 1.16],
+         ["wi1l", 0.3, -0.525, 1.16],
+
+         //--NODE WEIGHT ADD--
+         {"nodeMaterial":"|NM_METAL"},
+         //windshield
+         {"group":"moonhawk_body"},
+         {"nodeWeight":2.8},
+         //a pillar
+         ["p2r",-0.76, -0.31, 1.13, {"group":["moonhawk_body","gps","moonhawk_windshield"]}],
+         ["p2l", 0.76, -0.31, 1.13, {"group":["moonhawk_body","gps","moonhawk_windshield"]}],
+         //roof
+         {"nodeWeight":3.1},
+         ["r1rr",-0.63, -0.115, 1.325, {"group":["moonhawk_body","gps","moonhawk_windshield"]}],
+         ["r1", 0.0, -0.24, 1.35, {"nodeWeight":2.6,"group":["moonhawk_body","gps","moonhawk_windshield"]}],
+         ["r1ll", 0.63, -0.115, 1.325, {"group":["moonhawk_body","gps","moonhawk_windshield"]}],
+         //cowl
+         {"nodeWeight":3.5},
+         ["b11rr",-0.84,-0.59, 0.94, {"group":["moonhawk_body","gps","moonhawk_windshield","moonhawk_dashboard"]}],
+         ["b11r",-0.31,-0.82, 0.94, {"group":["moonhawk_body","gps","moonhawk_windshield","moonhawk_dashboard"]}],
+         ["b11l", 0.31,-0.82, 0.94, {"group":["moonhawk_body","gps","moonhawk_windshield","moonhawk_dashboard"]}],
+         ["b11ll", 0.84,-0.59, 0.94, {"group":["moonhawk_body","gps","moonhawk_windshield","moonhawk_dashboard"]}],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //windshield
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":1001000,"beamDamp":50},
+          {"beamDeform":4100,"beamStrength":"FLT_MAX"},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.03},
+          ["wi1r","wi1l"],
+
+          ["wi1r","r1"],
+          ["wi1l","r1"],
+          ["wi1r","r1rr"],
+          ["wi1l","r1ll"],
+
+          ["wi1r","p1r"],
+          ["wi1l","p1l"],
+          ["wi1r","p2r"],
+          ["wi1l","p2l"],
+
+          ["wi1r","b11r"],
+          ["wi1l","b11l"],
+          ["wi1r","b11rr"],
+          ["wi1l","b11ll"],
+
+          ["wi1r","b11l"],
+          ["wi1l","b11r"],
+
+          ["wi1r","p2rr"],
+          ["wi1l","p2ll"],
+
+          {"beamDeform":3289.02,"beamStrength":10},
+          {"deformLimitExpansion":""},
+          ["r1rr","b11rr"],
+          ["r1ll","b11ll"],
+
+          ["r1rr","b11r"],
+          ["r1ll","b11l"],
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"group":"moonhawk_roof"},
+          {"dragCoef":2},
+          ["r1","p1r","wi1r"],
+          ["p1l","r1","wi1l"],
+          ["r1","wi1r","wi1l"],
+          ["wi1r","p1r","b11r"],
+          ["wi1l","wi1r","b11r"],
+          ["wi1l","b11r","b11l"],
+          ["wi1l","b11l","p1l"],
+          {"group":""},
+    ],
+},
+"moonhawk_junk_glass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+    "slotType" : "moonhawk_glass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"backlight_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_backlight", ["moonhawk_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound9", "deformVolume":0.0}],
+
+         {"deformGroup":"backlight_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_backlight_int", ["moonhawk_body"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--NODE WEIGHT ADD--
+
+         //rear window
+         {"nodeWeight":2.8},
+         {"group":"moonhawk_body"},
+         //c pillar
+         ["p6r",-0.70, 1.35, 1.15],
+         ["p6l", 0.70, 1.35, 1.15],
+         //roof
+         {"nodeWeight":3.8},
+         ["r4rr",-0.64, 1.00, 1.31],
+         ["r4", 0.0, 1.01, 1.35, {"nodeWeight":3.4}],
+         ["r4ll", 0.64, 1.00, 1.31],
+         //trunk perimeter structure
+         {"nodeWeight":3.9},
+         ["tb2r",-0.645, 1.71, 1.00],
+         ["tb2", 0.0, 1.74, 1.00],
+         ["tb2l", 0.645, 1.71, 1.00],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":""},
+
+          {"deformGroup":""},
+          {"disableMeshBreaking":true},
+          {"breakGroup":"backlight"},
+          {"deformGroup":"backlight_break","deformationTriggerRatio":0.03},
+          {"beamSpring":996830,"beamDamp":42},
+          {"beamDeform":7035.6,"beamStrength":10},
+          ["r4rr","tb2"],
+          ["r4ll","tb2"],
+
+          ["r4","tb2l"],
+          ["r4","tb2r"],
+
+          ["r4","p6r"],
+          ["r4","p6l"],
+
+          ["p6r","p6l"],
+          ["tb2r","p6l"],
+          ["tb2l","p6r"],
+
+          ["tb2","p6l"],
+          ["tb2","p6r"],
+
+          ["r4","tb2"],
+          {"breakGroup":""},
+          {"disableMeshBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"group":"moonhawk_backlight"},
+          {"breakGroup":"backlight_break"},
+          {"dragCoef":8},
+          ["r4ll","p6l","r4"],
+          ["r4","p6l","p6r"],
+          ["r4","p6r","r4rr"],
+          ["p6l","tb2l","tb2"],
+          ["p6l","tb2","p6r"],
+          ["p6r","tb2","tb2r"],
+          {"group":""},
+          {"breakGroup":""},
+    ],
+},
+"moonhawk_junk_quarterglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Quarter Glass",
+        "value":0,
+    },
+    "slotType" : "moonhawk_quarterglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_quarterglass_R", ["moonhawk_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+         {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_quarterglass_R_int", ["moonhawk_body"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--NODE WEIGHT ADD--
+
+         //side rear windows
+         {"group":"moonhawk_body"},
+         //b pillar
+         {"nodeWeight":1.8},
+         ["p3r",-0.78, 0.68, 1.12],
+         ["p4r",-0.78, 0.80, 1.12],
+         //c pillar
+         ["p5r",-0.78, 1.26, 1.12],
+         //roof
+         {"nodeWeight":2.7},
+         ["r3rr",-0.64, 0.68, 1.33],
+         //quarter panel
+         {"nodeWeight":2.6},
+         ["q2r",-0.91, 1.08, 0.97],
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true},
+          {"beamSpring":1001000,"beamDamp":50},
+          {"deformLimitExpansion":""},
+
+          {"breakGroup":"quarterglass_R"},
+          {"deformGroup":"quarterglass_R_break","deformationTriggerRatio":0.01},
+          {"beamDeform":7035.6,"beamStrength":10},
+          ["r4rr","q2r"],
+          ["r4rr","q1r"],
+          ["r4rr","q3r"],
+
+          ["p5r","p4r"],
+          ["r3rr","q2r"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"group":"moonhawk_side_R"},
+          {"breakGroup":"quarterglass_R_break"},
+          {"dragCoef":6},
+          ["p5r","q2r","q1r"],
+          ["p5r","q1r","p4r"],
+          ["r4rr","p4r","r3rr"],
+          ["r4rr","p5r","p4r"],
+          {"group":""},
+          {"breakGroup":""},
+    ],
+},
+"moonhawk_junk_quarterglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Quarter Glass",
+        "value":0,
+    },
+    "slotType" : "moonhawk_quarterglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_quarterglass_L", ["moonhawk_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0}],
+
+         {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_quarterglass_L_int", ["moonhawk_body"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--NODE WEIGHT ADD--
+
+         //side rear windows
+         {"group":"moonhawk_body"},
+         //b pillar
+         {"nodeWeight":1.8},
+         ["p3l", 0.78, 0.68, 1.12],
+         ["p4l", 0.78, 0.80, 1.12],
+         //c pillar
+         ["p5l", 0.78, 1.26, 1.12],
+         //roof
+         {"nodeWeight":2.7},
+         ["r3ll", 0.64, 0.68, 1.33],
+         //quarter panel
+         {"nodeWeight":2.6},
+         ["q2l",0.91, 1.08, 0.97],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true},
+          {"beamSpring":1001000,"beamDamp":50},
+          {"deformLimitExpansion":""},
+          {"beamDeform":7035.6,"beamStrength":10},
+
+          {"breakGroup":"quarterglass_L"},
+          {"deformGroup":"quarterglass_L_break","deformationTriggerRatio":0.01},
+
+          ["r4ll","q2l"],
+          ["r4ll","q1l"],
+          ["r4ll","q3l"],
+
+          ["p5l","p4l"],
+          ["r3ll","q2l"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false},
+          {"deformGroup":""},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+          ["id1:","id2:","id3:"],
+          {"group":"moonhawk_side_L"},
+          {"breakGroup":"quarterglass_L_break"},
+          {"dragCoef":6},
+          ["p5l","q1l","q2l"],
+          ["p4l","q1l","p5l"],
+          ["r3ll","p4l","r4ll"],
+          ["r4ll","p4l","p5l"],
+          {"group":""},
+          {"breakGroup":""},
+    ],
+},
+"moonhawk_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":0,
+    },
+    "slotType" : "moonhawk_doorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_doorglass_R", ["moonhawk_doorglass_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_doorglass_R_int", ["moonhawk_doorglass_R"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         //right door glass
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"moonhawk_doorglass_R"},
+         {"nodeWeight":2.31},
+         ["d10r",-0.68, -0.08, 1.315],
+         ["d11r",-0.68, 0.64, 1.325],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true},
+          //glass
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":4100,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.1},
+          {"deformGroup":"doorglass_R_break","deformationTriggerRatio":0.04},
+          ["d10r","d11r"],
+          ["d10r","d9r", {"beamStrength":10,"breakGroup":"doorglass_R_break"}],
+          ["d10r","d8r"],
+          ["d10r","d7r"],
+          ["d11r","d9r"],
+          ["d11r","d8r"],
+          ["d11r","d7r", {"beamStrength":10,"breakGroup":"doorglass_R_break"}],
+
+          ["d10r","d14r"],
+          ["d11r","d14r"],
+
+          //window frame
+          ["d11r", "d6r"],
+          ["d10r", "d4r"],
+          ["d10r", "d5r"],
+          {"deformLimitExpansion":1.1},
+          {"breakGroup":""},
+          {"disableMeshBreaking":false},
+          {"deformGroup":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"moonhawk_door_R"},
+            {"dragCoef":12},
+            {"breakGroup":"doorglass_R_break"},
+            ["d7r", "d10r", "d8r"],
+            ["d9r", "d8r", "d10r"],
+            ["d11r", "d9r", "d10r"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+"moonhawk_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":0,
+    },
+    "slotType" : "moonhawk_doorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"moonhawk_glass", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_doorglass_L", ["moonhawk_doorglass_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"moonhawk_glass_int", "deformMaterialDamaged":"moonhawk_glass_dmg"},
+         ["moonhawk_doorglass_L_int", ["moonhawk_doorglass_L"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_GLASS"},
+         //left door glass
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":"moonhawk_doorglass_L"},
+         {"nodeWeight":2.31},
+         ["d10l",0.68, -0.08, 1.315],
+         ["d11l",0.68, 0.64, 1.325],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true},
+          //glass
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":4100,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"doorglass_L_break","deformationTriggerRatio":0.04},
+          {"deformLimitExpansion":1.1},
+          ["d10l","d11l"],
+          ["d10l","d9l", {"beamStrength":10,"breakGroup":"doorglass_L_break"}],
+          ["d10l","d8l"],
+          ["d10l","d7l"],
+          ["d11l","d9l"],
+          ["d11l","d8l"],
+          ["d11l","d7l", {"beamStrength":10,"breakGroup":"doorglass_L_break"}],
+
+          ["d10l","d14l"],
+          ["d11l","d14l"],
+
+          //window frame
+          ["d11l", "d6l"],
+          ["d10l", "d4l"],
+          ["d10l", "d5l"],
+          {"deformLimitExpansion":1.1},
+          {"breakGroup":""},
+          {"disableMeshBreaking":false},
+          {"deformGroup":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"group":"moonhawk_door_L"},
+            {"dragCoef":12},
+            {"breakGroup":"doorglass_L_break"},
+            ["d10l", "d7l", "d8l"],
+            ["d8l", "d9l", "d10l"],
+            ["d9l", "d11l", "d10l"],
+            {"breakGroup":""},
+            {"group":""},
+    ],
+},
+}

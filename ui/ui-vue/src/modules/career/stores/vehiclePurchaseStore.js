@@ -87,8 +87,8 @@ export const useVehiclePurchaseStore = defineStore("vehiclePurchase", () => {
     lua.career_modules_vehicleShopping.buyFromPurchaseMenu(purchaseType.value, options)
   }
 
-  async function getInventory() {
-    return await lua.career_modules_inventory.getVehicles()
+  function inventoryIsEmpty() {
+    return lua.career_modules_inventory.isEmpty()
   }
 
   function chooseTradeInVehicle() {
@@ -122,7 +122,7 @@ export const useVehiclePurchaseStore = defineStore("vehiclePurchase", () => {
     dispose,
     forceNoDelivery,
     forceTradeIn,
-    getInventory,
+    inventoryIsEmpty,
     inventoryHasFreeSlot,
     locationSelectionEnabled,
     makeDelivery,

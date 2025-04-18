@@ -1,0 +1,380 @@
+{
+"pickup_junk_transmission_4A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Automatic Transmission",
+        "value":350,
+    },
+    "slotType" : "pickup_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_converter","pickup_converter","Torque Converter", {"coreSlot":true}],
+        ["pickup_transfer_case","pickup_transfer_case_4WD","Transfer Case", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-2.00, 0, 2.4, 1.47, 1.0, 0.68],
+        "parkLockTorque":2500,
+        "oneWayViscousCoef":60,
+        "friction": 2.00,
+        "dynamicFriction": 0.00300,
+        "torqueLossCoef": 0.035,
+        "gearboxNode:":"tra1",
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "calculateOptimalLoadShiftPoints": false,
+        "transmissionGearChangeDelay":3.2,
+        "gearboxDecisionSmoothingUp":3.2,
+        "gearboxDecisionSmoothingDown":3.2,
+        "aggressionSmoothingUp":3.2,
+        "aggressionSmoothingDown":3.2,
+        "aggressionHoldOffThrottleDelay":3.2,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":4250,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup_transmission", ["pickup_engine","pickup_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--4 Speed Auto-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":32.9},
+         {"group":"pickup_transmission"},
+         ["tra1", 0.0, -0.41, 0.46],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_transmission_6A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 6-Speed Automatic Transmission",
+        "value":500,
+    },
+    "slotType" : "pickup_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_converter","pickup_converter_heavy","Torque Converter", {"coreSlot":true}],
+        ["pickup_transfer_case","pickup_transfer_case_4WD","Transfer Case", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        //premultiplied to account for 3.55 differential ratio instead of 3.15
+        //source ratios: [-3.4, 0, 4.17, 2.34, 1.52, 1.14, 0.87, 0.69]
+        "gearRatios":[-3.02, 0, 3.70, 2.08, 1.35, 1.02, 0.89, 0.62],
+        "parkLockTorque":2500,
+        "oneWayViscousCoef":95,
+        "friction": 1.99,
+        "dynamicFriction": 0.0050,
+        "torqueLossCoef": 0.050,
+        "gearboxNode:":"tra1",
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "transmissionGearChangeDelay":2.2,
+        "calculateOptimalLoadShiftPoints": false,
+        "aggressionSmoothingUp":2.2,
+        "aggressionSmoothingDown":2.2,
+        "aggressionHoldOffThrottleDelay":2.2,
+        "gearboxDecisionSmoothingUp":2.2,
+        "gearboxDecisionSmoothingDown":2.2,
+        "lowShiftDownRPM":1000,
+        "lowShiftUpRPM":[0,0,4500,4500,4000,4000,4000],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup_transmission", ["pickup_engine","pickup_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--6 Speed Auto-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":37.6},
+         {"group":"pickup_transmission"},
+         ["tra1", 0.0, -0.41, 0.46],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"pickup_junk_transmission_6A_Diesel": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Diesel 6-Speed Automatic Transmission",
+        "value":750,
+    },
+    "slotType" : "pickup_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_converter_diesel","pickup_converter_diesel","Torque Converter", {"coreSlot":true}],
+        ["pickup_transfer_case","pickup_transfer_case_4WD","Transfer Case", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["torqueConverter", "torqueConverter", "mainEngine", 1],
+        ["automaticGearbox", "gearbox", "torqueConverter", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.4, 0, 3.09, 1.81, 1.33, 1.0, 0.78, 0.65],
+        "parkLockTorque":2500,
+        "oneWayViscousCoef":100,
+        "friction": 2.00,
+        "dynamicFriction": 0.0060,
+        "torqueLossCoef": 0.060,
+        "gearboxNode:":"tra1",
+    },
+    "vehicleController": {
+        "automaticModes":"PRND21",
+        "transmissionGearChangeDelay":3.0,
+        "transmissionShiftDelay":3.0,
+        "minGearChangeTime":3.0,
+        "maxGearChangeTime":3.0,
+        "calculateOptimalLoadShiftPoints":false,
+        "useSmartAggressionCalculation":false,
+        "lowShiftDownRPM":1250,
+        "lowShiftUpRPM":3500,
+        "gearboxDecisionSmoothingUp":3.0,
+        "gearboxDecisionSmoothingDown":3.0,
+        "aggressionSmoothingUp":3.0,
+        "aggressionSmoothingDown":3.0,
+        "throttleCoefWhileShifting":0.95,
+        "torqueConverterLockupRPM":3000,
+        "torqueConverterLockupMinGear":2,
+        "torqueConverterLockupRange":50,
+        "torqueConverterLockupInRate":10,
+        "torqueConverterLockupOutRate":1,
+        "autoDownShiftInM":false,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup_transmission", ["pickup_engine","pickup_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--6 Speed Auto-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":37.6},
+         {"group":"pickup_transmission"},
+         ["tra1", 0.0, -0.41, 0.46],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+
+"pickup_junk_transmission_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed Manual Transmission",
+        "value":150,
+    },
+    "slotType" : "pickup_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["pickup_flywheel","pickup_flywheel","Flywheel", {"coreSlot":true}],
+        ["pickup_transfer_case","pickup_transfer_case_4WD","Transfer Case", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.39, 0, 3.9, 2.25, 1.5, 1.0, 0.8],
+        "friction": 1.80,
+        "dynamicFriction": 0.00250,
+        "torqueLossCoef": 0.0250,
+        "gearboxNode:":"tra1",
+
+        "gearWhineCoefsInput":  [2.00, 0.00, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25],
+        "gearWhineCoefsOutput": [2.00, 0.00, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "clutch": {
+        "uiName":"Clutch",
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.1,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,6500,6500,6500,6500,6500],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup_transmission", ["pickup_engine","pickup_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--5 Speed Manual-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":32.9},
+         {"group":"pickup_transmission"},
+         ["tra1", 0.0, -0.41, 0.46],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+
+"pickup_junk_transmission_5M_diesel": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Diesel 5-Speed Manual Transmission",
+        "value":250,
+    },
+    "slotType" : "pickup_transmission",
+    "slots": [
+        ["type", "default","description"],
+        ["pickup_flywheel","pickup_flywheel_heavy","Flywheel", {"coreSlot":true}],
+        ["pickup_transfer_case","pickup_transfer_case_4WD","Transfer Case", {"coreSlot":true}],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-4.66, 0, 5.08, 2.60, 1.53, 1.0, 0.77],
+        "friction": 1.42,
+        "dynamicFriction": 0.00144,
+        "torqueLossCoef": 0.0155,
+        "gearboxNode:":"tra1",
+
+        "gearWhineCoefsInput":  [3.60, 0.00, 3.12, 2.12, 3.12, 1.12, 3.12, 2.12, 1.12, 2.12],
+        "gearWhineCoefsOutput": [3.60, 0.00, 3.12, 2.12, 3.12, 1.12, 3.12, 2.12, 1.12, 2.12],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in_tuned",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out_tuned",
+
+        "forwardInputPitchCoef":0.95
+        "forwardOutputPitchCoef":0.95
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.1,
+        "transmissionShiftDelay":0.28,
+        "lowShiftDownRPM":[0,0,0,1000,1000,1000,1000,1000],
+        "lowShiftUpRPM":[0,0,5000,5000,5000,5000,5000],
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["gavril_v8_pickup_transmission", ["pickup_engine","pickup_transmission"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--5 Speed Manual-
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":47},
+         {"group":"pickup_transmission"},
+         ["tra1", 0.0, -0.41, 0.46],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //--TRANSMISSION CONE--
+          {"beamSpring":18800940,"beamDamp":470},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["tra1","e1r"],
+          ["tra1","e3r"],
+          ["tra1","e1l"],
+          ["tra1","e3l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

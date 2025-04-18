@@ -1,0 +1,132 @@
+{
+"bx_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":25,
+    },
+    "slotType" : "bx_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_premium", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_disc_plain", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.685,"y":-1.245, "z":0.35}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_plain", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":0.685,"y":-1.245, "z":0.35}, "scale":{"x":1.0,"y":1.0,"z":1.0}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["bx_hub_F"], [], {"pos":{"x":-0.685,"y":-1.245, "z":0.35}, "scale":{"x":1.0,"y":0.9,"z":1.0}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["bx_hub_F"], [], {"pos":{"x":0.685,"y":-1.245, "z":0.35}, "scale":{"x":1.0,"y":0.9,"z":1.0}, "rot":{"x":0,"y":180,"z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*650"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":50},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.25},
+        {"brakeMass":6.0},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //abs
+        {"absSlipRatioTarget":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+
+        //hub
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+        //general settings
+        {"hubRadius":0.14},
+        {"wheelOffset":-0.05},
+        {"hubWidth":0.05},
+        {"numRays":12},
+
+        //hub options
+        {"hubTreadBeamSpring":501000, "hubTreadBeamDamp":5},
+        {"hubPeripheryBeamSpring":501000, "hubPeripheryBeamDamp":5},
+        {"hubSideBeamSpring":801000, "hubSideBeamDamp":5},
+        {"hubNodeWeight":0.6},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+    ],
+},
+"bx_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "bx_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_premium", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_disc_plain", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.685,"y":1.25,"z":0.325}, "scale":{"x":1.0,"y":0.9,"z":0.9}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_disc_plain", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x":0.685,"y":1.25,"z":0.325}, "scale":{"x":1.0,"y":0.9,"z":0.9}, "rot":{"x":180,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["bx_hub_R"], [], {"pos":{"x":-0.685,"y":1.25,"z":0.325}, "scale":{"x":1.0,"y":0.75,"z":0.9}, "rot":{"x":0,"y":0,"z":0}}],
+        ["brake_caliper_standard_plain", ["bx_hub_R"], [], {"pos":{"x":0.685,"y":1.25,"z":0.325}, "scale":{"x":1.0,"y":0.75,"z":0.9}, "rot":{"x":0,"y":180,"z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+
+        {"brakeTorque":"$=$brakestrength*370"},
+        {"brakeInputSplit":0.65},
+        {"brakeSplitCoef":0.4},
+        {"parkingTorque":600},
+        {"brakeSpring":50},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.23},
+        {"brakeMass":4.0},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //abs
+        {"absSlipRatioTarget":0.13},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+
+        //hub
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+        //general settings
+        {"hubRadius":0.122},
+        {"wheelOffset":-0.05},
+        {"hubWidth":0.05},
+        {"numRays":12},
+
+        //hub options
+        {"hubTreadBeamSpring":501000, "hubTreadBeamDamp":5},
+        {"hubPeripheryBeamSpring":501000, "hubPeripheryBeamDamp":5},
+        {"hubSideBeamSpring":801000, "hubSideBeamDamp":5},
+        {"hubNodeWeight":0.5},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.2},
+        {"hubBeamDeform":45500, "hubBeamStrength":87500},
+    ],
+},
+"bx_junk_ABS": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective ABS System",
+        "value":35,
+    },
+    "slotType":"bx_ABS",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"enableABS":false},
+        //brake sounds
+        {"squealCoefNatural": 0.0, "squealCoefLowSpeed": 0.0}
+    ],
+},
+}

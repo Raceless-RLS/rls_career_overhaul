@@ -1,0 +1,217 @@
+{
+"scintilla_junk_dash": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Dashboard With Electrical Issues",
+        "value":150,
+    },
+    "slotType" : "scintilla_dash",
+    "slots":[
+        ["type", "default", "description"],
+        ["scintilla_steer","scintilla_steer", "Steering Wheel"],
+        ["scintilla_pedals","scintilla_pedals", "Pedals"],
+        ["scintilla_shiftlight","", "Shift Light"],
+        ["scintilla_gauges","scintilla_gauges", "Gauges", {"coreSlot":true}],
+        ["soundscape_horn", "soundscape_horn_4", "Horn"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["scintilla_dashboard", ["scintilla_dash", "scintilla_chassis"]],
+         ["scintilla_interior_mirror", ["scintilla_windshield"]],
+         ["scintilla_windshield_stripping", ["scintilla_windshield"]],
+         ["scintilla_dashboard_race", ["scintilla_dash", "scintilla_chassis"]],
+         {"deformGroup":"dash_damage", "deformMaterialBase":"scintilla_gps_screen", "deformMaterialDamaged":"scintilla_gauges_dmg"},
+         ["scintilla_gps_screen", ["scintilla_dash", "scintilla_chassis"]],
+         ["scintilla_kickplate_R", ["scintilla_chassis"]],
+         ["scintilla_kickplate_L", ["scintilla_chassis"]],
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["scintilla_interior_mirror","rf1","rf1rr","f6l",{"refBaseTranslation":{"x":0.0,"y":0.0,"z":-0.09},"baseRotationGlobal":{"x":5,"y":0.0,"z":10}}],
+    ],
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //steering column controls
+        //["turnsignal", "scintilla_signalstalk", "dsh1","dsh1l","f7",  {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":-12},  {"x":0, "y":0, "z":0},  -1, 1, -0.0, 1],
+    ],
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["axle_lift", "", "dsh1","dsh1r","dsh2", "box", {"x":0.02, "y":0.02, "z":0.02}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.041, "y":0.385, "z":-0.04}],
+        ["hazard", "", "dsh1","dsh1r","dsh2", "box", {"x":0.02, "y":0.02, "z":0.02}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.01, "y":0.395, "z":-0.03}],
+        ["handbrake", "", "dsh1","dsh1r","dsh2", "box", {"x":0.025, "y":0.03, "z":0.02}, {"x":38, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.03, "y":0.43, "z":-0.01}],
+        ["launch", "", "dsh1","dsh1r","dsh2", "box", {"x":0.02, "y":0.02, "z":0.01}, {"x":38, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.007, "y":0.349, "z":-0.095}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["axle_lift", "action0", "axle_lift"],
+        ["hazard", "action0", "hazard"],
+        ["handbrake", "action0", "handbrake"],
+        ["launch", "action0", "launch"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["axle_lift", "ui.inputActions.scintilla.axle_lift.title", "ui.inputActions.scintilla.axle_lift.description", {"onUp":"controller.getControllerSafe('axleLift').toggleMode()"}],
+        ["hazard", "ui.inputActions.hazard.title", "ui.inputActions.hazard.description", {"onDown": "electrics.toggle_warn_signal()"}],
+        ["handbrake", "ui.inputActions.handbrake.title", "ui.inputActions.handbrake.description", {"onDown": "input.toggleEvent('parkingbrake')"}],
+        ["launch", "ui.inputActions.vehicle.toggleTwoStep.title", "ui.inputActions.vehicle.toggleTwoStep.description", {"onDown"  :"controller.getControllerSafe('twoStepLaunch').toggleTwoStep()"}]
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //soundscape_indicator4
+        {"node:":"f6l"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>BM1_V2_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>BM1_V2_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>AU3_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>SUB_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>POLA_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>POLA_Off"],
+        //handbrake2
+        {"node:":"dsh2"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"bbf2"},
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //dashboard
+         {"group":"scintilla_dash"},
+         {"nodeWeight":16.0},
+         ["dsh1r",-0.67,-0.6,0.79],
+         ["dsh1",0.0,-0.6,0.79],
+         ["dsh1l",0.67,-0.6,0.79],
+
+         ["dsh2",0.0,-0.35,0.5],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+         //--DASHBOARD--
+         {"beamSpring":1501000,"beamDamp":100},
+         {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+         {"deformLimitExpansion":""},
+         {"deformGroup":"dash_damage","deformationTriggerRatio":0.03},
+         ["dsh1l", "dsh1"],
+         ["dsh1", "dsh1r"],
+         ["dsh1l", "f6ll"],
+         ["dsh1r", "f6rr"],
+         ["dsh1", "f6l"],
+         ["dsh1", "f6r"],
+         ["f6r", "dsh1r"],
+         ["f6ll", "dsh1"],
+         ["dsh1l", "f6l"],
+         ["f6rr", "dsh1"],
+         ["dsh1l", "f5ll"],
+         ["dsh1l", "fx4l"],
+         ["dsh1r", "f5rr"],
+         ["dsh1r", "fx4r"],
+         ["dsh1", "fx4r"],
+         ["dsh1", "fx4l"],
+         ["dsh1", "f7l"],
+         ["dsh1", "f7r"],
+         ["dsh1r", "f7r"],
+         ["dsh1l", "f7l"],
+         ["dsh1", "f8r"],
+         ["dsh1", "f8l"],
+         ["dsh2", "f7l"],
+         ["dsh2", "f7r"],
+         ["dsh2", "f8l"],
+         ["dsh2", "f8r"],
+         ["dsh2", "f2l"],
+         ["dsh2", "f2r"],
+         ["dsh2", "f3l"],
+         ["dsh2", "f3r"],
+         ["dsh2", "dsh1"],
+         ["dsh2", "dsh1l"],
+         ["dsh2", "dsh1r"],
+         {"deformGroup":""},
+
+         //bleed through
+         {"deformLimitExpansion":1.2},
+    ],
+},
+"scintilla_junk_gauges": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Gauges",
+        "value":100,
+    },
+    "slotType" : "scintilla_gauges",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"dash_damage", "deformMaterialBase":"scintilla_gauges", "deformMaterialDamaged":"scintilla_gauges_dmg"},
+         ["scintilla_gauges", ["scintilla_dash", "scintilla_chassis"]],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/genericGauges", {"name":"gauge", }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/accelerationData"],
+        ["gauges/customModules/tireData"],
+        ["gauges/customModules/dynamicRedlineData", {"minOutput":0,"maxOutput":20, "minOutputRPM":0, "maxOutputRPM":10000, "minOilTemp":50, "maxOilTemp": 90, "coldOilRPMCoef":0.5 "yellowOutputOffset":-2}],
+        ["gauges/customModules/combustionEngineData"],
+    ],
+    "gauge": {
+        "configuration": {
+            "materialName": "@scintilla_gauges_screen"
+            "htmlPath": "local://local/vehicles/scintilla/gauges_screen/gauges_screen.html"
+            "displayWidth":1024
+            "displayHeight":512
+        }
+        "displayData": {
+            "electrics": [
+                "gear",
+                "fuel",
+                "watertemp",
+                "wheelspeed",
+                "rpmTacho",
+                "lowfuel",
+                "signal_L",
+                "signal_R",
+                "parkingbrake",
+                "checkengine",
+                "engineRunning",
+                "lowpressure",
+                "lights",
+                "turboBoost",
+                "oiltemp",
+                "escActive",
+                "tcsActive",
+                "odometer",
+                "trip"
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["environmentData", "time"],
+                ["environmentData", "temperatureEnv",]
+                ["accelerationData", "accelerationSmooth"]
+                ["dynamicRedlineData", ""]
+                ["tireData", "pressures"]
+                ["tireData", "temperatures"]
+                ["combustionEngineData", "remainingRange"]
+                ["combustionEngineData", "fuelConsumption"],
+            ]
+        },
+    },
+},
+"scintilla_junk_screen_branding_default": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Default",
+        "value":1,
+    },
+    "slotType" : "scintilla_screen_branding",
+    "glowMap":{
+        "scintilla_gauges":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"screen_off", "on_intense":"screen_off"},
+        "scintilla_gps_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"scintilla_naviscreen_accessory", "on_intense":"screen_off"},
+    },
+},
+}

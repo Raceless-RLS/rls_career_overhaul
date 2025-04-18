@@ -1,0 +1,73 @@
+{
+"junk_md_series_tire_R_1_295/75R22_5": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Out 295/75R22.5 Rear Tires",
+        "value":100,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["tire_02a_22x10_41", ["wheel_R1L","tire_R1L"],   [], {"pos":{"x":"$=-1*$components.dualyOffsets_R.offsetInner+0.814", "y":0.00, "z":0.00}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["tire_02a_22x10_41", ["wheel_R1R","tire_R1R"],   [], {"pos":{"x":"$=$components.dualyOffsets_R.offsetInner-0.814",    "y":0.00, "z":0.00}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["tire_02a_22x10_41", ["wheel_R1LL","tire_R1LL"], [], {"pos":{"x":"$=-1*$components.dualyOffsets_R.offsetOuter+0.814", "y":0.00, "z":0.00}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         ["tire_02a_22x10_41", ["wheel_R1RR","tire_R1RR"], [], {"pos":{"x":"$=$components.dualyOffsets_R.offsetOuter-0.814",    "y":0.00, "z":0.00}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+     ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$tirepressure_R", "range", "psi", "Wheels", 100, 0, 120, "Tire Pressure", "Relative to atmospheric pressure", {"subCategory":"Rear"}],
+    ],
+    "slotType" : "md_series_tire_R_1",
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"enableTireLbeams":false},
+            {"enableTireReinfBeams":true},
+            {"enableTireSideReinfBeams":false},
+            {"enableTreadReinfBeams":false},
+            {"enableTirePeripheryReinfBeams":false},
+            {"disableMeshBreaking":false},
+            {"disableHubMeshBreaking":false},
+
+            //general settings
+            {"radius":0.52},
+            {"tireWidth":0.255},
+
+            //tire options
+            {"wheelSideBeamSpring":0,"wheelSideBeamDamp":180},
+            {"wheelSideBeamSpringExpansion":2401000,"wheelSideBeamDampExpansion":180},
+            {"wheelSideTransitionZone":0.05,"wheelSideBeamPrecompression":0.975},
+
+            {"wheelReinfBeamSpring":25000,"wheelReinfBeamDamp":350},
+            {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.98},
+
+            {"wheelTreadBeamSpring":551000,"wheelTreadBeamDamp":400},
+            {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.98},
+
+            {"wheelPeripheryBeamSpring":351000,"wheelPeripheryBeamDamp":150},
+            {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":0.98},
+
+            //deform values
+            {"wheelSideBeamDeform":78000,"wheelSideBeamStrength":25000},
+            {"wheelReinfBeamDeform":78000,"wheelReinfBeamStrength":25000},
+            {"wheelTreadBeamDeform":78000,"wheelTreadBeamStrength":25000},
+            {"wheelPeripheryBeamDeform":158000,"wheelPeripheryBeamStrength":176000},
+
+            //general tire values
+            {"nodeWeight":1.96},
+            {"nodeMaterial":"|NM_RUBBER","hasTire":true},
+            {"triangleCollision":false},
+            {"pressurePSI":"$tirepressure_R"},
+            {"dragCoef":5},
+
+            //groundmodel friction multipliers
+            {"frictionCoef":0.8},
+            {"slidingFrictionCoef":0.8},
+            {"treadCoef":0.0},
+
+            //advanced friction values
+            {"noLoadCoef":1.08},
+            {"loadSensitivitySlope":0.000012},
+            {"fullLoadCoef":0.25},
+            {"softnessCoef":0.3},
+    ],
+},
+}

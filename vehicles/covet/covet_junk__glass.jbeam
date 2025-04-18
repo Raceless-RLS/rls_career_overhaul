@@ -1,0 +1,516 @@
+{
+"covet_junk_windshield": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":50,
+    },
+
+    "slotType" : "covet_windshield",
+    "slots": [
+        ["type", "default", "description"],
+        ["covet_sunstrip","","Sunstrip"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //glass
+        {"deformGroup":"windshield_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_windshield_dmg"},
+        ["covet_windshield", ["covet_body","covet_windshield"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_int"},
+        ["covet_windshield_int", ["covet_body","covet_windshield"]],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+        ["covet_windshield_dmg", ["covet_body","covet_windshield"]],
+        {"deformGroup":""},
+        ["covet_wipers", ["covet_body"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.0
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_GLASS"},
+        {"nodeWeight":2.0},
+        {"group":["covet_windshield","gps","covet_intmirror_grp"]},
+        //windshield node
+        ["wi1", 0, -0.60, 1.08],
+        {"group":""},
+        {"nodeMaterial":"|NM_METAL"},
+
+         //--ADD WEIGHT--
+         //windshield
+         //a pillar
+         {"nodeWeight":2.2},
+         ["p1r", -0.55, -0.47, 1.09, {"group":["covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         ["p1l", 0.55, -0.47, 1.09, {"group":["covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         //roof
+         {"nodeWeight":2.6},
+         ["rf1r", -0.53, -0.15, 1.27, {"group":["covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         ["rf1", 0, -0.245, 1.28, {"nodeWeight":1.2,"group":["covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         ["rf1l", 0.53, -0.15, 1.27, {"group":["covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         //firewall
+         {"nodeWeight":4.6},
+         ["f6rr", -0.73, -0.77, 0.84, {"group":["covet_dash","covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+         ["f6r", -0.28, -0.88, 0.84, {"group":["covet_dash","covet_body","covet_windshield","gps","covet_strutbar","covet_intmirror_grp"]}],//weight added by glass
+         ["f6l", 0.28, -0.88, 0.84, {"group":["covet_dash","covet_body","covet_windshield","gps","covet_strutbar","covet_intmirror_grp"]}],//weight added by glass
+         ["f6ll", 0.73, -0.77, 0.84, {"group":["covet_dash","covet_body","covet_windshield","gps","covet_intmirror_grp"]}],//weight added by glass
+
+        //windshield 12kg, rear windshield 10kg, sedan window 3kg, coupe window 4kg
+        //943kg
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //windshield node
+          {"beamSpring":1104460,"beamDamp":116},
+          {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"windshield_break","deformationTriggerRatio":0.03},
+          {"deformLimitExpansion":""},
+          ["wi1","rf1r"],
+          ["wi1","rf1"],
+          ["wi1","rf1l"],
+          ["wi1","p1r"],
+          ["wi1","p1l"],
+          ["wi1","p2r"],
+          ["wi1","p2l"],
+          ["wi1","f6r"],
+          ["wi1","f6l"],
+          ["wi1","f6rr"],
+          ["wi1","f6ll"],
+
+          ["wi1","p2rr"],
+          ["wi1","p2ll"],
+          {"beamDeform":10,"beamStrength":10},
+          ["f6r","rf1"],
+          ["f6l","rf1"],
+          ["p1r","p1l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"optional":false},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+},
+"covet_junk_quarterglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Quarter Glass",
+        "value":10,
+    },
+
+    "slotType" : "covet_quarterglass_R",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //glass
+        {"deformGroup":"sideglass_R_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_glass_dmg"},
+        ["covet_sideglass_R", ["covet_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0}],
+        {"deformGroup":"sideglass_R_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_dmg"},
+        ["covet_sideglass_R_int", ["covet_body"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+
+         //rear side windows
+         {"group":"covet_body"},
+         //b pillar
+         {"nodeWeight":1.6},
+         ["p4r", -0.66, 0.50, 1.08],
+         //c pillar
+         {"nodeWeight":1.8},
+         ["p5r", -0.65, 1.35, 1.06],
+         //roof
+         {"nodeWeight":2.5},
+         ["rf2r", -0.52, 0.47, 1.30],
+         ["rf3r", -0.52, 0.88, 1.295],
+         ["rf4r", -0.51, 1.345, 1.263],//weight added by glass
+         {"group":"covet_body"},
+         //quarter panel
+         {"nodeWeight":1.6},
+         ["q1r", -0.765, 0.42, 0.86],
+         ["q2r", -0.765, 1.01, 0.88],
+         ["q3r", -0.74, 1.36, 0.89],
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //side glass
+          {"beamDeform":10,"beamStrength":10},
+          {"deformGroup":"sideglass_R_break", "deformationTriggerRatio":0.05},
+          {"breakGroup":"sideglass_R"},
+          ["q2r","rf3r"],
+          ["q2r","rf4r"],
+          ["q1r","p5r"],
+          ["p5r","rf2r"],
+          ["p4r","rf4r"],
+          ["p4r","q3r"],
+          ["q1r","rf3r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"optional":false},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //front right door
+            {"groundModel":"glass"},
+            {"dragCoef":9},
+            {"group":"covet_rightside"},
+            {"breakGroup":"sideglass_R"},
+            ["rf3r", "p4r", "rf2r"],
+            ["rf4r", "p5r", "rf3r"],
+            ["p5r",  "q3r", "q2r"],
+            ["q2r",  "q1r", "p4r"],
+            ["rf3r", "p5r", "p4r"],
+            ["p4r",  "p5r", "q2r"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+            {"group":""},
+    ],
+},
+"covet_junk_quarterglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Quarter Glass",
+        "value":10,
+    },
+
+    "slotType" : "covet_quarterglass_L",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //glass
+        {"deformGroup":"sideglass_L_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_glass_dmg"},
+        ["covet_sideglass_L", ["covet_body"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound6", "deformVolume":0.0}],
+        {"deformGroup":"sideglass_L_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_dmg"},
+        ["covet_sideglass_L_int", ["covet_body"]],
+        {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+
+         //rear side windows
+         {"group":"covet_body"},
+         //b pillar
+         {"nodeWeight":1.6},
+         ["p4l", 0.66, 0.50, 1.08],
+         //c pillar
+         {"nodeWeight":1.8},
+         ["p5l", 0.65, 1.35, 1.06],
+         //roof
+         {"nodeWeight":2.5},
+         ["rf2l", 0.52, 0.47, 1.30],
+         ["rf3l", 0.52, 0.88, 1.295],
+         ["rf4l", 0.51, 1.345, 1.263],//weight added by glass
+         {"group":"covet_body"},
+         //quarter panel
+         {"nodeWeight":1.6},
+         ["q1l", 0.765, 0.42, 0.86],
+         ["q2l", 0.765, 1.01, 0.88],
+         ["q3l", 0.74, 1.36, 0.89],
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //side glass
+          {"beamDeform":10,"beamStrength":10},
+          {"deformGroup":"sideglass_L_break", "deformationTriggerRatio":0.05},
+          {"breakGroup":"sideglass_L"},
+          ["q2l","rf3l"],
+          ["q2l","rf4l"],
+          ["q1l","p5l"],
+          ["p5l","rf2l"],
+          ["p4l","rf4l"],
+          ["p4l","q3l"],
+          ["q1l","rf3l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"optional":false},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //front right door
+            {"groundModel":"glass"},
+            {"dragCoef":9},
+            {"group":"covet_leftside"},
+            {"breakGroup":"sideglass_L"},
+            ["rf3l", "rf2l", "p4l"],
+            ["rf4l", "rf3l", "p5l"],
+            ["p5l", "q2l",  "q3l"],
+            ["q2l", "p4l",  "q1l"],
+            ["rf3l", "p4l", "p5l"],
+            ["p4l", "q2l",  "p5l"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+            {"group":""},
+    ],
+},
+"covet_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":10,
+    },
+    "slotType" : "covet_doorglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_doorglass_R", ["covet_door_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_R_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_doorglass_R_int", ["covet_door_R"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--DOOR--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"collision":true},
+        {"selfCollision":true},
+        {"group":"covet_door_R"},
+        {"nodeWeight":2.0},
+        ["d10r",-0.67, -0.425, 1.07],//weight added by glass
+        ["d11r",-0.55, -0.14, 1.27],//weight added by glass
+        ["d12r",-0.54, 0.46, 1.30],//weight added by glass
+        ["d13r",-0.70, 0.45, 1.07],//weight added by glass
+        {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":false},
+          //right door glass
+          {"beamSpring":800800,"beamDamp":100},
+          {"deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.02},
+          {"beamDeform":10,"beamStrength":10},
+          {"breakGroup":"doorglass_R"},
+          {"deformLimitExpansion":""},
+          ["d11r","d8r"],
+          ["d12r","d8r"],
+          ["d10r","d13r"],
+          ["d10r","d9r"],
+          ["d13r","d7r"],
+          ["d9r","d11r"],
+          ["d7r","d11r"],
+          ["d9r","d12r"],
+          {"deformGroup":""},
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //right door
+            {"groundModel":"metal"},
+            {"group":"covet_door_R"},
+            {"dragCoef":14},
+            {"breakGroup":"doorglass_R"},
+            ["d13r", "d9r", "d8r"],
+            ["d8r", "d7r", "d10r"],
+            ["d10r", "d13r", "d8r"],
+            ["d10r", "d11r", "d13r"],
+            ["d13r", "d11r", "d12r"],
+            {"breakGroup":""},
+    ],
+},
+"covet_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":10,
+    },
+    "slotType" : "covet_doorglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_doorglass_L", ["covet_door_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+         {"deformGroup":"doorglass_L_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_doorglass_L_int", ["covet_door_L"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--DOOR--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"collision":true},
+        {"selfCollision":true},
+        {"group":"covet_door_L"},
+        {"nodeWeight":2.0},
+        ["d10l",0.67, -0.425, 1.07],//weight added by glass
+        ["d11l",0.55, -0.14, 1.27],//weight added by glass
+        ["d12l",0.54, 0.46, 1.30],//weight added by glass
+        ["d13l",0.70, 0.45, 1.07],//weight added by glass
+        {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":false},
+          //left door glass
+          {"beamSpring":800800,"beamDamp":100},
+          {"deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.02},
+          {"beamDeform":10,"beamStrength":10},
+          {"breakGroup":"doorglass_L"},
+          {"deformLimitExpansion":""},
+          ["d11l","d8l"],
+          ["d12l","d8l"],
+          ["d10l","d13l"],
+          ["d10l","d9l"],
+          ["d13l","d7l"],
+          ["d9l","d11l"],
+          ["d7l","d11l"],
+          ["d9l","d12l"],
+          {"deformGroup":""},
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //right door
+            {"groundModel":"metal"},
+            {"group":"covet_door_L"},
+            {"dragCoef":14},
+            {"breakGroup":"doorglass_L"},
+            ["d13l", "d8l", "d9l"],
+            ["d8l", "d10l", "d7l"],
+            ["d10l", "d8l", "d13l"],
+            ["d10l", "d13l", "d11l"],
+            ["d13l", "d12l", "d11l"],
+            {"breakGroup":""},
+    ],
+},
+"covet_junk_tailgateglass": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Tailgate Glass",
+        "value":10,
+    },
+    "slotType" : "covet_tailgateglass",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"covet_glass", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_tailgateglass", ["covet_tailgate"],[],{"pos":{"x":0,"y":0,"z":0},"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"covet_glass_int", "deformMaterialDamaged":"covet_glass_dmg"},
+         ["covet_tailgateglass_int", ["covet_tailgate"],[],{"pos":{"x":0,"y":0,"z":0}}],
+         {"deformGroup":""},
+    ],
+    "tailgateCoupler":{
+        "$+openForceMagnitude": 5,
+        "$+openForceDuration": 1.0,
+        "$+closeForceMagnitude": -20,
+        "$+closeForceDuration": -0.5,
+    },
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--TAILGATE--
+        {"collision":true},
+        {"selfCollision":true},
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"collision":true},
+        {"nodeWeight":1.3},
+        {"group":"covet_tailgate"},
+        ["t1rr", -0.52, 1.355, 1.27],
+        ["t1", 0, 1.38, 1.28],
+        ["t1ll", 0.52, 1.355, 1.27],
+
+        ["t2rr", -0.62, 1.56, 1.07],
+        ["t2ll", 0.62, 1.56, 1.07],
+
+        ["t3rr", -0.70, 1.70, 0.87],
+        ["t3r", -0.35, 1.74, 0.87, {"group":["covet_tailgate","covet_wing_strut"]}],
+        ["t3", 0.0, 1.75, 0.87, {"group":["covet_tailgate","covet_wing_strut"]}],
+        ["t3l", 0.35, 1.74, 0.87, {"group":["covet_tailgate","covet_wing_strut"]}],
+        ["t3ll", 0.70, 1.70, 0.87],
+        {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          //tailgate glass
+          {"beamSpring":1001000,"beamDamp":50},
+          {"beamDeform":10,"beamStrength":10},
+          {"deformGroup":"tailgateglass_break", "deformationTriggerRatio":0.05},
+          {"breakGroup":"tailgateglass"},
+          {"deformLimitExpansion":""},
+          ["t3ll", "t1rr"],
+          ["t3rr", "t1ll"],
+          ["t3l", "t1"],
+          ["t1", "t3r"],
+          ["t3", "t1rr"],
+          ["t3", "t1ll"],
+          ["t2ll", "t1rr"],
+          ["t2rr", "t1ll"],
+          ["t2ll", "t3r"],
+          ["t2rr", "t3l"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.1},
+    ],
+},
+"covet_sunstrip": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sunstrip",
+        "value":20,
+    },
+
+    "slotType" : "covet_sunstrip",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["covet_sunstrip", ["covet_body","covet_windshield"]],
+    ],
+},
+"covet_firewallglass": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Firewall Glass",
+        "value":20,
+    },
+
+    "slotType" : "covet_firewallglass",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["covet_stripped_int_glass", ["covet_body","covet_rollcage"]],
+    ],
+},
+
+}

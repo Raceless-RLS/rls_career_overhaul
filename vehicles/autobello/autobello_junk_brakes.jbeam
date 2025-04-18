@@ -1,0 +1,162 @@
+{
+"autobello_junk_brake_F":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Drum Brakes",
+        "value":15,
+    },
+
+    "slotType":"autobello_brake_F",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_brakedrum_FR", ["wheel_FR","wheelhub_FR"]],
+        ["autobello_brakedrum_FL", ["wheel_FL","wheelhub_FL"]],
+    ],
+    "pressureWheels":[
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*425"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":80},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.24},
+        {"brakeMass":2.75},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+"autobello_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Drum Brakes",
+        "value":15,
+    },
+
+    "slotType":"autobello_brake_R",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Shoes", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_brakedrum_RR", ["wheel_RR","wheelhub_RR"]],
+        ["autobello_brakedrum_RL", ["wheel_RL","wheelhub_RL"]],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*250"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":750},
+        {"brakeSpring":80},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.24},
+        {"brakeMass":2.75},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //brake sounds
+        {"squealCoefNatural": 3.5, "squealCoefLowSpeed": 3.5}
+    ],
+},
+"autobello_junk_brake_F_disc":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+        "value":20,
+    },
+
+    "slotType":"autobello_brake_F",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_caliper_standard_plain", ["hub_F","lowerarm_F","upperarm_F", "tierod_F", "brakearm_F"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_disc_plain", ["wheel_FR","wheelhub_FR"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_hub_4l", ["wheel_FR","wheelhub_FR"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_caliper_standard_plain", ["hub_F","lowerarm_F","upperarm_F", "tierod_F", "brakearm_F"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_disc_plain", ["wheel_FL","wheelhub_FL"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_hub_4l", ["wheel_FL","wheelhub_FL"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":-1.1274, "z":0.2948}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+    ],
+    "pressureWheels":[
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*450"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":80},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.22},
+        {"brakeMass":3.3},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.5}
+    ],
+},
+"autobello_junk_brake_R_disc": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+
+    "slotType":"autobello_brake_R",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_caliper_standard_plain", ["hub_R","lowermounts_R"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_disc_plain", ["wheel_RR","wheelhub_RR"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_hub_4l_deep", ["wheel_RR","wheelhub_RR"], [], {"rot":{"x":180,"y":0,"z":0},"pos":{"x":-0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_caliper_standard_plain", ["hub_R","lowermounts_R"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_disc_plain", ["wheel_RL","wheelhub_RL"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+        ["brake_hub_4l_deep", ["wheel_RL","wheelhub_RL"], [], {"rot":{"x":0,"y":0,"z":180},"pos":{"x":0.62, "y":1.07275, "z":0.29476}, "scale":{"x":0.7, "y":0.7, "z":0.7}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*275"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":750},
+        {"brakeSpring":80},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.22},
+        {"brakeMass":2.9},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.0, "squealCoefLowSpeed": 4.0}
+    ],
+},
+}

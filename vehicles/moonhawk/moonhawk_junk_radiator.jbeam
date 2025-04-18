@@ -1,0 +1,60 @@
+{
+"moonhawk_junk_radiator": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Radiator",
+        "value":65,
+    },
+    "slotType" : "moonhawk_radiator",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["moonhawk_radiator_stock", ["moonhawk_radiator","moonhawk_radsupport"]],
+    ],
+    "mainEngine":{
+        "radiatorArea":0.4,
+        "radiatorEffectiveness":1000,
+        "coolantVolume":3.5,
+        "radiatorFanType":"mechanical",
+        "radiatorFanMaxAirSpeed":25,
+        "thermostatTemperature":100,
+
+        //damage deformGroups
+        "deformGroups_radiator":["radiator_damage", "radhose_damage"]
+        },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //Radiator
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"moonhawk_radiator"},
+         {"nodeWeight":3.56},
+         ["rad1", 0.0, -2.05, 0.6, {"engineGroup":"radiator"}],
+         {"group":""},
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1660830,"beamDamp":168},
+          {"beamDeform":9815.4,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"radiator_damage","deformationTriggerRatio":0.05},
+          {"deformLimitExpansion":1.2},
+          //radiator
+          ["rad1","s1"],
+          ["rad1","s1r"],
+          ["rad1","s1l"],
+          ["rad1","s3r"],
+          ["rad1","s3l"],
+          ["rad1","s5"],
+          ["rad1","s6"],
+          ["rad1","s6r"],
+          ["rad1","s6l"],
+          ["rad1","s7"],
+          {"deformLimitExpansion":""},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

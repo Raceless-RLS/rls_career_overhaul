@@ -1,0 +1,127 @@
+{
+"wendover_junk_muffler":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Muffler",
+        "value":30,
+    },
+    "slotType" : "wendover_muffler",
+    "flexbodies":[
+        ["mesh", "[group]:","nonFlexMaterials"],
+        ["wendover_muffler", ["wendover_exhaust"]],
+    ],
+    "nodes":[
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":1.7},
+         {"group":"wendover_exhaust"},
+         ["ex8r",0.27,1.75,0.24],
+         ["ex8l",0.52,1.75,0.24],
+         ["ex9r",0.27,2.284,0.24],
+         ["ex9l",0.52,2.284,0.24],
+         ["ex10",0.371,2.349,0.235],
+         ["ex11",0.371,2.433,0.235, {"afterFireAudioCoef":0.7, "afterFireVisualCoef":0.0, "afterFireVolumeCoef":0.7, "afterFireMufflingCoef":0.05, "exhaustAudioMufflingCoef":0.05, "exhaustAudioGainChange":-3}],
+         //rigidifier
+         {"selfCollision":false},
+         ["ex14",0.388,2.193,0.39],
+         {"group":"none"},
+        ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          //path
+          {"beamSpring":1701000,"beamDamp":150},
+          {"beamDeform":33000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          ["ex7", "ex8r", {"isExhaust":"mainEngine"}],
+          ["ex8r", "ex9r", {"isExhaust":"mainEngine"}],
+          ["ex9r", "ex10", {"isExhaust":"mainEngine"}],
+          ["ex10", "ex11", {"isExhaust":"mainEngine"}],
+
+          //muffler box
+          ["ex9r", "ex9l"],
+          ["ex9l", "ex8l"],
+          ["ex8l", "ex8r"],
+          ["ex8r", "ex9l"],
+          ["ex8l", "ex9r"],
+
+          //rigids
+          {"beamSpring":601000,"beamDamp":150},
+          ["ex6", "ex8r"],
+          ["ex8r", "ex10"],
+          ["ex9r", "ex11"],
+
+          //rigidifier
+          {"deformLimitExpansion":""},
+          {"beamSpring":601000,"beamDamp":150},
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          ["ex8r", "ex5"],
+          ["ex8l", "ex7"],
+          ["ex8l", "ex6"],
+          ["ex14", "ex9r"],
+          ["ex14", "ex9l"],
+          ["ex14", "ex10"],
+          ["ex14", "ex11"],
+          ["ex14", "ex8r"],
+          ["ex14", "ex8l"],
+          ["ex14", "ex7"],
+          ["ex14", "ex6"],
+          ["ex14", "ex5"],
+          ["ex8l", "ex4l"],
+          ["ex10", "ex9l"],
+          ["ex11", "ex9l"],
+
+          //attach
+          //mid
+          {"beamSpring":250,"beamDamp":200},
+          {"beamDeform":4000,"beamStrength":15000},
+          //rear
+          {"breakGroup":"exhaust_rear"},
+          ["ex9l", "r7ll"],
+          ["ex9r", "r7ll"],
+          ["ex8l", "r7ll"],
+          ["ex8r", "r7ll"],
+          ["ex9l", "r8ll"],
+          ["ex9r", "r8ll"],
+          ["ex8r", "r6ll"],
+          ["ex8l", "r6ll"],
+          ["ex14", "r8ll"],
+          ["ex14", "r7ll"],
+          ["ex9r", "r8"],
+          {"breakGroup":""},
+
+          //limiters
+          {"beamPrecompression":0.9, "beamType":"|SUPPORT", "beamLongBound":15},
+          {"beamSpring":434750,"beamDamp":130.43},
+          {"beamDeform":9000,"beamStrength":65000},
+          ["ex9l", "r9ll"],
+          ["ex9r", "r9"],
+          ["ex8l", "r6ll"],
+          ["ex8r", "r5"],
+          //widthwise
+          ["ex11", "r4ll"],
+          ["ex11", "r4"],
+          {"optional":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"group":"wendover_exhaust"},
+        {"triangleType":"NONCOLLIDABLE"},
+        {"dragCoef":0},
+        ["ex7", "ex8r", "ex8l"],
+        ["ex8l", "ex6", "ex7"],
+        ["ex8r", "ex9l", "ex8l"],
+        ["ex8r", "ex9r", "ex9l"],
+        ["ex9r", "ex10", "ex9l"],
+        ["ex9r", "ex11", "ex10"],
+        ["ex11", "ex9l", "ex10"],
+        {"triangleType":"NORMALTYPE"},
+        ],
+},
+}

@@ -1,0 +1,586 @@
+{
+"pigeon_junk_dashboard": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Dashboard",
+        "value":10,
+    },
+    "slotType" : "pigeon_dashboard",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_steer","pigeon_steer", "Steering Wheel"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_dash" ["pigeon_dash"]],
+         ["pigeon_gauges" ["pigeon_dash"]],
+         ["pigeon_steeringcolumn" ["pigeon_column"]],
+         ["pigeon_steering" ["pigeon_column"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "translation", "min", "max", "offset", "multiplier"],
+        ["turnsignal", "pigeon_signalstalk"    "dsh2","dsh4","dsh3",  {"x":43.1, "y":180, "z":90}, {"x":0, "y":-15, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+        ["wheelspeed", "pigeon_needle_speedo",  "dsh2","dsh2r","dsh3", {"x":-20, "y":0, "z":0},     {"x":0, "y":-6.35, "z":0},  {"x":0, "y":0, "z":0}, 0,     29,     14.7,   1],
+        ["fuel",       "pigeon_needle_fuel",    "dsh2","dsh2r","dsh3", {"x":-20, "y":0, "z":0},    {"x":0, "y":-81, "z":0},     {"x":0, "y":0, "z":0}, 0,     1.1,       -3.8,    1],
+        ["watertemp",  "pigeon_needle_temp",    "dsh2","dsh2r","dsh3", {"x":-20, "y":0, "z":0},    {"x":0, "y":1.05, "z":0}     , {"x":0, "y":0, "z":0}, 45, 135, 0, 1],
+
+
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":1.5},
+        {"rightHandCamera":true},
+        {"beamSpring":800, "beamDamp":120},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", -0.316, 0.1, 1.25, 60, "b2rr","b2r","b3rr","b3","b1rr","b1l", {"beamDeform":5001000,"beamStrength":"FLT_MAX"}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@pigeon_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"metric",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_PLASTIC"},
+
+         {"group":"pigeon_dash"},
+         {"nodeWeight":0.2},
+         ["dsh1",-0.316,-0.457,0.99],
+
+         ["dsh2",-0.316,-0.457,0.87, {"group":["pigeon_dash","pigeon_column"]}],
+         ["dsh2l",-0.012,-0.457,0.87],
+         ["dsh2r",-0.525,-0.457,0.87],
+
+         ["dsh3",-0.316,-0.457,0.722, {"group":["pigeon_dash","pigeon_column"]}],
+
+         ["dsh4",-0.316,-0.332,0.877, {"group":"pigeon_column"}],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+        //dashboard
+        {"beamSpring":75000,"beamDamp":20},
+        {"beamDeform":4500,"beamStrength":150000},
+        {"deformLimitExpansion":1.2},
+        ["dsh2l", "dsh2"],
+        ["dsh2", "dsh2r"],
+        ["dsh1", "dsh2"],
+        ["dsh2", "dsh3"],
+        ["dsh3", "dsh2r"],
+        ["dsh2r", "dsh1"],
+        ["dsh1", "dsh2l"],
+        ["dsh2l", "dsh3"],
+        ["dsh1", "dsh3"],
+
+        //attach
+        {"beamDeform":500,"beamStrength":150000},
+        {"deformLimitExpansion":""},
+        ["dsh2l", "b6l"],
+        ["dsh2l", "b6r"],
+        ["dsh2", "b6r"],
+        ["dsh2", "b6l"],
+        ["dsh2", "b6rr"],
+        ["dsh2r", "b6rr"],
+        ["dsh2r", "b6r"],
+        ["dsh2l", "b5l"],
+        ["dsh2l", "b5r"],
+        ["dsh2", "b5r"],
+        ["dsh2", "b5l"],
+        ["dsh2r", "b5rr"],
+        ["dsh2r", "b5r"],
+        ["dsh2", "b5rr"],
+        ["dsh1", "b6r"],
+        ["dsh1", "b6rr"],
+        ["dsh3", "b5r"],
+        ["dsh3", "b5rr"],
+        ["dsh3", "b6r"],
+        ["dsh3", "b6rr"],
+        ["dsh1", "b5r"],
+        ["dsh1", "b5rr"],
+
+        //column
+        ["dsh4", "dsh3"],
+        ["dsh4", "dsh2"],
+        ["dsh4", "dsh2r"],
+        ["dsh4", "dsh2l"],
+        ["dsh4", "dsh1"],
+
+        //corners
+        {"beamDeform":2000,"beamStrength":150000},
+        ["dsh2l", "b1r"],
+        ["dsh2l", "b1l"],
+        ["dsh2", "b1r"],
+        ["dsh2", "b1rr"],
+        ["dsh2r", "b1rr"],
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+
+    ],
+},
+"pigeon_junk_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Driver Seat",
+        "value":10,
+    },
+    "slotType" : "pigeon_seat_FR",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_driver_weight", "pigeon_driver_weight", "Driver Weight"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_seat_FR" ["pigeon_floor", "pigeon_seat_FR"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+
+         {"group":"pigeon_seat_FR"},
+         {"nodeWeight":0.7},
+         ["sf1r", -0.11, -0.16, 0.6],
+         ["sf1rr", -0.52, -0.16, 0.6],
+
+         ["sf2r", -0.11, 0.21, 0.55],
+         ["sf2rr", -0.52, 0.21, 0.55],
+
+         ["sf3r", -0.13, 0.28, 1.02],
+         ["sf3rr", -0.5, 0.28, 1.02],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+        //main shape
+        {"beamSpring":101000,"beamDamp":250},
+        {"beamDeform":3000,"beamStrength":150000},
+        {"deformLimitExpansion":1.2},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+
+        //crossing
+        {"beamDeform":1500,"beamStrength":150000},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+
+        //corners
+        {"beamDeform":1500},
+        ["sf3r", "sf1r"],
+        ["sf3rr", "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":20},
+        ["sf3rr", "b1rr"],
+        ["sf3r", "b1r"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":150},
+        {"beamDeform":5000,"beamStrength":150000},
+        ["sf2rr", "b3rr"],
+        ["sf2rr", "b2rr"],
+        ["sf2rr", "b3"],
+        ["sf2r", "b3"],
+        ["sf2r", "b2r"],
+        ["sf2r", "b3rr"],
+        ["sf1rr", "b2rr"],
+        ["sf1rr", "b3rr"],
+        ["sf1r", "b2r"],
+        ["sf1r", "b3"],
+
+        //limiter
+        {"beamSpring":501000,"beamDamp":50},
+        {"beamPrecompression":0.9, "beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamDeform":3000,"beamStrength":150000},
+        ["sf2rr", "b7ll"],
+        ["sf1rr", "b7ll"],
+        ["sf1r", "b7rr"],
+        ["sf2r", "b7rr"],
+        ["sf3r", "b8rr"],
+        ["sf3rr", "b8ll"],
+
+        //to other seat
+        {"beamPrecompression":0.6},
+        {"optional":true}
+        ["sf1rr", "sf1l"],
+        ["sf2rr", "sf2l"],
+        ["sf1ll", "sf1r"],
+        ["sf2ll", "sf2r"],
+        ["sf3rr", "sf3l"],
+        ["sf3ll", "sf3r"],
+        {"optional":false}
+
+        //anti flop
+        {"beamSpring":21000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":150000},
+        {"beamPrecompression":1.0},
+        ["sf3rr", "b1rr"],
+        ["sf3r", "b1r"],
+        ["sf2rr", "b1rr"],
+        ["sf2r", "b1r"],
+
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"plastic"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+        {"triangleType":"NONCOLLIDABLE"},
+        ["sf2rr", "sf3rr", "sf1rr"],
+        ["sf2r", "sf3r", "sf1r"],
+        {"triangleType":"NORMALTYPE"},
+    ],
+},
+"pigeon_junk_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Passenger Seat",
+        "value":10,
+    },
+    "slotType" : "pigeon_seat_FL",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_passenger_weight", "pigeon_passenger_weight", "Passenger Weight"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_seat_FL" ["pigeon_floor", "pigeon_seat_FL"],],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+
+         {"group":"pigeon_seat_FL"},
+         {"nodeWeight":0.7},
+         ["sf1l", 0.11, -0.16, 0.6],
+         ["sf1ll", 0.52, -0.16, 0.6],
+
+         ["sf2l", 0.11, 0.21, 0.55],
+         ["sf2ll", 0.52, 0.21, 0.55],
+
+         ["sf3l", 0.13, 0.28, 1.02],
+         ["sf3ll", 0.5, 0.28, 1.02],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+        //main shape
+        {"beamSpring":101000,"beamDamp":250},
+        {"beamDeform":3000,"beamStrength":150000},
+        {"deformLimitExpansion":1.2},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+
+        //crossing
+        {"beamDeform":1500,"beamStrength":150000},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+
+        //corners
+        {"beamDeform":1500},
+        ["sf3l", "sf1l"],
+        ["sf3ll", "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":20},
+        ["sf3ll", "b1ll"],
+        ["sf3l", "b1l"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":150},
+        {"beamDeform":5000,"beamStrength":150000},
+        ["sf2ll", "b3ll"],
+        ["sf2ll", "b2ll"],
+        ["sf2ll", "b3"],
+        ["sf2l", "b3"],
+        ["sf2l", "b2l"],
+        ["sf2l", "b3ll"],
+        ["sf1ll", "b2ll"],
+        ["sf1ll", "b3ll"],
+        ["sf1l", "b2l"],
+        ["sf1l", "b3"],
+
+        //limiter
+        {"beamSpring":501000,"beamDamp":50},
+        {"beamPrecompression":0.9, "beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamDeform":3000,"beamStrength":150000},
+        ["sf2ll", "b7rr"],
+        ["sf1ll", "b7rr"],
+        ["sf1l", "b7ll"],
+        ["sf2l", "b7ll"],
+        ["sf3l", "b8ll"],
+        ["sf3ll", "b8rr"],
+
+        //anti flop
+        {"beamSpring":21000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":150000},
+        {"beamPrecompression":1.0},
+        ["sf3l", "b1l"],
+        ["sf3ll", "b1ll"],
+        ["sf2l", "b1l"],
+        ["sf2ll", "b1ll"],
+
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"plastic"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+        {"triangleType":"NONCOLLIDABLE"},
+        ["sf3ll", "sf2ll", "sf1ll"],
+        ["sf3l", "sf2l", "sf1l"],
+        {"triangleType":"NORMALTYPE"},
+    ],
+},
+"pigeon_junk_seatR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Rear Jump Seat",
+        "value":15,
+    },
+    "slotType" : "pigeon_bed_contents",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_jumpseats" ["pigeon_seat_R"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+
+         {"group":"pigeon_seat_R"},
+         {"nodeWeight":0.4},
+         ["sr1r", -0.53, 0.85, 0.8],
+         ["sr1", 0.0, 0.85, 0.8],
+         ["sr1l", 0.53, 0.85, 0.8],
+
+         ["sr2r", -0.53, 0.54, 0.78],
+         ["sr2", 0.0, 0.54, 0.78],
+         ["sr2l", 0.53, 0.54, 0.78],
+
+         ["sr3r", -0.53, 0.49, 1.15],
+         ["sr3", 0.0, 0.49, 1.15],
+         ["sr3l", 0.53, 0.49, 1.15],
+
+         //mounting bracket
+         {"nodeWeight":0.3},
+         ["sr4r", -0.37, 0.76, 0.55],
+         ["sr4l", 0.37, 0.76, 0.55],
+
+         ["sr5r", -0.37, 0.45, 0.55],
+         ["sr5l", 0.37, 0.45, 0.55],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+        //main shape
+        {"beamSpring":301000,"beamDamp":40},
+        {"beamDeform":3000,"beamStrength":150000},
+        {"deformLimitExpansion":1.2},
+        ["sr2r", "sr2"],
+        ["sr2", "sr2l"],
+        ["sr1r", "sr1"],
+        ["sr1", "sr1l"],
+        ["sr3r", "sr3"],
+        ["sr3", "sr3l"],
+        ["sr3l", "sr2l"],
+        ["sr2l", "sr1l"],
+        ["sr3", "sr2"],
+        ["sr2", "sr1"],
+        ["sr3r", "sr2r"],
+        ["sr2r", "sr1r"],
+
+        //crossing
+        {"beamDeform":1500,"beamStrength":150000},
+        {"deformLimitExpansion":""},
+        ["sr1l", "sr2"],
+        ["sr2l", "sr1"],
+        ["sr2", "sr3l"],
+        ["sr2l", "sr3"],
+        ["sr3", "sr2r"],
+        ["sr2", "sr3r"],
+        ["sr2", "sr1r"],
+        ["sr1", "sr2r"],
+
+        //rigids
+        {"beamDeform":1000},
+        ["sr1l", "sr3l"],
+        ["sr1", "sr3"],
+        ["sr1r", "sr3r"],
+        ["sr1r", "sr1l"],
+        ["sr2r", "sr2l"],
+        ["sr3r", "sr3l"],
+
+        //mounting bracket
+        {"beamDeform":1500},
+        ["sr5r", "sr4r"],
+        ["sr4r", "sr1r"],
+        ["sr4r", "sr1"],
+        ["sr5r", "sr1r"],
+        ["sr5r", "sr1"],
+        ["sr4r", "sr2r"],
+        ["sr4r", "sr2"],
+        ["sr5l", "sr4l"],
+        ["sr4l", "sr1l"],
+        ["sr4l", "sr1"],
+        ["sr5l", "sr1l"],
+        ["sr5l", "sr1"],
+        ["sr4l", "sr2l"],
+        ["sr4l", "sr2"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":20},
+        {"beamDeform":3000,"beamStrength":11000},
+        {"breakGroup":"jumpseat_R"},
+        ["sr4r", "bd6r"],
+        ["sr4r", "bd6rr"],
+        ["sr4r", "bd5"],
+        ["sr4r", "bd5rr"],
+
+        ["sr5r", "bd6r"],
+        ["sr5r", "bd6rr"],
+        ["sr5r", "bd5"],
+        ["sr5r", "bd5rr"],
+
+        ["sr1r", "bd6r"],
+        ["sr1r", "bd6rr"],
+        ["sr2r", "bd6rr"],
+        ["sr2r", "bd6r"],
+
+        ["sr5r", "bd9rr"],
+        ["sr5r", "bd9"],
+
+        {"breakGroup":"jumpseat_L"},
+        ["sr4l", "bd6l"],
+        ["sr4l", "bd6ll"],
+        ["sr4l", "bd5"],
+        ["sr4l", "bd5ll"],
+
+        ["sr5l", "bd6l"],
+        ["sr5l", "bd6ll"],
+        ["sr5l", "bd5"],
+        ["sr5l", "bd5ll"],
+
+        ["sr1l", "bd6l"],
+        ["sr1l", "bd6ll"],
+        ["sr2l", "bd6ll"],
+        ["sr2l", "bd6l"],
+
+        ["sr5l", "bd9ll"],
+        ["sr5l", "bd9"],
+        {"breakGroup":""},
+
+        //damper
+        {"beamSpring":0,"beamDamp":30},
+        ["sr3l", "bd13", {"breakGroup":"jumpseat_L"}],
+        ["sr3",  "bd13", {"breakGroup":"jumpseat_L"}],
+        ["sr3",  "bd13", {"breakGroup":"jumpseat_R"}],
+        ["sr3r", "bd13", {"breakGroup":"jumpseat_R"}],
+
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":1},
+        ["sr3l", "sr2", "sr3"],
+        ["sr3", "sr2", "sr3r"],
+        ["sr3l", "sr2l", "sr2"],
+        ["sr3r", "sr2", "sr2r"],
+        ["sr2", "sr1", "sr1r"],
+        ["sr1r", "sr2r", "sr2"],
+        ["sr2l", "sr1", "sr2"],
+        ["sr2l", "sr1l", "sr1"],
+        ["sr1", "sr4r", "sr1r"],
+        ["sr1l", "sr4l", "sr1"],
+        ["sr1", "sr5r", "sr4r"],
+        ["sr1", "sr2", "sr5r"],
+        ["sr1", "sr4l", "sr5l"],
+        ["sr5l", "sr2", "sr1"],
+        ["sr1r", "sr4r", "sr2r"],
+        ["sr2r", "sr4r", "sr5r"],
+        ["sr2l", "sr4l", "sr1l"],
+        ["sr2l", "sr5l", "sr4l"],
+        ["sr2", "sr5l", "sr2l"],
+        ["sr2", "sr2r", "sr5r"],
+    ],
+},
+}

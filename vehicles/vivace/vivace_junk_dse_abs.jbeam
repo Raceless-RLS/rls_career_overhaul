@@ -1,0 +1,20 @@
+{
+    "vivace_junk_DSE_ABS": {
+        "information":{
+            "authors":"Diamondback",
+            "name":"Defective ABS System",
+            "value":25,
+        },
+        "slotType" : "vivace_DSE_ABS",
+
+        "controller": [
+            ["fileName"],
+        ],
+
+        "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+            {"enableABS":false},
+        ],
+    },
+}

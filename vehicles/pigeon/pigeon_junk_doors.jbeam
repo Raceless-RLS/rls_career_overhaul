@@ -1,0 +1,516 @@
+{
+"pigeon_junk_door_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Savage Right Door",
+        "value":25,
+    },
+    "slotType" : "pigeon_door_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_mirror_R","pigeon_mirror_R", "Right Mirror"],
+        ["pigeon_doorglass_R","pigeon_doorglass_R", "Right Door Glass"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_door_R", ["pigeon_door_R"]],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"doorRCoupler"}],
+    ]
+    "doorRCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["b8rr",    "d14rr",     35000,                     0.01,                   0.005,                      0.2,                 0.1,                   "doorR_latch"],
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["d14rr"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Door>80s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Door>80s_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 1500,
+        "openForceDuration": 0.1,
+        "closeForceMagnitude": 1500,
+        "closeForceDuration": 0.1
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["door_R", "", "d9r","d8r","d6r", "box", {"x":0.16, "y":0.05, "z":0.04}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.04, "y":0.012, "z":-0.028}],
+        ["door_R_int", "", "d7r","d8r","d4r", "box", {"x":0.12, "y":0.03, "z":0.04}, {"x":-7, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.345, "y":0.02, "z":0.07}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["door_R", "action0", "doorLatch_R"],
+        ["door_R_int", "action0", "doorLatch_R"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["doorLatch_R", "ui.inputActions.pigeon.doorLatch_R.title", "ui.inputActions.pigeon.doorLatch_R.description", {"onUp":"controller.getControllerSafe('doorRCoupler').toggleGroup()"}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.04
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":["pigeon_door_R", "pigeon_doorpanel_R"]},
+
+         {"nodeWeight":0.5},
+         ["d1r",-0.63,-0.56, 0.29],
+         ["d2r",-0.66,-0.126, 0.29],
+         ["d3r",-0.66,0.3, 0.29],
+
+         ["d4r",-0.67,-0.56, 0.562],
+         ["d5r",-0.67,-0.126, 0.562, {"selfCollision":false}],
+         ["d6r",-0.67,0.3, 0.562],
+
+         ["d7r",-0.63,-0.56, 0.87],
+         ["d8r",-0.64,-0.126, 0.87, {"selfCollision":false}],
+         ["d9r",-0.64,0.3, 0.87],
+
+         {"nodeWeight":0.3},
+         {"group":"pigeon_door_R"},
+         ["d10r",-0.59, -0.37, 1.18],
+         ["d11r",-0.52, -0.2, 1.42],
+         ["d12r",-0.52, 0.3, 1.42],
+         ["d13r",-0.59, 0.3, 1.18],
+
+         //rigidifier
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":0.5},
+         ["d14r",-0.4, -0.126, 0.8],
+         {"group":""},
+         //latch node
+         {"nodeWeight":0.5},
+         ["d14rr", -0.62,0.349,0.87],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //door main shape
+          {"beamSpring":301000,"beamDamp":40},
+          {"beamDeform":6000,"beamStrength":150000},
+          {"deformLimitExpansion":1.2},
+          ["d1r","d2r"],
+          ["d2r","d3r"],
+          ["d4r","d5r"],
+          ["d5r","d6r"],
+          ["d7r","d8r"],
+          ["d8r","d9r"],
+          ["d7r","d10r"],
+          ["d13r","d9r"],
+          ["d10r","d11r"],
+          ["d11r","d12r"],
+          ["d12r","d13r"],
+          ["d1r","d4r"],
+          ["d2r","d5r"],
+          ["d3r","d6r"],
+          ["d4r","d7r"],
+          ["d5r","d8r"],
+          ["d6r","d9r"],
+
+          //surficial crossing
+          {"beamDeform":2500,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["d1r","d5r"],
+          ["d2r","d4r"],
+          ["d2r","d6r"],
+          ["d3r","d5r"],
+          ["d4r","d8r"],
+          ["d5r","d7r"],
+          ["d5r","d9r"],
+          ["d6r","d8r"],
+
+          //corner rigids
+          {"beamDeform":1500,"beamStrength":150000},
+          {"deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.01},
+          ["d13r", "d11r"],
+          ["d10r", "d12r"],
+          ["d13r", "d8r"],
+          ["d10r", "d8r"],
+          ["d9r", "d12r"],
+          ["d7r", "d11r"],
+          {"deformGroup":""},
+          ["d9r", "d3r"],
+          ["d8r", "d2r"],
+          ["d7r", "d1r"],
+
+          //rigidifier
+          {"beamSpring":301000,"beamDamp":20},
+          {"beamDeform":2000,"beamStrength":150000},
+          ["d1r","d14r"],
+          ["d2r","d14r", {"beamDeform":1000}],
+          ["d3r","d14r"],
+          ["d4r","d14r"],
+          ["d5r","d14r", {"beamDeform":1000}],
+          ["d6r","d14r"],
+          ["d7r","d14r"],
+          ["d8r","d14r", {"beamDeform":1000}],
+          ["d9r","d14r"],
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":1000,"beamStrength":150000},
+          {"deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.01},
+          ["d10r","d14r"],
+          ["d13r","d14r"],
+          ["d11r","d14r"],
+          ["d12r","d14r"],
+          {"deformGroup":""},
+
+          //door hinge
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":4000,"beamStrength":8000},
+          {"breakGroup":"doorhinge_a_R"},
+          ["d7r", "b6rr"],
+          ["d7r", "b5rr"],
+          ["d7r", "b6r"],
+          ["d1r", "b6rr"],
+          ["d1r", "fe9rr", {"beamDeform":3000,"beamStrength":"FLT_MAX"}],
+          {"breakGroup":"doorhinge_b_R"},
+          ["d1r", "b1rr"],
+          ["d1r", "b1r"],
+          ["d1r", "b5rr"],
+          ["d7r", "b1rr"],
+          ["d7r", "fe7rr", {"beamDeform":3000,"beamStrength":"FLT_MAX"}],
+          {"breakGroup":""},
+
+          //latch node
+          {"beamDeform":2500,"beamStrength":"FLT_MAX"},
+          {"beamSpring":201000,"beamDamp":50},
+          ["d9r","d14rr"],
+          ["d6r","d14rr"],
+          ["d5r","d14rr"],
+          ["d3r","d14rr"],
+          ["d14r","d14rr"],
+
+          //pop open
+          {"beamPrecompression":1.003,"beamSpring":50000,"beamDamp":500,"beamDeform":40000,"beamStrength":10000,"breakGroupType":1,"breakGroup":"doorhinge_a_R","beamType":"|SUPPORT", "beamLongBound":25},
+          ["b3", "d14rr"],
+          //outer detent
+          {"beamPrecompression":1.8,"beamLongBound":0.1,"beamShortBound":0.1,"beamSpring":200,"beamDamp":100,"beamStrength":8000,"boundZone":0.01,"beamLimitSpring":0,"beamLimitDamp":0,"beamType":"|BOUNDED"},
+          ["d5r", "b2rr"],
+          //inner detent
+          {"beamPrecompression":1.5},
+          ["d5r", "b2rr"],
+          //limiter & damping
+          {"beamLongBound":0.9,"beamLimitSpring":500000,"beamLimitDamp":500,"beamShortBound":1,"beamPrecompression":1,"beamSpring":0,"beamDamp":5,"beamDeform":3000,"beamStrength":10000,"boundZone":""},
+          ["d5r", "b2rr"],
+          {"beamLimitSpring":0,"beamLimitDamp":0,"beamType":"|NORMAL","beamLongBound":1,"breakGroup":"","breakGroupType":0},
+
+          //door support beams
+          {"beamType":"|SUPPORT","beamLongBound":25},
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":3000,"beamStrength":50000},
+          ["d12r", "rf2"],
+          ["d9r", "b8"],
+          ["d3r", "b3"],
+          ["d2r", "b2r"],
+          ["d1r", "b1r"],
+          //["d4r", "b5r"],
+          ["d7r", "b6r"],
+          ["d10r", "p1r"],
+          ["d11r", "rf1"],
+          ["d7r", "fe7rr"],
+          ["d1r", "fe9rr"],
+          {"beamPrecompression":0.9},
+          ["d9r", "rf2r"],
+          ["d12r", "b8rr"],
+          ["b8rr", "d3r"],
+          ["d9r", "b3rr"],
+          ["d3r", "b3rr"],
+          ["d6r", "b7rr"],
+          ["d9r", "b8rr"],
+          ["d13r", "p3r"],
+          ["d12r", "rf2r"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //door
+            {"groundModel":"plastic"},
+            {"group":"pigeon_door_R"},
+            {"dragCoef":20},
+            ["d4r",  "d2r",  "d1r"],
+            ["d4r",  "d5r",  "d2r"],
+            ["d5r",  "d3r",  "d2r"],
+            ["d5r",  "d6r",  "d3r"],
+            ["d7r",  "d5r",  "d4r"],
+            ["d7r",  "d8r",  "d5r"],
+            ["d8r",  "d6r",  "d5r"],
+            ["d8r",  "d9r",  "d6r"],
+            ["d13r", "d9r",  "d8r"],
+            ["d8r",  "d7r",  "d10r"],
+            ["d10r", "d13r", "d8r"],
+            ["d10r", "d11r", "d13r"],
+            ["d13r", "d11r", "d12r"],
+            {"group":""},
+    ],
+},
+"pigeon_junk_door_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Savage Left Door",
+        "value":25,
+    },
+    "slotType" : "pigeon_door_L",
+    "slots": [
+        ["type", "default", "description"],
+        ["pigeon_mirror_L","", "Left Mirror"],
+        ["pigeon_doorglass_L","pigeon_doorglass_L", "Left Door Glass"],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pigeon_door_L", ["pigeon_door_L"]],
+         {"deformGroup":""},
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"doorLCoupler"}],
+    ]
+    "doorLCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["b8ll",    "d14ll",     35000,                     0.01,                   0.005,                      0.2,                 0.1,                   "doorL_latch"],
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["d14ll"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Door>80s_02_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Door>80s_02_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 1500,
+        "openForceDuration": 0.1,
+        "closeForceMagnitude": 1500,
+        "closeForceDuration": 0.1
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["door_L", "", "d9l","d8l","d6l", "box", {"x":0.16, "y":0.05, "z":0.04}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.04, "y":0.012, "z":-0.023}],
+        ["door_L_int", "", "d7l","d8l","d4l", "box", {"x":0.12, "y":0.03, "z":0.04}, {"x":7, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.345, "y":0.02, "z":-0.1}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["door_L", "action0", "doorLatch_L"],
+        ["door_L_int", "action0", "doorLatch_L"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["doorLatch_L", "ui.inputActions.pigeon.doorLatch_L.title", "ui.inputActions.pigeon.doorLatch_L.description", {"onUp":"controller.getControllerSafe('doorLCoupler').toggleGroup()"}],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.04
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--DOOR--
+         {"nodeMaterial":"|NM_PLASTIC"},
+         {"frictionCoef":0.5},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":["pigeon_door_L", "pigeon_doorpanel_L"]},
+
+         {"nodeWeight":0.5},
+         ["d1l",0.63,-0.56, 0.29],
+         ["d2l",0.66,-0.126, 0.29],
+         ["d3l",0.66,0.3, 0.29],
+
+         ["d4l",0.67,-0.56, 0.562],
+         ["d5l",0.67,-0.126, 0.562, {"selfCollision":false}],
+         ["d6l",0.67,0.3, 0.562],
+
+         ["d7l",0.63,-0.56, 0.87],
+         ["d8l",0.64,-0.126, 0.87, {"selfCollision":false}],
+         ["d9l",0.64,0.3, 0.87],
+
+         {"nodeWeight":0.3},
+         ["d10l",0.59, -0.37, 1.18],
+         ["d11l",0.52, -0.2, 1.42],
+         ["d12l",0.52, 0.3, 1.42],
+         ["d13l",0.59, 0.3, 1.18],
+
+         //rigidifier
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":0.5},
+         {"group":""},
+         ["d14l", 0.4, -0.126, 0.8]
+         {"group":""},
+         //latch node
+         {"nodeWeight":0.5},
+         ["d14ll", 0.62,0.349,0.87],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //door main shape
+          {"beamSpring":301000,"beamDamp":40},
+          {"beamDeform":6000,"beamStrength":150000},
+          {"deformLimitExpansion":1.2},
+          ["d1l","d2l"],
+          ["d2l","d3l"],
+          ["d4l","d5l"],
+          ["d5l","d6l"],
+          ["d7l","d8l"],
+          ["d8l","d9l"],
+          ["d7l","d10l"],
+          ["d13l","d9l"],
+          ["d10l","d11l"],
+          ["d11l","d12l"],
+          ["d12l","d13l"],
+          ["d1l","d4l"],
+          ["d2l","d5l"],
+          ["d3l","d6l"],
+          ["d4l","d7l"],
+          ["d5l","d8l"],
+          ["d6l","d9l"],
+
+          //surficial crossing
+          {"beamDeform":2500,"beamStrength":150000},
+          {"deformLimitExpansion":""},
+          ["d1l","d5l"],
+          ["d2l","d4l"],
+          ["d2l","d6l"],
+          ["d3l","d5l"],
+          ["d4l","d8l"],
+          ["d5l","d7l"],
+          ["d5l","d9l"],
+          ["d6l","d8l"],
+
+          //corner rigids
+          {"beamDeform":1500,"beamStrength":150000},
+          {"deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.01},
+          ["d13l", "d11l"],
+          ["d10l", "d12l"],
+          ["d13l", "d8l"],
+          ["d10l", "d8l"],
+          ["d9l", "d12l"],
+          ["d7l", "d11l"],
+          {"deformGroup":""},
+          ["d9l", "d3l"],
+          ["d8l", "d2l"],
+          ["d7l", "d1l"],
+
+          //rigidifier
+          {"beamSpring":301000,"beamDamp":20},
+          {"beamDeform":2000,"beamStrength":150000},
+          ["d1l","d14l"],
+          ["d2l","d14l", {"beamDeform":1000}],
+          ["d3l","d14l"],
+          ["d4l","d14l"],
+          ["d5l","d14l", {"beamDeform":1000}],
+          ["d6l","d14l"],
+          ["d7l","d14l"],
+          ["d8l","d14l", {"beamDeform":1000}],
+          ["d9l","d14l"],
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":1000,"beamStrength":150000},
+          {"deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.01},
+          ["d10l","d14l"],
+          ["d13l","d14l"],
+          ["d11l","d14l"],
+          ["d12l","d14l"],
+          {"deformGroup":""},
+
+          //door hinge
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":4000,"beamStrength":8000},
+          {"breakGroup":"doorhinge_a_L"},
+          ["d7l", "b6ll"],
+          ["d7l", "b5ll"],
+          ["d7l", "b6l"],
+          ["d1l", "b6ll"],
+          ["d1l", "fe9ll", {"beamDeform":3000,"beamStrength":"FLT_MAX"}],
+          {"breakGroup":"doorhinge_b_L"},
+          ["d1l", "b1ll"],
+          ["d1l", "b1l"],
+          ["d1l", "b5ll"],
+          ["d7l", "b1ll"],
+          ["d7l", "fe7ll", {"beamDeform":3000,"beamStrength":"FLT_MAX"}],
+          {"breakGroup":""},
+
+          //latch node
+          {"beamDeform":2500,"beamStrength":"FLT_MAX"},
+          {"beamSpring":201000,"beamDamp":50},
+          ["d9l","d14ll"],
+          ["d6l","d14ll"],
+          ["d5l","d14ll"],
+          ["d3l","d14ll"],
+          ["d14l","d14ll"],
+
+          //pop open
+          {"beamPrecompression":1.0003,"beamSpring":50000,"beamDamp":500,"beamDeform":40000,"beamStrength":10000,"breakGroupType":1,"breakGroup":"doorhinge_a_L","beamType":"|SUPPORT", "beamLongBound":25},
+          ["b3", "d14ll"],
+          //outer detent
+          {"beamPrecompression":1.8,"beamLongBound":0.1,"beamShortBound":0.1,"beamSpring":200,"beamDamp":100,"beamStrength":8000,"boundZone":0.01,"beamLimitSpring":0,"beamLimitDamp":0,"beamType":"|BOUNDED"},
+          ["d5l", "b2ll"],
+          //inner detent
+          {"beamPrecompression":1.5},
+          ["d5l", "b2ll"],
+          //limiter & damping
+          {"beamLongBound":0.9,"beamLimitSpring":500000,"beamLimitDamp":500,"beamShortBound":1,"beamPrecompression":1,"beamSpring":0,"beamDamp":5,"beamDeform":3000,"beamStrength":10000,"boundZone":""},
+          ["d5l", "b2ll"],
+          {"beamLimitSpring":0,"beamLimitDamp":0,"beamType":"|NORMAL","beamLongBound":1,"breakGroup":"","breakGroupType":0},
+
+          //door support beams
+          {"beamType":"|SUPPORT","beamLongBound":25},
+          {"beamSpring":201000,"beamDamp":20},
+          {"beamDeform":3000,"beamStrength":50000},
+          ["d12l", "rf2"],
+          ["d9l", "b8"],
+          ["d3l", "b3"],
+          ["d2l", "b2l"],
+          ["d1l", "b1l"],
+          //["d4l", "b5l"],
+          ["d7l", "b6l"],
+          ["d10l", "p1l"],
+          ["d11l", "rf1"],
+          ["d7l", "fe7ll"],
+          ["d1l", "fe9ll"],
+          {"beamPrecompression":0.9},
+          ["d9l", "rf2l"],
+          ["d12l", "b8ll"],
+          ["b8ll", "d3l"],
+          ["d9l", "b3ll"],
+          ["d3l", "b3ll"],
+          ["d6l", "b7ll"],
+          ["d9l", "b8ll"],
+          ["d13l", "p3l"],
+          ["d12l", "rf2l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //door
+            {"groundModel":"plastic"},
+            {"group":"pigeon_door_L"},
+            {"dragCoef":20},
+            ["d2l",  "d4l",  "d1l"],
+            ["d5l",  "d4l",  "d2l"],
+            ["d3l",  "d5l",  "d2l"],
+            ["d6l",  "d5l",  "d3l"],
+            ["d5l",  "d7l",  "d4l"],
+            ["d8l",  "d7l",  "d5l"],
+            ["d6l",  "d8l",  "d5l"],
+            ["d9l",  "d8l",  "d6l"],
+            ["d9l",  "d13l", "d8l"],
+            ["d7l",  "d8l",  "d10l"],
+            ["d13l", "d10l", "d8l"],
+            ["d11l", "d10l", "d13l"],
+            ["d11l", "d13l", "d12l"],
+            {"group":""},
+    ],
+},
+}

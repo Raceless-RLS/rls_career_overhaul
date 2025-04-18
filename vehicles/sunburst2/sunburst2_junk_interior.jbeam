@@ -1,0 +1,904 @@
+{
+"sunburst2_junk_dashboard": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Dashboard",
+        "value":150,
+    },
+    "slotType" : "sunburst2_dashboard",
+    "slots2": [
+        ["name",                        "allowTypes",                    "denyTypes", "default",            "description"],
+        ["soundscape_horn",             ["soundscape_horn"],             [],          "soundscape_horn_3",  "Horn"],
+        ["sunburst2_steer",              ["sunburst2_steer"],              [],          "sunburst2_steer",     "Steering Wheel"],
+        ["sunburst2_pedals",             ["sunburst2_pedals"],             [],          "sunburst2_pedals_M",  "Pedals"],
+        ["sunburst2_shifter",            ["sunburst2_shifter"],            [],          "sunburst2_shifter_M", "Shifter"],
+        ["sunburst2_radio",              ["sunburst2_radio"],              [],          "sunburst2_radio",     "Radio"],
+        ["sunburst2_gauges",             ["sunburst2_gauges"],             [],          "sunburst2_gauges",    "Gauges"],
+        ["sunburst2_shiftlight",         ["sunburst2_shiftlight"],         [],          "",                   "Shift Light"],
+        ["sunburst2_interior_accessory", ["sunburst2_interior_accessory"], [],          "",                   "Dashboard Accessory"],
+        ["gps_altb",                    ["gps_altb"],                    [],          "",                   "Navigation Unit", {"nodeMove":{"x":0.075,"y":-0.49,"z":0.845},"nodeRotate":{"x":25, "y":0, "z":0, "px":0.075, "py":-0.49, "pz":0.845}}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_dash", ["sunburst2_dash"]],
+         ["sunburst2_console", ["sunburst2_dash"]],
+         ["sunburst2_mirror", ["sunburst2_body"]],
+         ["sunburst2_shifter_panel_button_blank_L", ["sunburst2_dash"]],
+         ["sunburst2_shifter_panel_button_blank_R", ["sunburst2_dash"]],
+         ["sunburst2_shifter_panel", ["sunburst2_dash"]],
+         ["sunburst2_hazard_button", ["sunburst2_dash"]],
+         ["sunburst2_nav_empty", ["sunburst2_dash"]],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator9
+        {"node:":"stc3"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>AU5_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>AU5_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>AU3_Clack"],
+        //lights15
+        ["LightOn", "event:>Vehicle>Interior>Light>PEU_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>PEU_Off"],
+        //handbrake5
+        {"node:":"sh_b2l"},
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Ratchet>Ratchet_01_Ratchet"],
+        ["handbrakeDisengaging","event:>Vehicle>Interior>Handbrake_Ratchet>Ratchet_01_Button"],
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Ratchet>Ratchet_01_Thump"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"f15"},
+    ],
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "", "f5ll","f5l","f6ll", "box", {"x":0.05, "y":0.05, "z":0.05}, {"x":-15, "y":2, "z":-22}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.037, "y":0.17, "z":-0.31}],
+        ["hazards", "", "dsh1l","dsh1r","dsh2l", "box", {"x":0.026, "y":0.015, "z":0.04}, {"x":0, "y":0, "z":0}, {"x":-10, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.184, "y":0.037, "z":0.0}],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["toggleHazards"],
+    ],
+    "triggerEventLinks2": [
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["hazards", "action0", "common:toggle_hazard_signal"],
+    ],
+    "mirrors": [
+        ["mesh", "idRef:", "id1:", "id2:"],
+        ["sunburst2_mirror","rf1","rf1r","rf2",{"refBaseTranslation":{"x":0.00,"y":-0.08,"z":-0.12},"baseRotationGlobal":{"x":0,"y":0,"z":19}}],
+    ],
+    "props": [
+       ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "translation", "min", "max", "offset", "multiplier"],
+       //turn signal stalk
+       ["turnsignal",   "sunburst2_signalstalk",  "stc1","stc2","stc3", {"x":90, "y":10, "z":180}, {"x":0, "y":-15, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, 0, 1],
+       //wiper stalk
+       ["wipers",       "sunburst2_wiperstalk",   "stc1","stc2","stc3", {"x":90, "y":-10, "z":180}, {"x":0, "y":0, "z":0}    , {"x":0, "y":0, "z":0}, -1, 1, -0.8, 1],
+       //parking brake
+       ["parkingbrake", "sunburst2_parkingbrake", "f7r","f7l","f8r",  {"x":90, "y":0, "z":0} , {"x":-15, "y":0, "z":0}    , {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "components":{
+        "dashNodeWeightAdd":{},
+    },
+    "nodes": [
+         ["id",     "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_CLOTH"},
+         {"selfCollision":true},
+         {"collision":true},
+
+         //interior flexbody
+         {"group":["sunburst2_dash", "sunburst2_dash_stock"]},
+         {"nodeWeight":3.0},
+         ["dsh1rr",-0.660, -0.544,  0.895],
+         ["dsh1r", -0.197, -0.544,  0.895,  {"nodeWeight":"$=$components.dashNodeWeightAdd.dsh1r == nil and 3.0 or $components.dashNodeWeightAdd.dsh1r+3.0"}],
+         ["dsh1l",  0.197, -0.544,  0.895,  {"nodeWeight":"$=$components.dashNodeWeightAdd.dsh1l == nil and 3.0 or $components.dashNodeWeightAdd.dsh1l+3.0"}],
+         ["dsh1ll", 0.664, -0.544,  0.895],
+
+         ["dsh2rr",-0.660, -0.475,  0.700],
+         ["dsh2r", -0.197, -0.475,  0.700],
+         ["dsh2l",  0.197, -0.475,  0.700],
+         ["dsh2ll", 0.664, -0.475,  0.700],
+
+         ["dsh3rr",-0.130, -0.374,  0.250,  {"nodeWeight":0.5,"selfCollision":false}],
+         ["dsh3r", -0.090, -0.386,  0.505,  {"nodeWeight":"$=$components.dashNodeWeightAdd.dsh3r == nil and 3.0 or $components.dashNodeWeightAdd.dsh3r+3.0"}],
+         ["dsh3l",  0.090, -0.386,  0.505,  {"nodeWeight":"$=$components.dashNodeWeightAdd.dsh3l == nil and 3.0 or $components.dashNodeWeightAdd.dsh3l+3.0"}],
+         ["dsh3ll", 0.130, -0.374,  0.250,  {"nodeWeight":0.5,"selfCollision":false}],
+
+         ["dsh4rr",-0.130,  0.298,  0.250,  {"nodeWeight":0.5,"selfCollision":false}],
+         ["dsh4",   0.000,  0.162,  0.597],
+         ["dsh4ll", 0.130,  0.298,  0.250,  {"nodeWeight":0.5,"selfCollision":false}],
+
+         //steering column
+         {"group":"sunburst2_column"},
+         {"nodeWeight":2.0},
+         ["stc1",   0.373, -0.628,  0.738],
+         ["stc2",   0.207, -0.628,  0.738],
+         ["stc3",   0.373, -0.376,  0.832],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["stc3", "stc1", "stc2", "f5l"],
+    ],
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["dsh4ll", "cConsole2", true, true, 0.0, 300100, "FLT_MAX", "FLT_MAX"],
+        ["dsh4rr", "cConsole2", true, true, 0.0, 300100, "FLT_MAX", "FLT_MAX"],
+        ["dsh3ll", "cConsole1", true, true, 0.0, 300100, "FLT_MAX", "FLT_MAX"],
+        ["dsh3rr", "cConsole1", true, true, 0.0, 300100, "FLT_MAX", "FLT_MAX"],
+
+    ],
+    "rails": {
+        "cConsole1":{"links:":["fi2r", "fi2l"], "broken:":[], "looped":false, "capped":true},
+        "cConsole2":{"links:":["fi3r", "fi3l"], "broken:":[], "looped":false, "capped":true},
+    },
+    "beams": [
+          ["id1:",   "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //dashboard maine shape
+          {"beamSpring":1000000,"beamDamp":50},
+          {"beamDeform":18000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.1},
+          ["dsh1ll", "dsh2ll"],
+          ["dsh1l",  "dsh2l"],
+          ["dsh1r",  "dsh2r"],
+          ["dsh1rr", "dsh2rr"],
+          ["dsh2r",  "dsh3r"],
+          ["dsh2l",  "dsh3l"],
+          ["dsh1ll", "dsh1l"],
+          ["dsh1l",  "dsh1r"],
+          ["dsh1r",  "dsh1rr"],
+          ["dsh2ll", "dsh2l"],
+          ["dsh2l",  "dsh2r"],
+          ["dsh2r",  "dsh2rr"],
+          ["dsh3l",  "dsh3r"],
+          ["f6ll",   "dsh1ll"],
+          ["f6l",    "dsh1l"],
+          ["f6r",    "dsh1r"],
+          ["f6rr",   "dsh1rr"],
+          ["f5rr",   "dsh2rr"],
+          ["f5r",    "dsh2r"],
+          ["f5l",    "dsh2l"],
+          ["f5ll",   "dsh2ll"],
+          ["dsh4",   "dsh3l"],
+          ["dsh4",   "dsh3r"],
+          {"beamSpring":501000,"beamDamp":50},
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["dsh4",   "dsh4rr"],
+          ["dsh4",   "dsh4ll"],
+          ["dsh4rr", "dsh4ll"],
+          ["fi3r",   "dsh4rr"],
+          ["fi3l",   "dsh4ll"],
+          ["f2r",    "dsh4rr"],
+          ["f2l",    "dsh4ll"],
+          {"beamDeform":6000,"beamStrength":"FLT_MAX"},
+          ["dsh3r",  "dsh3rr"],
+          ["dsh3l",  "dsh3ll"],
+          ["dsh3l",  "dsh3rr"],
+          ["dsh3r",  "dsh3ll"],
+          ["dsh3rr", "dsh3ll"],
+          ["f2r",    "dsh3rr"],
+          ["f2l",    "dsh3ll"],
+
+          //crossing
+          {"beamSpring":2001000,"beamDamp":50},
+          {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["f6ll",   "dsh1l"],
+          ["dsh1ll", "f6l"],
+          ["dsh1l",  "f6r"],
+          ["f6l",    "dsh1r"],
+          ["dsh1r",  "f6rr"],
+          ["f6r",    "dsh1rr"],
+          ["dsh2r",  "dsh1rr"],
+          ["dsh2rr", "dsh1r"],
+          ["dsh2r",  "dsh1l"],
+          ["dsh2l",  "dsh1r"],
+          ["dsh1l",  "dsh2ll"],
+          ["dsh2l",  "dsh1ll"],
+          ["dsh1ll", "f5ll"],
+          ["dsh2ll", "f6ll"],
+          ["dsh1rr", "f5rr"],
+          ["dsh2rr", "f6rr"],
+          ["dsh1r",  "f5r"],
+          ["dsh2r",  "f6r"],
+          ["dsh1l",  "f5l"],
+          ["dsh2l",  "f6l"],
+          ["dsh2ll", "f5l"],
+          ["f5ll",   "dsh2l"],
+          ["dsh2l",  "f5r"],
+          ["dsh2r",  "f5l"],
+          ["dsh2r",  "f5rr"],
+          ["dsh2rr", "f5r"],
+          {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+          ["dsh4",   "f2r"],
+          ["dsh4",   "f2l"],
+          ["dsh3l",  "f3l"],
+          ["dsh3r",  "f3r"],
+
+          //rigids
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          ["dsh2ll", "dsh2r"],
+          ["dsh2l",  "dsh2rr"],
+          ["dsh1ll", "dsh1r"],
+          ["dsh1l",  "dsh1rr"],
+          ["dsh1l",  "dsh3l"],
+          ["dsh3r",  "dsh1r"],
+
+          //extra attach
+          {"beamDeform":1500,"beamStrength":"FLT_MAX"},
+          ["dsh2l",  "dsh3r"],
+          ["dsh2r",  "dsh3l"],
+          ["f6rr",   "dsh2r"],
+          ["f6ll",   "dsh2l"],
+
+          ["dsh3r",  "f7l"],
+          ["dsh3r",  "f5l"],
+          ["dsh3r",  "f5r"],
+          ["dsh3r",  "f7r"],
+          ["dsh3r",  "f2l"],
+          ["dsh3r",  "f1l"],
+          ["dsh3r",  "f1r"],
+          ["dsh3r",  "f2r"],
+
+          ["dsh3l",  "f7l"],
+          ["dsh3l",  "f5l"],
+          ["dsh3l",  "f5r"],
+          ["dsh3l",  "f7r"],
+          ["dsh3l",  "f2l"],
+          ["dsh3l",  "f1l"],
+          ["dsh3l",  "f1r"],
+          ["dsh3l",  "f2r"],
+
+          //steering column
+          {"beamSpring":2501000,"beamDamp":50},
+          {"beamDeform":38000,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.1},
+          ["stc2",   "stc1"],
+          ["stc1",   "stc3"],
+          ["stc3",   "stc2"],
+
+          //attach
+          {"beamDeform":2500,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["stc2",   "dsh2l"],
+          ["stc2",   "dsh1l"],
+          ["stc2",   "dsh2ll"],
+          ["stc2",   "dsh1ll"],
+          ["stc1",   "dsh2ll"],
+          ["stc1",   "dsh1ll"],
+          ["stc1",   "dsh2l"],
+          ["stc1",   "dsh1l"],
+
+          ["stc1",   "f6l"],
+          ["stc1",   "f5l"],
+          ["stc1",   "f6ll"],
+          ["stc1",   "f5ll"],
+
+          ["stc2",   "f6l"],
+          ["stc2",   "f5l"],
+          ["stc2",   "f6ll"],
+          ["stc2",   "f5ll"],
+
+          //damper
+          {"beamSpring":0,"beamDamp":550},
+          ["stc3",   "dsh2ll"],
+          ["stc3",   "dsh2l"],
+          ["stc3",   "dsh1l"],
+          ["stc3",   "dsh1ll"],
+          ["stc3",   "dsh3l"],
+    ],
+    "triangles":[
+        ["id1:",   "id2:",   "id3:"],
+        {"groundModel":"plastic"},
+        //Dashboard
+        {"dragCoef":0},
+        ["dsh1ll", "dsh2ll", "dsh1l"],
+        ["dsh1l",  "dsh2ll", "dsh2l"],
+        ["dsh1l",  "dsh2l",  "dsh2r"],
+        ["dsh2r",  "dsh1r",  "dsh1l"],
+        ["dsh1r",  "dsh2r",  "dsh2rr"],
+        ["dsh2rr", "dsh1rr", "dsh1r"],
+        ["dsh2l",  "dsh3l",  "dsh3r"],
+        ["dsh3r",  "dsh2r",  "dsh2l"],
+        ["dsh3l",  "dsh4",   "dsh3r"],
+
+        ["dsh1r",  "f6r",    "f6l"],
+        ["f6l",    "dsh1l",  "dsh1r"],
+        ["dsh4",   "dsh4ll", "dsh4rr"],
+
+        ["dsh1rr", "f6rr",   "f6r"],
+        ["f6r",    "dsh1r",  "dsh1rr"],
+        ["dsh2r",  "f5r",    "dsh2rr"],
+        ["dsh2rr", "f5r",    "f5rr"],
+        ["dsh2rr", "f5rr",   "f6rr"],
+        ["dsh1rr", "dsh2rr", "f6rr"],
+        ["dsh2r",  "dsh3r",  "f5r"],
+        ["dsh3r",  "dsh3rr", "fi1r"],
+        ["dsh3r",  "fi1r",   "f5r"],
+        ["dsh4",   "dsh3rr", "dsh3r"],
+        ["dsh4",   "dsh4rr", "dsh3rr"],
+
+        ["f6ll",   "dsh1ll", "f6l"],
+        ["dsh1l",  "f6l",    "dsh1ll"],
+        ["f5l",    "dsh2l",  "dsh2ll"],
+        ["f5l",    "dsh2ll", "f5ll"],
+        ["f5ll",   "dsh2ll", "f6ll"],
+        ["dsh2ll", "dsh1ll", "f6ll"],
+        ["dsh3l",  "dsh2l",  "f5l"],
+        ["dsh3ll", "dsh3l",  "fi1l"],
+        ["fi1l",   "dsh3l",  "f5l"],
+        ["dsh3ll", "dsh4",   "dsh3l"],
+        ["dsh4ll", "dsh4",   "dsh3ll"],
+
+        ["f5ll",   "fi1ll",  "fi1l"],
+        ["fi1l",   "f5l",    "f5ll"],
+        ["f5r",    "fi1r",   "fi1rr"],
+        ["fi1rr",  "f5rr",   "f5r"],
+    ],
+}
+"sunburst2_junk_nav": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Infotainment System",
+        "value":50,
+    },
+    "slotType" : "sunburst2_radio",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_nav" ["sunburst2_dash"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@sunburst2_naviscreen_on", "name":"sunburst2_navi"}],
+    ],
+    "glowMap":{
+        "sunburst2_display_nav":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"screen_off", "on_intense":"sunburst2_naviscreen_accessory"},
+    },
+}
+"sunburst2_junk_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Left Seat",
+        "value":125,
+    },
+    "slotType" : "sunburst2_seat_FL",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_seats_FL" ["sunburst2_floor","sunburst2_seat_FL"]],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":1.9},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.374, 0.18, 1.145, 55, "f1ll","f2r","f3ll","f4ll","f4r",[], {"beamDeform":5001000,"beamStrength":"FLT_MAX"}],
+    ],
+    "nodes": [
+         ["id",    "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"sunburst2_seat_FL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.2},
+         ["sf1l",  0.138, -0.294,  0.490],
+         ["sf1ll", 0.595, -0.294,  0.490],
+         ["sf2l",  0.161,  0.152,  0.373],
+         ["sf2ll", 0.561,  0.152,  0.373],
+         ["sf3l",  0.224,  0.372,  1.170],
+         ["sf3ll", 0.514,  0.372,  1.170],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:",  "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":100},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1l",  "sf1ll"],
+        ["sf2l",  "sf2ll"],
+        ["sf3l",  "sf3ll"],
+        ["sf1l",  "sf2l"],
+        ["sf2l",  "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l",  "sf3ll"],
+        ["sf3l",  "sf2ll"],
+        //corners
+        {"beamDeform":9000},
+        ["sf3l",  "sf1l"],
+        ["sf3ll", "sf1ll"],
+        ["sf3ll", "sf1l"],
+        ["sf3l",  "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3ll", "r5ll"],
+        ["sf3l",  "r1ll"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":40},
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        ["sf3ll", "f3l"],
+        ["sf3l",  "f3ll"],
+        ["sf3ll", "f3ll"],
+        ["sf3l",  "f3l"],
+        ["sf2ll", "f3ll"],
+        ["sf2ll", "f3l"],
+        ["sf2l",  "f3l"],
+        ["sf2l",  "f3ll"],
+        ["sf2ll", "f2ll"],
+        ["sf2ll", "p3l"],
+        ["sf2l",  "f2l"],
+        ["sf1ll", "f2ll"],
+        ["sf1ll", "f2l"],
+        ["sf1l",  "f2l"],
+        ["sf1l",  "f2ll"],
+
+        //limiter
+        {"beamPrecompression":0.9, "beamType":"|SUPPORT","beamLongBound":5},
+        {"beamSpring":1501000,"beamDamp":120},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3l",  "p7l"],
+        ["sf3l",  "p8l"],
+        ["sf3l",  "lf2l"],
+        ["sf2l",  "p3l"],
+        ["sf2l",  "p4l"],
+        ["sf2l",  "f3ll"],
+
+        //to other seat
+        {"beamPrecompression":0.7},
+        ["sf1rr", "sf1ll"],
+        ["sf2rr", "sf2ll"],
+        ["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:",  "id2:",  "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"sunburst2_junk_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Front Right Seat",
+        "value":125,
+    },
+    "slotType" : "sunburst2_seat_FR",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        ["load_seat_FR", ["load_seat_FR"], [], "", "Front Seat Load", {
+            "nodeMove":{"x":-0.40, "y":-0.2, "z":0.60},
+            "variables":{
+                "$rotx":-15, "$roty":0, "$rotz":90,
+                "$group":"sunburst2_seat_FR",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_seats_FR" ["sunburst2_floor","sunburst2_seat_FR"]],
+    ],
+    "nodes": [
+         ["id",    "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":15},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"sunburst2_seat_FR"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":2.2},
+         ["sf1r", -0.138, -0.294,  0.490],
+         ["sf1rr",-0.595, -0.294,  0.490],
+         ["sf2r", -0.161,  0.152,  0.373],
+         ["sf2rr",-0.561,  0.152,  0.373],
+         ["sf3r", -0.224,  0.372,  1.170],
+         ["sf3rr",-0.514,  0.372,  1.170],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:",  "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2501000,"beamDamp":100},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sf1r",  "sf1rr"],
+        ["sf2r",  "sf2rr"],
+        ["sf3r",  "sf3rr"],
+        ["sf1r",  "sf2r"],
+        ["sf2r",  "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r",  "sf3rr"],
+        ["sf3r",  "sf2rr"],
+        //corners
+        {"beamDeform":9000},
+        ["sf3r",  "sf1r"],
+        ["sf3rr", "sf1rr"],
+        ["sf3rr", "sf1r"],
+        ["sf3r",  "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["sf3rr", "r5rr"],
+        ["sf3r",  "r1rr"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":40},
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        ["sf3rr", "f3r"],
+        ["sf3r",  "f3rr"],
+        ["sf3rr", "f3rr"],
+        ["sf3r",  "f3r"],
+        ["sf2rr", "f3rr"],
+        ["sf2rr", "f3r"],
+        ["sf2r",  "f3r"],
+        ["sf2r",  "f3rr"],
+        ["sf2rr", "f2rr"],
+        ["sf2rr", "p3r"],
+        ["sf2r",  "f2r"],
+        ["sf1rr", "f2rr"],
+        ["sf1rr", "f2r"],
+        ["sf1r",  "f2r"],
+        ["sf1r",  "f2rr"],
+
+        //limiter
+        {"beamPrecompression":0.9, "beamType":"|SUPPORT","beamLongBound":5},
+        {"beamSpring":1501000,"beamDamp":120},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3r",  "p7r"],
+        ["sf3r",  "p8r"],
+        ["sf3r",  "rf2r"],
+        ["sf2r",  "p3r"],
+        ["sf2r",  "p4r"],
+        ["sf2r",  "f3rr"],
+        ["sf1r",  "f3rr"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:",  "id2:",  "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r",  "sf2r",  "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r",  "sf3r",  "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+"sunburst2_junk_seats_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loose Rear Seats",
+        "value":150,
+    },
+    "slotType" : "sunburst2_seats_R",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        ["load_seat_R_2", ["load_seat_R_2"], [], "", "Rear Seat Load", {
+            "nodeMove":{"x": 0.00, "y":0.70, "z":0.69},
+            "variables":{
+                "$rotx":-5, "$roty":0, "$rotz":0,
+                "$offsetX":0.35, "$group":"sunburst2_seats_R_B",
+            },
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_seats_R", ["sunburst2_seats_R"]],
+    ],
+    "nodes":[
+        ["id",    "posX", "posY", "posZ"],
+        {"group":["sunburst2_seats_R","sunburst2_seats_R_B"]},
+        {"collision":true},
+        {"selfCollision":true},
+        {"nodeWeight":2.2},
+        ["srr1r",-0.687,  0.545,  0.532],
+        ["srr1",  0.000,  0.545,  0.532],
+        ["srr1l", 0.688,  0.545,  0.532],
+
+        ["srr2r",-0.638,  0.920,  0.509],
+        ["srr2",  0.000,  0.920,  0.509],
+        ["srr2l", 0.638,  0.920,  0.509],
+
+        {"group":"sunburst2_seats_R"},
+        ["srr3r",-0.638,  1.113,  1.008],
+        ["srr3",  0.000,  1.113,  1.008],
+        ["srr3l", 0.638,  1.113,  1.008],
+        {"group":""},
+  ],
+  "beams":[
+        ["id1:",        "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2001000,"beamDamp":200},
+        {"beamDeform":9000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["srr2l",       "srr2"],
+        ["srr2",        "srr2r"],
+        ["srr3l",       "srr3"],
+        ["srr3",        "srr3r"],
+        ["srr1l",       "srr1"],
+        ["srr1",        "srr1r"],
+        ["srr1r",       "srr2r"],
+        ["srr2r",       "srr3r"],
+        ["srr1l",       "srr2l"],
+        ["srr2l",       "srr3l"],
+        ["srr1",        "srr2"],
+        ["srr2",        "srr3"],
+
+        //crossing
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["srr1",        "srr2l"],
+        ["srr2l",       "srr3"],
+        ["srr3",        "srr2r"],
+        ["srr2r",       "srr1"],
+        ["srr1r",       "srr2"],
+        ["srr2",        "srr3r"],
+        ["srr3l",       "srr2"],
+        ["srr2",        "srr1l"],
+
+        //corner
+        ["srr1r",       "srr3r"],
+        ["srr3",        "srr1"],
+        ["srr1l",       "srr3l"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":800},
+        ["srr3",        "r6rr"],
+        ["srr3",        "r6ll"],
+
+        //attach
+        {"beamSpring":10000,"beamDamp":50},
+        {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+        ["srr2r",       "f4r"],
+        ["srr2r",       "f9r"],
+        ["srr1r",       "f3r"],
+        ["srr1r",       "f8r"],
+        ["srr1r",       "f9r"],
+        ["srr2r",       "f8r"],
+        ["srr2",        "f4r"],
+        ["srr1",        "f3r"],
+        ["srr1",        "f8r"],
+        ["srr1",        "f9r"],
+        ["srr2",        "f9r"],
+        ["srr2",        "f8r"],
+
+        ["srr2l",       "f4l"],
+        ["srr2l",       "f9l"],
+        ["srr1l",       "f3l"],
+        ["srr1l",       "f8l"],
+        ["srr1l",       "f9l"],
+        ["srr2l",       "f8l"],
+        ["srr2",        "f4l"],
+        ["srr1",        "f3l"],
+        ["srr1",        "f8l"],
+        ["srr1",        "f9l"],
+        ["srr2",        "f9l"],
+        ["srr2",        "f8l"],
+
+        ["srr3r",       "q1r"],
+        ["srr3r",       "q2r"],
+        ["srr3r",       "rs1r"],
+        ["srr3l",       "q1l"],
+        ["srr3l",       "q2l"],
+        ["srr3l",       "rs1l"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":1034000,"beamDamp":130.43},
+        {"beamDeform":2450,"beamStrength":10500},
+        {"beamPrecompression":0.85},
+        {"optional":true},
+        ["srr3",        "q1l"],
+        ["srr2",        "q6l"],
+        ["srr2",        "q5l"],
+        ["srr1",        "p4l"],
+        ["srr3",        "q1l"],
+        ["srr2",        "q6l"],
+        ["srr2",        "q5l"],
+        ["srr1",        "p4l"],
+
+        ["srr3",        "tb1l"],
+        ["srr3",        "tb1r"],
+        ["srr3r",       "tb1rr"],
+        ["srr3l",       "tb1ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        //cargo load box
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":500001,"beamDamp":250},
+        {"beamDeform":510000,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["seat_box_RA", "srr1l"],
+        ["seat_box_RA", "srr2l"],
+        ["seat_box_RA", "srr3l"],
+        ["seat_box_RA", "srr1"],
+        ["seat_box_RA", "srr2"],
+        ["seat_box_RA", "srr3"],
+
+        ["seat_box_RB", "srr1r"],
+        ["seat_box_RB", "srr2r"],
+        ["seat_box_RB", "srr3r"],
+        ["seat_box_RB", "srr1"],
+        ["seat_box_RB", "srr2"],
+        ["seat_box_RB", "srr3"],
+        {"optional":false},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+  ],
+  "triangles":[
+      ["id1:",  "id2:",  "id3:"],
+      {"groundModel":"metal"},
+      {"dragCoef":0},
+      {"group":"sunburst2_seats_R"},
+      ["srr1",  "srr2l", "srr2"],
+      ["srr2",  "srr2r", "srr1"],
+      ["srr2",  "srr2l", "srr3"],
+      ["srr3",  "srr2r", "srr2"],
+      ["srr2l", "srr3l", "srr3"],
+      ["srr3",  "srr3r", "srr2r"],
+      ["srr2r", "srr1r", "srr1"],
+      ["srr1",  "srr1l", "srr2l"],
+  ],
+},
+"sunburst2_junk_gauges": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Gauges ( Imperial )",
+        "value":45,
+    },
+    "slotType" : "sunburst2_gauges",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_gauges", ["sunburst2_dash"]],
+         ["sunburst2_decals_gauges", ["sunburst2_dash"]],
+    ],
+    "glowMap":{
+        "sunburst2_gauges_display":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"sunburst2_gauges_display", "on_intense":"screen_off"},
+    },
+    "controller": [
+        ["fileName"],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        //["gauges/customModules/environmentData"],
+        //["gauges/customModules/combustionEngineData"],
+    ],
+    "props": [
+        ["func",        "mesh",                   "idRef:","idX:","idY:", "baseRotation",              "rotation",               "translation",            "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "sunburst2_needle_speedo", "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":-1.498},    {"x":0, "y":0, "z":0},    0, 183.3, 39.7, 2.23694],
+        ["rpm",         "sunburst2_needle_tacho",  "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},   0, 8000, 2750, 1.0],
+        ["fuel",        "sunburst2_needle_fuel",   "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":100},     {"x":0, "y":0, "z":0},   0, 50, 0.4, 0.95],
+        ["watertemp",   "sunburst2_needle_temp",   "dsh2ll","dsh2l","dsh1l", {"x":-90, "y":0, "z":180}, {"x":0, "y":0, "z":-1.5},    {"x":0, "y":0, "z":0},   60, 120, 90, 1],
+    ],
+    "gauge": {
+        "configuration": {
+            "materialName": "@sunburst2_gauges_display"
+            "htmlPath": "local://local/vehicles/sunburst2/gauges_screen/gauges_screen.html"
+            "displayWidth":256
+            "displayHeight":256
+            "jbeamUnitLength": "imperial"
+        }
+        "displayData": {
+            "electrics": [
+                "gear",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                // ["combustionEngineData", "fuelDisplay"]
+                // ["combustionEngineData", "fuelConsumption"]
+                // ["environmentData", "temperatureEnv"]
+                // ["environmentData", "time"]
+            ]
+        }
+    },
+}
+"sunburst2_junk_gauges_metric": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Gauges ( Metric )",
+        "value":200,
+    },
+    "slotType" : "sunburst2_gauges",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["sunburst2_gauges_KMH", ["sunburst2_dash"]],
+         ["sunburst2_decals_gauges", ["sunburst2_dash"]],
+    ],
+    "glowMap":{
+        "sunburst2_gauges_display":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"screen_off", "on_intense":"screen_off"},
+    },
+    "controller": [
+        ["fileName"],
+        ["gauges/genericGauges", {"name":"gauge" }],
+        //["gauges/customModules/environmentData"],
+        //["gauges/customModules/combustionEngineData"],
+    ],
+    "props": [
+        ["func",        "mesh",                   "idRef:","idX:","idY:", "baseRotation",              "rotation",               "translation",            "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "sunburst2_needle_speedo", "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":-0.93},    {"x":0, "y":0, "z":0},   0, 295, 64, 3.6],
+        ["rpm",         "sunburst2_needle_tacho",  "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},   0, 8000, 2750, 1.0],
+        ["fuel",        "sunburst2_needle_fuel",   "dsh2ll","dsh2l","dsh1l", {"x":90, "y":0, "z":0}, {"x":0, "y":0, "z":100},     {"x":0, "y":0, "z":0},   0, 50, 0.4, 0.95],
+        ["watertemp",   "sunburst2_needle_temp",   "dsh2ll","dsh2l","dsh1l", {"x":-90, "y":0, "z":180}, {"x":0, "y":0, "z":-1.5},    {"x":0, "y":0, "z":0},   60, 120, 90, 1],
+    ],
+    "gauge": {
+        "configuration": {
+            "materialName": "@sunburst2_gauges_display"
+            "htmlPath": "local://local/vehicles/sunburst2/gauges_screen/gauges_screen.html"
+            "displayWidth":256
+            "displayHeight":256
+            "jbeamUnitLength": "metric"
+        }
+        "displayData": {
+            "electrics": [
+                "gear",
+                "odometer",
+                "trip"
+            ]
+            "powertrain": [
+                ["deviceName", "property"]
+                //["mainEngine", "outputTorque1"]
+                //["mainEngine", "outputAV1"]
+                //["gearbox", "outputAV1"]
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                // ["combustionEngineData", "fuelDisplay"]
+                // ["combustionEngineData", "fuelConsumption"]
+                // ["environmentData", "temperatureEnv"]
+                // ["environmentData", "time"]
+            ]
+        }
+    },
+
+}
+}

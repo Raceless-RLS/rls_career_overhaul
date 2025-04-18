@@ -1,0 +1,271 @@
+{
+"legran_junk_wagon_quarterglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Quarter Glass",
+        "value":5,
+    },
+    "slotType" : "legran_wagon_quarterglass_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"sideglass_R_break", "deformMaterialBase":"legran_glass", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_wagon_sideglass_R", ["legran_body", "legran_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_R_break", "deformMaterialBase":"legran_glass_int", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_wagon_sideglass_R_int", ["legran_body", "legran_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--ADD WEIGHT--
+
+         //rear side windows
+         //roof
+         {"nodeWeight":3.2},
+         {"group":"legran_roof"}
+         ["rf3r", -0.60, 0.9, 1.25],
+         ["rf4r", -0.60, 1.36, 1.24],
+         ["rf5r", -0.60, 1.7, 1.22],
+
+         //c pillar
+         {"nodeWeight":2.7},
+         ["p10r", -0.71, 1.02, 1.04],
+
+         //d pillar
+         {"nodeWeight":2.9},
+         ["p11r", -0.695, 1.71, 1.04],
+         ["p12r", -0.69, 1.95, 1.04],
+
+         {"group":""},
+         //windshield 12kg, rear windshield 10kg, sedan window 3kg, coupe window 4kg
+         //1411kg
+
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamSpring":1470600,"beamDamp":120},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":1470600,"beamDamp":60},
+          {"deformGroup":"backlight_break", "deformationTriggerRatio":0.03},
+
+          //brittle glass beams
+          {"beamDeform":7500,"beamStrength":10},
+          {"breakGroup":"sideglass_R_break"},
+          ["p10r", "p11r"],
+          ["rf4r", "q2r"],
+          ["p10r", "rf5r"],
+          ["p11r", "q1r"],
+          ["q1r", "rf5r"],
+          ["rf3r", "q3r"],
+          ["q3r", "rf5r"],
+          ["rf4r", "q4r"],
+          ["p10r", "q3r"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"glass"},
+            {"dragCoef":3},
+            {"breakGroup":"sideglass_R_break"},
+            {"group":"legran_roof"},
+            ["p11r", "p10r", "rf4r"],
+            ["q2r",  "p10r", "p11r"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+            {"group":""},
+    ],
+},
+"legran_junk_wagon_quarterglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Quarter Glass",
+        "value":5,
+    },
+    "slotType" : "legran_wagon_quarterglass_L",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //glass
+         {"deformGroup":"sideglass_L_break", "deformMaterialBase":"legran_glass", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_wagon_sideglass_L", ["legran_body", "legran_roof"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+         {"deformGroup":"sideglass_L_break", "deformMaterialBase":"legran_glass_int", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_wagon_sideglass_L_int", ["legran_body", "legran_roof"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //--ADD WEIGHT--
+
+         //rear side windows
+         //roof
+         {"nodeWeight":3.2},
+         {"group":"legran_roof"}
+         ["rf3l", 0.60, 0.9, 1.25],
+         ["rf4l", 0.60, 1.36, 1.24],
+         ["rf5l", 0.60, 1.7, 1.22],
+
+         //c pillar
+         {"nodeWeight":2.7},
+         ["p10l", 0.71, 1.02, 1.04],
+
+         //d pillar
+         {"nodeWeight":2.9},
+         ["p11l", 0.695, 1.71, 1.04],
+         ["p12l", 0.69, 1.95, 1.04],
+
+         {"group":""},
+         //windshield 12kg, rear windshield 10kg, sedan window 3kg, coupe window 4kg
+         //1411kg
+
+    ],
+
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamSpring":1470600,"beamDamp":120},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"beamSpring":1470600,"beamDamp":60},
+          {"deformGroup":"backlight_break", "deformationTriggerRatio":0.03},
+
+          //brittle glass beams
+          {"beamDeform":7500,"beamStrength":10},
+          {"breakGroup":"sideglass_L_break"},
+          ["p10l", "p11l"],
+          ["rf4l", "q2l"],
+          ["p10l", "rf5l"],
+          ["p11l", "q1l"],
+          ["q1l", "rf5l"],
+          ["rf3l", "q3l"],
+          ["q3l", "rf5l"],
+          ["rf4l", "q4l"],
+          ["p10l", "q3l"],
+
+          {"breakGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.1},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"glass"},
+            {"dragCoef":3},
+            {"breakGroup":"sideglass_L_break"},
+            {"group":"legran_roof"},
+            ["p10l", "p11l", "rf4l"],
+            ["p10l", "q2l",  "p11l"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+            {"group":""},
+    ],
+},
+"legran_junk_wagon_tailgateglass": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Tailgate Glass",
+        "value":5,
+    },
+    "slotType" : "legran_wagon_tailgateglass",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"legran_glass", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_tailgateglass", ["legran_tailgate"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound10", "deformVolume":0.0}],
+
+         {"deformGroup":"tailgateglass_break", "deformMaterialBase":"legran_glass_int", "deformMaterialDamaged":"legran_glass_dmg"},
+         ["legran_tailgateglass_int", ["legran_tailgate"]],
+         {"deformGroup":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+         //--TAILGATE--
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"legran_tailgate"},
+         {"nodeWeight":2.2},
+         ["t1r",-0.59,1.72,1.23, {"nodeWeight":2.5}],
+         ["t1",0.0,1.74,1.24]
+         ["t1l",0.59,1.72,1.23, {"nodeWeight":2.5}],
+
+         ["t2r",-0.67,1.99,1.05],
+         ["t2l",0.67,1.99,1.05],
+
+         {"nodeWeight":2.6},
+         ["t3rr",-0.71,2.2,0.87],
+         {"group":["legran_tailgate", "legran_wing_strut"]},
+         ["t3r",-0.36,2.22,0.87],
+         ["t3",0.0,2.22,0.87],
+         ["t3l",0.36,2.22,0.87],
+         {"group":"legran_tailgate"},
+         ["t3ll",0.71,2.2,0.87],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+          //brittle rear glass
+          {"beamSpring":1201000,"beamDamp":100},
+          {"beamDeform":3600,"beamStrength":10},
+          {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+          {"breakGroup":"tailgateglass"},
+          {"deformGroup":"tailgateglass_break", "deformationTriggerRatio":0.02},
+          {"deformLimitExpansion":""},
+          ["t2l", "t3"],
+          ["t3", "t2r"],
+          ["t3r", "t1"],
+          ["t3l", "t1"],
+          ["t1", "t3"],
+          ["t2r", "t2l"],
+          ["t2l", "t3rr"],
+          ["t2r", "t3ll"],
+          ["t1l", "t3r"],
+          ["t3l", "t1r"],
+          ["t3rr", "t1l"],
+          ["t3ll", "t1r"],
+          {"breakGroup":""},
+          {"deformGroup":""},
+          {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+          {"deformLimitExpansion":1.2},
+    ],
+        "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"glass"},
+            {"dragCoef":3},
+            {"breakGroup":"tailgateglass"},
+            {"group":"legran_tailgate"},
+            ["t2l", "t3l", "t1"],
+            ["t1", "t3l", "t3"],
+            ["t3", "t3r", "t1"],
+            ["t1", "t3r", "t2r"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+            {"group":""},
+    ],
+},
+}

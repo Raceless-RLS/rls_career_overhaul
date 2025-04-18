@@ -1,0 +1,586 @@
+{
+"autobello_junk_transaxle_4M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 4-Speed Manual Transaxle",
+        "value":100,
+    },
+
+    "slotType" : "autobello_transaxle",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["autobello_flywheel","autobello_flywheel","Flywheel", {"coreSlot":true}],
+        ["autobello_differential_R","autobello_differential_R", "Rear Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.88, 0, 3.8, 2.06, 1.32, 0.86],
+        "friction": 0.75,
+        "dynamicFriction": 0.00100,
+        "torqueLossCoef": 0.0200,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [1.99, 0.00, 1.37, 2.37, 1.37, 3.37, 0.37, 0.37, 0.37, 0.37],
+        "gearWhineCoefsOutput": [1.99, 0.00, 1.37, 2.37, 1.37, 3.37, 0.37, 0.37, 0.37, 0.37],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "forwardInputPitchCoef":1.05
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "clutch": {
+        "clutchMass":3,
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.3,
+        "lowShiftDownRPM":[0,0,0,5500,5500,5500],
+        "lowShiftUpRPM":[0,0,5500,5500,5500],
+        //"wheelSlipUpThreshold":10000,
+    },
+    "props": [
+        ["func",       "mesh",                "idRef:", "idX:", "idY:", "baseRotation",          "rotation",                 "translation",        "min", "max", "offset", "multiplier"],
+        //pedals
+        ["clutch",    "autobello_clutchpedal", "b1l","b1ll","b1rr", {"x":0, "y":-90, "z":0}, {"x":20, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_gearbox", ["engine","transaxle"]],
+        ["autobello_shifter_4M", ["autobello_shifterbase_M","autobello_shifterboot_M"],[], {"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/hPattern", {"name":"hPattern"}],
+
+    ],
+    "hPattern": {
+        "gearCoordinates": [
+            ["gearIndex",   "x",      "y"]
+            [-1,            -1,       -1]
+            [0,             0,    0]
+            [1,             0,   1]
+            [2,             0,   -1]
+            [3,             1,    1]
+            [4,             1,    -1]
+        ]
+        "shiftSoundNode:":["sh_b3"]
+        "shiftSoundEventHPatternGearIn": "event:>Vehicle>Interior>Gearshift>manual_modern_07_in",
+        "shiftSoundEventHPatternGearOut": "event:>Vehicle>Interior>Gearshift>manual_modern_07_out",
+        "shiftSoundVolumeHPatternGearIn": 0.5,
+        "shiftSoundVolumeHPatternGearOut": 0.5,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":"autobello_shifterbase_M"},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.05, -0.505, 0.38],
+         ["sh_b1r", -0.05, -0.505, 0.38],
+         ["sh_b2l",  0.05, -0.405, 0.38],
+         ["sh_b2r", -0.05, -0.405, 0.38],
+
+         ["sh_b3", 0.00, -0.455, 0.34],
+         {"selfCollision":true},
+         {"group":["autobello_shifterboot_M"]},
+         {"nodeWeight":0.5}
+         ["sh_l3",  0.00, -0.43, 0.613],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":"autobello_shifterboot_M"},
+         ["sh_l1l",  0.03, -0.475, 0.500],
+         ["sh_l1r", -0.03, -0.475, 0.500],
+         ["sh_l2l",  0.03, -0.415, 0.495],
+         ["sh_l2r", -0.03, -0.415, 0.495],
+          //--4 Speed Manual Transaxle--
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.7},
+         {"group":"transaxle"},
+         {"nodeWeight":7},
+         ["tra1", 0.0, 0.76, 0.31],
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":6},
+         ["tra2r",-0.12, 1.07, 0.31],
+         ["tra2l", 0.12, 1.07, 0.31],
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":200000,"beamDamp":70},
+        {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+
+        ["sh_b1l", "b2r"],
+        ["sh_b1r", "b2r"],
+        ["sh_b2l", "b2r"],
+        ["sh_b2r", "b2r"],
+        ["sh_b3",  "b2r"],
+
+        ["sh_b1l", "b2"],
+        ["sh_b1r", "b2"],
+        ["sh_b2l", "b2"],
+        ["sh_b2r", "b2"],
+        ["sh_b3",  "b2"],
+
+        ["sh_b1l", "b2l"],
+        ["sh_b1r", "b2l"],
+        ["sh_b2l", "b2l"],
+        ["sh_b2r", "b2l"],
+        ["sh_b3",  "b2l"],
+
+        ["sh_b1l", "b3r"],
+        ["sh_b1r", "b3r"],
+        ["sh_b2l", "b3r"],
+        ["sh_b2r", "b3r"],
+        ["sh_b3",  "b3r"],
+
+        ["sh_b1l", "b3"],
+        ["sh_b1r", "b3"],
+        ["sh_b2l", "b3"],
+        ["sh_b2r", "b3"],
+        ["sh_b3",  "b3"],
+
+        ["sh_b1l", "b3l"],
+        ["sh_b1r", "b3l"],
+        ["sh_b2l", "b3l"],
+        ["sh_b2r", "b3l"],
+        ["sh_b3",  "b3l"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.86,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.85}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        //TRANSMISSION
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":10001000,"beamDamp":250},
+        {"beamDeform":150000,"beamStrength":"FLT_MAX"},
+        ["e1l", "tra1"],
+        ["e1r", "tra1"],
+        ["e2l", "tra1"],
+        ["e2r", "tra1"],
+        ["tra2l", "tra2r"],
+        ["tra2l", "e1l"],
+        ["tra2r", "e1r"],
+        ["tra2l", "e2l"],
+        ["tra2r", "e2r"],
+        ["tra2l", "e2r"],
+        ["tra2r", "e2l"],
+        ["tra2l", "e1r"],
+        ["tra2r", "e1l"],
+        ["tra2l", "tra1"],
+        ["tra2r", "tra1"],
+        //transmission mounts
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":25000,"beamDamp":2500},
+        {"beamDeform":12000,"beamStrength":35000},
+        ["tra1", "k3", {"dampCutoffHz":500}],
+        {"beamSpring":401000,"beamDamp":2500},
+        ["tra1", "k1r", {"dampCutoffHz":500}],
+        ["tra1", "k1l", {"dampCutoffHz":500}],
+        ["tra1", "k3r", {"dampCutoffHz":500}],
+        ["tra1", "k3l", {"dampCutoffHz":500}],
+        ["tra1", "b4l", {"dampCutoffHz":500}],
+        ["tra1", "b4r", {"dampCutoffHz":500}],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisY","factor":-0.20}],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisX","factor":-0.20}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisY","factor":0.20}],
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisX","factor":0.20}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":100, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":5},
+        ["tra1", "e1l", "e2l"],
+        ["e2l", "e2r", "tra1"],
+        ["e2r", "e1r", "tra1"],
+        ["e1r", "e1l", "tra1"],
+    ],
+},
+"autobello_junk_transaxle_5M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 5-Speed Manual Transaxle",
+        "value":250,
+    },
+
+    "slotType" : "autobello_transaxle",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["autobello_flywheel","autobello_flywheel","Flywheel", {"coreSlot":true}],
+        ["autobello_differential_R","autobello_differential_R", "Rear Differential"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1],
+        ["manualGearbox", "gearbox", "clutch", 1],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":[-3.61, 0, 3.091 , 1.889, 1.318, 1.040, 0.793],
+        "friction": 0.75,
+        "dynamicFriction": 0.00150,
+        "torqueLossCoef": 0.0199,
+        "gearboxNode:":["tra1"],
+
+        "gearWhineCoefsInput":  [0.74, 0.00, 3.37, 2.37, 2.37, 3.37, 3.37, 0.37, 0.37, 0.37],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>helical_01>twine_in",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>helical_01>twine_out",
+
+        "forwardInputPitchCoef":1.05
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "clutch": {
+        "clutchMass":3,
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": false,
+        "shiftDownRPMOffsetCoef":1.2,
+        "lowShiftDownRPM":[0,0,0,5500,5500,5500],
+        "lowShiftUpRPM":[0,0,5500,5500,5500],
+        //"wheelSlipUpThreshold":10000,
+    },
+    "props": [
+        ["func",       "mesh",                "idRef:", "idX:", "idY:", "baseRotation",          "rotation",                 "translation",        "min", "max", "offset", "multiplier"],
+        //pedals
+        ["clutch",    "autobello_clutchpedal", "b1l","b1ll","b1rr", {"x":0, "y":-90, "z":0}, {"x":20, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["autobello_gearbox", ["engine","transaxle"]],
+        ["autobello_shifter_5M", ["autobello_shifterbase_M","autobello_shifterboot_M"],[], {"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/hPattern", {"name":"hPattern"}],
+
+    ],
+    "hPattern": {
+        "gearCoordinates": [
+            ["gearIndex",   "x",       "y"]
+            [-1,            -1.0,       1.0]
+            [0,              0.0,       0.0]
+            [1,             -1.0,      -1.0]
+            [2,              0.0,       1.0]
+            [3,              0.0,      -1.0]
+            [4,              1.0,       1.0]
+            [5,              1.0,      -1.0]
+        ]
+        "shiftSoundNode:":["sh_b3"]
+        "shiftSoundEventHPatternGearIn": "event:>Vehicle>Interior>Gearshift>manual_modern_07_in",
+        "shiftSoundEventHPatternGearOut": "event:>Vehicle>Interior>Gearshift>manual_modern_07_out",
+        "shiftSoundVolumeHPatternGearIn": 0.5,
+        "shiftSoundVolumeHPatternGearOut": 0.5,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":"autobello_shifterbase_M"},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.05, -0.505, 0.38],
+         ["sh_b1r", -0.05, -0.505, 0.38],
+         ["sh_b2l",  0.05, -0.405, 0.38],
+         ["sh_b2r", -0.05, -0.405, 0.38],
+
+         ["sh_b3", 0.00, -0.455, 0.34],
+         {"selfCollision":true},
+         {"group":["autobello_shifterboot_M"]},
+         {"nodeWeight":0.5}
+         ["sh_l3",  0.00, -0.43, 0.613],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":"autobello_shifterboot_M"},
+         ["sh_l1l",  0.03, -0.475, 0.500],
+         ["sh_l1r", -0.03, -0.475, 0.500],
+         ["sh_l2l",  0.03, -0.415, 0.495],
+         ["sh_l2r", -0.03, -0.415, 0.495],
+          //--4 Speed Manual Transaxle--
+         {"selfCollision":true},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.7},
+         {"group":"transaxle"},
+         {"nodeWeight":7},
+         ["tra1", 0.0, 0.76, 0.31],
+         {"selfCollision":false},
+         {"collision":false},
+         {"nodeWeight":6},
+         ["tra2r",-0.12, 1.07, 0.31],
+         ["tra2l", 0.12, 1.07, 0.31],
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":200000,"beamDamp":70},
+        {"beamDeform":4000,"beamStrength":"FLT_MAX"},
+
+        ["sh_b1l", "b2r"],
+        ["sh_b1r", "b2r"],
+        ["sh_b2l", "b2r"],
+        ["sh_b2r", "b2r"],
+        ["sh_b3",  "b2r"],
+
+        ["sh_b1l", "b2"],
+        ["sh_b1r", "b2"],
+        ["sh_b2l", "b2"],
+        ["sh_b2r", "b2"],
+        ["sh_b3",  "b2"],
+
+        ["sh_b1l", "b2l"],
+        ["sh_b1r", "b2l"],
+        ["sh_b2l", "b2l"],
+        ["sh_b2r", "b2l"],
+        ["sh_b3",  "b2l"],
+
+        ["sh_b1l", "b3r"],
+        ["sh_b1r", "b3r"],
+        ["sh_b2l", "b3r"],
+        ["sh_b2r", "b3r"],
+        ["sh_b3",  "b3r"],
+
+        ["sh_b1l", "b3"],
+        ["sh_b1r", "b3"],
+        ["sh_b2l", "b3"],
+        ["sh_b2r", "b3"],
+        ["sh_b3",  "b3"],
+
+        ["sh_b1l", "b3l"],
+        ["sh_b1r", "b3l"],
+        ["sh_b2l", "b3l"],
+        ["sh_b2r", "b3l"],
+        ["sh_b3",  "b3l"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.86,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.85}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        //TRANSMISSION
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":10001000,"beamDamp":250},
+        {"beamDeform":150000,"beamStrength":"FLT_MAX"},
+        ["e1l", "tra1"],
+        ["e1r", "tra1"],
+        ["e2l", "tra1"],
+        ["e2r", "tra1"],
+        ["tra2l", "tra2r"],
+        ["tra2l", "e1l"],
+        ["tra2r", "e1r"],
+        ["tra2l", "e2l"],
+        ["tra2r", "e2r"],
+        ["tra2l", "e2r"],
+        ["tra2r", "e2l"],
+        ["tra2l", "e1r"],
+        ["tra2r", "e1l"],
+        ["tra2l", "tra1"],
+        ["tra2r", "tra1"],
+        //transmission mounts
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":25000,"beamDamp":2500},
+        {"beamDeform":12000,"beamStrength":35000},
+        ["tra1", "k3", {"dampCutoffHz":500}],
+        {"beamSpring":401000,"beamDamp":2500},
+        ["tra1", "k1r", {"dampCutoffHz":500}],
+        ["tra1", "k1l", {"dampCutoffHz":500}],
+        ["tra1", "k3r", {"dampCutoffHz":500}],
+        ["tra1", "k3l", {"dampCutoffHz":500}],
+        ["tra1", "b4l", {"dampCutoffHz":500}],
+        ["tra1", "b4r", {"dampCutoffHz":500}],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisY","factor":-0.20}],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisX","factor":-0.20}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"hPatternAxisY","factor":0.20}],
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3",  {"inputSource":"hPatternAxisX","factor":0.20}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":100, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":5},
+        ["tra1", "e1l", "e2l"],
+        ["e2l", "e2r", "tra1"],
+        ["e2r", "e1r", "tra1"],
+        ["e1r", "e1l", "tra1"],
+    ],
+},
+"autobello_junk_flywheel": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Flywheel",
+        "value":10,
+    },
+
+    "slotType" : "autobello_flywheel",
+
+    "clutch": {
+        "uiName":"Clutch",
+        "additionalEngineInertia":0.10,
+        "clutchMass":6,
+    },
+},
+}

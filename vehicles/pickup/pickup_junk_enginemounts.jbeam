@@ -1,0 +1,79 @@
+{
+"pickup_junk_enginemounts": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Engine Mounts",
+        "value":15,
+    },
+    "slotType" : "pickup_enginemounts",
+    "beams": [
+          ["id1:", "id2:"],
+
+          //engine soft mount
+          {"optional":true},
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0, "beamShortBound":0},
+          {"beamSpring":100, "beamDamp":10},
+          {"beamLimitSpring":100, "beamLimitDamp":10},
+          {"beamDeform":100, "beamStrength":100},
+          {"dampCutoffHz":500},
+          {"boundZone":0.02},
+
+          {"breakGroup":"enginemount_R"},
+          ["em1r", "f3r"],
+          ["em1r", "f2r"],
+          ["em1r", "f13r"],
+          ["em1r", "f12r"],
+          ["em1r", "fx1r"],
+          ["em1r", "fx2r"],
+
+          {"breakGroup":"enginemount_L"},
+          ["em1l", "f3l"],
+          ["em1l", "f2l"],
+          ["em1l", "f13l"],
+          ["em1l", "f12l"],
+          ["em1l", "fx1l"],
+          ["em1l", "fx2l"],
+
+          //transmission mount
+          {"beamSpring":100, "beamDamp":10},
+          {"beamLimitSpring":100, "beamLimitDamp":10},
+          {"beamDeform":100, "beamStrength":100},
+          {"boundZone":0.01},
+
+          {"breakGroup":"transmissionmount"},
+          ["tra1", "f14"],
+          ["tra1", "f4"],
+          ["tra1", "f4r"],
+          ["tra1", "f14r"],
+          ["tra1", "f4l"],
+          ["tra1", "f14l"],
+          ["tra1", "f5r"],
+          ["tra1", "f15r"],
+          ["tra1", "f5l"],
+          ["tra1", "f15l"],
+          {"boundZone":""},
+          {"breakGroup":""},
+
+          //damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamDeform":15000, "beamStrength":60000},
+          {"beamSpring":47175, "beamDamp":925},
+          ["e3r", "f3l"],
+          ["e3l", "f3r"],
+          ["e4r", "f2l"],
+          ["e4l", "f2r"],
+          {"dampCutoffHz":""},
+          {"optional":false},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+   "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+       //transmission anti-floppage
+       {"spring":50000, "damp":2000, "deform":30000, "strength":200000},
+       ["f4r", "f4l", "f5l", "tra1"],
+       ["f4l", "f4r", "f5r", "tra1"],
+    ],,
+},
+}

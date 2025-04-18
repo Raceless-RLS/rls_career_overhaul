@@ -1,0 +1,523 @@
+{
+"md_series_junk_frame_mid_M": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Short Upfit Rear Frame",
+        "value":1500,
+    },
+    "slotType" : "md_series_frame_mid",
+    "slots2": [
+        ["name",                          "allowTypes",                      "denyTypes", "default",                            "description"],
+      //  ["md_series_upfit_S",              ["md_series_upfit_S"],              [],          "md_series_upfit_S",                   "Upfit"],
+        ["md_series_suspension_R_single", ["md_series_suspension_R_single"], [],          "md_series_R_suspension_single_leaf", "Rear Suspension",    {"nodeMove":{"x":0.0, "y":"$=0.7+$components.rearFrameOffset.exhaustClearanceOffset+$components.rearFrameOffset.shortUpfitEndOffset", "z":0.0}}],
+        ["md_series_airtank",             ["md_series_airtank"],             [],          "md_series_airtank",                  "Air Tank",            {"nodeOffset":{"x":0.0, "y":0.1, "z":0.0}}],
+        ["md_series_airtank_aux",         ["md_series_airtank_aux"],         [],          "md_series_airtank_aux",              "Auxiliary Air Tank",  {"nodeOffset":{"x":0.0, "y":0.1, "z":0.0}}],
+        ["md_series_frameEnd_M",          ["md_series_frameEnd_M"],          [],          "md_series_frame_end_M_fifthwheel",   "Frame End",          {"coreSlot":true}],
+    ],
+    "cameraChase":{
+        "distance":8,
+        "distanceMin":3.5,
+        "defaultRotation":{"x":0,"y":-9.3,"z":0},
+        "offset":{"x":0.43, "y":2, "z":1.9},
+        "fov":55,
+    },
+    "cameraExternal":{
+        "distance":8,
+        "distanceMin":3.5,
+        "offset":{"x":0.43, "y":2, "z":0.85},
+        "fov":55,
+    },
+    "components": {
+        "driveshaft_R_2WD": {
+           "slipshaftMesh": "us_semi_slipshaft_R_1_0"
+           "driveshaftMesh": "us_semi_driveshaft_R_1_5"
+        },
+        "driveshaft_R_4WD": {
+           "slipshaftMesh": "us_semi_slipshaft_R_0_55"
+           "driveshaftMesh": "us_semi_driveshaft_R_0_8"
+        },
+        "driveshaft_R_2WD_extCab": {
+           "slipshaftMesh": "us_semi_slipshaft_R_1_5"
+           "driveshaftMesh": "us_semi_driveshaft_R_2_0"
+        },
+        "driveshaft_R_4WD_extCab": {
+           "slipshaftMesh": "us_semi_slipshaft_R_0_55"
+           "driveshaftMesh": "us_semi_driveshaft_R_1_5"
+        },
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"rot":{"x":0, "y":0, "z":0}, "pos":{"x":0, "y":0, "z":0}},
+        //frame
+        ["md_series_frame_mid_longbed", ["md_series_frame_mid"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+        ["md_series_frame_crossmember_1", ["md_series_frame_mid"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+        ["md_series_frame_crossmember_1", ["md_series_frame_mid"], [],{"pos":{"x":0.0, "y":1.3, "z":0.0}}],
+    ],
+    "nodes": [
+         ["id",    "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":["md_series_upfitColide","md_series_frame_mid"]},
+         {"selfCollision":true},
+         {"collision":true},
+         //frame
+         {"nodeWeight":15},
+         //top
+         ["mf1r", -0.434,  0.435,  0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         ["mf1l",  0.434,  0.435,  0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         {"chemEnergy":200,"burnRate":0.35,"flashPoint":200,"specHeat":0.05,"smokePoint":150,"selfIgnitionCoef":false},
+         ["mf2r", -0.434,  1.5168, 0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         ["mf2l",  0.434,  1.5168, 0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         //bottom
+         ["mf11r",-0.434,  0.435,  0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         ["mf11l", 0.434,  0.435,  0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         {"chemEnergy":200,"burnRate":0.35,"flashPoint":200,"specHeat":0.05,"smokePoint":150,"selfIgnitionCoef":false},
+         ["mf12r",-0.434,  1.5168, 0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         ["mf12l", 0.434,  1.5168, 0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         {"group":"md_series_frame_mid"},
+         {"nodeWeight":10},
+         //rigifiers
+         {"selfCollision":false},
+         {"collision":false},
+         //["mfR", 0.00, 3.1, 2.2, {"nodeWeight":40}],
+         {"selfCollision":true},
+         {"collision":true},
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        //rigidify frame in bending
+        {"spring":2000000, "damp":1500, "deform":45000, "strength":2500000},
+        //["mf13l", "mf2l", "mf2r", "mf1r"],
+        //["mf13r", "mf2r", "mf2l", "mf1l"],
+    ],
+    "beams": [
+          ["id1:",  "id2:"],
+          //--EXPANSION DEFORM LIMIT DEFAULT--
+          {"deformLimitExpansion":1.1},
+          //rear suspension mounts attach
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":20001000,"beamDamp":1000},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+
+          ["mf2r",  "rsm1r"],
+          ["mf2l",  "rsm1l"],
+
+          ["mf12r", "rsm11r"],
+          ["mf12l", "rsm11l"],
+
+          {"beamSpring":2501000,"beamDamp":500},
+
+          ["mf2r",  "rsm11r"],
+          ["mf2l",  "rsm11l"],
+
+          ["mf12r", "rsm1r"],
+          ["mf12l", "rsm1l"],
+
+          ["mf12r", "rsm11l"],
+          ["mf12l", "rsm11r"],
+
+          ["mf2r",  "rsm1l"],
+          ["mf2l",  "rsm1r"],
+
+          //damp
+          {"beamSpring":1000,"beamDamp":400},
+          //["mf2l","rsm1r"],
+          //["mf2r","rsm1l"],
+          {"optional":false},
+          //--FRAME--
+          //frame rails main shape lengthwise
+          {"beamSpring":25000,"beamDamp":150}, //main rail lenghtwise
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"deformationTriggerRatio":0.05},
+          ["mf1r",  "mf2r"],
+          ["mf1l",  "mf2l"],
+          ["mf11r", "mf12r"],
+          ["mf11l", "mf12l"],
+          {"deformGroup":""},
+          //frame rails main shape vertical
+          {"beamSpring":25000,"beamDamp":400}, //frame rails vertical
+          {"beamDeform":375000,"beamStrength":"FLT_MAX"},
+          ["mf1r",  "mf11r"],
+          ["mf1l",  "mf11l"],
+          ["mf2r",  "mf12r"],
+          ["mf2l",  "mf12l"],
+          {"deformGroup":""},
+          //frame rails main shape widthwise
+          {"beamSpring":25000,"beamDamp":500}, //frame rails widthwise
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf1l",  "mf1r"],
+          ["mf11r", "mf11l"],
+          ["mf2l",  "mf2r"],
+          ["mf12r", "mf12l"],
+          //surficial crossing yz
+          {"beamSpring":10100100,"beamDamp":150}, //crossing yz
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf1r",  "mf12r"],
+          ["mf1l",  "mf12l"],
+          ["mf2r",  "mf11r"],
+          ["mf2l",  "mf11l"],
+          {"deformGroup":""},
+          //surficial crossing xy
+          {"beamSpring":801000,"beamDamp":500}, //crossing xy
+          {"beamDeform":115000,"beamStrength":"FLT_MAX"},
+          ["mf2r",  "mf1l"],
+          ["mf2l",  "mf1r"],
+          ["mf12l", "mf11r"],
+          ["mf12r", "mf11l"],
+          //surficial crossing xz
+          {"beamSpring":2500100,"beamDamp":500}, //crossing xz
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf1l",  "mf11r"],
+          ["mf1r",  "mf11l"],
+          ["mf2l",  "mf12r"],
+          ["mf2r",  "mf12l"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.1},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "triangles": [
+            ["id1:",  "id2:",  "id3:"],
+            {"dragCoef":8},
+            {"groundModel":"metal"},
+            //rest of the frame
+            //top
+            ["mf1l",  "mf2l",  "mf2r"],
+            ["mf2r",  "mf1r",  "mf1l"],
+            ["mf2l",  "mf3l",  "mf3r"],
+            ["mf3r",  "mf2r",  "mf2l"],
+            //bottom
+            ["mf11r", "mf12r", "mf12l"],
+            ["mf12l", "mf11l", "mf11r"],
+            ["mf12r", "mf13r", "mf13l"],
+            ["mf13l", "mf12l", "mf12r"],
+            //right
+            ["mf1r",  "mf2r",  "mf12r"],
+            ["mf12r", "mf11r", "mf1r"],
+            ["mf2r",  "mf3r",  "mf13r"],
+            ["mf13r", "mf12r", "mf2r"],
+            //left
+            ["mf2l",  "mf1l",  "mf12l"],
+            ["mf11l", "mf12l", "mf1l"],
+            ["mf3l",  "mf2l",  "mf13l"],
+            ["mf12l", "mf13l", "mf2l"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+},
+"md_series_junk_frame_end_M_fifthwheel": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Fifthwheel Frame End",
+        "value":1250,
+    },
+    "slotType" : "md_series_frameEnd_M",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"rot":{"x":0, "y":0, "z":0}, "pos":{"x":0, "y":0, "z":0}},
+        //frame
+        ["md_series_frame_mid_longbed", ["md_series_frame_mid"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+        ["md_series_frame_end_fifthwheel", ["md_series_frame_mid"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+    "slots2": [
+        ["name",                       "allowTypes",                   "denyTypes", "default",                    "description"],
+        ["md_series_upfit_fifthwheel", ["md_series_upfit_fifthwheel"], [],          "md_series_upfit_fifthwheel", "Upfit"],//0.2188
+        ["md_series_endPlate",         ["md_series_endPlate"],         [],          "",                           "End Plate",       {"nodeMove":{"x":0.0, "y":0.4962, "z":0.0}}],
+        ["md_series_pintle_sloped",    ["md_series_pintle_sloped"],    [],          "md_series_pintle_sloped",    "Tow Hitch",       {"nodeMove":{"x":0.0, "y":"$=0.4962+$components.rearFrameOffset.exhaustClearanceOffset", "z":0.0}}],
+        ["md_series_mudflaps",         ["md_series_mudflaps"],         [],          "md_series_mudflaps",         "Rear Mud Flaps",  {"nodeMove":{"x":0.0, "y":0.67, "z":-0.04}}],
+        ["md_series_taillight_R_alt",      ["md_series_taillight_R_alt"],      [],          "md_series_taillight_R_alt",      "Right Taillight", {"nodeMove":{"x":0.0, "y":0.4962, "z":-0.05}}],
+        ["md_series_taillight_L_alt",      ["md_series_taillight_L_alt"],      [],          "md_series_taillight_L_alt",      "Left Taillight",  {"nodeMove":{"x":0.0, "y":0.4962, "z":-0.05}}],
+   ],
+    "rails": {
+          "fRail1L":{"links:":["mf1l", "mf2l", "mf3l", "mf4l"], "looped":false, "capped":true},
+          "fRail1R":{"links:":["mf1r", "mf2r", "mf3r", "mf4r"], "looped":false, "capped":true},
+          "fRail2L":{"links:":["mf11l", "mf12l", "mf13l", "mf14l"], "looped":false, "capped":true},
+          "fRail2R":{"links:":["mf11r", "mf12r", "mf13r", "mf14r"], "looped":false, "capped":true},
+          "hitchmount1":{"links:":["mf4r", "mf4"  , "mf4l"], "looped":false, "capped":true},
+          "hitchmount2":{"links:":["mf14r", "mf14", "mf14l"], "looped":false, "capped":true},
+    },
+    "nodes": [
+         ["id",    "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":["md_series_upfitColide","md_series_frame_mid"]},
+         {"selfCollision":true},
+         {"collision":true},
+         //frame
+         {"nodeWeight":15},
+         //top
+         {"chemEnergy":200,"burnRate":0.35,"flashPoint":200,"specHeat":0.05,"smokePoint":150,"selfIgnitionCoef":false},
+         ["mf3r", -0.434,  3.0173, 0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         ["mf3l",  0.434,  3.0173, 0.95,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"]}],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         ["mf4r", -0.434,  3.5062, 0.88],
+         ["mf4",   0.000,  3.5062, 0.88],
+         ["mf4l",  0.434,  3.5062, 0.88],
+         //bottom
+         ["mf13r",-0.434,  2.811,  0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"], "tag":"taillightMount_R2"}],
+         ["mf13l", 0.434,  2.811,  0.69,   {"group":["md_series_upfitColide","md_series_frame","md_series_frame_mid"], "tag":"taillightMount_L2"}],
+         {"chemEnergy":200,"burnRate":0.35,"flashPoint":200,"specHeat":0.05,"smokePoint":150,"selfIgnitionCoef":false},
+         ["mf14r",-0.434,  3.5062, 0.6904, {"tag":"taillightMount_R"}],
+         ["mf14",  0.000,  3.5062, 0.6904, {"tag":"taillightMount_M"}],
+         ["mf14l", 0.434,  3.5062, 0.6904, {"tag":"taillightMount_L"}],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false,"specHeat":false,"smokePoint":false,"selfIgnitionCoef":false},
+         {"group":"md_series_frame_mid"},
+         {"nodeWeight":10},
+         //rigifiers
+         {"selfCollision":false},
+         {"collision":false},
+         //["mfR", 0.00, 3.1, 2.2, {"nodeWeight":40}],
+         {"selfCollision":true},
+         {"collision":true},
+    ],
+    "components": {
+          "frameEndNodes": {
+          "lastTopR":       "mf4r"
+          "lastTop":        "mf4"
+          "lastTopL":       "mf4l"
+          "lastBottomR":    "mf14r"
+          "lastBottom":     "mf14"
+          "lastBottomL":    "mf14l"
+          "preLastTopR":    "mf3r"
+          "preLastTopL":    "mf3l"
+          "preLastBottomR": "mf13r"
+          "preLastBottomL": "mf13l"
+          },
+          "rearFrameOffset": {
+            "shortUpfitEndOffset": 0,
+        },
+    },
+    "beams": [
+          ["id1:",  "id2:"],
+          //--EXPANSION DEFORM LIMIT DEFAULT--
+          {"deformLimitExpansion":1.1},
+          //pintle hitch attach
+          {"beamSpring":10100100,"beamDamp":130},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["ph1l",  "mf4"],
+          ["ph1r",  "mf4"],
+          ["ph11l", "mf14"],
+          ["ph11r", "mf14"],
+
+          ["ph1l",  "mf14"],
+          ["ph1r",  "mf14"],
+          ["ph11l", "mf4"],
+          ["ph11r", "mf4"],
+          {"beamSpring":100100,"beamDamp":130},
+          ["ph1l",  "mf3l"],
+          ["ph1r",  "mf3r"],
+          ["ph11l", "mf13l"],
+          ["ph11r", "mf13r"],
+          {"optional":false},
+          //upfit mounts attach
+          //Fifthwheela
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":4200100,"beamDamp":600},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["mf2r",  "fwr11r"],
+          ["mf2l",  "fwr11l"],
+          ["mf12r", "fwr11r"],
+          ["mf12l", "fwr11l"],
+
+          ["mf3r",  "fwr11r"],
+          ["mf3l",  "fwr11l"],
+          ["mf13r", "fwr11r"],
+          ["mf13l", "fwr11l"],
+
+          ["mf3r",  "fwr14r"],
+          ["mf3l",  "fwr14l"],
+          ["mf13r", "fwr14r"],
+          ["mf13l", "fwr14l"],
+
+          ["mf4r",  "fwr14r"],
+          ["mf4l",  "fwr14l"],
+          ["mf14r", "fwr14r"],
+          ["mf14l", "fwr14l"],
+
+          ["mf4r",  "fwr18r"],
+          ["mf4l",  "fwr18l"],
+          ["mf14r", "fwr18r"],
+          ["mf14l", "fwr18l"],
+
+          ["mf4r",  "fwr18r"],
+          ["mf4l",  "fwr18l"],
+          ["mf14r", "fwr18r"],
+          ["mf14l", "fwr18l"],
+          {"optional":false},
+          //rear suspension mounts attach
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":20001000,"beamDamp":1000},
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"optional":true},
+          ["mf3r",  "rsm1r"],
+          ["mf3l",  "rsm1l"],
+
+          ["mf13r", "rsm11r"],
+          ["mf13l", "rsm11l"],
+
+          {"beamSpring":2501000,"beamDamp":500},
+
+          ["mf13r", "rsm2r"],
+          ["mf13l", "rsm2l"],
+
+          ["mf3r",  "rsm12r"],
+          ["mf3l",  "rsm12l"],
+
+          ["mf2r",  "rsm11r"],
+          ["mf2l",  "rsm11l"],
+
+          ["mf12r", "rsm1r"],
+          ["mf12l", "rsm1l"],
+
+          ["mf12r", "rsm11l"],
+          ["mf12l", "rsm11r"],
+
+          ["mf2r",  "rsm1l"],
+          ["mf2l",  "rsm1r"],
+
+          //damp
+          {"beamSpring":1000,"beamDamp":400},
+          //["mf2l","rsm1r"],
+          //["mf2r","rsm1l"],
+          //["mf3l","rsm1r"],
+          //["mf3r","rsm1l"],
+          //
+          //["mf4l","rsm2r"],
+          //["mf4r","rsm2l"],
+          //["mf3l","rsm2r"],
+          //["mf3r","rsm2l"],
+          //
+          //["mf12l","rsm11r"],
+          //["mf12r","rsm11l"],
+          //["mf13l","rsm11r"],
+          //["mf13r","rsm11l"],
+          //
+          //["mf14l","rsm12r"],
+          //["mf14r","rsm12l"],
+          //["mf13l","rsm12r"],
+          //["mf13r","rsm12l"],
+          {"optional":false},
+          //--FRAME--
+          //frame rails main shape lengthwise
+          {"beamSpring":25000,"beamDamp":150}, //main rail lenghtwise
+          {"beamDeform":250000,"beamStrength":"FLT_MAX"},
+          {"deformationTriggerRatio":0.05},
+          ["mf2r",  "mf3r"],
+          ["mf2l",  "mf3l"],
+          ["mf12r", "mf13r"],
+          ["mf12l", "mf13l"],
+          ["mf3r",  "mf4r"],
+          ["mf3l",  "mf4l"],
+          ["mf13r", "mf14r"],
+          ["mf13l", "mf14l"],
+          {"deformGroup":""},
+          //frame rails main shape vertical
+          {"beamSpring":25000,"beamDamp":400}, //frame rails vertical
+          {"beamDeform":375000,"beamStrength":"FLT_MAX"},
+          ["mf3r",  "mf13r"],
+          ["mf3l",  "mf13l"],
+          ["mf4r",  "mf14r"],
+          ["mf4l",  "mf14l"],
+          {"deformGroup":""},
+          //frame rails main shape widthwise
+          {"beamSpring":25000,"beamDamp":500}, //frame rails widthwise
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf3l",  "mf3r"],
+          ["mf13r", "mf13l"],
+          //surficial crossing yz
+          {"beamSpring":25000,"beamDamp":150}, //crossing yz
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf2r",  "mf13r"],
+          ["mf2l",  "mf13l"],
+          ["mf3r",  "mf12r"],
+          ["mf3l",  "mf12l"],
+          ["mf3r",  "mf14r"],
+          ["mf3l",  "mf14l"],
+          ["mf4r",  "mf13r"],
+          ["mf4l",  "mf13l"],
+          {"deformGroup":""},
+          //surficial crossing xy
+          {"beamSpring":25000,"beamDamp":500}, //crossing xy
+          {"beamDeform":115000,"beamStrength":"FLT_MAX"},
+          ["mf3r",  "mf2l"],
+          ["mf3l",  "mf2r"],
+          ["mf13l", "mf12r"],
+          ["mf13r", "mf12l"],
+          ["mf3l",  "mf4r"],
+          ["mf3r",  "mf4l"],
+          ["mf13l", "mf14r"],
+          ["mf13r", "mf14l"],
+          //surficial crossing xz
+          {"beamSpring":25000,"beamDamp":500}, //crossing xz
+          {"beamDeform":120000,"beamStrength":"FLT_MAX"},
+          ["mf3l",  "mf13r"],
+          ["mf3r",  "mf13l"],
+          //lenghtwise rigids
+          {"beamSpring":25000,"beamDamp":200}, //lenght rigids
+          {"beamDeform":70000,"beamStrength":"FLT_MAX"},
+          ["mf11l", "mf13l"],
+          ["mf11r", "mf13r"],
+          ["mf12l", "mf14l"],
+          ["mf12r", "mf14r"],
+          ["mf2l",  "mf4l"],
+          ["mf2r",  "mf4r"],
+          //extra rigifier mainly for dampening
+          {"beamSpring":15100100,"beamDamp":250},
+          {"beamDeform":28000,"beamStrength":"FLT_MAX"},
+          //["mfR", "mf13l"],
+          //["mfR", "mf13r"],
+          //["mfR", "mf12r"],
+          //["mfR", "mf12l"],
+          //["mfR", "mf11r"],
+          //["mfR", "mf11l"],
+          {"beamSpring":15001000,"beamDamp":150},
+          {"beamDeform":150000,"beamStrength":"FLT_MAX"},
+          //rear center node
+          ["mf4",   "mf4r"],
+          ["mf4",   "mf4l"],
+          ["mf4",   "mf14r"],
+          ["mf4",   "mf14l"],
+          ["mf4",   "mf3r"],
+          ["mf4",   "mf3l"],
+          ["mf14",  "mf4r"],
+          ["mf14",  "mf4l"],
+          ["mf14",  "mf14r"],
+          ["mf14",  "mf14l"],
+          ["mf14",  "mf13r"],
+          ["mf14",  "mf13l"],
+          ["mf14",  "mf4"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.1},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "triangles": [
+            ["id1:",  "id2:",  "id3:"],
+            {"dragCoef":8},
+            {"groundModel":"metal"},
+             //ending
+            {"group":"md_series_frame_rear"},
+            ["mf4",   "mf4l",  "mf14l"],
+            ["mf14l", "mf14",  "mf4"],
+            ["mf4",   "mf14",  "mf14r"],
+            ["mf14r", "mf4r",  "mf4"],
+            //top
+            ["mf3l",  "mf4l",  "mf4"],
+            ["mf4",   "mf4r",  "mf3r"],
+            ["mf3r",  "mf3l",  "mf4"],
+            //bottom
+            ["mf13l", "mf13r", "mf14"],
+            ["mf14",  "mf14l", "mf13l"],
+            ["mf14",  "mf13r", "mf14r"],
+            //left
+            ["mf3l",  "mf13l", "mf14l"],
+            ["mf14l", "mf4l",  "mf3l"],
+            //right
+            ["mf3r",  "mf4r",  "mf14r"],
+            ["mf14r", "mf13r", "mf3r"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+},
+}

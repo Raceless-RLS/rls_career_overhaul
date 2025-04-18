@@ -323,8 +323,10 @@ const listedVehicles = computed(() => {
 <style scoped lang="scss">
 .marketplace-container {
     width: max-content;
-    max-width: 40%;
-    height: 95%;
+    min-width: 40%;
+    max-width: 60%;
+    min-height: 400px;
+    max-height: 95%;
     background-color: #282828;
     border-radius: 15px;
     padding: 20px;

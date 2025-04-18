@@ -1,0 +1,530 @@
+{
+"autobello_junk_windshield": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Windshield",
+        "value":5,
+    },
+
+    "slotType" : "autobello_windshield",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_windshield_dmg"},
+        ["autobello_windshield", ["windshield","a_pillar","b_pillar","roof","body","floor"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>impact_glass_windscreen_01", "deformVolume":0.0}],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"glass_invisible", "deformMaterialDamaged":"glass_mirror"},
+        ["autobello_windshield_dmg", ["windshield","a_pillar","b_pillar","roof","body","floor"]],
+        {"deformGroup":"windshield_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_int"},
+        ["autobello_windshield_int", ["windshield","a_pillar","b_pillar","roof","body","floor"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+        ["autobello_wipers", ["firewall","windshield","a_pillar"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.05
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_GLASS"},
+        {"nodeWeight":1.2},
+        {"group":["gps","windshield"]},
+        //windshield node
+        ["wi1r", -0.25, -0.57, 1.15],
+        ["wi1l", 0.25, -0.57, 1.15],
+        {"group":""},
+
+        {"nodeMaterial":"|NM_METAL"},
+        //--ADD WEIGHT--
+        //windshield
+        //a pillar
+        {"nodeWeight":1.0},
+        {"group":["a_pillar","gps"]},
+        ["a1rr", -0.58, -0.51, 1.11],
+        ["a1ll", 0.58, -0.51, 1.11],
+        //roof
+        {"nodeWeight":1.1},
+        {"group":["roof","gps"]},
+        ["t1rr", -0.545, -0.33, 1.32, {"nodeWeight":1.5}],
+        ["t1r",  -0.18, -0.37, 1.36],
+        ["t1l",   0.18, -0.37, 1.36],
+        ["t1ll",  0.545, -0.33, 1.32, {"nodeWeight":1.5}],
+        //firewall
+        {"nodeWeight":2.1},
+        {"group":["firewall","body","gps"]},
+        ["w2rr", -0.60, -0.72, 0.89],
+        ["w2r",  -0.25, -0.76, 0.955],
+        ["w2l",   0.25, -0.76, 0.955],
+        ["w2ll",  0.60, -0.72, 0.89],
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        //windshield
+        {"deformLimitExpansion":1.3},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":701000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":"FLT_MAX"},
+        {"deformGroup":"windshield_break","deformationTriggerRatio":0.005},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"deformLimitExpansion":""},
+        //shape
+        ["wi1l", "wi1r"],
+        ["wi1l", "w2l"],
+        ["wi1r", "w2r"],
+        ["wi1l", "t1l"],
+        ["wi1r", "t1r"],
+        ["t1l", "wi1r"],
+        ["t1r", "wi1l"],
+        ["w2l", "wi1r"],
+        ["wi1l", "w2r"],
+        //reinf
+        {"deformationTriggerRatio":0.01},
+        ["wi1l", "w1l"],
+        ["wi1r", "w1r"],
+        ["wi1l", "w1r"],
+        ["wi1r", "w1l"],
+
+        ["wi1l", "a2ll"],
+        ["wi1r", "a2rr"],
+
+        ["wi1l", "t2ll"],
+        ["wi1r", "t2rr"],
+        ["wi1r", "t2l", {"deformationTriggerRatio":0.05}],
+        ["wi1l", "t2r", {"deformationTriggerRatio":0.05}],
+
+        {"beamSpring":601000,"beamDamp":50},
+        {"beamDeform":3000,"beamStrength":10},
+        ["wi1l", "a1ll"],
+        ["wi1r", "a1rr"],
+        ["wi1l", "t1ll"],
+        ["wi1r", "t1rr"],
+        ["wi1l", "w2ll"],
+        ["wi1r", "w2rr"],
+
+
+        ["a1rr", "t1r"],
+        ["a1ll", "t1l"],
+
+        {"beamSpring":301000,"beamDamp":50},
+        ["wi1l", "t0"],
+        ["wi1r", "t0"],
+        {"breakGroup":""},
+        {"deformGroup":""},
+        {"deformLimitExpansion":1.2},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":3},
+        ["w2rr", "w2r", "wi1r"],
+        ["wi1r", "a1rr", "w2rr"],
+        ["t1rr", "a1rr", "wi1r"],
+        ["wi1r", "t1r", "t1rr"],
+
+        ["w2l", "w2ll", "wi1l"],
+        ["a1ll", "wi1l", "w2ll"],
+        ["a1ll", "t1ll", "wi1l"],
+        ["t1l", "wi1l", "t1ll"],
+
+        ["w2r", "w2l", "wi1l"],
+        ["wi1l", "wi1r", "w2r"],
+        ["wi1r", "wi1l", "t1l"],
+        ["t1l", "t1r", "wi1r"],
+    ],
+},
+"autobello_junk_backlight": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Backlight",
+        "value":0,
+    },
+
+    "slotType" : "autobello_backlight",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+
+        {"deformGroup":"backlight_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_backlight", ["a_pillar","b_pillar","roof","body","floor"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound9", "deformVolume":0.0}],
+        {"deformGroup":"backlight_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_backlight_int", ["a_pillar","b_pillar","roof","body","floor"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+
+        //rear window
+        //roof
+        {"nodeWeight":1.1},
+        {"group":"roof"},
+        ["t5rr", -0.52, 0.995, 1.24, {"nodeWeight":1.5}],
+        ["t5r",  -0.18, 1.05, 1.295],
+        ["t5l",   0.18, 1.05, 1.295],
+        ["t5ll",  0.52, 0.995, 1.24, {"nodeWeight":1.5}],
+        //quarter panels
+        {"group":"body"},
+        {"nodeWeight":1.5},
+        ["q8rr", -0.525, 1.35, 0.92],
+        ["q8ll",  0.525, 1.35, 0.92],
+        //rear fascia
+        {"nodeWeight":1.9},
+        ["m5r",  -0.18, 1.435, 0.955],
+        ["m5l",   0.18, 1.435, 0.955],
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        //windshield
+        {"deformLimitExpansion":1.3},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+        //backlight
+        {"beamSpring":401000,"beamDamp":50},
+        {"beamDeform":3000,"beamStrength":10},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"breakGroup":"backlight"},
+        {"deformGroup":"backlight_break","deformationTriggerRatio":0.005},
+        ["t5l", "m5l"],
+        ["t5r", "m5r"],
+        ["t5l", "m5r"],
+        ["t5r", "m5l"],
+        ["t5rr", "m5l"],
+        ["t5ll", "m5r"],
+        ["t5r", "q8ll"],
+        ["t5l", "q8rr"],
+
+        {"breakGroup":""},
+        {"deformGroup":""},
+        {"deformLimitExpansion":1.2},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":5},
+        {"breakGroup":"backlight"},
+        ["t5l", "m5l", "m5r"],
+        ["m5r", "t5r", "t5l"],
+        ["t5ll", "q8ll", "m5l"],
+        ["m5l", "t5l", "t5ll"],
+        ["q8rr", "t5rr", "m5r"],
+        ["t5r", "m5r", "t5rr"],
+        {"breakGroup":""},
+    ],
+},
+"autobello_junk_quarterglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Right Quarter Glass",
+        "value":0,
+    },
+
+    "slotType" : "autobello_quarterglass_R",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_quarterglass_R", ["a_pillar","b_pillar","roof","body","floor"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+        {"deformGroup":"quarterglass_R_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_quarterglass_R_int", ["a_pillar","b_pillar","roof","body","floor"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+
+        //rear side windows
+        //roof
+        {"nodeWeight":1.5},
+        {"group":"roof"},
+        ["t3rr", -0.54, 0.34, 1.36],
+        ["t4rr", -0.525, 0.67, 1.34],
+        //b pillar
+        {"nodeWeight":1.0},
+        {"group":"b_pillar"},
+        ["b7rr", -0.60, 0.41, 1.14],
+        //rear quarter panels
+        {"group":"body"},
+        {"nodeWeight":1.3},
+        ["q5rr", -0.65, 0.30, 0.89],
+        {"nodeWeight":1.5},
+        ["q6rr", -0.64, 0.71, 0.90],
+        {"nodeWeight":1.3},
+        ["q7rr", -0.57, 1.07, 0.96],
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"deformLimitExpansion":""},
+
+        //quarterglass
+        {"beamSpring":401000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":10},
+        {"breakGroup":"quarterglass_R"},
+        {"deformGroup":"quarterglass_R_break","deformationTriggerRatio":0.005},
+        ["b7rr", "q7rr"],
+        ["q5rr", "t5rr"],
+        ["t4rr", "q6rr"],
+        ["t3rr", "q7rr"],
+        ["b7rr", "t5rr"],
+
+        {"breakGroup":""},
+        {"deformGroup":""},
+        {"deformLimitExpansion":1.2},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":8},
+        {"breakGroup":"quarterglass_R"},
+        ["b7rr", "t3rr", "t4rr"],
+        ["t4rr", "q7rr", "q6rr"],
+        ["q6rr", "b7rr", "t4rr"],
+        ["q6rr", "q5rr", "b7rr"],
+        {"breakGroup":""},
+    ],
+},
+"autobello_junk_quarterglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Rear Left Quarter Glass",
+        "value":0,
+    },
+
+    "slotType" : "autobello_quarterglass_L",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_quarterglass_L", ["a_pillar","b_pillar","roof","body","floor"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound5", "deformVolume":0.0}],
+
+        {"deformGroup":"quarterglass_L_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_quarterglass_L_int", ["a_pillar","b_pillar","roof","body","floor"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"selfCollision":true},
+        {"collision":true},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+
+        //rear side windows
+        //roof
+        {"nodeWeight":1.5},
+        {"group":"roof"},
+        ["t3ll", 0.54, 0.34, 1.36],
+        ["t4ll", 0.525, 0.67, 1.34],
+        //b pillar
+        {"nodeWeight":1.0},
+        {"group":"b_pillar"},
+        ["b7ll", 0.60, 0.41, 1.14],
+        //rear quarter panels
+        {"group":"body"},
+        {"nodeWeight":1.3},
+        ["q5ll", 0.65, 0.30, 0.89],
+        {"nodeWeight":1.5},
+        ["q6ll", 0.64, 0.71, 0.90],
+        {"nodeWeight":1.3},
+        ["q7ll", 0.57, 1.07, 0.96],
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"deformLimitExpansion":""},
+
+        //quarterglass
+        {"beamSpring":401000,"beamDamp":50},
+        {"beamDeform":2000,"beamStrength":10},
+        {"breakGroup":"quarterglass_L"},
+        {"deformGroup":"quarterglass_L_break","deformationTriggerRatio":0.005},
+        ["b7ll", "q7ll"],
+        ["q5ll", "t5ll"],
+        ["t4ll", "q6ll"],
+        ["t3ll", "q7ll"],
+        ["b7ll", "t5ll"],
+
+        {"breakGroup":""},
+        {"deformGroup":""},
+        {"deformLimitExpansion":1.2},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        {"dragCoef":8},
+        {"breakGroup":"quarterglass_L"},
+        ["t3ll", "b7ll", "t4ll"],
+        ["q7ll", "t4ll", "q6ll"],
+        ["b7ll", "q6ll", "t4ll"],
+        ["q5ll", "q6ll", "b7ll"],
+        {"breakGroup":""},
+    ],
+},
+"autobello_junk_doorglass_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Right Door Glass",
+        "value":0,
+    },
+
+    "slotType" : "autobello_doorglass_R",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"doorglass_R_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_doorglass_R", ["door_R"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound7", "deformVolume":0.0}],
+        {"deformGroup":"doorglass_R_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_doorglass_R_int", ["door_R"]],
+        {"deformGroup":""},
+        ["autobello_door_glassframe_R", ["door_R"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--RIGHT DOOR--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"collision":true},
+        {"selfCollision":true},
+        {"group":"door_R"},
+        {"nodeWeight":1.0},
+        ["d10r",-0.60, -0.42, 1.14],
+        ["d11r",-0.565, -0.14, 1.32],
+        ["d12r",-0.57, 0.33, 1.34],
+        ["d13r",-0.625, 0.33, 1.14],
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"deformLimitExpansion":1.2},
+        {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        //right door glass
+        {"beamSpring":401000,"beamDamp":20},
+        {"deformGroup":"doorglass_R_break", "deformationTriggerRatio":0.02},
+        {"beamDeform":3000,"beamStrength":10},
+        {"breakGroup":"doorglass_R"},
+        {"deformLimitExpansion":""},
+        ["d11r","d8r"],
+        ["d12r","d8r"],
+        ["d10r","d13r"],
+        ["d10r","d9r"],
+        ["d13r","d7r"],
+        ["d9r","d11r"],
+        ["d7r","d11r"],
+        ["d9r","d12r"],
+        {"deformGroup":""},
+        {"breakGroup":""},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //left door
+        {"groundModel":"metal"},
+        {"group":"door_R"},
+        {"dragCoef":12},
+        ["d10r", "d13r", "d8r"],
+        ["d10r", "d11r", "d13r"],
+        {"group":""},
+    ],
+},
+"autobello_junk_doorglass_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Broken Left Door Glass",
+        "value":0,
+    },
+
+    "slotType" : "autobello_doorglass_L",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        {"deformGroup":"doorglass_L_break", "deformMaterialBase":"autobello_glass", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_doorglass_L", ["door_L"],[]{"deformSound":"event:>Destruction>Vehicle>Glass>glassbreaksound8", "deformVolume":0.0}],
+        {"deformGroup":"doorglass_L_break", "deformMaterialBase":"autobello_glass_int", "deformMaterialDamaged":"autobello_glass_dmg"},
+        ["autobello_doorglass_L_int", ["door_L"]],
+        {"deformGroup":""},
+        ["autobello_door_glassframe_L", ["door_L"]],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.00
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        //--LEFT DOOR--
+        {"nodeMaterial":"|NM_METAL"},
+        {"frictionCoef":0.5},
+        {"collision":true},
+        {"selfCollision":true},
+        {"group":"door_L"},
+        {"nodeWeight":1.0},
+        ["d10l", 0.60, -0.42, 1.14],
+        ["d11l", 0.565, -0.14, 1.32],
+        ["d12l", 0.57, 0.33, 1.34],
+        ["d13l", 0.625, 0.33, 1.14],
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"deformLimitExpansion":1.2},
+        {"beamType":"|NORMAL", "beamPrecompression":1, "beamLongBound":1.0, "beamShortBound":1.0},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        //left door glass
+        {"beamSpring":401000,"beamDamp":20},
+        {"deformGroup":"doorglass_L_break", "deformationTriggerRatio":0.02},
+        {"beamDeform":3000,"beamStrength":10},
+        {"breakGroup":"doorglass_L"},
+        {"deformLimitExpansion":""},
+        ["d11l","d8l"],
+        ["d12l","d8l"],
+        ["d10l","d13l"],
+        ["d10l","d9l"],
+        ["d13l","d7l"],
+        ["d9l","d11l"],
+        ["d7l","d11l"],
+        ["d9l","d12l"],
+        {"deformGroup":""},
+        {"breakGroup":""},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"deformLimitExpansion":1.2},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //left door
+        {"groundModel":"metal"},
+        {"group":"door_L"},
+        {"dragCoef":12},
+        ["d13l", "d10l", "d8l"],
+        ["d11l", "d10l", "d13l"],
+        {"group":""},
+    ],
+},
+}

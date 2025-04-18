@@ -70,7 +70,6 @@ onMounted(() => {
   lua.extensions.load("ui_phone_time")
   events.on("phone_time_update", data => updateTime(data))
   events.on("closePhone", close)
-  lua.extensions.ui_phone_time.requestTimeUpdate()
 })
 
 onUnmounted(() => {

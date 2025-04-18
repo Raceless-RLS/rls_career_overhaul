@@ -1,0 +1,944 @@
+{
+"lansdale_junk_engine_v6_3.3": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3.3L V6 Engine",
+        "value":650,
+    },
+    "slotType" : "lansdale_engine",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_radiator_v6","lansdale_radiator_v6", "Radiator"],
+        ["lansdale_enginemounts","lansdale_enginemounts", "Engine Mounts", {"coreSlot":true}],
+        ["lansdale_oilpan_v6","lansdale_oilpan_v6", "Oil Pan", {"coreSlot":true}],
+        ["lansdale_intake_v6","lansdale_intake_v6_injection", "Intake", {"coreSlot":true}],
+        ["lansdale_exhaust","lansdale_exhaust", "Exhaust"],
+        ["lansdale_header_v6","lansdale_header_v6", "Exhaust Manifold", {"coreSlot":true}],
+        ["lansdale_engine_v6_ecu","lansdale_engine_v6_ecu", "Engine Management", {"coreSlot":true}],
+        ["lansdale_enginecover_v6_33","", "Engine Cover"],
+        ["n2o_system","", "Nitrous Oxide System"],
+        ["lansdale_engine_v6_internals","lansdale_engine_v6_internals", "Engine Long Block", {"coreSlot":true}],
+        ["lansdale_transmission","lansdale_transmission_4A", "Transmission"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+    ],
+    "mainEngine": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 0],
+            [500, 80],
+            [1000, 148],
+            [2000, 218],
+            [3000, 245],
+            [3500, 250],
+            [4000, 250],
+            [5000, 229],
+            [6000, 184],
+            [7000, 115],
+            [7500, 54],
+        ],
+        "idleRPM":475,
+		"idleRPMRoughness":1200,
+        //max capable
+        "maxRPM":6000,
+        "inertia":0.19,
+        "friction":14,
+        "dynamicFriction":0.022,
+        "engineBrakeTorque":40,
+        //"burnEfficiency":0.01
+        "burnEfficiency":[
+            [0, 0.1],
+            [0.05, 0.12],
+            [0.4, 0.16],
+            [0.7, 0.2],
+            [1, 0.14],
+        ],
+        //fuel system
+        "energyStorage": ["mainTank", "auxTank"],
+        "requiredEnergyType":"gasoline",
+
+        //exhaust
+        "instantAfterFireSound": "event:>Vehicle>Afterfire>v6_01>single",
+        "sustainedAfterFireSound": "event:>Vehicle>Afterfire>v6_01>multi",
+        "shiftAfterFireSound": "event:>Vehicle>Afterfire>v6_01>shift",
+        "particulates":3.50,
+        "instantAfterFireCoef": 0.1,
+        "sustainedAfterFireCoef": 0.5,
+
+        //cooling and oil system
+        "thermalsEnabled":true,
+        "engineBlockMaterial":"aluminum",
+        "oilVolume":3.0,
+        "engineBlockAirCoolingEfficiency":50,
+
+        //engine durability
+        "cylinderWallTemperatureDamageThreshold":130,
+        "headGasketDamageThreshold":500000,
+        "pistonRingDamageThreshold":500000,
+        "connectingRodDamageThreshold":500000,
+        "maxTorqueRating": 230,
+        "maxOverTorqueDamage": 230,
+
+        //node beam interface
+        "torqueReactionNodes:":["e1l","e2l","e4r"],
+        "waterDamage": {"[engineGroup]:":["engine_intake"]},
+        "radiator": {"[engineGroup]:":["radiator"]},
+        "engineBlock": {"[engineGroup]:":["engine_block"]},
+        "breakTriggerBeam":"engine",
+        "uiName":"Engine",
+        "soundConfig": "soundConfig",
+        "soundConfigExhaust": "soundConfigExhaust",
+
+        //starter motor
+        "starterSample":"event:>Engine>Starter>v6_1985_eng",
+        "starterSampleExhaust":"event:>Engine>Starter>v6_1985_exh",
+        "shutOffSampleEngine":"event:>Engine>Shutoff>v6_1985_eng",
+        "shutOffSampleExhaust":"event:>Engine>Shutoff>v6_1985_exh",
+        "starterVolume":3.76,
+        "starterVolumeExhaust":0.76,
+        "shutOffVolumeEngine":0.76,
+        "shutOffVolumeExhaust":0.76,
+        "starterThrottleKillTime":3.9,
+        "idleRPMStartRate":3.9,
+        "idleRPMStartCoef":3.9,
+
+        //engine deform groups
+        "deformGroups":["mainEngine", "mainEngine_intake", "mainEngine_accessories"]
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "soundConfig": {
+        "sampleName": "V6_2_engine",
+        "intakeMuffling": 0.8,
+
+        "mainGain": -8.5,
+        "onLoadGain": 1,
+        "offLoadGain": 0.58,
+
+        "maxLoadMix": 0.7,
+        "minLoadMix": 0.0,
+
+        "lowShelfGain": 5,
+        "lowShelfFreq": 120,
+
+        "highShelfGain": 2,
+        "highShelfFreq": 8000,
+
+        "eqLowGain": -3,
+        "eqLowFreq": 400,
+        "eqLowWidth": 0.2,
+
+        "eqHighGain": -4,
+        "eqHighFreq": 2200,
+        "eqHighWidth": 0.15,
+
+        "fundamentalFrequencyCylinderCount": 6,
+        "eqFundamentalGain": -3,
+    },
+    "soundConfigExhaust": {
+        "sampleName": "V6_2_exhaust",
+
+        "mainGain": 5,
+        "onLoadGain": 1,
+        "offLoadGain": 0.42,
+
+        "maxLoadMix": 0.7,
+        "minLoadMix": 0,
+
+        "lowShelfGain": -10,
+        "lowShelfFreq": 120,
+
+        "highShelfGain": 0,
+        "highShelfFreq": 1000,
+
+        "eqLowGain": -4,
+        "eqLowFreq": 250,
+        "eqLowWidth": 0.25,
+
+        "eqHighGain": -6,
+        "eqHighFreq": 1500,
+        "eqHighWidth": 0.25,
+
+        "fundamentalFrequencyCylinderCount": 6,
+        "eqFundamentalGain": -4,
+    },
+    "vehicleController": {
+        "clutchLaunchStartRPM":1500,
+        "clutchLaunchTargetRPM":2000,
+        //**highShiftDown can be overwritten by automatic transmissions**
+        "highShiftDownRPM":[0,0,0,2500,2950,3050,3150,3150],
+        //**highShiftUp can be overwritten by intake modifications**
+        "highShiftUpRPM":6500,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_engine_v6", ["lansdale_engine"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "translation", "min", "max", "offset", "multiplier"],
+        ["rpmspin", "lansdale_pulley_v6_crank",      "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["rpmspin", "lansdale_pulley_v6_alternator", "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -1080, 1080, 0, 2],
+        ["rpmspin", "lansdale_pulley_v6_waterpump",  "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -720, 720, 0, 1.5],
+        ["rpmspin", "lansdale_pulley_v6_steering",   "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.0],
+        ["rpmspin", "lansdale_pulley_v6_ac",         "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3.3L V6 Engine--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_engine"},
+         {"engineGroup":"engine_block"},
+         {"nodeWeight":34.5},
+         ["e1r", 0.22, -1.775, 0.185,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e1l", 0.22, -1.535, 0.185],
+         ["e2r", -0.31, -1.775, 0.185,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e2l", -0.31, -1.535, 0.185],
+         {"engineGroup":["engine_block","engine_intake"]},
+         ["e3r", 0.22, -1.915, 0.61,{"isExhaust":"mainEngine","chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e3l", 0.22, -1.395, 0.61],
+         ["e4r", -0.31, -1.915, 0.61,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e4l", -0.31, -1.395, 0.61],
+         {"engineGroup":""},
+         {"group":""},
+         //engine mount node
+         ["em1r", -0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          //engine
+          {"deformGroup":"mainEngine", "deformationTriggerRatio":0.001}
+          ["e1r","e1l"],
+          ["e2r","e2l"],
+          ["e3r","e3l"],
+          ["e4r","e4l"],
+
+          ["e1r","e2r"],
+          ["e1l","e2l"],
+          ["e3r","e4r"],
+          ["e3l","e4l"],
+
+          ["e1r","e3r"],
+          ["e1l","e3l"],
+          ["e2r","e4r", {"isExhaust":"mainEngine"}],
+          ["e2l","e4l"],
+
+          ["e2r","e3r"],
+          ["e2l","e3l"],
+          ["e2r","e3l"],
+          ["e2l","e3r"],
+
+          ["e1r","e4r"],
+          ["e1l","e4l"],
+          ["e1r","e4l"],
+          ["e1l","e4r"],
+
+          ["e1r","e2l"],
+          ["e1l","e2r"],
+          ["e3r","e4l"],
+          ["e3l","e4r"],
+
+          //engine mount node
+          {"beamSpring":10,"beamDamp":10},
+          {"beamDeform":10,"beamStrength":"FLT_MAX"},
+          ["em1r","e3l"],
+          ["em1r","e3r"],
+          ["em1r","e4l"],
+          ["em1r","e4r"],
+          ["em1r", "e1r"],
+          ["em1r", "e1l"],
+          ["em1r", "e2l"],
+          ["em1r", "e2r"],
+          {"deformGroup":""},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"metal"},
+            /*
+            ["e5l", "e1l", "e3l"],
+            ["e4r", "e3r", "e2r"],
+            ["e3r", "e1r", "e2r"],
+            ["e1r", "e1l", "e2r"],
+            ["e2r", "e1l", "e2l"],
+            ["e3l", "e1l", "e3r"],
+            ["e3r", "e1l", "e1r"],
+            ["e4r", "e4l", "e3l"],
+            ["e4r", "e3l", "e3r"],
+            ["e4r", "e2r", "e4l"],
+            ["e4l", "e2r", "e2l"],
+            ["e4l", "e2l", "e6l"],
+            ["e6l", "e3l", "e4l"],
+            ["e6l", "e2l", "e5l"],
+            ["e6l", "e5l", "e3l"],
+            ["e2l", "e1l", "e5l"],
+            */
+            {"triangleType":"NONCOLLIDABLE"},
+            {"dragCoef":0},
+            ["e2l", "e2r", "e1r"],
+            ["e1r", "e1l", "e2l"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+},
+"lansdale_junk_engine_v6_3.8": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 3.8L V6 Engine",
+        "value":500,
+    },
+    "slotType" : "lansdale_engine",
+    "slots": [
+        ["type", "default", "description"],
+        ["lansdale_radiator_v6","lansdale_radiator_v6", "Radiator"],
+        ["lansdale_enginemounts","lansdale_enginemounts", "Engine Mounts", {"coreSlot":true}],
+        ["lansdale_oilpan_v6","lansdale_oilpan_v6", "Oil Pan", {"coreSlot":true}],
+        ["lansdale_intake_v6_large","lansdale_intake_v6_injection_large", "Intake", {"coreSlot":true}],
+        ["lansdale_exhaust","lansdale_exhaust", "Exhaust"],
+        ["lansdale_header_v6","lansdale_header_v6", "Exhaust Manifold", {"coreSlot":true}],
+        ["lansdale_engine_v6_large_ecu","lansdale_engine_v6_large_ecu", "Engine Management", {"coreSlot":true}],
+        ["lansdale_enginecover_v6_38","", "Engine Cover"],
+        ["n2o_system","", "Nitrous Oxide System"],
+        ["lansdale_engine_v6_internals","lansdale_engine_v6_internals", "Engine Long Block", {"coreSlot":true}],
+        ["lansdale_transmission","lansdale_transmission_4A", "Transmission"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+    ],
+"mainEngine": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 0],
+            [500, 100],
+            [1000, 175],
+            [2000, 240],
+            [3000, 270],
+            [3500, 280],
+            [4000, 276],
+            [5000, 252],
+            [6000, 185],
+            [7000, 115],
+            [7500, 71],
+        ],
+
+        "idleRPM":450,
+		"idleRPMRoughness":1250,
+        //max capable
+        "maxRPM":7500,
+        "inertia":0.17,
+        "friction":14,
+        "dynamicFriction":0.022,
+        "engineBrakeTorque":44,
+        //"burnEfficiency":0.01
+        "burnEfficiency":[
+            [0, 0.1],
+            [0.05, 0.24],
+            [0.4, 0.32],
+            [0.7, 0.4],
+            [1, 0.28],
+        ],
+        //fuel system
+        "energyStorage": ["mainTank", "auxTank"],
+        "requiredEnergyType":"gasoline",
+
+        //exhaust
+        "instantAfterFireSound": "event:>Vehicle>Afterfire>v6_01>single",
+        "sustainedAfterFireSound": "event:>Vehicle>Afterfire>v6_01>multi",
+        "shiftAfterFireSound": "event:>Vehicle>Afterfire>v6_01>shift",
+        "particulates":10.2,
+        "afterFireAudibleThresholdInstant": 500000,
+        "instantAfterFireCoef": 0.5,
+        "instantAfterFireVolumeCoef": 0.8,
+        "afterFireAudibleThresholdShift": 150000,
+        "shiftAfterFireVolumeCoef": 0.7,
+        "afterFireAudibleThresholdSustained": 40000,
+        "sustainedAfterFireCoef": 1.0,
+        "sustainedAfterFireTime": 1.0,
+        "sustainedAfterFireVolumeCoef": 1.0,
+
+        //cooling and oil system
+        "thermalsEnabled":true,
+        "engineBlockMaterial":"aluminum",
+        "oilVolume":3.5,
+        "engineBlockAirCoolingEfficiency":50,
+
+        //engine durability
+        "cylinderWallTemperatureDamageThreshold":130,
+        "headGasketDamageThreshold":500000,
+        "pistonRingDamageThreshold":500000,
+        "connectingRodDamageThreshold":500000,
+        "maxTorqueRating": 270,
+        "maxOverTorqueDamage": 270,
+
+        //node beam interface
+        "torqueReactionNodes:":["e1l","e2l","e4r"],
+        "waterDamage": {"[engineGroup]:":["engine_intake"]},
+        "radiator": {"[engineGroup]:":["radiator"]},
+        "engineBlock": {"[engineGroup]:":["engine_block"]},
+        "breakTriggerBeam":"engine",
+        "uiName":"Engine",
+        "soundConfig": "soundConfig",
+        "soundConfigExhaust": "soundConfigExhaust",
+
+        //starter motor
+        "starterSample":"event:>Engine>Starter>v6_1985_eng",
+        "starterSampleExhaust":"event:>Engine>Starter>v6_1985_exh",
+        "shutOffSampleEngine":"event:>Engine>Shutoff>v6_1985_eng",
+        "shutOffSampleExhaust":"event:>Engine>Shutoff>v6_1985_exh",
+        "starterVolume":3.75,
+        "starterVolumeExhaust":0.76,
+        "shutOffVolumeEngine":0.76,
+        "shutOffVolumeExhaust":0.76,
+        "starterThrottleKillTime":4.2,
+        "idleRPMStartRate":4.2,
+        "idleRPMStartCoef":4.2,
+
+        //engine deform groups
+        "deformGroups":["mainEngine", "mainEngine_intake", "mainEngine_accessories"]
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "soundConfig": {
+        "sampleName": "V6_2_engine",
+        "intakeMuffling": 0.8,
+
+        "mainGain": -8,
+        "onLoadGain": 1,
+        "offLoadGain": 0.61,
+
+        "maxLoadMix": 0.75,
+        "minLoadMix": 0.0,
+
+        "lowShelfGain":6,
+        "lowShelfFreq":120,
+
+        "highShelfGain":3,
+        "highShelfFreq":8000,
+
+        "eqLowGain": -2.5,
+        "eqLowFreq": 400,
+        "eqLowWidth": 0.2,
+
+        "eqHighGain": -3.5,
+        "eqHighFreq": 2200,
+        "eqHighWidth": 0.15,
+
+        "fundamentalFrequencyCylinderCount":6,
+        "eqFundamentalGain": -2,
+    },
+    "soundConfigExhaust": {
+        "sampleName": "V6_2_exhaust",
+
+        "mainGain": 5.5,
+        "onLoadGain": 1,
+        "offLoadGain": 0.45,
+
+        "maxLoadMix": 0.75,
+        "minLoadMix": 0,
+
+        "lowShelfGain": -9,
+        "lowShelfFreq": 120,
+
+        "highShelfGain": 1,
+        "highShelfFreq": 1000,
+
+        "eqLowGain": -3.5,
+        "eqLowFreq": 250,
+        "eqLowWidth": 0.25,
+
+        "eqHighGain": -5.5,
+        "eqHighFreq": 1500,
+        "eqHighWidth": 0.25,
+
+        "fundamentalFrequencyCylinderCount":6,
+        "eqFundamentalGain": -3,
+    },
+    "vehicleController": {
+        "clutchLaunchStartRPM":1500,
+        "clutchLaunchTargetRPM":2000,
+        //**highShiftDown can be overwritten by automatic transmissions**
+        "highShiftDownRPM":[0,0,0,2500,2950,3050,3150,3150],
+        //**highShiftUp can be overwritten by intake modifications**
+        "highShiftUpRPM":5700,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_engine_v6", ["lansdale_engine"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "translation", "min", "max", "offset", "multiplier"],
+        ["rpmspin", "lansdale_pulley_v6_crank",      "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["rpmspin", "lansdale_pulley_v6_alternator", "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -1080, 1080, 0, 2],
+        ["rpmspin", "lansdale_pulley_v6_waterpump",  "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -720, 720, 0, 1.5],
+        ["rpmspin", "lansdale_pulley_v6_steering",   "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.0],
+        ["rpmspin", "lansdale_pulley_v6_ac",         "e2r","e2l","e4r", {"x":0, "y":0, "z":-90}, {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--3.8L V6 Engine--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_engine"},
+         {"engineGroup":"engine_block"},
+         {"nodeWeight":38},
+         ["e1r", 0.22, -1.775, 0.185,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e1l", 0.22, -1.535, 0.185],
+         ["e2r", -0.31, -1.775, 0.185,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e2l", -0.31, -1.535, 0.185],
+         {"engineGroup":["engine_block","engine_intake"]},
+         ["e3r", 0.22, -1.915, 0.61,{"isExhaust":"mainEngine","chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e3l", 0.22, -1.395, 0.61],
+         ["e4r", -0.31, -1.915, 0.61,{"chemEnergy":1000,"burnRate":0.39,"flashPoint":800,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":650,"baseTemp":"thermals","conductionRadius":0.12}],
+         ["e4l", -0.31, -1.395, 0.61],
+         {"engineGroup":""},
+         {"group":""},
+         //engine mount node
+         ["em1r", -0.46, -1.695, 0.46, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":8400600,"beamDamp":150},
+          {"beamDeform":540000,"beamStrength":"FLT_MAX"},
+          //engine
+          {"deformGroup":"mainEngine", "deformationTriggerRatio":0.001}
+          ["e1r","e1l"],
+          ["e2r","e2l"],
+          ["e3r","e3l"],
+          ["e4r","e4l"],
+
+          ["e1r","e2r"],
+          ["e1l","e2l"],
+          ["e3r","e4r"],
+          ["e3l","e4l"],
+
+          ["e1r","e3r"],
+          ["e1l","e3l"],
+          ["e2r","e4r", {"isExhaust":"mainEngine"}],
+          ["e2l","e4l"],
+
+          ["e2r","e3r"],
+          ["e2l","e3l"],
+          ["e2r","e3l"],
+          ["e2l","e3r"],
+
+          ["e1r","e4r"],
+          ["e1l","e4l"],
+          ["e1r","e4l"],
+          ["e1l","e4r"],
+
+          ["e1r","e2l"],
+          ["e1l","e2r"],
+          ["e3r","e4l"],
+          ["e3l","e4r"],
+
+          //engine mount node
+          {"beamSpring":10,"beamDamp":10},
+          {"beamDeform":10,"beamStrength":"FLT_MAX"},
+          ["em1r","e3l"],
+          ["em1r","e3r"],
+          ["em1r","e4l"],
+          ["em1r","e4r"],
+          ["em1r", "e1r"],
+          ["em1r", "e1l"],
+          ["em1r", "e2l"],
+          ["em1r", "e2r"],
+          {"deformGroup":""},
+
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"groundModel":"metal"},
+            /*
+            ["e5l", "e1l", "e3l"],
+            ["e4r", "e3r", "e2r"],
+            ["e3r", "e1r", "e2r"],
+            ["e1r", "e1l", "e2r"],
+            ["e2r", "e1l", "e2l"],
+            ["e3l", "e1l", "e3r"],
+            ["e3r", "e1l", "e1r"],
+            ["e4r", "e4l", "e3l"],
+            ["e4r", "e3l", "e3r"],
+            ["e4r", "e2r", "e4l"],
+            ["e4l", "e2r", "e2l"],
+            ["e4l", "e2l", "e6l"],
+            ["e6l", "e3l", "e4l"],
+            ["e6l", "e2l", "e5l"],
+            ["e6l", "e5l", "e3l"],
+            ["e2l", "e1l", "e5l"],
+            */
+            {"triangleType":"NONCOLLIDABLE"},
+            {"dragCoef":0},
+            ["e2l", "e2r", "e1r"],
+            ["e1r", "e1l", "e2l"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+},
+"lansdale_junk_oilpan_v6": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Dripping V6 Oil Pan",
+        "value":15,
+    },
+    "slotType" : "lansdale_oilpan_v6",
+    "mainEngine": {
+        //cooling and oil system
+        "oilVolume":2.0,
+
+        //engine durability
+        "oilpanMaximumSafeG": 1.0
+
+        //node beam interface
+        "oilpanNodes:":["oilpan","oilref"],
+
+        //engine deform groups
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //oil pan node
+         {"group":""},
+         {"nodeWeight":2},
+         ["oilpan", -0.05, -1.685, 0.155],
+         ["oilref", -0.05, -1.685, 0.655, {"nodeWeight":1, "collision":false}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //oilpan node
+          {"beamSpring":1501000,"beamDamp":250},
+          {"beamDeform":11000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"oilpan_damage","deformationTriggerRatio":0.005},
+          ["oilpan", "e1r"],
+          ["oilpan", "e1l"],
+          ["oilpan", "e2r"],
+          ["oilpan", "e2l"],
+          ["oilpan", "e3r"],
+          ["oilpan", "e3l"],
+          ["oilpan", "e4r"],
+          ["oilpan", "e4l"],
+          {"deformGroup":""},
+
+          //oil ref
+          {"beamSpring":301000,"beamDamp":150},
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          ["oilref", "e1r"],
+          ["oilref", "e1l"],
+          ["oilref", "e2r"],
+          ["oilref", "e2l"],
+          ["oilref", "e3r"],
+          ["oilref", "e3l"],
+          ["oilref", "e4r"],
+          ["oilref", "e4l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_engine_v6_ecu": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk ECU",
+        "value":125,
+    },
+    "slotType" : "lansdale_engine_v6_ecu",
+    "mainEngine":{
+        "revLimiterRPM":6000,
+        "revLimiterType":"rpmDrop",
+        "revLimiterRPMDrop":550,
+    },
+    "vehicleController": {
+    },
+},
+"lansdale_junk_engine_v6_ecu_late": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk ECU ( Late )",
+        "value":200,
+    },
+    "slotType" : "lansdale_engine_v6_ecu",
+    "mainEngine":{
+        "revLimiterRPM":6000,
+        "revLimiterType":"rpmDrop",
+        "revLimiterRPMDrop":350,
+    },
+    "vehicleController": {
+    },
+},
+"lansdale_junk_intake_v6_injection": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Fuel Injection System",
+        "value":65,
+    },
+    "slotType" : "lansdale_intake_v6",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_intake_v6_sport_33", ["lansdale_engine","lansdale_airbox"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "transration", "min", "max", "offset", "murtiprier"],
+        ["rpmspin", "lansdale_pulley_v6_idler",         "e2r","e2r","e4r", {"x":0, "y":0, "z":-90}, {"x":-1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "powertrainDamage":[
+        ["deviceName", "damageID"],
+        ["mainEngine", "intake"],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0, 0],
+            [1000, -16],
+            [1500, 10],
+            [2000, 15],
+            [3000, 25],
+            [3500, 25],
+            [4000, 20],
+            [4700, 15],
+            [5000, 15],
+            [6000, 20],
+            [7000, 5],
+            [8000, 0],
+        ],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_airbox"},
+         {"engineGroup":"engine_intake"},
+         {"nodeWeight":2},
+         ["airb", 0.44, -1.855, 0.625],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":100600,"beamDamp":150},
+          {"beamDeform":12000,"beamStrength":36000},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["airb","e1r"],
+          ["airb","e2r"],
+          ["airb","e3r"],
+          ["airb","e4r"],
+          ["airb","e1l"],
+          ["airb","e2l"],
+          ["airb","e3l"],
+          ["airb","e4l"],
+          {"deformGroup":""}
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_intake_v6_injection_late": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective Fuel Injection System ( Late )",
+        "value":90,
+    },
+    "slotType" : "lansdale_intake_v6",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_intake_v6_sport_33", ["lansdale_engine","lansdale_airbox"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "transration", "min", "max", "offset", "murtiprier"],
+        ["rpmspin", "lansdale_pulley_v6_idler",         "e2r","e2r","e4r", {"x":0, "y":0, "z":-90}, {"x":-1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "powertrainDamage":[
+        ["deviceName", "damageID"],
+        ["mainEngine", "intake"],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0, 0],
+            [1000, 15],
+            [2000, 10],
+            [3000, 20],
+            [4000, 25],
+            [4500, 25],
+            [5000, 25],
+            [5200, 25],
+            [6000, 15],
+            [7000, 10],
+            [8000, 10],
+        ],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_airbox"},
+         {"engineGroup":"engine_intake"},
+         {"nodeWeight":2},
+         ["airb", 0.44, -1.855, 0.625],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":100600,"beamDamp":150},
+          {"beamDeform":12000,"beamStrength":36000},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["airb","e1r"],
+          ["airb","e2r"],
+          ["airb","e3r"],
+          ["airb","e4r"],
+          ["airb","e1l"],
+          ["airb","e2l"],
+          ["airb","e3l"],
+          ["airb","e4l"],
+          {"deformGroup":""}
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_intake_v6_injection_large": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective 3.8 Fuel Injection System",
+        "value":125,
+    },
+    "slotType" : "lansdale_intake_v6_large",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_intake_v6_sport_38", ["lansdale_engine","lansdale_airbox"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "transration", "min", "max", "offset", "murtiprier"],
+        ["rpmspin", "lansdale_pulley_v6_idler",         "e2r","e2r","e4r", {"x":0, "y":0, "z":-90}, {"x":-1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "powertrainDamage":[
+        ["deviceName", "damageID"],
+        ["mainEngine", "intake"],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0, 0],
+            [1000, -32],
+            [2000, 20],
+            [3000, 35],
+            [3500, 35],
+            [4000, 30],
+            [4300, 25],
+            [5000, 15],
+            [6000, 2],
+            [7000, 1],
+            [8000, 0],
+        ],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_airbox"},
+         {"engineGroup":"engine_intake"},
+         {"nodeWeight":2},
+         ["airb", 0.44, -1.855, 0.625],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":100600,"beamDamp":150},
+          {"beamDeform":12000,"beamStrength":36000},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["airb","e1r"],
+          ["airb","e2r"],
+          ["airb","e3r"],
+          ["airb","e4r"],
+          ["airb","e1l"],
+          ["airb","e2l"],
+          ["airb","e3l"],
+          ["airb","e4l"],
+          {"deformGroup":""}
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"lansdale_junk_intake_v6_injection_late_large": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Defective 3.8 Fuel Injection System ( Late )",
+        "value":150,
+    },
+    "slotType" : "lansdale_intake_v6_large",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["lansdale_intake_v6_sport_38", ["lansdale_engine","lansdale_airbox"]],
+    ],
+    "props": [
+        ["func", "mesh", "idRef:", "idX:", "idY:", "baseRotation", "rotation", "transration", "min", "max", "offset", "murtiprier"],
+        ["rpmspin", "lansdale_pulley_v6_idler",         "e2r","e2r","e4r", {"x":0, "y":0, "z":-90}, {"x":-1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -540, 540, 0, 1.5],
+    ],
+    "powertrainDamage":[
+        ["deviceName", "damageID"],
+        ["mainEngine", "intake"],
+    ],
+    "mainEngine":{
+        "torqueModIntake":[
+            ["rpm", "torque"],
+            [0, 0],
+            [1000, 20],
+            [2000, 25],
+            [3000, 30],
+            [4000, 40],
+            [5000, 40],
+            [6000, 40],
+            [7000, 30],
+            [8000, 25],
+        ],
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"lansdale_airbox"},
+         {"engineGroup":"engine_intake"},
+         {"nodeWeight":2},
+         ["airb", 0.44, -1.855, 0.625],
+         {"engineGroup":""},
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":100600,"beamDamp":150},
+          {"beamDeform":12000,"beamStrength":36000},
+          {"deformGroup":"mainEngine_intake", "deformationTriggerRatio":0.01}
+          ["airb","e1r"],
+          ["airb","e2r"],
+          ["airb","e3r"],
+          ["airb","e4r"],
+          ["airb","e1l"],
+          ["airb","e2l"],
+          ["airb","e3l"],
+          ["airb","e4l"],
+          {"deformGroup":""}
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

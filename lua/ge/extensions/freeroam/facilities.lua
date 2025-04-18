@@ -154,6 +154,28 @@ local function getAverageDoorPositionForFacility(facility)
   end
 end
 
+local function getClosestDoorPositionForFacility(facility)
+  local camPos = core_camera.getPosition()
+  local center = getAverageDoorPositionForFacility(facility)
+  local closest = nil
+  local closestDist = math.huge
+
+  for _, pair in ipairs(facility.doors or {}) do
+    local obj = scenetree.findObject(pair[1])
+    if obj then
+      local dist = (obj:getPosition() - camPos):length()
+      if dist < closestDist then
+        closestDist = dist
+        closest = obj:getPosition()
+      end
+    end
+  end
+  return closest
+end
+
+
+
+
 
 local function getParkingSpotsForFacility(facility)
   if not facility.sitesFile then log("E","","Facility has not sites file: " .. dumpsz(facility,1)) return end
@@ -369,7 +391,6 @@ M.walkingMarkerFormatFacility = function(f, elements)
       maxDistSqr = math.max(maxDistSqr, (obj:getPosition()-center):squaredLength() + square(pair[3] or 6))
     end
   end
-
   if count > 0 then
     local e = {
       id = f.id,
@@ -479,7 +500,7 @@ local function onActivityAcceptGatherData(elemData, activityData)
         data.props = {}
         for _, prop in ipairs(elem.facility.activityAcceptProps or {}) do
           table.insert(data.props,{
-           icon = prop.icon or "stopwatchArrows01",
+           icon = prop.icon or "drag02",
            keyLabel = prop.keyLabel,
            valueLabel = prop.valueLabel,
          })
@@ -501,6 +522,7 @@ M.getGarage = getGarage
 M.getGasStation = getGasStation
 M.getDealership = getDealership
 M.getAverageDoorPositionForFacility = getAverageDoorPositionForFacility
+M.getClosestDoorPositionForFacility = getClosestDoorPositionForFacility
 M.getParkingSpotsForFacility = getParkingSpotsForFacility
 M.getZonesForFacility = getZonesForFacility
 M.getGaragePosRot = getGaragePosRot

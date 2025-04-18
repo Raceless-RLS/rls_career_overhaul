@@ -17,19 +17,19 @@
       "description":"Commercial vehicle garage, transport trucks, heavy machinery, buses, large vans, trailers, and more.",
       "preview":"garage_servicestation.jpg",
       "zoneNames":["commercialGarage1"],
-      "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParking3", "commercialGarageParking4", "commercialGarageParking5", "commercialGarageParking6", "commercialGarageParking7", "commercialGarageParking8", "commercialGarageParking9", "commercialGarageParking10", "commercialGarageParking11", "commercialGarageParking12", "commercialGarageParking13", "commercialGarageParking14", "commercialGarageParking15", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
+      "parkingSpotNames":["commercialGarageParking1", "commercialGarageParking2", "commercialGarageParking3", "commercialGarageParkingOutside1", "commercialGarageParkingOutside2", "commercialGarageParkingOutside3", "commercialGarageParkingOutside4"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
       "defaultPrice": 1000000,
       "capacity": 15
     },
-	{
-      "id":"dragPaddockGarage",
-      "name":"Drag Paddock Garage",
-      "description":"Commercial vehicle garage, transport trucks, heavy machinery, buses, large vans, trailers, and more.",
+    {
+      "id":"alderDragwayGarage",
+      "name":"Alder Dragway Garage",
+      "description":"Garage for tuning vehicles",
       "preview":"garage_servicestation.jpg",
-      "zoneNames":["dragPaddockGarage"],
-      "parkingSpotNames":["dragPaddockPark1", "dragPaddockPark2"],
+      "zoneNames":["alderDragwayGarage1"],
+      "parkingSpotNames":["alderDragwayGarageParking1", "alderDragwayGarageParking2"],
       "icon":"poi_garage_2_round",
       "tags":["truck"],
       "defaultPrice": 115000,
@@ -47,7 +47,7 @@
       "defaultPrice": 65000,
       "starterGarage": true,
       "capacity": 2
-    },   
+    },  
     {
       "id":"chinatownGarageOverflow",
       "name":"Chinatown Overflow",
@@ -440,14 +440,14 @@
         }
       }
     },{
-      "id":"tyrannos_commercial",
-      "name":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial.title",
-      "description":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial.description",
-      "preview":"fuel_tyrannos_commercial.jpg",
+      "id":"apex_commercial",
+      "name":"levels.west_coast_usa.gasStationPoints.apex_commercial.title",
+      "description":"levels.west_coast_usa.gasStationPoints.apex_commercial.description",
+      "preview":"fuel_apex_commercial.jpg",
       "energyTypes":["gasoline","diesel","unknown"],
       "pumps":[
-        ["fuel_tyrannos_commercial_pump_area_1", "fuel_tyrannos_commercial_pump_icon_1"],
-        ["fuel_tyrannos_commercial_pump_area_2", "fuel_tyrannos_commercial_pump_icon_2"]
+        ["fuel_apex_commercial_pump_area_1", "fuel_apex_commercial_pump_icon_1"],
+        ["fuel_apex_commercial_pump_area_2", "fuel_apex_commercial_pump_icon_2"]
       ],
       "prices":{
         "gasoline":{
@@ -456,28 +456,28 @@
           "priceRandomnessBias": 0.3,
           "us_9_10_tax":true,
           "displayObjects":[
-            ["tyranos_commercial_sign_A1_1","tyranos_commercial_sign_B1_1"],
-            ["tyranos_commercial_sign_A1_2","tyranos_commercial_sign_B1_2"],
-            ["tyranos_commercial_sign_A1_3","tyranos_commercial_sign_B1_3"],
-            ["tyranos_commercial_sign_A1_4","tyranos_commercial_sign_B1_4"]
+            ["apex_commercial_sign_A1_1","apex_commercial_sign_B1_1"],
+            ["apex_commercial_sign_A1_2","apex_commercial_sign_B1_2"],
+            ["apex_commercial_sign_A1_3","apex_commercial_sign_B1_3"],
+            ["apex_commercial_sign_A1_4","apex_commercial_sign_B1_4"]
           ]
         },
         "gasoline2":{
           "disabled": true,
           "displayObjects":[
-            ["tyranos_commercial_sign_A2_1","tyranos_commercial_sign_B2_1"],
-            ["tyranos_commercial_sign_A2_2","tyranos_commercial_sign_B2_2"],
-            ["tyranos_commercial_sign_A2_3","tyranos_commercial_sign_B2_3"],
-            ["tyranos_commercial_sign_A2_4","tyranos_commercial_sign_B2_4"]
+            ["apex_commercial_sign_A2_1","apex_commercial_sign_B2_1"],
+            ["apex_commercial_sign_A2_2","apex_commercial_sign_B2_2"],
+            ["apex_commercial_sign_A2_3","apex_commercial_sign_B2_3"],
+            ["apex_commercial_sign_A2_4","apex_commercial_sign_B2_4"]
           ]
         },
         "gasoline3":{
           "disabled": true,
           "displayObjects":[
-            ["tyranos_commercial_sign_A3_1","tyranos_commercial_sign_B3_1"],
-            ["tyranos_commercial_sign_A3_2","tyranos_commercial_sign_B3_2"],
-            ["tyranos_commercial_sign_A3_3","tyranos_commercial_sign_B3_3"],
-            ["tyranos_commercial_sign_A3_4","tyranos_commercial_sign_B3_4"]
+            ["apex_commercial_sign_A3_1","apex_commercial_sign_B3_1"],
+            ["apex_commercial_sign_A3_2","apex_commercial_sign_B3_2"],
+            ["apex_commercial_sign_A3_3","apex_commercial_sign_B3_3"],
+            ["apex_commercial_sign_A3_4","apex_commercial_sign_B3_4"]
           ]
         },
         "diesel":{
@@ -486,22 +486,22 @@
           "priceRandomnessBias": 0.2,
           "us_9_10_tax":true,
           "displayObjects":[
-            ["tyranos_commercial_sign_A4_1","tyranos_commercial_sign_B4_1"],
-            ["tyranos_commercial_sign_A4_2","tyranos_commercial_sign_B4_2"],
-            ["tyranos_commercial_sign_A4_3","tyranos_commercial_sign_B4_3"],
-            ["tyranos_commercial_sign_A4_4","tyranos_commercial_sign_B4_4"]
+            ["apex_commercial_sign_A4_1","apex_commercial_sign_B4_1"],
+            ["apex_commercial_sign_A4_2","apex_commercial_sign_B4_2"],
+            ["apex_commercial_sign_A4_3","apex_commercial_sign_B4_3"],
+            ["apex_commercial_sign_A4_4","apex_commercial_sign_B4_4"]
           ]
         }
       }
     }, {
-      "id":"tyrannos_commercial_KEVee",
-      "name":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee.title",
-      "description":"levels.west_coast_usa.gasStationPoints.tyrannos_commercial_KEVee.description",
-      "preview":"KEVee_tyrannos_commercial.jpg",
+      "id":"apex_commercial_KEVee",
+      "name":"levels.west_coast_usa.gasStationPoints.apex_commercial_KEVee.title",
+      "description":"levels.west_coast_usa.gasStationPoints.apex_commercial_KEVee.description",
+      "preview":"KEVee_apex_commercial.jpg",
       "energyTypes":["electricEnergy"],
       "pumps":[
-        ["fuel_tyrannos_commercial_KEVee_pump_area_1", "fuel_tyrannos_commercial_KEVee_pump_icon_1"],
-        ["fuel_tyrannos_commercial_KEVee_pump_area_3", "fuel_tyrannos_commercial_KEVee_pump_icon_3"]
+        ["fuel_apex_commercial_KEVee_pump_area_1", "fuel_apex_commercial_KEVee_pump_icon_1"],
+        ["fuel_apex_commercial_KEVee_pump_area_3", "fuel_apex_commercial_KEVee_pump_icon_3"]
       ],
       "prices":{
         "electricEnergy":{
@@ -572,7 +572,7 @@
       "preview":"commercialGarageComputer2.jpg",
       "doors":[["commercialGarageComputer_area_2", "commercialGarageComputer_icon_2"]],
       "screens":["commercialGarageComputer_screen_2"],
-      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true, "sleep": true},
+      "functions": {"painting":true, "tuning":true, "vehicleInventory":true, "vehicleShop":true, "partShop":true, "partInventory":true, "insurancePolicies":true},
       "activityAcceptProps":[
         {"keyLabel":"Vehicle & Parts Management"},
         {"keyLabel":"Vehicle & Parts Shopping"}
@@ -582,20 +582,19 @@
       "icon":"poi_laptop_round"
     },
     {
-      "id":"dragPaddockGarageComputer_area3",
-      "garageId":"dragPaddockGarage",
-      "name":"Drag Paddock Garage",
+      "id":"alderDragwayGarageComputer",
+      "garageId":"alderDragwayGarage",
+      "name":"Alder Dragway Tuning",
       "description":"ui.career.computer.bigmapLabel.garage",
-      "preview":"commercialGarageComputer2.jpg",
-      "doors":[["dragPaddockGarageComputer_area", "dragPaddockGarageComputer_icon"]],
-      "screens":["commercialGarageComputer_screen_2"],
-      "functions": {"painting":false, "tuning":true, "vehicleInventory":true, "vehicleShop":false, "partShop":false, "partInventory":true, "insurancePolicies":false},
+      "preview":"servicestationgaragecomputer.jpg",
+      "doors":[["alderDragwayGarageComputer_area_1","alderDragwayGarageComputer_icon_1"]],
+      "screens":["alderDragwayGarageComputer_screen_1"],
+      "functions": {"tuning":true,"vehicleInventory":true,"partShop":true,"partInventory":true},
       "activityAcceptProps":[
-        {"keyLabel":"Vehicle & Parts Management"},
-        {"keyLabel":"Vehicle & Parts Shopping"}
+        {"keyLabel":"Vehicle Tuning"}
       ],
-      "iconOffsetHeight":0.24,
-      "iconLift":0.24,
+      "iconOffsetHeight":0.15,
+      "iconLift":0.3,
       "icon":"poi_laptop_round"
     },
     {

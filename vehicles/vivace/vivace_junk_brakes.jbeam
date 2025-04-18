@@ -1,0 +1,88 @@
+{
+"vivace_junk_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Front Disc Brakes",
+
+        "value":25,
+    },
+    "slotType" : "vivace_brake_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_F","brakepad_F_premium", "Front Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //brake discs
+        ["brake_hub_5l",                 ["wheel_FR",    "wheelhub_FR"], [], {"pos":{"x":-0.79, "y":-1.342, "z":0.32}, "scale":{"x":0.9, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_hub_5l",                 ["wheel_FL",    "wheelhub_FL"], [], {"pos":{"x": 0.79, "y":-1.342, "z":0.32}, "scale":{"x":0.9, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_plain",             ["wheel_FR",    "wheelhub_FR"], [], {"pos":{"x":-0.80, "y":-1.342, "z":0.32}, "scale":{"x":1.0, "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_disc_plain",             ["wheel_FL",    "wheelhub_FL"], [], {"pos":{"x": 0.80, "y":-1.342, "z":0.32}, "scale":{"x":1.0, "y":1.0,  "z":1.0},  "rot":{"x":180, "y":0,   "z":0}}],
+        ["brake_caliper_standard_plain", ["vivace_hub_F","wheelhub_FR"], [], {"pos":{"x":-0.80, "y":-1.332, "z":0.32}, "scale":{"x":1.0, "y":0.95, "z":0.95}, "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_caliper_standard_plain", ["vivace_hub_F","wheelhub_FL"], [], {"pos":{"x": 0.80, "y":-1.332, "z":0.32}, "scale":{"x":1.0, "y":0.95, "z":0.95}, "rot":{"x":0,   "y":180, "z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*1250"},
+        {"brakeInputSplit":1},
+        {"brakeSplitCoef":1},
+        {"parkingTorque":0},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.280},
+        {"brakeMass":6.7},
+        {"brakeType":"vented-disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.2},
+        //abs
+        {"absSlipRatioTarget":0.2},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 5.5}
+    ],
+},
+"vivace_junk_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Worn Rear Disc Brakes",
+        "value":20,
+    },
+    "slotType" : "vivace_brake_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["brakepad_R","brakepad_R_premium", "Rear Brake Pads", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["brake_hub_5l",                 ["wheel_RR",    "wheelhub_RR"], [], {"pos":{"x":-0.79, "y":1.338, "z":0.32}, "scale":{"x":0.9,  "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_hub_5l",                 ["wheel_RL",    "wheelhub_RL"], [], {"pos":{"x": 0.79, "y":1.338, "z":0.32}, "scale":{"x":0.9,  "y":1.0,  "z":1.0},  "rot":{"x":0,   "y":0,   "z":180}}],
+        ["brake_disc_solid",             ["wheel_RR",    "wheelhub_RR"], [], {"pos":{"x":-0.80, "y":1.338, "z":0.32}, "scale":{"x":0.93, "y":0.93, "z":0.93}, "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_disc_solid",             ["wheel_RL",    "wheelhub_RL"], [], {"pos":{"x": 0.80, "y":1.338, "z":0.32}, "scale":{"x":0.93, "y":0.93, "z":0.93}, "rot":{"x":180, "y":0,   "z":0}}],
+        ["brake_caliper_standard_plain", ["vivace_hub_R","wheelhub_RR"], [], {"pos":{"x":-0.80, "y":1.338, "z":0.32}, "scale":{"x":0.93, "y":0.85, "z":0.85}, "rot":{"x":0,   "y":0,   "z":0}}],
+        ["brake_caliper_standard_plain", ["vivace_hub_R","wheelhub_RL"], [], {"pos":{"x": 0.80, "y":1.338, "z":0.32}, "scale":{"x":0.93, "y":0.85, "z":0.85}, "rot":{"x":0,   "y":180, "z":0}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":"$=$brakestrength*600"},
+        {"brakeInputSplit":0.5},
+        {"brakeSplitCoef":0.5},
+        {"parkingTorque":675},
+        {"brakeSpring":75},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.260},
+        {"brakeMass":4.5},
+        {"brakeType":"disc"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":0.1},
+        //abs
+        {"absSlipRatioTarget":0.15},
+        //brake sounds
+        {"squealCoefNatural": 4.5, "squealCoefLowSpeed": 4.0}
+    ],
+},
+}

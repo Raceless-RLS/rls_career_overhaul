@@ -116,14 +116,14 @@
       "type": ["crawl"]
     },
     "mudDrag1": {
-      "bestTime": 8,
+      "bestTime": 9,
       "reward": 1500,
       "checkpointRoad": "mudDrag1",
       "label": "Mud Drag Easy",
       "type": ["mud", "drag"]
     },
     "mudDrag2": {
-      "bestTime": 12,
+      "bestTime": 15,
       "reward": 2700,
       "checkpointRoad": "mudDrag2",
       "label": "Mud Drag Hard",
@@ -165,7 +165,7 @@
 
     },
     "rally3": {
-      "bestTime": 185,
+      "bestTime": 135,
       "reward": 3000,
       "checkpointRoad": "rally3",
       "label": "Rally Stage 3",
@@ -180,18 +180,19 @@
       "type": ["rally"]
     },
     "rubberBand": {
-      "bestTime": 60,
+      "bestTime": 41,
       "reward": 1250,
       "label": "Rubberband Ridge",
       "checkpointRoad": "rubberBandMain",
-      "hotlap": 50,
+      "runningStart": true,
+      "hotlap": 45,
       "altRoute": {
-        "bestTime": 65,
+        "bestTime": 41,
         "reward": 1250,
         "label": "Rubberband Ridge Joker",
         "checkpointRoad": "rubberBandJoker",
-        "mergeCheckpoints": [6, 7],
-        "hotlap": 55,
+        "mergeCheckpoints": [4, 5],
+        "hotlap": 45,
         "altInfo": "**Continue Right at the fork for the joker lap."
       },
       "type": ["offroad", "rally"]

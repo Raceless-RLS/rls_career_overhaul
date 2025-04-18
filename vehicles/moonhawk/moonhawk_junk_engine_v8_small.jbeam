@@ -1,0 +1,364 @@
+{
+"moonhawk_junk_engine_v8_309": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk 309 CUI V8 Engine",
+        "value":550,
+    },
+    "slotType" : "moonhawk_engine",
+    "slots": [
+        ["type", "default", "description"],
+        ["moonhawk_enginemounts","moonhawk_enginemounts", "Engine Mounts", {"coreSlot":true}],
+        ["moonhawk_intake_v8_small","moonhawk_intake_v8_small", "Intake", {"coreSlot":true}],
+        ["moonhawk_header_v8_small","moonhawk_header_v8_small", "Exhaust Manifold", {"coreSlot":true}],
+        ["moonhawk_oilpan_v8","moonhawk_oilpan_v8", "Oil Pan", {"coreSlot":true}],
+        ["moonhawk_exhaust_v8","moonhawk_exhaust_v8", "Exhaust"],
+      //  ["moonhawk_engine_ecu","", "Engine Management"],
+        ["n2o_system","", "Nitrous Oxide System"],
+        ["moonhawk_engine_internals_v8_small","moonhawk_engine_internals_v8_small", "Engine Long Block", {"coreSlot":true}],
+        ["moonhawk_transmission","moonhawk_transmission_3A", "Transmission"],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+    ],
+    "mainEngine":{
+       "torque": [
+        ["rpm", "torque"],
+        [0,    0.0],
+        [500,  160.0],
+        [1000, 290.0],
+        [1500, 342.0],
+        [2000, 368.0],
+        [2500, 375.0],
+        [3000, 374.0],
+        [3500, 365.0],
+        [4000, 355.0],
+        [4500, 328.0],
+        [5000, 298.0],
+        [5500, 258.0],
+        [6000, 218.0],
+        [6500, 175.0],
+        [7000, 125.0],
+        [7500, 80.0],
+        [8000, 50.0],
+    ]
+
+        "idleRPM":770,
+        "idleRPMRoughness":800,
+        //lets say max "advised" rpm
+        "maxRPM":5000,
+        //max rpm physically capable of
+        "maxPhysicalRPM":6000,
+        "redlineTorqueDropOffRange": 1500
+        "hasRevLimiter":false,
+        "inertia":0.5,
+        "friction":40,
+        "engineBrakeTorque":50,
+        "dynamicFriction":0.075,
+        //"burnEfficiency":0.01
+        "burnEfficiency":[
+            [0, 0.1],
+            [0.05, 0.22],
+            [0.4, 0.28],
+            [0.7, 0.34],
+            [1, 0.25],
+        ],
+        //fuel system
+        "energyStorage": "mainTank",
+        "requiredEnergyType":"gasoline",
+
+        //cooling and oil system
+        "thermalsEnabled":true,
+        "engineBlockMaterial":"iron",
+        "oilVolume":4.0,
+        "radiatorFanType":"mechanical",
+        "radiatorFanLoopEvent": "event:>Vehicle>Cooling Fan>Mechanical_03"
+        "radiatorFanVolume": 4.0
+        "engineBlockAirCoolingEfficiency":50,
+
+        //engine durability
+        "cylinderWallTemperatureDamageThreshold":130,
+        "headGasketDamageThreshold":500000,
+        "pistonRingDamageThreshold":500000,
+        "connectingRodDamageThreshold":500000,
+        "maxTorqueRating": 320,
+        "maxOverTorqueDamage": 320,
+
+
+        //exhaust
+        "instantAfterFireSound": "event:>Vehicle>Afterfire>01_Single_EQ1",
+        "sustainedAfterFireSound": "event:>Vehicle>Afterfire>01_Multi_EQ1",
+        "shiftAfterFireSound": "event:>Vehicle>Afterfire>01_Shift_EQ1",
+        "particulates":4.50,
+        "instantAfterFireCoef": 0.5,
+        "sustainedAfterFireCoef": 1,
+
+        //node beam interface
+        "torqueReactionNodes:":["e3l","e4l","e2r"],
+        "waterDamage": {"[engineGroup]:":["engine_intake"]},
+        "radiator": {"[engineGroup]:":["radiator"]},
+        "engineBlock": {"[engineGroup]:":["engine_block"]},
+        "breakTriggerBeam":"engine",
+        "uiName":"Engine",
+        "soundConfig": "soundConfig",
+        "soundConfigExhaust": "soundConfigExhaust",
+
+        //starter motor
+        "starterSample":"event:>Engine>Starter>v8_19xy_eng",
+        "starterSampleExhaust":"event:>Engine>Starter>v8_19xy_exh",
+        "shutOffSampleEngine":"event:>Engine>Shutoff>v8_19xy_eng",
+        "shutOffSampleExhaust":"event:>Engine>Shutoff>v8_19xy_exh",
+        "starterVolume":2.90,
+        "starterVolumeExhaust":0.76,
+        "shutOffVolumeEngine":0.76,
+        "shutOffVolumeExhaust":0.76,
+        "starterThrottleKillTime":3.8,
+        "idleRPMStartRate":1.25,
+        "idleRPMStartCoef":1,
+
+        //engine deform groups
+        "deformGroups":["mainEngine", "mainEngine_intake", "mainEngine_accessories"]
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "soundConfig": {
+        "sampleName": "V8_cross_engine",
+        "intakeMuffling": 1.0,
+
+        "mainGain": -4.5,
+        "onLoadGain":1,
+        "offLoadGain":0.66,
+
+        "maxLoadMix": 0.7,
+        "minLoadMix": 0.0,
+
+        "lowShelfGain":3,
+        "lowShelfFreq":120,
+
+        "highShelfGain":5,
+        "highShelfFreq":3500,
+
+        "eqLowGain": 7,
+        "eqLowFreq": 750,
+        "eqLowWidth": 0.5,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 2500,
+        "eqHighWidth": 0.2,
+
+        "fundamentalFrequencyCylinderCount":8,
+        "eqFundamentalGain": -5,
+
+    },
+    "soundConfigExhaust": {
+        "sampleName": "V8_cross_exhaust",
+
+        "mainGain": 2.5,
+        "onLoadGain":1,
+        "offLoadGain":0.6,
+
+        "maxLoadMix": 0.7,
+        "minLoadMix": 0.0,
+
+        "lowShelfGain":-13,
+        "lowShelfFreq":90,
+
+        "highShelfGain":1,
+        "highShelfFreq":2000,
+
+        "eqLowGain": 3,
+        "eqLowFreq": 300,
+        "eqLowWidth": 0.5,
+
+        "eqHighGain": 0,
+        "eqHighFreq": 2500,
+        "eqHighWidth": 0.2,
+
+        "fundamentalFrequencyCylinderCount":8,
+        "eqFundamentalGain": -5,
+
+    },
+    "vehicleController": {
+        "clutchLaunchStartRPM":1200,
+        "clutchLaunchTargetRPM":1600,
+        //**highShiftDown can be overwritten by automatic transmissions**
+        "highShiftDownRPM":[0,0,0,5000,5000,5000,5000,5000],
+        //**highShiftUp can be overwritten by intake modifications**
+        "highShiftUpRPM":5000,
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["moonhawk_engine_v8_smallblock", ["moonhawk_engine"]],
+        {"deformGroup":"radtube_break", "deformMaterialBase":"moonhawk", "deformMaterialDamaged":"invis"},
+        ["moonhawk_radhose_v8", ["moonhawk_radiator","moonhawk_radsupport","moonhawk_engine"]],
+        {"deformGroup":"", "deformMaterialBase":"", "deformMaterialDamaged":""},
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        ["radiatorFanSpin"  , "moonhawk_coolingfan_v8", "e2r","e2l","e4r",  {"x":-3, "y":0, "z":0}, {"x":0, "y":1, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["radiatorFanSpin"  , "moonhawk_engine_v8_pulley1", "e2r","e2l","e4r",  {"x":-3, "y":0, "z":0}, {"x":0, "y":1, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["radiatorFanSpin"  , "moonhawk_engine_v8_pulley2", "e2r","e2l","e4r",  {"x":-3, "y":0, "z":0}, {"x":0, "y":2, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+        ["radiatorFanSpin"  , "moonhawk_engine_v8_pulley3", "e2r","e2l","e4r",  {"x":-3, "y":0, "z":0}, {"x":0, "y":-2, "z":0}    , {"x":0, "y":0, "z":0}, -360, 360, 0, 1],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //6.2L V8 Engine
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"moonhawk_engine"},
+         {"engineGroup":"engine_block"},
+         {"nodeWeight":35},
+         {"chemEnergy":2000,"burnRate":0.39,"flashPoint":1000,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":900,"baseTemp":"thermals","conductionRadius":0.13},
+         ["e1r", -0.16, -1.08, 0.32],
+         ["e1l", 0.16, -1.08, 0.32],
+         {"chemEnergy":2000,"burnRate":0.39,"flashPoint":1000,"specHeat": 0.2,"selfIgnitionCoef":false,"smokePoint":900,"baseTemp":"thermals","conductionRadius":0.2},
+         {"selfCollision":false},
+         ["e2r", -0.16, -1.60, 0.35],
+         ["e2l", 0.16, -1.60, 0.35],
+         {"chemEnergy":false,"burnRate":false,"flashPoint":false, "specHeat": false,"selfIgnitionCoef":false,"smokePoint":false,"baseTemp":false,"conductionRadius":false},
+         {"selfCollision":false},
+         {"engineGroup":["engine_block","engine_intake"]},
+         ["e3r", -0.32, -1.08, 0.78],
+         ["e3l", 0.32, -1.08, 0.78],
+         ["e4r", -0.32, -1.60, 0.78, {"isExhaust":"mainEngine"}],
+         ["e4l", 0.32, -1.60, 0.78],
+         {"engineGroup":""},
+         {"group":""},
+         //engine mount nodes
+         ["em1r", -0.3, -1.4, 0.5, {"nodeWeight":3}],
+         ["em1l", 0.3, -1.4, 0.5, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":20001000,"beamDamp":500},
+          {"beamDeform":205000,"beamStrength":"FLT_MAX"},
+          //engine
+          {"deformGroup":"mainEngine", "deformationTriggerRatio":0.001}
+          ["e1r","e1l"],
+          ["e2r","e2l"],
+          ["e3r","e3l"],
+          ["e4r","e4l", {"isExhaust":"mainEngine"}],
+
+          ["e1r","e2r"],
+          ["e1l","e2l"],
+          ["e3r","e4r"],
+          ["e3l","e4l"],
+
+          ["e1r","e3r"],
+          ["e1l","e3l"],
+          ["e2r","e4r"],
+          ["e2l","e4l"],
+
+          ["e2r","e3r"],
+          ["e2l","e3l"],
+          ["e2r","e3l"],
+          ["e2l","e3r"],
+
+          ["e1r","e4r", {"isExhaust":"mainEngine"}],
+          ["e1l","e4l", {"isExhaust":"mainEngine"}],
+          ["e1r","e4l"],
+          ["e1l","e4r"],
+
+          ["e1r","e2l"],
+          ["e1l","e2r"],
+          ["e3r","e4l"],
+          ["e3l","e4r"],
+
+          ["e1r","e3l"],
+          ["e1l","e3r"],
+          ["e2r","e4l"],
+          ["e2l","e4r"],
+
+          //engine mount nodes
+          {"beamSpring":100,"beamDamp":10},
+          {"beamDeform":100,"beamStrength":"FLT_MAX"},
+          ["em1r","e3l"],
+          ["em1r","e3r"],
+          ["em1r","e4l"],
+          ["em1r","e4r"],
+          ["em1r", "e1r"],
+          ["em1r", "e1l"],
+          ["em1r", "e2l"],
+          ["em1r", "e2r"],
+
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          {"deformGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+"moonhawk_junk_oilpan_v8": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Junk Oil Pan",
+        "value":35,
+    },
+    "slotType" : "moonhawk_oilpan_v8",
+    "mainEngine": {
+        //cooling and oil system
+        "oilVolume":0.1,
+
+        //engine durability
+        "oilpanMaximumSafeG": 0.5
+
+        //node beam interface
+        "oilpanNodes:":["oilpan","oilref"],
+
+        //engine deform groups
+        "deformGroups_oilPan":["oilpan_damage"]
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+
+         //oil pan node
+         {"group":""},
+         {"nodeWeight":2},
+         ["oilpan", 0.0, -1.25, 0.25],
+         ["oilref", 0.0, -1.25, 0.75, {"nodeWeight":1, "collision":false}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //oilpan node
+          {"beamSpring":1501000,"beamDamp":250},
+          {"beamDeform":8000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"oilpan_damage","deformationTriggerRatio":0.005},
+          ["oilpan", "e1r"],
+          ["oilpan", "e1l"],
+          ["oilpan", "e2r"],
+          ["oilpan", "e2l"],
+          ["oilpan", "e3r"],
+          ["oilpan", "e3l"],
+          ["oilpan", "e4r"],
+          ["oilpan", "e4l"],
+          {"deformGroup":""},
+
+          //oil ref
+          {"beamSpring":1001000,"beamDamp":150},
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          ["oilref", "e1r"],
+          ["oilref", "e1l"],
+          ["oilref", "e2r"],
+          ["oilref", "e2l"],
+          ["oilref", "e3r"],
+          ["oilref", "e3l"],
+          ["oilref", "e4r"],
+          ["oilref", "e4l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}
