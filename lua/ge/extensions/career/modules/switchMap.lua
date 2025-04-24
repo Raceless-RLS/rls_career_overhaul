@@ -100,6 +100,8 @@ local function onExtensionLoaded()
 end
 
 local function formatLevelGatePoi(level, levelName)
+    if not careerMaps then return nil end
+
     local compatibleMaps = careerMaps.getCompatibleMaps()
     if not compatibleMaps[level] then return nil end
 
