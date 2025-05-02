@@ -648,153 +648,163 @@ end
 
 local saveCareer
 local function setupInventory(levelPath)
-  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-  local data = jsonReadFile(savePath .. "/info.json")
-  local generalData = jsonReadFile(savePath .. "/career/general.json")
-  local levelName = generalData and generalData.level or getCurrentLevelIdentifier()
-  local justSwitched = generalData and generalData.justSwitched or false
+    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+    local data = jsonReadFile(savePath .. "/info.json")
+    local generalData = jsonReadFile(savePath .. "/career/general.json")
+    local levelName = generalData and generalData.level or getCurrentLevelIdentifier()
+    local justSwitched = generalData and generalData.justSwitched or false
 
   if justSwitched and not career_modules_hardcore.isHardcoreMode() then
     career_modules_garageManager.purchaseDefaultGarage()
   end
 
-  if career_modules_linearTutorial.getLinearStep() == -1 then
-    if loadedVehiclesLocations then
-      local vehiclesToTeleportToGarage = {}
-      for inventoryId, location in pairs(loadedVehiclesLocations) do
-        local vehInfo = vehicles[inventoryId]
-        if vehInfo.loanType == "work" then
-          career_modules_loanerVehicles.returnVehicle(inventoryId)
-          loanedVehicleReturned = true
-        else
-          if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
-            vehiclesMovedToStorage = true
-          else
-            local veh = nil
-            if not justSwitched or vehicleToEnterId == inventoryId then
-              veh = spawnVehicle(inventoryId)
-            end
-            if veh then
-              local levelGate
-              if justSwitched then
-                levelGate = scenetree.findObject("Level Gate")
-                if levelGate then
-                  location.pos = levelGate:getPosition()
-                  location.rot = levelGate:getRotation()
+    if career_modules_linearTutorial.getLinearStep() == -1 then
+        if loadedVehiclesLocations then
+            local vehiclesToTeleportToGarage = {}
+            for inventoryId, location in pairs(loadedVehiclesLocations) do
+                local vehInfo = vehicles[inventoryId]
+                if vehInfo.loanType == "work" then
+                    career_modules_loanerVehicles.returnVehicle(inventoryId)
+                    loanedVehicleReturned = true
+                else
+                    if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
+                        vehiclesMovedToStorage = true
+                    else
+                        local veh = nil
+                        if not justSwitched or vehicleToEnterId == inventoryId then
+                            veh = spawnVehicle(inventoryId)
+                        end
+                        if veh then
+                            local levelGate
+                            if justSwitched then
+                                levelGate = scenetree.findObject("Level Gate")
+                                if levelGate then
+                                    location.pos = levelGate:getPosition()
+                                    location.rot = levelGate:getRotation()
+                                end
+                            end
+                            if not levelGate and location.option == "garage" then
+                                location.vehId = veh:getID()
+                                vehiclesToTeleportToGarage[inventoryId] = location
+                            end
+                            spawn.safeTeleport(veh, location.pos, location.rot)
+                        end
+                    end
                 end
-              end
-              if not levelGate and location.option == "garage" then
-                location.vehId = veh:getID()
-                vehiclesToTeleportToGarage[inventoryId] = location
-              end
-              spawn.safeTeleport(veh, location.pos, location.rot)
             end
-          end
+            loadedVehiclesLocations = nil
+
+            -- The teleport to garage needs to happen with one frame delay because that's when the OOBBs get updated
+            extensions.core_jobsystem.create(function(job)
+                for inventoryId, location in pairs(vehiclesToTeleportToGarage) do
+                    local veh = getObjectByID(location.vehId)
+                    local garage = getClosestGarage(location.pos)
+                    freeroam_facilities.teleportToGarage(garage.id, veh)
+                    job.sleep(0.1)
+                end
+            end)
         end
-      end
-      loadedVehiclesLocations = nil
 
-      -- The teleport to garage needs to happen with one frame delay because that's when the OOBBs get updated
-      extensions.core_jobsystem.create(
-        function (job)
-          for inventoryId, location in pairs(vehiclesToTeleportToGarage) do
-            local veh = getObjectByID(location.vehId)
-            local garage = getClosestGarage(location.pos)
-            freeroam_facilities.teleportToGarage(garage.id, veh)
-            job.sleep(0.1)
-          end
+        if vehicleToEnterId and inventoryIdToVehId[vehicleToEnterId] then
+            enterVehicle(vehicleToEnterId)
+        else
+            gameplay_walk.setWalkingMode(true)
         end
-      )
+        extensions.hook("onSetupInventoryFinished")
     end
 
-    if vehicleToEnterId and inventoryIdToVehId[vehicleToEnterId] then
-      enterVehicle(vehicleToEnterId)
+    local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
+    local data = jsonReadFile(savePath .. "/info.json")
+    if not data then
+        -- this means this is a new career save
+        saveCareer = 0
+        if career_career.hardcoreMode then
+            local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
+            local hardcoreFilter = {
+                whiteList = {
+                    ["Config Type"] = {"Hardcore"}
+                }
+            }
+            local hardcoreVehicleInfos = util_configListGenerator.getRandomVehicleInfos({
+                filter = hardcoreFilter
+            }, 6, eligibleVehicles, "Population")
+            local randomVehicleInfo = hardcoreVehicleInfos[math.random(#hardcoreVehicleInfos)]
+            local model = randomVehicleInfo.model_key
+            local config = '/vehicles/' .. model .. '/configurations/' .. randomVehicleInfo.key .. '.pc'
+            local pos, rot = vec3(-24.026, 609.157, 75.112), quatFromDir(vec3(1, 0, 0))
+            local options = {
+                config = config,
+                licenseText = "Hardcore",
+                vehicleName = "First Car",
+                pos = pos,
+                rot = rot
+            }
+            local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
+            spawningOptions.autoEnterVehicle = false
+            local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
+            core_vehicleBridge.executeAction(veh, 'setIgnitionLevel', 0)
+            core_vehicles.setPlateText("Uncle's", veh:getID())
+
+            gameplay_walk.setWalkingMode(true)
+            -- move walking character into position
+            spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
+            gameplay_walk.setRot(vec3(0, 1, 0), vec3(0, 0, 1))
+            local mileage = 900000 * 1609.344
+            veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, 0.5))
+            M.addVehicle(veh:getID(), nil, {
+                starter = true
+            })
+        elseif career_modules_linearTutorial.getLinearStep() == -1 then
+            -- default placement is in front of the dealership, facing it
+            -- spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
+            -- gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
+            if levelName == "west_coast_usa" then
+                freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+            elseif levelName == "italy" then
+                freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
+            end
+            career_modules_garageManager.purchaseDefaultGarage()
+        else
+            -- spawn the tutorial vehicle
+            local model, config = "covet", "vehicles/covet/covet_tutorial.pc"
+            local pos, rot = vec3(-24.026, 609.157, 75.112), quatFromDir(vec3(1, 0, 0))
+            local options = {
+                config = config,
+                licenseText = "TUTORIAL",
+                vehicleName = "TutorialVehicle",
+                pos = pos,
+                rot = rot
+            }
+            local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
+            spawningOptions.autoEnterVehicle = false
+            local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
+            core_vehicleBridge.executeAction(veh, 'setIgnitionLevel', 0)
+
+            gameplay_walk.setWalkingMode(true)
+            -- move walking character into position
+            spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
+            gameplay_walk.setRot(vec3(0, 1, 0), vec3(0, 0, 1))
+            career_modules_garageManager.purchaseDefaultGarage()
+        end
     else
-      gameplay_walk.setWalkingMode(true)
+        if gameplay_walk.isWalking() then
+            if unicycleSavedPosition and not justSwitched then
+
+                spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
+            else
+                if levelName == "west_coast_usa" then
+                    freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
+                elseif levelName == "italy" then
+                    freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
+                end
+            end
+        end
+        extensions.hook("onEnterVehicleFinished", currentVehicle)
     end
-    extensions.hook("onSetupInventoryFinished")
-  end
 
-  local saveSlot, savePath = career_saveSystem.getCurrentSaveSlot()
-  local data = jsonReadFile(savePath .. "/info.json")
-  if not data then
-    -- this means this is a new career save
-    saveCareer = 0
-    if career_career.hardcoreMode then
-      local eligibleVehicles = util_configListGenerator.getEligibleVehicles(false, false)
-      local hardcoreFilter = {
-        whiteList = {
-            ["Config Type"] = {"Hardcore"}
-        }
-    }
-    local hardcoreVehicleInfos = util_configListGenerator.getRandomVehicleInfos(
-        {filter = hardcoreFilter},
-        6,
-        eligibleVehicles,
-        "Population"
-    )
-      local randomVehicleInfo = hardcoreVehicleInfos[math.random(#hardcoreVehicleInfos)]
-      local model = randomVehicleInfo.model_key
-      local config = '/vehicles/' .. model .. '/configurations/' .. randomVehicleInfo.key .. '.pc'
-      local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
-      local options = {config = config, licenseText = "Hardcore", vehicleName = "First Car", pos = pos, rot = rot}
-      local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
-      spawningOptions.autoEnterVehicle = false
-      local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
-      core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
-      core_vehicles.setPlateText("Uncle's", veh:getID())
-
-      gameplay_walk.setWalkingMode(true)
-      -- move walking character into position
-      spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
-      gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
-      local mileage = 900000 * 1609.344
-      veh:queueLuaCommand(string.format("partCondition.initConditions(nil, %d, nil, %f)", mileage, 0.5))
-      M.addVehicle(veh:getID(), nil, {starter = true})
-    elseif career_modules_linearTutorial.getLinearStep() == -1 then
-      -- default placement is in front of the dealership, facing it
-      --spawn.safeTeleport(getPlayerVehicle(0), vec3(838.51,-522.42,165.75))
-      --gameplay_walk.setRot(vec3(-1,-1,0), vec3(0,0,1))
-      if levelName == "west_coast_usa" then
-        freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
-      elseif levelName == "italy" then
-        freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
-      end
-      career_modules_garageManager.purchaseDefaultGarage()
-    else
-      -- spawn the tutorial vehicle
-      local model, config = "covet","vehicles/covet/covet_tutorial.pc"
-      local pos, rot = vec3(-24.026,609.157,75.112), quatFromDir(vec3(1,0,0))
-      local options = {config = config, licenseText = "TUTORIAL", vehicleName = "TutorialVehicle", pos = pos, rot = rot}
-      local spawningOptions = sanitizeVehicleSpawnOptions(model, options)
-      spawningOptions.autoEnterVehicle = false
-      local veh = core_vehicles.spawnNewVehicle(model, spawningOptions)
-      core_vehicleBridge.executeAction(veh,'setIgnitionLevel', 0)
-
-      gameplay_walk.setWalkingMode(true)
-      -- move walking character into position
-      spawn.safeTeleport(getPlayerVehicle(0), vec3(-20.746, 598.736, 75.112))
-      gameplay_walk.setRot(vec3(0,1,0), vec3(0,0,1))
-      career_modules_garageManager.purchaseDefaultGarage()
-    end
-  else
-    if gameplay_walk.isWalking() then
-      if unicycleSavedPosition and not justSwitched then
-
-        spawn.safeTeleport(getPlayerVehicle(0), unicycleSavedPosition)
-      else
-        if levelName == "west_coast_usa" then
-          freeroam_facilities.teleportToGarage("chinatownGarage", getPlayerVehicle(0))
-        elseif levelName == "italy" then
-          freeroam_facilities.teleportToGarage("uncleGarage", getPlayerVehicle(0))
-      end
-    end
-    end
-    extensions.hook("onEnterVehicleFinished", currentVehicle)
-  end
-
-  commands.setGameCamera()
+    commands.setGameCamera()
 end
+
 
 local function onCareerModulesActivated(alreadyInLevel)
   if sellAllVehicles then
