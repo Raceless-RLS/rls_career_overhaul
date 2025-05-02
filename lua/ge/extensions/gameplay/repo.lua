@@ -6,7 +6,7 @@ local M = {}
 
 -- Dependencies
 M.dependencies = {
-    'career_career', 'util_configListGenerator', 'gameplay_parking', 
+    'util_configListGenerator', 'gameplay_parking', 
     'freeroam_facilities', 'gameplay_sites_sitesManager'
 }
 
@@ -15,9 +15,12 @@ local configListGenerator = require('util.configListGenerator')
 local parking = require('gameplay.parking')
 local freeroam_facilities = require('freeroam.facilities')
 local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
-local valueCalculator = require('career.modules.valueCalculator')
 local marker
 
+
+
+-- Create a single repo job instance for the whole module
+local repoJobInstance = nil
 
 local function createMarker(position)
     if not marker then
@@ -45,7 +48,6 @@ function VehicleRepoJob:new()
     instance.isMonitoring = false
     instance.selectedDealership = nil
     instance.isJobStarted = false
-    instance.isCompleted = false
     instance.returnCountdown = nil
     instance.totalDistanceTraveled = 0
     instance.spawnedVehicle = false
@@ -80,7 +82,6 @@ function VehicleRepoJob:destroy()
     self.isMonitoring = false
     self.selectedDealership = nil
     self.isJobStarted = false
-    self.isCompleted = false
     self.returnCountdown = nil
     self.totalDistanceTraveled = 0
     self.spawnedVehicle = false
@@ -91,6 +92,7 @@ end
 
 -- Generate a new repo job
 function VehicleRepoJob:generateJob()
+    
     -- Start the coroutine for job generation
     self.jobCoroutine = coroutine.create(function()
         -- Initialize player vehicle and yield to allow other processes
@@ -226,10 +228,12 @@ function VehicleRepoJob:generateVehicleConfig()
         self.randomVehicleInfo.Mileage = 0
     end
 
-    self.vehicleValue = valueCalculator.getAdjustedVehicleBaseValue(self.randomVehicleInfo.Value, {
-        mileage = self.randomVehicleInfo.Mileage,
-        age = 2025 - self.randomVehicleInfo.year
-    })
+    if career_career.isActive() then
+        self.vehicleValue = career_modules_valueCalculator.getAdjustedVehicleBaseValue(self.randomVehicleInfo.Value, {
+            mileage = self.randomVehicleInfo.Mileage,
+            age = 2025 - self.randomVehicleInfo.year
+        })
+    end
 end
 
 -- Spawn the vehicle at the selected spot
@@ -263,27 +267,24 @@ function VehicleRepoJob:spawnVehicle()
 
     self.vehInfo = self.randomVehicleInfo
     ui_message("New Repo Job Available!\nSomeone missed a payment on their \n" .. self.randomVehicleInfo.Brand .. " " ..
-                   self.randomVehicleInfo.Name .. ".\nPick it up for a reward.", 10, "info", "info")
+                   self.randomVehicleInfo.Name .. ".\nPick it up for a reward.", 10, "New Job", "info")
 end
 
 -- Handle vehicle switch events
 function VehicleRepoJob:onVehicleSwitched(oldId, newId)
-    if core_vehicles.getVehicleLicenseText(getObjectByID(newId)) == "repo" then
-        self.repoVehicle = getObjectByID(newId)
-        self.repoVehicleID = newId
-        if not self.isJobStarted then
-            self:destroy()
-            self:generateJob()
-        end
+    self.repoVehicle = getObjectByID(newId)
+    self.repoVehicleID = newId
+    if not self.isJobStarted then
+        self:destroy()
+        self:generateJob()
     end
 end
 
 -- Calculate the reward for completing the job
 function VehicleRepoJob:calculateReward()
-    print('[repo] calculateReward() called')
-    print('[repo] Total distance: ' .. tostring(self.totalDistanceTraveled))
-    print('[repo] Vehicle value: ' .. tostring(self.vehicleValue))
-    print('[repo] Time taken: ' .. tostring(os.time() - self.jobStartTime))
+    if not career_career.isActive() then
+        return nil
+    end
     local distanceMultiplier = self.totalDistanceTraveled * 2
     local timeMultiplier = (self.totalDistanceTraveled / ((os.time() - self.jobStartTime) * 10))
     local reward = math.floor((((5 * math.sqrt(self.vehicleValue or 1000)) + distanceMultiplier) * timeMultiplier)/ 4)
@@ -295,11 +296,7 @@ function VehicleRepoJob:calculateReward()
 end
 
 -- Update function called every frame
-function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
-    if not self.vehicleId and self.isCompleted then
-        return
-    end
-    
+function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw) 
     -- Add timer for distance checks
     if not self.updateTimer then self.updateTimer = 0 end
     self.updateTimer = self.updateTimer + dtSim
@@ -309,17 +306,6 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         if not success then
             self.jobCoroutine = nil
         end
-    end
-
-    if self.isCompleted then
-            local playerPos = be:getPlayerVehicle(0):getPosition()
-            local vehicle = getObjectByID(self.vehicleId)
-            local vehiclePos = vehicle:getPosition()
-
-            if (playerPos - vehiclePos):length() >= 15 then
-                self:destroy()
-        end
-        return
     end
 
     if not self.isMonitoring or not self.vehicleId then
@@ -442,37 +428,56 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
         local distanceFromDestination = (vehiclePos - self.deliveryLocation.pos):length()
         local velocity = vehicle:getVelocity():length()
         if distanceFromDestination <= 1 and velocity <= 1 then
-            local reward = self:calculateReward()
-            ui_message("You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. tostring(reward) .. ".", 15, "info", "info")
+            core_jobsystem.create(function(job)
+                ui_fadeScreen.cycle(0.5, 1, 0.5)
+                job.sleep(1)
+                local reward = self:calculateReward()
+                local rewardText = "You've Dropped Off a " ..  self.vehInfo.Brand .. " " .. self.vehInfo.Name .. "."
+                if reward then
+                    rewardText = rewardText .. "\nYou have been paid $" .. tostring(reward)
+                end
+                           
+                -- Add safety check for marker
+                if marker then
+                    marker:delete()
+                    marker = nil
+                end
             
-            -- Add safety check for marker
-            if marker then
-                marker:delete()
-                marker = nil
-            end
+                if career_career.isActive() then
+                    career_modules_payment.reward({
+                        money = { amount = reward },
+                        beamXP = { amount = math.floor(reward / 20) },
+                        labourer = { amount = math.floor(reward / 20) }
+                    }, {
+                        label = "You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. reward,
+                        tags = {"gameplay", "reward", "laborer"}
+                    }, true)
+                    career_saveSystem.saveCurrent()
+                    career_modules_inventory.addRepossession(career_modules_inventory.getInventoryIdFromVehicleId(self.repoVehicleID))
+                end
             
-            career_modules_payment.reward({
-                money = { amount = reward },
-                beamXP = { amount = math.floor(reward / 20) },
-                labourer = { amount = math.floor(reward / 20) }
-            }, {
-                label = "You've Dropped Off a " .. self.vehInfo.Brand .. " " .. self.vehInfo.Name .. ".\nYou have been paid $" .. reward,
-                tags = {"gameplay", "reward", "laborer"}
-            }, true)
-            career_saveSystem.saveCurrent()
-            self.isJobStarted = false
-            self.isCompleted = true
-            self.isMonitoring = false
+                self.isJobStarted = false
+                self.isMonitoring = false
             
-            -- Add safety check for vehicle
-            local vehicle = getObjectByID(self.vehicleId)
-            if vehicle then
-                core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
-            end
-            career_modules_inventory.addRepossession(career_modules_inventory.getInventoryIdFromVehicleId(self.repoVehicleID))
+                -- Add safety check for vehicle
+                local vehicle = getObjectByID(self.vehicleId)
+                if vehicle then
+                    core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
+                end
+                self:destroy()
+                ui_message(rewardText, 15, "Job Completed", "info")
+            end, 1, self)
         elseif distanceFromDestination <= 10 then
             ui_message("You've arrived at the dealership.\nPlease return the vehicle to the parking spot.", 10, "info", "info")
         else
+            if self.deliveryLocation then
+                print("Delivery location: " .. tostring(self.deliveryLocation.pos))
+                if core_groundMarkers then
+                    print("Core ground markers target pos: " .. tostring(core_groundMarkers.getTargetPos()))
+                else
+                    print("Core ground markers not found")
+                end
+            end
             if self.deliveryLocation.pos ~= nil and (not core_groundMarkers.getTargetPos() or core_groundMarkers.getTargetPos() ~= self.deliveryLocation.pos) then
                 core_groundMarkers.setPath(self.deliveryLocation.pos)
             end
@@ -497,6 +502,48 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
             self.totalDistanceTraveled = self.totalDistanceTraveled + core_groundMarkers.getPathLength()
         end
     end
+end
+
+-- Get the current repo job instance
+function M.getRepoJobInstance()
+    if not repoJobInstance then
+        repoJobInstance = VehicleRepoJob:new()
+    end
+    return repoJobInstance
+end
+
+-- Handle vehicle switching (called from playerDriving)
+function M.onVehicleSwitched(oldId, newId)
+    if M.isRepoVehicle(newId) then
+        print("Vehicle switched to repo vehicle")
+        local instance = M.getRepoJobInstance()
+        if instance then
+            print("Instance found")
+            instance:onVehicleSwitched(oldId, newId)
+        end
+    end
+end
+
+-- Generate a new repo job (called from playerDriving)
+function M.generateJob()
+    local instance = M.getRepoJobInstance()
+    if instance then
+        instance:generateJob()
+    end
+end
+
+-- Update the repo job (called from playerDriving's onUpdate)
+function M.onUpdate(dtReal, dtSim, dtRaw)
+    local instance = M.getRepoJobInstance()
+    if instance then
+        instance:onUpdate(dtReal, dtSim, dtRaw)
+    end
+end
+
+-- Check if the vehicle is a repo vehicle
+function M.isRepoVehicle(newId)
+    local licenseText = core_vehicles.getVehicleLicenseText(getObjectByID(newId))
+    return licenseText and licenseText:lower() == "repo"
 end
 
 -- Export the class

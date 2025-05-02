@@ -93,7 +93,9 @@ local function onUpdate(dtReal, dtSim, dtRaw)
           freeroamUtils.displayStartMessage("drag")
           freeroamUtils.saveAndSetTrafficAmount(0)
         elseif phase.name == "race" then
-          freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed * 2.2369362921, vehId)
+          if racer.timers.time_1_4.value and racer.timers.time_1_4.value > 0 then
+            freeroamEvents.payoutDragRace("drag", racer.timers.time_1_4.value, racer.vehSpeed * 2.2369362921, vehId)
+          end
           freeroamUtils.restoreTrafficAmount()
         end
         dUtils.changeRacerPhase(racer)
