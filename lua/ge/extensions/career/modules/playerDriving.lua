@@ -4,9 +4,7 @@
 
 local M = {}
 
-M.dependencies = {'career_career', 'career_modules_repo'}
-
-local repo = require('career/modules/repo')
+M.dependencies = {'career_career'}
 
 local playerData = {trafficActive = 0} -- traffic data, parking data, etc.
 local testTrafficAmounts = {traffic = 1, police = 0, parkedCars = 1, active = 1} -- amounts to use if restrict mode is true
@@ -18,8 +16,6 @@ M.debugMode = not shipping_build
 local function getPlayerData()
   return playerData
 end
-
-local repoJob = repo.VehicleRepoJob.new()
 
 local function setPlayerData(newId, oldId)
   -- oldId is optional and is used if the vehicle was switched
@@ -304,22 +300,6 @@ local function onVehicleSwitched(oldId, newId)
   if not career_career.tutorialEnabled and not gameplay_missions_missionManager.getForegroundMissionId() then
     setPlayerData(newId, oldId)
     setTrafficVars()
-    local licenseText = career_modules_inventory.getLicensePlateText(newId)
-    if licenseText then
-        licenseText = licenseText:lower()
-        for i = 1, #licenseText do
-          print(string.format("[RLS Career][Debug] Char %d: '%s' (byte: %d)", i, licenseText:sub(i, i),
-              string.byte(licenseText, i)))
-        end
-    end
-    if licenseText and licenseText == "repo" then
-      if repoJob then
-        repoJob:onVehicleSwitched(oldId, newId)
-      else
-        repoJob.generateJob()
-      end
-    end
-
     local playerIsCop = getPlayerIsCop()
     if playerIsCop then
       ui_message("You are now a cop", 5, "Police", "info")
@@ -454,43 +434,47 @@ local function onPlayerCameraReady()
 end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
-  if M.preStart and freeroam_specialTriggers and playerData.traffic then -- this cycles all lights triggers, to eliminate lag spikes (move this code later)
-    if not playerData.preStartTicks then playerData.preStartTicks = 6 end
-    playerData.preStartTicks = playerData.preStartTicks - 1
-    for k, v in pairs(freeroam_specialTriggers.getTriggers()) do
-      if not v.vehIds[be:getPlayerVehicleID(0)] then
-        if playerData.preStartTicks == 3 then
-          freeroam_specialTriggers.setTriggerActive(k, true, true)
-        elseif playerData.preStartTicks == 0 then
-          freeroam_specialTriggers.setTriggerActive(k, false, true)
-          M.preStart = false
+    if M.preStart and freeroam_specialTriggers and playerData.traffic then -- this cycles all lights triggers, to eliminate lag spikes (move this code later)
+        if not playerData.preStartTicks then
+            playerData.preStartTicks = 6
         end
-      end
-    end
+        playerData.preStartTicks = playerData.preStartTicks - 1
+        for k, v in pairs(freeroam_specialTriggers.getTriggers()) do
+            if not v.vehIds[be:getPlayerVehicleID(0)] then
+                if playerData.preStartTicks == 3 then
+                    freeroam_specialTriggers.setTriggerActive(k, true, true)
+                elseif playerData.preStartTicks == 0 then
+                    freeroam_specialTriggers.setTriggerActive(k, false, true)
+                    M.preStart = false
+                end
+            end
+        end
         if playerData.preStartTicks == 0 then
             playerData.preStartTicks = nil
         end
     end
 
-    if repoJob then
-        repoJob:onUpdate(dtReal, dtSim, dtRaw)
-  end
-
-  if not playerPursuitActive() then return end
-
-  -- for now, prevent pursuit softlock by making the police give up
-  if not playerData.pursuitStuckTimer then playerData.pursuitStuckTimer = 0 end
-  if (playerData.traffic.speed < 3 and playerData.traffic.pursuit.timers.arrest == 0 and playerData.traffic.pursuit.timers.evade == 0) then
-    playerData.pursuitStuckTimer = playerData.pursuitStuckTimer + dtSim
-    if playerData.pursuitStuckTimer >= 10 then
-      log("I", "career", "Ending pursuit early due to conflict")
-      gameplay_police.evadeVehicle(be:getPlayerVehicleID(0), true)
-      playerData.pursuitStuckTimer = 0
+    if not playerPursuitActive() then
+        return
     end
-  else
-    playerData.pursuitStuckTimer = 0
-  end
+
+    -- for now, prevent pursuit softlock by making the police give up
+    if not playerData.pursuitStuckTimer then
+        playerData.pursuitStuckTimer = 0
+    end
+    if (playerData.traffic.speed < 3 and playerData.traffic.pursuit.timers.arrest == 0 and
+        playerData.traffic.pursuit.timers.evade == 0) then
+        playerData.pursuitStuckTimer = playerData.pursuitStuckTimer + dtSim
+        if playerData.pursuitStuckTimer >= 10 then
+            log("I", "career", "Ending pursuit early due to conflict")
+            gameplay_police.evadeVehicle(be:getPlayerVehicleID(0), true)
+            playerData.pursuitStuckTimer = 0
+        end
+    else
+        playerData.pursuitStuckTimer = 0
+    end
 end
+
 
 local function onCareerModulesActivated(alreadyInLevel)
   if alreadyInLevel then

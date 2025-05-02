@@ -48,6 +48,12 @@ local function loadExtensions()
     end
     extensions.load("freeroam_facilities")
     setExtensionUnloadMode("freeroam_facilities", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_repo") then
+        extensions.unload("gameplay_repo")
+    end
+    extensions.load("gameplay_repo")
+    setExtensionUnloadMode("gameplay_repo", "manual")
 end
 
 if extensions.isExtensionLoaded("careerMaps") then
