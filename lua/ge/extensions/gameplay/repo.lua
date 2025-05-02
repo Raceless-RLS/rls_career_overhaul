@@ -18,7 +18,6 @@ local gameplay_sites_sitesManager = require('gameplay.sites.sitesManager')
 local marker
 
 
-
 -- Create a single repo job instance for the whole module
 local repoJobInstance = nil
 
@@ -51,6 +50,7 @@ function VehicleRepoJob:new()
     instance.returnCountdown = nil
     instance.totalDistanceTraveled = 0
     instance.spawnedVehicle = false
+    instance.isCompleted = false
     if core_groundMarkers then
         core_groundMarkers.resetAll()
     end
@@ -85,6 +85,8 @@ function VehicleRepoJob:destroy()
     self.returnCountdown = nil
     self.totalDistanceTraveled = 0
     self.spawnedVehicle = false
+    self.isCompleted = false
+    self.reward = nil
     if core_groundMarkers then
         core_groundMarkers.resetAll()
     end
@@ -234,6 +236,16 @@ function VehicleRepoJob:generateVehicleConfig()
             age = 2025 - self.randomVehicleInfo.year
         })
     end
+
+    local data = {
+        state = "picking_up",
+        vehicle = self.randomVehicleInfo,
+        deliveryLocation = self.selectedDealership and self.selectedDealership.name or "",
+        distanceToDestination = self.deliveryLocation and (self.vehicleId and 
+            (getObjectByID(self.vehicleId):getPosition() - self.deliveryLocation.pos):length() or 0) or 0,
+        totalDistance = self.totalDistanceTraveled or 0
+    }
+    guihooks.trigger('updateRepoState', data)
 end
 
 -- Spawn the vehicle at the selected spot
@@ -464,7 +476,15 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
                 if vehicle then
                     core_vehicleBridge.executeAction(vehicle, 'setFreeze', true)
                 end
-                self:destroy()
+                if self.vehicleId then
+                    local vehicle = getObjectByID(self.vehicleId)
+                    if vehicle then
+                        vehicle:delete()
+                    end
+                    self.vehicleId = nil
+                end
+                self.isCompleted = true
+                self.reward = reward
                 ui_message(rewardText, 15, "Job Completed", "info")
             end, 1, self)
         elseif distanceFromDestination <= 10 then
@@ -504,6 +524,10 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     end
 end
 
+function VehicleRepoJob:completeJob()
+    self:destroy()
+end
+
 -- Get the current repo job instance
 function M.getRepoJobInstance()
     if not repoJobInstance then
@@ -512,22 +536,17 @@ function M.getRepoJobInstance()
     return repoJobInstance
 end
 
--- Handle vehicle switching (called from playerDriving)
-function M.onVehicleSwitched(oldId, newId)
-    if M.isRepoVehicle(newId) then
-        print("Vehicle switched to repo vehicle")
-        local instance = M.getRepoJobInstance()
-        if instance then
-            print("Instance found")
-            instance:onVehicleSwitched(oldId, newId)
-        end
-    end
-end
-
 -- Generate a new repo job (called from playerDriving)
 function M.generateJob()
     local instance = M.getRepoJobInstance()
-    if instance then
+    if not M.isRepoVehicle() then
+        ui_message("You must be in a Repo Vehicle to generate a job.", 10, "info", "info")
+        return
+    end
+    
+    if instance and M.isRepoVehicle() then
+        instance.repoVehicle = playerVehicle
+        instance.repoVehicleID = playerVehicle:getID()
         instance:generateJob()
     end
 end
@@ -541,9 +560,48 @@ function M.onUpdate(dtReal, dtSim, dtRaw)
 end
 
 -- Check if the vehicle is a repo vehicle
-function M.isRepoVehicle(newId)
-    local licenseText = core_vehicles.getVehicleLicenseText(getObjectByID(newId))
+function M.isRepoVehicle()
+    local licenseText = core_vehicles.getVehicleLicenseText(be:getPlayerVehicle(0))
     return licenseText and licenseText:lower() == "repo"
+end
+
+function M.requestRepoState()
+    local instance = M.getRepoJobInstance()
+    if not instance then return end
+    
+    local state = "no_mission"
+    if instance.isCompleted then
+        state = "completed"
+    elseif instance.isMonitoring then
+        state = instance.isJobStarted and "dropping_off" or "picking_up"
+    end
+    
+    local data = {
+        state = state,
+        vehicle = instance.randomVehicleInfo,
+        deliveryLocation = instance.selectedDealership and instance.selectedDealership.name or "",
+        distanceToDestination = instance.deliveryLocation and (instance.vehicleId and 
+            (getObjectByID(instance.vehicleId):getPosition() - instance.deliveryLocation.pos):length() or 0) or 0,
+        totalDistance = instance.totalDistanceTraveled or 0,
+        reward = instance.reward or 0,
+        isRepoVehicle = M.isRepoVehicle()
+    }
+    
+    guihooks.trigger('updateRepoState', data)
+end
+
+function M.cancelJob()
+    local instance = M.getRepoJobInstance()
+    if instance then
+        instance:destroy()
+    end
+end
+
+function M.completeJob()
+    local instance = M.getRepoJobInstance()
+    if instance then
+        instance:completeJob()
+    end
 end
 
 -- Export the class
