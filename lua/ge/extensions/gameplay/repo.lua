@@ -545,8 +545,8 @@ function M.generateJob()
     end
     
     if instance and M.isRepoVehicle() then
-        instance.repoVehicle = playerVehicle
-        instance.repoVehicleID = playerVehicle:getID()
+        instance.repoVehicle = be:getPlayerVehicle(0)
+        instance.repoVehicleID = be:getPlayerVehicle(0):getID()
         instance:generateJob()
     end
 end
