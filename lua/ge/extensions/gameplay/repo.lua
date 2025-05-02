@@ -427,10 +427,10 @@ function VehicleRepoJob:onUpdate(dtReal, dtSim, dtRaw)
     if self.jobStartTime then
         local distanceFromDestination = (vehiclePos - self.deliveryLocation.pos):length()
         local velocity = vehicle:getVelocity():length()
-        if distanceFromDestination <= 1 and velocity <= 1 then
+        if distanceFromDestination <= 3 and velocity <= 1 then
             core_jobsystem.create(function(job)
-                ui_fadeScreen.cycle(0.5, 1, 0.5)
-                job.sleep(1)
+                ui_fadeScreen.cycle(0.5, 0.5, 0.5)
+                job.sleep(0.5)
                 local reward = self:calculateReward()
                 local rewardText = "You've Dropped Off a " ..  self.vehInfo.Brand .. " " .. self.vehInfo.Name .. "."
                 if reward then
