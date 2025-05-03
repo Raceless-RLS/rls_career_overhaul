@@ -343,6 +343,9 @@ local function saveVehiclesData(currentSavePath, oldSaveDate, vehiclesThumbnailU
         FS:copyFile(oldSavePath .. "/career/vehicles/" .. id .. ".png", thumbnailFilename)
       end
 
+      -- save damage state
+      career_modules_damageManager.saveDamageState(id, currentSavePath .. "/career/vehicles/damage/" .. id .. "_damageState.json")
+
       career_saveSystem.jsonWriteFileSafe(currentSavePath .. "/career/vehicles/" .. id .. ".json", vehicle, true)
     end
   end
@@ -360,6 +363,7 @@ local function saveVehiclesData(currentSavePath, oldSaveDate, vehiclesThumbnailU
     if not vehicles[inventoryId] then
       FS:removeFile(dir .. filename)
       FS:removeFile(dir .. inventoryId .. ".png")
+      FS:removeFile(dir .. "damage/" .. inventoryId .. "_damageState.json")
     end
   end
 end
@@ -476,7 +480,7 @@ local function removeVehicleObject(inventoryId, skipPartConditions)
   if vehId then
     local obj = getObjectByID(vehId)
     if obj then
-      obj:delete()
+      career_modules_damageManager.saveDamageState(inventoryId, nil, true) -- remove vehicle
     end
     vehIdToInventoryId[vehId] = nil
   end
@@ -538,6 +542,7 @@ end
 -- replaceOption 1: replace the current vehicle object
 -- replaceOption 2: replace the vehicle object with the same inventoryId
 local function spawnVehicle(inventoryId, replaceOption, callback)
+  print("Spawning vehicle " .. inventoryId)
   local vehInfo = vehicles[inventoryId]
 
   local carConfigToLoad = vehInfo.config
@@ -571,10 +576,9 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
     end
 
     assignInventoryIdToVehId(inventoryId, vehObj:getID())
-    local numberOfBrokenParts = career_modules_valueCalculator.getNumberOfBrokenParts(vehInfo.partConditions)
-    if numberOfBrokenParts > 0 and numberOfBrokenParts < career_modules_valueCalculator.getBrokenPartsThreshold() then
-      career_modules_insurance.repairPartConditions({partConditions = vehInfo.partConditions})
-    end
+
+    -- load damage state
+    career_modules_damageManager.loadDamageState(inventoryId)
 
     if vehInfo.partConditions then
       core_vehicleBridge.executeAction(vehObj, 'initPartConditions', vehInfo.partConditions, 0, 1, 1)
@@ -667,29 +671,25 @@ local function setupInventory(levelPath)
                     career_modules_loanerVehicles.returnVehicle(inventoryId)
                     loanedVehicleReturned = true
                 else
-                    if career_modules_insurance.inventoryVehNeedsRepair(inventoryId) then
-                        vehiclesMovedToStorage = true
-                    else
-                        local veh = nil
-                        if not justSwitched or vehicleToEnterId == inventoryId then
-                            veh = spawnVehicle(inventoryId)
-                        end
-                        if veh then
-                            local levelGate
-                            if justSwitched then
-                                levelGate = scenetree.findObject("Level Gate")
-                                if levelGate then
-                                    location.pos = levelGate:getPosition()
-                                    location.rot = levelGate:getRotation()
-                                end
-                            end
-                            if not levelGate and location.option == "garage" then
-                                location.vehId = veh:getID()
-                                vehiclesToTeleportToGarage[inventoryId] = location
-                            end
-                            spawn.safeTeleport(veh, location.pos, location.rot)
-                        end
-                    end
+                  local veh = nil
+                  if not justSwitched or vehicleToEnterId == inventoryId then
+                      veh = spawnVehicle(inventoryId)
+                  end
+                  if veh then
+                      local levelGate
+                      if justSwitched then
+                          levelGate = scenetree.findObject("Level Gate")
+                          if levelGate then
+                              location.pos = levelGate:getPosition()
+                              location.rot = levelGate:getRotation()
+                          end
+                      end
+                      if not levelGate and location.option == "garage" then
+                          location.vehId = veh:getID()
+                          vehiclesToTeleportToGarage[inventoryId] = location
+                      end
+                      spawn.safeTeleport(veh, location.pos, location.rot)
+                  end
                 end
             end
             loadedVehiclesLocations = nil

@@ -11,11 +11,7 @@
 
     <BngPopoverMenu :name="popId" focus @hide="selectedVehId = null">
       <template v-for="(buttonData, index) in vehicleInventoryStore.vehicleInventoryData.chooseButtonsData">
-        <BngButton v-if="buttonData.repairRequired && vehSelected.needsRepair && !vehicleInventoryStore.vehicleInventoryData.tutorialActive"
-          :accent="ACCENTS.menu" disabled>
-          {{ buttonData.buttonText }} (Needs repair)
-        </BngButton>
-        <BngButton v-else-if="!vehSelected.onSite"
+        <BngButton v-if="!vehSelected.onSite"
           :accent="ACCENTS.menu" disabled>
           {{ buttonData.buttonText }} (Offsite)
         </BngButton>

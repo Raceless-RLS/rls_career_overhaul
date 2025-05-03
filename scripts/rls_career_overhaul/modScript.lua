@@ -62,6 +62,12 @@ end
 extensions.load("careerMaps")
 setExtensionUnloadMode("careerMaps", "manual")
 
+if extensions.isExtensionLoaded("util_richPresence") then
+    extensions.unload("util_richPresence")
+end
+extensions.load("util_richPresence")
+setExtensionUnloadMode("util_richPresence", "manual")
+
 if not core_gamestate.state or core_gamestate.state.state ~= "career" then
     loadExtensions()
 end
