@@ -33,7 +33,7 @@ import PhoneMarketplace from "./views/PhoneMarketplace.vue"
 import Marketplace from "./views/Marketplace.vue"
 import PhoneTaxi from "./views/PhoneTaxi.vue"
 import CarMeetsPhone from "./views/CarMeetsPhone.vue"
-
+import PhoneRepo from "./views/PhoneRepo.vue"
 
 export default [
   // Career Pause
@@ -358,6 +358,12 @@ export default [
         path: "phone-marketplace",
         name: "phone-marketplace",
         component: PhoneMarketplace
+      },
+      
+      {
+        path: "phone-repo",
+        name: "phone-repo",
+        component: PhoneRepo
       }
 
     ],

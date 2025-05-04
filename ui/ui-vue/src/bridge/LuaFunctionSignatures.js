@@ -963,5 +963,14 @@ export default {
 
   career_modules_hardcore: {
     isHardcoreMode: () => {}
+  },
+
+  gameplay_repo: {
+    generateJob: () => {},
+    getRepoJobInstance: () => {},
+    requestRepoState: () => {},
+    cancelJob: () => {},
+    completeJob: () => {},
+    isRepoVehicle: () => {}
   }
 }

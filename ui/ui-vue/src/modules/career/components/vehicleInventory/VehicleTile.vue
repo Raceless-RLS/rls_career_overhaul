@@ -175,7 +175,7 @@ const locked = computed(() => {
       res = { reason: "Available in", eta }
     }
   } else if (props.data.needsRepair) {
-    res = { reason: "Needs repair", location: true }
+    res = { reason: "Damaged", location: true }
   } else if (!props.data.ownsRequiredInsurance) {
     res = { reason: "Insurance required", location: true }
   }

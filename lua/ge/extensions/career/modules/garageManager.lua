@@ -124,6 +124,7 @@ local function loadPurchasedGarages()
     purchasedGarages = {}
     discoveredGarages = {}
   end
+
   reloadRecoveryPrompt()
   buildGarageSizes()
   fillGarages()
@@ -133,10 +134,33 @@ local function onCareerModulesActivated()
   loadPurchasedGarages()
 end
 
+local function getGaragePrice(garage)
+  if career_modules_hardcore.isHardcoreMode() then
+    return garage.defaultPrice
+  else
+    return garage.starterGarage and 0 or garage.defaultPrice
+  end
+end
+
 local function showPurchaseGaragePrompt(garageId)
-  print(garageId)
   if not career_career.isActive() then return end
   garageToPurchase = freeroam_facilities.getFacility("garage", garageId)
+  if getGaragePrice(garageToPurchase) == 0 then
+    addPurchasedGarage(garageToPurchase.id)
+    local computers = freeroam_facilities.getFacilitiesByType("computer")
+    local computerId = nil
+    for _, computer in pairs(computers) do
+      if computer.garageId == garageId then
+        computerId = computer.id
+        break
+      end
+    end
+    if computerId then
+      career_modules_computer.openComputerMenuById(computerId)
+    end
+    career_saveSystem.saveCurrent()
+    return
+  end
   guihooks.trigger('ChangeState', {state = 'purchase-garage'})
 end
 
@@ -148,7 +172,7 @@ local function requestGarageData()
     end
     local garageData = {
       name = garage.name,
-      price = garage.defaultPrice,
+      price = getGaragePrice(garage),
       capacity = math.ceil(garage.capacity / (career_modules_hardcore.isHardcoreMode() and 2 or 1))
     }
     return garageData
@@ -158,7 +182,7 @@ end
 
 local function canPay()
   if not garageToPurchase then return false end
-  local price = { money = { amount = garageToPurchase.defaultPrice, canBeNegative = false } }
+  local price = { money = { amount = getGaragePrice(garageToPurchase), canBeNegative = false } }
   for currency, info in pairs(price) do
     if not info.canBeNegative and career_modules_playerAttributes.getAttributeValue(currency) < info.amount then
       return false
@@ -169,11 +193,11 @@ end
 
 local function buyGarage()
   if garageToPurchase then
-    local price = garageToPurchase.defaultPrice
-    price = { money = { amount = price, canBeNegative = false } }
+    local price = { money = { amount = getGaragePrice(garageToPurchase), canBeNegative = false } }
     local success = career_modules_payment.pay(price, { label = "Purchased " .. garageToPurchase.name })
     if success then
       addPurchasedGarage(garageToPurchase.id)
+      career_saveSystem.saveCurrent()
     end
     garageToPurchase = nil
   end

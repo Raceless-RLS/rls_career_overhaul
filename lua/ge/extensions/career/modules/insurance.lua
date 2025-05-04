@@ -583,7 +583,7 @@ local function startRepairInstant(vehInfo, callback, skipSound)
     if career_modules_inventory.getVehicleIdFromInventoryId(vehInfo.id) then -- vehicle is currently spawned
         career_modules_inventory.spawnVehicle(vehInfo.id, 2, callback and function()
             callback(vehInfo)
-        end)
+        end, true)
     end
     onAfterVehicleRepaired(vehInfo)
 
@@ -630,6 +630,7 @@ local function getRateIncrease(vehId, fullcost, paid)
 end
 
 local function startRepair(inventoryId, repairOptionData, callback)
+    career_modules_damageManager.clearDamageState(inventoryId)
     inventoryId = inventoryId or career_modules_inventory.getCurrentVehicle()
     repairOptionData = (repairOptionData and type(repairOptionData) == "table") and repairOptionData or {}
     repairOptionData.name = repairOptionData.name or "instantFreeRepair"
