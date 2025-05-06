@@ -68,6 +68,18 @@ end
 extensions.load("util_richPresence")
 setExtensionUnloadMode("util_richPresence", "manual")
 
+if extensions.isExtensionLoaded("freeroam_generateLights") then
+    extensions.unload("freeroam_generateLights")
+end
+extensions.load("freeroam_generateLights")
+setExtensionUnloadMode("freeroam_generateLights", "manual")
+
+if extensions.isExtensionLoaded("editor_lightGenerationEditor") then
+    extensions.unload("editor_lightGenerationEditor")
+end
+extensions.load("editor_lightGenerationEditor")
+setExtensionUnloadMode("editor_lightGenerationEditor", "manual")
+
 if not core_gamestate.state or core_gamestate.state.state ~= "career" then
     loadExtensions()
 end
