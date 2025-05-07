@@ -1,6 +1,7 @@
 local M = {}
 
 local lightRegistry = {}
+local forestLinks = {}
 local forest = nil
 local forestData = nil
 local currentLevel = nil
@@ -39,8 +40,25 @@ local function getLightData()
     forestData = forest:getData()
 end
 
-local function registerLight(light)
+local function checkRegistryForID(id, type)
+    for i, light in ipairs(lightRegistry) do
+        if forestLinks[i] then
+            goto continue
+        end
+        if type and light.obj:getClassName() == type then
+            if light.obj:getID() == id then
+                return true
+            end
+        end
+        ::continue::
+    end
+end
+
+local function registerLight(light, isForest)
     table.insert(lightRegistry, light)
+    if isForest then
+        forestLinks[#lightRegistry] = true
+    end
 end
 
 local function getLightsInForest()
@@ -53,7 +71,7 @@ local function getLightsInForest()
         for key, value in pairs(lightData) do
             if lastAfterSlash(shape) == key then
                 print("Found " .. key .. " at pos: " .. tostring(item:getPosition()))
-                registerLight({obj = item, data = value})
+                registerLight({obj = item, data = value}, true)
             end
         end
     end
@@ -75,17 +93,32 @@ local function getLightsFromSceneTree()
                 elseif obj.getClassName and obj:getClassName() == "TSStatic" then
                     for key, value in pairs(lightData) do
                         if lastAfterSlash(obj:getModelFile()) == key then
-                            registerLight({obj = obj, data = value})
+                            registerLight({
+                                obj = obj,
+                                data = value
+                            })
+                            print("Found " .. key .. " at pos: " .. tostring(obj:getPosition()))
+                        end
+                    end
+                elseif obj:getClassName() == "Prefab" then
+                    if checkRegistryForID(obj:getID(), "Prefab") then
+                        goto continue
+                    end
+                    for key, value in pairs(lightData) do
+                        if lastAfterSlash(obj:getField("fileName", 0)) == key then
+                            registerLight({ obj = obj, data = value})
                             print("Found " .. key .. " at pos: " .. tostring(obj:getPosition()))
                         end
                     end
                 end
             end
+            ::continue::
         end
     end
 
     searchObjects(missionGroup)
 end
+
 
 local function getAllLights()
     getLightsInForest()

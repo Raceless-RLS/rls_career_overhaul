@@ -158,59 +158,96 @@ local function calculateLightPosition(obj, pointData)
   return pos + scaledOffset
 end
 
--- Function to update light properties in the scene
-local function updateLightInScene(lightInfo, point)
+-- Function to update specific light property in the scene
+local function updateLightPropertyInScene(lightInfo, property, value)
+  if not lightInfo or not lightInfo.id then return end
+  
+  local lightObj = scenetree.findObjectById(lightInfo.id)
+  if not lightObj then return end
+  
+  if property == "color" then
+    lightObj:setField('color', 0, string.format("%f %f %f %f", 
+      value.x, value.y, value.z, 1.0))
+  elseif property == "radius" then
+    local obj = findObjectByFileName(currentLightName)
+    if obj then
+      local scale = obj:getScale()
+      local scaledRadius = value
+      if type(scale) == "cdata" then
+        scaledRadius = value * ((scale.x + scale.y + scale.z) / 3)
+      else
+        scaledRadius = value * scale
+      end
+      lightObj:setField('radius', 0, tostring(scaledRadius))
+    else
+      lightObj:setField('radius', 0, tostring(value))
+    end
+  elseif property == "brightness" then
+    lightObj:setField('brightness', 0, tostring(value))
+  elseif property == "positionOffset" then
+    local obj = findObjectByFileName(currentLightName)
+    if obj then
+      local newPos = calculateLightPosition(obj, {positionOffset = value})
+      if newPos then
+        lightObj:setPosition(newPos)
+      end
+    end
+  elseif property == "innerAngle" then
+    lightObj:setField('innerAngle', 0, tostring(value))
+  elseif property == "outerAngle" then
+    lightObj:setField('outerAngle', 0, tostring(value))
+  end
+end
+
+-- Function to update a light property and propagate only that change to scene
+local function updateLightProperty(point, propertyName, value)
+  point[propertyName] = value
+  modified = true
+  
+  -- Update only this property in the scene
+  local matchingLights = findLightsForCurrentDefinition()
+  for _, lightInfo in ipairs(matchingLights) do
+    if lightInfo.pointIndex == currentPointIndex then
+      updateLightPropertyInScene(lightInfo, propertyName, value)
+      break
+    end
+  end
+end
+
+-- Function to update light properties in the scene (keep for compatibility but replace usage)
+local function updateLightInScene(lightInfo, point, propertyName)
   if not lightInfo or not lightInfo.id or not point then return end
   
   local lightObj = scenetree.findObjectById(lightInfo.id)
   if not lightObj then return end
   
   -- Update color
-  if point.color then
-    lightObj:setField('color', 0, string.format("%f %f %f %f", 
-      point.color.x, point.color.y, point.color.z, 1.0))
+  if point.color and (propertyName == "color" or propertyName == nil) then
+    updateLightPropertyInScene(lightInfo, "color", point.color)
   end
   
   -- Update radius
-  if point.radius then
-    local obj = findObjectByFileName(currentLightName)
-    if obj then
-      local scale = obj:getScale()
-      local scaledRadius = point.radius
-      if type(scale) == "cdata" then
-        scaledRadius = point.radius * ((scale.x + scale.y + scale.z) / 3)
-      else
-        scaledRadius = point.radius * scale
-      end
-      lightObj:setField('radius', 0, tostring(scaledRadius))
-    else
-      lightObj:setField('radius', 0, tostring(point.radius))
-    end
+  if point.radius and (propertyName == "radius" or propertyName == nil) then
+    updateLightPropertyInScene(lightInfo, "radius", point.radius)
   end
   
   -- Update brightness
-  if point.brightness then
-    lightObj:setField('brightness', 0, tostring(point.brightness))
+  if point.brightness and (propertyName == "brightness" or propertyName == nil) then
+    updateLightPropertyInScene(lightInfo, "brightness", point.brightness)
   end
   
   -- Update position based on offset
-  if point.positionOffset then
-    local obj = findObjectByFileName(currentLightName)
-    if obj then
-      local newPos = calculateLightPosition(obj, point)
-      if newPos then
-        lightObj:setPosition(newPos)
-      end
-    end
+  if point.positionOffset and (propertyName == "positionOffset" or propertyName == nil) then
+    updateLightPropertyInScene(lightInfo, "positionOffset", point.positionOffset)
   end
   
   -- For spot lights, update additional properties
   if point.type == "SpotLight" then
-    if point.innerAngle then
-      lightObj:setField('innerAngle', 0, tostring(point.innerAngle))
+    if point.innerAngle and (propertyName == "innerAngle" or propertyName == nil) then
+      updateLightPropertyInScene(lightInfo, "innerAngle", point.innerAngle)
     end
-    if point.outerAngle then
-      lightObj:setField('outerAngle', 0, tostring(point.outerAngle))
+    if point.outerAngle and (propertyName == "outerAngle" or propertyName == nil) then
+      updateLightPropertyInScene(lightInfo, "outerAngle", point.outerAngle)
     end
   end
 end
@@ -567,11 +604,11 @@ local function updateLightProperty(point, propertyName, value)
   point[propertyName] = value
   modified = true
   
-  -- Update the actual light in the scene
+  -- Update only this property in the scene
   local matchingLights = findLightsForCurrentDefinition()
   for _, lightInfo in ipairs(matchingLights) do
     if lightInfo.pointIndex == currentPointIndex then
-      updateLightInScene(lightInfo, point)
+      updateLightPropertyInScene(lightInfo, propertyName, value)
       break
     end
   end
@@ -856,7 +893,7 @@ local function onEditorGui()
             local matchingLights = findLightsForCurrentDefinition()
             for _, lightInfo in ipairs(matchingLights) do
               if lightInfo.pointIndex == currentPointIndex then
-                updateLightInScene(lightInfo, point)
+                updateLightInScene(lightInfo, point, "positionOffset")
                 break
               end
             end
@@ -895,7 +932,7 @@ local function onEditorGui()
             local matchingLights = findLightsForCurrentDefinition()
             for _, lightInfo in ipairs(matchingLights) do
               if lightInfo.pointIndex == currentPointIndex then
-                updateLightInScene(lightInfo, point)
+                updateLightInScene(lightInfo, point, "color")
                 break
               end
             end
@@ -1013,19 +1050,22 @@ local function onEditorGui()
         modified = true
       end
     end
-    
-    im.Separator()
-    
-    -- Preview buttons
-    if im.Button("Preview Lights", im.ImVec2(im.GetContentRegionAvailWidth()/2, 0)) then
-      saveLightData() -- Save first
-      previewLights()
-    end
-    
-    im.SameLine()
-    
-    if im.Button("Clear Preview", im.ImVec2(im.GetContentRegionAvailWidth(), 0)) then
-      clearPreview()
+
+    if lightCount > 0 then
+      
+      im.Separator()
+      
+      -- Preview buttons
+      if im.Button("Preview Lights", im.ImVec2(im.GetContentRegionAvailWidth()/2, 0)) then
+        saveLightData() -- Save first
+        previewLights()
+      end
+      
+      im.SameLine()
+      
+      if im.Button("Clear Preview", im.ImVec2(im.GetContentRegionAvailWidth(), 0)) then
+        clearPreview()
+      end
     end
     
     editor.endWindow()
