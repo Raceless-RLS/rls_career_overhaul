@@ -1,3 +1,5 @@
+// Logically, because shuffleboard looks for a specific config, you can just grab another config for a different organization?
+
 {
   "shuffleboardLogistics": {
     "name": "Shuffleboard Logistics",
@@ -122,12 +124,13 @@
     "name": "Jerry Riggs",
     "description": "A small garage and mechanic in the industrial area.",
     "icon": "garage02",
+    
     "reputationLevels": [
-      {},
-      {},
-      {},
-      {},
-      {}
+      {},//-1
+      {},//0
+      {},//1
+      {},//2
+      {}//3
     ]
   },
   "belascoAuto": {

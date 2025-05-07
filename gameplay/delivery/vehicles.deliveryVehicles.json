@@ -1,15 +1,16 @@
 {
   //tier 1 vehicles
   //junker: bad "old" cars with lots of milage (300k-650k), but often used
+  //Boosted to 250/km to match the reward per km of last generation, blacklisted joesjunk.
   "junkerVehFilter": {
     "type":"vehicle",
     "unlockTag":"junkerVeh",
     "filterName":"Junker Car",
     "baseReward":250,
-    "rewardPerKm":40,
+    "rewardPerKm":250,
     "filter": {
       "whiteList":{"Years": {"min":1900, "max":2005}, "Mileage":{"min":300000000, "max":650000000}, "Value":{"min":2000, "max":50000},"Type":["Car"], "Config Type":["Factory"],"Population":{"min":500}},
-      "blackList":{"Type":["Trailer"]}
+      "blackList":{"Type":["Trailer"], "Config Type":["joesjunk"]}
     },
     "subFilters": [
     ],
@@ -18,12 +19,13 @@
   //tier 2 vehicles
   // TODO: Change this filter to reflect "Transport small vehicles to clients, emphasizing efficiency and the maintenance of vehicle condition."
   //fleet: "default" vehicles from dealership, "relatively" new with lower (35k-150k) mileage, very common.
+  //Boosted to 275/km to match the reward per km of last generation
   "smallVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Car",
     "baseReward":250,
-    "rewardPerKm":52,
+    "rewardPerKm":275,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Mileage":{"min":35000000, "max":150000000}, "Value":{"min":10000, "max":80000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":3000}},
       "blackList":{"Type":["Trailer"]}
@@ -33,12 +35,13 @@
     ],
   },
   //police filter only for police vehicles with used (20k-200k) or unused" (0.5k-25k)
+  //Boosted to 300/km to match the reward per km of last generation, base reward 350
   "policeFleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Small Police Car",
-    "baseReward":600,
-    "rewardPerKm":40,
+    "baseReward":350,
+    "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Type":["Car"], "Config Type":["Police"]},
       "blackList":{"Type":["Trailer"]}
@@ -55,12 +58,13 @@
   },
 
   //Ambulance Filter used (20k-200k) or unused" (0.5k-25k)
+  //Boosted to 300/km to match the reward per km of last generation, base reward 600
   "ambulanceFleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"smallVeh",
     "filterName":"Ambulance",
     "baseReward":600,
-    "rewardPerKm":40,
+    "rewardPerKm":300,
     "filter": {
       "whiteList":{"Years": {"min":1995, "max":2025}, "Name":["D-Series D45 Ambulance (A)","H-Series H45 Ambulance (A)"]},
       "blackList":{"Type":["Trailer"]}
@@ -79,12 +83,13 @@
   //tier 3 vehicles
   // This is a hardcoded filter that reads a particular property from the info.json: "careerCarJockey"
   // mileage from 80k-500k
+  //Tuned down slightly from .34, but still higher.
   "largeVehFilter": {
     "type":"vehicle",
     "unlockTag":"largeVeh",
     "filterName":"Large Truck",
-    "baseReward":250,
-    "rewardPerKm":92,
+    "baseReward":1500,
+    "rewardPerKm":600,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":80000000, "max":500000000}},
       "blackList":{"hasLoad":[true]},
@@ -96,24 +101,27 @@
 
   //tier 4 vehicles
   //fleet: "default" vehicles from dealership, "relatively" new with lower (5km-80km) mileage, very common. low chance for police or service cars
+  //Base 300, reward per km 250
   "fleetVehFilter": {
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Car",
-    "baseReward":250,
-    "rewardPerKm":62,
+    "baseReward":300,
+    "rewardPerKm":250,
     "filter": {
       "whiteList":{"Years": {"min":2000, "max":2025}, "Mileage":{"min":5000, "max":80000}, "Value":{"min":10000, "max":100000},"Type":["Car"], "Config Type":["Factory"], "Population":{"min":300}},
       "blackList":{"Type":["Trailer"]}
     },
   },
   //large vehicles like in tier 3, but "new" (5km-80km)
+  //Base 2500, reward per km 400
+  //Tuned down slightly from .34, but still higher.
   "fleetLargeVehFilter": {
     "type":"vehicle",
     "unlockTag":"fleetVeh",
     "filterName":"New Truck",
-    "baseReward":250,
-    "rewardPerKm":112,
+    "baseReward":2500,
+    "rewardPerKm":400,
     "filter": {
       "whiteList" : {"model_key" : ["us_semi"],"Mileage":{"min":5000, "max":80000}},
       "blackList":{"hasLoad":[true]},
@@ -124,21 +132,24 @@
 
   //tier 5 vehicles
   //customized: non-trivial "Custom"-config-type vehicles with lots of mileage (2k-200k)
+  //blacklisting "joesjunk" just in case, but not sure if it is needed.
+  //Base 800, reward per km 400
   "customizedVehFilter": {
     "type":"vehicle",
     "unlockTag":"exoticVeh",
     "filterName":"Customized Car",
-    "baseReward":300,
-    "rewardPerKm":120,
+    "baseReward":800,
+    "rewardPerKm":400,
     "filter": {
       "whiteList":{"Years": {"min":1950}, "Mileage":{"min":2000000, "max":200000000}, "Value":{"min":30000},"Type":["Car"], "Config Type":["Custom"]},
-      "blackList":{"Type":["Trailer"]}
+      "blackList":{"Type":["Trailer"], "Config Type":["joesjunk"]}
     },
     "subFilters": [
     ],
   },
 
   //exotic: basically "expensive" cars (>90k) with relatively low mileage (10k-50k)
+  //2nd exoticVeh filter?
   "exoticVehFilter": {
     "type":"vehicle",
     "unlockTag":"exoticVeh",
