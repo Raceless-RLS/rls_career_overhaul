@@ -10,7 +10,8 @@
 "doors":[["fastAutomotive_area","fastAutomotive_icon", 30]],
 "parkingSpotNames":["fastAutomotiveParking"],
 "activityAcceptProps":[
-  {"keyLabel":"Used Vehicles"}
+  {"keyLabel":"Used Race Cars"},
+  {"keyLabel":"High Performance"}
 ],
 "filter": {
   "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
@@ -147,7 +148,7 @@
 "doors":[["frameDealership_area","frameDealership_icon", 30]],
 "parkingSpotNames":["frameDealershipParking"],
 "activityAcceptProps":[
-  {"keyLabel":"Used Vehicles"}
+  {"keyLabel":"Rolling Frames"}
 ],
 "filter": {
   "blackList":{"Type":["Trailer"]}
@@ -267,7 +268,7 @@
   "testDrive": {
       "abandonFees" : 300,
       "timeLimit" : 120,
-      "licencePlate" : "prestige"
+      "licencePlate" : "Rich"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -284,8 +285,7 @@
   "doors":[["garageDealership_area_1","garageDealership_icon_1", 30]],
   "parkingSpotNames":["garageDealership1", "garageDealership2"],
   "activityAcceptProps":[
-      {"keyLabel":"Used Vehicles"},
-      {"keyLabel":"Low Fees"}
+      {"keyLabel":"Used Trucks and Vans"},
   ],
   "filter": {
       "whiteList":{"Mileage":{"min":8800028, "max":264000845},"Body Style":["Pickup","Van","Chassis Cab"], "Config Type":["Factory"] },
@@ -380,7 +380,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : ""
+    "licencePlate" : "Gizamn"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -397,6 +397,9 @@
 "parkingSpotNames":["discountDealershipParking"],
 "activityAcceptProps":[
   {"keyLabel":"Used Vehicles"}
+  {"keyLabel":"No Fees"}
+  {"keyLabel":"High Mileage"}
+
 ],
 "filter": {
 "whiteList":{"Mileage":{"min":305000000, "max":616001971}},
@@ -462,7 +465,7 @@
 "testDrive": {
   "abandonFees" : 250,
   "timeLimit" : 120,
-  "licencePlate" : ""
+  "licencePlate" : "Trusted"
 },
 "iconOffsetHeight":1.0,
 "iconLift":0.25,
@@ -478,7 +481,9 @@
   "doors":[["joesJunk_area","joesJunk_icon", 30]],
   "parkingSpotNames":["joesJunkCar","joesJunkBus"],
   "activityAcceptProps":[
-    {"keyLabel":"Used Vehicles"}
+    {"keyLabel":"VERY Used Vehicles"}
+    {"keyLabel":"VERY High Mileage"}
+    {"keyLabel":"No Fees"}
   ],
   "filter": {
     "blackList":{"Body Style":["ATV","Buggy"], "Config Type":["Frame"]}
@@ -494,7 +499,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : "Joe Junk"
+    "licencePlate" : "JoesJunk"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -510,7 +515,7 @@
   "doors":[["policeDealer_area","policeDealer_icon", 30]],
   "parkingSpotNames":["policeDealerParking"],
   "activityAcceptProps":[
-    {"keyLabel":"Used Vehicles"}
+    {"keyLabel":"Certified Police Vehicles"}
   ],
   "filter": {
       "whiteList":{"Mileage":{"min":2000, "max":88000282}, "Config Type":["Police"]},
@@ -563,7 +568,7 @@
   "doors":[["serviceDealer_area","serviceDealer_icon", 30]],
   "parkingSpotNames":["serviceDealerParking"],
   "activityAcceptProps":[
-    {"keyLabel":"Used Vehicles"}
+    {"keyLabel":"Used Service Vehicles"}
   ],
   "filter": {
       "whiteList":{"Mileage":{"min":10000, "max":88000282}, "Config Type":["Service"]},
@@ -625,7 +630,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : "Police"
+    "licencePlate" : "Service"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -640,7 +645,7 @@
   "doors":[["trailershop_area","trailershop_icon", 30]],
   "parkingSpotNames":["trailerShop"],
   "activityAcceptProps":[
-    {"keyLabel":"Trucks and Trailers"},
+    {"keyLabel":"Trailers"},
     {"keyLabel":"New & Used"}
   ],
 
@@ -659,7 +664,7 @@
   "testDrive" : {
     "abandonFees" : 100,
     "timeLimit" : 120,
-    "licencePlate" : "belasco"
+    "licencePlate" : "Trailer"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -675,7 +680,7 @@
   "doors":[["BruckellDealership_area","BruckellDealership_icon", 30]],
   "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
   "activityAcceptProps":[
-    {"keyLabel":"New Vehicles"}
+    {"keyLabel":"Imported Vehicles"}
   ],
   "filter": {
     "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
@@ -707,7 +712,7 @@
   "doors":[["GavrilcarDealership_area","GavrilcarDealership_icon", 30]],
   "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
   "activityAcceptProps":[
-    {"keyLabel":"New Vehicles"}
+    {"keyLabel":"Imported Vehicles"}
   ],
   "filter": {
     "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
@@ -723,7 +728,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : ""
+    "licencePlate" : "Gavril"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -739,7 +744,7 @@
   "doors":[["GavriltruckDealership_area","GavriltruckDealership_icon", 30]],
   "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
   "activityAcceptProps":[
-    {"keyLabel":"New Vehicles"}
+    {"keyLabel":"Imported Vehicles"}
   ],
   "filter": {
     "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
@@ -759,7 +764,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : ""
+    "licencePlate" : "Gavril"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -776,7 +781,7 @@
   "doors":[["SoliadDealership_area","SoliadDealership_icon", 30]],
   "parkingSpotNames":["domesticOnline","domesticOnlineBus"],
   "activityAcceptProps":[
-    {"keyLabel":"New Vehicles"}
+    {"keyLabel":"Imported Vehicles"}
   ],
   "filter": {
     "blackList":{"Type":["Trailer"],"Config Type":["Frame"]}
@@ -792,7 +797,7 @@
   "testDrive": {
     "abandonFees" : 250,
     "timeLimit" : 120,
-    "licencePlate" : ""
+    "licencePlate" : "Soliad"
   },
   "iconOffsetHeight":1.0,
   "iconLift":0.25,
@@ -834,7 +839,7 @@
   "testDrive" : {
     "abandonFees" : 100,
     "timeLimit" : 120,
-    "licencePlate" : "belasco"
+    "licencePlate" : "Commercial"
   },
   "iconOffsetHeight":0.24,
   "iconLift":0.24,
@@ -848,7 +853,7 @@
         "stock": 30,
         "filter": {
           "whiteList":{"Mileage":{"min":25000000, "max":380000000}, "Value":{"min":950}},
-          "blackList":{"Type":["Trailer", "Semi Truck"]}
+          "blackList":{"Type":["Trailer", "Semi Truck",],"Config Type":["Frame"]}
         },
         "subFilters": [
           {
