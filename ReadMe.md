@@ -505,13 +505,6 @@ Experience a diverse range of dealerships, each with unique specialties and inve
 
 Brand-specific new vehicle dealers:
 
-- **Soliad Online**:
-
-  - Stock: 10 vehicles
-  - New vehicles only
-  - Factory configurations
-  - Dealer Fees: \$2,500
-
 - **Gavril Car Online**:
 
   - Stock: 10 vehicles
