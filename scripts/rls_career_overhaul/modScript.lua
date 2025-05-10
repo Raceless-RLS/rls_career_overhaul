@@ -13,12 +13,6 @@ local function loadExtensions()
     extensions.load("core_gameContext")
     setExtensionUnloadMode("core_gameContext", "manual")
 
-    if extensions.isExtensionLoaded("gameplay_traffic_vehicle") then
-        extensions.unload("gameplay_traffic_vehicle")
-    end
-    extensions.load("gameplay_traffic_vehicle")
-    setExtensionUnloadMode("gameplay_traffic_vehicle", "manual")
-
     if extensions.isExtensionLoaded("gameplay_events_freeroam_init") then
         extensions.unload("gameplay_events_freeroam_init")
     end
@@ -67,18 +61,6 @@ if extensions.isExtensionLoaded("util_richPresence") then
 end
 extensions.load("util_richPresence")
 setExtensionUnloadMode("util_richPresence", "manual")
-
-if extensions.isExtensionLoaded("freeroam_generateLights") then
-    extensions.unload("freeroam_generateLights")
-end
-extensions.load("freeroam_generateLights")
-setExtensionUnloadMode("freeroam_generateLights", "manual")
-
-if extensions.isExtensionLoaded("editor_lightGenerationEditor") then
-    extensions.unload("editor_lightGenerationEditor")
-end
-extensions.load("editor_lightGenerationEditor")
-setExtensionUnloadMode("editor_lightGenerationEditor", "manual")
 
 if not core_gamestate.state or core_gamestate.state.state ~= "career" then
     loadExtensions()

@@ -1,234 +1,302 @@
 {
-  "races": {
-    "drag": {
-      "bestTime": 11,
-      "reward": 1000,
-      "checkpoints": 2,
-      "label": "Drag Strip",
-      "displaySpeed": true,
-      "type": ["drag"]
+  "races":{
+    "beachCircuit":{
+      "apexOffset":2,
+      "bestTime":30,
+      "checkpointRoad":"beachCircuit",
+      "displaySpeed":true,
+      "hotlap":25,
+      "label":"Beach Circuit",
+      "minCheckpointDistance":45,
+      "reward":1500,
+      "type":[
+        "offroad",
+        "rally"
+      ]
     },
-    "roadOval": {
-      "bestTime": 30,
-      "reward": 350,
-      "hotlap": 25,
-      "checkpointRoad": "roadOval",
-      "label": "Paved Oval",
-      "type": ["oval"]
+    "dirtCircuit":{
+      "bestTime":65,
+      "checkpointRoad":"dirtloop",
+      "hotlap":55,
+      "label":"Dirt Circuit",
+      "reward":2000,
+      "type":[
+        "offroad",
+        "rally"
+      ]
     },
-    "dirtOval": {
-      "bestTime": 30,
-      "reward": 350,
-      "hotlap": 25,
-      "checkpointRoad": "dirtOval",
-      "label": "Dirt Oval",
-      "type": ["oval", "offroad"]
+    "dirtOval":{
+      "bestTime":30,
+      "checkpointRoad":"dirtOval",
+      "hotlap":25,
+      "label":"Dirt Oval",
+      "reward":350,
+      "type":[
+        "oval",
+        "offroad"
+      ]
     },
-    "quarryCircuit": {
-      "bestTime": 27,
-      "reward": 1000,
-      "hotlap": 23,
-      "checkpointRoad": "quarryCircuit",
-      "label": "Quarry Circuit",
-      "type": ["offroad", "rally"]
+    "drag":{
+      "bestTime":11,
+      "checkpoints":2,
+      "displaySpeed":true,
+      "label":"Drag Strip",
+      "reward":1000,
+      "type":[
+        "drag"
+      ]
     },
-    "beachCircuit": {
-      "bestTime": 30,
-      "reward": 1500,
-      "hotlap": 25,
-      "checkpointRoad": "beachCircuit",
-      "label": "Beach Circuit",
-      "displaySpeed": true,
-      "apexOffset": 2,
-      "type": ["offroad", "rally"],
-      "minCheckpointDistance": 45
+    "dragHighway":{
+      "bestTime":17,
+      "checkpointRoad":"dragHighway",
+      "displaySpeed":true,
+      "label":"No Prep Highway Drag",
+      "reward":1700,
+      "type":[
+        "drag"
+      ]
     },
-    "hotrolledDrift": {
-      "bestTime": 30,
-      "driftGoal": 3500,
-      "reward": 1500,
-      "checkpointRoad": "hotrolledDrift",
-      "label": "Hotrolled Drift",
-      "type": ["motorsport", "drift"]
+    "hotrolledDrift":{
+      "bestTime":30,
+      "checkpointRoad":"hotrolledDrift",
+      "driftGoal":3500,
+      "label":"Hotrolled Drift",
+      "reward":1500,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
     },
-    "redwoodDrift": {
-      "bestTime": 60,
-      "driftGoal": 6000,
-      "reward": 1500,
-      "checkpointRoad": "redwoodDrift",
-      "label": "Redwood Drift",
-      "type": ["motorsport", "drift"]
+    "islandTouge":{
+      "bestTime":25,
+      "checkpointRoad":"islandTouge",
+      "driftGoal":3500,
+      "label":"Island Touge Drift",
+      "reward":3000,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
     },
-    "redwoodDriftR": {
-      "bestTime": 60,
-      "driftGoal": 6000,
-      "reward": 1500,
-      "checkpointRoad": "redwoodDriftR",
-      "label": "Redwood Drift Reverse",
-      "type": ["motorsport", "drift"]
+    "koh1":{
+      "bestTime":120,
+      "checkpointRoad":"koh1",
+      "hotlap":110,
+      "label":"King of the Hammer 1",
+      "reward":2000,
+      "type":[
+        "motorsport",
+        "rally",
+        "offroad",
+        "crawl"
+      ]
     },
-    "raceTrackDrift": {
-      "bestTime": 35,
-      "hotlap": 30,
-      "driftGoal": 4000,
-      "reward": 1500,
-      "checkpointRoad": "raceTrackDrift",
-      "label": "Parking Lot Drift",
-      "type": ["motorsport", "drift"],
-      "minCheckpointDistance": 20
+    "koh2":{
+      "bestTime":180,
+      "checkpointRoad":"koh2",
+      "hotlap":170,
+      "label":"King of the Hammer 2",
+      "reward":3000,
+      "type":[
+        "motorsport",
+        "rally",
+        "offroad",
+        "crawl"
+      ]
     },
-    "sealbrikDrift": {
-      "bestTime": 30,
-      "driftGoal": 4500,
-      "reward": 1500,
-      "checkpointRoad": "sealbrikDrift",
-      "label": "Sealbrik Drift",
-      "type": ["motorsport", "drift"]
+    "mudDrag1":{
+      "bestTime":9,
+      "checkpointRoad":"mudDrag1",
+      "label":"Mud Drag Easy",
+      "reward":1500,
+      "type":[
+        "mud",
+        "drag"
+      ]
     },
-    "islandTouge": {
-      "bestTime": 25,
-      "reward": 3000,
-      "driftGoal": 3500,
-      "checkpointRoad": "islandTouge",
-      "label": "Island Touge Drift",
-      "type": ["motorsport", "drift"]
+    "mudDrag2":{
+      "bestTime":15,
+      "checkpointRoad":"mudDrag2",
+      "label":"Mud Drag Hard",
+      "reward":2700,
+      "type":[
+        "mud",
+        "drag",
+        "extremeMud"
+      ]
     },
-    "dragHighway": {
-      "bestTime": 17,
-      "reward": 1700,
-      "checkpointRoad": "dragHighway",
-      "label": "No Prep Highway Drag",
-      "displaySpeed": true,
-      "type": ["drag"]
+    "quarryCircuit":{
+      "bestTime":27,
+      "checkpointRoad":"quarryCircuit",
+      "hotlap":23,
+      "label":"Quarry Circuit",
+      "reward":1000,
+      "type":[
+        "offroad",
+        "rally"
+      ]
     },
-    "rockClimbS": {
-      "bestTime": 5,
-      "reward": 1200,
-      "checkpointRoad": "rockClimbS",
-      "label": "Rock Crawl Short",
-      "type": ["crawl"]
+    "raceTrackDrift":{
+      "bestTime":35,
+      "checkpointRoad":"raceTrackDrift",
+      "driftGoal":4000,
+      "hotlap":30,
+      "label":"Parking Lot Drift",
+      "minCheckpointDistance":20,
+      "reward":1500,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
     },
-    "rockClimbL": {
-      "bestTime": 12,
-      "reward": 1500,
-      "checkpointRoad": "rockClimbL",
-      "label": "Rock Crawl Long",
-      "type": ["crawl"]
+    "rally1":{
+      "apexOffset":2,
+      "bestTime":70,
+      "checkpointRoad":"rally1",
+      "label":"Rally Stage 1",
+      "reward":2000,
+      "type":[
+        "rally"
+      ]
     },
-    "mudDrag1": {
-      "bestTime": 9,
-      "reward": 1500,
-      "checkpointRoad": "mudDrag1",
-      "label": "Mud Drag Easy",
-      "type": ["mud", "drag"]
+    "rally2":{
+      "apexOffset":2,
+      "bestTime":120,
+      "checkpointRoad":"rally2",
+      "label":"Rally Stage 2",
+      "reward":2500,
+      "type":[
+        "rally"
+      ]
     },
-    "mudDrag2": {
-      "bestTime": 15,
-      "reward": 2700,
-      "checkpointRoad": "mudDrag2",
-      "label": "Mud Drag Hard",
-      "type": ["mud", "drag", "extremeMud"]
+    "rally3":{
+      "apexOffset":1,
+      "bestTime":135,
+      "checkpointRoad":"rally3",
+      "label":"Rally Stage 3",
+      "reward":3000,
+      "type":[
+        "rally"
+      ]
     },
-    "koh1": {
-      "bestTime": 120,
-      "reward": 2000,
-      "hotlap": 110,
-      "checkpointRoad": "koh1",
-      "label": "King of the Hammer 1",
-      "type": ["motorsport", "rally", "offroad", "crawl"]
-
+    "rally4":{
+      "bestTime":90,
+      "checkpointRoad":"rally4",
+      "label":"Rally Stage 4 - Final",
+      "reward":2000,
+      "type":[
+        "rally"
+      ]
     },
-    "koh2": {
-      "bestTime": 180,
-      "reward": 3000,
-      "hotlap": 170,
-      "checkpointRoad": "koh2",
-      "label": "King of the Hammer 2",
-      "type": ["motorsport", "rally", "offroad", "crawl"]
+    "redwoodDrift":{
+      "bestTime":60,
+      "checkpointRoad":"redwoodDrift",
+      "driftGoal":6000,
+      "label":"Redwood Drift",
+      "reward":1500,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
     },
-    "rally1": {
-      "bestTime": 70,
-      "reward": 2000,
-      "checkpointRoad": "rally1",
-      "label": "Rally Stage 1",
-      "apexOffset": 2,
-      "type": ["rally"]
-
+    "redwoodDriftR":{
+      "bestTime":60,
+      "checkpointRoad":"redwoodDriftR",
+      "driftGoal":6000,
+      "label":"Redwood Drift Reverse",
+      "reward":1500,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
     },
-    "rally2": {
-      "bestTime": 120,
-      "reward": 2500,
-      "checkpointRoad": "rally2",
-      "label": "Rally Stage 2",
-      "apexOffset": 2,
-      "type": ["rally"]
-
+    "roadOval":{
+      "bestTime":30,
+      "checkpointRoad":"roadOval",
+      "hotlap":25,
+      "label":"Paved Oval",
+      "reward":350,
+      "type":[
+        "oval"
+      ]
     },
-    "rally3": {
-      "bestTime": 135,
-      "reward": 3000,
-      "checkpointRoad": "rally3",
-      "label": "Rally Stage 3",
-      "apexOffset": 1,
-      "type": ["rally"]
+    "rockClimbL":{
+      "bestTime":12,
+      "checkpointRoad":"rockClimbL",
+      "label":"Rock Crawl Long",
+      "reward":1500,
+      "type":[
+        "crawl"
+      ]
     },
-    "rally4": {
-      "bestTime": 90,
-      "reward": 2000,
-      "checkpointRoad": "rally4",
-      "label": "Rally Stage 4 - Final",
-      "type": ["rally"]
+    "rockClimbS":{
+      "bestTime":5,
+      "checkpointRoad":"rockClimbS",
+      "label":"Rock Crawl Short",
+      "reward":1200,
+      "type":[
+        "crawl"
+      ]
     },
-    "rubberBand": {
-      "bestTime": 41,
-      "reward": 1250,
-      "label": "Rubberband Ridge",
-      "checkpointRoad": "rubberBandMain",
-      "runningStart": true,
-      "hotlap": 45,
-      "altRoute": {
-        "bestTime": 41,
-        "reward": 1250,
-        "label": "Rubberband Ridge Joker",
-        "checkpointRoad": "rubberBandJoker",
-        "mergeCheckpoints": [4, 5],
-        "hotlap": 45,
-        "altInfo": "**Continue Right at the fork for the joker lap."
+    "rubberBand":{
+      "altRoute":{
+        "altInfo":"**Continue Right at the fork for the joker lap.",
+        "bestTime":41,
+        "checkpointRoad":"rubberBandJoker",
+        "hotlap":45,
+        "label":"Rubberband Ridge Joker",
+        "mergeCheckpoints":[
+          4,
+          5
+        ],
+        "reward":1250
       },
-      "type": ["offroad", "rally"]
+      "bestTime":41,
+      "checkpointRoad":"rubberBandMain",
+      "hotlap":45,
+      "label":"Rubberband Ridge",
+      "reward":1250,
+      "runningStart":true,
+      "type":[
+        "offroad",
+        "rally"
+      ]
     },
-    "track": {
-      "bestTime": 140,
-      "reward": 2250,
-      "label": "Track",
-      "checkpointRoad": "trackloop",
-      "hotlap": 125,
-      "runningStart": true,
-      "apexOffset": 1,
-      "altRoute": {
-        "bestTime": 100,
-        "reward": 1750,
-        "label": "Short Track",
-        "checkpointRoad": "trackalt",
-        "mergeCheckpoints": [1, 10],
-        "hotlap": 85,
-        "altInfo": "**Continue Left for Standard Track\nHair Pin Right for Short Track**"
+    "sealbrikDrift":{
+      "bestTime":30,
+      "checkpointRoad":"sealbrikDrift",
+      "driftGoal":4500,
+      "label":"Sealbrik Drift",
+      "reward":1500,
+      "type":[
+        "motorsport",
+        "drift"
+      ]
+    },
+    "track":{
+      "altRoute":{
+        "altInfo":"**Continue Left for Standard Track\nHair Pin Right for Short Track**",
+        "bestTime":100,
+        "checkpointRoad":"trackalt",
+        "hotlap":85,
+        "label":"Short Track",
+        "mergeCheckpoints":[
+          1,
+          10
+        ],
+        "reward":1750
       },
-      "type": ["motorsport", "apexRacing"]
-    },
-    "dirtCircuit": {
-      "bestTime": 65,
-      "reward": 2000,
-      "checkpointRoad": "dirtloop",
-      "hotlap": 55,
-      "label": "Dirt Circuit",
-      "type": ["offroad", "rally"]
-    },
-    "testTrack": {
-      "bestTime": 5.5,
-      "reward": 1000,
-      "label": "Test Track",
-      "type": ["motorsport"]
+      "apexOffset":1,
+      "bestTime":140,
+      "checkpointRoad":"trackloop",
+      "hotlap":125,
+      "label":"Track",
+      "reward":2250,
+      "runningStart":true,
+      "type":[
+        "motorsport",
+        "apexRacing"
+      ]
     }
   }
 }
