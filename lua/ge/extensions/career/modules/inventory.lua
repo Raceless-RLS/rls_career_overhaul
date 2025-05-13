@@ -577,9 +577,6 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
 
     assignInventoryIdToVehId(inventoryId, vehObj:getID())
 
-    -- load damage state
-    career_modules_damageManager.loadDamageState(inventoryId)
-
     if vehInfo.partConditions then
       core_vehicleBridge.executeAction(vehObj, 'initPartConditions', vehInfo.partConditions, 0, 1, 1)
       if callback then
@@ -601,6 +598,9 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
         'local cert = extensions.vehicleCertifications.getCertifications() obj:queueGameEngineLua("career_modules_inventory.setCertifications(%s, " .. serialize(cert) .. ")")',
         vehObj:getID()))
     end
+
+    -- load damage state
+    career_modules_damageManager.loadDamageState(inventoryId)
 
     return vehObj
   end
