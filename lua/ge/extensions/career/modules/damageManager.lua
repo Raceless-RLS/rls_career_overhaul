@@ -81,6 +81,64 @@ function M.clearDamageState(inventoryId)
     FS:removeFile(saveFile)
 end
 
+function M.repairPartsAndReloadState(inventoryId, partsToRepair)
+    if not inventoryId then
+        log('E', 'damageManager.repairParts', 'No inventoryId provided.')
+        return
+    end
+    if not partsToRepair or #partsToRepair == 0 then
+        log('W', 'damageManager.repairParts', 'No partsToRepair specified for inventoryId: ' .. inventoryId .. '. No action taken.')
+        return
+    end
+
+    local vehId = career_modules_inventory.getVehicleIdFromInventoryId(inventoryId)
+    if not vehId then
+        log('E', 'damageManager.repairParts', 'Could not find vehicleId for inventoryId: ' .. inventoryId)
+        return
+    end
+
+    local object = be:getObjectByID(vehId)
+    if not object then
+        log('E', 'damageManager.repairParts', 'Could not find vehicle object for vehId: ' .. vehId)
+        return
+    end
+
+    local _, savePathBase = career_saveSystem.getCurrentSaveSlot()
+    if not savePathBase then
+        log('E', 'damageManager.repairParts', 'Could not retrieve current save path.')
+        return
+    end
+
+    local tempSaveDir = savePathBase .. "/career/vehicles/damage/"
+    FS:createPath(tempSaveDir)
+    local tempSaveFile = tempSaveDir .. "temp_" .. inventoryId .. "_damageState.json"
+    
+    local serializedPartsToRepair = serialize(partsToRepair)
+    if not serializedPartsToRepair then
+        log('E', 'damageManager.repairParts', 'Failed to serialize partsToRepair table.')
+        return
+    end
+
+    log('I', 'damageManager.repairParts', 'Attempting to repair parts for vehicle ' .. inventoryId .. '. Temp file: ' .. tempSaveFile)
+    
+    local command = string.format(
+        "extensions.load('individualRepair') " ..
+        "if individualRepair and individualRepair.saveVehicleStateSelectiveRepair and individualRepair.loadVehicleStateSelectiveRepair then " ..
+        "  individualRepair.saveVehicleStateSelectiveRepair('%s', %s); " ..
+        "  individualRepair.loadVehicleStateSelectiveRepair('%s'); " ..
+        "  -- Consider os.remove('%s') here for the temp file " ..
+        "else " ..
+        "  log('E', 'vehicle.repairParts', 'individualRepair module or its functions not found.'); " ..
+        "end",
+        tempSaveFile:gsub("\\", "/"), 
+        serializedPartsToRepair,
+        tempSaveFile:gsub("\\", "/"),
+        tempSaveFile:gsub("\\", "/") -- For os.remove
+    )
+
+    object:queueLuaCommand(command)
+end
+
 M.getSpawnedVehicles = getSpawnedVehicles
 M.getDamagedVehicles = getDamagedVehicles
 return M
