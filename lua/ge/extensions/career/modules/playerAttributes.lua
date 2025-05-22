@@ -29,7 +29,7 @@ local function init()
 end
 
 -- reason should be table with label, list of tags
-local function addAttributes(change, reason)
+local function addAttributes(change, reason, fullprice)
 
   -- make sure a reason exists!
   if not reason then
@@ -59,6 +59,7 @@ local function addAttributes(change, reason)
     local attribute = attributes[attributeName]
     attribute.value = clamp(attribute.value + value, attribute.min or -math.huge, attribute.max or math.huge)
     for tag, en in pairs(reason.tags) do
+
       if en and value > 0 then
         attribute.gains[tag] = (attribute.gains[tag] or 0) + value
       end
@@ -158,48 +159,6 @@ local function onExtensionLoaded()
       attributes[name].value = math.min(data.value, gains - losses, moneySum)
     end
   end
-
-  -- backwards compatibility for old branch names
-  local oldAttributeNamesToNewNames = career_branches.oldAttributeNamesToNewNames
-  local updatedNames = {}
-
-  for name, data in pairs(jsonData) do
-    local mappedName = oldAttributeNamesToNewNames[name] or name
-    if oldAttributeNamesToNewNames[name] then
-      updatedNames[name] = mappedName
-    end
-    attributes[mappedName] = attributes[mappedName] or deepcopy(baseAttribute)
-    for k,v in pairs(data) do
-      attributes[mappedName][k] = v
-    end
-  end
-
-  attributeLog = (savePath and jsonReadFile(savePath .. "/career/attributeLog.json")) or attributeLog
-
-  -- Update old attribute names in the log to new names for backwards compatibility
-  for _, change in ipairs(attributeLog) do
-    if change.attributeChange then
-      local updatedChanges = {}
-      for oldName, value in pairs(change.attributeChange) do
-        local newName = oldAttributeNamesToNewNames[oldName] or oldName
-        if oldAttributeNamesToNewNames[oldName] then
-          updatedNames[oldName] = newName
-        end
-        updatedChanges[newName] = value
-      end
-      change.attributeChange = updatedChanges
-    end
-  end
-
-  -- Log all name updates at once
-  if next(updatedNames) then
-    local msg = "Updated attribute names:"
-    for oldName, newName in pairs(updatedNames) do
-      msg = msg .. string.format("\n  %s -> %s", oldName, newName)
-    end
-    log('I', '', msg)
-  end
-
 end
 
 -- this should only be loaded when the career is active
