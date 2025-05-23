@@ -8,6 +8,7 @@ local maps = {}
 local function switchMap(levelName)
     local currentLevel = getCurrentLevelIdentifier()
     if currentLevel == levelName then return end
+    gameplay_parking.resetAll()
     career_career.switchCareerLevel(levelName)
 end
 
