@@ -408,8 +408,12 @@ local function startShopping(inventoryId, _originComputerId)
   if not currentVehicle then return end
 
   local numberOfBrokenParts = career_modules_valueCalculator.getNumberOfBrokenParts(career_modules_inventory.getVehicles()[currentVehicle].partConditions)
-  if numberOfBrokenParts > 0 and numberOfBrokenParts < career_modules_valueCalculator.getBrokenPartsThreshold() then
-    career_modules_insurance.startRepair(currentVehicle, nil, function() startShoppingActual(_originComputerId) end)
+  if numberOfBrokenParts > 0 then
+    --career_modules_insurance.startRepair(currentVehicle, nil, function() startShoppingActual(_originComputerId) end)
+    core_jobsystem.create(function(job)
+      career_modules_damageManager.saveDamageState(currentVehicle)
+      startShoppingActual(_originComputerId)
+    end, 2)
   else
     startShoppingActual(_originComputerId)
   end
@@ -590,6 +594,7 @@ end
 local function updateInstalledParts(addedParts, removedParts)
   if not shoppingSessionActive then return end
 
+
   if addedParts then
     local firstPart = next(addedParts)
     if firstPart and not addedParts[firstPart].emptyPlaceholder then
@@ -648,14 +653,20 @@ local function updateInstalledParts(addedParts, removedParts)
   end
 
   local partPaths = {}
+  local partsToRemove = {}
 
   for path, part in pairs(shoppingCart.partsIn) do
-    table.insert(partPaths, path)
+    if part.emptyPlaceholder then
+      table.insert(partsToRemove, path)
+    else
+      table.insert(partPaths, path)
+    end
   end
 
   -- Find and remove parts from the shopping cart that are not compatible anymore after the installed parts have changed
   local incompatibleParts = findIncompatiblePartsInShoppingCart()
   for slot, partName in pairs(incompatibleParts) do
+    print('incompatible part: ' .. slot .. ' ' .. partName)
     shoppingCart.partsIn[slot] = nil
     local node = getNodeFromSlotPath(previewVehicle.config.partsTree, slot)
     if node then node.chosenPartName = "" end
@@ -683,8 +694,9 @@ local function updateInstalledParts(addedParts, removedParts)
   core_vehicleBridge.executeAction(getCurrentVehicleObj(), 'initPartConditions', previewVehicle.partConditions, nil, nil, nil, career_modules_painting.getPrimerColor())
 
   dump(partPaths)
+  dump(partsToRemove)
 
-  career_modules_damageManager.repairPartsAndReloadState(currentVehicle, partPaths)
+  career_modules_damageManager.repairPartsAndReloadState(currentVehicle, partPaths, partsToRemove)
 
   -- Doing the callback immediately will result in wrong values for some parts, so we do it one frame later
   core_vehicleBridge.requestValue(getCurrentVehicleObj(),

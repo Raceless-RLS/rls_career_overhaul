@@ -81,7 +81,7 @@ function M.clearDamageState(inventoryId)
     FS:removeFile(saveFile)
 end
 
-function M.repairPartsAndReloadState(inventoryId, partsToRepair)
+function M.repairPartsAndReloadState(inventoryId, partsToRepair, partsToRemove)
     if not inventoryId then
         log('E', 'damageManager.repairParts', 'No inventoryId provided.')
         return
@@ -111,17 +111,24 @@ function M.repairPartsAndReloadState(inventoryId, partsToRepair)
         return
     end
 
+    local serializedPartsToRemove = serialize(partsToRemove)
+    if not serializedPartsToRemove then
+        log('E', 'damageManager.repairParts', 'Failed to serialize partsToRemove table.')
+        return
+    end
+
     log('I', 'damageManager.repairParts', 'Attempting to repair parts for vehicle ' .. inventoryId .. '. Using save file: ' .. saveFile)
     
     local command = string.format(
         "extensions.load('individualRepair') " ..
         "if individualRepair and individualRepair.loadVehicleStateSelectiveRepair then " ..
-        "  individualRepair.loadVehicleStateSelectiveRepair('%s', %s); " ..
+        "  individualRepair.loadVehicleStateSelectiveRepair('%s', %s, %s); " ..
         "else " ..
         "  log('E', 'vehicle.repairParts', 'individualRepair module or its functions not found.'); " ..
         "end",
         saveFile:gsub("\\", "/"), 
-        serializedPartsToRepair
+        serializedPartsToRepair,
+        serializedPartsToRemove
     )
 
     object:queueLuaCommand(command)
