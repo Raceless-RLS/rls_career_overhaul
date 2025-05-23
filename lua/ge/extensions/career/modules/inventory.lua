@@ -1723,13 +1723,13 @@ function M.getSuspectsCaught(inventoryId)
   return vehicles[inventoryId].suspectsCaught or 0
 end
 
--- RLS Reload function
-
+--[[ RLS Reload function
 local function onWorldReadyState(state)
   if state == 2 and career_career.isActive() then
     setupInventory()
   end
 end
+]]
 
 -- RLS Taxi Functions
 
