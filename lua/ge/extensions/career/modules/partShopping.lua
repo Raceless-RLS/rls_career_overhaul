@@ -408,8 +408,9 @@ local function startShopping(inventoryId, _originComputerId)
   if not currentVehicle then return end
 
   local numberOfBrokenParts = career_modules_valueCalculator.getNumberOfBrokenParts(career_modules_inventory.getVehicles()[currentVehicle].partConditions)
-  if numberOfBrokenParts > 0 then
-    --career_modules_insurance.startRepair(currentVehicle, nil, function() startShoppingActual(_originComputerId) end)
+  if numberOfBrokenParts > 0 and numberOfBrokenParts < career_modules_valueCalculator.getBrokenPartsThreshold() then
+    career_modules_insurance.startRepair(currentVehicle, nil, function() startShoppingActual(_originComputerId) end)
+  elseif numberOfBrokenParts > 0 then
     core_jobsystem.create(function(job)
       career_modules_damageManager.saveDamageState(currentVehicle)
       startShoppingActual(_originComputerId)
