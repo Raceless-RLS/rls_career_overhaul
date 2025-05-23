@@ -873,12 +873,9 @@ local function onComputerAddFunctions(menuData, computerFunctions)
       order = 1
     }
     -- vehicle broken
-    --[[
     if vehicleData.needsRepair then
-      computerFunctionData.disabled = true
-      computerFunctionData.reason = career_modules_computer.reasons.needsRepair
+      computerFunctionData.label = "Part Customization (Experimental)"
     end
-    --]]
     -- tutorial active
     if menuData.tutorialTuningActive then
       computerFunctionData.disabled = true
