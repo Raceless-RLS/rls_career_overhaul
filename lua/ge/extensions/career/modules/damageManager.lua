@@ -63,6 +63,11 @@ function M.saveDamageState(inventoryId, saveFile, removeVehicle)
                 object:queueLuaCommand("beamstate.save(\"" .. saveFile .. "\");")
             end
         else
+            if removeVehicle then
+                local vehId = career_modules_inventory.getVehicleIdFromInventoryId(inventoryId)
+                local object = be:getObjectByID(vehId)
+                object:delete()
+            end
             print("No damage state to save for vehicle " .. inventoryId)
             FS:removeFile(saveFile)
         end
