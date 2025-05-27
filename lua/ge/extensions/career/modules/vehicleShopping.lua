@@ -217,6 +217,7 @@ local function generateVehicleList()
 
       -- compute taxes and fees
       randomVehicleInfo.fees = seller.fees or 0
+      randomVehicleInfo.tax = seller.salesTax or salesTax
 
       if seller.id == "private" then
         local parkingSpots = gameplay_parking.getParkingSpots().byName
@@ -485,7 +486,7 @@ local function sendPurchaseDataToUi()
   purchaseData.vehicleInfo = vehicleShopInfo
 
   local tradeInValue = purchaseData.tradeInVehicleInfo and purchaseData.tradeInVehicleInfo.Value or 0
-  local taxes = math.max((vehicleShopInfo.Value + vehicleShopInfo.fees - tradeInValue) * salesTax, 0)
+  local taxes = math.max((vehicleShopInfo.Value + vehicleShopInfo.fees - tradeInValue) * (vehicleShopInfo.tax or salesTax), 0)
   if vehicleShopInfo.sellerId == "discountedDealership" or vehicleShopInfo.sellerId == "joesJunkDealership" then
     taxes = 0
   end
