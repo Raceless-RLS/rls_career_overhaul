@@ -346,6 +346,96 @@
       "screens":[
         "commercialGarageComputer_screen_2"
       ]
+    },
+    {
+      "activityAcceptProps":[
+        {
+          "keyLabel":"Vehicle & Parts Management"
+        }
+      ],
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "doors":[
+        [
+          "dragTuningPits_area",
+          "dragTuningPits_icon"
+        ]
+      ],
+      "functions":{
+        "tuning":true,
+        "vehicleInventory":false
+      },
+      "garageId":"dragTuningPits",
+      "icon":"poi_laptop_round",
+      "iconLift":0.2,
+      "iconOffsetHeight":0.15,
+      "id":"dragTuningPits",
+      "name":"Drag Pit Lane",
+      "preview":"servicestationgaragecomputer.jpg",
+      "screens":{}
+    },
+    {
+      "activityAcceptProps":[
+        {
+          "keyLabel":"Vehicle & Parts Management"
+        }
+      ],
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "doors":[
+        [
+          "cabinGarage_area",
+          "cabinGarage_icon"
+        ]
+      ],
+      "functions":{
+        "insurancePolicies":true,
+        "painting":true,
+        "partInventory":true,
+        "partShop":true,
+        "sleep":true,
+        "tuning":true,
+        "vehicleInventory":true,
+        "vehicleShop":true
+      },
+      "garageId":"cabinGarage",
+      "icon":"poi_laptop_round",
+      "iconLift":0.2,
+      "iconOffsetHeight":0.15,
+      "id":"cabinGarage",
+      "name":"Redwood Cabin",
+      "preview":"servicestationgaragecomputer.jpg",
+      "screens":{}
+    },
+    {
+      "activityAcceptProps":[
+        {
+          "keyLabel":"Vehicle & Parts Management"
+        }
+      ],
+      "description":"ui.career.computer.bigmapLabel.garage",
+      "doors":[
+        [
+          "horizonEstate_area",
+          "horizonEstate_icon"
+        ]
+      ],
+      "functions":{
+        "insurancePolicies":true,
+        "painting":true,
+        "partInventory":true,
+        "partShop":true,
+        "sleep":true,
+        "tuning":true,
+        "vehicleInventory":true,
+        "vehicleShop":true
+      },
+      "garageId":"horizonEstate",
+      "icon":"poi_laptop_round",
+      "iconLift":0.2,
+      "iconOffsetHeight":0.15,
+      "id":"horizonEstate",
+      "name":"52 Horizon Estate Dr",
+      "preview":"servicestationgaragecomputer.jpg",
+      "screens":{}
     }
   ],
   "garages":[
@@ -513,6 +603,55 @@
       ],
       "zoneNames":[
         "cul-de-sacGarage"
+      ]
+    },
+    {
+      "capacity":0,
+      "defaultPrice":0,
+      "description":"A place to tune your drag car before pulling to the line.",
+      "icon":"poi_garage_2_round",
+      "id":"dragTuningPits",
+      "name":"Drag Pit Lane",
+      "parkingSpotNames":[
+        "spot_dragTuningPits_1"
+      ],
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":[
+        "dragTuningPits_1"
+      ]
+    },
+    {
+      "capacity":3,
+      "defaultPrice":285000,
+      "description":"A new garages",
+      "icon":"poi_garage_2_round",
+      "id":"cabinGarage",
+      "name":"Redwood Cabin",
+      "parkingSpotNames":[
+        "spot_cabinGarage_1",
+        "spot_cabinGarage_2",
+        "spot_cabinGarage_3"
+      ],
+      "preview":"garage_servicestation.jpg",
+      "tags":{},
+      "zoneNames":[
+        "cabinGarage_1"
+      ]
+    },
+    {
+      "capacity":2,
+      "defaultPrice":250000,
+      "description":"A nice pleasant home",
+      "icon":"poi_garage_2_round",
+      "id":"horizonEstate",
+      "name":"52 Horizon Estate Dr",
+      "parkingSpotNames":[
+        "spot_horizonEstate_1",
+        "spot_horizonEstate_2"
+      ],
+      "preview":"garage_servicestation.jpg",
+      "zoneNames":[
+        "horizonEstate_1"
       ]
     }
   ],

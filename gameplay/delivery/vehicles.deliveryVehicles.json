@@ -184,7 +184,7 @@
     "filterName":"Small Trailer",
     "connector":"towhitch",
     "baseReward":200,
-    "rewardPerKm":20,
+    "rewardPerKm":150,
     "filter" : {
       "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"] },
       "blackList":{"hasLoad":[true]},
@@ -196,7 +196,7 @@
     "filterName":"Small Trailer",
     "connector":"towhitch",
     "baseReward":305,
-    "rewardPerKm":30,
+    "rewardPerKm":175,
     "filter" : {
       "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"], "hasLoad":[true] },
       "blackList":{"key":["loaded_couch","loaded_armchairs","unsafe"]}
@@ -208,7 +208,7 @@
     "filterName":"Small Trailer",
     "connector":"towhitch",
     "baseReward":305,
-    "rewardPerKm":25,
+    "rewardPerKm":175,
     "filter" : {
       "whiteList" : {"model_key" : ["boxutility","tsfb","boxutility_large"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]},
    },
@@ -221,7 +221,7 @@
     "filterName":"Medium Trailer",
     //"connector":"towhitch",
     "baseReward":250,
-    "rewardPerKm":35,
+    "rewardPerKm":200,
     "filter" : {
       "whiteList" : {"model_key" : ["cargotrailer"] },
       "blackList":{"hasLoad":[true]},
@@ -233,7 +233,7 @@
     "filterName":"Medium Trailer",
     "connector":"towhitch",
     "baseReward":600,
-    "rewardPerKm":40,
+    "rewardPerKm":250,
     "filter" : {
       "whiteList" : {"model_key" : ["cargotrailer"], "hasLoad":[true] },
       "blackList":{"key":["loaded_couch","loaded_armchairs"]}
@@ -245,7 +245,7 @@
     "filterName":"Medium Trailer",
     "connector":"towhitch",
     "baseReward":500,
-    "rewardPerKm":40,
+    "rewardPerKm":250,
     "filter" : {
       "whiteList" : {"model_key" : ["cargotrailer"], "hasLoad":[true],"key":["loaded_couch","loaded_armchairs"]},
    },
@@ -257,7 +257,7 @@
     "filterName":"Large Trailer",
     "connector":"towhitch",
     "baseReward":350,
-    "rewardPerKm":100,
+    "rewardPerKm":1000,
     "filter" : {
       "whiteList" : {"model_key" : ["flatbed","containerTrailer","dryvan"]},
       "blackList":{"hasLoad":[true], "key":["48ft_loadingramp", "48ft_loadingramp_offset"]},
@@ -270,7 +270,7 @@
     "filterName":"Large Trailer",
     "connector":"towhitch",
     "baseReward":750,
-    "rewardPerKm":150,
+    "rewardPerKm":1500,
     "filter" : {
       "whiteList" : {"model_key" : ["flatbed","containerTrailer"], "hasLoad":[true]},
    },
