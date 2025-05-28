@@ -658,9 +658,9 @@ local function updateInstalledParts(addedParts, removedParts)
 
   for path, part in pairs(shoppingCart.partsIn) do
     if part.emptyPlaceholder then
-      table.insert(partsToRemove, path)
+      partsToRemove[path] = true
     else
-      table.insert(partPaths, path)
+      partPaths[path] = true
     end
   end
 
@@ -697,6 +697,7 @@ local function updateInstalledParts(addedParts, removedParts)
   dump(partPaths)
   dump(partsToRemove)
 
+  getCurrentVehicleObj():queueLuaCommand("extensions.load('individualRepair')")
   career_modules_damageManager.repairPartsAndReloadState(currentVehicle, partPaths, partsToRemove)
 
   -- Doing the callback immediately will result in wrong values for some parts, so we do it one frame later

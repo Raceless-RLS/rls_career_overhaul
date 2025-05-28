@@ -1,5 +1,11 @@
 local M = {}
 
+local damagedParts = {}
+local damageData = {}
+
+local nodeIDconvert = {}
+local beamIDconvert = {}
+local hydrosIDconvert = {}
 --- Gets the parent path by finding the last "/"
 -- @param path (string) The full path to split
 -- @return (string) The parent path, or "/" if no parent found
@@ -24,22 +30,6 @@ local function shouldProcessPart(partPath, pathsTable)
     end
   end
   return false
-end
-
---- Rotates a point around a center using a quaternion
--- @param point Vec3 point to rotate
--- @param center Vec3 center to rotate around
--- @param rotation Quat rotation to apply
--- @return Vec3 rotated point
-local function rotatePointAround(point, center, rotation)
-  -- 1. Translate point to origin relative to center
-  local relativePos = point - center
-  
-  -- 2. Apply rotation (BeamNG's quaternions can multiply vectors directly)
-  local rotatedPos = rotation * relativePos
-  
-  -- 3. Translate back to original coordinate system
-  return rotatedPos + center
 end
 
 --- Custom load function for vehicle states with selective part repair.
@@ -216,6 +206,422 @@ function M.loadVehicleStateSelectiveRepair(filename, partsToRepair, partsToRemov
 
   obj:commitLoad()
   log('I', 'individualRepair.load', 'Vehicle state loaded with selective repair from: ' .. filename)
+end
+
+local function onBeamDeformed(cid)
+  local b = v.data.beams[cid]
+  if b then
+    if b.partPath then
+      damagedParts[b.partPath] = true
+    end
+  end
+end
+
+local function onBeamBroke(cid)
+  local b = v.data.beams[cid]
+  if b then
+    if b.partPath then
+      damagedParts[b.partPath] = true
+    end
+  end
+end
+
+function M.getDamagedParts()
+  return damagedParts
+end
+
+local function seperateByPart(inputTable)
+  local outputTable = {}
+  for _, state in ipairs(inputTable) do
+    if not state.partPath then
+      print("No part path found for: " .. tostring(state.cid))
+      goto continue
+    end
+    local parentPath = getParentPath(state.partPath)
+    if not outputTable[parentPath] then
+      outputTable[parentPath] = {}
+    end
+    table.insert(outputTable[parentPath], state)
+    ::continue::
+  end
+  return outputTable
+end
+
+local function saveDamageData(filename)
+  if filename == nil then
+    filename = v.data.vehicleDirectory .. "/vehicle.rls_save.json"
+  end
+  
+  local save = {}
+  save.format = "rls_v1"
+  save.model = v.data.model
+  save.luaState = serialize(serializePackages("save"))
+  save.rotation = quat(obj:getRotation()):toTable()
+
+  save.partStates = {}
+  --
+
+  for _, node in pairs(v.data.nodes) do
+    local parentPath
+    if not node.partPath then
+      print("No part path found for: " .. tostring(node.cid))
+    else
+      parentPath = getParentPath(node.partPath)
+    end
+    if not save.partStates[parentPath] then
+      save.partStates[parentPath] = {}
+    end
+    if not save.partStates[parentPath].nodes then
+      save.partStates[parentPath].nodes = {}
+    end
+    table.insert(save.partStates[parentPath].nodes, node.cid, {
+      pos = obj:getNodePosition(node.cid):toTable(),
+      name = node.name,
+      mass = math.abs(obj:getOriginalNodeMass(node.cid) - obj:getNodeMass(node.cid)) > 0.1 and obj:getNodeMass(node.cid) or nil
+    })
+  end
+
+  for _, beam in pairs(v.data.beams) do
+    local parentPath
+    if not beam.partPath then
+      print("No part path found for: " .. tostring(beam.cid))
+    else
+      parentPath = getParentPath(beam.partPath)
+    end
+    if not save.partStates[parentPath] then
+      save.partStates[parentPath] = {}
+    end
+    if not save.partStates[parentPath].beams then
+      save.partStates[parentPath].beams = {}
+    end
+    table.insert(save.partStates[parentPath].beams, beam.cid, {
+      length = obj:getBeamRestLength(beam.cid),
+      broken = obj:beamIsBroken(beam.cid) and true or nil,
+      deformed = obj:getBeamDeformation(beam.cid) ~= 0 and obj:getBeamDeformation(beam.cid) or nil,
+      idents = {beam.id1, beam.id2, beam.beamType},
+    })
+  end
+
+  for _, hydros in pairs(hydros.hydros) do
+    local parentPath
+    if not hydros.partPath then
+      print("No part path found for: " .. tostring(hydros.cid))
+    else
+      parentPath = getParentPath(hydros.partPath)
+    end
+    if not save.partStates[parentPath] then
+      save.partStates[parentPath] = {}
+    end
+    if not save.partStates[parentPath].hydros then
+      save.partStates[parentPath].hydros = {}
+    end
+    table.insert(save.partStates[parentPath].hydros, hydros.cid, {
+      idents = {hydros.id1, hydros.id2, hydros.beamType},
+      state = hydros.state,
+    })
+  end
+  --]]
+
+  --[[
+
+  local vehNodes = seperateByPart(v.data.nodes)
+  local vehBeams = seperateByPart(v.data.beams)
+  local vehHydros = seperateByPart(hydros.hydros)
+
+  for partPath, state in pairs(damagedParts) do
+    save.partStates[partPath] = {}
+    if not vehNodes[partPath] then
+      goto beams
+    end
+    save.partStates[partPath].nodes = {}
+    for _, node in pairs(vehNodes[partPath]) do
+      save.partStates[partPath].nodes[node.cid] = {
+          pos = obj:getNodePosition(node.cid):toTable(),
+          name = node.name,
+          mass = math.abs(obj:getOriginalNodeMass(node.cid) - obj:getNodeMass(node.cid)) > 0.1 and obj:getNodeMass(node.cid) or nil
+      }
+    end
+    ::beams::
+    if not vehBeams[partPath] then
+      goto hydros
+    end
+    save.partStates[partPath].beams = {}
+    for _, beam in pairs(vehBeams[partPath]) do
+      save.partStates[partPath].beams[beam.cid] = {
+          length = obj:getBeamRestLength(beam.cid) or 0,
+          broken = obj:beamIsBroken(beam.cid) and true or nil,
+          deformed = obj:getBeamDeformation(beam.cid) ~= 0 and obj:getBeamDeformation(beam.cid) or nil,
+          idents = {beam.id1, beam.id2, beam.beamType},
+      }
+    end
+    ::hydros::
+    if not vehHydros[partPath] then
+      goto nextPart
+    end
+    save.partStates[partPath].hydros = {}
+    for _, hydros in pairs(vehHydros[partPath]) do
+      save.partStates[partPath].hydros[hydros.cid] = {
+        idents = {hydros.id1, hydros.id2, hydros.beamType},
+        state = hydros.state,
+      }
+    end
+    ::nextPart::
+  end
+  --]]
+  
+  local savedParts = 0
+  for partPath, state in pairs(save.partStates) do
+    savedParts = savedParts + 1
+  end
+  print("Saved " .. savedParts .. " parts")
+
+  jsonWriteFile(filename, save, true)
+  return save
+end
+
+local function loadNodeIDconvert(separateOldNodes)
+  local separateNewNodes = seperateByPart(v.data.nodes)
+  local nodeConvert = {}
+  
+  local partCount = 0
+  -- Count the actual number of entries in the table
+  local totalParts = 0
+  for _ in pairs(separateOldNodes) do
+    totalParts = totalParts + 1
+  end
+  
+  dumpz(separateOldNodes, 1)
+  print("Total parts to process: " .. totalParts)
+
+  for partPath, state in pairs(separateOldNodes) do
+    local nodeCount = 0
+    local nodeStatement = ""
+    partCount = partCount + 1
+    print("Part: " .. partPath .. " (" .. partCount .. "/" .. totalParts .. ")")
+    local nodes = state.nodes
+    if not nodes then
+      print("No nodes found for part: " .. partPath)
+      goto continue -- Using goto instead of break to continue the loop
+    end
+    for cid, oldNode in pairs(nodes) do
+      local oldName = oldNode.name
+      if oldName then
+        for _, newNode in ipairs(v.data.nodes) do
+          if newNode.name == oldName then
+            if tostring(cid) ~= tostring(newNode.cid) then
+              nodeCount = nodeCount + 1
+              --nodeStatement = nodeStatement .. "Name: " .. oldName .. " Old: " .. tostring(cid) .. " New: " .. tostring(newNode.cid) .. "\n"
+              nodeConvert[cid] = newNode.cid
+            end
+            break
+          end
+        end
+      end
+    end
+    if nodeStatement ~= "" then
+      print(nodeStatement)
+    end
+    print("Converted " .. nodeCount .. " nodes")
+    ::continue::
+  end
+  print("Checked " .. partCount .. " parts")
+  return nodeConvert
+end
+
+local function loadBeamIDconvert(separateOldBeams, hydros)
+  if not separateOldBeams or separateOldBeams == {} then
+    return
+  end
+  
+  local separateNewBeams
+  if hydros then
+    separateNewBeams = seperateByPart(v.data.hydros)
+  else
+    separateNewBeams = seperateByPart(v.data.beams)
+  end
+  
+  -- Process each part's beams
+  for partPath, states in pairs(separateOldBeams) do
+    -- Skip if this part doesn't exist in the new vehicle
+    if not separateNewBeams[partPath] then
+      goto continue
+    end
+    local beams = {}
+    if hydros then
+      beams = states.hydros
+    else
+      beams = states.beams
+    end
+    if not beams then
+      goto continue
+    end
+    
+    -- For each old beam in this part
+    for oldCID, oldBeam in pairs(beams) do
+      -- Get the nodes this beam connects
+      local oldNode1 = oldBeam.idents[1]
+      local oldNode2 = oldBeam.idents[2]
+      local oldBeamType = oldBeam.idents[3]
+      
+      -- Convert old node IDs to new node IDs using nodeIDconvert
+      local newNode1 = nodeIDconvert[oldNode1] or oldNode1
+      local newNode2 = nodeIDconvert[oldNode2] or oldNode2
+      
+      -- Skip if either node conversion failed
+      if not newNode1 or not newNode2 then
+        goto nextBeam
+      end
+      
+      -- Find matching beam in the new vehicle
+      for _, newBeam in ipairs(separateNewBeams[partPath]) do
+        -- Check if this beam connects the same nodes (in either order)
+        if (newBeam.id1 == newNode1 and newBeam.id2 == newNode2 and newBeam.beamType == oldBeamType) or
+           (newBeam.id1 == newNode2 and newBeam.id2 == newNode1 and newBeam.beamType == oldBeamType) then
+          -- Found a match - map old beam CID to new beam CID
+          if hydros then
+            if oldCID ~= newBeam.cid then
+              hydrosIDconvert[oldCID] = newBeam.cid
+            end
+          else
+            if oldCID ~= newBeam.cid then
+              beamIDconvert[oldCID] = newBeam.cid
+            end
+          end
+          break
+        end
+      end
+      
+      ::nextBeam::
+    end
+    
+    ::continue::
+  end
+  
+  return beamIDconvert
+end 
+
+local function loadDamageData(filename, partsToRepair, partsToRemove)
+  if filename == nil then
+    filename = v.data.vehicleDirectory .. "/vehicle.rls_save.json"
+  end
+
+  local save = jsonReadFile(filename)
+  if not save then
+    log("E", "individualRepair.load", "Invalid save file: " .. filename)
+    return
+  end
+
+  if save.format ~= "rls_v1" then
+    log("E", "individualRepair.load", "Invalid save format: " .. save.format)
+    return
+  end
+
+  if save.model ~= v.data.model then
+    log("E", "individualRepair.load", "Invalid model: " .. save.model)
+    return
+  end
+
+  -- Calculate rotation difference between saved and current orientation
+  local currentRotation = quat(obj:getRotation())
+  local saveRotation = quat(save.rotation)
+  
+  -- Calculate the rotation needed to go from saved rotation to current rotation
+  local rotationDifference = currentRotation * saveRotation:inversed()
+
+  for partPath, state in pairs(save.partStates) do
+    if partsToRemove and shouldProcessPart(partPath, partsToRemove) then
+      print("Skipping part: " .. partPath .. " because it is in the partsToRemove list")
+      save.partStates[partPath] = nil
+    end
+    if partsToRepair and shouldProcessPart(partPath, partsToRepair) then
+      print("Skipping part: " .. partPath .. " because it is in the partsToRepair list")
+      save.partStates[partPath] = nil
+    end
+  end
+
+  importPersistentData(save.luaState)
+  nodeIDconvert = loadNodeIDconvert(save.partStates)
+  beamIDconvert = loadBeamIDconvert(save.partStates)
+  hydrosIDconvert = loadBeamIDconvert(save.partStates, true)
+
+  for partPath, state in pairs(save.partStates) do
+    if save.partStates[partPath].nodes then
+      for cid, node in pairs(state.nodes) do
+        if nodeIDconvert[cid] then
+          --print("using convert: " .. tostring(nodeIDconvert[cid]) .. " for " .. tostring(node.name))
+        end
+        local newCID = nodeIDconvert[cid] or cid
+        if newCID then
+          -- Apply rotation difference to the node position
+          local nodePos = vec3(node.pos)
+          local rotatedPos = rotationDifference * nodePos
+          
+          -- Set the rotated position
+          obj:setNodePosition(newCID, rotatedPos)
+          
+          if node.mass then
+            obj:setNodeMass(newCID, node.mass)
+          end
+        end
+      end
+    end
+    if save.partStates[partPath].beams then
+      for cid, beam in pairs(state.beams) do
+        if beam.length > 0 then
+          obj:setBeamLength(beamIDconvert[cid] or cid, beam.length)
+        end
+        if beam.broken then
+          obj:breakBeam(beamIDconvert[cid] or cid)
+        end
+        if beam.deformed then
+          onBeamDeformed(beamIDconvert[cid] or cid, beam.deformed)
+          beamstate.onBeamDeformed(beamIDconvert[cid] or cid, beam.deformed)
+        end
+      end
+    end
+    if save.partStates[partPath].hydros then
+      if state.hydros then
+        for cid, hydro in pairs(state.hydros) do
+          for k, h in pairs(hydros.hydros) do
+            if h.cid == (hydrosIDconvert[cid] or cid) then
+              h.state = hydro.state
+              break
+            end
+          end
+        end
+      end
+    end
+  end
+
+  obj:commitLoad()
+end
+
+M.getNodeIDconvert = function()
+  return nodeIDconvert
+end
+
+M.getBeamIDconvert = function()
+  return beamIDconvert
+end
+
+M.getHydrosIDconvert = function()
+  return hydrosIDconvert
+end
+
+M.saveDamageData = saveDamageData
+M.loadDamageData = loadDamageData
+
+M.onBeamDeformed = onBeamDeformed
+M.onBeamBroke = onBeamBroke
+
+M.saveData = damageData
+
+-- Test reset function
+M.reset = function()
+  damagedParts = {}
+  damageData = {}
+  nodeIDconvert = {}
+  beamIDconvert = {}
 end
 
 return M

@@ -575,6 +575,8 @@ local function spawnVehicle(inventoryId, replaceOption, callback)
       vehObj = core_vehicles.spawnNewVehicle(carModelToLoad, vehicleData)
     end
 
+    vehObj:queueLuaCommand("extensions.load('individualRepair')")
+
     assignInventoryIdToVehId(inventoryId, vehObj:getID())
 
     if vehInfo.partConditions then

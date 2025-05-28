@@ -58,9 +58,11 @@ function M.saveDamageState(inventoryId, saveFile, removeVehicle)
             local vehId = career_modules_inventory.getVehicleIdFromInventoryId(inventoryId)
             local object = be:getObjectByID(vehId)
             if removeVehicle then
-                object:queueLuaCommand("beamstate.save(\"" .. saveFile .. "\"); obj:queueGameEngineLua('career_modules_damageManager.deleteVehicleDelayed(" .. vehId .. ")');")
+                --object:queueLuaCommand("beamstate.save(\"" .. saveFile .. "\"); obj:queueGameEngineLua('career_modules_damageManager.deleteVehicleDelayed(" .. vehId .. ")');")
+                object:queueLuaCommand("individualRepair.saveDamageData(\"" .. saveFile .. "\"); obj:queueGameEngineLua('career_modules_damageManager.deleteVehicleDelayed(" .. vehId .. ")');")
             else
-                object:queueLuaCommand("beamstate.save(\"" .. saveFile .. "\");")
+                object:queueLuaCommand("individualRepair.saveDamageData(\"" .. saveFile .. "\");")
+                --object:queueLuaCommand("beamstate.save(\"" .. saveFile .. "\");")
             end
         else
             if removeVehicle then
@@ -78,7 +80,8 @@ function M.loadDamageState(inventoryId)
     print("Loading damage state for vehicle " .. inventoryId)
     local saveFile = GetVehicleSaveFile(inventoryId)
     local object = be:getObjectByID(career_modules_inventory.getVehicleIdFromInventoryId(inventoryId))
-    object:queueLuaCommand("beamstate.load(\"" .. saveFile .. "\");")
+    --object:queueLuaCommand("beamstate.load(\"" .. saveFile .. "\");")
+    object:queueLuaCommand("individualRepair.loadDamageData(\"" .. saveFile .. "\");")
 end
 
 function M.clearDamageState(inventoryId)
@@ -125,12 +128,7 @@ function M.repairPartsAndReloadState(inventoryId, partsToRepair, partsToRemove)
     log('I', 'damageManager.repairParts', 'Attempting to repair parts for vehicle ' .. inventoryId .. '. Using save file: ' .. saveFile)
     
     local command = string.format(
-        "extensions.load('individualRepair') " ..
-        "if individualRepair and individualRepair.loadVehicleStateSelectiveRepair then " ..
-        "  individualRepair.loadVehicleStateSelectiveRepair('%s', %s, %s); " ..
-        "else " ..
-        "  log('E', 'vehicle.repairParts', 'individualRepair module or its functions not found.'); " ..
-        "end",
+        "individualRepair.loadDamageData('%s', %s, %s);",
         saveFile:gsub("\\", "/"), 
         serializedPartsToRepair,
         serializedPartsToRemove
