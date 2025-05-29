@@ -444,6 +444,16 @@ local function onVehicleSaveFinished(currentSavePath, oldSaveDate)
     part.description = nil
   end
   jsonWriteFile(currentSavePath .. "/career/partInventory.json", {serialize(partInventoryCopy)}, true)
+  local splitPartInventory = {}
+  for partId, part in pairs(partInventoryCopy) do
+    if not splitPartInventory[part.location] then
+      splitPartInventory[part.location] = {}
+    end
+    table.insert(splitPartInventory[part.location], part)
+  end
+  for location, parts in pairs(splitPartInventory) do
+    jsonWriteFile(currentSavePath .. "/career/vehicles/parts/" .. location .. ".json", parts, true)
+  end
 end
 
 local function updatePartDescriptionsWithJBeamInfo()
@@ -486,31 +496,41 @@ local function onExtensionLoaded()
   local saveInfo = savePath and jsonReadFile(savePath .. "/info.json")
   local outdated = not saveInfo or saveInfo.version < minimumVersion
 
-  local jsonData = savePath and jsonReadFile(savePath .. "/career/partInventory.json")
-  if jsonData and not outdated then
-    partInventory = deserialize(jsonData[1])
-
-    -- Not needed right now, because we sell all parts anyway
-    --[[ if saveInfo.version < 43 then
-      -- Update older versions to use "slotType" instead of "slot"
-      for partId, part in pairs(partInventory) do
-        part.slotType = part.slot
-        part.slot = nil
-      end
-    end ]]
-
-    if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
-      -- Sell all parts that are not in a vehicle
-      local partsToSell = {}
-      for partId, part in pairs(partInventory) do
-        if part.location == 0 then
-          table.insert(partsToSell, partId)
-        end
-      end
-      sellParts(partsToSell)
+  local rlsFiles = FS:findFiles(savePath .. "/career/vehicles/parts/", '*.json', 0, false, false)
+  for i = 1, tableSize(rlsFiles) do
+    local partData = jsonReadFile(rlsFiles[i])
+    for _, part in ipairs(partData) do
+      table.insert(partInventory, part)
     end
-  else
-    partInventory = {}
+  end
+
+  if tableSize(rlsFiles) == 0 then
+    local jsonData = savePath and jsonReadFile(savePath .. "/career/partInventory.json")
+    if jsonData and not outdated then
+      partInventory = deserialize(jsonData[1])
+  
+      -- Not needed right now, because we sell all parts anyway
+      --[[ if saveInfo.version < 43 then
+        -- Update older versions to use "slotType" instead of "slot"
+        for partId, part in pairs(partInventory) do
+          part.slotType = part.slot
+          part.slot = nil
+        end
+      end ]]
+  
+      if saveInfo.version < career_saveSystem.getSaveSystemVersion() then
+        -- Sell all parts that are not in a vehicle
+        local partsToSell = {}
+        for partId, part in pairs(partInventory) do
+          if part.location == 0 then
+            table.insert(partsToSell, partId)
+          end
+        end
+        sellParts(partsToSell)
+      end
+    else
+      partInventory = {}
+    end
   end
   updatePartDescriptionsWithJBeamInfo()
   updateVehicleMaps()
