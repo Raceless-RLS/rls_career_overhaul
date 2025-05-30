@@ -515,6 +515,7 @@ function M.returnPartsTree(partsTree)
 end
 
 function M.onVehicleSwitched()
+    currentVehiclePartsTree = nil
     if gameplay_walk.isWalking() then
         state = "start"
         currentFare = nil
