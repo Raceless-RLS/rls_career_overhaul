@@ -552,12 +552,14 @@ local function onVehicleAdded(inventoryId)
 end
 
 local function onVehicleRemoved(inventoryId)
+  local savePath, _ = career_saveSystem.getCurrentSaveSlot()
   local partsToRemove = {}
   for partId, part in pairs(partInventory) do
     if part.location == inventoryId then
       partsToRemove[partId] = true
     end
   end
+  FS:removeFile(savePath .. "/career/vehicles/parts/" .. inventoryId .. ".json")
 
   for partId, _ in pairs(partsToRemove) do
     partInventory[partId] = nil
