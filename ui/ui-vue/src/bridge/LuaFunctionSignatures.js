@@ -943,7 +943,7 @@ export default {
     cancelGaragePurchase: () => {}
   },
 
-  career_modules_taxi: {
+  gameplay_taxi: {
     prepareTaxiJob: () => {},
     acceptJob: () => {},
     rejectJob: () => {},

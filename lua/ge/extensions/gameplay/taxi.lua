@@ -1,5 +1,5 @@
 local M = {}
-M.dependencies = {'career_career', 'gameplay_sites_sitesManager', 'freeroam_facilities'}
+M.dependencies = {'gameplay_sites_sitesManager', 'freeroam_facilities'}
 
 local dataToSend = {}
 
@@ -26,6 +26,8 @@ local jobOfferTimer = 0
 local state = "start"
 local jobOfferInterval = math.random(5, 45)
 
+local currentVehiclePartsTree = nil
+
 local function findParkingSpots()
     local sitePath = gameplay_sites_sitesManager.getCurrentLevelSitesFileByName('city')
     if sitePath then
@@ -34,14 +36,93 @@ local function findParkingSpots()
     end
 end
 
+local function retrievePartsTree()
+    currentVehiclePartsTree = nil
+    local vehicle = be:getPlayerVehicle(0)
+    if vehicle then
+        vehicle:queueLuaCommand(
+            [[
+                local partsTree = v.config.partsTree
+                obj:queueGameEngineLua('gameplay_taxi.returnPartsTree(' .. serialize(partsTree) .. ')')
+            ]]
+        )
+    end
+end
+
+local function specificCapcityCases(partName)
+    if partName:find("capsule") and partName:find("seats") then
+      if partName:find("sd12m") then return 58
+      elseif partName:find("sd18m") then return 44
+      elseif partName:find("sd105") then return 25
+      elseif partName:find("sd_seats") then return 33
+      elseif partName:find("dd105") then return 58
+      elseif partName:find("sd195") then return 42
+      elseif partName:find("lh_seats") then return 70
+      elseif partName:find("artic") then return 107 end
+    end
+    return nil
+  end
+  
+local function cyclePartsTree(partData, seatingCapacity)
+    for first, part in pairs(partData) do
+      local partName = part.chosenPartName
+      if partName:find("seat") and not partName:find("cargo") and not partName:find("captains") then
+        local seatSize = nil
+        if partName:find("seats") then
+          seatSize = 3
+        elseif partName:find("ext") then
+          seatSize = 2
+        else
+          if partName:match("(%d+)R") then
+            seatSize = 2
+          else
+            seatSize = 1
+          end
+        end
+        if partName:find("citybus_seats") then seatSize = 44
+        elseif partName:find("skin") then seatSize = 0 end
+        if specificCapcityCases(partName) then seatSize = specificCapcityCases(partName) end
+        seatingCapacity = seatingCapacity + seatSize
+      end
+      if part.children then
+        seatingCapacity = cyclePartsTree(part.children, seatingCapacity)
+      end
+      if partName == "pickup" then
+        seatingCapacity = math.max(seatingCapacity, 7)
+      end
+    end
+    return seatingCapacity
+end
+  
+local function calculateSeatingCapacity()
+    if not currentVehiclePartsTree then
+        retrievePartsTree()
+    end
+    return cyclePartsTree({currentVehiclePartsTree}, 0)
+end
+
 -- New function to calculate seating capacity
 local function calculateCapacity(vehicleId)
-    local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehicleId)
-    if not inventoryId then
-        return 0
+    if not vehicleId then
+        vehicleId = be:getPlayerVehicle(0):getID()
     end
-    local seatingCapacity = career_modules_inventory.calculateSeatingCapacity(inventoryId)
+    if career_career.isActive() then
+        local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(vehicleId)
+        if not inventoryId then
+            return 0
+        end
+    end
+    local seatingCapacity = calculateSeatingCapacity()
     availableSeats = seatingCapacity - 1 -- Subtract the driver seat
+    dataToSend = {
+        state = state,
+        currentFare = currentFare,
+        availableSeats = availableSeats,
+        vehicleMultiplier = vehicleMultiplier,
+        cumulativeReward = cumulativeReward,
+        fareStreak = fareStreak
+    }
+    guihooks.trigger('updateTaxiState', dataToSend)
     return availableSeats
 end
 
@@ -147,6 +228,9 @@ local function generateFareMultiplier()
 end
 
 local function generateValueMultiplier()
+    if not career_career or not career_career.isActive() then
+        return 1
+    end
     local inventoryId = career_modules_inventory.getInventoryIdFromVehicleId(be:getPlayerVehicle(0):getID())
     if not inventoryId then
         return 0
@@ -200,9 +284,9 @@ local function generateJob()
 
     local fareMultiplier = generateFareMultiplier()
 
-    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier * distanceMultiplier
+    local baseFare = fareMultiplier * 100 * (passengerCount ^ 0.5) * valueMultiplier * distanceMultiplier * ((fareStreak + 1) ^ 0.5)
 
-    if career_modules_hardcore.isHardcoreMode() then
+    if career_career and career_career.isActive() and career_modules_hardcore.isHardcoreMode() then
         baseFare = baseFare * 0.66
     end
 
@@ -243,7 +327,7 @@ local function completeRide()
     fareStreak = fareStreak + 1
 
     -- Base payment calculation using actual path distance
-    local basePayment = currentFare.baseFare * (currentFare.totalDistance / 1000) * (fareStreak ^ 0.75)
+    local basePayment = currentFare.baseFare * (currentFare.totalDistance / 1000)
 
     local finalPayment = basePayment * (1 + speedFactor)
 
@@ -273,6 +357,10 @@ local function completeRide()
     local label = string.format("Taxi fare (%d passengers): $%d\nDistance: %.2fkm | %s: x %.2f", currentFare.passengers,
         currentFare.totalFare, currentFare.totalDistance, speedFactor > 0 and "Speed Bonus" or "Time Penalty",
         currentFare.timeMultiplier)
+    
+    if not career_career or not career_career.isActive() then
+        return
+    end
 
     if career_modules_hardcore.isHardcoreMode() then
         label = label .. "\nHardcore mode is enabled, all rewards lowered."
@@ -419,6 +507,11 @@ local function setAvailable()
     jobOfferInterval = math.random(5, 45)
     dataToSend = {}
     requestTaxiState()
+end
+
+function M.returnPartsTree(partsTree)
+    currentVehiclePartsTree = partsTree
+    calculateCapacity()
 end
 
 function M.onVehicleSwitched()

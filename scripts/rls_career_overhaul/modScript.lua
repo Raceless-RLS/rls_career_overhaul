@@ -48,6 +48,12 @@ local function loadExtensions()
     end
     extensions.load("gameplay_repo")
     setExtensionUnloadMode("gameplay_repo", "manual")
+
+    if extensions.isExtensionLoaded("gameplay_taxi") then
+        extensions.unload("gameplay_taxi")
+    end
+    extensions.load("gameplay_taxi")
+    setExtensionUnloadMode("gameplay_taxi", "manual")
 end
 
 if extensions.isExtensionLoaded("careerMaps") then
