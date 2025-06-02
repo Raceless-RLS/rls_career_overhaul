@@ -33,7 +33,6 @@
             "min": 0,
             "max": 200000
           },
-          "Brand": {},
           "Years": {
             "min": 1950,
             "max": 2023
@@ -45,8 +44,7 @@
           ],
           "Config Type": [
             "Frame"
-          ],
-          "Body Style": {}
+          ]
         }
       },
       "subFilters": [
@@ -60,8 +58,6 @@
             "Config Type": [
               "Race"
             ],
-            "Brand": {},
-            "Body Style": {},
             "Years": {
               "min": 1950,
               "max": 2023
@@ -75,7 +71,6 @@
               "min": 11000,
               "max": 17600056
             },
-            "Config Type": {},
             "Body Style": [
               "ATV"
             ]
@@ -182,20 +177,7 @@
       "iconOffsetHeight": 1,
       "iconLift": 0.25,
       "playModeIconName": "poi_entrance_round",
-      "salesTax": 0.07,
-      "ui": {
-        "showMatchingConfigs": [
-          false,
-          true,
-          true,
-          true,
-          true,
-          true,
-          true,
-          true
-        ],
-        "configSearchText": {}
-      }
+      "salesTax": 0.07
     },
     {
       "id": "jeffersonmotors",
@@ -406,7 +388,6 @@
               "min": 8800028,
               "max": 264000845
             },
-            "Brand": {},
             "Config Type": [
               "Custom"
             ]
@@ -495,13 +476,7 @@
       },
       "iconOffsetHeight": 1,
       "iconLift": 0.25,
-      "playModeIconName": "poi_entrance_round",
-      "ui": {
-        "showMatchingConfigs": [
-          true
-        ],
-        "configSearchText": {}
-      }
+      "playModeIconName": "poi_entrance_round"
     },
     {
       "id": "frameDealership",
@@ -569,13 +544,7 @@
       },
       "iconOffsetHeight": 1,
       "iconLift": 0.25,
-      "playModeIconName": "poi_entrance_round",
-      "ui": {
-        "showMatchingConfigs": [
-          true
-        ],
-        "configSearchText": {}
-      }
+      "playModeIconName": "poi_entrance_round"
     },
     {
       "id": "belascoAuto",
@@ -700,13 +669,7 @@
       },
       "iconOffsetHeight": 1,
       "iconLift": 0.25,
-      "playModeIconName": "poi_entrance_round",
-      "ui": {
-        "showMatchingConfigs": [
-          true,
-        ],
-        "configSearchText": {}
-      }
+      "playModeIconName": "poi_entrance_round"
     },
     {
       "id": "richsmotorcompany",
@@ -785,8 +748,7 @@
             "Years": {
               "min": 1950,
               "max": 1973
-            },
-            "Value": {}
+            }
           }
         },
         {
@@ -799,8 +761,7 @@
             "Years": {
               "min": 1973,
               "max": 2010
-            },
-            "Value": {}
+            }
           }
         },
         {
@@ -809,9 +770,7 @@
             "Mileage": {
               "min": 250000,
               "max": 18000000
-            },
-            "Years": {},
-            "Value": {}
+            }
           }
         },
         {
@@ -820,9 +779,7 @@
             "Mileage": {
               "min": 10000,
               "max": 50000
-            },
-            "Years": {},
-            "Value": {}
+            }
           }
         }
       ],
@@ -841,13 +798,7 @@
       },
       "iconOffsetHeight": 1,
       "iconLift": 0.25,
-      "playModeIconName": "poi_entrance_round",
-      "ui": {
-        "showMatchingConfigs": [
-          true
-        ],
-        "configSearchText": {}
-      }
+      "playModeIconName": "poi_entrance_round"
     },
     {
       "id": "quarrysideAutoSales",
@@ -1045,7 +996,6 @@
         }
       ],
       "filter": {
-        "whiteList": {},
         "blackList": {
           "Type": [
             "Trailer"
@@ -1212,17 +1162,14 @@
           }
         },
         {
-          "probability": 1,
-          "whiteList": {
-            "Value": {}
-          }
+          "probability": 1
         }
       ],
       "subFilterNames": [
         "Sub-Filter 1",
         "Sub-Filter 2",
         "Sub-Filter 3",
-        "Sub-Filter 4",
+        "Sub-Filter 4"
       ],
       "fees": 0,
       "containsStarterVehicles": false,
@@ -1585,8 +1532,7 @@
           "Type": [
             "Trailer"
           ]
-        },
-        "blackList": {}
+        }
       },
       "subFilters": [
         {
@@ -2043,7 +1989,6 @@
         "importDealerParking1"
       ],
       "filter": {
-        "whiteList": {},
         "blackList": {
           "Configuration": [
             "Drag",
@@ -2120,13 +2065,6 @@
         "timeLimit": 120,
         "licencePlate": ""
       },
-      "ui": {
-        "showMatchingConfigs": [
-          false,
-          true
-        ],
-        "configSearchText": {}
-      },
       "salesTax": 0.20
     }
   ],
@@ -2140,8 +2078,7 @@
           "Mileage": {
             "min": 25000000,
             "max": 380000000
-          },
-          "Value": {}
+          }
         },
         "blackList": {
           "Type": [
