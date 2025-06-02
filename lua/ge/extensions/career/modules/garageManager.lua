@@ -43,11 +43,10 @@ local function isDiscoveredGarage(garageId)
 end
 
 local function reloadRecoveryPrompt()
-  --[[
   if core_recoveryPrompt then
     core_recoveryPrompt.addTowingButtons()
     core_recoveryPrompt.addTaxiButtons()
-  end]]
+  end
 end
 
 local function buildGarageSizes()

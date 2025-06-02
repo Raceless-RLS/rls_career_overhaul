@@ -318,6 +318,7 @@ local buttonOptions = {
 local function addTowingButtons()
   if not getCurrentLevelIdentifier() then return end
   local garages = freeroam_facilities.getFacilitiesByType("garage")
+  local discoveredGarages = 0
 
   -- add garage tow buttons
   for i, garage in ipairs(garages) do
@@ -331,37 +332,40 @@ local function addTowingButtons()
         return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage), canBeNegative = true}}
       end
 
-      buttonOptions[string.format("towTo%s", garage.id)] =
-      {
-        type = "vehicle",
-        label = function(options, target)
-          return string.format("%s", translateLanguage(garage.name, garage.name, true))
-        end,
-        includeConditions = {},
-        menuTag = "towing",
-        enableConditions = {conditions.outOfPursuit, conditions.vehicleSlow, conditions.vehicleInInventory, conditions.notTestdriving, conditions.towToRoadAllowedByPermission},
-        atFadeFunction = function(target)
-          career_modules_playerDriving.teleportToGarage(garage.id, scenetree.findObjectById(target.vehId), false)
-          if career_modules_quickTravel.getPriceForQuickTravelToGarage(garage) > 0 then
-            career_modules_insurance.useTow(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId))
-          end
-          local price = getPrice(target)
-          if price then
-            career_modules_payment.pay(price, {label = string.format("Towed your vehicle to your garage")})
-          end
-        end,
-        message = "ui.career.towed",
-        order = 25,
-        active = true,
-        enabled = true,
-        fadeActive = true,
-        fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
-        icon = "garageNumber"..i,
-        price = getPrice,
-        confirmationText = "Do you want to tow your vehicle to this garage?",
-        path = "towing/",
-        noUniqueID = true,
-      }
+      if career_modules_garageManager.isDiscoveredGarage(garage.id) then
+        discoveredGarages = discoveredGarages + 1
+        buttonOptions[string.format("towTo%s", garage.id)] =
+        {
+          type = "vehicle",
+          label = function(options, target)
+            return string.format("%s", translateLanguage(garage.name, garage.name, true))
+          end,
+          includeConditions = {},
+          menuTag = "towing",
+          enableConditions = {conditions.outOfPursuit, conditions.vehicleSlow, conditions.vehicleInInventory, conditions.notTestdriving, conditions.towToRoadAllowedByPermission},
+          atFadeFunction = function(target)
+            career_modules_playerDriving.teleportToGarage(garage.id, scenetree.findObjectById(target.vehId), false)
+            if career_modules_quickTravel.getPriceForQuickTravelToGarage(garage) > 0 then
+              career_modules_insurance.useTow(career_modules_inventory.getInventoryIdFromVehicleId(target.vehId))
+            end
+            local price = getPrice(target)
+            if price then
+              career_modules_payment.pay(price, {label = string.format("Towed your vehicle to your garage")})
+            end
+          end,
+          message = "ui.career.towed",
+          order = discoveredGarages,
+          active = true,
+          enabled = true,
+          fadeActive = true,
+          fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
+          icon = "garageNumber"..discoveredGarages,
+          price = getPrice,
+          confirmationText = "Do you want to tow your vehicle to this garage?",
+          path = "towing/",
+          noUniqueID = true,
+        }
+      end
     end
   end
 end
@@ -369,33 +373,38 @@ end
 local function addTaxiButtons()
   if not getCurrentLevelIdentifier() then return end
   local garages = freeroam_facilities.getFacilitiesByType("garage")
+  local discoveredGarages = 0
 
   -- add garage taxi buttons
   for i, garage in ipairs(garages) do
     if not garage.noQuickTravel then
-      buttonOptions[string.format("taxiTo%s", garage.id)] =
-      {
-        type = "walk",
-        label = function(options)
-          return string.format("%s", translateLanguage(garage.name, garage.name, true))
-        end,
-        includeConditions = {},
-        menuTag = "taxi",
-        enableConditions = {},
-        atFadeFunction = function()
-          career_modules_quickTravel.quickTravelToGarage(garage)
-        end,
-        order = 25,
-        active = true,
-        enabled = true,
-        fadeActive = true,
-        fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
-        icon = "garageNumber"..i,
-        price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)}} end,
-        confirmationText = "Do you want to use the taxi?",
-        path = "taxi/",
-        noUniqueID = true,
-      }
+
+      if career_modules_garageManager.isDiscoveredGarage(garage.id) then
+        discoveredGarages = discoveredGarages + 1
+        buttonOptions[string.format("taxiTo%s", garage.id)] =
+        {
+          type = "walk",
+          label = function(options)
+            return string.format("%s", translateLanguage(garage.name, garage.name, true))
+          end,
+          includeConditions = {},
+          menuTag = "taxi",
+          enableConditions = {},
+          atFadeFunction = function()
+            career_modules_quickTravel.quickTravelToGarage(garage)
+          end,
+          order = discoveredGarages,
+          active = true,
+          enabled = true,
+          fadeActive = true,
+          fadeStartSound = "event:>UI>Missions>Vehicle_Recover",
+          icon = "garageNumber"..discoveredGarages,
+          price = function() return {money = {amount = career_modules_quickTravel.getPriceForQuickTravelToGarage(garage)}} end,
+          confirmationText = "Do you want to use the taxi?",
+          path = "taxi/",
+          noUniqueID = true,
+        }
+      end
     end
   end
 
@@ -873,6 +882,9 @@ end
 local function onQuickAccessLoaded()
   quickAccessInitialized = nil
 end
+
+M.addTowingButtons = addTowingButtons
+M.addTaxiButtons = addTaxiButtons
 
 M.buttonPressed = buttonPressed
 M.onPopupClosed = onPopupClosed
