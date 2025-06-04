@@ -452,7 +452,19 @@ local function onVehicleSaveFinished(currentSavePath, oldSaveDate)
     table.insert(splitPartInventory[part.location], part)
   end
   for location, parts in pairs(splitPartInventory) do
-    jsonWriteFile(currentSavePath .. "/career/vehicles/parts/" .. location .. ".json", parts, true)
+    if career_modules_inventory.getVehicles()[location] then
+      print("Saving parts for vehicle " .. location)
+      jsonWriteFile(currentSavePath .. "/career/vehicles/parts/" .. location .. ".json", parts, true)
+    end
+  end
+  local rlsFiles = FS:findFiles(currentSavePath .. "/career/vehicles/parts/", '*.json', 0, false, false)
+  for _, file in ipairs(rlsFiles) do
+    local dir, filename, ext = path.split(file)
+    local fileNameNoExt = string.sub(filename, 1, -6)
+    if tonumber(fileNameNoExt) ~= 0 and not career_modules_inventory.getVehicles()[tonumber(fileNameNoExt)] then
+      print("Removing parts for vehicle: " .. fileNameNoExt)
+      FS:removeFile(file)
+    end
   end
 end
 
@@ -559,11 +571,21 @@ local function onVehicleRemoved(inventoryId)
       partsToRemove[partId] = true
     end
   end
-  FS:removeFile(savePath .. "/career/vehicles/parts/" .. inventoryId .. ".json")
 
   for partId, _ in pairs(partsToRemove) do
     partInventory[partId] = nil
   end
+  local locations = {}
+  for _, part in pairs(partInventory) do
+    if locations[part.location] then
+      locations[part.location] = locations[part.location] + 1
+    else
+      locations[part.location] = 1
+    end
+  end
+  print("Locations:")
+  dump(locations)
+  FS:removeFile(savePath .. "/career/vehicles/parts/" .. inventoryId .. ".json")
 end
 
 local function getPart(inventoryId, path)
