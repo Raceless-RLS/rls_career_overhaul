@@ -258,6 +258,67 @@ local function garageIdToName(garageId)
   return nil
 end
 
+local function computerIdToGarageId(computerId)
+  local computer = freeroam_facilities.getFacility("computer", computerId)
+  if computer then
+    return computer.garageId
+  end
+  return nil
+end
+
+local function getGaragePrice(garageId, computerId)
+  if not garageId and not computerId then
+    return nil
+  elseif not garageId and computerId then
+    garageId = computerIdToGarageId(computerId)
+  end
+  if not garageId then
+    return nil
+  end
+  local garage = freeroam_facilities.getFacility("garage", garageId)
+  if garage then
+    if career_modules_hardcore.isHardcoreMode() then
+      print("Garage price: " .. garage.defaultPrice)
+      return garage.defaultPrice
+    else
+      local price = garage.starterGarage and 0 or garage.defaultPrice
+      return tonumber(price)
+    end
+  end
+  return nil
+end
+
+local function canSellGarage(computerId)
+  local garageId = computerIdToGarageId(computerId)
+  if not garageId then
+    return false
+  end
+  local garage = freeroam_facilities.getFacility("garage", garageId)
+  if not garage then
+    return false
+  end
+  return {isGarageSpace(garageId)[2] == garage.capacity, garage.capacity - isGarageSpace(garageId)[2]}
+end
+
+local function sellGarage(computerId, sellPrice)
+  local garageId = computerIdToGarageId(computerId)
+  if not garageId then
+    return false
+  end
+  guihooks.trigger('ChangeState', {state = 'play'})
+  purchasedGarages[garageId] = nil
+  reloadRecoveryPrompt()
+  buildGarageSizes()
+  local garage = freeroam_facilities.getFacility("garage", garageId)
+  local soldMessage = "Sold "
+  if garage then
+    soldMessage = soldMessage .. garage.name
+  else
+    soldMessage = soldMessage .. garageId
+  end
+  career_modules_payment.reward({ money = { amount = sellPrice } }, { label = soldMessage })
+end
+
 local function getNextAvailableSpace()
   for garage, owned in pairs(purchasedGarages) do
     if not owned then goto continue end
@@ -285,6 +346,9 @@ M.requestGarageData = requestGarageData
 M.canPay = canPay
 M.buyGarage = buyGarage
 M.cancelGaragePurchase = cancelGaragePurchase
+M.getGaragePrice = getGaragePrice
+M.canSellGarage = canSellGarage
+M.sellGarage = sellGarage
 
 M.getFreeSlots = getFreeSlots
 M.onCareerModulesActivated = onCareerModulesActivated
@@ -296,6 +360,7 @@ M.loadPurchasedGarages = loadPurchasedGarages
 M.savePurchasedGarages = savePurchasedGarages
 M.onSaveCurrentSaveSlot = onSaveCurrentSaveSlot
 M.garageIdToName = garageIdToName
+M.computerIdToGarageId = computerIdToGarageId
 
 -- Localization
 M.isGarageSpace = isGarageSpace

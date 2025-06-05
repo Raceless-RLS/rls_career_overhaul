@@ -3,7 +3,17 @@
 
     <BngCard class="card-content" v-bng-blur="1" >
       <BngCardHeading>
-        {{ computerLoading ? "Loading..." : "Vehicle management" }}
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <span>{{ computerLoading ? "Loading..." : "Vehicle management" }}</span>
+          <BngButton 
+            v-if="!computerLoading" 
+            :accent="ACCENTS.outlined" 
+            @click="sellGarage"
+            :icon="icons.home"
+            style="margin-left: 1em;">
+            Sell Garage
+          </BngButton>
+        </div>
       </BngCardHeading>
 
       <div v-if="!computerLoading" class="vehicle-actions">
@@ -117,6 +127,7 @@ import { default as UINavEvents, UI_EVENT_GROUPS } from "@/bridge/libs/UINavEven
 import { vBngOnUiNav, vBngBlur, vBngUiNavFocus } from "@/common/directives"
 import VehicleTile from "../components/vehicleInventory/VehicleTile.vue"
 import { LIST_LAYOUTS } from "@/common/components/base"
+import { openConfirmation } from "@/services/popup"
 
 const computerStore = useComputerStore()
 const currentVehicleData = ref(null)
@@ -199,6 +210,54 @@ const setReason = (idx, reason = null) => {
 
 const startPerformanceTest = function() {
   lua.career_modules_vehiclePerformance.startDragTestFromOutsideMenu(computerStore.activeInventoryId, computerStore.computerData.computerId)
+}
+
+const sellGarage = async function() {
+  try {
+    // Check if the garage can be sold (must be empty)
+    const canSell = await lua.career_modules_garageManager.canSellGarage(computerStore.computerData.computerId)
+    
+    if (!canSell || !Array.isArray(canSell) || canSell.length < 2) {
+      console.error("Could not check garage sell status")
+      return
+    }
+    
+    const [isEmpty, vehicleCount] = canSell
+    
+    // If garage has vehicles, show error message
+    if (!isEmpty) {
+      await openConfirmation("", `You have ${vehicleCount} vehicle${vehicleCount !== 1 ? 's' : ''} in this garage. Please move or sell your vehicles out of this garage to sell it.`, [
+        { label: "OK", value: true, extras: { default: true } },
+      ])
+      return
+    }
+    
+    // Get the garage price from Lua
+    const garagePrice = await lua.career_modules_garageManager.getGaragePrice(null, computerStore.computerData.computerId)
+    
+    if (!garagePrice) {
+      console.error("Could not get garage price")
+      await openConfirmation("", `You cannot sell this garage.`, [
+        { label: "OK", value: true, extras: { default: true } },
+      ])
+      return
+    }
+    
+    // Calculate 75% of the garage value
+    const sellPrice = Math.floor(garagePrice * 0.75)
+    
+    const res = await openConfirmation("", `Are you sure you want to sell this garage for ${sellPrice}? You will receive 75% of the original value. This action cannot be undone.`, [
+      { label: "Yes", value: true, extras: { default: true } },
+      { label: "No", value: false, extras: { accent: ACCENTS.secondary } },
+    ])
+    
+    if (res) {
+      console.log(`Garage sold for ${sellPrice} credits!`)
+      lua.career_modules_garageManager.sellGarage(computerStore.computerData.computerId, sellPrice)
+    }
+  } catch (error) {
+    console.error("Error selling garage:", error)
+  }
 }
 
 const close = () => {

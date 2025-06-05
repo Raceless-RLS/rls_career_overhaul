@@ -940,7 +940,10 @@ export default {
     requestGarageData: () => {},
     canPay: () => {},
     buyGarage: () => {},
-    cancelGaragePurchase: () => {}
+    cancelGaragePurchase: () => {},
+    getGaragePrice: () => {},
+    canSellGarage: () => {},
+    sellGarage: () => {}
   },
 
   gameplay_taxi: {
