@@ -25,19 +25,20 @@ local function isOverhaulAddonActive(levelName)
     return false
 end
 
-local function setLevelGate(levelName)
-    local isOverhaulAddonActive = isOverhaulAddonActive(levelName)
-    print("isOverhaulAddonActive" .. levelName .. " " .. tostring(isOverhaulAddonActive))
-    local gate = scenetree.findObject("switchTo_" .. levelName)
+local function setLevelGate(gateName)
+    local availableMaps = careerMaps.getOtherAvailableMaps()
+    dump(availableMaps)
+    if availableMaps[gateName] == {} then return end
+    local gate = scenetree.findObject("switchTo_" .. gateName)
     if gate then
-        gate:setHidden(not isOverhaulAddonActive)
+        gate:setHidden(false)
         local index = 1
-        while scenetree.findObject("gateBlock" .. levelName .. index) do
-            print("gateBlock" .. levelName .. index)
-            local block = scenetree.findObject("gateBlock" .. levelName .. index)
+        while scenetree.findObject("gateBlock" .. gateName .. index) do
+            print("gateBlock" .. gateName .. index)
+            local block = scenetree.findObject("gateBlock" .. gateName .. index)
             if block then
                 block:setField('collisionType', 0, 'None')
-                block:setHidden(isOverhaulAddonActive)
+                block:setHidden(true)
             end
             index = index + 1
         end
@@ -62,9 +63,8 @@ local function onBeamNGTrigger(data)
     local triggerName = data.triggerName
     
     if triggerName:match("^switchTo_") then
-        local levelName = triggerName:sub(10)
         simTimeAuthority.pause(true)
-        switchMap(levelName)
+        guihooks.trigger('ChangeState', {state = 'level-switch'})
         return
     elseif triggerName:match("^setGate_") then
         local levelName = triggerName:sub(9)
@@ -142,6 +142,7 @@ function M.onGetRawPoiListForLevel(levelIdentifier, elements)
     end
 end
 
+M.switchMap = switchMap
 M.onBeamNGTrigger = onBeamNGTrigger
 M.onSetupInventoryFinished = onSetupInventoryFinished
 M.onWorldReadyState = onWorldReadyState

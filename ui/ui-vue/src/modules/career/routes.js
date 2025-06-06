@@ -34,6 +34,7 @@ import Marketplace from "./views/Marketplace.vue"
 import PhoneTaxi from "./views/PhoneTaxi.vue"
 import CarMeetsPhone from "./views/CarMeetsPhone.vue"
 import PhoneRepo from "./views/PhoneRepo.vue"
+import LevelSwitch from "./views/LevelSwitch.vue"
 
 export default [
   // Career Pause
@@ -364,6 +365,12 @@ export default [
         path: "phone-repo",
         name: "phone-repo",
         component: PhoneRepo
+      },
+
+      {
+        path: "level-switch",
+        name: "level-switch",
+        component: LevelSwitch
       }
 
     ],

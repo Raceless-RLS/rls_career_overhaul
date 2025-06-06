@@ -975,5 +975,13 @@ export default {
     cancelJob: () => {},
     completeJob: () => {},
     isRepoVehicle: () => {}
+  },
+
+  careerMaps: {
+    getOtherAvailableMaps: () => {}
+  },
+
+  career_modules_switchMap: {
+    switchMap: (level) => {}
   }
 }

@@ -5,6 +5,9 @@ local compatibleMaps = {
 }
 
 local function retrieveCompatibleMaps()
+    compatibleMaps = {
+        ["west_coast_usa"] = "West Coast USA"
+    }
     extensions.hook("onGetMaps")
 end
 
@@ -36,6 +39,9 @@ local function enableMapSwitching()
 end
 
 M.onExtensionLoaded = retrieveCompatibleMaps
+M.onModActivated = retrieveCompatibleMaps
+M.onModDeactivated = retrieveCompatibleMaps
+
 M.returnCompatibleMap = returnCompatibleMap
 M.getCompatibleMaps = getCompatibleMaps
 M.getOtherAvailableMaps = getOtherAvailableMaps

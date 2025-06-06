@@ -1002,7 +1002,7 @@ local conditions = {
 
 local function changeVehPolicy(invVehId, toPolicyId)
     if plPoliciesData[toPolicyId].owned then
-        insuredInvVehs[tostring(invVehId)] = toPolicyId
+        insuredInvVehs[tostring(invVehId)] = math.abs(toPolicyId)
         M.sendUIData()
     end
 end
@@ -1440,7 +1440,7 @@ local function onVehicleAddedToInventory(data)
     if not plPoliciesData[requiredPolicyId].owned then
         requiredPolicyId = requiredPolicyId * -1
     end -- a negative insurance id means it is not insured and would require said insurance
-    insuredInvVehs[tostring(data.inventoryId)] = requiredPolicyId
+    insuredInvVehs[tostring(data.inventoryId)] = math.abs(requiredPolicyId)
 end
 
 local function openRepairMenu(vehicle, _originComputerId)
