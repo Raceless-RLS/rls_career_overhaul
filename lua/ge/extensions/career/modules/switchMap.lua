@@ -27,7 +27,6 @@ end
 
 local function setLevelGate(gateName)
     local availableMaps = careerMaps.getOtherAvailableMaps()
-    dump(availableMaps)
     if availableMaps[gateName] == {} then return end
     local gate = scenetree.findObject("switchTo_" .. gateName)
     if gate then
