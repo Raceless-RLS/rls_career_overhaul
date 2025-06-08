@@ -32,7 +32,7 @@ const router = useRouter()
 
 const apps = [
   { name: 'Taxi', icon: icons.taxiCar3, route: '/career/phone-taxi', color: '#ffd700', iconColor: '#000000' },
-  { name: 'Repo', icon: icons.tow, route: '/career/phone-main', color: '#1E90FF', iconColor: '#ffffff' },
+  { name: 'Repo', icon: icons.tow, route: '/career/phone-repo', color: '#1E90FF', iconColor: '#ffffff' },
   { name: 'Car Meet', icon: icons.cars, route: '/career/car-meets-phone', color: '#696969', iconColor: '#ffffff' },
   { name: 'Marketplace', icon: icons.shoppingCart, route: '/career/phone-marketplace', color: '#228B22', iconColor: '#ffffff' }
   // Add more apps using icons from the existing icon system
