@@ -124,7 +124,7 @@ local function formatLevelGatePoi(level, levelName)
                 pos = pos,
                 icon = "poi_fasttravel_round_orange_green",
                 name = levelName,
-                description = "Travel to " .. levelName,
+                description = "Travel and " .. levelName,
                 previews = {preview},
                 thumbnail = preview
             }
